@@ -25,6 +25,7 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
   if (mapping) {
     const style: React.CSSProperties = {
       backgroundColor: mapping.color,
+      containerType: "size",
     };
 
     if (!fill) {
@@ -40,7 +41,7 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
         } ${className}`}
         style={style}
       >
-        <span style={{ fontSize: "50%" }}>{mapping.emoji}</span>
+        <span style={{ fontSize: "65cqmin" }}>{mapping.emoji}</span>
       </div>
     );
   }
