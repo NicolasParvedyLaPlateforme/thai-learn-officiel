@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import IconImage from '../components/IconImage';
 import { motion, AnimatePresence } from 'motion/react';
 import { useProgressStore } from '../lib/store';
 import PWAInstallButton from '../components/PWAInstallButton';
@@ -170,7 +170,7 @@ export default function ConversationsPage() {
                     >
                        {unit.imageUrl && (
                           <div className="w-full h-40 rounded-2xl bg-slate-100 overflow-hidden relative mb-4">
-                            <Image src={unit.imageUrl} alt={unit.en} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                            <IconImage src={unit.imageUrl} alt={unit.en} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                             <div className="absolute top-3 left-3 bg-white/90 backdrop-blur rounded-xl px-2 py-1 shadow-sm text-lg">
                                {unit.emoji}
                             </div>
@@ -215,7 +215,7 @@ export default function ConversationsPage() {
                          <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] rounded-3xl overflow-hidden shadow-lg border border-slate-200">
                               {selectedStory.imageUrl ? (
                                   <>
-                                      <Image src={selectedStory.imageUrl} alt="" fill className="object-cover" />
+                                      <IconImage src={selectedStory.imageUrl} alt="" fill className="object-cover" />
                                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent" />
                                   </>
                               ) : (
@@ -251,7 +251,7 @@ export default function ConversationsPage() {
                      <div className="hidden md:flex flex-row gap-6 items-start">
                           {selectedStory.imageUrl && (
                               <div className="w-56 h-36 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow relative shrink-0">
-                                  <Image src={selectedStory.imageUrl} alt="" fill className="object-cover" />
+                                  <IconImage src={selectedStory.imageUrl} alt="" fill className="object-cover" />
                                   <div className="absolute bottom-3 left-3 text-3xl drop-shadow-md">{selectedStory.emoji}</div>
                               </div>
                           )}
@@ -337,7 +337,7 @@ export default function ConversationsPage() {
                                       <div className="flex items-center gap-4 w-full">
                                          {conv.imageUrl ? (
                                              <div className={`w-28 h-20 md:w-40 md:h-28 rounded-2xl overflow-hidden shrink-0 relative transition-all ${(isStoryLocked || isVocabLocked) && !isSelected ? 'grayscale opacity-60' : ''}`}>
-                                                 <Image src={conv.imageUrl} alt="" fill className="object-cover" />
+                                                 <IconImage src={conv.imageUrl} alt="" fill className="object-cover" />
                                                  {/* In progress badge overlay */}
                                                  {isSelected && !isCompleted && !isStoryLocked && (
                                                      <div className="absolute bottom-2 left-2 bg-orange-500 text-white text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-md">
@@ -432,7 +432,7 @@ export default function ConversationsPage() {
                    {/* Big Image Cover */}
                    <div className="w-full aspect-video md:h-56 rounded-3xl overflow-hidden relative shadow-md shrink-0 mb-6 group bg-slate-200">
                        {selectedConv.imageUrl ? (
-                           <Image src={selectedConv.imageUrl} alt="" fill className="object-cover" />
+                           <IconImage src={selectedConv.imageUrl} alt="" fill className="object-cover" />
                        ) : (
                            <div className="w-full h-full flex items-center justify-center flex-col bg-gradient-to-br from-orange-100 to-orange-50 text-orange-400">
                               <MessageCircle size={48} className="mb-2" />

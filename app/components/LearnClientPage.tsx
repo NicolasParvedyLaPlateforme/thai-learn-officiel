@@ -9,7 +9,7 @@ import { useProgressStore } from '../lib/store';
 import { playThaiTTS } from '../lib/tts';
 import { BookOpen, CheckCircle, Star, Play, Crown, RotateCcw, Pencil, X, Unlock, Brain, MessageCircle, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Heart, Users, Flame, Target } from 'lucide-react';
 import { Lesson } from '../types';
-import Image from 'next/image';
+import IconImage from '../components/IconImage';
 
 import { WritingConfigModal } from '../components/WritingConfigModal';
 import { DesktopSidebarRight } from '../components/DesktopSidebarRight';
@@ -246,7 +246,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
               <div className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} rounded-2xl text-white shadow-md relative overflow-hidden`}>
                 {unit.imageUrl && (
                   <>
-                    <Image src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-50 mix-blend-overlay" priority />
+                    <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-50 mix-blend-overlay" priority />
                     <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 z-0`}></div>
                   </>
                 )}
@@ -364,7 +364,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           >
                             {lesson.imageUrl ? (
                               <>
-                                <Image src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
+                                <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
                                 {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={40} className="stroke-[3] text-white" /></div>}
                               </>
                             ) : (
@@ -467,7 +467,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                   <div className={`p-8 md:p-10 ${unit.colorClass} border-b-[6px] ${unit.borderClass} rounded-3xl text-white shadow-xl relative overflow-hidden`}>
                     {unit.imageUrl && (
                       <>
-                        <Image src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-50 mix-blend-overlay" priority />
+                        <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-50 mix-blend-overlay" priority />
                         <div className={`absolute inset-0 bg-gradient-to-r from-black/30 via-black/10 to-transparent z-0`}></div>
                         <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 z-0`}></div>
                       </>
@@ -542,7 +542,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                               <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-20 transition-transform overflow-hidden bg-white ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
                                 {(lesson as any).imageUrl ? (
                                   <>
-                                    <Image src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
+                                    <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
                                     {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={32} className="stroke-[3] text-white" /></div>}
                                   </>
                                 ) : (
@@ -673,7 +673,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                   <div className="w-full shrink-0 z-0">
                      <div className={`w-full h-[100px] md:h-[180px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
                        {selectedLesson.lesson.imageUrl ? (
-                          <Image src={selectedLesson.lesson.imageUrl} alt="" fill className="object-contain md:object-cover p-2 md:p-0" />
+                          <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-contain md:object-cover p-2 md:p-0" />
                        ) : (
                           <BookOpen size={48} className="text-slate-200" />
                        )}

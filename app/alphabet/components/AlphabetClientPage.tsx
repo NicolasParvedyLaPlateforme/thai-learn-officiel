@@ -9,7 +9,7 @@ import { useProgressStore } from '../../lib/store';
 import { getAlphabetLessons, AlphabetLessonDef, formatCombiningChar } from '../../lib/alphabet-utils';
 import { playThaiTTS } from '../../lib/tts';
 import { BookOpen, CheckCircle, Star, Play, Crown, X, Unlock, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Users, Flame, Target } from 'lucide-react';
-import Image from 'next/image';
+import IconImage from '../../components/IconImage';
 
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
 import { DesktopSidebarRight } from '../../components/DesktopSidebarRight';
@@ -303,7 +303,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                           >
                             {lesson.imageUrl ? (
                               <>
-                                <Image src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
+                                <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
                                 {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={40} className="stroke-[3] text-white" /></div>}
                               </>
                             ) : (
@@ -484,7 +484,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                               <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-10 transition-transform text-3xl font-thai overflow-hidden ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : level >= 3 ? unit.shades.l3 : level >= 2 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
                                 {lesson.imageUrl ? (
                                   <>
-                                    <Image src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
+                                    <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
                                     {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={32} className="stroke-[3] text-white" /></div>}
                                   </>
                                 ) : (

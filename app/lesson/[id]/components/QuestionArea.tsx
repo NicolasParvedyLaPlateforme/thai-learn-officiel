@@ -1,4 +1,4 @@
-import Image from "next/image";
+import IconImage from "../../../components/IconImage";
 import { useEffect } from "react";
 import { Exercise, Lesson, Word } from "../../../types";
 import { SentenceWithHints } from "../../../components/Hints";
@@ -140,7 +140,7 @@ const imageUrl =
           }`}
         >
           {imageUrl ? (
-            <Image
+            <IconImage
               src={imageUrl}
               alt="word"
               fill

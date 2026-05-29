@@ -1,0 +1,5786 @@
+{
+  "/images/animals.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🐘"
+  },
+  "/images/body.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💪"
+  },
+  "/images/clothes.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👕"
+  },
+  "/images/colors.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🎨"
+  },
+  "/images/default-lesson.svg": {
+    "color": "#E8ECEF",
+    "emoji": "🇹🇭"
+  },
+  "/images/family.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👨‍👩‍👧‍👦"
+  },
+  "/images/feelings.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😊"
+  },
+  "/images/food.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🍜"
+  },
+  "/images/good_word.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👍"
+  },
+  "/images/hello.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👋"
+  },
+  "/images/hello_word.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👋"
+  },
+  "/images/house.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🏠"
+  },
+  "/images/introduce.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🤝"
+  },
+  "/images/jobs.svg": {
+    "color": "#F0C987",
+    "emoji": "💼"
+  },
+  "/images/l_nouveau_001.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👋"
+  },
+  "/images/l_nouveau_002.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🔟"
+  },
+  "/images/l_nouveau_003.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⏰"
+  },
+  "/images/l_nouveau_004.svg": {
+    "color": "#DCD3FF",
+    "emoji": "📦"
+  },
+  "/images/l_nouveau_005.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🍖"
+  },
+  "/images/l_nouveau_006.svg": {
+    "color": "#F0C987",
+    "emoji": "😋"
+  },
+  "/images/l_nouveau_007.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🤔"
+  },
+  "/images/l_nouveau_008.svg": {
+    "color": "#E3F4BA",
+    "emoji": "📍"
+  },
+  "/images/l_nouveau_009.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚶‍♀️"
+  },
+  "/images/l_nouveau_010.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🏘️"
+  },
+  "/images/l_nouveau_011.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🛍️"
+  },
+  "/images/l_nouveau_012.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🧘‍♀️"
+  },
+  "/images/letters.svg": {
+    "color": "#E8ECEF",
+    "emoji": "กข"
+  },
+  "/images/man_word.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👨"
+  },
+  "/images/numbers.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🔢"
+  },
+  "/images/p_p_10_years.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🔟"
+  },
+  "/images/p_p_2c7f76.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🦒"
+  },
+  "/images/p_p_6_years.svg": {
+    "color": "#FFB3BA",
+    "emoji": "6️⃣"
+  },
+  "/images/p_p_7_years.svg": {
+    "color": "#FFDFBA",
+    "emoji": "7️⃣"
+  },
+  "/images/p_p_8_years.svg": {
+    "color": "#FFFFBA",
+    "emoji": "8️⃣"
+  },
+  "/images/p_p_9_years.svg": {
+    "color": "#BAFFC9",
+    "emoji": "9️⃣"
+  },
+  "/images/p_p_aa_chop_kin_khao.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🧔"
+  },
+  "/images/p_p_airplane_big.svg": {
+    "color": "#FFBAF2",
+    "emoji": "✈️"
+  },
+  "/images/p_p_allergic_shrimp.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🦐"
+  },
+  "/images/p_p_also_well_f.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🙆‍♀️"
+  },
+  "/images/p_p_also_well_m.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🙆‍♂️"
+  },
+  "/images/p_p_and_you.svg": {
+    "color": "#D5BAFF",
+    "emoji": "❓"
+  },
+  "/images/p_p_answer_question.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🗣️"
+  },
+  "/images/p_p_arrive_when.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_ask_request.svg": {
+    "color": "#FFC4E1",
+    "emoji": "❓"
+  },
+  "/images/p_p_auto_lesson-50_0.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🖐️"
+  },
+  "/images/p_p_auto_lesson-50_1.svg": {
+    "color": "#F0C987",
+    "emoji": "☀️"
+  },
+  "/images/p_p_auto_lesson-50_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "✈️"
+  },
+  "/images/p_p_auto_lesson-50_3.svg": {
+    "color": "#DCD3FF",
+    "emoji": "❌"
+  },
+  "/images/p_p_auto_lesson-51_0.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😴"
+  },
+  "/images/p_p_auto_lesson-51_1.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🗺️"
+  },
+  "/images/p_p_auto_lesson-51_2.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💰"
+  },
+  "/images/p_p_auto_lesson-51_3.svg": {
+    "color": "#BAFFC9",
+    "emoji": "☕"
+  },
+  "/images/p_p_auto_lesson-52_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🐷"
+  },
+  "/images/p_p_auto_lesson-52_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🍺"
+  },
+  "/images/p_p_auto_lesson-52_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🧑"
+  },
+  "/images/p_p_auto_lesson-52_3.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🎨"
+  },
+  "/images/p_p_auto_lesson-53_0.svg": {
+    "color": "#FFC4E1",
+    "emoji": "8️⃣"
+  },
+  "/images/p_p_auto_lesson-53_1.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👤"
+  },
+  "/images/p_p_auto_lesson-53_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🎬"
+  },
+  "/images/p_p_auto_lesson-53_3.svg": {
+    "color": "#FFB3BA",
+    "emoji": "📚"
+  },
+  "/images/p_p_auto_lesson-55_0.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🌬️"
+  },
+  "/images/p_p_auto_lesson-55_1.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👂"
+  },
+  "/images/p_p_auto_lesson-55_2.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⏰"
+  },
+  "/images/p_p_auto_lesson-55_3.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🧒"
+  },
+  "/images/p_p_auto_lesson-56_0.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤢"
+  },
+  "/images/p_p_auto_lesson-56_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🍺"
+  },
+  "/images/p_p_auto_lesson-56_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🏫"
+  },
+  "/images/p_p_auto_lesson-56_3.svg": {
+    "color": "#F0C987",
+    "emoji": "🧑‍⚕️"
+  },
+  "/images/p_p_auto_lesson-57_0.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🚗"
+  },
+  "/images/p_p_auto_lesson-57_1.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🥩"
+  },
+  "/images/p_p_auto_lesson-57_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "❓"
+  },
+  "/images/p_p_auto_lesson-57_3.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🍋"
+  },
+  "/images/p_p_auto_lesson-58_0.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😊"
+  },
+  "/images/p_p_auto_lesson-58_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👌"
+  },
+  "/images/p_p_auto_lesson-58_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👨‍👩‍👧‍👦"
+  },
+  "/images/p_p_auto_lesson-58_3.svg": {
+    "color": "#FFBAF2",
+    "emoji": "☕"
+  },
+  "/images/p_p_back_pain.svg": {
+    "color": "#FFBAF2",
+    "emoji": "😫"
+  },
+  "/images/p_p_beautiful_skirt.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👗"
+  },
+  "/images/p_p_big_car.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🚙"
+  },
+  "/images/p_p_big_hand.svg": {
+    "color": "#F0C987",
+    "emoji": "✋"
+  },
+  "/images/p_p_big_house.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🏡"
+  },
+  "/images/p_p_big_market.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🛍️"
+  },
+  "/images/p_p_big_tree.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🌳"
+  },
+  "/images/p_p_bill_please.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🧾"
+  },
+  "/images/p_p_bill_please_eng.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧾"
+  },
+  "/images/p_p_bill_please_f.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🧾"
+  },
+  "/images/p_p_black_pants.svg": {
+    "color": "#F0C987",
+    "emoji": "👖"
+  },
+  "/images/p_p_blue_pen.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🟦"
+  },
+  "/images/p_p_board_train.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🚂"
+  },
+  "/images/p_p_boat_big.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🛥️"
+  },
+  "/images/p_p_busy_today.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🐝"
+  },
+  "/images/p_p_buy_medicine.svg": {
+    "color": "#FFB3BA",
+    "emoji": "💊"
+  },
+  "/images/p_p_buy_new_backpack.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🎒"
+  },
+  "/images/p_p_buy_pork_two_kilos.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🐖"
+  },
+  "/images/p_p_buy_shirt.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👕"
+  },
+  "/images/p_p_buy_shoes.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🛍️"
+  },
+  "/images/p_p_buy_three.svg": {
+    "color": "#BAFFC9",
+    "emoji": "3️⃣"
+  },
+  "/images/p_p_buy_ticket.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🎫"
+  },
+  "/images/p_p_buy_water.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💧"
+  },
+  "/images/p_p_can_try_on.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🛍️"
+  },
+  "/images/p_p_cannot_help.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🤷‍♀️"
+  },
+  "/images/p_p_cannot_open_door.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🚫"
+  },
+  "/images/p_p_cannot_reduce.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🙅"
+  },
+  "/images/p_p_chan_mai_pai_nae_non.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🚫"
+  },
+  "/images/p_p_chan_mee_khwaam_suk.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😄"
+  },
+  "/images/p_p_cheap_food.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🍚"
+  },
+  "/images/p_p_cheap_shirt.svg": {
+    "color": "#F0C987",
+    "emoji": "👕"
+  },
+  "/images/p_p_child_play.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🎲"
+  },
+  "/images/p_p_chuai_yut.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🛑"
+  },
+  "/images/p_p_clean_room.svg": {
+    "color": "#DCD3FF",
+    "emoji": "✨"
+  },
+  "/images/p_p_clever_dog.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💡"
+  },
+  "/images/p_p_close_window.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🪟"
+  },
+  "/images/p_p_coffee_water.svg": {
+    "color": "#E3F4BA",
+    "emoji": "☕"
+  },
+  "/images/p_p_cold_m.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🥶"
+  },
+  "/images/p_p_cold_water.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧊"
+  },
+  "/images/p_p_cold_wind.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🌬️"
+  },
+  "/images/p_p_color_red.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🟥"
+  },
+  "/images/p_p_color_white.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⬜"
+  },
+  "/images/p_p_come_here_m.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👋"
+  },
+  "/images/p_p_come_often.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🚶"
+  },
+  "/images/p_p_dad_fine.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👨"
+  },
+  "/images/p_p_dad_has_three_younger_siblings.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👨‍👧‍👦"
+  },
+  "/images/p_p_dad_is_very_proud.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🤩"
+  },
+  "/images/p_p_dangerous_storm.svg": {
+    "color": "#BAE1FF",
+    "emoji": "⛈️"
+  },
+  "/images/p_p_dek_ha_mae.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🤱"
+  },
+  "/images/p_p_dek_rong_hai_dang.svg": {
+    "color": "#D5BAFF",
+    "emoji": "😭"
+  },
+  "/images/p_p_dek_tia.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👶"
+  },
+  "/images/p_p_delicious_f.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😋"
+  },
+  "/images/p_p_delicious_sweet.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🍰"
+  },
+  "/images/p_p_diao_joegan_ton_bai.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👋"
+  },
+  "/images/p_p_diao_ma.svg": {
+    "color": "#BAE1FF",
+    "emoji": "↩️"
+  },
+  "/images/p_p_dirty_plate.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🤢"
+  },
+  "/images/p_p_discount.svg": {
+    "color": "#FFDFBA",
+    "emoji": "📉"
+  },
+  "/images/p_p_doen_pai.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🚶"
+  },
+  "/images/p_p_doen_phaan_rong_pha_ya_baan.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🏥"
+  },
+  "/images/p_p_dont_be_jealous_of_friend.svg": {
+    "color": "#FFFFBA",
+    "emoji": "😠"
+  },
+  "/images/p_p_dont_forget_buy_ticket.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🔔"
+  },
+  "/images/p_p_drink_beer.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🍺"
+  },
+  "/images/p_p_drink_water.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🥛"
+  },
+  "/images/p_p_drink_water_deum.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🥤"
+  },
+  "/images/p_p_duration_one_decade.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🔟"
+  },
+  "/images/p_p_eat_chicken.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🍗"
+  },
+  "/images/p_p_eat_dessert.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_eat_evening.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_eat_here.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍔"
+  },
+  "/images/p_p_eat_medicine.svg": {
+    "color": "#B8F2E6",
+    "emoji": "💊"
+  },
+  "/images/p_p_eat_regularly.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_eat_rice.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍚"
+  },
+  "/images/p_p_eat_when.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_eleven.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🔢"
+  },
+  "/images/p_p_english_language.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🇬🇧"
+  },
+  "/images/p_p_enter_hotel.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🚪"
+  },
+  "/images/p_p_exactly_two_hours.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🎯"
+  },
+  "/images/p_p_examine_throat.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🔎"
+  },
+  "/images/p_p_expensive_shoes.svg": {
+    "color": "#FFC4E1",
+    "emoji": "💰"
+  },
+  "/images/p_p_fat_cat.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🐘"
+  },
+  "/images/p_p_feel_sick.svg": {
+    "color": "#F0C987",
+    "emoji": "🤢"
+  },
+  "/images/p_p_fine_f.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🙆‍♀️"
+  },
+  "/images/p_p_fine_m.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🙆‍♂️"
+  },
+  "/images/p_p_fish_water.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🐠"
+  },
+  "/images/p_p_five_days.svg": {
+    "color": "#B8F2E6",
+    "emoji": "5️⃣"
+  },
+  "/images/p_p_five_oclock.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🕔"
+  },
+  "/images/p_p_five_people.svg": {
+    "color": "#FFB3BA",
+    "emoji": "5️⃣"
+  },
+  "/images/p_p_flight_expensive.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💸"
+  },
+  "/images/p_p_fly_airplane.svg": {
+    "color": "#BAFFC9",
+    "emoji": "✈️"
+  },
+  "/images/p_p_four_bags.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👜"
+  },
+  "/images/p_p_four_friends.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🧑‍🤝‍🧑"
+  },
+  "/images/p_p_four_people.svg": {
+    "color": "#BAE1FF",
+    "emoji": "4️⃣"
+  },
+  "/images/p_p_french_person.svg": {
+    "color": "#F0C987",
+    "emoji": "🇫🇷"
+  },
+  "/images/p_p_friday.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🎉"
+  },
+  "/images/p_p_friend_eat.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_full.svg": {
+    "color": "#D5BAFF",
+    "emoji": "😌"
+  },
+  "/images/p_p_full_cup.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🥛"
+  },
+  "/images/p_p_full_f.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😌"
+  },
+  "/images/p_p_full_m.svg": {
+    "color": "#FFBAF2",
+    "emoji": "😌"
+  },
+  "/images/p_p_fun_game.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🎮"
+  },
+  "/images/p_p_give_money.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💰"
+  },
+  "/images/p_p_glass_of_water.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🥛"
+  },
+  "/images/p_p_go_airport.svg": {
+    "color": "#FFB3BA",
+    "emoji": "✈️"
+  },
+  "/images/p_p_go_clinic.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🏥"
+  },
+  "/images/p_p_go_home.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🏠"
+  },
+  "/images/p_p_go_hospital.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🏥"
+  },
+  "/images/p_p_go_hotel.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🏨"
+  },
+  "/images/p_p_go_left.svg": {
+    "color": "#FFDFBA",
+    "emoji": "⬅️"
+  },
+  "/images/p_p_go_market.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🛒"
+  },
+  "/images/p_p_go_out_work.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💼"
+  },
+  "/images/p_p_go_park.svg": {
+    "color": "#F0C987",
+    "emoji": "🌳"
+  },
+  "/images/p_p_go_pier.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⚓"
+  },
+  "/images/p_p_go_right.svg": {
+    "color": "#FFFFBA",
+    "emoji": "➡️"
+  },
+  "/images/p_p_go_school.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🏫"
+  },
+  "/images/p_p_go_straight.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_go_straight_kha.svg": {
+    "color": "#B8F2E6",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_go_summer.svg": {
+    "color": "#FFDFBA",
+    "emoji": "☀️"
+  },
+  "/images/p_p_go_together.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤝"
+  },
+  "/images/p_p_go_tomorrow.svg": {
+    "color": "#F0C987",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_go_when.svg": {
+    "color": "#F0C987",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_go_with_friend.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🤝"
+  },
+  "/images/p_p_go_work.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💼"
+  },
+  "/images/p_p_good_evening.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👋"
+  },
+  "/images/p_p_good_figure.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💃"
+  },
+  "/images/p_p_good_student.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💯"
+  },
+  "/images/p_p_grandchild_plays_with_friend.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🧒"
+  },
+  "/images/p_p_green_shirt.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👕"
+  },
+  "/images/p_p_grey_skirt.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👗"
+  },
+  "/images/p_p_ha_arai.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🔍"
+  },
+  "/images/p_p_half_past_five.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🕠"
+  },
+  "/images/p_p_happy_f.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😄"
+  },
+  "/images/p_p_happy_m.svg": {
+    "color": "#FFFFBA",
+    "emoji": "😀"
+  },
+  "/images/p_p_hardworking_student.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💪"
+  },
+  "/images/p_p_hate_rainy.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😠"
+  },
+  "/images/p_p_have_fever.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🤒"
+  },
+  "/images/p_p_have_money.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💰"
+  },
+  "/images/p_p_have_question.svg": {
+    "color": "#BEEBE9",
+    "emoji": "❓"
+  },
+  "/images/p_p_have_runny_nose.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤧"
+  },
+  "/images/p_p_have_storm.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⛈️"
+  },
+  "/images/p_p_have_water.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💧"
+  },
+  "/images/p_p_he_comes_here.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🚶‍♂️"
+  },
+  "/images/p_p_he_comes_often.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🔄"
+  },
+  "/images/p_p_he_holds_bag.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🛍️"
+  },
+  "/images/p_p_he_is_fat.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🐘"
+  },
+  "/images/p_p_he_is_tall.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_he_name.svg": {
+    "color": "#BAFFC9",
+    "emoji": "📛"
+  },
+  "/images/p_p_he_very_clever.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💡"
+  },
+  "/images/p_p_head_hospital.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🤕"
+  },
+  "/images/p_p_headache.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🤕"
+  },
+  "/images/p_p_health_blood.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🩸"
+  },
+  "/images/p_p_health_breathe.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😮‍💨"
+  },
+  "/images/p_p_health_dizzy.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😵"
+  },
+  "/images/p_p_health_injured.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🤕"
+  },
+  "/images/p_p_health_strong.svg": {
+    "color": "#FFB3BA",
+    "emoji": "💪"
+  },
+  "/images/p_p_heavy_bag_very.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🏋️"
+  },
+  "/images/p_p_hello_f.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👋"
+  },
+  "/images/p_p_hello_m.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👋"
+  },
+  "/images/p_p_help_a_bit.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🙏"
+  },
+  "/images/p_p_hiw_nam_mai_khrap.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🥵❓"
+  },
+  "/images/p_p_holiday_sunday.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🚫"
+  },
+  "/images/p_p_hospital_near.svg": {
+    "color": "#F0C987",
+    "emoji": "🏥"
+  },
+  "/images/p_p_hot_coffee.svg": {
+    "color": "#BAFFC9",
+    "emoji": "☕"
+  },
+  "/images/p_p_hot_not.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🧊"
+  },
+  "/images/p_p_hot_not_cold.svg": {
+    "color": "#FFBAF2",
+    "emoji": "☀️"
+  },
+  "/images/p_p_hot_sun.svg": {
+    "color": "#BEEBE9",
+    "emoji": "☀️"
+  },
+  "/images/p_p_hotel_good.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🏨"
+  },
+  "/images/p_p_house_beautiful.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🏠"
+  },
+  "/images/p_p_how_are_you.svg": {
+    "color": "#FFFFBA",
+    "emoji": "❓"
+  },
+  "/images/p_p_how_many_bags.svg": {
+    "color": "#FFFFBA",
+    "emoji": "❓"
+  },
+  "/images/p_p_how_many_chairs.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🪑"
+  },
+  "/images/p_p_how_many_chairs_f.svg": {
+    "color": "#BAFFC9",
+    "emoji": "❓"
+  },
+  "/images/p_p_how_many_chairs_m.svg": {
+    "color": "#FFFFBA",
+    "emoji": "❓"
+  },
+  "/images/p_p_how_many_friends.svg": {
+    "color": "#F0C987",
+    "emoji": "❓"
+  },
+  "/images/p_p_how_many_people.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👥"
+  },
+  "/images/p_p_how_many_seasons.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_how_much.svg": {
+    "color": "#BEEBE9",
+    "emoji": "💰"
+  },
+  "/images/p_p_how_much_f.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💰"
+  },
+  "/images/p_p_how_old.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🎂"
+  },
+  "/images/p_p_how_to_do_it.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤔"
+  },
+  "/images/p_p_hungry.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🤤"
+  },
+  "/images/p_p_hurt_eye.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🤕"
+  },
+  "/images/p_p_hurt_hand.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤕"
+  },
+  "/images/p_p_i_always_do.svg": {
+    "color": "#E3F4BA",
+    "emoji": "♾️"
+  },
+  "/images/p_p_i_am_fine.svg": {
+    "color": "#D5BAFF",
+    "emoji": "😊"
+  },
+  "/images/p_p_i_dont_know.svg": {
+    "color": "#F0C987",
+    "emoji": "🤷"
+  },
+  "/images/p_p_i_feel_very_lonely.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😔"
+  },
+  "/images/p_p_i_go_first.svg": {
+    "color": "#FFC4E1",
+    "emoji": "☝️"
+  },
+  "/images/p_p_i_have_family.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👨‍👩‍👧‍👦"
+  },
+  "/images/p_p_i_like_it.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👍"
+  },
+  "/images/p_p_i_like_it_f.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👍"
+  },
+  "/images/p_p_i_pity_that_cat.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🥺"
+  },
+  "/images/p_p_in_bag.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👜"
+  },
+  "/images/p_p_it_eats_chicken.svg": {
+    "color": "#F0C987",
+    "emoji": "🍗"
+  },
+  "/images/p_p_jing_mai.svg": {
+    "color": "#FFDFBA",
+    "emoji": "❓"
+  },
+  "/images/p_p_jot_jakkayaan_thini.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🅿️"
+  },
+  "/images/p_p_khaam_thanon.svg": {
+    "color": "#FFDFBA",
+    "emoji": "↔️"
+  },
+  "/images/p_p_khao_aa_rom_dii.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😄"
+  },
+  "/images/p_p_khao_hua_ro_dang.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🤣"
+  },
+  "/images/p_p_khao_khriat_mak.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😩"
+  },
+  "/images/p_p_khao_ma_saai.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⏰"
+  },
+  "/images/p_p_khao_mee_nam_ta.svg": {
+    "color": "#FFBAF2",
+    "emoji": "😥"
+  },
+  "/images/p_p_khao_mo_ho_mak.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😡"
+  },
+  "/images/p_p_khao_phlia_mak.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😫"
+  },
+  "/images/p_p_khao_sia_jai_mak.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😢"
+  },
+  "/images/p_p_khao_yang_sao.svg": {
+    "color": "#F0C987",
+    "emoji": "👧"
+  },
+  "/images/p_p_khao_yim.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😊"
+  },
+  "/images/p_p_khap_rot_rew.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🚗"
+  },
+  "/images/p_p_khi_rot.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🏍️"
+  },
+  "/images/p_p_khii_motoesai.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🏍️"
+  },
+  "/images/p_p_kho_haeng.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😬"
+  },
+  "/images/p_p_khon_soong.svg": {
+    "color": "#F0C987",
+    "emoji": "🦒"
+  },
+  "/images/p_p_kind_friend.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤗"
+  },
+  "/images/p_p_lazy_person.svg": {
+    "color": "#FFBAF2",
+    "emoji": "😴"
+  },
+  "/images/p_p_learn_much.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧠"
+  },
+  "/images/p_p_learn_thai.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🇹🇭"
+  },
+  "/images/p_p_lesson-24-a1_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🍎"
+  },
+  "/images/p_p_lesson-24-a1_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🍊"
+  },
+  "/images/p_p_lesson-24-a1_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🍌"
+  },
+  "/images/p_p_lesson-24-a1_3.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍉"
+  },
+  "/images/p_p_lesson-24-a1_4.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🥭"
+  },
+  "/images/p_p_liao_khwaa_thii_yaek.svg": {
+    "color": "#D5BAFF",
+    "emoji": "➡️"
+  },
+  "/images/p_p_liao_saai_nai_soi.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⬅️"
+  },
+  "/images/p_p_light_blue_socks.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🧦"
+  },
+  "/images/p_p_light_things.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🎈"
+  },
+  "/images/p_p_like_duck.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🦆"
+  },
+  "/images/p_p_like_eat_cake.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😋"
+  },
+  "/images/p_p_like_green.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💚"
+  },
+  "/images/p_p_like_q.svg": {
+    "color": "#FFB3BA",
+    "emoji": "❤️"
+  },
+  "/images/p_p_like_summer.svg": {
+    "color": "#DCD3FF",
+    "emoji": "☀️"
+  },
+  "/images/p_p_listen_me.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👂"
+  },
+  "/images/p_p_lock_door.svg": {
+    "color": "#F0C987",
+    "emoji": "🔒"
+  },
+  "/images/p_p_look_map.svg": {
+    "color": "#F0C987",
+    "emoji": "👀"
+  },
+  "/images/p_p_look_this.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👀"
+  },
+  "/images/p_p_loose_pants.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👖"
+  },
+  "/images/p_p_lost_way.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧭"
+  },
+  "/images/p_p_luk_phi_luk_nong_khong_phom.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👯‍♀️"
+  },
+  "/images/p_p_maew_uan.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🐈"
+  },
+  "/images/p_p_mai_khayap.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🚫"
+  },
+  "/images/p_p_mai_klua_phi.svg": {
+    "color": "#FFC4E1",
+    "emoji": "💪"
+  },
+  "/images/p_p_mai_tee_yao.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🏏"
+  },
+  "/images/p_p_mai_tong_kangwon.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😌"
+  },
+  "/images/p_p_mai_tong_khriat.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😌"
+  },
+  "/images/p_p_many_clouds.svg": {
+    "color": "#FFDFBA",
+    "emoji": "☁️"
+  },
+  "/images/p_p_market_far_mai.svg": {
+    "color": "#FFC4E1",
+    "emoji": "❓"
+  },
+  "/images/p_p_maybe_yes.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🤞"
+  },
+  "/images/p_p_menu_please.svg": {
+    "color": "#B8F2E6",
+    "emoji": "📜"
+  },
+  "/images/p_p_mom_name.svg": {
+    "color": "#FFBAF2",
+    "emoji": "📛"
+  },
+  "/images/p_p_monday.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_my_child.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🧒"
+  },
+  "/images/p_p_my_child_kind.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🧒"
+  },
+  "/images/p_p_my_close_friend.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🫂"
+  },
+  "/images/p_p_my_friend.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🧑‍🤝‍🧑"
+  },
+  "/images/p_p_my_name_and_you_f.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👩"
+  },
+  "/images/p_p_my_name_and_you_m.svg": {
+    "color": "#F0C987",
+    "emoji": "👨"
+  },
+  "/images/p_p_my_partner.svg": {
+    "color": "#B8F2E6",
+    "emoji": "💑"
+  },
+  "/images/p_p_my_younger_sibling.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧒"
+  },
+  "/images/p_p_na_seed_mak.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👻"
+  },
+  "/images/p_p_na_suai.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😍"
+  },
+  "/images/p_p_naa_maa_haa_rao.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👩"
+  },
+  "/images/p_p_name_ask.svg": {
+    "color": "#FFBAF2",
+    "emoji": "❓"
+  },
+  "/images/p_p_name_f.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👩"
+  },
+  "/images/p_p_name_m.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👨"
+  },
+  "/images/p_p_nang_sue_bang.svg": {
+    "color": "#BEEBE9",
+    "emoji": "📄"
+  },
+  "/images/p_p_nang_taeksi.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🚕"
+  },
+  "/images/p_p_never_been.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🚫"
+  },
+  "/images/p_p_never_eat.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚫"
+  },
+  "/images/p_p_new_l3_1.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_new_l3_2.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_new_l3_2_pii.svg": {
+    "color": "#E3F4BA",
+    "emoji": "2️⃣"
+  },
+  "/images/p_p_new_l3_3.svg": {
+    "color": "#B8F2E6",
+    "emoji": "✖️"
+  },
+  "/images/p_p_new_l3_3_pii.svg": {
+    "color": "#F0C987",
+    "emoji": "3️⃣"
+  },
+  "/images/p_p_new_l3_4.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_new_l3_4_pii.svg": {
+    "color": "#FFC4E1",
+    "emoji": "4️⃣"
+  },
+  "/images/p_p_new_l3_5.svg": {
+    "color": "#F0C987",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_new_l3_5_pii.svg": {
+    "color": "#DCD3FF",
+    "emoji": "5️⃣"
+  },
+  "/images/p_p_new_l4_1.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🍗"
+  },
+  "/images/p_p_new_l4_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🥚"
+  },
+  "/images/p_p_new_l4_3.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🥓"
+  },
+  "/images/p_p_new_l4_4.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🌶️"
+  },
+  "/images/p_p_new_l4_5.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🚫"
+  },
+  "/images/p_p_new_l4_6.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🍗"
+  },
+  "/images/p_p_new_l4_7.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🥩"
+  },
+  "/images/p_p_new_l5_1.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🙏"
+  },
+  "/images/p_p_new_l5_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🗣️"
+  },
+  "/images/p_p_new_l5_3.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😕"
+  },
+  "/images/p_p_new_l5_4.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🗣️"
+  },
+  "/images/p_p_new_l5_5.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🗺️"
+  },
+  "/images/p_p_new_l6_1.svg": {
+    "color": "#F0C987",
+    "emoji": "📛"
+  },
+  "/images/p_p_new_l6_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🍚"
+  },
+  "/images/p_p_new_l6_3.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧑‍🏫"
+  },
+  "/images/p_p_new_l6_4.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😊"
+  },
+  "/images/p_p_new_l6_5.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👩‍🍼"
+  },
+  "/images/p_p_new_l7_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👀"
+  },
+  "/images/p_p_new_l7_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⏳"
+  },
+  "/images/p_p_new_l7_3.svg": {
+    "color": "#F0C987",
+    "emoji": "🤔"
+  },
+  "/images/p_p_new_l7_4.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👀"
+  },
+  "/images/p_p_new_l7_5.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🤷"
+  },
+  "/images/p_p_new_l8_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "💰"
+  },
+  "/images/p_p_new_l8_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🏷️"
+  },
+  "/images/p_p_new_l8_3.svg": {
+    "color": "#F0C987",
+    "emoji": "💵"
+  },
+  "/images/p_p_new_l8_4.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🏷️"
+  },
+  "/images/p_p_new_l8_5.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🔟"
+  },
+  "/images/p_p_new_l9_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😡"
+  },
+  "/images/p_p_new_l9_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😴"
+  },
+  "/images/p_p_new_l9_3.svg": {
+    "color": "#F0C987",
+    "emoji": "😄"
+  },
+  "/images/p_p_new_l9_4.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😡"
+  },
+  "/images/p_p_new_l9_5.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😢"
+  },
+  "/images/p_p_new_lesson-24-a1_0.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🍎"
+  },
+  "/images/p_p_new_lesson-24-a1_1.svg": {
+    "color": "#F0C987",
+    "emoji": "🍊"
+  },
+  "/images/p_p_new_lesson-24-a1_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🍌"
+  },
+  "/images/p_p_new_lesson-24-a1_3.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🍎"
+  },
+  "/images/p_p_new_lesson-24-a1_4.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🙅"
+  },
+  "/images/p_p_new_lesson-24-a2_0.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🥦"
+  },
+  "/images/p_p_new_lesson-24-a2_1.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🙅"
+  },
+  "/images/p_p_new_lesson-24-a2_2.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍅"
+  },
+  "/images/p_p_new_lesson-24-a2_3.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🥬"
+  },
+  "/images/p_p_new_lesson-24-a2_4.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🥒"
+  },
+  "/images/p_p_new_lesson-24-a3_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🥄"
+  },
+  "/images/p_p_new_lesson-24-a3_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🍴"
+  },
+  "/images/p_p_new_lesson-24-a3_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_new_lesson-24-a3_3.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🧼"
+  },
+  "/images/p_p_new_lesson-24-a3_4.svg": {
+    "color": "#F0C987",
+    "emoji": "🍴"
+  },
+  "/images/p_p_new_lesson-24-a3_5.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🥢"
+  },
+  "/images/p_p_new_lesson-24-a3_6.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🥣"
+  },
+  "/images/p_p_new_lesson-24-a4_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🍗"
+  },
+  "/images/p_p_new_lesson-24-a4_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🍖"
+  },
+  "/images/p_p_new_lesson-24-a4_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🥚"
+  },
+  "/images/p_p_new_lesson-24-a4_3.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍳"
+  },
+  "/images/p_p_new_lesson-24-a4_4.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🍗"
+  },
+  "/images/p_p_new_lesson-24-a4_5.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🍲"
+  },
+  "/images/p_p_new_lesson-24-a4_6.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🥘"
+  },
+  "/images/p_p_new_lesson-24-a5_0.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🍲"
+  },
+  "/images/p_p_new_lesson-24-a5_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🧊"
+  },
+  "/images/p_p_new_lesson-24-a5_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🍰"
+  },
+  "/images/p_p_new_lesson-24-a5_3.svg": {
+    "color": "#F0C987",
+    "emoji": "🙅‍♀️"
+  },
+  "/images/p_p_new_lesson-24-a5_4.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🍜"
+  },
+  "/images/p_p_new_lesson-29-a1_0.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🚶‍♀️"
+  },
+  "/images/p_p_new_lesson-29-a1_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🏃‍♀️"
+  },
+  "/images/p_p_new_lesson-29-a1_2.svg": {
+    "color": "#F0C987",
+    "emoji": "🛑"
+  },
+  "/images/p_p_new_lesson-29-a1_3.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🚶‍♀️"
+  },
+  "/images/p_p_new_lesson-29-a1_4.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🛑"
+  },
+  "/images/p_p_new_lesson-29-a2_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🙋‍♀️"
+  },
+  "/images/p_p_new_lesson-29-a2_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "💬"
+  },
+  "/images/p_p_new_lesson-29-a2_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "📚"
+  },
+  "/images/p_p_new_lesson-29-a2_3.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🚫💬"
+  },
+  "/images/p_p_new_lesson-29-a2_4.svg": {
+    "color": "#BAFFC9",
+    "emoji": "📚"
+  },
+  "/images/p_p_new_lesson-29-a3_0.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🍳"
+  },
+  "/images/p_p_new_lesson-29-a3_1.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🧺"
+  },
+  "/images/p_p_new_lesson-29-a3_2.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🧹"
+  },
+  "/images/p_p_new_lesson-29-a3_3.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🍳"
+  },
+  "/images/p_p_new_lesson-29-a3_4.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🚫🧺"
+  },
+  "/images/p_p_new_lesson-29-a4_0.svg": {
+    "color": "#F0C987",
+    "emoji": "🚪"
+  },
+  "/images/p_p_new_lesson-29-a4_1.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🔒"
+  },
+  "/images/p_p_new_lesson-29-a4_2.svg": {
+    "color": "#DCD3FF",
+    "emoji": "💰"
+  },
+  "/images/p_p_new_lesson-29-a4_3.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🔒"
+  },
+  "/images/p_p_new_lesson-29-a4_4.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🚫🔓"
+  },
+  "/images/p_p_new_lesson-29-a5_0.svg": {
+    "color": "#FFDFBA",
+    "emoji": "▶️"
+  },
+  "/images/p_p_new_lesson-29-a5_1.svg": {
+    "color": "#FFFFBA",
+    "emoji": "✅"
+  },
+  "/images/p_p_new_lesson-29-a5_2.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👕"
+  },
+  "/images/p_p_new_lesson-29-a5_3.svg": {
+    "color": "#BAE1FF",
+    "emoji": "⏳"
+  },
+  "/images/p_p_new_lesson-29-a5_4.svg": {
+    "color": "#D5BAFF",
+    "emoji": "▶️"
+  },
+  "/images/p_p_new_lesson-34-a1_0.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💨"
+  },
+  "/images/p_p_new_lesson-34-a1_1.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⛈️"
+  },
+  "/images/p_p_new_lesson-34-a1_2.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🌨️"
+  },
+  "/images/p_p_new_lesson-34-a1_3.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👎"
+  },
+  "/images/p_p_new_lesson-34-a1_4.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🌪️"
+  },
+  "/images/p_p_new_lesson-34-a2_0.svg": {
+    "color": "#FFBAF2",
+    "emoji": "❤️"
+  },
+  "/images/p_p_new_lesson-34-a2_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "❄️"
+  },
+  "/images/p_p_new_lesson-34-a2_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👎"
+  },
+  "/images/p_p_new_lesson-34-a2_3.svg": {
+    "color": "#F0C987",
+    "emoji": "☀️"
+  },
+  "/images/p_p_new_lesson-34-a2_4.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🥵"
+  },
+  "/images/p_p_new_lesson-34-a3_0.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🔥"
+  },
+  "/images/p_p_new_lesson-34-a3_1.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👋"
+  },
+  "/images/p_p_new_lesson-34-a3_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🔙"
+  },
+  "/images/p_p_new_lesson-34-a3_3.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_new_lesson-34-a3_4.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🚫"
+  },
+  "/images/p_p_new_lesson-34-a4_0.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🌅"
+  },
+  "/images/p_p_new_lesson-34-a4_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😴"
+  },
+  "/images/p_p_new_lesson-34-a4_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_new_lesson-34-a4_3.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🥶"
+  },
+  "/images/p_p_new_lesson-34-a4_4.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👀"
+  },
+  "/images/p_p_new_lesson-34-a5_0.svg": {
+    "color": "#E3F4BA",
+    "emoji": "5️⃣"
+  },
+  "/images/p_p_new_lesson-34-a5_1.svg": {
+    "color": "#F0C987",
+    "emoji": "🕐"
+  },
+  "/images/p_p_new_lesson-34-a5_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⏳"
+  },
+  "/images/p_p_new_lesson-34-a5_3.svg": {
+    "color": "#DCD3FF",
+    "emoji": "3️⃣"
+  },
+  "/images/p_p_new_lesson-34-a5_4.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🕑"
+  },
+  "/images/p_p_new_lesson-39-a1_0.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🏦"
+  },
+  "/images/p_p_new_lesson-39-a1_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🏥"
+  },
+  "/images/p_p_new_lesson-39-a1_2.svg": {
+    "color": "#F0C987",
+    "emoji": "👮"
+  },
+  "/images/p_p_new_lesson-39-a1_3.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🏥"
+  },
+  "/images/p_p_new_lesson-39-a1_4.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🏦"
+  },
+  "/images/p_p_new_lesson-39-a2_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_new_lesson-39-a2_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⬇️"
+  },
+  "/images/p_p_new_lesson-39-a2_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "➡️"
+  },
+  "/images/p_p_new_lesson-39-a2_3.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⬇️"
+  },
+  "/images/p_p_new_lesson-39-a2_4.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_new_lesson-39-a3_0.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🎫"
+  },
+  "/images/p_p_new_lesson-39-a3_1.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚉"
+  },
+  "/images/p_p_new_lesson-39-a3_2.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🗺️"
+  },
+  "/images/p_p_new_lesson-39-a3_3.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🎫"
+  },
+  "/images/p_p_new_lesson-39-a3_4.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🚉"
+  },
+  "/images/p_p_new_lesson-39-a4_0.svg": {
+    "color": "#F0C987",
+    "emoji": "🚗"
+  },
+  "/images/p_p_new_lesson-39-a4_1.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🚆"
+  },
+  "/images/p_p_new_lesson-39-a4_2.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🚌"
+  },
+  "/images/p_p_new_lesson-39-a4_3.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🚗"
+  },
+  "/images/p_p_new_lesson-39-a4_4.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🚆"
+  },
+  "/images/p_p_new_lesson-39-a5_0.svg": {
+    "color": "#FFDFBA",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_new_lesson-39-a5_1.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⬅️"
+  },
+  "/images/p_p_new_lesson-39-a5_2.svg": {
+    "color": "#BAFFC9",
+    "emoji": "➡️"
+  },
+  "/images/p_p_new_lesson-39-a5_3.svg": {
+    "color": "#BAE1FF",
+    "emoji": "➡️"
+  },
+  "/images/p_p_new_lesson-39-a5_4.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⬅️"
+  },
+  "/images/p_p_new_lesson-44-a1_0.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👟"
+  },
+  "/images/p_p_new_lesson-44-a1_1.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👒"
+  },
+  "/images/p_p_new_lesson-44-a1_2.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👜"
+  },
+  "/images/p_p_new_lesson-44-a1_3.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👟"
+  },
+  "/images/p_p_new_lesson-44-a1_4.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👜"
+  },
+  "/images/p_p_new_lesson-44-a2_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👗"
+  },
+  "/images/p_p_new_lesson-44-a2_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🧦"
+  },
+  "/images/p_p_new_lesson-44-a2_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👗"
+  },
+  "/images/p_p_new_lesson-44-a2_3.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👚"
+  },
+  "/images/p_p_new_lesson-44-a2_4.svg": {
+    "color": "#F0C987",
+    "emoji": "🚫"
+  },
+  "/images/p_p_new_lesson-44-a3_0.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👕"
+  },
+  "/images/p_p_new_lesson-44-a3_1.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_new_lesson-44-a3_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "💇‍♀️"
+  },
+  "/images/p_p_new_lesson-44-a3_3.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🦯"
+  },
+  "/images/p_p_new_lesson-44-a3_4.svg": {
+    "color": "#FFDFBA",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_new_lesson-44-a4_0.svg": {
+    "color": "#FFFFBA",
+    "emoji": "✂️"
+  },
+  "/images/p_p_new_lesson-44-a4_1.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👜"
+  },
+  "/images/p_p_new_lesson-44-a4_2.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👟"
+  },
+  "/images/p_p_new_lesson-44-a4_3.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🏋️"
+  },
+  "/images/p_p_new_lesson-44-a4_4.svg": {
+    "color": "#FFBAF2",
+    "emoji": "☁️"
+  },
+  "/images/p_p_new_lesson-44-a5_0.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🥇"
+  },
+  "/images/p_p_new_lesson-44-a5_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💍"
+  },
+  "/images/p_p_new_lesson-44-a5_2.svg": {
+    "color": "#F0C987",
+    "emoji": "💎"
+  },
+  "/images/p_p_new_lesson-44-a5_3.svg": {
+    "color": "#FFC4E1",
+    "emoji": "✨"
+  },
+  "/images/p_p_new_lesson-44-a5_4.svg": {
+    "color": "#DCD3FF",
+    "emoji": "💎"
+  },
+  "/images/p_p_new_lesson-49-a1_0.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👴"
+  },
+  "/images/p_p_new_lesson-49-a1_1.svg": {
+    "color": "#F0C987",
+    "emoji": "❤️"
+  },
+  "/images/p_p_new_lesson-49-a1_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👨"
+  },
+  "/images/p_p_new_lesson-49-a1_3.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🏡"
+  },
+  "/images/p_p_new_lesson-49-a1_4.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👵"
+  },
+  "/images/p_p_new_lesson-49-a2_0.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👩‍❤️‍👨"
+  },
+  "/images/p_p_new_lesson-49-a2_1.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👦"
+  },
+  "/images/p_p_new_lesson-49-a2_2.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👶"
+  },
+  "/images/p_p_new_lesson-49-a2_3.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👩"
+  },
+  "/images/p_p_new_lesson-49-a2_4.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🎁"
+  },
+  "/images/p_p_new_lesson-49-a3_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "✨"
+  },
+  "/images/p_p_new_lesson-49-a3_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "✨"
+  },
+  "/images/p_p_new_lesson-49-a3_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🥰"
+  },
+  "/images/p_p_new_lesson-49-a3_3.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😍"
+  },
+  "/images/p_p_new_lesson-49-a3_4.svg": {
+    "color": "#F0C987",
+    "emoji": "🚗"
+  },
+  "/images/p_p_new_lesson-49-a4_0.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🧍"
+  },
+  "/images/p_p_new_lesson-49-a4_1.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🐈"
+  },
+  "/images/p_p_new_lesson-49-a4_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "📏"
+  },
+  "/images/p_p_new_lesson-49-a4_3.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_new_lesson-49-a4_4.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🐷"
+  },
+  "/images/p_p_new_lesson-49-a5_0.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🧍‍♀️"
+  },
+  "/images/p_p_new_lesson-49-a5_1.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🐕"
+  },
+  "/images/p_p_new_lesson-49-a5_2.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🧠"
+  },
+  "/images/p_p_new_lesson-49-a5_3.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💡"
+  },
+  "/images/p_p_new_lesson-49-a5_4.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🌟"
+  },
+  "/images/p_p_new_lesson-54-a1_0.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💊"
+  },
+  "/images/p_p_new_lesson-54-a1_1.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🧑‍⚕️"
+  },
+  "/images/p_p_new_lesson-54-a1_2.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⚕️"
+  },
+  "/images/p_p_new_lesson-54-a1_3.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🧑‍⚕️"
+  },
+  "/images/p_p_new_lesson-54-a1_4.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💊"
+  },
+  "/images/p_p_new_lesson-54-a2_0.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤕"
+  },
+  "/images/p_p_new_lesson-54-a2_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🌡️"
+  },
+  "/images/p_p_new_lesson-54-a2_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🤧"
+  },
+  "/images/p_p_new_lesson-54-a2_3.svg": {
+    "color": "#F0C987",
+    "emoji": "😊"
+  },
+  "/images/p_p_new_lesson-54-a2_4.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😣"
+  },
+  "/images/p_p_new_lesson-54-a3_0.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😊"
+  },
+  "/images/p_p_new_lesson-54-a3_1.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😌"
+  },
+  "/images/p_p_new_lesson-54-a3_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😨"
+  },
+  "/images/p_p_new_lesson-54-a3_3.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😡"
+  },
+  "/images/p_p_new_lesson-54-a3_4.svg": {
+    "color": "#FFFFBA",
+    "emoji": "😌"
+  },
+  "/images/p_p_new_lesson-54-a4_0.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😋"
+  },
+  "/images/p_p_new_lesson-54-a4_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😴"
+  },
+  "/images/p_p_new_lesson-54-a4_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🥤"
+  },
+  "/images/p_p_new_lesson-54-a4_3.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🛌"
+  },
+  "/images/p_p_new_lesson-54-a4_4.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😌"
+  },
+  "/images/p_p_new_lesson-54-a5_0.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😊"
+  },
+  "/images/p_p_new_lesson-54-a5_1.svg": {
+    "color": "#F0C987",
+    "emoji": "😭"
+  },
+  "/images/p_p_new_lesson-54-a5_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😂"
+  },
+  "/images/p_p_new_lesson-54-a5_3.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😌"
+  },
+  "/images/p_p_new_lesson-54-a5_4.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😄"
+  },
+  "/images/p_p_new_not_old.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🆕"
+  },
+  "/images/p_p_new_shirt.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👕"
+  },
+  "/images/p_p_nine_baht.svg": {
+    "color": "#FFFFBA",
+    "emoji": "9️⃣"
+  },
+  "/images/p_p_no_beer.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🙅"
+  },
+  "/images/p_p_no_f.svg": {
+    "color": "#E3F4BA",
+    "emoji": "❌"
+  },
+  "/images/p_p_no_m.svg": {
+    "color": "#B8F2E6",
+    "emoji": "❌"
+  },
+  "/images/p_p_no_money.svg": {
+    "color": "#FFBAF2",
+    "emoji": "💸"
+  },
+  "/images/p_p_no_rain.svg": {
+    "color": "#FFDFBA",
+    "emoji": "☀️"
+  },
+  "/images/p_p_no_wallet.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚫"
+  },
+  "/images/p_p_non_ton_bai.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😴"
+  },
+  "/images/p_p_nong_puay.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🤒"
+  },
+  "/images/p_p_not_afraid.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💪"
+  },
+  "/images/p_p_not_big.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤏"
+  },
+  "/images/p_p_not_eat.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚫"
+  },
+  "/images/p_p_not_eat_meat.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🥦"
+  },
+  "/images/p_p_not_expensive.svg": {
+    "color": "#E3F4BA",
+    "emoji": "📉"
+  },
+  "/images/p_p_not_fat.svg": {
+    "color": "#FFFFBA",
+    "emoji": "📏"
+  },
+  "/images/p_p_not_fun.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🙄"
+  },
+  "/images/p_p_not_like.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👎"
+  },
+  "/images/p_p_not_spicy.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🙅"
+  },
+  "/images/p_p_not_stupid.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💡"
+  },
+  "/images/p_p_not_sure_f.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🤷‍♀️"
+  },
+  "/images/p_p_not_sure_m.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🤷‍♂️"
+  },
+  "/images/p_p_not_sweet.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🙅"
+  },
+  "/images/p_p_not_understand.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🤷‍♀️"
+  },
+  "/images/p_p_not_understand_well.svg": {
+    "color": "#D5BAFF",
+    "emoji": "😕"
+  },
+  "/images/p_p_not_want.svg": {
+    "color": "#F0C987",
+    "emoji": "🙅‍♀️"
+  },
+  "/images/p_p_not_work.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🚫💼"
+  },
+  "/images/p_p_num_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "0️⃣"
+  },
+  "/images/p_p_num_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "1️⃣"
+  },
+  "/images/p_p_num_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "2️⃣"
+  },
+  "/images/p_p_num_3.svg": {
+    "color": "#FFFFBA",
+    "emoji": "3️⃣"
+  },
+  "/images/p_p_num_4.svg": {
+    "color": "#BAFFC9",
+    "emoji": "4️⃣"
+  },
+  "/images/p_p_num_5.svg": {
+    "color": "#BAE1FF",
+    "emoji": "5️⃣"
+  },
+  "/images/p_p_old_car.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚗"
+  },
+  "/images/p_p_old_white_bag.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👜"
+  },
+  "/images/p_p_on_table.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_one_chair.svg": {
+    "color": "#FFDFBA",
+    "emoji": "1️⃣"
+  },
+  "/images/p_p_one_child.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🧒"
+  },
+  "/images/p_p_one_hundred.svg": {
+    "color": "#FFC4E1",
+    "emoji": "💯"
+  },
+  "/images/p_p_one_more_time.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🔁"
+  },
+  "/images/p_p_one_thousand.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🔢"
+  },
+  "/images/p_p_open_door.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🚪"
+  },
+  "/images/p_p_order_pork.svg": {
+    "color": "#F0C987",
+    "emoji": "🍖"
+  },
+  "/images/p_p_paa_pai_baan.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🏡"
+  },
+  "/images/p_p_pant_yellow.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👖"
+  },
+  "/images/p_p_park_beautiful.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🌳"
+  },
+  "/images/p_p_passenger_wait_plane.svg": {
+    "color": "#FFDFBA",
+    "emoji": "✈️"
+  },
+  "/images/p_p_passport_where.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🛂"
+  },
+  "/images/p_p_pay_card_can.svg": {
+    "color": "#B8F2E6",
+    "emoji": "💳"
+  },
+  "/images/p_p_pay_money.svg": {
+    "color": "#FFBAF2",
+    "emoji": "💸"
+  },
+  "/images/p_p_phak_kon_mai.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😴"
+  },
+  "/images/p_p_pharmacy_where.svg": {
+    "color": "#BEEBE9",
+    "emoji": "❓"
+  },
+  "/images/p_p_phom_mot_raeng.svg": {
+    "color": "#F0C987",
+    "emoji": "🔋"
+  },
+  "/images/p_p_phom_phit_wang_mak.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😞"
+  },
+  "/images/p_p_phuchai_kae.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👴"
+  },
+  "/images/p_p_pink_shoes.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👟"
+  },
+  "/images/p_p_piu_si_khao.svg": {
+    "color": "#B8F2E6",
+    "emoji": "✋"
+  },
+  "/images/p_p_plane_ticket.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🎫"
+  },
+  "/images/p_p_play_well.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🏆"
+  },
+  "/images/p_p_play_what.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🎮"
+  },
+  "/images/p_p_please_answer.svg": {
+    "color": "#DCD3FF",
+    "emoji": "💬"
+  },
+  "/images/p_p_please_f.svg": {
+    "color": "#F0C987",
+    "emoji": "🙏"
+  },
+  "/images/p_p_please_help.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🙏"
+  },
+  "/images/p_p_please_m.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🙏"
+  },
+  "/images/p_p_please_open_window.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🙏"
+  },
+  "/images/p_p_please_tell.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🗣️"
+  },
+  "/images/p_p_pork_delicious.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🍖"
+  },
+  "/images/p_p_price_how_much.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💰"
+  },
+  "/images/p_p_purple_hat.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🎩"
+  },
+  "/images/p_p_put_shirt.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👕"
+  },
+  "/images/p_p_rain_falls.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🌧️"
+  },
+  "/images/p_p_rain_much.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🌧️"
+  },
+  "/images/p_p_read_book.svg": {
+    "color": "#F0C987",
+    "emoji": "📚"
+  },
+  "/images/p_p_read_good.svg": {
+    "color": "#FFB3BA",
+    "emoji": "📚"
+  },
+  "/images/p_p_read_what.svg": {
+    "color": "#BEEBE9",
+    "emoji": "📖"
+  },
+  "/images/p_p_red_cap.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🧢"
+  },
+  "/images/p_p_red_mouth.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💋"
+  },
+  "/images/p_p_request_crab.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🦀"
+  },
+  "/images/p_p_return_home.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🏡"
+  },
+  "/images/p_p_ride_car.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🚗"
+  },
+  "/images/p_p_riip_pai.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💨"
+  },
+  "/images/p_p_ro_naan_mai.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⏳"
+  },
+  "/images/p_p_ro_sakphak.svg": {
+    "color": "#FFFFBA",
+    "emoji": "✋"
+  },
+  "/images/p_p_ro_taeksi.svg": {
+    "color": "#F0C987",
+    "emoji": "⏳"
+  },
+  "/images/p_p_rot_tu_yu_thinai.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🚐"
+  },
+  "/images/p_p_round_table.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🟠"
+  },
+  "/images/p_p_run_home.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🏃"
+  },
+  "/images/p_p_salty.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧂"
+  },
+  "/images/p_p_salty_meat.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧂"
+  },
+  "/images/p_p_saturday.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🛋️"
+  },
+  "/images/p_p_school_big.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🏫"
+  },
+  "/images/p_p_see_you_monday.svg": {
+    "color": "#F0C987",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_see_you_tomorrow.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👋"
+  },
+  "/images/p_p_see_you_tuesday.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👋"
+  },
+  "/images/p_p_sell_pants.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👖"
+  },
+  "/images/p_p_sell_what.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🛍️"
+  },
+  "/images/p_p_she_short.svg": {
+    "color": "#BEEBE9",
+    "emoji": "⬇️"
+  },
+  "/images/p_p_shirt_big.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👕"
+  },
+  "/images/p_p_shirt_fits.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👕"
+  },
+  "/images/p_p_shoes_beautiful.svg": {
+    "color": "#F0C987",
+    "emoji": "👟"
+  },
+  "/images/p_p_shop_expensive.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💸"
+  },
+  "/images/p_p_sii_sapdaa.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_sit_here.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🪑"
+  },
+  "/images/p_p_skirt_long.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👗"
+  },
+  "/images/p_p_skirt_pattern.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👗"
+  },
+  "/images/p_p_sleep_night.svg": {
+    "color": "#F0C987",
+    "emoji": "😴"
+  },
+  "/images/p_p_sleep_on_bed.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😴"
+  },
+  "/images/p_p_sleep_room.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🛌"
+  },
+  "/images/p_p_small_car.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🚗"
+  },
+  "/images/p_p_small_house.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🏠"
+  },
+  "/images/p_p_snowing.svg": {
+    "color": "#BAFFC9",
+    "emoji": "❄️"
+  },
+  "/images/p_p_socks_short.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🧦"
+  },
+  "/images/p_p_sometimes_not_like.svg": {
+    "color": "#F0C987",
+    "emoji": "🤷‍♀️"
+  },
+  "/images/p_p_sore_throat.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😫"
+  },
+  "/images/p_p_sorry_f.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🙏"
+  },
+  "/images/p_p_sorry_m.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🙏"
+  },
+  "/images/p_p_sour.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🍋"
+  },
+  "/images/p_p_speak_again.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🔁"
+  },
+  "/images/p_p_speak_little.svg": {
+    "color": "#F0C987",
+    "emoji": "🗣️"
+  },
+  "/images/p_p_speak_slowly.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🐢"
+  },
+  "/images/p_p_speak_thai_little.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🗣️"
+  },
+  "/images/p_p_speak_what.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🗣️"
+  },
+  "/images/p_p_speak_where.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🗺️"
+  },
+  "/images/p_p_special_menu.svg": {
+    "color": "#FFB3BA",
+    "emoji": "✨"
+  },
+  "/images/p_p_spicy_chicken.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🌶️"
+  },
+  "/images/p_p_spicy_m.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🌶️"
+  },
+  "/images/p_p_spicy_squid.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🌶️"
+  },
+  "/images/p_p_stomach_ache.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🤢"
+  },
+  "/images/p_p_stomach_ache_very.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🤢"
+  },
+  "/images/p_p_stop_here.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🛑"
+  },
+  "/images/p_p_strong_lightning.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⚡"
+  },
+  "/images/p_p_strong_wind.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🌬️"
+  },
+  "/images/p_p_student_learn.svg": {
+    "color": "#FFBAF2",
+    "emoji": "📚"
+  },
+  "/images/p_p_suea_na.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧥"
+  },
+  "/images/p_p_sun_out.svg": {
+    "color": "#FFFFBA",
+    "emoji": "☀️"
+  },
+  "/images/p_p_sunday.svg": {
+    "color": "#FFBAF2",
+    "emoji": "😴"
+  },
+  "/images/p_p_sweet_snack_delicious.svg": {
+    "color": "#F0C987",
+    "emoji": "😋"
+  },
+  "/images/p_p_take_boat.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🛥️"
+  },
+  "/images/p_p_take_bus.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🚌"
+  },
+  "/images/p_p_take_off_socks.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🧦"
+  },
+  "/images/p_p_tall_friend.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🤝"
+  },
+  "/images/p_p_tea_with_milk.svg": {
+    "color": "#FFFFBA",
+    "emoji": "☕"
+  },
+  "/images/p_p_ten_minutes.svg": {
+    "color": "#B8F2E6",
+    "emoji": "⏱️"
+  },
+  "/images/p_p_ten_thousand.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🔢"
+  },
+  "/images/p_p_tham_mai_khun_ngut_ngit.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😩"
+  },
+  "/images/p_p_tham_mai_khun_rong_hai.svg": {
+    "color": "#FFFFBA",
+    "emoji": "😭"
+  },
+  "/images/p_p_thammai_tong_klua.svg": {
+    "color": "#FFB3BA",
+    "emoji": "❓"
+  },
+  "/images/p_p_thanks_f.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🙏"
+  },
+  "/images/p_p_thanks_m.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🙏"
+  },
+  "/images/p_p_they_go.svg": {
+    "color": "#DCD3FF",
+    "emoji": "➡️"
+  },
+  "/images/p_p_thirty_years_old.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🎂"
+  },
+  "/images/p_p_this_morning.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🌅"
+  },
+  "/images/p_p_this_person_is_kind.svg": {
+    "color": "#F0C987",
+    "emoji": "🤗"
+  },
+  "/images/p_p_this_shop_is_cheap.svg": {
+    "color": "#FFC4E1",
+    "emoji": "📉"
+  },
+  "/images/p_p_three_chairs.svg": {
+    "color": "#DCD3FF",
+    "emoji": "3️⃣"
+  },
+  "/images/p_p_three_children.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👶"
+  },
+  "/images/p_p_thuk_wan.svg": {
+    "color": "#E3F4BA",
+    "emoji": "☀️"
+  },
+  "/images/p_p_thursday.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_ticket_expensive.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💰"
+  },
+  "/images/p_p_today.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_tomorrow.svg": {
+    "color": "#D5BAFF",
+    "emoji": "➡️"
+  },
+  "/images/p_p_toothache.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😫"
+  },
+  "/images/p_p_train_good.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👍"
+  },
+  "/images/p_p_train_station.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🚉"
+  },
+  "/images/p_p_try_black_hat.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🎩"
+  },
+  "/images/p_p_tuesday.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_turn_left.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⬅️"
+  },
+  "/images/p_p_turn_left_here.svg": {
+    "color": "#F0C987",
+    "emoji": "⬅️"
+  },
+  "/images/p_p_turn_right.svg": {
+    "color": "#BEEBE9",
+    "emoji": "➡️"
+  },
+  "/images/p_p_turn_straight.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⬆️"
+  },
+  "/images/p_p_twenty.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🔢"
+  },
+  "/images/p_p_twenty_one.svg": {
+    "color": "#F0C987",
+    "emoji": "🔢"
+  },
+  "/images/p_p_two_hours.svg": {
+    "color": "#FFBAF2",
+    "emoji": "⏰"
+  },
+  "/images/p_p_two_older_siblings.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👬"
+  },
+  "/images/p_p_two_tables.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🍽️"
+  },
+  "/images/p_p_two_tickets.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🎟️"
+  },
+  "/images/p_p_u_turn.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🔄"
+  },
+  "/images/p_p_understand_q.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤔"
+  },
+  "/images/p_p_use_umbrella.svg": {
+    "color": "#FFFFBA",
+    "emoji": "☂️"
+  },
+  "/images/p_p_vegetarian.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🥗"
+  },
+  "/images/p_p_very_beautiful.svg": {
+    "color": "#BAFFC9",
+    "emoji": "✨"
+  },
+  "/images/p_p_very_cold.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🥶"
+  },
+  "/images/p_p_very_delicious.svg": {
+    "color": "#FFBAF2",
+    "emoji": "😋"
+  },
+  "/images/p_p_very_expensive.svg": {
+    "color": "#FFB3BA",
+    "emoji": "💸"
+  },
+  "/images/p_p_very_good.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🌟"
+  },
+  "/images/p_p_very_hot.svg": {
+    "color": "#BAFFC9",
+    "emoji": "☀️"
+  },
+  "/images/p_p_very_hungry.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😩"
+  },
+  "/images/p_p_very_important.svg": {
+    "color": "#DCD3FF",
+    "emoji": "‼️"
+  },
+  "/images/p_p_very_sweet.svg": {
+    "color": "#F0C987",
+    "emoji": "🍬"
+  },
+  "/images/p_p_very_thin.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🧍‍♀️"
+  },
+  "/images/p_p_very_tight_shoes.svg": {
+    "color": "#F0C987",
+    "emoji": "👞"
+  },
+  "/images/p_p_very_tired.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😴"
+  },
+  "/images/p_p_wait_10_seconds.svg": {
+    "color": "#DCD3FF",
+    "emoji": "✋"
+  },
+  "/images/p_p_walk_on_bridge.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🌉"
+  },
+  "/images/p_p_walk_where.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🚶‍♀️"
+  },
+  "/images/p_p_wallet_expensive.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💰"
+  },
+  "/images/p_p_want_beef.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🥩"
+  },
+  "/images/p_p_want_black.svg": {
+    "color": "#F0C987",
+    "emoji": "⬛"
+  },
+  "/images/p_p_want_coffee_m.svg": {
+    "color": "#BAE1FF",
+    "emoji": "☕"
+  },
+  "/images/p_p_want_eat.svg": {
+    "color": "#FFFFBA",
+    "emoji": "😋"
+  },
+  "/images/p_p_want_eat_fruit.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🍎"
+  },
+  "/images/p_p_want_fish.svg": {
+    "color": "#F0C987",
+    "emoji": "🐟"
+  },
+  "/images/p_p_want_hat.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🧢"
+  },
+  "/images/p_p_want_ice_please.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🧊"
+  },
+  "/images/p_p_want_order_what.svg": {
+    "color": "#E3F4BA",
+    "emoji": "❓"
+  },
+  "/images/p_p_want_red.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🟥"
+  },
+  "/images/p_p_want_sell.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🛍️"
+  },
+  "/images/p_p_want_shoes.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👟"
+  },
+  "/images/p_p_want_shrimp.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🦐"
+  },
+  "/images/p_p_want_sleep.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😴"
+  },
+  "/images/p_p_want_tea_f.svg": {
+    "color": "#D5BAFF",
+    "emoji": "☕"
+  },
+  "/images/p_p_want_to_go_f.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🚶‍♀️"
+  },
+  "/images/p_p_want_water.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💧"
+  },
+  "/images/p_p_wash_hand.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🧼"
+  },
+  "/images/p_p_wash_socks.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧼"
+  },
+  "/images/p_p_watch_film.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🎬"
+  },
+  "/images/p_p_watch_film_f.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🎬"
+  },
+  "/images/p_p_we_are_good.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👍"
+  },
+  "/images/p_p_wear_black_belt.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🎗️"
+  },
+  "/images/p_p_weather_good.svg": {
+    "color": "#B8F2E6",
+    "emoji": "☀️"
+  },
+  "/images/p_p_wednesday.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🗓️"
+  },
+  "/images/p_p_weigh_bag.svg": {
+    "color": "#F0C987",
+    "emoji": "⚖️"
+  },
+  "/images/p_p_weight_how_much.svg": {
+    "color": "#B8F2E6",
+    "emoji": "⚖️"
+  },
+  "/images/p_p_went_yesterday.svg": {
+    "color": "#B8F2E6",
+    "emoji": "⏪"
+  },
+  "/images/p_p_what_are_you_doing.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤷"
+  },
+  "/images/p_p_what_book.svg": {
+    "color": "#FFDFBA",
+    "emoji": "📚"
+  },
+  "/images/p_p_what_color.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🌈"
+  },
+  "/images/p_p_what_is_it.svg": {
+    "color": "#DCD3FF",
+    "emoji": "❓"
+  },
+  "/images/p_p_what_symptoms.svg": {
+    "color": "#E3F4BA",
+    "emoji": "❓"
+  },
+  "/images/p_p_what_time.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⏰"
+  },
+  "/images/p_p_what_time_go.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⏰"
+  },
+  "/images/p_p_what_time_is_it.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⏰"
+  },
+  "/images/p_p_where_bank.svg": {
+    "color": "#FFFFBA",
+    "emoji": "❓"
+  },
+  "/images/p_p_where_bathroom.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🚽"
+  },
+  "/images/p_p_where_bus.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🚌"
+  },
+  "/images/p_p_where_friend.svg": {
+    "color": "#D5BAFF",
+    "emoji": "❓"
+  },
+  "/images/p_p_where_go.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🗺️"
+  },
+  "/images/p_p_where_hospital.svg": {
+    "color": "#FFDFBA",
+    "emoji": "❓"
+  },
+  "/images/p_p_where_hotel.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🏨"
+  },
+  "/images/p_p_where_is_dad.svg": {
+    "color": "#B8F2E6",
+    "emoji": "📍"
+  },
+  "/images/p_p_where_is_it.svg": {
+    "color": "#FFC4E1",
+    "emoji": "📍"
+  },
+  "/images/p_p_where_sleep.svg": {
+    "color": "#FFBAF2",
+    "emoji": "❓"
+  },
+  "/images/p_p_where_station.svg": {
+    "color": "#BAFFC9",
+    "emoji": "❓"
+  },
+  "/images/p_p_where_street.svg": {
+    "color": "#E3F4BA",
+    "emoji": "📍"
+  },
+  "/images/p_p_which_hotel.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🏨"
+  },
+  "/images/p_p_which_one_do_you_choose.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👆"
+  },
+  "/images/p_p_which_platform.svg": {
+    "color": "#BEEBE9",
+    "emoji": "❓"
+  },
+  "/images/p_p_who_forgot.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💭"
+  },
+  "/images/p_p_who_is_this.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🤔"
+  },
+  "/images/p_p_why_is_he_surprised.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😲"
+  },
+  "/images/p_p_wind_strong.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💨"
+  },
+  "/images/p_p_wing_rew.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🏃"
+  },
+  "/images/p_p_winter_cold.svg": {
+    "color": "#BEEBE9",
+    "emoji": "☃️"
+  },
+  "/images/p_p_work_monday.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💼"
+  },
+  "/images/p_p_work_morning.svg": {
+    "color": "#B8F2E6",
+    "emoji": "💼"
+  },
+  "/images/p_p_work_much.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🥵"
+  },
+  "/images/p_p_work_normally.svg": {
+    "color": "#FFC4E1",
+    "emoji": "💼"
+  },
+  "/images/p_p_write_book.svg": {
+    "color": "#BEEBE9",
+    "emoji": "✍️"
+  },
+  "/images/p_p_write_name.svg": {
+    "color": "#FFB3BA",
+    "emoji": "✍️"
+  },
+  "/images/p_p_ya_mo_ho.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🙅‍♀️"
+  },
+  "/images/p_p_ya_tham_na_bueng.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🙅‍♀️"
+  },
+  "/images/p_p_yaai_jai_dee.svg": {
+    "color": "#F0C987",
+    "emoji": "👵"
+  },
+  "/images/p_p_yak_non_lap.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🛌"
+  },
+  "/images/p_p_yellow_pants.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👖"
+  },
+  "/images/p_p_yellow_shirt.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👕"
+  },
+  "/images/p_p_yes.svg": {
+    "color": "#BAE1FF",
+    "emoji": "✅"
+  },
+  "/images/p_p_yes_f.svg": {
+    "color": "#FFBAF2",
+    "emoji": "✅"
+  },
+  "/images/p_p_yesterday.svg": {
+    "color": "#FFBAF2",
+    "emoji": "⬅️"
+  },
+  "/images/p_p_yesterday_good.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👍"
+  },
+  "/images/p_p_yut_thi_ni.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🛑"
+  },
+  "/images/p_p_yuu_thaang_khwaa.svg": {
+    "color": "#BAE1FF",
+    "emoji": "➡️"
+  },
+  "/images/question_word.svg": {
+    "color": "#FFBAF2",
+    "emoji": "❓"
+  },
+  "/images/sabai_word.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😌"
+  },
+  "/images/thanks_word.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🙏"
+  },
+  "/images/time.svg": {
+    "color": "#FFBAF2",
+    "emoji": "⏰"
+  },
+  "/images/travel.svg": {
+    "color": "#BAE1FF",
+    "emoji": "✈️"
+  },
+  "/images/w_w_0.svg": {
+    "color": "#B8F2E6",
+    "emoji": "0️⃣"
+  },
+  "/images/w_w_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "1️⃣"
+  },
+  "/images/w_w_10.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🔟"
+  },
+  "/images/w_w_2.svg": {
+    "color": "#F0C987",
+    "emoji": "2️⃣"
+  },
+  "/images/w_w_3.svg": {
+    "color": "#FFC4E1",
+    "emoji": "3️⃣"
+  },
+  "/images/w_w_4.svg": {
+    "color": "#DCD3FF",
+    "emoji": "4️⃣"
+  },
+  "/images/w_w_5.svg": {
+    "color": "#BEEBE9",
+    "emoji": "5️⃣"
+  },
+  "/images/w_w_6.svg": {
+    "color": "#FFB3BA",
+    "emoji": "6️⃣"
+  },
+  "/images/w_w_7.svg": {
+    "color": "#FFDFBA",
+    "emoji": "7️⃣"
+  },
+  "/images/w_w_8.svg": {
+    "color": "#FFFFBA",
+    "emoji": "8️⃣"
+  },
+  "/images/w_w_9.svg": {
+    "color": "#BAFFC9",
+    "emoji": "9️⃣"
+  },
+  "/images/w_w_aa.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🧔"
+  },
+  "/images/w_w_aa_rom.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😐"
+  },
+  "/images/w_w_aakan.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🤒"
+  },
+  "/images/w_w_aan.svg": {
+    "color": "#B8F2E6",
+    "emoji": "📖"
+  },
+  "/images/w_w_aat_ja.svg": {
+    "color": "#DCD3FF",
+    "emoji": "❓"
+  },
+  "/images/w_w_aayu.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🎂"
+  },
+  "/images/w_w_akat.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🌤️"
+  },
+  "/images/w_w_an_nai.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👆"
+  },
+  "/images/w_w_angkhan.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_angkrit.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🇬🇧"
+  },
+  "/images/w_w_answer_noun.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💬"
+  },
+  "/images/w_w_answer_verb.svg": {
+    "color": "#FFBAF2",
+    "emoji": "💬"
+  },
+  "/images/w_w_ao.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🙋"
+  },
+  "/images/w_w_arai.svg": {
+    "color": "#BAE1FF",
+    "emoji": "❓"
+  },
+  "/images/w_w_aroi.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😋"
+  },
+  "/images/w_w_ask.svg": {
+    "color": "#D5BAFF",
+    "emoji": "❓"
+  },
+  "/images/w_w_at_ja.svg": {
+    "color": "#FFBAF2",
+    "emoji": "❓"
+  },
+  "/images/w_w_athit.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_ay.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🤧"
+  },
+  "/images/w_w_baan.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🏠"
+  },
+  "/images/w_w_baat_jep.svg": {
+    "color": "#F0C987",
+    "emoji": "🩹"
+  },
+  "/images/w_w_backpack.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🎒"
+  },
+  "/images/w_w_baen.svg": {
+    "color": "#DCD3FF",
+    "emoji": "➖"
+  },
+  "/images/w_w_bag_sack.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🛍️"
+  },
+  "/images/w_w_baht.svg": {
+    "color": "#F0C987",
+    "emoji": "🪙"
+  },
+  "/images/w_w_bai.svg": {
+    "color": "#FFDFBA",
+    "emoji": "☀️"
+  },
+  "/images/w_w_bai_class.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🏷️"
+  },
+  "/images/w_w_bang.svg": {
+    "color": "#B8F2E6",
+    "emoji": "📄"
+  },
+  "/images/w_w_bang_thi.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤷‍♀️"
+  },
+  "/images/w_w_bao.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🎈"
+  },
+  "/images/w_w_bat.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💳"
+  },
+  "/images/w_w_bia.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🍺"
+  },
+  "/images/w_w_bin.svg": {
+    "color": "#BAFFC9",
+    "emoji": "✈️"
+  },
+  "/images/w_w_board.svg": {
+    "color": "#B8F2E6",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_boi.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🔁"
+  },
+  "/images/w_w_bon.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_bpet.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🦆"
+  },
+  "/images/w_w_bplaa_muek.svg": {
+    "color": "#F0C987",
+    "emoji": "🦑"
+  },
+  "/images/w_w_bpuu.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🦀"
+  },
+  "/images/w_w_bueng.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😒"
+  },
+  "/images/w_w_busy.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🐝"
+  },
+  "/images/w_w_cake.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍰"
+  },
+  "/images/w_w_cap.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧢"
+  },
+  "/images/w_w_cha.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🍵"
+  },
+  "/images/w_w_cha_lent.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🐌"
+  },
+  "/images/w_w_cha_slow.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🐢"
+  },
+  "/images/w_w_chai.svg": {
+    "color": "#BAE1FF",
+    "emoji": "✅"
+  },
+  "/images/w_w_chalaat.svg": {
+    "color": "#FFC4E1",
+    "emoji": "💡"
+  },
+  "/images/w_w_chan.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👩"
+  },
+  "/images/w_w_chang.svg": {
+    "color": "#BAE1FF",
+    "emoji": "⚖️"
+  },
+  "/images/w_w_chao.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🌅"
+  },
+  "/images/w_w_check_bin.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧾"
+  },
+  "/images/w_w_chomphu.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🩷"
+  },
+  "/images/w_w_chop.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👍"
+  },
+  "/images/w_w_chuai.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🆘"
+  },
+  "/images/w_w_chuamong.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⏰"
+  },
+  "/images/w_w_chue.svg": {
+    "color": "#BAFFC9",
+    "emoji": "📛"
+  },
+  "/images/w_w_clinic.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🏥"
+  },
+  "/images/w_w_close.svg": {
+    "color": "#BAFFC9",
+    "emoji": "❌"
+  },
+  "/images/w_w_daai.svg": {
+    "color": "#BEEBE9",
+    "emoji": "✅"
+  },
+  "/images/w_w_daeng.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🔴"
+  },
+  "/images/w_w_daet.svg": {
+    "color": "#BAE1FF",
+    "emoji": "☀️"
+  },
+  "/images/w_w_dai.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💪"
+  },
+  "/images/w_w_dam.svg": {
+    "color": "#FFBAF2",
+    "emoji": "⚫"
+  },
+  "/images/w_w_dang.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🔊"
+  },
+  "/images/w_w_dangerous.svg": {
+    "color": "#BEEBE9",
+    "emoji": "⚠️"
+  },
+  "/images/w_w_decade.svg": {
+    "color": "#F0C987",
+    "emoji": "🔟"
+  },
+  "/images/w_w_dee_jai.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😄"
+  },
+  "/images/w_w_dek.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🧒"
+  },
+  "/images/w_w_dek_2.svg": {
+    "color": "#FFBAF2",
+    "emoji": "👶"
+  },
+  "/images/w_w_diao.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🔜"
+  },
+  "/images/w_w_doen.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🚶"
+  },
+  "/images/w_w_doo.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👀"
+  },
+  "/images/w_w_door.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚪"
+  },
+  "/images/w_w_dto.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🍽️"
+  },
+  "/images/w_w_dtua.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🏷️"
+  },
+  "/images/w_w_du.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👀"
+  },
+  "/images/w_w_duay.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🙏"
+  },
+  "/images/w_w_duay_kan.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤝"
+  },
+  "/images/w_w_duean.svg": {
+    "color": "#FFBAF2",
+    "emoji": "📅"
+  },
+  "/images/w_w_duem.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🥤"
+  },
+  "/images/w_w_duration.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⏳"
+  },
+  "/images/w_w_eek.svg": {
+    "color": "#BAE1FF",
+    "emoji": "➕"
+  },
+  "/images/w_w_et.svg": {
+    "color": "#B8F2E6",
+    "emoji": "1️⃣"
+  },
+  "/images/w_w_exactly.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🎯"
+  },
+  "/images/w_w_examine.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🔎"
+  },
+  "/images/w_w_faa.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🔵"
+  },
+  "/images/w_w_faen.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💑"
+  },
+  "/images/w_w_fai.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🔥"
+  },
+  "/images/w_w_fan.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🦷"
+  },
+  "/images/w_w_fang.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👂"
+  },
+  "/images/w_w_farangset.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🇫🇷"
+  },
+  "/images/w_w_fon.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🌧️"
+  },
+  "/images/w_w_free_empty.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🆓"
+  },
+  "/images/w_w_gamlang.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🔄"
+  },
+  "/images/w_w_gao_ee.svg": {
+    "color": "#F0C987",
+    "emoji": "🪑"
+  },
+  "/images/w_w_gee.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🔢"
+  },
+  "/images/w_w_gep_ngoen.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🧾"
+  },
+  "/images/w_w_get_off.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_glap.svg": {
+    "color": "#FFBAF2",
+    "emoji": "↩️"
+  },
+  "/images/w_w_go.svg": {
+    "color": "#BAFFC9",
+    "emoji": "➕"
+  },
+  "/images/w_w_goon.svg": {
+    "color": "#D5BAFF",
+    "emoji": "☝️"
+  },
+  "/images/w_w_gung.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🦐"
+  },
+  "/images/w_w_ha.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🔎"
+  },
+  "/images/w_w_haai_jai.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🌬️"
+  },
+  "/images/w_w_haeng.svg": {
+    "color": "#FFBAF2",
+    "emoji": "☀️"
+  },
+  "/images/w_w_hai.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🎁"
+  },
+  "/images/w_w_hate.svg": {
+    "color": "#F0C987",
+    "emoji": "😠"
+  },
+  "/images/w_w_hiw.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🍔"
+  },
+  "/images/w_w_hiw_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😋"
+  },
+  "/images/w_w_hiw_nam.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🥵"
+  },
+  "/images/w_w_hong.svg": {
+    "color": "#F0C987",
+    "emoji": "🚪"
+  },
+  "/images/w_w_hong_nam.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🚽"
+  },
+  "/images/w_w_hua.svg": {
+    "color": "#F0C987",
+    "emoji": "👤"
+  },
+  "/images/w_w_hua_ro.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😂"
+  },
+  "/images/w_w_im.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😌"
+  },
+  "/images/w_w_important.svg": {
+    "color": "#BAE1FF",
+    "emoji": "❗"
+  },
+  "/images/w_w_itcha.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😠"
+  },
+  "/images/w_w_jaai.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💸"
+  },
+  "/images/w_w_jai.svg": {
+    "color": "#E3F4BA",
+    "emoji": "❤️"
+  },
+  "/images/w_w_jai_dee.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🥰"
+  },
+  "/images/w_w_jakkayaan.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🚲"
+  },
+  "/images/w_w_jan.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_jep.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🤕"
+  },
+  "/images/w_w_jing.svg": {
+    "color": "#B8F2E6",
+    "emoji": "✅"
+  },
+  "/images/w_w_joegan.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🤝"
+  },
+  "/images/w_w_jot.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🅿️"
+  },
+  "/images/w_w_ka_ru_na.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🙏"
+  },
+  "/images/w_w_kae.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👴"
+  },
+  "/images/w_w_kaew.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🥛"
+  },
+  "/images/w_w_kafae.svg": {
+    "color": "#BAE1FF",
+    "emoji": "☕"
+  },
+  "/images/w_w_kai.svg": {
+    "color": "#F0C987",
+    "emoji": "🐔"
+  },
+  "/images/w_w_kai_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🐔"
+  },
+  "/images/w_w_kang_won.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😟"
+  },
+  "/images/w_w_kangkeng.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👖"
+  },
+  "/images/w_w_kao.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⏳"
+  },
+  "/images/w_w_kap.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🤝"
+  },
+  "/images/w_w_khaam.svg": {
+    "color": "#DCD3FF",
+    "emoji": "↔️"
+  },
+  "/images/w_w_khaeng_raeng.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💪"
+  },
+  "/images/w_w_khai.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🤒"
+  },
+  "/images/w_w_khai_egg.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🥚"
+  },
+  "/images/w_w_khai_fever.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🤒"
+  },
+  "/images/w_w_khai_sell.svg": {
+    "color": "#DCD3FF",
+    "emoji": "💰"
+  },
+  "/images/w_w_khai_sell_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "💰"
+  },
+  "/images/w_w_khanom.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🍬"
+  },
+  "/images/w_w_khao.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🍚"
+  },
+  "/images/w_w_khao_color.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⚪"
+  },
+  "/images/w_w_khao_enter.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🚪"
+  },
+  "/images/w_w_khao_jai.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💡"
+  },
+  "/images/w_w_khao_pron.svg": {
+    "color": "#F0C987",
+    "emoji": "🧑"
+  },
+  "/images/w_w_khap.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🚘"
+  },
+  "/images/w_w_khap_clothe.svg": {
+    "color": "#D5BAFF",
+    "emoji": "😬"
+  },
+  "/images/w_w_khayan.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👷"
+  },
+  "/images/w_w_khayap.svg": {
+    "color": "#F0C987",
+    "emoji": "➡️"
+  },
+  "/images/w_w_khem.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🧂"
+  },
+  "/images/w_w_khemkhat.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🎗️"
+  },
+  "/images/w_w_khi.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🏍️"
+  },
+  "/images/w_w_khian.svg": {
+    "color": "#E3F4BA",
+    "emoji": "✍️"
+  },
+  "/images/w_w_khiao.svg": {
+    "color": "#F0C987",
+    "emoji": "💚"
+  },
+  "/images/w_w_khiikiat.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😴"
+  },
+  "/images/w_w_khit.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤔"
+  },
+  "/images/w_w_khit_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🤔"
+  },
+  "/images/w_w_kho_req.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🙏"
+  },
+  "/images/w_w_kho_thot.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🙇"
+  },
+  "/images/w_w_khoey.svg": {
+    "color": "#BAE1FF",
+    "emoji": "✅"
+  },
+  "/images/w_w_khoi.svg": {
+    "color": "#FFBAF2",
+    "emoji": "✨"
+  },
+  "/images/w_w_khon.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👤"
+  },
+  "/images/w_w_khong_of.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🔗"
+  },
+  "/images/w_w_khong_waan.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🍰"
+  },
+  "/images/w_w_khoo.svg": {
+    "color": "#F0C987",
+    "emoji": "🗣️"
+  },
+  "/images/w_w_khrai.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👤"
+  },
+  "/images/w_w_khrang.svg": {
+    "color": "#B8F2E6",
+    "emoji": "⏰"
+  },
+  "/images/w_w_khrang_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🔁"
+  },
+  "/images/w_w_khriat.svg": {
+    "color": "#F0C987",
+    "emoji": "😩"
+  },
+  "/images/w_w_khrop_khrua.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👨‍👩‍👧‍👦"
+  },
+  "/images/w_w_khru.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧑‍🏫"
+  },
+  "/images/w_w_khrueng.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🌗"
+  },
+  "/images/w_w_khuen.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🌙"
+  },
+  "/images/w_w_khuen_up.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_khun.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👉"
+  },
+  "/images/w_w_khwa.svg": {
+    "color": "#FFDFBA",
+    "emoji": "➡️"
+  },
+  "/images/w_w_ki.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🔢"
+  },
+  "/images/w_w_kilo.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⚖️"
+  },
+  "/images/w_w_kin.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🍴"
+  },
+  "/images/w_w_klai_far.svg": {
+    "color": "#FFBAF2",
+    "emoji": "⛰️"
+  },
+  "/images/w_w_klai_near.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🤏"
+  },
+  "/images/w_w_kliat.svg": {
+    "color": "#FFBAF2",
+    "emoji": "💔"
+  },
+  "/images/w_w_klom.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🟠"
+  },
+  "/images/w_w_klua.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😱"
+  },
+  "/images/w_w_kra_prong.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👗"
+  },
+  "/images/w_w_krapao.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👜"
+  },
+  "/images/w_w_kreng.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👍"
+  },
+  "/images/w_w_krot.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😡"
+  },
+  "/images/w_w_krot_2.svg": {
+    "color": "#BAE1FF",
+    "emoji": "😡"
+  },
+  "/images/w_w_kruang_bin.svg": {
+    "color": "#FFFFBA",
+    "emoji": "✈️"
+  },
+  "/images/w_w_la.svg": {
+    "color": "#D5BAFF",
+    "emoji": "↩️"
+  },
+  "/images/w_w_laew.svg": {
+    "color": "#FFBAF2",
+    "emoji": "➡️"
+  },
+  "/images/w_w_lai.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🎨"
+  },
+  "/images/w_w_lan.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👶"
+  },
+  "/images/w_w_lang.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🧼"
+  },
+  "/images/w_w_lang_back.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧍"
+  },
+  "/images/w_w_lap.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💤"
+  },
+  "/images/w_w_lek.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🐜"
+  },
+  "/images/w_w_len.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🎮"
+  },
+  "/images/w_w_lesson-24-a1_0.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🍎"
+  },
+  "/images/w_w_lesson-24-a1_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🍌"
+  },
+  "/images/w_w_lesson-24-a1_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🍊"
+  },
+  "/images/w_w_lesson-24-a1_3.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🥭"
+  },
+  "/images/w_w_lesson-24-a1_4.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🍉"
+  },
+  "/images/w_w_lesson-24-a2_0.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🍅"
+  },
+  "/images/w_w_lesson-24-a2_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🥒"
+  },
+  "/images/w_w_lesson-24-a2_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🥦"
+  },
+  "/images/w_w_lesson-24-a3_0.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🥄"
+  },
+  "/images/w_w_lesson-24-a3_1.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🍴"
+  },
+  "/images/w_w_lesson-24-a3_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🍽️"
+  },
+  "/images/w_w_lesson-24-a3_3.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🥢"
+  },
+  "/images/w_w_lesson-24-a3_4.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🥣"
+  },
+  "/images/w_w_lesson-24-a4_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🍟"
+  },
+  "/images/w_w_lesson-24-a4_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "♨️"
+  },
+  "/images/w_w_lesson-24-a4_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🔥"
+  },
+  "/images/w_w_lesson-24-a4_3.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🍳"
+  },
+  "/images/w_w_lesson-24-a5_0.svg": {
+    "color": "#F0C987",
+    "emoji": "🍰"
+  },
+  "/images/w_w_lesson-24-a5_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🍜"
+  },
+  "/images/w_w_lesson-24-a5_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🧊"
+  },
+  "/images/w_w_lesson-29-a1_0.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🏃"
+  },
+  "/images/w_w_lesson-29-a1_1.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🚶"
+  },
+  "/images/w_w_lesson-29-a1_2.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🛑"
+  },
+  "/images/w_w_lesson-29-a2_0.svg": {
+    "color": "#FFBAF2",
+    "emoji": "❓"
+  },
+  "/images/w_w_lesson-29-a2_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "💡"
+  },
+  "/images/w_w_lesson-29-a2_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "📖"
+  },
+  "/images/w_w_lesson-29-a3_0.svg": {
+    "color": "#F0C987",
+    "emoji": "🧹"
+  },
+  "/images/w_w_lesson-29-a3_1.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🧼"
+  },
+  "/images/w_w_lesson-29-a3_2.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧑‍🍳"
+  },
+  "/images/w_w_lesson-29-a4_0.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🔓"
+  },
+  "/images/w_w_lesson-29-a4_1.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🔒"
+  },
+  "/images/w_w_lesson-29-a4_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⚙️"
+  },
+  "/images/w_w_lesson-29-a5_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🟢"
+  },
+  "/images/w_w_lesson-29-a5_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🏁"
+  },
+  "/images/w_w_lesson-29-a5_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🔄"
+  },
+  "/images/w_w_lesson-34-a1_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🌬️"
+  },
+  "/images/w_w_lesson-34-a1_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "❄️"
+  },
+  "/images/w_w_lesson-34-a1_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "⛈️"
+  },
+  "/images/w_w_lesson-34-a2_0.svg": {
+    "color": "#BAFFC9",
+    "emoji": "☀️"
+  },
+  "/images/w_w_lesson-34-a2_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "❄️"
+  },
+  "/images/w_w_lesson-34-a2_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🌧️"
+  },
+  "/images/w_w_lesson-34-a3_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "➡️"
+  },
+  "/images/w_w_lesson-34-a3_2.svg": {
+    "color": "#F0C987",
+    "emoji": "⬅️"
+  },
+  "/images/w_w_lesson-34-a4_0.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🌅"
+  },
+  "/images/w_w_lesson-34-a4_1.svg": {
+    "color": "#BEEBE9",
+    "emoji": "☀️"
+  },
+  "/images/w_w_lesson-34-a4_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🌆"
+  },
+  "/images/w_w_lesson-34-a5_0.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⏰"
+  },
+  "/images/w_w_lesson-34-a5_1.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⏰"
+  },
+  "/images/w_w_lesson-34-a5_2.svg": {
+    "color": "#BAE1FF",
+    "emoji": "⏱️"
+  },
+  "/images/w_w_lesson-39-a1_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🏦"
+  },
+  "/images/w_w_lesson-39-a1_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🏥"
+  },
+  "/images/w_w_lesson-39-a1_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🚓"
+  },
+  "/images/w_w_lesson-39-a2_0.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_lesson-39-a2_1.svg": {
+    "color": "#BEEBE9",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_lesson-39-a2_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "➡️"
+  },
+  "/images/w_w_lesson-39-a3_0.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🎟️"
+  },
+  "/images/w_w_lesson-39-a3_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🚉"
+  },
+  "/images/w_w_lesson-39-a3_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🗺️"
+  },
+  "/images/w_w_lesson-39-a4_0.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🚗"
+  },
+  "/images/w_w_lesson-39-a4_2.svg": {
+    "color": "#F0C987",
+    "emoji": "🚌"
+  },
+  "/images/w_w_lesson-39-a5_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_lesson-39-a5_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⬅️"
+  },
+  "/images/w_w_lesson-39-a5_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "➡️"
+  },
+  "/images/w_w_lesson-44-a1_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👟"
+  },
+  "/images/w_w_lesson-44-a1_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🧢"
+  },
+  "/images/w_w_lesson-44-a1_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👜"
+  },
+  "/images/w_w_lesson-44-a2_0.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👗"
+  },
+  "/images/w_w_lesson-44-a2_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👗"
+  },
+  "/images/w_w_lesson-44-a2_2.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🧦"
+  },
+  "/images/w_w_lesson-44-a3_0.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_lesson-44-a3_1.svg": {
+    "color": "#FFBAF2",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_lesson-44-a3_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "↔️"
+  },
+  "/images/w_w_lesson-44-a4_0.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤏"
+  },
+  "/images/w_w_lesson-44-a4_1.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🏋️"
+  },
+  "/images/w_w_lesson-44-a4_2.svg": {
+    "color": "#DCD3FF",
+    "emoji": "☁️"
+  },
+  "/images/w_w_lesson-44-a5_0.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🥇"
+  },
+  "/images/w_w_lesson-44-a5_1.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🥈"
+  },
+  "/images/w_w_lesson-44-a5_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💎"
+  },
+  "/images/w_w_lesson-49-a1_0.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👴"
+  },
+  "/images/w_w_lesson-49-a1_1.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👵"
+  },
+  "/images/w_w_lesson-49-a1_2.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👨"
+  },
+  "/images/w_w_lesson-49-a2_0.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👩"
+  },
+  "/images/w_w_lesson-49-a2_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🧑"
+  },
+  "/images/w_w_lesson-49-a2_2.svg": {
+    "color": "#F0C987",
+    "emoji": "👦"
+  },
+  "/images/w_w_lesson-49-a3_0.svg": {
+    "color": "#FFC4E1",
+    "emoji": "✨"
+  },
+  "/images/w_w_lesson-49-a3_1.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😎"
+  },
+  "/images/w_w_lesson-49-a3_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🥰"
+  },
+  "/images/w_w_lesson-49-a4_0.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🐷"
+  },
+  "/images/w_w_lesson-49-a4_1.svg": {
+    "color": "#BAFFC9",
+    "emoji": "📏"
+  },
+  "/images/w_w_lesson-49-a4_2.svg": {
+    "color": "#BAE1FF",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_lesson-49-a5_0.svg": {
+    "color": "#FFBAF2",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_lesson-49-a5_1.svg": {
+    "color": "#B8F2E6",
+    "emoji": "💡"
+  },
+  "/images/w_w_lesson-49-a5_2.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🤦"
+  },
+  "/images/w_w_lesson-54-a1_0.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💊"
+  },
+  "/images/w_w_lesson-54-a1_1.svg": {
+    "color": "#F0C987",
+    "emoji": "⚕️"
+  },
+  "/images/w_w_lesson-54-a1_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🧑‍⚕️"
+  },
+  "/images/w_w_lesson-54-a2_0.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🤕"
+  },
+  "/images/w_w_lesson-54-a2_1.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🥵"
+  },
+  "/images/w_w_lesson-54-a2_2.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🤧"
+  },
+  "/images/w_w_lesson-54-a3_0.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😊"
+  },
+  "/images/w_w_lesson-54-a3_1.svg": {
+    "color": "#FFFFBA",
+    "emoji": "😡"
+  },
+  "/images/w_w_lesson-54-a3_2.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😱"
+  },
+  "/images/w_w_lesson-54-a4_0.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😴"
+  },
+  "/images/w_w_lesson-54-a4_1.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🤤"
+  },
+  "/images/w_w_lesson-54-a4_2.svg": {
+    "color": "#F0C987",
+    "emoji": "💧"
+  },
+  "/images/w_w_lesson-54-a5_0.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🙂"
+  },
+  "/images/w_w_lesson-54-a5_1.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😭"
+  },
+  "/images/w_w_lesson-54-a5_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😂"
+  },
+  "/images/w_w_leuat.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🩸"
+  },
+  "/images/w_w_liao.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🔄"
+  },
+  "/images/w_w_lightning.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⚡"
+  },
+  "/images/w_w_lock.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🔒"
+  },
+  "/images/w_w_lom.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🌬️"
+  },
+  "/images/w_w_long.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🛍️"
+  },
+  "/images/w_w_long_lost.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😵"
+  },
+  "/images/w_w_lot.svg": {
+    "color": "#B8F2E6",
+    "emoji": "📉"
+  },
+  "/images/w_w_luam.svg": {
+    "color": "#FFBAF2",
+    "emoji": "↔️"
+  },
+  "/images/w_w_lueak.svg": {
+    "color": "#FFDFBA",
+    "emoji": "✅"
+  },
+  "/images/w_w_lueang.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🟨"
+  },
+  "/images/w_w_luem.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💭"
+  },
+  "/images/w_w_luk.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👶"
+  },
+  "/images/w_w_luk_phi_luk_nong.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👯‍♀️"
+  },
+  "/images/w_w_luuk_khaa.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🙋"
+  },
+  "/images/w_w_ma.svg": {
+    "color": "#F0C987",
+    "emoji": "🚶‍♀️"
+  },
+  "/images/w_w_ma_dog.svg": {
+    "color": "#F0C987",
+    "emoji": "🐶"
+  },
+  "/images/w_w_maa.svg": {
+    "color": "#FFBAF2",
+    "emoji": "➡️"
+  },
+  "/images/w_w_maa_dog.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🐶"
+  },
+  "/images/w_w_mae.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👩"
+  },
+  "/images/w_w_maew.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🐱"
+  },
+  "/images/w_w_mai_chai.svg": {
+    "color": "#D5BAFF",
+    "emoji": "❌"
+  },
+  "/images/w_w_mai_khoei.svg": {
+    "color": "#BAFFC9",
+    "emoji": "❌"
+  },
+  "/images/w_w_mai_neg.svg": {
+    "color": "#B8F2E6",
+    "emoji": "❌"
+  },
+  "/images/w_w_mai_new.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🆕"
+  },
+  "/images/w_w_mai_tee.svg": {
+    "color": "#F0C987",
+    "emoji": "🎾"
+  },
+  "/images/w_w_mak.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💯"
+  },
+  "/images/w_w_man.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🐾"
+  },
+  "/images/w_w_mangsawirat.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🥗"
+  },
+  "/images/w_w_map.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🗺️"
+  },
+  "/images/w_w_mee.svg": {
+    "color": "#E3F4BA",
+    "emoji": "✅"
+  },
+  "/images/w_w_mee_khwaam_suk.svg": {
+    "color": "#D5BAFF",
+    "emoji": "😊"
+  },
+  "/images/w_w_mek.svg": {
+    "color": "#BEEBE9",
+    "emoji": "☁️"
+  },
+  "/images/w_w_menu.svg": {
+    "color": "#FFBAF2",
+    "emoji": "📜"
+  },
+  "/images/w_w_mo.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🩺"
+  },
+  "/images/w_w_mo_ho.svg": {
+    "color": "#FFBAF2",
+    "emoji": "😠"
+  },
+  "/images/w_w_mong.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⏰"
+  },
+  "/images/w_w_moo.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🐷"
+  },
+  "/images/w_w_mot.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🔚"
+  },
+  "/images/w_w_motoesai.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🏍️"
+  },
+  "/images/w_w_mu.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🐖"
+  },
+  "/images/w_w_muak.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🧢"
+  },
+  "/images/w_w_muang.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🟣"
+  },
+  "/images/w_w_mue.svg": {
+    "color": "#FFC4E1",
+    "emoji": "✋"
+  },
+  "/images/w_w_muea.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🕰️"
+  },
+  "/images/w_w_muean_gan.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤝"
+  },
+  "/images/w_w_muearai.svg": {
+    "color": "#F0C987",
+    "emoji": "⏰"
+  },
+  "/images/w_w_mueawaan.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⏪"
+  },
+  "/images/w_w_muen.svg": {
+    "color": "#FFC4E1",
+    "emoji": "📈"
+  },
+  "/images/w_w_na.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🧱"
+  },
+  "/images/w_w_na_face.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🙂"
+  },
+  "/images/w_w_naa.svg": {
+    "color": "#B8F2E6",
+    "emoji": "👩"
+  },
+  "/images/w_w_naam_khaeng.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🧊"
+  },
+  "/images/w_w_naan.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⏳"
+  },
+  "/images/w_w_nae_jai.svg": {
+    "color": "#FFC4E1",
+    "emoji": "✅"
+  },
+  "/images/w_w_nae_non.svg": {
+    "color": "#DCD3FF",
+    "emoji": "✅"
+  },
+  "/images/w_w_nai.svg": {
+    "color": "#B8F2E6",
+    "emoji": "📦"
+  },
+  "/images/w_w_nai_which.svg": {
+    "color": "#B8F2E6",
+    "emoji": "❓"
+  },
+  "/images/w_w_nak.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🏋️"
+  },
+  "/images/w_w_nak_rian.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🧑‍🎓"
+  },
+  "/images/w_w_nam.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💧"
+  },
+  "/images/w_w_nam_nak.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⚖️"
+  },
+  "/images/w_w_nam_ngoen.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🔵"
+  },
+  "/images/w_w_nam_ta.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💧"
+  },
+  "/images/w_w_nan.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👉"
+  },
+  "/images/w_w_nang.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🎬"
+  },
+  "/images/w_w_nang_transport.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💺"
+  },
+  "/images/w_w_nang_v.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💺"
+  },
+  "/images/w_w_nangsue.svg": {
+    "color": "#F0C987",
+    "emoji": "📖"
+  },
+  "/images/w_w_naow.svg": {
+    "color": "#FFFFBA",
+    "emoji": "❄️"
+  },
+  "/images/w_w_naow_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🥶"
+  },
+  "/images/w_w_natang.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🪟"
+  },
+  "/images/w_w_nathi.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⏱️"
+  },
+  "/images/w_w_ngao.svg": {
+    "color": "#F0C987",
+    "emoji": "😔"
+  },
+  "/images/w_w_ngern.svg": {
+    "color": "#FFB3BA",
+    "emoji": "💵"
+  },
+  "/images/w_w_ngoen.svg": {
+    "color": "#FFDFBA",
+    "emoji": "💰"
+  },
+  "/images/w_w_ngoo.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🤪"
+  },
+  "/images/w_w_nguang.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🥱"
+  },
+  "/images/w_w_ngut_ngit.svg": {
+    "color": "#F0C987",
+    "emoji": "😤"
+  },
+  "/images/w_w_nii_here.svg": {
+    "color": "#FFFFBA",
+    "emoji": "📍"
+  },
+  "/images/w_w_nii_this.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👉"
+  },
+  "/images/w_w_nit_noi.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤏"
+  },
+  "/images/w_w_noi.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🤏"
+  },
+  "/images/w_w_nom.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🥛"
+  },
+  "/images/w_w_non.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😴"
+  },
+  "/images/w_w_nong.svg": {
+    "color": "#FFDFBA",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_nuea.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🥩"
+  },
+  "/images/w_w_nueay.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😩"
+  },
+  "/images/w_w_nueay_2.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😴"
+  },
+  "/images/w_w_ook.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🏃‍♂️"
+  },
+  "/images/w_w_open.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👐"
+  },
+  "/images/w_w_paa.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👵"
+  },
+  "/images/w_w_pai.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🚶"
+  },
+  "/images/w_w_pak.svg": {
+    "color": "#F0C987",
+    "emoji": "👄"
+  },
+  "/images/w_w_pakati.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👍"
+  },
+  "/images/w_w_pha_cloth.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👕"
+  },
+  "/images/w_w_phaan.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🚶"
+  },
+  "/images/w_w_phaasaa.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🗣️"
+  },
+  "/images/w_w_phae.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🤧"
+  },
+  "/images/w_w_phaeng.svg": {
+    "color": "#FFBAF2",
+    "emoji": "💸"
+  },
+  "/images/w_w_phaeng_2.svg": {
+    "color": "#FFC4E1",
+    "emoji": "💸"
+  },
+  "/images/w_w_phak.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🗺️"
+  },
+  "/images/w_w_phak_kon.svg": {
+    "color": "#D5BAFF",
+    "emoji": "😴"
+  },
+  "/images/w_w_phan.svg": {
+    "color": "#F0C987",
+    "emoji": "📈"
+  },
+  "/images/w_w_phasa.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🗣️"
+  },
+  "/images/w_w_phat_sa_pot.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🛂"
+  },
+  "/images/w_w_phet.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🌶️"
+  },
+  "/images/w_w_phi.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_phi_ghost.svg": {
+    "color": "#D5BAFF",
+    "emoji": "👻"
+  },
+  "/images/w_w_phit_wang.svg": {
+    "color": "#BEEBE9",
+    "emoji": "😞"
+  },
+  "/images/w_w_phlia.svg": {
+    "color": "#BAFFC9",
+    "emoji": "😴"
+  },
+  "/images/w_w_pho.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👨"
+  },
+  "/images/w_w_phoeng.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⏰"
+  },
+  "/images/w_w_phom.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👨"
+  },
+  "/images/w_w_phom_mince.svg": {
+    "color": "#F0C987",
+    "emoji": "🧍‍♀️"
+  },
+  "/images/w_w_phonlamai.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🍎"
+  },
+  "/images/w_w_phruehat.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_phrung.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🌅"
+  },
+  "/images/w_w_phrungnii.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⏩"
+  },
+  "/images/w_w_phu_doi_san.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🧍"
+  },
+  "/images/w_w_phuak_khao.svg": {
+    "color": "#F0C987",
+    "emoji": "👥"
+  },
+  "/images/w_w_phuchai.svg": {
+    "color": "#FFDFBA",
+    "emoji": "👨"
+  },
+  "/images/w_w_phuean.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🤝"
+  },
+  "/images/w_w_phuean_2.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🤝"
+  },
+  "/images/w_w_phumjai.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🤩"
+  },
+  "/images/w_w_phut.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🗣️"
+  },
+  "/images/w_w_phut_wed.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_phuying.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👩"
+  },
+  "/images/w_w_pi.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_pii.svg": {
+    "color": "#FFBAF2",
+    "emoji": "📅"
+  },
+  "/images/w_w_piu.svg": {
+    "color": "#BAFFC9",
+    "emoji": "✋"
+  },
+  "/images/w_w_pla.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🐠"
+  },
+  "/images/w_w_platform.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🚉"
+  },
+  "/images/w_w_por_dee.svg": {
+    "color": "#BAE1FF",
+    "emoji": "✅"
+  },
+  "/images/w_w_prajam.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🔄"
+  },
+  "/images/w_w_pratu.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🚪"
+  },
+  "/images/w_w_priao.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🍋"
+  },
+  "/images/w_w_puat.svg": {
+    "color": "#E3F4BA",
+    "emoji": "😩"
+  },
+  "/images/w_w_puay.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😷"
+  },
+  "/images/w_w_question.svg": {
+    "color": "#B8F2E6",
+    "emoji": "❓"
+  },
+  "/images/w_w_quiet.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🤫"
+  },
+  "/images/w_w_raa_khaa.svg": {
+    "color": "#BAE1FF",
+    "emoji": "💰"
+  },
+  "/images/w_w_raan.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🛍️"
+  },
+  "/images/w_w_raeng.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💪"
+  },
+  "/images/w_w_rak.svg": {
+    "color": "#FFBAF2",
+    "emoji": "❤️"
+  },
+  "/images/w_w_ran_khai_ya.svg": {
+    "color": "#E3F4BA",
+    "emoji": "💊"
+  },
+  "/images/w_w_rao.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👥"
+  },
+  "/images/w_w_rew.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⚡"
+  },
+  "/images/w_w_rian.svg": {
+    "color": "#FFBAF2",
+    "emoji": "📚"
+  },
+  "/images/w_w_riip.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⏰"
+  },
+  "/images/w_w_ro.svg": {
+    "color": "#FFDFBA",
+    "emoji": "⏳"
+  },
+  "/images/w_w_roi.svg": {
+    "color": "#FFFFBA",
+    "emoji": "💯"
+  },
+  "/images/w_w_rom.svg": {
+    "color": "#FFB3BA",
+    "emoji": "☂️"
+  },
+  "/images/w_w_ron.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🔥"
+  },
+  "/images/w_w_ron_2.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🔥"
+  },
+  "/images/w_w_rong_hai.svg": {
+    "color": "#FFC4E1",
+    "emoji": "😭"
+  },
+  "/images/w_w_rong_phayaban.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🏥"
+  },
+  "/images/w_w_rong_raem.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🏨"
+  },
+  "/images/w_w_rong_raem_2.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🏨"
+  },
+  "/images/w_w_rong_rian.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🏫"
+  },
+  "/images/w_w_rong_thao.svg": {
+    "color": "#BAE1FF",
+    "emoji": "👟"
+  },
+  "/images/w_w_rot.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🚗"
+  },
+  "/images/w_w_rot_fai.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🚂"
+  },
+  "/images/w_w_rot_me.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🚌"
+  },
+  "/images/w_w_rot_tu.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🚐"
+  },
+  "/images/w_w_ru.svg": {
+    "color": "#FFBAF2",
+    "emoji": "💡"
+  },
+  "/images/w_w_rudufon.svg": {
+    "color": "#B8F2E6",
+    "emoji": "🌧️"
+  },
+  "/images/w_w_ruea.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⛵"
+  },
+  "/images/w_w_ruesuek.svg": {
+    "color": "#D5BAFF",
+    "emoji": "💭"
+  },
+  "/images/w_w_runny_nose.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🤧"
+  },
+  "/images/w_w_rup_rang.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👤"
+  },
+  "/images/w_w_sa_aat.svg": {
+    "color": "#E3F4BA",
+    "emoji": "✨"
+  },
+  "/images/w_w_saai.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⏰"
+  },
+  "/images/w_w_sai.svg": {
+    "color": "#FFB3BA",
+    "emoji": "⬅️"
+  },
+  "/images/w_w_sai_put.svg": {
+    "color": "#DCD3FF",
+    "emoji": "👕"
+  },
+  "/images/w_w_saii.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👕"
+  },
+  "/images/w_w_sakphak.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⏳"
+  },
+  "/images/w_w_samoe.svg": {
+    "color": "#FFDFBA",
+    "emoji": "♾️"
+  },
+  "/images/w_w_san.svg": {
+    "color": "#F0C987",
+    "emoji": "✂️"
+  },
+  "/images/w_w_sanambin.svg": {
+    "color": "#FFB3BA",
+    "emoji": "✈️"
+  },
+  "/images/w_w_sang.svg": {
+    "color": "#D5BAFF",
+    "emoji": "📝"
+  },
+  "/images/w_w_sanit.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🫂"
+  },
+  "/images/w_w_sanuk.svg": {
+    "color": "#FFDFBA",
+    "emoji": "😄"
+  },
+  "/images/w_w_sao.svg": {
+    "color": "#F0C987",
+    "emoji": "😢"
+  },
+  "/images/w_w_sao_day.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_sao_young.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👩"
+  },
+  "/images/w_w_sapdaa.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_saphan.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🌉"
+  },
+  "/images/w_w_sathannee.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🚉"
+  },
+  "/images/w_w_season.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_season_cold.svg": {
+    "color": "#B8F2E6",
+    "emoji": "☃️"
+  },
+  "/images/w_w_season_hot.svg": {
+    "color": "#FFBAF2",
+    "emoji": "☀️"
+  },
+  "/images/w_w_season_rain.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🌧️"
+  },
+  "/images/w_w_see_color.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🎨"
+  },
+  "/images/w_w_seed.svg": {
+    "color": "#FFFFBA",
+    "emoji": "👻"
+  },
+  "/images/w_w_sia_jai.svg": {
+    "color": "#FFFFBA",
+    "emoji": "😔"
+  },
+  "/images/w_w_sneeze.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🤧"
+  },
+  "/images/w_w_snow.svg": {
+    "color": "#F0C987",
+    "emoji": "❄️"
+  },
+  "/images/w_w_soi.svg": {
+    "color": "#BAE1FF",
+    "emoji": "⛓️"
+  },
+  "/images/w_w_sok_ka_prok.svg": {
+    "color": "#F0C987",
+    "emoji": "🗑️"
+  },
+  "/images/w_w_songsan.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🥺"
+  },
+  "/images/w_w_soong.svg": {
+    "color": "#D5BAFF",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_special.svg": {
+    "color": "#D5BAFF",
+    "emoji": "✨"
+  },
+  "/images/w_w_storm.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⛈️"
+  },
+  "/images/w_w_strong.svg": {
+    "color": "#DCD3FF",
+    "emoji": "💪"
+  },
+  "/images/w_w_suan.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🌳"
+  },
+  "/images/w_w_suay.svg": {
+    "color": "#DCD3FF",
+    "emoji": "✨"
+  },
+  "/images/w_w_sue.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🛍️"
+  },
+  "/images/w_w_suea.svg": {
+    "color": "#BEEBE9",
+    "emoji": "👕"
+  },
+  "/images/w_w_suk.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🗓️"
+  },
+  "/images/w_w_sung.svg": {
+    "color": "#DCD3FF",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_ta.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👁️"
+  },
+  "/images/w_w_taeksi.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🚕"
+  },
+  "/images/w_w_talat.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🛍️"
+  },
+  "/images/w_w_talat_2.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🛍️"
+  },
+  "/images/w_w_tamruat.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👮"
+  },
+  "/images/w_w_tell.svg": {
+    "color": "#F0C987",
+    "emoji": "🗣️"
+  },
+  "/images/w_w_tem.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🈵"
+  },
+  "/images/w_w_tha_ruea.svg": {
+    "color": "#F0C987",
+    "emoji": "⚓"
+  },
+  "/images/w_w_thaang.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🛣️"
+  },
+  "/images/w_w_thai.svg": {
+    "color": "#DCD3FF",
+    "emoji": "🇹🇭"
+  },
+  "/images/w_w_tham.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🛠️"
+  },
+  "/images/w_w_tham_ngan.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💼"
+  },
+  "/images/w_w_thammai.svg": {
+    "color": "#DCD3FF",
+    "emoji": "❓"
+  },
+  "/images/w_w_than.svg": {
+    "color": "#FFC4E1",
+    "emoji": "✅"
+  },
+  "/images/w_w_thanaakhaan.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🏦"
+  },
+  "/images/w_w_thang_way.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🛣️"
+  },
+  "/images/w_w_thanon.svg": {
+    "color": "#F0C987",
+    "emoji": "🛣️"
+  },
+  "/images/w_w_thao.svg": {
+    "color": "#BAFFC9",
+    "emoji": "🔘"
+  },
+  "/images/w_w_thao_rai.svg": {
+    "color": "#D5BAFF",
+    "emoji": "❓"
+  },
+  "/images/w_w_thi_nai.svg": {
+    "color": "#F0C987",
+    "emoji": "❓"
+  },
+  "/images/w_w_thi_nan.svg": {
+    "color": "#FFC4E1",
+    "emoji": "👉"
+  },
+  "/images/w_w_thi_ni.svg": {
+    "color": "#FFB3BA",
+    "emoji": "📍"
+  },
+  "/images/w_w_thiao_bin.svg": {
+    "color": "#BEEBE9",
+    "emoji": "✈️"
+  },
+  "/images/w_w_thii.svg": {
+    "color": "#F0C987",
+    "emoji": "📍"
+  },
+  "/images/w_w_thinai.svg": {
+    "color": "#E3F4BA",
+    "emoji": "🗺️"
+  },
+  "/images/w_w_thittawanok.svg": {
+    "color": "#FFFFBA",
+    "emoji": "➡️"
+  },
+  "/images/w_w_thong.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🤰"
+  },
+  "/images/w_w_thot.svg": {
+    "color": "#FFC4E1",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_thuk.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🏷️"
+  },
+  "/images/w_w_thuk_correct.svg": {
+    "color": "#F0C987",
+    "emoji": "👍"
+  },
+  "/images/w_w_thung_thao.svg": {
+    "color": "#FFBAF2",
+    "emoji": "🧦"
+  },
+  "/images/w_w_tia.svg": {
+    "color": "#BEEBE9",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_tiang.svg": {
+    "color": "#D5BAFF",
+    "emoji": "🛏️"
+  },
+  "/images/w_w_to_hold.svg": {
+    "color": "#FFFFBA",
+    "emoji": "✋"
+  },
+  "/images/w_w_tok.svg": {
+    "color": "#BAFFC9",
+    "emoji": "⬇️"
+  },
+  "/images/w_w_tokjai.svg": {
+    "color": "#B8F2E6",
+    "emoji": "😲"
+  },
+  "/images/w_w_ton.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🧩"
+  },
+  "/images/w_w_ton_mai.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🌳"
+  },
+  "/images/w_w_tong.svg": {
+    "color": "#FFBAF2",
+    "emoji": "✅"
+  },
+  "/images/w_w_trong.svg": {
+    "color": "#FFFFBA",
+    "emoji": "⬆️"
+  },
+  "/images/w_w_tua.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🎟️"
+  },
+  "/images/w_w_tua_lek.svg": {
+    "color": "#FFDFBA",
+    "emoji": "🔢"
+  },
+  "/images/w_w_uan.svg": {
+    "color": "#FFB3BA",
+    "emoji": "🐷"
+  },
+  "/images/w_w_waan.svg": {
+    "color": "#F0C987",
+    "emoji": "🍬"
+  },
+  "/images/w_w_waan_sucre.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🍬"
+  },
+  "/images/w_w_waen.svg": {
+    "color": "#BAFFC9",
+    "emoji": "💍"
+  },
+  "/images/w_w_wallet.svg": {
+    "color": "#FFB3BA",
+    "emoji": "👛"
+  },
+  "/images/w_w_wan.svg": {
+    "color": "#D5BAFF",
+    "emoji": "☀️"
+  },
+  "/images/w_w_wan_nii.svg": {
+    "color": "#BEEBE9",
+    "emoji": "☀️"
+  },
+  "/images/w_w_wan_yesterday.svg": {
+    "color": "#F0C987",
+    "emoji": "⏪"
+  },
+  "/images/w_w_wela.svg": {
+    "color": "#E3F4BA",
+    "emoji": "⏰"
+  },
+  "/images/w_w_which.svg": {
+    "color": "#D5BAFF",
+    "emoji": "❓"
+  },
+  "/images/w_w_wian_hua.svg": {
+    "color": "#DCD3FF",
+    "emoji": "😵"
+  },
+  "/images/w_w_window.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🪟"
+  },
+  "/images/w_w_wing.svg": {
+    "color": "#FFC4E1",
+    "emoji": "🏃"
+  },
+  "/images/w_w_ya.svg": {
+    "color": "#DCD3FF",
+    "emoji": "💊"
+  },
+  "/images/w_w_ya_dont.svg": {
+    "color": "#BAE1FF",
+    "emoji": "🚫"
+  },
+  "/images/w_w_ya_not.svg": {
+    "color": "#B8F2E6",
+    "emoji": "⛔"
+  },
+  "/images/w_w_yaai.svg": {
+    "color": "#E3F4BA",
+    "emoji": "👵"
+  },
+  "/images/w_w_yaek.svg": {
+    "color": "#FFB3BA",
+    "emoji": "➕"
+  },
+  "/images/w_w_yai.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🐘"
+  },
+  "/images/w_w_yak.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🙏"
+  },
+  "/images/w_w_yang.svg": {
+    "color": "#F0C987",
+    "emoji": "🔁"
+  },
+  "/images/w_w_yang_ngai.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🤔"
+  },
+  "/images/w_w_yao.svg": {
+    "color": "#E3F4BA",
+    "emoji": "↔️"
+  },
+  "/images/w_w_yen.svg": {
+    "color": "#BEEBE9",
+    "emoji": "🌆"
+  },
+  "/images/w_w_yen_cold.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🧊"
+  },
+  "/images/w_w_yii.svg": {
+    "color": "#E3F4BA",
+    "emoji": "2️⃣"
+  },
+  "/images/w_w_yim.svg": {
+    "color": "#FFB3BA",
+    "emoji": "😁"
+  },
+  "/images/w_w_yut.svg": {
+    "color": "#FFFFBA",
+    "emoji": "🛑"
+  },
+  "/images/w_w_yuu.svg": {
+    "color": "#BAFFC9",
+    "emoji": "📍"
+  },
+  "/images/weather.svg": {
+    "color": "#BAE1FF",
+    "emoji": "⛅"
+  },
+  "/images/woman_word.svg": {
+    "color": "#BAFFC9",
+    "emoji": "👩"
+  }
+}

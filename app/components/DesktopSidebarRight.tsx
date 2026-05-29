@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { BookOpen, CheckCircle, Clock, Lock, Pencil, Play, RotateCcw, Star, Volume2, X, Users, Target, ChevronLeft, Flag } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
+import IconImage from './IconImage';
 import { playThaiTTS } from '../lib/tts';
 import { motion, AnimatePresence } from 'motion/react';
 import { DailyQuestsWidget } from './DailyQuestsWidget';
@@ -93,7 +93,7 @@ export function DesktopSidebarRight({
               <div className="w-full shrink-0 z-0">
                  <div className={`w-full h-[180px] relative border-b border-slate-100 ${!selectedLesson.lesson.imageUrl && 'bg-amber-50 flex items-center justify-center'}`}>
                    {selectedLesson.lesson.imageUrl ? (
-                      <Image src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
+                      <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
                    ) : (
                       <BookOpen size={48} className="text-slate-200" />
                    )}

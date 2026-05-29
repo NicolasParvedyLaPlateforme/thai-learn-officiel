@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import IconImage from '../../../components/IconImage';
 import { useParams, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Play, RotateCcw, Volume2, Star, MessageCircle, Check, X, Home, Image as ImageIcon, Type, Sparkles } from 'lucide-react';
 import { useProgressStore } from '../../../lib/store';
@@ -533,7 +533,7 @@ function ConversationContent() {
           <div className="flex flex-col items-center justify-center mt-8 gap-6 bg-white p-6 sm:p-8 rounded-3xl border-2 border-slate-200 shadow-sm">
             {conversation.imageUrl ? (
               <div className="relative w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-sm border border-slate-100">
-                <Image src={conversation.imageUrl} alt={conversation.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 36rem" priority />
+                <IconImage src={conversation.imageUrl} alt={conversation.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 36rem" priority />
               </div>
             ) : (
               <div className="bg-orange-100 text-orange-500 p-6 rounded-full">
@@ -587,7 +587,7 @@ function ConversationContent() {
                 >
                   {/* Avatar */}
                   <div className="flex-shrink-0 mt-6 flex flex-col items-center">
-                     <Image 
+                     <IconImage 
                        src={speakerInfo.avatar} 
                        alt={speakerInfo.name} 
                        width={60} 
@@ -917,7 +917,7 @@ function ConversationContent() {
               <X size={20} />
             </button>
             <div className="w-48 h-48 relative mb-4 mt-2">
-               <Image src={hintWord.imageUrl || `/images/w_w_${hintWord.id}.svg`} alt="Hint Image" fill className="object-contain" />
+               <IconImage src={hintWord.imageUrl || `/images/w_w_${hintWord.id}.svg`} alt="Hint Image" fill className="object-contain" />
             </div>
             <p className="text-sm font-bold text-slate-400 mt-2">{language === 'en' ? 'Tap anywhere to close' : 'Appuyez n\'importe où pour fermer'}</p>
           </div>
