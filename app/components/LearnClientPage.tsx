@@ -475,12 +475,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                     <div className="relative z-10 w-full">
                       <div className="flex justify-between items-start mb-3">
                         <h2 className="text-4xl lg:text-5xl font-extrabold text-white drop-shadow-md uppercase tracking-tight">{language === 'en' ? unit.titleEn : unit.title}</h2>
-                        {unit.imageUrl && (
-                          <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2.5 rounded-xl text-white font-bold text-sm transition-all border border-white/30 whitespace-nowrap shadow-sm">
-                            {language === 'en' ? 'CHANGE UNIT' : "CHANGER D'UNIT"}
-                            <ChevronLeft className="w-4 h-4 rotate-[-90deg]" />
-                          </button>
-                        )}
+                        {/* Changer d'unité removed string */}
                       </div>
                       <p className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} mb-10 font-medium text-xl drop-shadow`}>{language === 'en' ? unit.descriptionEn : unit.description}</p>
                       
