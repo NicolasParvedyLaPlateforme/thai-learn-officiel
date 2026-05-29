@@ -1,0 +1,644 @@
+{
+  "conversations": [
+    {
+      "id": "conv-1",
+      "unitId": "unit-1",
+      "title": "Une rencontre au marché",
+      "titleEn": "A meeting at the market",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Tom",
+          "th": "สวัสดีครับ ผมชื่อทอมครับ",
+          "phonetic": "sà-wàt-diː khráp, phǒm-chʉ̂ː-thom khráp",
+          "fr": "Bonjour, je m'appelle Tom.",
+          "en": "Hello, my name is Tom."
+        },
+        {
+          "speaker": "Marchand",
+          "th": "สวัสดีครับ ยินดีที่ได้รู้จักครับ",
+          "phonetic": "sà-wàt-diː khráp, yin-diː-thîː-dâi-rúː-jàk khráp",
+          "fr": "Bonjour, enchanté de vous rencontrer.",
+          "en": "Hello, nice to meet you."
+        },
+        {
+          "speaker": "Tom",
+          "th": "คุณสบายดีไหมครับ",
+          "phonetic": "khun-sà-baːi-diː mái khráp",
+          "fr": "Comment allez-vous ?",
+          "en": "How are you?"
+        },
+        {
+          "speaker": "Marchand",
+          "th": "สบายดีครับ คุณล่ะครับ",
+          "phonetic": "sà-baːi-diː khráp, khun lâ khráp",
+          "fr": "Je vais bien, et vous ?",
+          "en": "I am fine, and you?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "สบายดีครับ ผมเป็นคนฝรั่งเศสครับ",
+          "phonetic": "sà-baːi-diː khráp, phǒm-pen-khon-fà-ràng-sèːt khráp",
+          "fr": "Je vais bien. Je suis français.",
+          "en": "I am fine. I am French."
+        },
+        {
+          "speaker": "Marchand",
+          "th": "ยินดีต้อนรับสู่ประเทศไทยครับ คุณทำงานอะไรครับ",
+          "phonetic": "yin-diː-tɔ̂ːn-ráp sùː prà-thêːt-thai khráp, khun-tham-ŋaːn à-rai khráp",
+          "fr": "Bienvenue en Thaïlande. Quel est votre métier ?",
+          "en": "Welcome to Thailand. What is your job?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "ผมเป็นนักพัฒนาเว็บครับ",
+          "phonetic": "phǒm-pen-nak-phát-thá-naː-wɛ́p khráp",
+          "fr": "Je suis développeur web.",
+          "en": "I am a web developer."
+        },
+        {
+          "speaker": "Marchand",
+          "th": "เก่งมากครับ ขอให้โชคดีครับ",
+          "phonetic": "kèŋ-mâːk khráp, khɔ̌ː-hai-chôːk-diː khráp",
+          "fr": "C'est très bien. Bonne chance !",
+          "en": "Very good. Good luck!"
+        },
+        {
+          "speaker": "Tom",
+          "th": "ขอบคุณครับ สวัสดีครับ",
+          "phonetic": "khɔ̌ːp-khun khráp, sà-wàt-diː khráp",
+          "fr": "Merci. Au revoir.",
+          "en": "Thank you. Goodbye."
+        },
+        {
+          "speaker": "Marchand",
+          "th": "โชคดีครับ สวัสดีครับ",
+          "phonetic": "chôːk-diː khráp, sà-wàt-diː khráp",
+          "fr": "Bonne chance. Au revoir.",
+          "en": "Good luck. Goodbye."
+        }
+      ],
+      "imageUrl": "/au-marche.webp"
+    },
+    {
+      "id": "conv-2",
+      "unitId": "unit-1",
+      "title": "Rencontre avec Kanya",
+      "titleEn": "Meeting Kanya",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Tom",
+          "th": "สวัสดีครับ ผมชื่อทอมครับ คุณชื่ออะไรครับ",
+          "phonetic": "sà-wàt-dee khráp, phǒm chûu thom khráp. khoon chûu à-rai khráp?",
+          "fr": "Bonjour, je m'appelle Tom. Comment vous vous appelez ?",
+          "en": "Hello, my name is Tom. What is your name?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ยินดีที่ได้รู้จักค่ะ ฉันชื่อกันยาค่ะ",
+          "phonetic": "yin-dee thîi dâi róo-jàk khâ, chǎn chûu kan-yaa khâ.",
+          "fr": "Enchantée de vous rencontrer. Je m'appelle Kanya.",
+          "en": "Nice to meet you. My name is Kanya."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ยินดีที่ได้รู้จักครับ คุณเป็นคนเชียงใหม่ใช่ไหมครับ",
+          "phonetic": "yin-dee thîi dâi róo-jàk khráp. khoon bpen khon chīang-mài châi mǎi khráp?",
+          "fr": "Enchanté. Vous êtes de Chiang Mai, n'est-ce pas ?",
+          "en": "Nice to meet you. You are from Chiang Mai, right?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ใช่ค่ะ ฉันเป็นคนเชียงใหม่ แล้วคุณมาจากไหนคะ",
+          "phonetic": "châi khâ, chǎn bpen khon chīang-mài. lǽw khoon maa jàak nǎi khá?",
+          "fr": "Oui, c'est ça. Je suis de Chiang Mai. Et vous, d'où venez-vous ?",
+          "en": "Yes, I am. I am from Chiang Mai. And you, where do you come from?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "ผมมาจากฝรั่งเศสครับ ผมมาจากเมืองลียงครับ",
+          "phonetic": "phǒm maa jàak fà-ràng-sèet khráp. phǒm maa jàak meuang lee-yong khráp.",
+          "fr": "Je viens de France. Je viens de la ville de Lyon.",
+          "en": "I come from France. I come from the city of Lyon."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "อ๋อ เมืองลียงสวยไหมคะ คุณอายุเท่าไหร่คะ",
+          "phonetic": "ǒo, meuang lee-yong sǔay mǎi khá? khoon aa-yóo thâo-rài khá?",
+          "fr": "Oh, est-ce que la ville de Lyon est belle ? Quel âge avez-vous ?",
+          "en": "Oh, is Lyon a beautiful city? How old are you?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "เมืองลียงสวยมากครับ ผมอายุสามสิบปีครับ",
+          "phonetic": "meuang lee-yong sǔay mâak khráp. phǒm aa-yóo sǎam-sìp bpee khráp.",
+          "fr": "La ville de Lyon est très belle. J'ai trente ans.",
+          "en": "Lyon is very beautiful. I am thirty years old."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "คุณพูดภาษาไทยเก่งมากค่ะ มาทำอะไรที่นี่คะ",
+          "phonetic": "khoon phôot phaa-sǎa thai gèng mâak khâ. maa tham à-rai thîi nîi khá?",
+          "fr": "Vous parlez très bien thaï. Qu'est-ce que vous venez faire ici ?",
+          "en": "You speak Thai very well. What are you here to do?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "ขอบคุณครับ ผมมาเที่ยวและมาเรียนภาษาไทยครับ",
+          "phonetic": "khòop-khoon khráp. phǒm maa thîaw lǽ maa rīan phaa-sǎa thai khráp.",
+          "fr": "Merci. Je viens voyager et apprendre le thaï.",
+          "en": "Thank you. I am here to travel and learn Thai."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ดีมากค่ะ ยินดีต้อนรับสู่เชียงใหม่นะคะ",
+          "phonetic": "dee mâak khâ. yin-dee dtâawn-ráp sùu chīang-mài ná khá.",
+          "fr": "C'est très bien. Bienvenue à Chiang Mai !",
+          "en": "Very good. Welcome to Chiang Mai!"
+        }
+      ],
+      "imageUrl": "/kanya-rencontre.webp"
+    },
+    {
+      "id": "conv-1779650771346",
+      "unitId": "unit-1",
+      "title": "Préparatifs pour un anniversaire",
+      "titleEn": "Birthday preparations",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Tom",
+          "th": "วันนี้เราจะทำอะไรครับ",
+          "phonetic": "wan-níi rao jà tham à-rai khráp?",
+          "fr": "Qu'est-ce que nous allons faire aujourd'hui ?",
+          "en": "What are we going to do today?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "วันนี้เป็นวันเกิดเพื่อนของฉันค่ะ",
+          "phonetic": "wan-níi pen wan-gèut phûean khǒng chǎn khà.",
+          "fr": "Aujourd'hui, c'est l'anniversaire de mon ami.",
+          "en": "Today is my friend's birthday."
+        },
+        {
+          "speaker": "Tom",
+          "th": "อ๋อ สุขสันต์วันเกิดเพื่อนของคุณครับ",
+          "phonetic": "ǒo, sùk-sǎn wan-gèut phûean khǒng khun khráp.",
+          "fr": "Oh, joyeux anniversaire à votre ami.",
+          "en": "Oh, happy birthday to your friend."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ขอบคุณค่ะ เราต้องไปซื้อของขวัญและเค้กค่ะ",
+          "phonetic": "khòp-khun khà. rao dtông bpai súue khǒng-khwǎn láe khék khà.",
+          "fr": "Merci. Nous devons aller acheter un cadeau et un gâteau.",
+          "en": "Thank you. We must go buy a gift and a cake."
+        },
+        {
+          "speaker": "Tom",
+          "th": "เราจะไปซื้อที่ไหนครับ",
+          "phonetic": "rao jà bpai súue thîi nǎi khráp?",
+          "fr": "Où allons-nous acheter cela ?",
+          "en": "Where will we go buy them?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "เราจะไปที่ตลาดค่ะ",
+          "phonetic": "rao jà bpai thîi dtà-làat khà.",
+          "fr": "Nous allons aller au marché.",
+          "en": "We will go to the market."
+        },
+        {
+          "speaker": "Tom",
+          "th": "เค้กราคาเท่าไหร่ครับ",
+          "phonetic": "khék raa-khaa thâo-rài khráp?",
+          "fr": "Combien coûte un gâteau ?",
+          "en": "How much does a cake cost?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ประมาณสามร้อยบาทค่ะ",
+          "phonetic": "bprà-maan sǎam-rói bàat khà.",
+          "fr": "Environ trois cents bahts.",
+          "en": "About three hundred baht."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ไม่แพงครับ ไปตลาดกันเถอะ",
+          "phonetic": "mâi phaeng khráp. bpai dtà-làat gan thòe.",
+          "fr": "Ce n'est pas cher. Allons au marché.",
+          "en": "Not expensive. Let's go to the market."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ไปค่ะ",
+          "phonetic": "bpai khà.",
+          "fr": "Allons-y.",
+          "en": "Let's go."
+        }
+      ],
+      "imageUrl": "/aniversaire.webp"
+    },
+    {
+      "id": "conv-1779650907957",
+      "unitId": "unit-1",
+      "title": "Achat d'un gâteau",
+      "titleEn": "Buying a cake",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Kanya",
+          "th": "นี่คือร้านเค้กค่ะ",
+          "phonetic": "Nîi khʉʉ ráan khéek khà.",
+          "fr": "Voici la pâtisserie.",
+          "en": "Here is the cake shop."
+        },
+        {
+          "speaker": "Tom",
+          "th": "สวัสดีครับ เค้กช็อกโกแลตราคาเท่าไหร่ครับ",
+          "phonetic": "Sà-wàt-dii khráp. Khéek chók-koo-lɛ́ɛt raa-khaa thâo-rài khráp?",
+          "fr": "Bonjour. Combien coûte le gâteau au chocolat ?",
+          "en": "Hello. How much is the chocolate cake?"
+        },
+        {
+          "speaker": "Vendor",
+          "th": "สามร้อยห้าสิบบาทค่ะ",
+          "phonetic": "Sǎam-róoi hâa-sìp bàat khà.",
+          "fr": "Trois cent cinquante bahts.",
+          "en": "Three hundred fifty baht."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ผมเอาเค้กช็อกโกแลตครับ",
+          "phonetic": "Phǒm ao khéek chók-koo-lɛ́ɛt khráp.",
+          "fr": "Je prends le gâteau au chocolat.",
+          "en": "I will take the chocolate cake."
+        },
+        {
+          "speaker": "Vendor",
+          "th": "ได้ค่ะ รับอะไรเพิ่มไหมคะ",
+          "phonetic": "Dâai khà. Ráp a-rai phə̂əm mǎi khá?",
+          "fr": "D'accord. Voulez-vous autre chose ?",
+          "en": "Okay. Would you like anything else?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "เอาเทียนวันเกิดด้วยค่ะ",
+          "phonetic": "Ao thian wan-kə̀ət dûai khà.",
+          "fr": "Nous prenons aussi des bougies d'anniversaire.",
+          "en": "We will take birthday candles too."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ทั้งหมดราคาเท่าไหร่ครับ",
+          "phonetic": "Tháng-mòt raa-khaa thâo-rài khráp?",
+          "fr": "Combien ça coûte au total ?",
+          "en": "How much is it in total?"
+        },
+        {
+          "speaker": "Vendor",
+          "th": "ทั้งหมดสามร้อยเจ็ดสิบบาทค่ะ",
+          "phonetic": "Tháng-mòt sǎam-róoi cèt-sìp bàat khà.",
+          "fr": "Le total est de trois cent soixante-dix bahts.",
+          "en": "The total is three hundred seventy baht."
+        },
+        {
+          "speaker": "Tom",
+          "th": "นี่ครับ สี่ร้อยบาท",
+          "phonetic": "Nîi khráp, sìi-róoi bàat.",
+          "fr": "Voici, quatre cents bahts.",
+          "en": "Here is four hundred baht."
+        },
+        {
+          "speaker": "Vendor",
+          "th": "ขอบคุณค่ะ เงินทอนสามสิบบาทค่ะ",
+          "phonetic": "Khɔ̀ɔp-khun khà. Ngən-thɔɔn sǎam-sìp bàat khà.",
+          "fr": "Merci. Voici trente bahts de monnaie.",
+          "en": "Thank you. Thirty baht change."
+        }
+      ],
+      "imageUrl": "/achat-gateau.webp"
+    },
+    {
+      "id": "conv-1779651042732",
+      "unitId": "unit-1",
+      "title": "Achat d'un cadeau",
+      "titleEn": "Buying a gift",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Kanya",
+          "th": "ตอนนี้เราต้องไปซื้อของขวัญค่ะ",
+          "phonetic": "dtɔɔn-níi raw dtɔ̂ng pay sʉ́ʉ kɔ̌ɔng-kwǎn kâ",
+          "fr": "Maintenant, nous devons aller acheter un cadeau.",
+          "en": "Now we have to go buy a gift."
+        },
+        {
+          "speaker": "Tom",
+          "th": "เพื่อนของคุณชอบอะไรครับ",
+          "phonetic": "pʉ̂an kɔ̌ɔng kun chɔ̂ɔp a-ray kráp",
+          "fr": "Qu'est-ce que votre ami aime ?",
+          "en": "What does your friend like?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "เขาชอบเสื้อสีน้ำเงินค่ะ",
+          "phonetic": "kǎw chɔ̂ɔp sʉ̂a sǐi nám-ngən kâ",
+          "fr": "Il aime les chemises bleues.",
+          "en": "He likes blue shirts."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ร้านนั้นมีเสื้อสีน้ำเงินครับ",
+          "phonetic": "ráan nán mii sʉ̂a sǐi nám-ngən kráp",
+          "fr": "Ce magasin-là a des chemises bleues.",
+          "en": "That shop has blue shirts."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ขอโทษครับ เสื้อตัวนี้ราคาเท่าไหร่ครับ",
+          "phonetic": "kɔ̌ɔ-tôot kráp, sʉ̂a tua níi raa-kaa tâw-rày kráp",
+          "fr": "Excusez-moi, combien coûte cette chemise ?",
+          "en": "Excuse me, how much is this shirt?"
+        },
+        {
+          "speaker": "Vendor",
+          "th": "สองร้อยห้าสิบบาทค่ะ",
+          "phonetic": "sɔ̌ɔng rɔ́ɔy hâa-sìp bàat kâ",
+          "fr": "Deux cent cinquante bahts.",
+          "en": "Two hundred and fifty baht."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ลดราคาได้ไหมครับ",
+          "phonetic": "lót raa-kaa dâay mǎy kráp",
+          "fr": "Pouvez-vous faire une réduction ?",
+          "en": "Can you give a discount?"
+        },
+        {
+          "speaker": "Vendor",
+          "th": "ได้ค่ะ สองร้อยยี่สิบบาทค่ะ",
+          "phonetic": "dâay kâ, sɔ̌ɔng rɔ́ɔy yîi-sìp bàat kâ",
+          "fr": "D'accord, deux cent vingt bahts.",
+          "en": "Okay, two hundred and twenty baht."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ผมเอาตัวนี้ครับ",
+          "phonetic": "pǒm aw tua níi kráp",
+          "fr": "Je prends celle-ci.",
+          "en": "I'll take this one."
+        },
+        {
+          "speaker": "Tom",
+          "th": "โอ้! เข็มทิศของผมสว่างแล้ว!",
+          "phonetic": "ôo! kěm-tít kɔ̌ɔng pǒm sa-wàang lɛ́ɛw!",
+          "fr": "Oh ! Ma boussole s'est illuminée !",
+          "en": "Oh! My compass lit up!"
+        }
+      ],
+      "imageUrl": "/en-savoir-plus-bousolle.webp"
+    },
+    {
+      "id": "conv-1779651578144",
+      "unitId": "unit-1",
+      "title": "Le mystère de la boussole",
+      "titleEn": "The mystery of the compass",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Kanya",
+          "th": "นั่นอะไรคะ สว่างมากเลย",
+          "phonetic": "nân a-rai khá? sà-wàang mâak loei.",
+          "fr": "Qu'est-ce que c'est ? C'est très lumineux.",
+          "en": "What is that? It is very bright."
+        },
+        {
+          "speaker": "Tom",
+          "th": "เข็มทิศของผมครับ ผมซื้อที่กรุงเทพฯ",
+          "phonetic": "khĕm-thít khŏng phŏm khráp. phŏm súe thîi krung-thêp.",
+          "fr": "C'est ma boussole. Je l'ai achetée à Bangkok.",
+          "en": "It's my compass. I bought it in Bangkok."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ขอดูหน่อยค่ะ โอ้ มันเก่ามาก",
+          "phonetic": "khŏr duu nòi khà. ôo, man kào mâak.",
+          "fr": "Fais voir. Oh, c'est très vieux.",
+          "en": "Let me see. Oh, it is very old."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ใช่ครับ มันแปลกมาก มันชี้ไปที่อีสาน",
+          "phonetic": "châi khráp, man plàek mâak. man chíi pai thîi ii-săan.",
+          "fr": "Oui, c'est très étrange. Elle pointe vers l'Isan.",
+          "en": "Yes, it is very strange. It points to Isan."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "อีสานหรอคะ ฉันเคยเห็นแบบนี้",
+          "phonetic": "ii-săan rŏr khá? chăn khoei hĕn bàep níi.",
+          "fr": "L'Isan ? J'ai déjà vu ce genre de chose.",
+          "en": "Isan? I have seen this kind before."
+        },
+        {
+          "speaker": "Tom",
+          "th": "จริงหรอครับ คุณช่วยผมได้ไหมครับ",
+          "phonetic": "jing rŏr khráp? khun chûai phŏm dâi măi khráp?",
+          "fr": "Vraiment ? Pouvez-vous m'aider ?",
+          "en": "Really? Can you help me?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ได้ค่ะ เราต้องไปหาพระอรัญที่วัด",
+          "phonetic": "dâi khà. rao tông pai hăa phrá a-ran thîi wát.",
+          "fr": "Oui. Nous devons aller voir le moine Aran au temple.",
+          "en": "Yes. We must go see Monk Aran at the temple."
+        },
+        {
+          "speaker": "Tom",
+          "th": "พระอรัญคือใครครับ",
+          "phonetic": "phrá a-ran khue khrai khráp?",
+          "fr": "Qui est le moine Aran ?",
+          "en": "Who is Monk Aran?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "เขาเป็นพระที่รู้เรื่องนี้ค่ะ พรุ่งนี้ไปกันเถอะ",
+          "phonetic": "khăo pen phrá thîi rúu rûeang níi khà. phrûng-níi pai kan thòe.",
+          "fr": "C'est un moine qui connaît cette histoire. Allons-y demain.",
+          "en": "He is a monk who knows about this matter. Let's go tomorrow."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ตกลงครับ ไปวัดพรุ่งนี้ครับ",
+          "phonetic": "tòk-long khráp. pai wát phrûng-níi khráp.",
+          "fr": "D'accord. Allons au temple demain.",
+          "en": "Okay. Let's go to the temple tomorrow."
+        }
+      ],
+      "imageUrl": "/bousolle-bleu.webp"
+    },
+    {
+      "id": "conv-1779652273445",
+      "unitId": "unit-1",
+      "title": "La rencontre avec Aran",
+      "titleEn": "The meeting with Aran",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Tom",
+          "th": "ที่นี่คือวัดใช่ไหมครับ สวยมากครับ",
+          "phonetic": "thîi-nîi khʉʉ wát chây-mǎi khráp? sǔay mâak khráp",
+          "fr": "C'est bien le temple ici ? C'est très beau.",
+          "en": "Is this the temple here? It is very beautiful."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ใช่ค่ะ พระอรัญอยู่ตรงนั้น เราไปกันเถอะ",
+          "phonetic": "chây khâ. phrá a-ran yùu trong nán. raw pay kan thə̀",
+          "fr": "Oui. Le moine Aran est là-bas. Allons-y.",
+          "en": "Yes. Monk Aran is over there. Let's go."
+        },
+        {
+          "speaker": "Tom",
+          "th": "สวัสดีครับพระอรัญ ผมชื่อทอมครับ",
+          "phonetic": "sà-wàt-dii khráp phrá a-ran. phǒm chʉ̂ʉ Tom khráp",
+          "fr": "Bonjour moine Aran. Je m'appelle Tom.",
+          "en": "Hello monk Aran. My name is Tom."
+        },
+        {
+          "speaker": "Aran",
+          "th": "สวัสดี คุณมาทำอะไรที่วัด",
+          "phonetic": "sà-wàt-dii. khun maa tham a-ray thîi wát?",
+          "fr": "Bonjour. Que venez-vous faire au temple ?",
+          "en": "Hello. What are you doing at the temple?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "ผมมีเข็มทิศนี้ครับ มันแปลกมาก",
+          "phonetic": "phǒm mii khěm-thít níi khráp. man plɛ̀ɛk mâak",
+          "fr": "J'ai cette boussole. Elle est très étrange.",
+          "en": "I have this compass. It is very strange."
+        },
+        {
+          "speaker": "Aran",
+          "th": "ขอดูหน่อย... นี่คือเข็มทิศทองแดง",
+          "phonetic": "khɔ̌ɔ duu nɔ̀y... nîi khʉʉ khěm-thít thɔɔng-dɛɛng",
+          "fr": "Fais voir... C'est la boussole de cuivre.",
+          "en": "Let me see... This is the copper compass."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ครับ มันชี้ไปที่อีสานครับ",
+          "phonetic": "khráp. man chíi pay thîi ii-sǎan khráp",
+          "fr": "Oui. Elle pointe vers l'Isan.",
+          "en": "Yes. It points to Isan."
+        },
+        {
+          "speaker": "Aran",
+          "th": "ใช่ มันสำคัญมาก คุณต้องไปอีสาน",
+          "phonetic": "chây. man sǎm-khan mâak. khun dtɔ̂ng pay ii-sǎan",
+          "fr": "Oui. C'est très important. Tu dois aller en Isan.",
+          "en": "Yes. It is very important. You must go to Isan."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "เราจะไปอีสานยังไงคะ",
+          "phonetic": "raw jà pay ii-sǎan yang-ngay khá?",
+          "fr": "Comment allons-nous aller en Isan ?",
+          "en": "How will we go to Isan?"
+        },
+        {
+          "speaker": "Aran",
+          "th": "นั่งรถไฟไป โชคดีนะ",
+          "phonetic": "nâng rót-fay pay. chôok-dii ná",
+          "fr": "Prenez le train. Bonne chance.",
+          "en": "Take the train. Good luck."
+        }
+      ],
+      "imageUrl": "/decouvre-moine.webp"
+    },
+    {
+      "id": "conv-1779653844033",
+      "unitId": "unit-1",
+      "title": "Achat des billets pour Udon",
+      "titleEn": "Buying tickets to Udon",
+      "level": 1,
+      "dialogs": [
+        {
+          "speaker": "Tom",
+          "th": "เราอยู่ที่สถานีรถไฟ ซื้อตั๋วที่ไหนครับ",
+          "phonetic": "rao yùu tîi sà-tǎa-nii rót fai. séu dtǔa tîi nǎi kráp",
+          "fr": "Nous sommes à la gare. Où achète-t-on les billets ?",
+          "en": "We are at the train station. Where do we buy tickets?"
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ที่นั่นค่ะ เราจะไปจังหวัดอะไรคะ",
+          "phonetic": "tîi nân kâ. rao jà bpai jang-wàt à-rai ká",
+          "fr": "Là-bas. Dans quelle province allons-nous ?",
+          "en": "Over there. What province are we going to?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "เข็มทิศชี้ไปที่อุดรธานีครับ",
+          "phonetic": "kěm-tít chíi bpai tîi ù-dɔɔn-taa-nii kráp",
+          "fr": "La boussole pointe vers Udon Thani.",
+          "en": "The compass points to Udon Thani."
+        },
+        {
+          "speaker": "Kanya",
+          "th": "ตกลงค่ะ ไปซื้อตั๋วกันเถอะ",
+          "phonetic": "dtòk long kâ. bpai séu dtǔa gan tòe",
+          "fr": "D'accord. Allons acheter les billets.",
+          "en": "Okay. Let's go buy the tickets."
+        },
+        {
+          "speaker": "Tom",
+          "th": "สวัสดีครับ ขอตั๋วไปอุดรธานีสองใบครับ",
+          "phonetic": "sà-wàt-dii kráp. kɔ̌ɔ dtǔa bpai ù-dɔɔn-taa-nii sɔ̌ɔng bai kráp",
+          "fr": "Bonjour, je voudrais deux billets pour Udon Thani, s'il vous plaît.",
+          "en": "Hello, I would like two tickets to Udon Thani, please."
+        },
+        {
+          "speaker": "Ticket Seller",
+          "th": "ไปวันนี้หรือพรุ่งนี้คะ",
+          "phonetic": "bpai wan-níi rěu prûng-níi ká",
+          "fr": "Vous partez aujourd'hui ou demain ?",
+          "en": "Are you going today or tomorrow?"
+        },
+        {
+          "speaker": "Tom",
+          "th": "วันนี้ครับ รถไฟออกกี่โมงครับ",
+          "phonetic": "wan-níi kráp. rót fai ɔ̀ɔk gìi moong kráp",
+          "fr": "Aujourd'hui. À quelle heure part le train ?",
+          "en": "Today. What time does the train leave?"
+        },
+        {
+          "speaker": "Ticket Seller",
+          "th": "รถไฟออกเวลาสองทุ่มค่ะ",
+          "phonetic": "rót fai ɔ̀ɔk wee-laa sɔ̌ɔng tûm kâ",
+          "fr": "Le train part à vingt heures.",
+          "en": "The train leaves at 8 PM."
+        },
+        {
+          "speaker": "Tom",
+          "th": "ตั๋วราคาเท่าไหร่ครับ",
+          "phonetic": "dtǔa raa-kaa tâo-rài kráp",
+          "fr": "Combien coûtent les billets ?",
+          "en": "How much are the tickets?"
+        },
+        {
+          "speaker": "Ticket Seller",
+          "th": "ทั้งหมดเก้าร้อยบาทค่ะ",
+          "phonetic": "táng-mòt gâao rɔ́ɔi bàat kâ",
+          "fr": "Neuf cents bahts en tout.",
+          "en": "Nine hundred baht in total."
+        }
+      ],
+      "imageUrl": "/achat-ticket-train.webp"
+    }
+  ]
+}

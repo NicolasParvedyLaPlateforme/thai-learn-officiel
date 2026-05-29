@@ -1,0 +1,44 @@
+{
+  "Tom": {
+    "name": "Tom",
+    "avatar": "/tom.png",
+    "bubbleColor": "bg-blue-50 border-blue-200 text-blue-900",
+    "position": "right"
+  },
+  "Marchand": {
+    "name": "Marchand",
+    "avatar": "/un-marchand.png",
+    "bubbleColor": "bg-emerald-50 border-emerald-200 text-emerald-900",
+    "position": "left"
+  },
+  "Kanya": {
+    "name": "Kanya",
+    "avatar": "/Kanya.png",
+    "bubbleColor": "bg-orange-50 border-orange-200 text-orange-900",
+    "position": "left"
+  },
+  "Vendor": {
+    "name": "Vendor",
+    "avatar": "/femme-old.png",
+    "bubbleColor": "bg-purple-50 border-purple-200 text-purple-900",
+    "position": "left"
+  },
+  "Aran": {
+    "name": "Aran",
+    "avatar": "/moine.png",
+    "bubbleColor": "bg-purple-50 border-purple-200 text-purple-900",
+    "position": "left"
+  },
+  "A": {
+    "name": "A",
+    "avatar": "/deedee-no-bg.png",
+    "bubbleColor": "bg-white border-slate-200 text-slate-800",
+    "position": "right"
+  },
+  "B": {
+    "name": "B",
+    "avatar": "/monkey-no-bg.png",
+    "bubbleColor": "bg-orange-50 border-orange-200 text-orange-900",
+    "position": "left"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "unit-1": { 
+    "en": "Basics & Greetings", 
+    "fr": "Bases & Salutations", 
+    "emoji": "👋",
+    "imageUrl": "/tom-et-sa-bossole.webp",
+    "description": {
+      "en": "Follow Tom's adventures in Thailand. He discovers a mysterious compass that will lead him on a grand journey.",
+      "fr": "Suivez les aventures de Tom en Thaïlande. Il découvre une boussole mystérieuse qui le mènera dans un grand voyage."
+    }
+  },
+  "unit-2": { "en": "Numbers & Quantities", "fr": "Nombres et Quantités", "emoji": "🔢" },
+  "unit-3": { "en": "Food & Restaurant", "fr": "Nourriture & Restaurant", "emoji": "🍜" },
+  "unit-4": { "en": "Getting to know people", "fr": "Faire connaissance", "emoji": "🤝" }
+}

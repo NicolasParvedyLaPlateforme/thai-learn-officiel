@@ -1,0 +1,37 @@
+[
+  {
+    "id": "w_phom",
+    "th": "ผม",
+    "fr": "je (homme)",
+    "phonetic": "phǒm",
+    "en": "I (man)"
+  },
+  {
+    "id": "w_chan",
+    "th": "ฉัน",
+    "fr": "je (femme)",
+    "phonetic": "chǎn",
+    "en": "I (woman)"
+  },
+  {
+    "id": "w_khun",
+    "th": "คุณ",
+    "fr": "tu / vous",
+    "phonetic": "khun",
+    "en": "you/you"
+  },
+  {
+    "id": "w_chue",
+    "th": "ชื่อ",
+    "fr": "nom / s'appeler",
+    "phonetic": "chûue",
+    "en": "name/to be called"
+  },
+  {
+    "id": "w_arai",
+    "th": "อะไร",
+    "fr": "quoi / quel",
+    "phonetic": "à-rai",
+    "en": "what / which"
+  }
+]

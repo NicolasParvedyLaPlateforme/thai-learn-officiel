@@ -1,0 +1,1168 @@
+      "words": [
+        {
+          "id": "w_sawatdee",
+          "th": "สวัสดี",
+          "fr": "bonjour",
+          "phonetic": "sà-wàt-dii",
+          "en": "Good morning"
+        },
+        {
+          "id": "w_khopkhun",
+          "th": "ขอบคุณ",
+--
+      "words": [
+        {
+          "id": "w_phom",
+          "th": "ผม",
+          "fr": "je (homme)",
+          "phonetic": "phǒm",
+          "en": "I (man)"
+        },
+        {
+          "id": "w_chan",
+          "th": "ฉัน",
+--
+      "words": [
+        {
+          "id": "w_0",
+          "th": "ศูนย์",
+          "fr": "zéro",
+          "phonetic": "sǔun",
+          "en": "zero"
+        },
+        {
+          "id": "w_1",
+          "th": "หนึ่ง",
+--
+      "words": [
+        {
+          "id": "w_mee",
+          "th": "มี",
+          "fr": "il y a / avoir",
+          "phonetic": "mii",
+          "en": "there is / have"
+        },
+        {
+          "id": "w_gao_ee",
+          "th": "เก้าอี้",
+--
+      "words": [
+        {
+          "id": "w_kin",
+          "th": "กิน",
+          "fr": "manger",
+          "phonetic": "kin",
+          "en": "eat"
+        },
+        {
+          "id": "w_khao",
+          "th": "ข้าว",
+--
+      "words": [
+        {
+          "id": "w_kho_thot",
+          "th": "ขอโทษ",
+          "fr": "pardon / désolé",
+          "phonetic": "khɔ̌ɔ thôot",
+          "en": "sorry / sorry"
+        },
+        {
+          "id": "w_thi_ni",
+          "th": "ที่นี่",
+--
+      "words": [
+        {
+          "id": "w_khao_pron",
+          "th": "เขา",
+          "fr": "il / elle",
+          "phonetic": "khǎo",
+          "en": "he/she"
+        },
+        {
+          "id": "w_rao",
+          "th": "เรา",
+--
+      "words": [
+        {
+          "id": "w_ma",
+          "th": "มา",
+          "fr": "venir",
+          "phonetic": "maa",
+          "en": "come"
+        },
+        {
+          "id": "w_tham",
+          "th": "ทำ",
+--
+      "words": [
+        {
+          "id": "w_thao_rai",
+          "th": "เท่าไหร่",
+          "fr": "combien",
+          "phonetic": "thâo rai",
+          "en": "How much"
+        },
+        {
+          "id": "w_phaeng",
+          "th": "แพง",
+--
+      "words": [
+        {
+          "id": "w_hiw",
+          "th": "หิว",
+          "fr": "avoir faim",
+          "phonetic": "hǐw",
+          "en": "to be hungry"
+        },
+        {
+          "id": "w_nueay",
+          "th": "เหนื่อย",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 1 assessment",
+      "descriptionEn": "Global review (30 questions)"
+    },
+    {
+      "id": "lesson-11",
+      "title": "Transports",
+      "description": "Se déplacer en ville",
+      "words": [
+        {
+          "id": "w_rot",
+          "th": "รถ",
+          "fr": "voiture / véhicule",
+          "phonetic": "rót",
+          "en": "car / vehicle"
+        },
+        {
+          "id": "w_fai",
+          "th": "ไฟ",
+--
+      "words": [
+        {
+          "id": "w_wan",
+          "th": "วัน",
+          "fr": "jour",
+          "phonetic": "wan",
+          "en": "day"
+        },
+        {
+          "id": "w_phrung",
+          "th": "พรุ่ง",
+--
+      "words": [
+        {
+          "id": "w_sai",
+          "th": "ซ้าย",
+          "fr": "gauche",
+          "phonetic": "sáai",
+          "en": "LEFT"
+        },
+        {
+          "id": "w_khwa",
+          "th": "ขวา",
+--
+      "words": [
+        {
+          "id": "w_chai",
+          "th": "ใช่",
+          "fr": "oui / exact",
+          "phonetic": "châi",
+          "en": "yes / correct"
+        },
+        {
+          "id": "w_mai_chai",
+          "th": "ไม่ใช่",
+--
+      "words": [
+        {
+          "id": "w_jep",
+          "th": "เจ็บ",
+          "fr": "avoir mal",
+          "phonetic": "jèp",
+          "en": "to be in pain"
+        },
+        {
+          "id": "w_puat",
+          "th": "ปวด",
+--
+      "words": [
+        {
+          "id": "w_yai",
+          "th": "ใหญ่",
+          "fr": "grand",
+          "phonetic": "yài",
+          "en": "big"
+        },
+        {
+          "id": "w_lek",
+          "th": "เล็ก",
+--
+      "words": [
+        {
+          "id": "w_see_color",
+          "th": "สี",
+          "fr": "couleur",
+          "phonetic": "sìi",
+          "en": "color"
+        },
+        {
+          "id": "w_daeng",
+          "th": "แดง",
+--
+      "words": [
+        {
+          "id": "w_baan",
+          "th": "บ้าน",
+          "fr": "maison",
+          "phonetic": "bâan",
+          "en": "House"
+        },
+        {
+          "id": "w_hong",
+          "th": "ห้อง",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 2 assessment",
+      "descriptionEn": "Unit 2 review (30 questions)"
+    },
+    {
+      "id": "lesson-20",
+      "title": "Au Menu : Viandes",
+      "description": "Poulet, porc, poisson",
+      "words": [
+        {
+          "id": "w_kai_2",
+          "th": "ไก่",
+          "fr": "poulet",
+          "phonetic": "kài",
+          "en": "chicken"
+        },
+        {
+          "id": "w_moo",
+          "th": "หมู",
+--
+      "words": [
+        {
+          "id": "w_kafae",
+          "th": "กาแฟ",
+          "fr": "café",
+          "phonetic": "kaa-fae",
+          "en": "coffee"
+        },
+        {
+          "id": "w_cha",
+          "th": "ชา",
+--
+      "words": [
+        {
+          "id": "w_waan",
+          "th": "หวาน",
+          "fr": "sucré",
+          "phonetic": "wǎan",
+          "en": "sugar"
+        },
+        {
+          "id": "w_khem",
+          "th": "เค็ม",
+--
+      "words": [
+        {
+          "id": "w_gep_ngoen",
+          "th": "เก็บเงิน",
+          "fr": "l'addition",
+          "phonetic": "gèp ngoen",
+          "en": "the bill please"
+        },
+        {
+          "id": "w_hiw_2",
+          "th": "หิว",
+--
+      "words": [
+        {
+          "id": "w_lesson-24-a1_0",
+          "th": "แอปเปิล",
+          "fr": "pomme",
+          "en": "apple",
+          "phonetic": "aép-pən"
+        },
+        {
+          "id": "w_lesson-24-a1_1",
+          "th": "กล้วย",
+--
+      "words": [
+        {
+          "id": "w_lesson-24-a2_0",
+          "th": "มะเขือเทศ",
+          "fr": "tomate",
+          "en": "tomato",
+          "phonetic": "má-khǔea-thêet"
+        },
+        {
+          "id": "w_lesson-24-a2_1",
+          "th": "แตงกวา",
+--
+      "words": [
+        {
+          "id": "w_lesson-24-a3_0",
+          "th": "ช้อน",
+          "fr": "cuillère",
+          "en": "spoon",
+          "phonetic": "chɔ́ɔn"
+        },
+        {
+          "id": "w_lesson-24-a3_1",
+          "th": "ส้อม",
+--
+      "words": [
+        {
+          "id": "w_lesson-24-a4_0",
+          "th": "ทอด",
+          "fr": "frit",
+          "en": "fried",
+          "phonetic": "thɔ̂ɔt"
+        },
+        {
+          "id": "w_lesson-24-a4_1",
+          "th": "ต้ม",
+--
+      "words": [
+        {
+          "id": "w_lesson-24-a5_0",
+          "th": "ของหวาน",
+          "fr": "dessert",
+          "en": "dessert",
+          "phonetic": "khɔ̌ɔng-wǎan"
+        },
+        {
+          "id": "w_lesson-24-a5_2",
+          "th": "น้ำแข็ง",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 3 Assessment",
+      "descriptionEn": "Food test"
+    },
+    {
+      "id": "lesson-25",
+      "title": "Verbes d'action 1",
+      "description": "Regarder, écouter, marcher",
+      "words": [
+        {
+          "id": "w_doo",
+          "th": "ดู",
+          "fr": "regarder",
+          "phonetic": "duu",
+          "en": "look"
+        },
+        {
+          "id": "w_fang",
+          "th": "ฟัง",
+--
+      "words": [
+        {
+          "id": "w_tham_ngan",
+          "th": "ทำงาน",
+          "fr": "travailler",
+          "phonetic": "tham-ngaan",
+          "en": "to work"
+        },
+        {
+          "id": "w_len",
+          "th": "เล่น",
+--
+      "words": [
+        {
+          "id": "w_rian",
+          "th": "เรียน",
+          "fr": "apprendre",
+          "phonetic": "riian",
+          "en": "learn"
+        },
+        {
+          "id": "w_aan",
+          "th": "อ่าน",
+--
+      "words": [
+        {
+          "id": "w_khai_sell_2",
+          "th": "ขาย",
+          "fr": "vendre",
+          "phonetic": "khǎai",
+          "en": "sell"
+        },
+        {
+          "id": "w_hai",
+          "th": "ให้",
+--
+      "words": [
+        {
+          "id": "w_lesson-29-a1_0",
+          "th": "วิ่ง",
+          "fr": "courir",
+          "en": "run",
+          "phonetic": "wîng"
+        },
+        {
+          "id": "w_lesson-29-a1_1",
+          "th": "เดิน",
+--
+      "words": [
+        {
+          "id": "w_lesson-29-a2_0",
+          "th": "ถาม",
+          "fr": "demander",
+          "en": "ask",
+          "phonetic": "thǎam"
+        },
+        {
+          "id": "w_lesson-29-a2_1",
+          "th": "ตอบ",
+--
+      "words": [
+        {
+          "id": "w_lesson-29-a3_0",
+          "th": "ทำความสะอาด",
+          "fr": "nettoyer",
+          "en": "to clean",
+          "phonetic": "tham-khwaam-sà-àat"
+        },
+        {
+          "id": "w_lesson-29-a3_1",
+          "th": "ซัก",
+--
+      "words": [
+        {
+          "id": "w_lesson-29-a4_0",
+          "th": "เปิด",
+          "fr": "ouvrir",
+          "en": "open",
+          "phonetic": "pǝ̀ǝt"
+        },
+        {
+          "id": "w_lesson-29-a4_1",
+          "th": "ปิด",
+--
+      "words": [
+        {
+          "id": "w_lesson-29-a5_0",
+          "th": "เริ่ม",
+          "fr": "commencer",
+          "en": "begin",
+          "phonetic": "rə̂əm"
+        },
+        {
+          "id": "w_lesson-29-a5_1",
+          "th": "เสร็จ",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 4 Assessment",
+      "descriptionEn": "Stock test"
+    },
+    {
+      "id": "lesson-30",
+      "title": "Moments du jour",
+      "description": "Matin, Soir, Nuit",
+      "words": [
+        {
+          "id": "w_chao",
+          "th": "เช้า",
+          "fr": "matin",
+          "phonetic": "cháao",
+          "en": "Morning"
+        },
+        {
+          "id": "w_yen",
+          "th": "เย็น",
+--
+      "words": [
+        {
+          "id": "w_fon",
+          "th": "ฝน",
+          "fr": "pluie",
+          "phonetic": "fǒn",
+          "en": "rain"
+        },
+        {
+          "id": "w_tok",
+          "th": "ตก",
+--
+      "words": [
+        {
+          "id": "w_lom",
+          "th": "ลม",
+          "fr": "vent",
+          "phonetic": "lom",
+          "en": "wind"
+        },
+        {
+          "id": "w_ron_2",
+          "th": "ร้อน",
+--
+      "words": [
+        {
+          "id": "w_muearai",
+          "th": "เมื่อไหร่",
+          "fr": "quand ?",
+          "phonetic": "mûea-rài",
+          "en": "When ?"
+        },
+        {
+          "id": "w_ki",
+          "th": "กี่",
+--
+      "words": [
+        {
+          "id": "w_lesson-34-a1_0",
+          "th": "ลม",
+          "fr": "vent",
+          "en": "wind",
+          "phonetic": "lom"
+        },
+        {
+          "id": "w_lesson-34-a1_1",
+          "th": "หิมะ",
+--
+      "words": [
+        {
+          "id": "w_lesson-34-a2_0",
+          "th": "ฤดูร้อน",
+          "fr": "été",
+          "en": "summer",
+          "phonetic": "rʉ́-duu-rɔ́ɔn"
+        },
+        {
+          "id": "w_lesson-34-a2_1",
+          "th": "ฤดูหนาว",
+--
+      "words": [
+        {
+          "id": "w_lesson-34-a3_1",
+          "th": "พรุ่งนี้",
+          "fr": "demain",
+          "en": "tomorrow",
+          "phonetic": "phrûng-níi"
+        },
+        {
+          "id": "w_lesson-34-a3_2",
+          "th": "เมื่อวาน",
+--
+      "words": [
+        {
+          "id": "w_lesson-34-a4_0",
+          "th": "เช้า",
+          "fr": "matin",
+          "en": "morning",
+          "phonetic": "cháo"
+        },
+        {
+          "id": "w_lesson-34-a4_1",
+          "th": "บ่าย",
+--
+      "words": [
+        {
+          "id": "w_lesson-34-a5_0",
+          "th": "นาที",
+          "fr": "minute",
+          "en": "minute",
+          "phonetic": "naa-thii"
+        },
+        {
+          "id": "w_lesson-34-a5_1",
+          "th": "ชั่วโมง",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 5 Assessment",
+      "descriptionEn": "Time and Weather Test"
+    },
+    {
+      "id": "lesson-35",
+      "title": "Lieux 1",
+      "description": "Hôtel, école",
+      "words": [
+        {
+          "id": "w_rong_raem",
+          "th": "โรงแรม",
+          "fr": "hôtel",
+          "phonetic": "roong-raem",
+          "en": "hotel"
+        },
+        {
+          "id": "w_rong_rian",
+          "th": "โรงเรียน",
+--
+      "words": [
+        {
+          "id": "w_talat",
+          "th": "ตลาด",
+          "fr": "marché",
+          "phonetic": "dtà-làat",
+          "en": "market"
+        },
+        {
+          "id": "w_thanon",
+          "th": "ถนน",
+--
+      "words": [
+        {
+          "id": "w_rot_me",
+          "th": "รถเมล์",
+          "fr": "bus",
+          "phonetic": "rót-mee",
+          "en": "bus"
+        },
+        {
+          "id": "w_ruea",
+          "th": "เรือ",
+--
+      "words": [
+        {
+          "id": "w_kruang_bin",
+          "th": "เครื่องบิน",
+          "fr": "avion",
+          "phonetic": "khrûeang-bin",
+          "en": "plane"
+        },
+        {
+          "id": "w_bin",
+          "th": "บิน",
+--
+      "words": [
+        {
+          "id": "w_lesson-39-a1_0",
+          "th": "ธนาคาร",
+          "fr": "banque",
+          "en": "bank",
+          "phonetic": "thá-naa-khaan"
+        },
+        {
+          "id": "w_lesson-39-a1_1",
+          "th": "โรงพยาบาล",
+--
+      "words": [
+        {
+          "id": "w_lesson-39-a2_0",
+          "th": "เหนือ",
+          "fr": "nord",
+          "en": "north",
+          "phonetic": "nʉ̌a"
+        },
+        {
+          "id": "w_lesson-39-a2_1",
+          "th": "ใต้",
+--
+      "words": [
+        {
+          "id": "w_lesson-39-a3_0",
+          "th": "ตั๋ว",
+          "fr": "billet",
+          "en": "ticket",
+          "phonetic": "dtǔa"
+        },
+        {
+          "id": "w_lesson-39-a3_1",
+          "th": "สถานี",
+--
+      "words": [
+        {
+          "id": "w_lesson-39-a4_0",
+          "th": "รถ",
+          "fr": "voiture",
+          "en": "car",
+          "phonetic": "rót"
+        },
+        {
+          "id": "w_lesson-39-a4_2",
+          "th": "รถเมล์",
+--
+      "words": [
+        {
+          "id": "w_lesson-39-a5_0",
+          "th": "ตรง",
+          "fr": "tout droit",
+          "en": "straight",
+          "phonetic": "dtrong"
+        },
+        {
+          "id": "w_lesson-39-a5_1",
+          "th": "ซ้าย",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 6 Assessment",
+      "descriptionEn": "Places and Routes Test"
+    },
+    {
+      "id": "lesson-40",
+      "title": "Vêtements",
+      "description": "Chemise, pantalon",
+      "words": [
+        {
+          "id": "w_kangkeng",
+          "th": "กางเกง",
+          "fr": "pantalon",
+          "phonetic": "gaang-geeng",
+          "en": "pants"
+        },
+        {
+          "id": "w_rong_thao",
+          "th": "รองเท้า",
+--
+      "words": [
+        {
+          "id": "w_lueang",
+          "th": "เหลือง",
+          "fr": "jaune",
+          "phonetic": "lǔeang",
+          "en": "YELLOW"
+        },
+        {
+          "id": "w_chomphu",
+          "th": "ชมพู",
+--
+      "words": [
+        {
+          "id": "w_mai_new",
+          "th": "ใหม่",
+          "fr": "nouveau",
+          "phonetic": "mǎi",
+          "en": "new"
+        },
+        {
+          "id": "w_kao",
+          "th": "เก่า",
+--
+      "words": [
+        {
+          "id": "w_thuk_correct",
+          "th": "ถูก",
+          "fr": "bon marché / correct",
+          "phonetic": "thùuk",
+          "en": "cheap/ok"
+        },
+        {
+          "id": "w_phaeng_2",
+          "th": "แพง",
+--
+      "words": [
+        {
+          "id": "w_lesson-44-a1_0",
+          "th": "รองเท้า",
+          "fr": "chaussures",
+          "en": "shoes",
+          "phonetic": "rɔɔng-tháo"
+        },
+        {
+          "id": "w_lesson-44-a1_1",
+          "th": "หมวก",
+--
+      "words": [
+        {
+          "id": "w_lesson-44-a2_0",
+          "th": "กระโปรง",
+          "fr": "jupe",
+          "en": "skirt",
+          "phonetic": "krà-proong"
+        },
+        {
+          "id": "w_lesson-44-a2_2",
+          "th": "ถุงเท้า",
+--
+      "words": [
+        {
+          "id": "w_lesson-44-a3_0",
+          "th": "ใหญ่",
+          "fr": "grand",
+          "en": "big",
+          "phonetic": "yài"
+        },
+        {
+          "id": "w_lesson-44-a3_1",
+          "th": "เล็ก",
+--
+      "words": [
+        {
+          "id": "w_lesson-44-a4_1",
+          "th": "หนัก",
+          "fr": "lourd",
+          "en": "heavy",
+          "phonetic": "nàk"
+        },
+        {
+          "id": "w_lesson-44-a4_2",
+          "th": "เบา",
+--
+      "words": [
+        {
+          "id": "w_lesson-44-a5_0",
+          "th": "ทอง",
+          "fr": "or",
+          "en": "gold",
+          "phonetic": "thɔɔng"
+        },
+        {
+          "id": "w_lesson-44-a5_1",
+          "th": "เงิน",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 7 Assessment",
+      "descriptionEn": "Purchases and Appearances Test"
+    },
+    {
+      "id": "lesson-45",
+      "title": "Famille proche",
+      "description": "Enfants, frères",
+      "words": [
+        {
+          "id": "w_luk",
+          "th": "ลูก",
+          "fr": "enfant (son enfant)",
+          "phonetic": "lûuk",
+          "en": "child (his child)"
+        },
+        {
+          "id": "w_dek_2",
+          "th": "เด็ก",
+--
+      "words": [
+        {
+          "id": "w_ta",
+          "th": "ตา",
+          "fr": "oeil",
+          "phonetic": "dtaa",
+          "en": "eye"
+        },
+        {
+          "id": "w_pak",
+          "th": "ปาก",
+--
+      "words": [
+        {
+          "id": "w_sung",
+          "th": "สูง",
+          "fr": "grand (taille)",
+          "phonetic": "sǔung",
+          "en": "large (size)"
+        },
+        {
+          "id": "w_tia",
+          "th": "เตี้ย",
+--
+      "words": [
+        {
+          "id": "w_sanuk",
+          "th": "สนุก",
+          "fr": "amusant",
+          "phonetic": "sà-nùk",
+          "en": "amusing"
+        },
+        {
+          "id": "w_nak_rian",
+          "th": "นักเรียน",
+--
+      "words": [
+        {
+          "id": "w_lesson-49-a1_0",
+          "th": "ปู่",
+          "fr": "grand-père",
+          "en": "grandfather",
+          "phonetic": "pùu"
+        },
+        {
+          "id": "w_lesson-49-a1_1",
+          "th": "ย่า",
+--
+      "words": [
+        {
+          "id": "w_lesson-49-a2_0",
+          "th": "ป้า",
+          "fr": "tante",
+          "en": "aunt",
+          "phonetic": "pâa"
+        },
+        {
+          "id": "w_lesson-49-a2_1",
+          "th": "ลูกพี่ลูกน้อง",
+--
+      "words": [
+        {
+          "id": "w_lesson-49-a3_0",
+          "th": "สวย",
+          "fr": "belle",
+          "en": "beautiful",
+          "phonetic": "sǔay"
+        },
+        {
+          "id": "w_lesson-49-a3_1",
+          "th": "หล่อ",
+--
+      "words": [
+        {
+          "id": "w_lesson-49-a4_0",
+          "th": "อ้วน",
+          "fr": "gros(se)",
+          "en": "fat",
+          "phonetic": "ûan"
+        },
+        {
+          "id": "w_lesson-49-a4_1",
+          "th": "ผอม",
+--
+      "words": [
+        {
+          "id": "w_lesson-49-a5_0",
+          "th": "เตี้ย",
+          "fr": "petit (taille)",
+          "en": "short",
+          "phonetic": "dtîa"
+        },
+        {
+          "id": "w_lesson-49-a5_1",
+          "th": "ฉลาด",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 8 Assessment",
+      "descriptionEn": "Family and Body Test"
+    },
+    {
+      "id": "lesson-50",
+      "title": "À l'hôpital",
+      "description": "Malade, médecine",
+      "words": [
+        {
+          "id": "w_puay",
+          "th": "ป่วย",
+          "fr": "malade",
+          "phonetic": "bpùay",
+          "en": "sick"
+        },
+        {
+          "id": "w_ya",
+          "th": "ยา",
+--
+      "words": [
+        {
+          "id": "w_khai_fever",
+          "th": "ไข้",
+          "fr": "fièvre",
+          "phonetic": "khǎai",
+          "en": "fever"
+        },
+        {
+          "id": "w_ay",
+          "th": "ไอ",
+--
+      "words": [
+        {
+          "id": "w_sia_jai",
+          "th": "เสียใจ",
+          "fr": "triste / désolé",
+          "phonetic": "sǐia-jai",
+          "en": "sad / sorry"
+        },
+        {
+          "id": "w_klua",
+          "th": "กลัว",
+--
+      "words": [
+        {
+          "id": "w_khit_2",
+          "th": "คิด",
+          "fr": "penser",
+          "phonetic": "khít",
+          "en": "think"
+        },
+        {
+          "id": "w_ru",
+          "th": "รู้",
+--
+      "words": [
+        {
+          "id": "w_lesson-54-a1_0",
+          "th": "ยา",
+          "fr": "médicament",
+          "en": "medicine",
+          "phonetic": "yaa"
+        },
+        {
+          "id": "w_lesson-54-a1_1",
+          "th": "ร้านขายยา",
+--
+      "words": [
+        {
+          "id": "w_lesson-54-a2_0",
+          "th": "เจ็บ",
+          "fr": "avoir mal",
+          "en": "pain",
+          "phonetic": "jèp"
+        },
+        {
+          "id": "w_lesson-54-a2_1",
+          "th": "ไข้",
+--
+      "words": [
+        {
+          "id": "w_lesson-54-a3_0",
+          "th": "มีความสุข",
+          "fr": "heureux",
+          "en": "happy",
+          "phonetic": "mii-khwaam-sùk"
+        },
+        {
+          "id": "w_lesson-54-a3_1",
+          "th": "โมโห",
+--
+      "words": [
+        {
+          "id": "w_lesson-54-a4_0",
+          "th": "เหนื่อย",
+          "fr": "fatigué",
+          "en": "tired",
+          "phonetic": "nʉ̀ai"
+        },
+        {
+          "id": "w_lesson-54-a4_1",
+          "th": "หิว",
+--
+      "words": [
+        {
+          "id": "w_lesson-54-a5_0",
+          "th": "ยิ้ม",
+          "fr": "sourire",
+          "en": "smile",
+          "phonetic": "yím"
+        },
+        {
+          "id": "w_lesson-54-a5_1",
+          "th": "ร้องไห้",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "Unit 9 Assessment",
+      "descriptionEn": "Feelings and Health Test"
+    },
+    {
+      "id": "lesson-55",
+      "title": "Fréquence 1",
+      "description": "Toujours, souvent",
+      "words": [
+        {
+          "id": "w_samoe",
+          "th": "เสมอ",
+          "fr": "toujours",
+          "phonetic": "sà-mǒe",
+          "en": "always"
+        },
+        {
+          "id": "w_boi",
+          "th": "บ่อย",
+--
+      "words": [
+        {
+          "id": "w_mai_khoei",
+          "th": "ไม่เคย",
+          "fr": "jamais",
+          "phonetic": "mâi-khoei",
+          "en": "Never"
+        },
+        {
+          "id": "w_bang_thi",
+          "th": "บางที",
+--
+      "words": [
+        {
+          "id": "w_khrai",
+          "th": "ใคร",
+          "fr": "qui ?",
+          "phonetic": "khrai",
+          "en": "Who ?"
+        }
+      ],
+      "phrases": [
+        {
+--
+      "words": [
+        {
+          "id": "w_at_ja",
+          "th": "อาจจะ",
+          "fr": "peut-être",
+          "phonetic": "àat-jà",
+          "en": "maybe"
+        }
+      ],
+      "phrases": [
+        {
+--
+      "words": [
+        {
+          "id": "w_et",
+          "th": "เอ็ด",
+          "fr": "un (1 dans 11, 21...)",
+          "phonetic": "èt",
+          "en": "one (1 in 11, 21...)"
+        },
+        {
+          "id": "w_yii",
+          "th": "ยี่",
+--
+      "words": [
+        {
+          "id": "w_jan",
+          "th": "จันทร์",
+          "fr": "lundi",
+          "phonetic": "jan",
+          "en": "Monday"
+        },
+        {
+          "id": "w_angkhan",
+          "th": "อังคาร",
+--
+      "words": [
+        {
+          "id": "w_aayu",
+          "th": "อายุ",
+          "fr": "âge",
+          "phonetic": "aa-yú",
+          "en": "age"
+        },
+        {
+          "id": "w_pii",
+          "th": "ปี",
+--
+      "words": [
+        {
+          "id": "w_rong_raem_2",
+          "th": "โรงแรม",
+          "fr": "hôtel",
+          "phonetic": "roong-raem",
+          "en": "hotel"
+        },
+        {
+          "id": "w_talat_2",
+          "th": "ตลาด",
+--
+      "words": [
+        {
+          "id": "w_check_bin",
+          "th": "เช็คบิล",
+          "fr": "l'addition",
+          "phonetic": "chék bin",
+          "en": "the bill",
+          "explanation": "Ce mot vient de l'anglais 'Check bill'. Le son 'k' final s'écrit avec 'ค' (qui fait normalement 'kh' au début) respectant la translittération anglaise."
+        },
+        {
+          "id": "w_eek",
+--
+      "words": [],
+      "phrases": [],
+      "titleEn": "The A1 Grand Assessment",
+      "descriptionEn": "Final test of Level A1 (All Units)"
+    }
+  ]
+}
