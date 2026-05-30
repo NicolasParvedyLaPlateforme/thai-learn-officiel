@@ -215,15 +215,8 @@ export function DesktopSidebarRight({
 
             {/* Sticky Actions Footer */}
             <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-                <Link
-                  href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                  className="w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all bg-[#0a6c4a]"
-                >
-                  {language === 'en' ? `Start lesson` : `Commencer la leçon`}
-                </Link>
-
                 {selectedLesson.isCompleted && (
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 mb-1">
                     {suggestionType !== 'alphabet' && (
                       <Link
                         href={`/writing?lessonId=${selectedLesson.lesson.id}`}
@@ -245,6 +238,12 @@ export function DesktopSidebarRight({
                     </button>
                   </div>
                 )}
+                <Link
+                  href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                  className="w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all bg-[#0a6c4a]"
+                >
+                  {language === 'en' ? `Start lesson` : `Commencer la leçon`}
+                </Link>
             </div>
           </div>
         </motion.div>

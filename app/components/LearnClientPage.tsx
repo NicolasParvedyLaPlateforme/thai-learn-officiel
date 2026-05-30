@@ -797,26 +797,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
 
                 {/* Sticky Actions Footer */}
                 <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-                    <div className="flex items-center gap-3 w-full">
-                      <button
-                        onClick={() => setSelectedLesson(null)}
-                        className="md:hidden shrink-0 flex items-center justify-center w-14 h-14 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 active:scale-95 transition-all"
-                      >
-                        <ChevronLeft size={24} />
-                      </button>
-                      <Link
-                        href={`/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                        className="flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all bg-[#0a6c4a]"
-                      >
-                        {language === 'en' ? `Start lesson` : `Commencer la leçon`}
-                      </Link>
-                    </div>
-
                     {selectedLesson.isCompleted && (
                       <div className="flex gap-3">
                         <Link
                           href={`/writing?lessonId=${selectedLesson.lesson.id}`}
-                          className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors"
+                          className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer"
                         >
                           <Pencil size={16} className="mr-2" />
                           {language === 'en' ? 'Writing' : 'Écriture'}
@@ -833,6 +818,20 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         </button>
                       </div>
                     )}
+                    <div className="flex items-center gap-3 w-full mt-1">
+                      <button
+                        onClick={() => setSelectedLesson(null)}
+                        className="md:hidden shrink-0 flex items-center justify-center w-14 h-14 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 active:scale-95 transition-all"
+                      >
+                        <ChevronLeft size={24} />
+                      </button>
+                      <Link
+                        href={`/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                        className="flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all bg-[#0a6c4a]"
+                      >
+                        {language === 'en' ? `Start lesson` : `Commencer la leçon`}
+                      </Link>
+                    </div>
                 </div>
               </motion.div>
             </div>

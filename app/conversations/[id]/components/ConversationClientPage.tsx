@@ -302,6 +302,20 @@ function ConversationContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepIndex, hasStarted, isInteractive, mounted, allWords]);
 
+  useEffect(() => {
+    if (searchParams.get("dev") === "validate" && conversation && !isFinished && mounted) {
+      setIsFinished(true);
+      hasStarted || setHasStarted(true);
+      setCurrentLineIndex(conversation.dialogs.length);
+      addXp(10);
+      let completionLvl = 0;
+      if (isLevel1) completionLvl = 1;
+      if (isLevel2) completionLvl = 2;
+      if (isLevel3) completionLvl = 3;
+      completeConversation(conversation.id, completionLvl, 5); // 5 stars dev skip!
+    }
+  }, [searchParams, conversation?.id, isFinished, isLevel1, isLevel2, isLevel3, mounted, addXp, completeConversation, hasStarted]);
+
   if (!mounted) return null;
 
   if (!conversation) {

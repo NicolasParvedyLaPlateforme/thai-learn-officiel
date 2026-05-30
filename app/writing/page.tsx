@@ -44,14 +44,19 @@ export default function WritingPage() {
     const timer = setTimeout(() => {
       setMounted(true);
       if(!initialized) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLessonId = urlParams.get('lessonId');
+
         let targetLessons = completedLessons;
         
-        if (writingConfig.lessonId !== 'all') {
+        if (urlLessonId) {
+           targetLessons = [urlLessonId];
+        } else if (writingConfig.lessonId !== 'all') {
            targetLessons = [writingConfig.lessonId];
         }
         
         if (targetLessons.length > 0) {
-           getWritingExercisesServer(targetLessons, language, writingConfig.selectedWordIds).then(generated => {
+           getWritingExercisesServer(targetLessons, language, urlLessonId ? null : writingConfig.selectedWordIds).then(generated => {
                setExercises(generated);
            });
         }
@@ -84,7 +89,7 @@ export default function WritingPage() {
         <button 
           onClick={() => {
             if (hasLessonId) {
-              router.push(`/lesson/${params?.get('lessonId')}`);
+              router.push(`/learn#lesson-${params?.get('lessonId')}`);
             } else {
               router.push('/practice');
             }
@@ -105,7 +110,7 @@ export default function WritingPage() {
 
   const currentExercise = exercises[currentIndex] || null;
   // Loop back or refill if needed
-  const progress = ((currentIndex % 10) / 10) * 100;
+  const progress = exercises.length > 0 ? ((currentIndex / exercises.length) * 100) : 0;
 
   const handleCheck = (overrideAnswer?: string[]) => {
     if (!currentExercise) return;
@@ -114,11 +119,16 @@ export default function WritingPage() {
           completeLesson('writing-dummy', 1);
           
           if (currentIndex >= exercises.length - 1) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLessonId = urlParams.get('lessonId');
+
             let targetLessons = completedLessons;
-            if (writingConfig.lessonId !== 'all') {
+            if (urlLessonId) {
+               targetLessons = [urlLessonId];
+            } else if (writingConfig.lessonId !== 'all') {
                targetLessons = [writingConfig.lessonId];
             }
-            getWritingExercisesServer(targetLessons, language, writingConfig.selectedWordIds).then(generated => {
+            getWritingExercisesServer(targetLessons, language, urlLessonId ? null : writingConfig.selectedWordIds).then(generated => {
                setExercises(generated);
                setCurrentIndex(0);
             });
@@ -179,7 +189,7 @@ export default function WritingPage() {
         <div className="flex items-center gap-6 w-full max-w-2xl mx-auto h-full px-4 flex-1">
           <button onClick={() => {
             if (hasLessonId) {
-              router.push(`/lesson/${params?.get('lessonId')}`);
+              router.push(`/learn#lesson-${params?.get('lessonId')}`);
             } else {
               router.push('/practice');
             }

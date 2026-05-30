@@ -26,8 +26,16 @@ async function getAudioUrl(text: string): Promise<string> {
   const primaryUrl = `/sound/${text}-${targetGender}.mp3`;
   const secondaryUrl = `/sound/${text}-${targetGender === 'men' ? 'woman' : 'men'}.mp3`;
   
-  if (await checkUrlExists(primaryUrl)) return primaryUrl;
-  if (await checkUrlExists(secondaryUrl)) return secondaryUrl;
+  if (fileExistenceCache[primaryUrl]) return primaryUrl;
+  if (fileExistenceCache[secondaryUrl]) return secondaryUrl;
+  
+  const [primaryOk, secondaryOk] = await Promise.all([
+    checkUrlExists(primaryUrl),
+    checkUrlExists(secondaryUrl)
+  ]);
+  
+  if (primaryOk) return primaryUrl;
+  if (secondaryOk) return secondaryUrl;
   
   return `/api/tts?text=${encodeURIComponent(text)}`;
 }
@@ -63,7 +71,9 @@ export const playThaiTTS = (text: string) => {
         const needsWakeUp = now - globalLastPlayTime > WAKEUP_THRESHOLD;
         globalLastPlayTime = now;
 
-        if (needsWakeUp) {
+        const isShortSound = text.length <= 3;
+
+        if (needsWakeUp && !isShortSound) {
           // Play an invisible "wake up" sound using the same audio URL
           const wakeUpAudio = new Audio(url);
           wakeUpAudio.volume = 0.01; // Barely audible
@@ -157,7 +167,9 @@ export const playThaiTTSAsync = (text: string): Promise<void> => {
           const needsWakeUp = now - globalLastPlayTime > WAKEUP_THRESHOLD;
           globalLastPlayTime = now;
 
-          if (needsWakeUp) {
+          const isShortSound = text.length <= 3;
+
+          if (needsWakeUp && !isShortSound) {
             const wakeUpAudio = new Audio(url);
             wakeUpAudio.volume = 0.01;
             wakeUpAudio.play().catch(() => {});

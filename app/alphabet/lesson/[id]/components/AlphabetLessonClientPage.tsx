@@ -110,6 +110,14 @@ function AlphabetLessonContent() {
     }
   }, [lesson, router, currentLevel, language, completedLessons, _hasHydrated, lessonId, unlockedLessons, exercisesGeneratedFor]);
 
+  useEffect(() => {
+    if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
+      setIsFinished(true);
+      if (lesson) completeLesson(lesson.id, 15, currentLevel, 3);
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    }
+  }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
+
   const isDataLoaded = isClient && _hasHydrated && !!lesson && exercises.length > 0;
 
   if (!isDataLoaded && !showExerciseUI) {
