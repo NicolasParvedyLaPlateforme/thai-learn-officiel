@@ -265,35 +265,35 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
               {mounted && (
                 <div 
                   onClick={() => setIsQuestsModalOpen(true)}
-                  className="xl:hidden mt-6 w-full bg-white rounded-2xl border-2 border-slate-100 p-4 shadow-sm flex items-center justify-between cursor-pointer active:scale-95 transition-transform"
+                  className="xl:hidden mt-6 w-full bg-white rounded-2xl border-2 border-slate-100 p-4 shadow-sm flex items-center justify-between cursor-pointer active:scale-95 transition-transform gap-2"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
                     <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
                       <Target size={20} className="text-emerald-500" />
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col min-w-0">
                       <span className="text-xs font-semibold text-slate-400">
                         {language === 'en' ? 'Daily Quest' : 'Quête du jour'}
                       </span>
                       {alphabetQuests.filter(q => !q.completed).length > 0 ? (
-                        <span className="text-sm font-bold text-slate-700">
+                        <span className="text-sm font-bold text-slate-700 truncate">
                           {language === 'en' 
                             ? alphabetQuests.filter(q => !q.completed)[0].titleEn 
                             : alphabetQuests.filter(q => !q.completed)[0].titleFr}
                         </span>
                       ) : (
-                        <span className="text-sm font-bold text-emerald-600">
+                        <span className="text-sm font-bold text-emerald-600 truncate">
                           {language === 'en' ? 'All quests completed!' : 'Toutes les quêtes terminées !'}
                         </span>
                       )}
                     </div>
                   </div>
                   {alphabetQuests.filter(q => !q.completed).length > 0 && (
-                    <div className="flex items-center gap-2">
-                       <span className="text-sm font-bold text-slate-400">
+                    <div className="flex items-center gap-2 shrink-0">
+                       <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
                          {alphabetQuests.filter(q => !q.completed)[0].progress} / {alphabetQuests.filter(q => !q.completed)[0].target}
                        </span>
-                       <ChevronRight size={18} className="text-slate-300" />
+                       <ChevronRight size={18} className="text-slate-300 shrink-0" />
                     </div>
                   )}
                 </div>
@@ -522,6 +522,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                                 e.stopPropagation();
                                 setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                                 setModalLevel(Math.min(level, 3));
+                                setShowDesktopUnitsList(false);
                               }}
                             >
                               <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-10 transition-transform text-3xl font-thai overflow-hidden ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : level >= 3 ? unit.shades.l3 : level >= 2 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
@@ -562,6 +563,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                                 e.stopPropagation();
                                 setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                                 setModalLevel(Math.min(level, 3));
+                                setShowDesktopUnitsList(false);
                               }}
                             >
                                {isMaxLevel ? (
