@@ -133,7 +133,7 @@ export function DesktopSidebarRight({
                             setModalLevel(levelIndex);
                           }
                         }}
-                        className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed`}
+                        className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
                         disabled={!isAccessible}
                       >
                         <div className={`
@@ -234,7 +234,7 @@ export function DesktopSidebarRight({
                         resetLessonLevel(selectedLesson.lesson.id);
                         setModalLevel(0);
                       }}
-                      className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors"
+                      className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
                     >
                       <RotateCcw size={16} className="mr-2" />
                       {language === 'en' ? 'Reset' : 'Réinitialiser'}
@@ -265,7 +265,7 @@ export function DesktopSidebarRight({
         >
            <button 
              onClick={() => setShowUnitsList(true)}
-             className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-2xl transition-colors group"
+             className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-2xl transition-colors group cursor-pointer"
            >
              <div className="flex items-center gap-3">
                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
@@ -310,7 +310,7 @@ export function DesktopSidebarRight({
             </div>
             <button 
               onClick={() => setShowUnitsList(false)}
-              className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors"
+              className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors cursor-pointer"
             >
               <X size={18} />
             </button>
@@ -363,7 +363,7 @@ export function DesktopSidebarRight({
                 <button 
                   key={u.id}
                   onClick={() => onUnitSelect(i)}
-                  className="w-full text-left rounded-2xl transition-all relative flex flex-row items-center p-3 shrink-0 bg-slate-50 border border-transparent hover:border-slate-200 hover:bg-slate-100 active:scale-[0.98] group/btn"
+                  className="w-full text-left rounded-2xl transition-all relative flex flex-row items-center p-3 shrink-0 bg-slate-50 border border-transparent hover:border-slate-200 hover:bg-slate-100 active:scale-[0.98] group/btn cursor-pointer"
                 >
                   {hasSuggestion && (
                     <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-amber-400 rounded-full z-10"></span>

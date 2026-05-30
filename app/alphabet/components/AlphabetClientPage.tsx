@@ -8,6 +8,7 @@ import { createPortal } from 'react-dom';
 import { useProgressStore } from '../../lib/store';
 import { getAlphabetLessons, AlphabetLessonDef, formatCombiningChar } from '../../lib/alphabet-utils';
 import { playThaiTTS } from '../../lib/tts';
+import { Drawer } from 'vaul';
 import { BookOpen, CheckCircle, Star, Play, Crown, X, Unlock, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Users, Flame, Target } from 'lucide-react';
 import IconImage from '../../components/IconImage';
 
@@ -25,6 +26,14 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, unlockLessonManual, language, setLanguage, autoDetectLanguage } = useProgressStore();
   const alphabetQuests = dailyQuests?.alphabet || [];
   const [mounted, setMounted] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const levelsScrollRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const [selectedLesson, setSelectedLesson] = useState<{lesson: AlphabetLessonDef, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string} | null>(null);
@@ -631,107 +640,100 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       )}
 
       {/* Selected Lesson Modal */}
-      {mounted && createPortal(
-        <AnimatePresence>
-           {selectedLesson && (
-            <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-4 xl:hidden">
-              <motion.div 
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
-                className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
-                onClick={() => setSelectedLesson(null)}
-              />
-              <motion.div 
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className={`w-full md:max-w-[26rem] h-[100dvh] md:h-auto md:max-h-[90vh] bg-white rounded-none md:rounded-[20px] shadow-xl flex flex-col relative overflow-hidden z-20`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Removed Close Button */}
-
+      {mounted && windowWidth < 1280 && createPortal(
+        <Drawer.Root open={!!selectedLesson} onOpenChange={(open) => !open && setSelectedLesson(null)}>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm xl:hidden" />
+            <Drawer.Content className="xl:hidden bg-white flex flex-col rounded-t-[24px] fixed bottom-0 left-0 right-0 z-[100] max-h-[95vh] outline-none">
+                <Drawer.Title className="sr-only">Alphabet Details</Drawer.Title>
+                <Drawer.Description className="sr-only">Choose a level</Drawer.Description>
+                <div className="w-full flex justify-center py-3 shrink-0 bg-transparent z-10 absolute top-0 left-0 right-0">
+                  <div className="w-12 h-1.5 bg-slate-300/50 rounded-full" />
+                </div>
                 {/* Scrollable Content */}
-                <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar">
-                  {/* Image Header */}
-                  <div className="w-full shrink-0 z-0">
-                     <div className={`w-full h-[100px] md:h-[180px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
-                        <BookOpen size={48} className="text-amber-500/50" />
-                     </div>
-                  </div>
+                <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar pt-6">
+                  {selectedLesson && (
+                    <>
+                      {/* Image Header */}
+                      <div className="w-full shrink-0 z-0">
+                         <div className={`w-full h-[100px] md:h-[180px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
+                            <BookOpen size={48} className="text-amber-500/50" />
+                         </div>
+                      </div>
 
-                  <div className="p-6 pt-5 pb-2 text-center flex flex-col items-center">
-                    <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
-                      {language === 'en' ? selectedLesson.lesson.titleEn : selectedLesson.lesson.title}
-                    </h3>
-                    
-                    <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
-                      Alphabet
-                    </p>
-
-                    {/* Levels Grid */}
-                    <div className="grid grid-cols-4 gap-y-4 gap-x-3 w-full mb-6 max-w-[14rem] mx-auto">
-                      {[0, 1, 2, 3].map((levelIndex) => {
-                        const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
-                        const starsArray = lessonStars[selectedLesson.lesson.id] || Array(10).fill(0);
-                        const earnedStars = starsArray[levelIndex] || 0;
+                      <div className="p-6 pt-5 pb-2 text-center flex flex-col items-center">
+                        <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
+                          {language === 'en' ? selectedLesson.lesson.titleEn : selectedLesson.lesson.title}
+                        </h3>
                         
-                        const isAccessible = levelIndex <= currentProgress;
-                        const isCompleted = levelIndex < currentProgress;
-                        const isSelected = modalLevel === levelIndex;
-                        const isCurrent = levelIndex === currentProgress;
+                        <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
+                          Alphabet
+                        </p>
+
+                        {/* Levels Grid */}
+                        <div className="grid grid-cols-4 gap-y-4 gap-x-3 w-full mb-6 max-w-[14rem] mx-auto">
+                          {[0, 1, 2, 3].map((levelIndex) => {
+                            const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
+                            const starsArray = lessonStars[selectedLesson.lesson.id] || Array(10).fill(0);
+                            const earnedStars = starsArray[levelIndex] || 0;
+                            
+                            const isAccessible = levelIndex <= currentProgress;
+                            const isCompleted = levelIndex < currentProgress;
+                            const isSelected = modalLevel === levelIndex;
+                            const isCurrent = levelIndex === currentProgress;
+                            
+                            return (
+                              <button
+                                key={levelIndex}
+                                onClick={() => {
+                                  if (isAccessible) {
+                                    setModalLevel(levelIndex);
+                                  }
+                                }}
+                                className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
+                                disabled={!isAccessible}
+                              >
+                                <div className={`
+                                  w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
+                                  ${isSelected ? `ring-4 ring-offset-2 ${selectedLesson.unitBorder.replace('border-', 'ring-')}/20` : ''}
+                                  ${isCompleted ? 'bg-amber-400 border border-amber-500 shadow-sm text-amber-900' : 
+                                    isCurrent ? `bg-white border-[3px] ${selectedLesson.unitBorder} shadow-sm ${selectedLesson.unitText}` : 
+                                    'bg-slate-50 border border-slate-200 text-slate-300'
+                                  }
+                                `}>
+                                  {isCompleted ? (
+                                    <div className="flex gap-[1px]">
+                                      {Array.from({ length: 3 }).map((_, i) => (
+                                        <Star key={i} className={`stroke-[1.5] ${i < earnedStars ? "fill-amber-900 stroke-amber-900" : "fill-amber-500/30 stroke-amber-700/40"}`} size={10} />
+                                      ))}
+                                    </div>
+                                  ) : isCurrent ? (
+                                    <span className="font-extrabold text-lg">{levelIndex + 1}</span>
+                                  ) : (
+                                    <Lock size={16} className="stroke-[2.5]" />
+                                  )}
+                                </div>
+                                <span className={`text-[9px] font-black tracking-widest uppercase
+                                  ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
+                                `}>
+                                  {isCurrent ? (language === 'en' ? 'IN PROGRESS' : 'EN COURS') : `NIV. ${levelIndex + 1}`}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {(() => {
+                        const letterCount = selectedLesson.lesson.items.length;
+                        const stepsCount = 10 + letterCount;
+                        let secsPerStep = 5;
+                        
+                        let estimatedSecs = stepsCount * secsPerStep;
+                        let estimatedMins = Math.max(1, Math.ceil(estimatedSecs / 60));
                         
                         return (
-                          <button
-                            key={levelIndex}
-                            onClick={() => {
-                              if (isAccessible) {
-                                setModalLevel(levelIndex);
-                              }
-                            }}
-                            className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed`}
-                            disabled={!isAccessible}
-                          >
-                            <div className={`
-                              w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
-                              ${isSelected ? 'ring-4 ring-offset-2 ring-[#0a6c4a]/20' : ''}
-                              ${isCompleted ? 'bg-amber-400 border border-amber-500 shadow-sm text-amber-900' : 
-                                isCurrent ? 'bg-white border-[3px] border-[#0a6c4a] shadow-sm text-[#0a6c4a]' : 
-                                'bg-slate-50 border border-slate-200 text-slate-300'
-                              }
-                            `}>
-                              {isCompleted ? (
-                                <div className="flex gap-[1px]">
-                                  {Array.from({ length: 3 }).map((_, i) => (
-                                    <Star key={i} className={`stroke-[1.5] ${i < earnedStars ? "fill-amber-900 stroke-amber-900" : "fill-amber-500/30 stroke-amber-700/40"}`} size={10} />
-                                  ))}
-                                </div>
-                              ) : isCurrent ? (
-                                <span className="font-extrabold text-lg">{levelIndex + 1}</span>
-                              ) : (
-                                <Lock size={16} className="stroke-[2.5]" />
-                              )}
-                            </div>
-                            <span className={`text-[9px] font-black tracking-widest uppercase
-                              ${isCurrent ? 'text-[#0a6c4a]' : isCompleted ? 'text-amber-500' : 'text-slate-300'}
-                            `}>
-                              {isCurrent ? (language === 'en' ? 'IN PROGRESS' : 'EN COURS') : `NIV. ${levelIndex + 1}`}
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {(() => {
-                    const letterCount = selectedLesson.lesson.items.length;
-                    const stepsCount = 10 + letterCount;
-                    let secsPerStep = 5;
-                    
-                    let estimatedSecs = stepsCount * secsPerStep;
-                    let estimatedMins = Math.max(1, Math.ceil(estimatedSecs / 60));
-                    
-                    return (
-                      <div className="px-7 pt-2 flex flex-col">
+                          <div className="px-7 pt-2 flex flex-col">
                         {/* Badges Container */}
                         <div className="flex items-center justify-center gap-3 mb-8 border-b border-slate-100 pb-8 w-full flex-wrap">
                           <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
@@ -755,8 +757,8 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
 
                           <div className="flex flex-wrap gap-2.5 pb-2">
                               {selectedLesson.lesson.items.slice(0, 10).map((i: any) => (
-                                <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className="group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:border-[#0a6c4a] hover:bg-[#0a6c4a]/5 transition-colors cursor-pointer active:scale-95">
-                                    <span className="font-bold text-[#0a6c4a] text-[17px] font-thai">{formatCombiningChar(i.letter)}</span> 
+                                <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
+                                    <span className={`font-bold text-[17px] font-thai ${selectedLesson.unitText}`}>{formatCombiningChar(i.letter)}</span> 
                                     <span className="text-slate-500 text-[13px] font-medium">({i.romanization})</span>
                                 </button>
                               ))}
@@ -770,147 +772,118 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                       </div>
                     );
                   })()}
+                  </>
+                  )}
                 </div>
                 
                 {/* Sticky Actions Footer */}
-                <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-                    <div className="flex items-center gap-3 w-full">
-                      <button
-                        onClick={() => setSelectedLesson(null)}
-                        className="md:hidden shrink-0 flex items-center justify-center w-14 h-14 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 active:scale-95 transition-all"
-                      >
-                        <ChevronLeft size={24} />
-                      </button>
-                      <Link
-                        href={`/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                        className="flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all bg-[#0a6c4a]"
-                      >
-                        {language === 'en' ? `Start lesson` : `Commencer la leçon`}
-                      </Link>
-                    </div>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>,
+                {selectedLesson && (
+                  <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
+                      <div className="flex items-center gap-3 w-full">
+                        <Link
+                          href={`/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                          className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                        >
+                          {language === 'en' ? `Start lesson` : `Commencer la leçon`}
+                        </Link>
+                      </div>
+                  </div>
+                )}
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>,
         document.body
       )}
 
       {/* Portals for Units and Daily Quests */}
-      {mounted && typeof window !== 'undefined' && createPortal(
-        <AnimatePresence>
-          {isUnitsModalOpen && (
-            <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center pointer-events-none md:hidden">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm pointer-events-auto"
-                onClick={() => setIsUnitsModalOpen(false)}
-              />
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="w-full bg-[#FAFAFA] rounded-t-3xl shadow-2xl relative pointer-events-auto flex flex-col max-h-[85vh] overflow-hidden"
-              >
-                <div className="w-full flex justify-center py-3 shrink-0 bg-[#FAFAFA] z-10 rounded-t-3xl border-b border-slate-200/50">
-                  <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
-                </div>
-                
-                <h3 className="text-xl font-bold text-slate-800 text-center py-4 border-b border-slate-200/50 shrink-0">
-                  {language === 'en' ? 'Alphabet Units' : 'Unités d\'Alphabet'}
-                </h3>
-                
-                <button 
-                  onClick={() => setIsUnitsModalOpen(false)}
-                  className="absolute top-4 right-4 text-slate-400 bg-slate-100 p-2 rounded-full hover:bg-slate-200 hover:text-slate-600 transition-colors z-20"
-                >
-                  <X size={20} />
-                </button>
-
-                <div className="p-4 overflow-y-auto flex flex-col gap-3 pb-12">
-                  {UNITS.map((u, i) => {
-                    const isActive = i === activeUnitIndex;
-                    return (
-                      <button
-                        key={u.id}
-                        onClick={() => {
-                          handleUnitSelect(i);
-                          setIsUnitsModalOpen(false);
-                        }}
-                        className={`w-full flex items-center justify-between p-4 rounded-2xl border-2 transition-all text-left ${
-                          isActive 
-                            ? `bg-white ${u.borderClass} shadow-sm` 
-                            : 'bg-white border-slate-100 hover:border-slate-200'
-                        }`}
-                      >
-                         <div className="flex items-center gap-4">
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
-                            isActive ? `${u.shades.l1} ${u.textClass}` : 'bg-slate-100 text-slate-400'
-                          }`}>
-                            <BookOpen size={24} />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className={`font-black uppercase text-sm ${isActive ? u.textClass : 'text-slate-400'}`}>
-                              {language === 'en' ? 'Unit' : 'Unité'} {i + 1}
-                            </span>
-                            <span className="font-bold text-slate-800">
-                              {language === 'en' ? u.titleEn : u.title}
-                            </span>
-                          </div>
-                        </div>
-                        {isActive && <CheckCircle className={`${u.textClass} shrink-0`} size={24} />}
-                      </button>
-                    )
-                  })}
-                </div>
-              </motion.div>
+      {mounted && windowWidth < 768 && (
+      <Drawer.Root open={isUnitsModalOpen} onOpenChange={setIsUnitsModalOpen}>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm md:hidden" />
+          <Drawer.Content className="md:hidden bg-[#FAFAFA] flex flex-col rounded-t-[24px] fixed bottom-0 left-0 right-0 z-[100] max-h-[85vh] outline-none">
+            <Drawer.Title className="sr-only">Alphabet Units</Drawer.Title>
+            <Drawer.Description className="sr-only">Select a course unit</Drawer.Description>
+            <div className="w-full flex justify-center py-3 shrink-0 bg-[#FAFAFA] z-10 rounded-t-3xl border-b border-slate-200/50">
+              <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
             </div>
-          )}
-        </AnimatePresence>,
-        document.body
+            
+            <h3 className="text-xl font-bold text-slate-800 text-center py-4 border-b border-slate-200/50 shrink-0">
+              {language === 'en' ? 'Alphabet Units' : 'Unités d\'Alphabet'}
+            </h3>
+            
+            <button 
+              onClick={() => setIsUnitsModalOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 bg-slate-100 p-2 rounded-full hover:bg-slate-200 hover:text-slate-600 transition-colors z-20"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="p-4 overflow-y-auto flex flex-col gap-3 pb-12">
+              {UNITS.map((u, i) => {
+                const isActive = i === activeUnitIndex;
+                return (
+                  <button
+                    key={u.id}
+                    onClick={() => {
+                      handleUnitSelect(i);
+                      setIsUnitsModalOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between p-4 rounded-2xl border-2 transition-all text-left cursor-pointer ${
+                      isActive 
+                        ? `bg-white ${u.borderClass} shadow-sm` 
+                        : 'bg-white border-slate-100 hover:border-slate-200'
+                    }`}
+                  >
+                     <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
+                        isActive ? `${u.shades.l1} ${u.textClass}` : 'bg-slate-100 text-slate-400'
+                      }`}>
+                        <BookOpen size={24} />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className={`font-black uppercase text-sm ${isActive ? u.textClass : 'text-slate-400'}`}>
+                          {language === 'en' ? 'Unit' : 'Unité'} {i + 1}
+                        </span>
+                        <span className="font-bold text-slate-800">
+                          {language === 'en' ? u.titleEn : u.title}
+                        </span>
+                      </div>
+                    </div>
+                    {isActive && <CheckCircle className={`${u.textClass} shrink-0`} size={24} />}
+                  </button>
+                )
+              })}
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
       )}
 
-      {mounted && typeof window !== 'undefined' && createPortal(
-        <AnimatePresence>
-          {isQuestsModalOpen && (
-            <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center pointer-events-none xl:hidden">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm pointer-events-auto"
-                onClick={() => setIsQuestsModalOpen(false)}
-              />
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="w-full bg-white rounded-t-3xl shadow-2xl relative pointer-events-auto flex flex-col max-h-[85vh] overflow-hidden"
-              >
-                <div className="w-full flex justify-center py-3 shrink-0 bg-white z-10 rounded-t-3xl border-b border-slate-100">
-                  <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
-                </div>
-                
-                <button 
-                  onClick={() => setIsQuestsModalOpen(false)}
-                  className="absolute top-4 right-4 text-slate-400 bg-slate-100 p-2 rounded-full hover:bg-slate-200 hover:text-slate-600 transition-colors z-20"
-                >
-                  <X size={20} />
-                </button>
-
-                <div className="p-6 pb-12 overflow-y-auto flex flex-col gap-6">
-                   <DailyQuestsWidget category="alphabet" />
-                   <ConversationObjectiveWidget />
-                </div>
-              </motion.div>
+      {mounted && windowWidth < 1280 && (
+      <Drawer.Root open={isQuestsModalOpen} onOpenChange={setIsQuestsModalOpen}>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm xl:hidden" />
+          <Drawer.Content className="xl:hidden bg-white flex flex-col rounded-t-[24px] fixed bottom-0 left-0 right-0 z-[100] max-h-[85vh] outline-none">
+            <Drawer.Title className="sr-only">Quests</Drawer.Title>
+            <Drawer.Description className="sr-only">View your daily quests and objectives</Drawer.Description>
+            <div className="w-full flex justify-center py-3 shrink-0 bg-white z-10 rounded-t-3xl border-b border-slate-100">
+              <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
             </div>
-          )}
-        </AnimatePresence>,
-        document.body
+            
+            <button 
+              onClick={() => setIsQuestsModalOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 bg-slate-100 p-2 rounded-full hover:bg-slate-200 hover:text-slate-600 transition-colors z-20"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="p-6 pb-12 overflow-y-auto flex flex-col gap-6">
+               <DailyQuestsWidget category="alphabet" />
+               <ConversationObjectiveWidget />
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
       )}
 
     </div>
