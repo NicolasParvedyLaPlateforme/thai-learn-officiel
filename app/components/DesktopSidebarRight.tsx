@@ -6,6 +6,7 @@ import { playThaiTTS } from '../lib/tts';
 import { formatCombiningChar } from '../lib/alphabet-utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { DailyQuestsWidget } from './DailyQuestsWidget';
+import { ConversationObjectiveWidget } from './ConversationObjectiveWidget';
 
 interface Unit {
   id: string;
@@ -282,8 +283,9 @@ export function DesktopSidebarRight({
              <ChevronLeft size={20} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-1" />
            </button>
 
-           <div className="w-full">
+           <div className="w-full flex flex-col gap-6">
              <DailyQuestsWidget category={questsCategory} />
+             <ConversationObjectiveWidget />
            </div>
         </motion.div>
       );

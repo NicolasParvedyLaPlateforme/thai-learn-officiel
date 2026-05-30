@@ -15,6 +15,7 @@ import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
 import { DesktopSidebarRight } from '../../components/DesktopSidebarRight';
 import PWAInstallButton from '../../components/PWAInstallButton';
 import { DailyQuestsWidget } from '../../components/DailyQuestsWidget';
+import { ConversationObjectiveWidget } from '../../components/ConversationObjectiveWidget';
 import ALPHABET_BASE_UNITS from '../../data/alphabet_units.json';
 import { useIsPWA } from '../../../hooks/use-pwa';
 
@@ -901,8 +902,9 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                   <X size={20} />
                 </button>
 
-                <div className="p-6 pb-12 overflow-y-auto">
+                <div className="p-6 pb-12 overflow-y-auto flex flex-col gap-6">
                    <DailyQuestsWidget category="alphabet" />
+                   <ConversationObjectiveWidget />
                 </div>
               </motion.div>
             </div>
