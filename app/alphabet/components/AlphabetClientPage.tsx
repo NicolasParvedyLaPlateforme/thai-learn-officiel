@@ -30,6 +30,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   const [cols, setCols] = useState(5);
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
+  const [isMobileStatsOpen, setIsMobileStatsOpen] = useState(false);
   const [isUnitsModalOpen, setIsUnitsModalOpen] = useState(false);
 
   const globalSuggested = useGlobalSuggestedLesson(lightweightLessons);
@@ -160,15 +161,36 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
             {mounted && <PWAInstallButton />}
             
             {mounted && (
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-1 px-2 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
+              <div className="flex items-center gap-1.5 relative">
+                <div className="hidden md:flex items-center gap-1 px-2 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
                   <Star size={16} className="fill-amber-400 stroke-amber-400" />
                   <span>{xp}</span>
                 </div>
-                <div className="flex items-center gap-1 px-2 py-1.5 bg-orange-50 text-orange-500 rounded-xl font-extrabold text-sm">
+                <div className="hidden md:flex items-center gap-1 px-2 py-1.5 bg-orange-50 text-orange-500 rounded-xl font-extrabold text-sm">
                   <Flame size={16} fill="currentColor" className={`${currentStreak > 0 ? '' : 'text-slate-400 opacity-50'}`} />
                   <span className={`${currentStreak > 0 ? '' : 'text-slate-400 opacity-50'}`}>{currentStreak}</span>
                 </div>
+
+                <button
+                  onClick={() => setIsMobileStatsOpen(!isMobileStatsOpen)}
+                  className="md:hidden flex items-center justify-center p-1.5 bg-amber-50 text-amber-500 rounded-xl hover:bg-amber-100 transition-colors"
+                >
+                  <Star size={18} className="fill-amber-400 stroke-amber-400" />
+                </button>
+
+                {isMobileStatsOpen && (
+                  <div className="absolute top-full right-0 mt-2 p-3 bg-white rounded-2xl shadow-xl flex flex-col gap-2 z-50 min-w-[120px] md:hidden border border-slate-100">
+                    <div className="flex items-center gap-2 px-2 py-1">
+                      <Star size={16} className="text-amber-500 fill-amber-500" />
+                      <span className="font-extrabold text-slate-700">{xp}</span>
+                    </div>
+                    <div className="flex items-center gap-2 px-2 py-1">
+                      <Flame size={16} className={`${currentStreak > 0 ? 'text-orange-500 fill-orange-500' : 'text-slate-300'}`} />
+                      <span className={`font-extrabold ${currentStreak > 0 ? 'text-slate-700' : 'text-slate-400'}`}>{currentStreak}</span>
+                    </div>
+                  </div>
+                )}
+
                 <button 
                   onClick={() => setIsQuestsModalOpen(true)}
                   className="xl:hidden flex items-center justify-center p-1.5 bg-emerald-50 text-emerald-500 rounded-xl hover:bg-emerald-100 transition-colors"

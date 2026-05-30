@@ -23,12 +23,38 @@ export interface DailyQuest {
   titleFr: string;
 }
 
+const ALL_QUESTS = [
+  { id: 'q_lesson_1', type: 'lessons', target: 1, rewardXp: 20, titleEn: 'Complete 1 Lesson', titleFr: 'Terminer 1 leçon' },
+  { id: 'q_lesson_3', type: 'lessons', target: 3, rewardXp: 50, titleEn: 'Complete 3 Lessons', titleFr: 'Terminer 3 leçons' },
+  { id: 'q_xp_50', type: 'xp', target: 50, rewardXp: 15, titleEn: 'Earn 50 XP', titleFr: 'Gagner 50 XP' },
+  { id: 'q_xp_100', type: 'xp', target: 100, rewardXp: 30, titleEn: 'Earn 100 XP', titleFr: 'Gagner 100 XP' },
+  { id: 'q_xp_200', type: 'xp', target: 200, rewardXp: 60, titleEn: 'Earn 200 XP', titleFr: 'Gagner 200 XP' },
+  { id: 'q_perfect_1', type: 'perfect_lesson', target: 1, rewardXp: 25, titleEn: 'Get 3 stars on a level', titleFr: 'Obtenir 3 étoiles à un niveau' },
+  { id: 'q_perfect_2', type: 'perfect_lesson', target: 2, rewardXp: 55, titleEn: 'Get 3 stars on 2 levels', titleFr: 'Obtenir 3 étoiles sur 2 niveaux' }
+];
+
 const generateNewQuests = (): DailyQuest[] => {
-  return [
-    { id: 'q1', type: 'lessons', target: 1, progress: 0, rewardXp: 20, completed: false, titleEn: 'Complete 1 Lesson', titleFr: 'Terminer 1 leçon' },
-    { id: 'q2', type: 'xp', target: 50, progress: 0, rewardXp: 15, completed: false, titleEn: 'Earn 50 XP', titleFr: 'Gagner 50 XP' },
-    { id: 'q3', type: 'perfect_lesson', target: 1, progress: 0, rewardXp: 25, completed: false, titleEn: 'Get 3 stars on a level', titleFr: 'Obtenir 3 étoiles à un niveau' },
-  ];
+  // Shuffle and pick 3 different quests
+  const shuffled = [...ALL_QUESTS].sort(() => 0.5 - Math.random());
+  const selected = shuffled.slice(0, 3);
+  
+  return selected.map((q, index) => ({
+    id: `q_${Date.now()}_${index}`, // Unique runtime ID for react rendering tracking
+    type: q.type as any,
+    target: q.target,
+    progress: 0,
+    rewardXp: q.rewardXp,
+    completed: false,
+    titleEn: q.titleEn,
+    titleFr: q.titleFr,
+  }));
+};
+
+const getLocalDateString = (date: Date = new Date()) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 };
 
 const safeStorage = {
@@ -136,7 +162,7 @@ export const useProgressStore = create<ProgressState>()(
       questsDate: null,
       
       recordActivity: () => set((state) => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDateString();
         if (state.lastActiveDate === today) return {}; // Already active today
         
         let newStreak = state.currentStreak;
@@ -185,7 +211,7 @@ export const useProgressStore = create<ProgressState>()(
       }),
 
       checkAndGenerateQuests: () => set((state) => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDateString();
         if (state.questsDate !== today) {
           return {
             questsDate: today,
