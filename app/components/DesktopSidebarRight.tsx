@@ -38,6 +38,8 @@ interface DesktopSidebarRightProps {
   lessonStars?: Record<string, number[]>;
   resetLessonLevel?: (lessonId: string) => void;
   questsCategory?: 'learn' | 'alphabet';
+  showUnitsList?: boolean;
+  setShowUnitsList?: (show: boolean) => void;
 }
 
 export function DesktopSidebarRight({
@@ -57,9 +59,14 @@ export function DesktopSidebarRight({
   setModalLevel,
   lessonStars,
   resetLessonLevel,
-  questsCategory = 'learn'
+  questsCategory = 'learn',
+  showUnitsList: externalShowUnitsList,
+  setShowUnitsList: externalSetShowUnitsList
 }: DesktopSidebarRightProps) {
-  const [showUnitsList, setShowUnitsList] = useState(false);
+  const [internalShowUnitsList, setInternalShowUnitsList] = useState(false);
+  const showUnitsList = externalShowUnitsList !== undefined ? externalShowUnitsList : internalShowUnitsList;
+  const setShowUnitsList = externalSetShowUnitsList || setInternalShowUnitsList;
+  
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const levelsScrollRef = useRef<HTMLDivElement>(null);
 

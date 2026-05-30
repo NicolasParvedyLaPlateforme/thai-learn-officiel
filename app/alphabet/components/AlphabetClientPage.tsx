@@ -43,6 +43,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
   const [isMobileStatsOpen, setIsMobileStatsOpen] = useState(false);
   const [isUnitsModalOpen, setIsUnitsModalOpen] = useState(false);
+  const [showDesktopUnitsList, setShowDesktopUnitsList] = useState(false);
 
   const globalSuggested = useGlobalSuggestedLesson(lightweightLessons);
   
@@ -224,7 +225,10 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
           
           return (
             <div key={unit.id} className="relative z-0">
-              <div className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} rounded-2xl text-white shadow-md relative overflow-hidden`}>
+              <div 
+                onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
+                className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} rounded-2xl text-white shadow-md relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform`}
+              >
                 <div className="relative z-10 w-full flex flex-col items-start text-left">
                   <div className="flex justify-between items-start w-full mb-1">
                      <h2 className="text-xl sm:text-2xl font-extrabold mb-1 text-white drop-shadow-md uppercase tracking-tight break-words pr-2">{mounted && language === 'en' ? unit.titleEn : unit.title}</h2>
@@ -436,7 +440,10 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       {mounted && (
         <div 
           className="hidden md:flex flex-row w-full items-start relative min-h-screen"
-          onClick={() => setSelectedLesson(null)}
+          onClick={() => {
+            setSelectedLesson(null);
+            setShowDesktopUnitsList(false);
+          }}
         >
           {/* Center Curriculum Content */}
           <div className="flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12">
@@ -450,7 +457,10 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
               return (
                 <div key={`desktop-unit-${unit.id}`} className="flex flex-col gap-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
                   {/* Unit Hero Card */}
-                  <div className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-xl relative overflow-hidden border-b-[6px] ${unit.borderClass}`}>
+                  <div 
+                    onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
+                    className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-xl relative overflow-hidden border-b-[6px] ${unit.borderClass} cursor-pointer active:scale-[0.99] transition-transform`}
+                  >
                     <div className="relative z-10">
                       <h2 className="text-4xl font-extrabold mb-3">{language === 'en' ? unit.titleEn : unit.title}</h2>
                       <p className={`${unit.lightTextClass} mb-8 font-medium text-lg`}>{language === 'en' ? unit.descriptionEn : unit.description}</p>
@@ -618,6 +628,8 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
           
           {/* Right Sidebar Wrap */}
           <DesktopSidebarRight 
+            showUnitsList={showDesktopUnitsList}
+            setShowUnitsList={setShowDesktopUnitsList}
             units={UNITS}
             activeUnitIndex={activeUnitIndex}
             onUnitSelect={handleUnitSelect}
