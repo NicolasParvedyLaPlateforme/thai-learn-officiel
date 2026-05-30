@@ -212,11 +212,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
             
             {mounted && (
               <div className="flex items-center gap-1.5">
-                <div className="hidden md:flex items-center gap-1 px-2 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
+                <div className="flex items-center gap-1 px-2 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
                   <Star size={16} className="fill-amber-400 stroke-amber-400" />
                   <span>{xp}</span>
                 </div>
-                <div className="hidden md:flex items-center gap-1 px-2 py-1.5 bg-orange-50 text-orange-500 rounded-xl font-extrabold text-sm">
+                <div className="flex items-center gap-1 px-2 py-1.5 bg-orange-50 text-orange-500 rounded-xl font-extrabold text-sm">
                   <Flame size={16} fill="currentColor" className={`${currentStreak > 0 ? '' : 'text-slate-400 opacity-50'}`} />
                   <span className={`${currentStreak > 0 ? '' : 'text-slate-400 opacity-50'}`}>{currentStreak}</span>
                 </div>
