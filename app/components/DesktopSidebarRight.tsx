@@ -31,7 +31,7 @@ interface DesktopSidebarRightProps {
   maxLevelPerLesson?: number;
   suggestionType?: 'learn' | 'alphabet' | string;
   // Modal props
-  selectedLesson?: {lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string} | null;
+  selectedLesson?: {lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string} | null;
   onCloseLesson?: () => void;
   modalLevel?: number;
   setModalLevel?: (level: number) => void;
@@ -138,9 +138,9 @@ export function DesktopSidebarRight({
                       >
                         <div className={`
                           w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300
-                          ${isSelected ? 'scale-110 ring-[4px] ring-offset-[3px] ring-[#0a6c4a]/40 shadow-lg relative z-10' : ''}
+                          ${isSelected ? 'scale-110 ring-[4px] ring-offset-[3px] ring-slate-300 shadow-lg relative z-10' : ''}
                           ${isCompleted ? 'bg-amber-400 border border-amber-500 shadow-sm text-amber-900' : 
-                            isCurrent ? 'bg-white border-[3px] border-[#0a6c4a] shadow-sm text-[#0a6c4a]' : 
+                            isCurrent ? `bg-white border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` : 
                             'bg-slate-50 border border-slate-200 text-slate-300'
                           }
                         `}>
@@ -157,7 +157,7 @@ export function DesktopSidebarRight({
                           )}
                         </div>
                         <span className={`text-[9px] font-black tracking-widest uppercase
-                          ${isCurrent ? 'text-[#0a6c4a]' : isCompleted ? 'text-amber-500' : 'text-slate-300'}
+                          ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
                         `}>
                           {isCurrent ? (language === 'en' ? 'IN PROGRESS' : 'EN COURS') : `NIV. ${levelIndex + 1}`}
                         </span>
@@ -193,15 +193,15 @@ export function DesktopSidebarRight({
                   <div className="flex flex-wrap gap-2.5 pb-2">
                       {suggestionType === 'alphabet' ? (
                         selectedLesson.lesson.items?.slice(0, 10).map((i: any) => (
-                          <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className="group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:border-[#0a6c4a] hover:bg-[#0a6c4a]/5 transition-colors cursor-pointer active:scale-95">
-                              <span className="font-bold text-[#0a6c4a] text-[17px] font-thai">{formatCombiningChar(i.letter)}</span> 
+                          <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
+                              <span className={`font-bold ${selectedLesson.unitText} text-[17px] font-thai`}>{formatCombiningChar(i.letter)}</span> 
                               <span className="text-slate-500 text-[13px] font-medium">({i.romanization})</span>
                           </button>
                         ))
                       ) : (
                         selectedLesson.lesson.words?.map((w: any) => (
-                          <button onClick={() => playThaiTTS(w.th)} key={w.id} className="group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:border-[#0a6c4a] hover:bg-[#0a6c4a]/5 transition-colors cursor-pointer active:scale-95">
-                              <span className="font-bold text-[#0a6c4a] text-[17px]">{w.th}</span> 
+                          <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
+                              <span className={`font-bold ${selectedLesson.unitText} text-[17px]`}>{w.th}</span> 
                               <span className="text-slate-500 text-[13px] font-medium">({language === 'en' ? w.en : w.fr})</span>
                           </button>
                         ))
@@ -243,7 +243,7 @@ export function DesktopSidebarRight({
                 )}
                 <Link
                   href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                  className="w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all bg-[#0a6c4a]"
+                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
                 >
                   {language === 'en' ? `Start lesson` : `Commencer la leçon`}
                 </Link>

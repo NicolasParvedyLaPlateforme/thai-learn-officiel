@@ -67,7 +67,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
   const [isMobileStatsOpen, setIsMobileStatsOpen] = useState(false);
   const [isUnitsModalOpen, setIsUnitsModalOpen] = useState(false);
   const levelsScrollRef = useRef<HTMLDivElement>(null);
-  const [selectedLesson, setSelectedLesson] = useState<{lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string} | null>(null);
+  const [selectedLesson, setSelectedLesson] = useState<{lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string} | null>(null);
   const [modalLevel, setModalLevel] = useState(0);
   const [cols, setCols] = useState(5);
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
@@ -376,7 +376,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           className={`relative shrink-0 mb-4 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
                           onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass});
+                            setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                             setModalLevel(Math.min(level, 9));
                           }}
                         >
@@ -402,7 +402,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           className={`w-full max-w-[280px] sm:max-w-[320px] rounded-[1.5rem] p-5 flex flex-col items-center text-center transition-all z-10 border-2 border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
                           onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass});
+                            setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                             setModalLevel(Math.min(level, 9));
                           }}
                         >
@@ -559,7 +559,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                               className={`relative shrink-0 py-6 cursor-pointer hover:brightness-95 hover:scale-105 active:scale-95 transition-all z-10`}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass});
+                                setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                                 setModalLevel(Math.min(level, 9));
                               }}
                             >
@@ -580,7 +580,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                               className={`flex-1 rounded-[1.5rem] border-2 p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all group border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative z-10 ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass});
+                                setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                                 setModalLevel(Math.min(level, 9));
                               }}
                             >
