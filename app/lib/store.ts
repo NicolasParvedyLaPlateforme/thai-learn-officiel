@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import questsConfig from '../data/quests.json';
 
 export type AppLanguage = 'fr' | 'en';
 
@@ -23,23 +24,17 @@ export interface DailyQuest {
   titleFr: string;
 }
 
-const ALL_QUESTS = [
-  { id: 'q_lesson_1', type: 'lessons', target: 1, rewardXp: 20, titleEn: 'Complete 1 Lesson', titleFr: 'Terminer 1 leçon' },
-  { id: 'q_lesson_3', type: 'lessons', target: 3, rewardXp: 50, titleEn: 'Complete 3 Lessons', titleFr: 'Terminer 3 leçons' },
-  { id: 'q_xp_50', type: 'xp', target: 50, rewardXp: 15, titleEn: 'Earn 50 XP', titleFr: 'Gagner 50 XP' },
-  { id: 'q_xp_100', type: 'xp', target: 100, rewardXp: 30, titleEn: 'Earn 100 XP', titleFr: 'Gagner 100 XP' },
-  { id: 'q_xp_200', type: 'xp', target: 200, rewardXp: 60, titleEn: 'Earn 200 XP', titleFr: 'Gagner 200 XP' },
-  { id: 'q_perfect_1', type: 'perfect_lesson', target: 1, rewardXp: 25, titleEn: 'Get 3 stars on a level', titleFr: 'Obtenir 3 étoiles à un niveau' },
-  { id: 'q_perfect_2', type: 'perfect_lesson', target: 2, rewardXp: 55, titleEn: 'Get 3 stars on 2 levels', titleFr: 'Obtenir 3 étoiles sur 2 niveaux' }
-];
+export interface QuestsState {
+  learn: DailyQuest[];
+  alphabet: DailyQuest[];
+}
 
-const generateNewQuests = (): DailyQuest[] => {
-  // Shuffle and pick 3 different quests
-  const shuffled = [...ALL_QUESTS].sort(() => 0.5 - Math.random());
+const generateNewQuestsForCategory = (categoryConfig: any[]): DailyQuest[] => {
+  const shuffled = [...categoryConfig].sort(() => 0.5 - Math.random());
   const selected = shuffled.slice(0, 3);
   
   return selected.map((q, index) => ({
-    id: `q_${Date.now()}_${index}`, // Unique runtime ID for react rendering tracking
+    id: `q_${Date.now()}_${index}`,
     type: q.type as any,
     target: q.target,
     progress: 0,
@@ -48,6 +43,13 @@ const generateNewQuests = (): DailyQuest[] => {
     titleEn: q.titleEn,
     titleFr: q.titleFr,
   }));
+};
+
+const generateNewQuests = (): QuestsState => {
+  return {
+    learn: generateNewQuestsForCategory(questsConfig.learn),
+    alphabet: generateNewQuestsForCategory(questsConfig.alphabet),
+  };
 };
 
 const getLocalDateString = (date: Date = new Date()) => {
@@ -130,10 +132,10 @@ interface ProgressState {
   currentStreak: number;
   longestStreak: number;
   lastActiveDate: string | null;
-  dailyQuests: DailyQuest[];
+  dailyQuests: QuestsState | null;
   questsDate: string | null;
   recordActivity: () => void;
-  progressQuest: (type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => void;
+  progressQuest: (category: 'learn' | 'alphabet', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => void;
   checkAndGenerateQuests: () => void;
 }
 
@@ -158,7 +160,7 @@ export const useProgressStore = create<ProgressState>()(
       currentStreak: 0,
       longestStreak: 0,
       lastActiveDate: null,
-      dailyQuests: [],
+      dailyQuests: null,
       questsDate: null,
       
       recordActivity: () => set((state) => {
@@ -188,8 +190,11 @@ export const useProgressStore = create<ProgressState>()(
         };
       }),
 
-      progressQuest: (type, amount) => set((state) => {
-        const updatedQuests = state.dailyQuests.map((quest) => {
+      progressQuest: (category, type, amount) => set((state) => {
+        if (!state.dailyQuests) return state; // or handle initialization
+        const questsForCategory = state.dailyQuests[category] || [];
+        
+        const updatedQuestsForCategory = questsForCategory.map((quest) => {
           if (quest.type === type && !quest.completed) {
             const newProgress = Math.min(quest.progress + amount, quest.target);
             const completed = newProgress >= quest.target;
@@ -199,20 +204,25 @@ export const useProgressStore = create<ProgressState>()(
         });
 
         // Add reward XP for newly completed quests
-        const newlyCompletedQuests = updatedQuests.filter(
-          (q, i) => q.completed && !state.dailyQuests[i].completed
+        const newlyCompletedQuests = updatedQuestsForCategory.filter(
+          (q, i) => q.completed && !questsForCategory[i].completed
         );
         const earnedXp = newlyCompletedQuests.reduce((acc, q) => acc + q.rewardXp, 0);
 
         return {
-          dailyQuests: updatedQuests,
+          dailyQuests: {
+            ...state.dailyQuests,
+            [category]: updatedQuestsForCategory,
+          },
           xp: state.xp + earnedXp,
         };
       }),
 
       checkAndGenerateQuests: () => set((state) => {
         const today = getLocalDateString();
-        if (state.questsDate !== today) {
+        // Also check if dailyQuests has the new structure or is null/array
+        const isLegacyQuests = Array.isArray(state.dailyQuests) || !state.dailyQuests;
+        if (state.questsDate !== today || isLegacyQuests) {
           return {
             questsDate: today,
             dailyQuests: generateNewQuests()
@@ -279,9 +289,9 @@ export const useProgressStore = create<ProgressState>()(
           };
         });
         get().recordActivity();
-        get().progressQuest('lessons', 1);
+        get().progressQuest('learn', 'lessons', 1);
         if (stars >= 3) {
-          get().progressQuest('perfect_lesson', 1);
+          get().progressQuest('learn', 'perfect_lesson', 1);
         }
       },
 
@@ -338,16 +348,22 @@ export const useProgressStore = create<ProgressState>()(
         });
         
         get().recordActivity();
-        get().progressQuest('lessons', 1);
-        get().progressQuest('xp', earnedXp);
+        
+        let type: 'learn' | 'alphabet' = 'learn';
+        if (lessonId.startsWith('alphabet_')) {
+          type = 'alphabet';
+        }
+
+        get().progressQuest(type, 'lessons', 1);
+        get().progressQuest(type, 'xp', earnedXp);
         if (earnedStars >= 3) {
-          get().progressQuest('perfect_lesson', 1);
+          get().progressQuest(type, 'perfect_lesson', 1);
         }
       },
       addXp: (amount) => {
         set((state) => ({ xp: state.xp + amount }));
         get().recordActivity();
-        get().progressQuest('xp', amount);
+        get().progressQuest('learn', 'xp', amount);
       },
       unlockLessonManual: (lessonId) => set((state) => ({
         unlockedLessons: state.unlockedLessons 

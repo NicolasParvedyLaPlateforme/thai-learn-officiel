@@ -36,6 +36,7 @@ interface DesktopSidebarRightProps {
   setModalLevel?: (level: number) => void;
   lessonStars?: Record<string, number[]>;
   resetLessonLevel?: (lessonId: string) => void;
+  questsCategory?: 'learn' | 'alphabet';
 }
 
 export function DesktopSidebarRight({
@@ -54,7 +55,8 @@ export function DesktopSidebarRight({
   modalLevel = 0,
   setModalLevel,
   lessonStars,
-  resetLessonLevel
+  resetLessonLevel,
+  questsCategory = 'learn'
 }: DesktopSidebarRightProps) {
   const [showUnitsList, setShowUnitsList] = useState(false);
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
@@ -281,7 +283,7 @@ export function DesktopSidebarRight({
            </button>
 
            <div className="w-full">
-             <DailyQuestsWidget />
+             <DailyQuestsWidget category={questsCategory} />
            </div>
         </motion.div>
       );

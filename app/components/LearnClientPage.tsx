@@ -57,6 +57,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
 
   const router = useRouter();
   const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, language, setLanguage, unlockLessonManual, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex } = useProgressStore();
+  const learnQuests = dailyQuests?.learn || [];
   const [mounted, setMounted] = useState(false);
   const isPWA = useIsPWA();
   const [isWritingConfigModalOpen, setWritingConfigModalOpen] = useState(false);
@@ -322,11 +323,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       <span className="text-xs font-semibold text-slate-400">
                         {language === 'en' ? 'Daily Quest' : 'Quête du jour'}
                       </span>
-                      {dailyQuests.filter(q => !q.completed).length > 0 ? (
+                      {learnQuests.filter(q => !q.completed).length > 0 ? (
                         <span className="text-sm font-bold text-slate-700">
                           {language === 'en' 
-                            ? dailyQuests.filter(q => !q.completed)[0].titleEn 
-                            : dailyQuests.filter(q => !q.completed)[0].titleFr}
+                            ? learnQuests.filter(q => !q.completed)[0].titleEn 
+                            : learnQuests.filter(q => !q.completed)[0].titleFr}
                         </span>
                       ) : (
                         <span className="text-sm font-bold text-emerald-600">
@@ -335,10 +336,10 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       )}
                     </div>
                   </div>
-                  {dailyQuests.filter(q => !q.completed).length > 0 && (
+                  {learnQuests.filter(q => !q.completed).length > 0 && (
                     <div className="flex items-center gap-2">
                        <span className="text-sm font-bold text-slate-400">
-                         {dailyQuests.filter(q => !q.completed)[0].progress} / {dailyQuests.filter(q => !q.completed)[0].target}
+                         {learnQuests.filter(q => !q.completed)[0].progress} / {learnQuests.filter(q => !q.completed)[0].target}
                        </span>
                        <ChevronRight size={18} className="text-slate-300" />
                     </div>
@@ -941,7 +942,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       {mounted && typeof window !== 'undefined' && createPortal(
         <AnimatePresence>
           {isQuestsModalOpen && (
-            <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center pointer-events-none md:hidden">
+            <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center pointer-events-none xl:hidden">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

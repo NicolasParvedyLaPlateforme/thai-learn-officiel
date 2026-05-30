@@ -1,0 +1,17 @@
+{
+  "learn": [
+    { "id": "l_quest_lesson_1", "type": "lessons", "target": 1, "rewardXp": 20, "titleEn": "Complete 1 Lesson", "titleFr": "Terminer 1 leçon" },
+    { "id": "l_quest_lesson_3", "type": "lessons", "target": 3, "rewardXp": 50, "titleEn": "Complete 3 Lessons", "titleFr": "Terminer 3 leçons" },
+    { "id": "l_quest_xp_50", "type": "xp", "target": 50, "rewardXp": 15, "titleEn": "Earn 50 XP in Learn", "titleFr": "Gagner 50 XP (Parcours)" },
+    { "id": "l_quest_xp_100", "type": "xp", "target": 100, "rewardXp": 30, "titleEn": "Earn 100 XP in Learn", "titleFr": "Gagner 100 XP (Parcours)" },
+    { "id": "l_quest_xp_200", "type": "xp", "target": 200, "rewardXp": 60, "titleEn": "Earn 200 XP in Learn", "titleFr": "Gagner 200 XP (Parcours)" },
+    { "id": "l_quest_perfect_1", "type": "perfect_lesson", "target": 1, "rewardXp": 25, "titleEn": "Get 3 stars on a Learn level", "titleFr": "Obtenir 3 étoiles à un niveau (Parcours)" },
+    { "id": "l_quest_perfect_2", "type": "perfect_lesson", "target": 2, "rewardXp": 55, "titleEn": "Get 3 stars on 2 Learn levels", "titleFr": "Obtenir 3 étoiles sur 2 niveaux (Parcours)" }
+  ],
+  "alphabet": [
+    { "id": "a_quest_lesson_1", "type": "lessons", "target": 1, "rewardXp": 20, "titleEn": "Complete 1 Alphabet Lesson", "titleFr": "Terminer 1 leçon d'alphabet" },
+    { "id": "a_quest_lesson_3", "type": "lessons", "target": 3, "rewardXp": 50, "titleEn": "Complete 3 Alphabet Lessons", "titleFr": "Terminer 3 leçons d'alphabet" },
+    { "id": "a_quest_xp_50", "type": "xp", "target": 50, "rewardXp": 15, "titleEn": "Earn 50 XP in Alphabet", "titleFr": "Gagner 50 XP (Alphabet)" },
+    { "id": "a_quest_perfect_1", "type": "perfect_lesson", "target": 1, "rewardXp": 25, "titleEn": "Get 3 stars on an Alphabet level", "titleFr": "Obtenir 3 étoiles à un niveau (Alphabet)" }
+  ]
+}

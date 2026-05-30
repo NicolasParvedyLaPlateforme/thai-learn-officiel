@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useProgressStore, DailyQuest } from '../lib/store';
 import { Target, CheckCircle2, Star } from 'lucide-react';
 
-export function DailyQuestsWidget() {
+export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' | 'alphabet' }) {
   const { dailyQuests, language, questsDate } = useProgressStore();
   const [mounted, setMounted] = useState(false);
 
@@ -18,7 +18,8 @@ export function DailyQuestsWidget() {
     return language === 'en' ? quest.titleEn : quest.titleFr;
   };
 
-  const completedCount = dailyQuests.filter(q => q.completed).length;
+  const questsForCategory = dailyQuests?.[category] || [];
+  const completedCount = questsForCategory.filter(q => q.completed).length;
 
   return (
     <div className="w-full bg-white rounded-2xl border-2 border-slate-100 p-4 shadow-sm flex flex-col gap-3">
@@ -30,17 +31,17 @@ export function DailyQuestsWidget() {
           </h2>
         </div>
         <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
-          {completedCount} / {dailyQuests.length} {language === 'en' ? 'Quests' : 'Quêtes'}
+          {completedCount} / {questsForCategory.length} {language === 'en' ? 'Quests' : 'Quêtes'}
         </span>
       </div>
 
       <div className="flex flex-col gap-3">
-        {dailyQuests.length === 0 ? (
+        {questsForCategory.length === 0 ? (
           <div className="text-sm font-medium text-slate-500 italic text-center py-4">
              {language === 'en' ? 'No quests for today.' : 'Pas de quêtes aujourd\'hui.'}
           </div>
         ) : (
-          dailyQuests.map(quest => {
+          questsForCategory.map(quest => {
             const progressPercent = Math.min(100, Math.max(0, (quest.progress / quest.target) * 100));
             return (
               <div key={quest.id} className="w-full flex flex-col bg-slate-50 rounded-xl p-3 border border-slate-100">

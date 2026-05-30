@@ -22,6 +22,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   const router = useRouter();
   const isPWA = useIsPWA();
   const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, unlockLessonManual, language, setLanguage, autoDetectLanguage } = useProgressStore();
+  const alphabetQuests = dailyQuests?.alphabet || [];
   const [mounted, setMounted] = useState(false);
   const levelsScrollRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
@@ -260,11 +261,11 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                       <span className="text-xs font-semibold text-slate-400">
                         {language === 'en' ? 'Daily Quest' : 'Quête du jour'}
                       </span>
-                      {dailyQuests.filter(q => !q.completed).length > 0 ? (
+                      {alphabetQuests.filter(q => !q.completed).length > 0 ? (
                         <span className="text-sm font-bold text-slate-700">
                           {language === 'en' 
-                            ? dailyQuests.filter(q => !q.completed)[0].titleEn 
-                            : dailyQuests.filter(q => !q.completed)[0].titleFr}
+                            ? alphabetQuests.filter(q => !q.completed)[0].titleEn 
+                            : alphabetQuests.filter(q => !q.completed)[0].titleFr}
                         </span>
                       ) : (
                         <span className="text-sm font-bold text-emerald-600">
@@ -273,10 +274,10 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                       )}
                     </div>
                   </div>
-                  {dailyQuests.filter(q => !q.completed).length > 0 && (
+                  {alphabetQuests.filter(q => !q.completed).length > 0 && (
                     <div className="flex items-center gap-2">
                        <span className="text-sm font-bold text-slate-400">
-                         {dailyQuests.filter(q => !q.completed)[0].progress} / {dailyQuests.filter(q => !q.completed)[0].target}
+                         {alphabetQuests.filter(q => !q.completed)[0].progress} / {alphabetQuests.filter(q => !q.completed)[0].target}
                        </span>
                        <ChevronRight size={18} className="text-slate-300" />
                     </div>
@@ -623,6 +624,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
             setModalLevel={setModalLevel}
             lessonStars={lessonStars}
             resetLessonLevel={resetLessonLevel}
+            questsCategory="alphabet"
           />
         </div>
       )}
@@ -873,7 +875,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       {mounted && typeof window !== 'undefined' && createPortal(
         <AnimatePresence>
           {isQuestsModalOpen && (
-            <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center pointer-events-none md:hidden">
+            <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center pointer-events-none xl:hidden">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -900,7 +902,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                 </button>
 
                 <div className="p-6 pb-12 overflow-y-auto">
-                   <DailyQuestsWidget />
+                   <DailyQuestsWidget category="alphabet" />
                 </div>
               </motion.div>
             </div>
