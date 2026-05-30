@@ -3,6 +3,7 @@ import { BookOpen, CheckCircle, Clock, Lock, Pencil, Play, RotateCcw, Star, Volu
 import Link from 'next/link';
 import IconImage from './IconImage';
 import { playThaiTTS } from '../lib/tts';
+import { formatCombiningChar } from '../lib/alphabet-utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { DailyQuestsWidget } from './DailyQuestsWidget';
 
@@ -174,22 +175,39 @@ export function DesktopSidebarRight({
                   </div>
                 </div>
 
-                {/* Vocab preview */}
+                {/* Vocab/Letters preview */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                      {language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`}
+                      {suggestionType === 'alphabet' 
+                        ? (language === 'en' ? `Letters (${selectedLesson.lesson.items?.length}) :` : `Lettres (${selectedLesson.lesson.items?.length}) :`)
+                        : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
+                      }
                     </h4>
                     <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
                   </div>
 
                   <div className="flex flex-wrap gap-2.5 pb-2">
-                      {selectedLesson.lesson.words?.map((w: any) => (
-                        <button onClick={() => playThaiTTS(w.th)} key={w.id} className="group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:border-[#0a6c4a] hover:bg-[#0a6c4a]/5 transition-colors cursor-pointer active:scale-95">
-                            <span className="font-bold text-[#0a6c4a] text-[17px]">{w.th}</span> 
-                            <span className="text-slate-500 text-[13px] font-medium">({language === 'en' ? w.en : w.fr})</span>
-                        </button>
-                      ))}
+                      {suggestionType === 'alphabet' ? (
+                        selectedLesson.lesson.items?.slice(0, 10).map((i: any) => (
+                          <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className="group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:border-[#0a6c4a] hover:bg-[#0a6c4a]/5 transition-colors cursor-pointer active:scale-95">
+                              <span className="font-bold text-[#0a6c4a] text-[17px] font-thai">{formatCombiningChar(i.letter)}</span> 
+                              <span className="text-slate-500 text-[13px] font-medium">({i.romanization})</span>
+                          </button>
+                        ))
+                      ) : (
+                        selectedLesson.lesson.words?.map((w: any) => (
+                          <button onClick={() => playThaiTTS(w.th)} key={w.id} className="group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:border-[#0a6c4a] hover:bg-[#0a6c4a]/5 transition-colors cursor-pointer active:scale-95">
+                              <span className="font-bold text-[#0a6c4a] text-[17px]">{w.th}</span> 
+                              <span className="text-slate-500 text-[13px] font-medium">({language === 'en' ? w.en : w.fr})</span>
+                          </button>
+                        ))
+                      )}
+                      {suggestionType === 'alphabet' && selectedLesson.lesson.items && selectedLesson.lesson.items.length > 10 && (
+                        <div className="shrink-0 border border-dashed border-slate-300 text-slate-400 rounded-[2rem] px-4 py-2 flex items-center justify-center font-medium text-[13px]">
+                           +{selectedLesson.lesson.items.length - 10} {language === 'en' ? 'others' : 'autres'}
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>
@@ -198,7 +216,7 @@ export function DesktopSidebarRight({
             {/* Sticky Actions Footer */}
             <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
                 <Link
-                  href={`/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                  href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
                   className="w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all bg-[#0a6c4a]"
                 >
                   {language === 'en' ? `Start lesson` : `Commencer la leçon`}
