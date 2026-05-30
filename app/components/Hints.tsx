@@ -188,7 +188,6 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
       ) : (
         innerText
       )}
-      {rightElement && <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 inline-flex items-center shrink-0">{rightElement}</span>}
       {currentThaiWordForAudio && !wordHighlighted && (
         <div className="absolute left-1/2 -translate-x-1/2 top-full -mt-2 flex flex-col items-center z-10">
            <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-sky-200 -mb-[1px] z-10" />
@@ -204,25 +203,34 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
     </span>
   );
 
+  const tooltipWrappedContent = tooltipTranslation && !disableTooltips ? (
+    <TooltipHint 
+      className="inline-block relative z-[100]"
+      tooltipPosition="bottom"
+      tooltipContent={
+        <>
+          <span className="font-thai text-lg font-bold text-slate-800">{tooltipTranslation}</span>
+          {phonetic && (!forceHideRomanization && showRomanization || isChecking) && <span className="text-slate-500 text-xs ml-2">(<ColoredPhonetic phonetic={phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />)</span>}
+        </>
+      }
+      audioText={tooltipTranslation}
+    >
+      {mainContent}
+    </TooltipHint>
+  ) : (
+    mainContent
+  );
+
   return (
     <div className="flex flex-col-reverse md:flex-col gap-4 md:gap-8 relative items-center w-full">
-      {tooltipTranslation && !disableTooltips ? (
-        <TooltipHint 
-          className="inline-block relative z-[100]"
-          tooltipPosition="bottom"
-          tooltipContent={
-            <>
-              <span className="font-thai text-lg font-bold text-slate-800">{tooltipTranslation}</span>
-              {phonetic && (!forceHideRomanization && showRomanization || isChecking) && <span className="text-slate-500 text-xs ml-2">(<ColoredPhonetic phonetic={phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />)</span>}
-            </>
-          }
-          audioText={tooltipTranslation}
-        >
-          {mainContent}
-        </TooltipHint>
-      ) : (
-        mainContent
-      )}
+      <div className="relative inline-flex items-center">
+        {tooltipWrappedContent}
+        {rightElement && (
+          <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 inline-flex items-center shrink-0">
+            {rightElement}
+          </span>
+        )}
+      </div>
 
       {!hideHints && isSentence && (
         <div className="w-full relative flex flex-col items-center z-[110]">

@@ -1,9 +1,20 @@
 "use client";
 
-export default function NotFound() {
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
   return (
-    <div className="flex h-screen items-center justify-center">
-      <h2>Not Found</h2>
-    </div>
+    <html>
+      <body>
+        <div className="flex h-screen flex-col items-center justify-center">
+          <h2>Something went wrong!</h2>
+          <button onClick={() => reset()}>Try again</button>
+        </div>
+      </body>
+    </html>
   );
 }
