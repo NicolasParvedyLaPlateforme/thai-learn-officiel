@@ -83,8 +83,12 @@ export function DesktopSidebarRight({
       
       let estimatedSecs = stepsCount * secsPerStep;
       let estimatedMins = Math.ceil(estimatedSecs / 60);
-      if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
-      else estimatedMins = Math.max(1, estimatedMins);
+      if (selectedLesson.lesson.isReview) {
+          estimatedMins = (modalLevel + 1) * 2;
+      } else {
+          if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
+          else estimatedMins = Math.max(1, estimatedMins);
+      }
 
       return (
         <motion.div

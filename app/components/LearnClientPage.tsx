@@ -793,8 +793,12 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                     
                     let estimatedSecs = stepsCount * secsPerStep;
                     let estimatedMins = Math.ceil(estimatedSecs / 60);
-                    if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
-                    else estimatedMins = Math.max(1, estimatedMins);
+                    if (selectedLesson.lesson.isReview) {
+                        estimatedMins = (modalLevel + 1) * 2;
+                    } else {
+                        if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
+                        else estimatedMins = Math.max(1, estimatedMins);
+                    }
 
                     return (
                       <div className="px-7 pt-2 flex flex-col">

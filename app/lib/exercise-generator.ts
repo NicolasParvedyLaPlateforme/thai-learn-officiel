@@ -333,88 +333,248 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     const unitLessons = allLessons.slice(unitStartIdx, currentIdx);
     const unitWords = unitLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
     const unitPhrases = unitLessons.flatMap(l => l.phrases);
+    const allPhrases = allLessons.flatMap(l => l.phrases);
+    const globalWordsPool = allLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
     
     let reviewExercises: Exercise[] = [];
     
-    // 1. Word Match (6 exercises)
-    const shuffledWordsForWM = shuffle(unitWords).slice(0, 6);
-    shuffledWordsForWM.forEach(word => {
-        const distractors = shuffle(unitWords.filter(w => w.id !== word.id)).slice(0, 3);
-        reviewExercises.push({
-          id: `rev-wm-${word.id}-${Math.random()}`,
-          type: 'word-match',
-          question: language === 'en' ? (word.en || word.fr) : word.fr,
-          answer: word.th,
-          options: shuffle([word, ...distractors]),
-          hideHints: true,
-          disableTooltips: true,
-          imageUrl: word.imageUrl
+    if (level === 9) {
+        // Niveau 10 : 10 phrases de free-typing uniquement
+        const itemsForFT = shuffle([...unitPhrases, ...unitWords]).slice(0, 10);
+        itemsForFT.forEach(item => {
+            reviewExercises.push({
+                id: `rev-ft-${item.id}-${Math.random()}`,
+                type: 'free-typing',
+                question: language === 'en' ? (item.en || item.fr) : item.fr,
+                answer: item.th,
+                options: [],
+                hideHints: true,
+                disableTooltips: true,
+                forceHideRomanization: true,
+                imageUrl: item.imageUrl
+            });
         });
-    });
-    
-    // Combine words and phrases for the rest
-    const allUnitItems = shuffle([...unitWords, ...unitPhrases]);
-    
-    // 2. Sentence Builder (8 exercises)
-    const itemsForSB = shuffle(unitPhrases).slice(0, 8);
-    const globalWords = allLessons.flatMap(l => l.words || []);
-    itemsForSB.forEach(item => {
-        const phrase = item as Phrase;
-        const phraseWords = phrase.components.map(id => globalWords.find(w => w.id === id)).filter(Boolean) as Word[];
-        
-        // Add distractors to make it challenging and avoid single-card issues
-        const isNumberLesson = item.id.includes('num') || item.th.match(/[๐-๙]/);
-        const sbDistractorPool = isNumberLesson ? allLessons.find(l => l.id === 'lesson-3')?.words || globalWords : globalWords;
-        const distractors = shuffle(sbDistractorPool.filter(w => !phrase.components.includes(w.id))).slice(0, 3);
-        
-        reviewExercises.push({
-            id: `rev-sb-${item.id}-${Math.random()}`,
-            type: 'sentence-builder',
-            question: language === 'en' ? (item.en || item.fr) : item.fr,
-            answer: item.th,
-            options: shuffle([...phraseWords, ...distractors]),
-            correctComponents: phrase.components,
-            hideHints: true,
-            disableTooltips: true,
-            imageUrl: item.imageUrl
-        });
-    });
+        return reviewExercises;
+    }
 
-    // 3. Writing (8 exercises)
-    const itemsForWriting = shuffle(allUnitItems).slice(0, 8);
-    itemsForWriting.forEach(item => {
-        const { characters, groups } = getWritingClustersAndGroups(item.th.replace(/\s+/g, ''));
-        reviewExercises.push({
-            id: `rev-wr-${item.id}-${Math.random()}`,
-            type: 'writing',
-            question: language === 'en' ? (item.en || item.fr) : item.fr,
-            answer: item.th,
-            options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
-            correctComponents: characters,
-            componentGroups: groups,
-            hideHints: true,
-            disableTooltips: true,
-            blindMode: false,
-            imageUrl: item.imageUrl
+    // Niveau 1 (level >= 0): 5 word-match
+    if (level >= 0 && level <= 8) {
+        const wordsForWM = shuffle(unitWords).slice(0, 5);
+        wordsForWM.forEach(word => {
+            const rand = Math.random();
+            let type: 'distractors' | 'misspelled' = rand < 0.5 ? 'distractors' : 'misspelled';
+            
+            if (type === 'distractors') {
+                let distractors = shuffle(unitWords.filter(w => w.id !== word.id)).slice(0, 3);
+                if (distractors.length < 3) distractors.push(...shuffle(globalWordsPool.filter(w => w.id !== word.id && !distractors.find(sw => sw.id === w.id))).slice(0, 3 - distractors.length));
+                reviewExercises.push({
+                    id: `rev-wm-dist-${word.id}-${Math.random()}`,
+                    type: 'word-match',
+                    question: language === 'en' ? (word.en || word.fr) : word.fr,
+                    answer: word.th,
+                    options: shuffle([word, ...distractors]),
+                    hideHints: true,
+                    disableTooltips: true,
+                    maxMistakes: 2,
+                    imageUrl: word.imageUrl
+                });
+            } else {
+                const distractors = generateMisspelledWords(word, 3);
+                reviewExercises.push({
+                    id: `rev-wm-misspelled-${word.id}-${Math.random()}`,
+                    type: 'word-match',
+                    question: language === 'en' ? (word.en || word.fr) : word.fr,
+                    answer: word.th,
+                    options: shuffle([word, ...distractors]) as any,
+                    hideHints: true,
+                    disableTooltips: true,
+                    maxMistakes: 2,
+                    imageUrl: word.imageUrl
+                });
+            }
         });
-    });
+    }
 
-    // 4. Free typing (8 exercises)
-    const itemsForFT = shuffle(allUnitItems).slice(0, 8);
-    itemsForFT.forEach(item => {
-        reviewExercises.push({
-            id: `rev-ft-${item.id}-${Math.random()}`,
-            type: 'free-typing',
-            question: language === 'en' ? (item.en || item.fr) : item.fr,
-            answer: item.th,
-            options: [],
-            hideHints: true,
-            disableTooltips: true,
-            imageUrl: item.imageUrl
+    // Niveau 2 (level >= 1): 5 fill-in-the-blank
+    if (level >= 1 && level <= 8) {
+        const phrasesForFIB = shuffle(unitPhrases).filter(p => p.components.length > 1).slice(0, 5);
+        phrasesForFIB.forEach(phrase => {
+           const validIndices = phrase.components.map((c, i) => c !== 'w_dots' ? i : -1).filter(i => i !== -1);
+           if (validIndices.length > 0) {
+               const blankIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
+               const blankWordId = phrase.components[blankIndex];
+               const blankWord = globalWordsPool.find(w => w.id === blankWordId) || {id: blankWordId, th: blankWordId, fr: '', en: '', phonetic: ''};
+               const misspelledOptions = generateMisspelledWords(blankWord as any, 1);
+               const prefilledComponents = phrase.components.map((id, i) => {
+                   if (i === blankIndex) return '';
+                   if (id === 'w_dots') return '...';
+                   const w = globalWordsPool.find(w => w.id === id);
+                   return w ? w.th : id;
+               });
+               const missingWordFr = language === 'en' ? (blankWord.en || blankWord.fr) : blankWord.fr;
+               const blankHint = language === 'en' ? `(Missing: ${missingWordFr})` : `(Mot manquant : ${missingWordFr})`;
+
+               reviewExercises.push({
+                  id: `rev-fib-${phrase.id}-${Math.random()}`,
+                  type: 'sentence-builder',
+                  question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+                  answer: phrase.th,
+                  options: shuffle([blankWord, ...misspelledOptions]) as any,
+                  correctComponents: phrase.components,
+                  prefilledComponents,
+                  isFillInBlank: true,
+                  blankIndex,
+                  blankHint,
+                  hideHints: true,
+                  disableTooltips: true,
+                  maxMistakes: 2,
+                  imageUrl: phrase.imageUrl
+               });
+           }
         });
-    });
-    
-    // Total is exactly 30: 6 + 8 + 8 + 8 = 30.
+    }
+
+    // Niveau 3 (level >= 2): 5 sentence-builder
+    if (level >= 2 && level <= 8) {
+        const phrasesForSB = shuffle(unitPhrases).slice(0, 5);
+        phrasesForSB.forEach(phrase => {
+            const phraseWords = phrase.components.map(id => globalWordsPool.find(w => w.id === id)).filter(Boolean) as Word[];
+            const distractors = shuffle(globalWordsPool.filter(w => !phrase.components.includes(w.id))).slice(0, 1);
+            reviewExercises.push({
+                id: `rev-sb-${phrase.id}-${Math.random()}`,
+                type: 'sentence-builder',
+                question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+                answer: phrase.th,
+                options: shuffle([...phraseWords, ...distractors]),
+                correctComponents: phrase.components,
+                hideHints: true,
+                disableTooltips: true,
+                imageUrl: phrase.imageUrl
+            });
+        });
+    }
+
+    // Niveau 4 (level >= 3): 5 phrase translation (word-match style)
+    if (level >= 3 && level <= 8) {
+        const phrasesForTransl = shuffle(unitPhrases).slice(0, 5);
+        phrasesForTransl.forEach(phrase => {
+           const similar = allPhrases.filter(p => p.id !== phrase.id && p.components.some(c => phrase.components.includes(c)));
+           const distractorPhrase = similar.length > 0 ? shuffle(similar)[0] : (shuffle(allPhrases.filter(p => p.id !== phrase.id))[0] || phrase);
+           reviewExercises.push({
+              id: `rev-pmatch-${phrase.id}-${Math.random()}`,
+              type: 'word-match',
+              question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+              answer: phrase.th,
+              options: shuffle([
+                { id: phrase.id, th: phrase.th, fr: phrase.fr, phonetic: phrase.phonetic },
+                { id: distractorPhrase.id, th: distractorPhrase.th, fr: distractorPhrase.fr, phonetic: distractorPhrase.phonetic }
+              ]) as any,
+              hideHints: true,
+              disableTooltips: true,
+              maxMistakes: 1,
+              imageUrl: phrase.imageUrl
+           });
+        });
+    }
+
+    // Generate pool for pair matching
+    const allItemsForPairs = Array.from(new Map([...unitWords, ...unitPhrases].map(w => [w.id, w])).values());
+
+    // Niveau 5 (level >= 4): 3 pair-matching (normal)
+    if (level >= 4 && level <= 8) {
+        for (let i = 0; i < 3; i++) {
+            const pairs = shuffle(allItemsForPairs).slice(0, 4);
+            reviewExercises.push({
+                id: `rev-pair-normal-${Math.random()}`,
+                type: 'pair-matching',
+                question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+                answer: '',
+                options: pairs as any,
+                pairs: pairs as any,
+                hideHints: true,
+                pairMatchMode: 'normal'
+            });
+        }
+    }
+
+    // Niveau 6 (level >= 5): 3 pair-matching (audio-only)
+    if (level >= 5 && level <= 8) {
+        for (let i = 0; i < 3; i++) {
+            const pairs = shuffle(allItemsForPairs).slice(0, 4);
+            reviewExercises.push({
+                id: `rev-pair-audio-${Math.random()}`,
+                type: 'pair-matching',
+                question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+                answer: '',
+                options: pairs as any,
+                pairs: pairs as any,
+                hideHints: true,
+                pairMatchMode: 'audio-only'
+            });
+        }
+    }
+
+    // Niveau 7 (level >= 6): 3 pair-matching (script-only)
+    if (level >= 6 && level <= 8) {
+        for (let i = 0; i < 3; i++) {
+            const pairs = shuffle(allItemsForPairs).slice(0, 4);
+            reviewExercises.push({
+                id: `rev-pair-script-${Math.random()}`,
+                type: 'pair-matching',
+                question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+                answer: '',
+                options: pairs as any,
+                pairs: pairs as any,
+                hideHints: true,
+                pairMatchMode: 'script-only'
+            });
+        }
+    }
+
+    // Niveau 8 (level >= 7): 3 writing words
+    if (level >= 7 && level <= 8) {
+        const wordsForWr = shuffle(unitWords).slice(0, 3);
+        wordsForWr.forEach(w => {
+           const { characters, groups } = getWritingClustersAndGroups(w.th.replace(/\s+/g, ''));
+           reviewExercises.push({
+              id: `rev-wr-word-${w.id}-${Math.random()}`,
+              type: 'writing',
+              question: language === 'en' ? (w.en || w.fr) : w.fr,
+              answer: w.th,
+              options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
+              correctComponents: characters,
+              componentGroups: groups,
+              hideHints: true,
+              disableTooltips: true,
+              blindMode: true,
+              forceHideRomanization: true,
+              imageUrl: w.imageUrl
+           });
+        });
+    }
+
+    // Niveau 9 (level >= 8): 3 writing phrases
+    if (level >= 8 && level <= 8) {
+        const phrasesForWr = shuffle(unitPhrases).slice(0, 3);
+        phrasesForWr.forEach(p => {
+           const { characters, groups } = getWritingClustersAndGroups(p.th.replace(/\s+/g, ''));
+           reviewExercises.push({
+              id: `rev-wr-phrase-${p.id}-${Math.random()}`,
+              type: 'writing',
+              question: language === 'en' ? (p.en || p.fr) : p.fr,
+              answer: p.th,
+              options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
+              correctComponents: characters,
+              componentGroups: groups,
+              hideHints: true,
+              disableTooltips: true,
+              blindMode: true,
+              forceHideRomanization: true,
+              imageUrl: p.imageUrl
+           });
+        });
+    }
+
     return reviewExercises;
   }
 
