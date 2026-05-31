@@ -11,9 +11,10 @@ const fileExistenceCache: Record<string, boolean> = {};
 async function checkUrlExists(url: string): Promise<boolean> {
   if (url in fileExistenceCache) return fileExistenceCache[url];
   try {
-    const res = await fetch(url, { method: 'HEAD' });
-    fileExistenceCache[url] = res.ok;
-    return res.ok;
+    const res = await fetch(`/api/check-audio?file=${encodeURIComponent(url)}`);
+    const data = await res.json();
+    fileExistenceCache[url] = data.exists;
+    return data.exists;
   } catch {
     fileExistenceCache[url] = false;
     return false;

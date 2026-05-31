@@ -259,15 +259,15 @@ export function DesktopSidebarRight({
                         {suggestionType === 'alphabet' ? (
                           selectedLesson.lesson.items?.slice(0, 10).map((i: any) => (
                             <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
-                                <span className={`font-bold ${selectedLesson.unitText} text-[17px] font-thai`}>{formatCombiningChar(i.letter)}</span> 
-                                <span className="text-slate-500 text-[13px] font-medium">({i.romanization})</span>
+                                <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] font-thai transition-colors`}>{formatCombiningChar(i.letter)}</span> 
+                                <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({i.romanization})</span>
                             </button>
                           ))
                         ) : (
                           selectedLesson.lesson.words?.map((w: any) => (
                             <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
-                                <span className={`font-bold ${selectedLesson.unitText} text-[17px]`}>{w.th}</span> 
-                                <span className="text-slate-500 text-[13px] font-medium">({language === 'en' ? w.en : w.fr})</span>
+                                <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] transition-colors`}>{w.th}</span> 
+                                <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({language === 'en' ? w.en : w.fr})</span>
                             </button>
                           ))
                         )}
