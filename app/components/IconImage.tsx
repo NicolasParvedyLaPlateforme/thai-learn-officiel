@@ -36,9 +36,8 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
 
     return (
       <div
-        className={`flex items-center justify-center rounded-[20%] ${
-          fill ? "absolute inset-0" : ""
-        } ${className}`}
+        className={`flex items-center justify-center ${fill ? "absolute inset-0" : ""
+          } ${className}`}
         style={style}
       >
         <span style={{ fontSize: "65cqmin" }}>{mapping.emoji}</span>

@@ -1,4 +1,4 @@
-import { X, Star, Crown } from "lucide-react";
+import { X, Star, Crown, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Exercise } from "../../../types";
 
@@ -14,6 +14,9 @@ interface HeaderProgressBarProps {
   showRomanization: boolean;
   setShowRomanization: (val: boolean) => void;
   setShowInfoModal: (val: boolean) => void;
+  isReview?: boolean;
+  timeLeft?: number | null;
+  initialTime?: number | null;
 }
 
 export default function HeaderProgressBar({
@@ -28,6 +31,9 @@ export default function HeaderProgressBar({
   showRomanization,
   setShowRomanization,
   setShowInfoModal,
+  isReview,
+  timeLeft,
+  initialTime,
 }: HeaderProgressBarProps) {
   const router = useRouter();
 
@@ -46,10 +52,21 @@ export default function HeaderProgressBar({
         </div>
 
         <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">
-          <div
-            className="bg-emerald-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.3)]"
-            style={{ width: `${progress}%` }}
-          />
+          {isReview && timeLeft !== undefined && timeLeft !== null && initialTime ? (
+            <div
+              className={`h-full transition-all duration-1000 rounded-full ${
+                timeLeft < 30 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.3)]' :
+                timeLeft < 60 ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' :
+                'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
+              }`}
+              style={{ width: `${(timeLeft / initialTime) * 100}%` }}
+            />
+          ) : (
+            <div
+              className="bg-emerald-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.3)]"
+              style={{ width: `${progress}%` }}
+            />
+          )}
         </div>
 
         <div className="font-bold text-slate-400 flex items-center gap-2 sm:gap-3 text-sm sm:text-base shrink-0">
@@ -89,11 +106,20 @@ export default function HeaderProgressBar({
             </span>
           )}
 
-          <span className="bg-slate-100 text-slate-500 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold shrink-0 ml-1">
-            {currentIndex + 1} / {exercisesLength}
+          <span className="bg-slate-100 text-slate-500 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold shrink-0 ml-1 flex items-center gap-1.5 tabular-nums">
+            {isReview && timeLeft !== undefined && timeLeft !== null ? (
+               <>
+                 <Clock size={14} className={timeLeft < 30 ? "text-red-500" : "text-slate-400"} />
+                 <span className={timeLeft < 30 ? "text-red-500 font-bold" : ""}>
+                    {Math.floor(timeLeft / 60).toString().padStart(2, '0')}:{(timeLeft % 60).toString().padStart(2, '0')}
+                 </span>
+               </>
+            ) : (
+               `${currentIndex + 1} / ${exercisesLength}`
+            )}
           </span>
 
-          {!currentExercise?.forceHideRomanization && (
+          {!isReview && !currentExercise?.forceHideRomanization && (
             <button
               onClick={() => setShowRomanization(!showRomanization)}
               className={`w-9 h-9 flex flex-col items-center justify-center rounded-xl font-bold border-2 transition-colors ${
@@ -117,28 +143,30 @@ export default function HeaderProgressBar({
             </button>
           )}
 
-          <button
-            onClick={() => setShowInfoModal(true)}
-            className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
-            title={
-              language === "en" ? "Vocabulary List" : "Liste de vocabulaire"
-            }
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {!isReview && (
+            <button
+              onClick={() => setShowInfoModal(true)}
+              className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
+              title={
+                language === "en" ? "Vocabulary List" : "Liste de vocabulaire"
+              }
             >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-          </button>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     </header>
