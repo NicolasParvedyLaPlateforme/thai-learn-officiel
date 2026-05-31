@@ -58,7 +58,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
   }, [lightweightLessons]);
 
   const router = useRouter();
-  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, language, setLanguage, unlockLessonManual, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex } = useProgressStore();
+  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, language, setLanguage, unlockLessonManual, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex, reviewStats } = useProgressStore();
   const learnQuests = dailyQuests?.learn || [];
   const [mounted, setMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -690,6 +690,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
             setModalLevel={setModalLevel}
             lessonStars={lessonStars}
             resetLessonLevel={resetLessonLevel}
+            reviewStats={reviewStats}
           />
         </div>
       )}
@@ -814,23 +815,77 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           </div>
                         </div>
 
-                        {/* Vocab preview */}
+                        {/* Vocab preview or Bilan Stats */}
                         <div className="mb-4">
                           <div className="flex items-center justify-between mb-4">
                             <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                              {language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`}
+                              {selectedLesson.lesson.isReview 
+                                ? (language === 'en' ? `Bilan Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`)
+                                : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
+                              }
                             </h4>
-                            <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
+                            {!selectedLesson.lesson.isReview && (
+                              <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
+                            )}
                           </div>
 
-                          <div className="flex flex-wrap gap-2.5 pb-2">
-                              {selectedLesson.lesson.words?.map((w: any) => (
-                                <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
-                                    <span className={`font-bold text-[17px] ${selectedLesson.unitText}`}>{w.th}</span> 
-                                    <span className="text-slate-500 text-[13px] font-medium">({language === 'en' ? w.en : w.fr})</span>
-                                </button>
-                              ))}
-                          </div>
+                          {selectedLesson.lesson.isReview ? (
+                            <div className="flex flex-col gap-3">
+                                {(() => {
+                                    const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
+                                    if (stats?.bestTime !== undefined && stats.bestTime !== null) {
+                                      const m = Math.floor(stats.bestTime / 60);
+                                      const s = stats.bestTime % 60;
+                                      return (
+                                        <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-200 shadow-sm">
+                                          <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                                            <Clock size={20} className="stroke-[2.5]" />
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-emerald-800 font-bold text-[15px]">
+                                              {language === 'en' ? "Best Time" : "Meilleur Temps"}
+                                            </span>
+                                            <span className="text-emerald-600 font-medium text-sm">
+                                              {m}min {s}s
+                                            </span>
+                                          </div>
+                                        </div>
+                                      );
+                                    } else if (stats?.maxPercentage !== undefined && stats.maxPercentage !== null) {
+                                      return (
+                                        <div className="flex items-center gap-3 p-4 bg-rose-50 rounded-xl border border-rose-200 shadow-sm">
+                                          <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 shrink-0">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-rose-800 font-bold text-[15px]">
+                                              {language === 'en' ? "Best Survival" : "Record de Survie"}
+                                            </span>
+                                            <span className="text-rose-600 font-medium text-sm">
+                                              {stats.maxPercentage}%
+                                            </span>
+                                          </div>
+                                        </div>
+                                      );
+                                    } else {
+                                      return (
+                                        <div className="flex items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200 text-slate-400 text-sm font-medium">
+                                          {language === 'en' ? "Not completed yet" : "Pas encore terminé"}
+                                        </div>
+                                      );
+                                    }
+                                })()}
+                            </div>
+                          ) : (
+                            <div className="flex flex-wrap gap-2.5 pb-2">
+                                {selectedLesson.lesson.words?.map((w: any) => (
+                                  <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
+                                      <span className={`font-bold text-[17px] ${selectedLesson.unitText}`}>{w.th}</span> 
+                                      <span className="text-slate-500 text-[13px] font-medium">({language === 'en' ? w.en : w.fr})</span>
+                                  </button>
+                                ))}
+                            </div>
+                          )}
                         </div>
                       </div>
                     )

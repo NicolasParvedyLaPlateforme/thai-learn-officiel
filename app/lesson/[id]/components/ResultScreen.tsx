@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, Star } from "lucide-react";
+import { Check, Star, Clock, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Lesson } from "../../../types";
 import { useProgressStore } from "../../../lib/store";
@@ -11,6 +11,10 @@ interface ResultScreenProps {
   exercisesLength: number;
   language: string;
   nextUnitIndex: number;
+  failedDueToTime?: boolean;
+  timeLeft?: number | null;
+  initialTime?: number | null;
+  currentIndex?: number;
 }
 
 export default function ResultScreen({
@@ -20,13 +24,58 @@ export default function ResultScreen({
   exercisesLength,
   language,
   nextUnitIndex,
+  failedDueToTime,
+  timeLeft,
+  initialTime,
+  currentIndex,
 }: ResultScreenProps) {
   const router = useRouter();
   const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
+  
+  const percentage = failedDueToTime && currentIndex !== undefined ? Math.round((currentIndex / exercisesLength) * 100) : 100;
+  const timeTakenSec = initialTime !== undefined && initialTime !== null && timeLeft !== undefined && timeLeft !== null ? initialTime - Math.max(0, timeLeft) : null;
+  
+  const formatTime = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}min ${s}s`;
+  };
+
+  if (failedDueToTime) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
+        <div className="text-rose-500 mb-2">
+          <Clock size={80} className="mx-auto" />
+        </div>
+        <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center mt-6">
+          {language === "en" ? "Time's Up!" : "Temps Écoulé !"}
+        </h1>
+        <p className="text-slate-500 mb-8 text-center text-lg font-medium">
+          {language === "en" ? `Completion: ${percentage}%` : `Complété à : ${percentage}%`}
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
+          <button
+            onClick={() => window.location.reload()}
+            className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
+          >
+            <RotateCcw size={20} />
+            {language === "en" ? "Retry" : "Réessayer"}
+          </button>
+          <button
+            onClick={() => router.push(`/learn#lesson-${lesson.id}`)}
+            className="px-8 py-3 flex-1 rounded-xl bg-slate-200 border-b-4 border-slate-300 text-slate-500 font-bold text-lg shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
+          >
+            {language === "en" ? "Back" : "Retour"}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
-      <div className="text-orange-500 mb-2">
+      <div className="text-emerald-500 mb-2">
         <Check size={80} className="mx-auto" />
       </div>
       <div className="flex gap-2 mb-6">
@@ -53,9 +102,18 @@ export default function ResultScreen({
           ? `Level ${currentLevel + 1} completed!`
           : `Niveau ${currentLevel + 1} terminé !`}
       </h1>
-      <p className="text-slate-500 mb-8 text-center text-lg font-medium">
-        + {10 + exercisesLength} XP
-      </p>
+      
+      {lesson.isReview && timeTakenSec !== null ? (
+        <p className="text-indigo-500 mb-8 text-center text-lg font-bold flex items-center justify-center gap-2">
+          <Clock size={20} />
+          {language === "en" ? `Time: ${formatTime(timeTakenSec)}` : `Temps : ${formatTime(timeTakenSec)}`}
+        </p>
+      ) : (
+        <p className="text-slate-500 mb-8 text-center text-lg font-medium">
+          + {10 + exercisesLength} XP
+        </p>
+      )}
+      
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
         {nextUnitIndex !== -1 && (
           <button

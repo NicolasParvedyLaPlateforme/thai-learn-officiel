@@ -85,6 +85,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     hiddenInstructions,
     hideInstruction,
     unhideInstruction,
+    saveReviewStat,
   } = useProgressStore();
 
   const lessonId = params.id as string;
@@ -116,6 +117,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const [mistakes, setMistakes] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [initialTime, setInitialTime] = useState<number | null>(null);
+  const [failedDueToTime, setFailedDueToTime] = useState(false);
 
   const earnedStars = mistakes < 2 ? 3 : mistakes < 4 ? 2 : 1;
 
@@ -165,6 +170,15 @@ function LessonPageContent({ lesson }: { lesson: any }) {
          setIsCorrect(null);
          setSelectedAnswer(null);
          setMistakes(0);
+         setFailedDueToTime(false);
+         if (lesson.isReview) {
+            const time = (currentLevel + 1) * 2 * 60;
+            setTimeLeft(time);
+            setInitialTime(time);
+         } else {
+            setTimeLeft(null);
+            setInitialTime(null);
+         }
          setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
       });
     }
@@ -190,6 +204,24 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const isDataLoaded = isClient && _hasHydrated && !!lesson && exercises.length > 0;
 
+  useEffect(() => {
+    if (timeLeft === null || isFinished || !showExerciseUI || !isDataLoaded) return;
+    
+    if (timeLeft <= 0) {
+       setIsFinished(true);
+       setFailedDueToTime(true);
+       const percentage = Math.round((currentIndex / exercises.length) * 100);
+       saveReviewStat(lesson.id, currentLevel, { maxPercentage: percentage });
+       return;
+    }
+
+    const timerId = setInterval(() => {
+      setTimeLeft(prev => (prev !== null && prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [timeLeft, isFinished, showExerciseUI, isDataLoaded, currentIndex, exercises.length, lesson, currentLevel, saveReviewStat]);
+
   if (!isDataLoaded && !showExerciseUI) {
     // Need this block to prevent early variable access if exercises is empty
     // but the loading screen is still active.
@@ -212,6 +244,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         } else {
           setIsFinished(true);
           completeLesson(lesson.id, 10 + exercises.length, currentLevel, earnedStars);
+          if (lesson.isReview && initialTime !== null && timeLeft !== null) {
+             saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
+          }
           confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
       }, 150);
@@ -233,6 +268,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             // Finished
             setIsFinished(true);
             completeLesson(lesson.id, 10 + exercises.length, currentLevel, earnedStars);
+            if (lesson.isReview && initialTime !== null && timeLeft !== null) {
+               saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
+            }
             confetti({
               particleCount: 150,
               spread: 70,
@@ -345,6 +383,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         exercisesLength={exercises.length}
         language={language}
         nextUnitIndex={nextUnitIndex}
+        failedDueToTime={failedDueToTime}
+        timeLeft={timeLeft}
+        initialTime={initialTime}
+        currentIndex={currentIndex}
       />
     );
   }
@@ -408,6 +450,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
               showRomanization={showRomanization}
               setShowRomanization={setShowRomanization}
               setShowInfoModal={setShowInfoModal}
+              isReview={lesson.isReview}
+              timeLeft={timeLeft}
+              initialTime={initialTime}
             />
 
             {/* Main Exercise Area */}
@@ -545,6 +590,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                               10 + exercises.length,
                               currentLevel,
                             );
+                            if (lesson.isReview && initialTime !== null && timeLeft !== null) {
+                              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
+                            }
                             confetti({
                               particleCount: 150,
                               spread: 70,

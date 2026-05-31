@@ -137,6 +137,9 @@ interface ProgressState {
   recordActivity: () => void;
   progressQuest: (category: 'learn' | 'alphabet', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => void;
   checkAndGenerateQuests: () => void;
+  
+  reviewStats: Record<string, Record<number, { bestTime?: number, maxPercentage?: number }>>;
+  saveReviewStat: (lessonId: string, level: number, stats: { bestTime?: number, maxPercentage?: number }) => void;
 }
 
 export const useProgressStore = create<ProgressState>()(
@@ -162,6 +165,39 @@ export const useProgressStore = create<ProgressState>()(
       lastActiveDate: null,
       dailyQuests: null,
       questsDate: null,
+      reviewStats: {},
+      
+      saveReviewStat: (lessonId, level, stats) => set((state) => {
+        const lessonStats = state.reviewStats[lessonId] || {};
+        const currentLevelStats = lessonStats[level] || {};
+        
+        let newBestTime = currentLevelStats.bestTime;
+        if (stats.bestTime !== undefined) {
+          if (newBestTime === undefined || stats.bestTime < newBestTime) {
+            newBestTime = stats.bestTime;
+          }
+        }
+        
+        let newMaxPercentage = currentLevelStats.maxPercentage;
+        if (stats.maxPercentage !== undefined) {
+          if (newMaxPercentage === undefined || stats.maxPercentage > newMaxPercentage) {
+            newMaxPercentage = stats.maxPercentage;
+          }
+        }
+        
+        return {
+          reviewStats: {
+            ...state.reviewStats,
+            [lessonId]: {
+              ...lessonStats,
+              [level]: {
+                bestTime: newBestTime,
+                maxPercentage: newMaxPercentage
+              }
+            }
+          }
+        };
+      }),
       
       recordActivity: () => set((state) => {
         const today = getLocalDateString();
@@ -370,7 +406,7 @@ export const useProgressStore = create<ProgressState>()(
           ? (state.unlockedLessons.includes(lessonId) ? state.unlockedLessons : [...state.unlockedLessons, lessonId])
           : [lessonId]
       })),
-      resetProgress: () => set({ completedLessons: [], unlockedLessons: [], lessonLevels: {}, lessonStars: {}, xp: 0 }),
+      resetProgress: () => set({ completedLessons: [], unlockedLessons: [], lessonLevels: {}, lessonStars: {}, xp: 0, reviewStats: {} }),
       resetLessonLevel: (lessonId) => set((state) => ({
         lessonLevels: {
           ...state.lessonLevels,
