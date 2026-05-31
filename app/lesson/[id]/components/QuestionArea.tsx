@@ -144,7 +144,7 @@ const imageUrl =
               src={imageUrl}
               alt="word"
               fill
-              className="object-contain"
+              className="object-cover rounded-3xl shadow-lg border-4 border-white"
             />
           ) : (
             <span>🐘</span>
