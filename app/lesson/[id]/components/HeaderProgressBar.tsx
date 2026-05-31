@@ -106,12 +106,12 @@ export default function HeaderProgressBar({
             </span>
           )}
 
-          <span className="bg-slate-100 text-slate-500 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold shrink-0 ml-1 flex items-center gap-1.5">
+          <span className="bg-slate-100 text-slate-500 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold shrink-0 ml-1 flex items-center gap-1.5 tabular-nums">
             {isReview && timeLeft !== undefined && timeLeft !== null ? (
                <>
                  <Clock size={14} className={timeLeft < 30 ? "text-red-500" : "text-slate-400"} />
                  <span className={timeLeft < 30 ? "text-red-500 font-bold" : ""}>
-                    {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+                    {Math.floor(timeLeft / 60).toString().padStart(2, '0')}:{(timeLeft % 60).toString().padStart(2, '0')}
                  </span>
                </>
             ) : (
@@ -119,7 +119,7 @@ export default function HeaderProgressBar({
             )}
           </span>
 
-          {!currentExercise?.forceHideRomanization && (
+          {!isReview && !currentExercise?.forceHideRomanization && (
             <button
               onClick={() => setShowRomanization(!showRomanization)}
               className={`w-9 h-9 flex flex-col items-center justify-center rounded-xl font-bold border-2 transition-colors ${
@@ -143,28 +143,30 @@ export default function HeaderProgressBar({
             </button>
           )}
 
-          <button
-            onClick={() => setShowInfoModal(true)}
-            className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
-            title={
-              language === "en" ? "Vocabulary List" : "Liste de vocabulaire"
-            }
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {!isReview && (
+            <button
+              onClick={() => setShowInfoModal(true)}
+              className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
+              title={
+                language === "en" ? "Vocabulary List" : "Liste de vocabulaire"
+              }
             >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-          </button>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     </header>
