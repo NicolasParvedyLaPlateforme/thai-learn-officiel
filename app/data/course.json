@@ -11,7 +11,7 @@
           "fr": "Bonjour",
           "phonetic": "sà-wàt-dii",
           "en": "Good morning",
-          "imageUrl": "/images/hello_word.svg"
+          "imageUrl": "/images/unite-1/mot/bonjour-mot.webp"
         },
         {
           "id": "w_khopkhun",
@@ -19,7 +19,7 @@
           "fr": "Merci",
           "phonetic": "khɔ̀p-khun",
           "en": "Thanks",
-          "imageUrl": "/images/thanks_word.svg"
+          "imageUrl": "/images/unite-1/mot/merci.webp"
         },
         {
           "id": "w_krap",
@@ -27,7 +27,7 @@
           "fr": "particule polie homme",
           "phonetic": "khráp",
           "en": "polite male particle",
-          "imageUrl": "/images/man_word.svg"
+          "imageUrl": "/images/unite-1/mot/homme.webp"
         },
         {
           "id": "w_kha",
@@ -35,7 +35,7 @@
           "fr": "particule polie femme",
           "phonetic": "khâ",
           "en": "polite female particle",
-          "imageUrl": "/images/woman_word.svg"
+          "imageUrl": "/images/unite-1/mot/femme.webp"
         },
         {
           "id": "w_sabai",
@@ -43,7 +43,7 @@
           "fr": "bien / à l'aise",
           "phonetic": "sà-baai",
           "en": "good / comfortable",
-          "imageUrl": "/images/sabai_word.svg"
+          "imageUrl": "/images/unite-1/mot/cavabien.webp"
         },
         {
           "id": "w_dee",
@@ -51,7 +51,7 @@
           "fr": "bien / bon",
           "phonetic": "dii",
           "en": "good / good",
-          "imageUrl": "/images/good_word.svg"
+          "imageUrl": "/images/unite-1/mot/bien.webp"
         },
         {
           "id": "w_mai",
@@ -59,7 +59,7 @@
           "fr": "est-ce que (question)",
           "phonetic": "mǎi",
           "en": "does (question)",
-          "imageUrl": "/images/question_word.svg"
+          "imageUrl": "/images/unite-1/mot/question.webp"
         }
       ],
       "phrases": [
@@ -264,7 +264,7 @@
       ],
       "titleEn": "Basics 2: Introduce yourself",
       "descriptionEn": "Learn basic pronouns and introducing yourself",
-      "imageUrl": "/images/introduce.svg"
+      "imageUrl": "/images/unite/unite-1-exercice-2-officiel.webp"
     },
     {
       "id": "l_nouveau_001",
@@ -402,7 +402,7 @@
       ],
       "titleEn": "Introducing yourself: What about you?",
       "descriptionEn": "Learn to ask questions about the other person",
-      "imageUrl": "/images/l_nouveau_001.svg"
+      "imageUrl": "/images/unite/unite-1-exercice-3-officiel.webp"
     },
     {
       "id": "lesson-3",
@@ -542,7 +542,7 @@
       ],
       "titleEn": "Numbers 0 to 5",
       "descriptionEn": "Learn to count from 1 to 10",
-      "imageUrl": "/images/numbers.svg"
+      "imageUrl": "/images/unite/unite-1-exercice-4-officiel.webp"
     },
     {
       "id": "l_nouveau_002",
@@ -664,7 +664,7 @@
       ],
       "titleEn": "Numbers 6 to 10",
       "descriptionEn": "Learn to count from 6 to 10",
-      "imageUrl": "/images/l_nouveau_002.svg"
+      "imageUrl": "/images/unite/unite-1-exercice-5-officiel.webp"
     },
     {
       "id": "l_nouveau_003",
@@ -786,7 +786,7 @@
       ],
       "titleEn": "Duration and Frequency",
       "descriptionEn": "Express the time and frequency of actions",
-      "imageUrl": "/images/l_nouveau_003.svg"
+      "imageUrl": "/images/unite/unite-1-exercice-6-officiel.webp"
     },
     {
       "id": "bilan-unit-1",
