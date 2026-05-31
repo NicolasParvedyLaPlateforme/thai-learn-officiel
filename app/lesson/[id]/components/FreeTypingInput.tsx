@@ -59,7 +59,7 @@ export default function FreeTypingInput({ exercise, selected, onChange, disabled
               value={selected}
               onChange={(e) => onChange(e.target.value)}
               disabled={disabled}
-              className="w-full text-center font-thai text-3xl md:text-4xl py-4 px-6 md:py-6 border-4 border-slate-200 rounded-2xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 transition-all text-slate-800 disabled:opacity-50 disabled:bg-slate-50"
+              className="w-full text-center font-thai text-3xl md:text-4xl leading-loose md:leading-loose py-4 px-6 md:py-6 border-4 border-slate-200 rounded-2xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 transition-all text-slate-800 disabled:opacity-50 disabled:bg-slate-50"
               placeholder={language === 'en' ? "Type in Thai..." : "Tapez en Thaï..."}
               autoFocus
               dir="ltr"
