@@ -458,14 +458,13 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             {/* Main Exercise Area */}
             <main className="flex-1 flex flex-col w-full relative">
         {/* Glossary Modal */}
-        {showInfoModal && (
-          <GlossaryModal 
-             lesson={lesson} 
-             language={language} 
-             showRomanization={showRomanization} 
-             onClose={() => setShowInfoModal(false)} 
-          />
-        )}
+        <GlossaryModal 
+           isOpen={showInfoModal}
+           lesson={lesson} 
+           language={language} 
+           showRomanization={showRomanization} 
+           onClose={() => setShowInfoModal(false)} 
+        />
 
         {/* The Question / Hint System */}
         <AnimatePresence mode="wait">
