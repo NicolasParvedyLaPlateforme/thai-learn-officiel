@@ -60,7 +60,7 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
       width={width}
       height={height}
       priority={priority}
-      sizes={sizes}
+      sizes={sizes || (fill ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" : undefined)}
       referrerPolicy={referrerPolicy}
       onLoad={() => setIsLoaded(true)}
     />
