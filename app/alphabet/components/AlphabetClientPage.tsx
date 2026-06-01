@@ -670,8 +670,12 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                     <>
                       {/* Image Header */}
                       <div className="w-full shrink-0 z-0">
-                         <div className={`w-full h-[100px] md:h-[180px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
-                            <BookOpen size={48} className="text-amber-500/50" />
+                         <div className={`w-full h-[120px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
+                           {selectedLesson?.lesson.imageUrl ? (
+                              <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
+                           ) : (
+                              <BookOpen size={48} className="text-amber-500/50" />
+                           )}
                          </div>
                       </div>
 

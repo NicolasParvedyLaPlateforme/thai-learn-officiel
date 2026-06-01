@@ -712,7 +712,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                   <div className="w-full shrink-0 z-0">
                      <div className={`w-full h-[120px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
                        {selectedLesson?.lesson.imageUrl ? (
-                          <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-contain p-2" />
+                          <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
                        ) : (
                           <BookOpen size={48} className="text-slate-200" />
                        )}
