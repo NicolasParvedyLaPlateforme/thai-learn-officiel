@@ -15,9 +15,6 @@ export function TooltipHint({ children, tooltipContent, className = '', audioTex
 
   const onOpen = () => {
     setIsOpen(true);
-    if (audioText) {
-      playThaiTTS(audioText);
-    }
   };
 
   const handleTap = () => {

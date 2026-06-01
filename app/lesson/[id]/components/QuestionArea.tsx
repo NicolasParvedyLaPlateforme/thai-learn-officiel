@@ -111,12 +111,18 @@ const isNumberExercise = (() => {
   if (!correctOption) return false;
 
   const frText = (correctOption.fr || "").toLowerCase().trim();
+  const enText = (correctOption.en || "").toLowerCase().trim();
+  
   const numWordsFr = [
     'zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 
     'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf', 'vingt'
   ];
+  const numWordsEn = [
+    'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+    'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'
+  ];
   
-  return numWordsFr.includes(frText);
+  return numWordsFr.includes(frText) || numWordsEn.includes(enText);
 })();
 
 const hideImageForNumbers = isReverse && isNumberExercise;
@@ -249,36 +255,30 @@ const imageUrl = hideImageForNumbers
                     isReverse={currentExercise.reverse}
                     currentThaiWordForAudio={currentThaiWordForAudio}
                     rightElement={
-                      currentExercise.type === "word-match" ||
-                      (currentExercise.type === "writing" &&
-                        currentExercise.blindMode &&
-                        currentExercise.correctComponents &&
-                        !isChecking) ? (
-                        <button
-                          onClick={() => playThaiTTS(currentExercise.answer)}
-                          className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0 ml-2"
-                          title={
-                            language === "en"
-                              ? "Listen to pronunciation"
-                              : "Écouter la prononciation"
-                          }
+                      <button
+                        onClick={() => playThaiTTS(currentExercise.answer)}
+                        className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0 ml-2"
+                        title={
+                          language === "en"
+                            ? "Listen to pronunciation"
+                            : "Écouter la prononciation"
+                        }
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         >
-                          <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-                          </svg>
-                        </button>
-                      ) : undefined
+                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </svg>
+                      </button>
                     }
                   />
                 </div>
