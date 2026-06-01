@@ -82,6 +82,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
   const [cols, setCols] = useState(5);
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
+  const [lockedReviewModalOpen, setLockedReviewModalOpen] = useState(false);
 
   const globalSuggested = useGlobalSuggestedLesson(lightweightLessons);
   const suggestedLessonId = globalSuggested?.type === 'learn' ? globalSuggested.id : null;
@@ -370,6 +371,13 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                    const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
                    // All lessons are fully unlocked horizontally
                    const isUnlocked = true;
+                   
+                   let isReviewLocked = false;
+                   if (lesson.isReview && mounted) {
+                       const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview);
+                       isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
+                   }
+                   
                    const isMaxLevel = level >= 10;
 
                    const showLineToNext = idx < unitLessons.length - 1;
@@ -389,6 +397,10 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           className={`relative shrink-0 mb-4 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
                           onClick={(e) => {
                             e.stopPropagation();
+                            if (isReviewLocked) {
+                              setLockedReviewModalOpen(true);
+                              return;
+                            }
                             setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                             setModalLevel(Math.min(level, 9));
                           }}
@@ -396,25 +408,32 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
                             ${isMaxLevel 
                               ? unit.colorClass + ' text-white ' + unit.borderClass 
+                              : isReviewLocked
+                              ? 'bg-slate-100 text-slate-300 border-slate-200 border-2 active:border-b-2 active:translate-y-1'
                               : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1
                               : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}
                           >
                             {lesson.imageUrl ? (
                               <>
-                                <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
+                                <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''} ${isReviewLocked ? 'opacity-30 grayscale' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
                                 {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={40} className="stroke-[3] text-white" /></div>}
+                                {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10"><Lock size={40} className="text-slate-500 stroke-[2.5]" /></div>}
                               </>
                             ) : (
-                              isMaxLevel ? <CheckCircle size={40} className="stroke-[3]" /> : level > 0 ? <CheckCircle size={40} className="stroke-current stroke-[2.5]" /> : lesson.isReview ? <Star size={40} className="fill-current stroke-current" /> : <Play size={40} className="ml-1 fill-current stroke-[2]" />
+                              isMaxLevel ? <CheckCircle size={40} className="stroke-[3]" /> : isReviewLocked ? <Lock size={40} className="fill-slate-200 text-slate-400 stroke-[2.5]" /> : level > 0 ? <CheckCircle size={40} className="stroke-current stroke-[2.5]" /> : lesson.isReview ? <Star size={40} className="fill-current stroke-current" /> : <Play size={40} className="ml-1 fill-current stroke-[2]" />
                             )}
                           </div>
                         </div>
                         
                         {/* Card */}
                         <div 
-                          className={`w-full max-w-[280px] sm:max-w-[320px] rounded-[1.5rem] p-5 flex flex-col items-center text-center transition-all z-10 border-2 border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
+                          className={`w-full max-w-[280px] sm:max-w-[320px] rounded-[1.5rem] p-5 flex flex-col items-center text-center transition-all z-10 border-2 border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : isReviewLocked ? 'bg-slate-50 border-slate-200' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
                           onClick={(e) => {
                             e.stopPropagation();
+                            if (isReviewLocked) {
+                              setLockedReviewModalOpen(true);
+                              return;
+                            }
                             setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                             setModalLevel(Math.min(level, 9));
                           }}
@@ -559,6 +578,12 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                        const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
                        const isUnlocked = true;
                        
+                       let isReviewLocked = false;
+                       if (lesson.isReview && mounted) {
+                           const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview);
+                           isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
+                       }
+                       
                        const showLineToNext = idx < unitLessons.length - 1;
                        const lineToNextColor = level > 0 ? unit.colorClass : "bg-slate-200";
                        
@@ -578,28 +603,37 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                               className={`relative shrink-0 py-6 cursor-pointer hover:brightness-95 hover:scale-105 active:scale-95 transition-all z-10`}
                               onClick={(e) => {
                                 e.stopPropagation();
+                                if (isReviewLocked) {
+                                  setLockedReviewModalOpen(true);
+                                  return;
+                                }
                                 setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                                 setModalLevel(Math.min(level, 9));
                                 setShowDesktopUnitsList(false);
                               }}
                             >
-                              <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-20 transition-transform overflow-hidden bg-white ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
+                              <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-20 transition-transform overflow-hidden bg-white ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : isReviewLocked ? 'bg-slate-100 text-slate-300 border-slate-200 border-2 active:border-b-2 active:translate-y-1' : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
                                 {(lesson as any).imageUrl ? (
                                   <>
-                                    <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
+                                    <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''} ${isReviewLocked ? 'opacity-30 grayscale' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
                                     {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={32} className="stroke-[3] text-white" /></div>}
+                                    {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10"><Lock size={32} className="text-slate-500 stroke-[2]" /></div>}
                                   </>
                                 ) : (
-                                  isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
+                                  isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : isReviewLocked ? <Lock size={32} className="fill-slate-200 text-slate-400 stroke-[2]" /> : lesson.isReview ? <Star size={32} className="fill-current stroke-current" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
                                 )}
                               </div>
                             </div>
                             
                             {/* Horizontal Card */}
                             <div 
-                              className={`flex-1 rounded-[1.5rem] border-2 p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all group border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative z-10 ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
+                              className={`flex-1 rounded-[1.5rem] border-2 p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all group border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative z-10 ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : isReviewLocked ? 'bg-slate-50 border-slate-200' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
                               onClick={(e) => {
                                 e.stopPropagation();
+                                if (isReviewLocked) {
+                                  setLockedReviewModalOpen(true);
+                                  return;
+                                }
                                 setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
                                 setModalLevel(Math.min(level, 9));
                                 setShowDesktopUnitsList(false);
@@ -712,7 +746,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                   <div className="w-full shrink-0 z-0">
                      <div className={`w-full h-[120px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
                        {selectedLesson?.lesson.imageUrl ? (
-                          <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-contain p-2" />
+                          <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
                        ) : (
                           <BookOpen size={48} className="text-slate-200" />
                        )}
@@ -1022,7 +1056,52 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       </Drawer.Root>
       )}
 
-      <WritingConfigModal isOpen={isWritingConfigModalOpen} onClose={() => setWritingConfigModalOpen(false)} />
+      <WritingConfigModal 
+        isOpen={isWritingConfigModalOpen} 
+        onClose={() => setWritingConfigModalOpen(false)} 
+      />
+
+      {/* Locked Review Modal */}
+      {mounted && (
+        <AnimatePresence>
+          {lockedReviewModalOpen && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[200] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4"
+              onClick={() => setLockedReviewModalOpen(false)}
+            >
+              <motion.div 
+                initial={{ scale: 0.95, opacity: 0, y: 10 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 10 }}
+                className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center relative"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                  <Lock size={32} className="text-slate-400" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 tracking-tight">
+                  {language === 'en' ? 'Review Locked' : 'Bilan Verrouillé'}
+                </h3>
+                <p className="text-slate-500 font-medium mb-6">
+                  {language === 'en' 
+                    ? 'To prove you are ready for the review, reach at least Level 4 on all lessons in this unit!' 
+                    : 'Pour prouver que vous êtes prêt pour le bilan, atteignez au moins le Niveau 4 sur toutes les leçons de cette unité !'}
+                </p>
+                <button 
+                  onClick={() => setLockedReviewModalOpen(false)}
+                  className="w-full py-4 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-700 active:scale-[0.98] transition-all"
+                >
+                  {language === 'en' ? 'Got it!' : 'Compris !'}
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+
     </div>
   );
 }

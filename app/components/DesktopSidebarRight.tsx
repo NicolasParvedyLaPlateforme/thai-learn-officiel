@@ -108,8 +108,17 @@ export function DesktopSidebarRight({
             <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar p-3">
               {/* Image Header */}
               <div className="w-full shrink-0 z-0">
-                 <div className={`w-full h-[180px] relative border-b border-slate-100 ${!selectedLesson.lesson.imageUrl && 'bg-amber-50 flex items-center justify-center'}`}>
-                   {selectedLesson.lesson.imageUrl ? (
+                 <div className={`w-full h-[180px] relative border-b border-slate-100 flex items-center justify-center ${suggestionType === 'alphabet' ? selectedLesson.unitColor : (!selectedLesson.lesson.imageUrl ? 'bg-amber-50' : '')} overflow-hidden`}>
+                   {suggestionType === 'alphabet' ? (
+                      <>
+                        <div className="text-6xl text-white font-thai tracking-widest drop-shadow-sm font-bold flex items-center justify-center h-full pt-2">
+                           {selectedLesson.lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
+                        </div>
+                        <div className={`absolute -bottom-10 -right-10 opacity-20 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
+                          <BookOpen size={160} />
+                        </div>
+                      </>
+                   ) : selectedLesson.lesson.imageUrl ? (
                       <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
                    ) : (
                       <BookOpen size={48} className="text-slate-200" />
