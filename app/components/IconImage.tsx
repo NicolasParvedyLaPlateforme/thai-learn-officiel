@@ -54,7 +54,8 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
     <Image
       src={src}
       alt={alt}
-      className={`${className} transition-opacity duration-300 ease-out z-10 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      className={`${className} transition-opacity duration-300 ease-out z-10`}
+      style={{ opacity: isLoaded ? undefined : 0 }}
       fill={fill}
       width={width}
       height={height}
@@ -67,7 +68,7 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
 
   const skeletonElement = (
     <div 
-      className={`absolute inset-0 bg-slate-200 animate-pulse transition-opacity duration-300 z-0 rounded-[inherit] pointer-events-none ${isLoaded ? 'opacity-0' : 'opacity-100'}`} 
+      className={`absolute inset-0 bg-slate-200 transition-opacity duration-300 z-0 rounded-[inherit] pointer-events-none ${isLoaded ? 'opacity-0' : 'opacity-100 animate-pulse'}`} 
       aria-hidden="true"
     />
   );
