@@ -105,8 +105,25 @@ const is4ChoiceSimilar = (() => {
   return maxDiffLen <= 3;
 })();
 
-const imageUrl =
-  (currentExercise.type === "intro" &&
+const isNumberExercise = (() => {
+  if (currentExercise.type !== "word-match") return false;
+  const correctOption = currentExercise.options?.find((o: any) => o.th === currentExercise.answer) as any;
+  if (!correctOption) return false;
+
+  const frText = (correctOption.fr || "").toLowerCase().trim();
+  const numWordsFr = [
+    'zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 
+    'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf', 'vingt'
+  ];
+  
+  return numWordsFr.includes(frText);
+})();
+
+const hideImageForNumbers = isReverse && isNumberExercise;
+
+const imageUrl = hideImageForNumbers
+  ? undefined
+  : (currentExercise.type === "intro" &&
       (currentExercise.introItem as any)?.imageUrl) ||
     currentExercise.imageUrl;
 
