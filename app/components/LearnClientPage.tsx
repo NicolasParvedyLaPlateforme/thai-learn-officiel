@@ -1059,7 +1059,6 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       <WritingConfigModal 
         isOpen={isWritingConfigModalOpen} 
         onClose={() => setWritingConfigModalOpen(false)} 
-        language={language}
       />
 
       {/* Locked Review Modal */}
