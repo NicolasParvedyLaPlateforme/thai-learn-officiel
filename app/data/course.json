@@ -73,7 +73,7 @@
             "w_krap"
           ],
           "en": "hello (man)",
-          "imageUrl": "/images/p_p_hello_m.svg"
+          "imageUrl": "/images/unite-1/mot/bonjour-mot.webp"
         },
         {
           "id": "p_hello_f",
@@ -85,7 +85,7 @@
             "w_kha"
           ],
           "en": "hello (woman)",
-          "imageUrl": "/images/p_p_hello_f.svg"
+          "imageUrl": "/images/unite-1/phrase/bonjour-femme.webp"
         },
         {
           "id": "p_how_are_you",
@@ -98,7 +98,7 @@
             "w_mai"
           ],
           "en": "How are you ?",
-          "imageUrl": "/images/p_p_how_are_you.svg"
+          "imageUrl": "/images/unite-1/phrase/cavabien-question-compress.webp"
         },
         {
           "id": "p_thanks_m",
