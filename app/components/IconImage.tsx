@@ -1,4 +1,7 @@
+'use client';
+
 import Image from "next/image";
+import { useState } from "react";
 import emojiMappingData from "../data/emoji_mapping.json";
 
 interface IconImageProps {
@@ -16,6 +19,8 @@ interface IconImageProps {
 const emojiMapping = emojiMappingData as Record<string, { color: string; emoji: string }>;
 
 export default function IconImage({ src, alt, className = "", fill, width, height, priority, sizes, referrerPolicy }: IconImageProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   if (!src) {
     return <span className="text-4xl">🐘</span>;
   }
@@ -45,17 +50,41 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
     );
   }
 
-  return (
+  const imageElement = (
     <Image
       src={src}
       alt={alt}
-      className={className}
+      className={`${className} transition-opacity duration-300 ease-out z-10 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
       fill={fill}
       width={width}
       height={height}
       priority={priority}
       sizes={sizes}
       referrerPolicy={referrerPolicy}
+      onLoad={() => setIsLoaded(true)}
     />
+  );
+
+  const skeletonElement = (
+    <div 
+      className={`absolute inset-0 bg-slate-200 animate-pulse transition-opacity duration-300 z-0 rounded-[inherit] pointer-events-none ${isLoaded ? 'opacity-0' : 'opacity-100'}`} 
+      aria-hidden="true"
+    />
+  );
+
+  if (fill) {
+    return (
+      <>
+        {skeletonElement}
+        {imageElement}
+      </>
+    );
+  }
+
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden`} style={{ width: width ? `${width}px` : "100%", height: height ? `${height}px` : "100%" }}>
+      {skeletonElement}
+      {imageElement}
+    </div>
   );
 }
