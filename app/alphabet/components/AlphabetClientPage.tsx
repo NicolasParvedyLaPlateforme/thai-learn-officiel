@@ -224,7 +224,25 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
           const progressPercent = mounted && unitLessons.length > 0 ? (completedInUnit / unitLessons.length) * 100 : 0;
           
           return (
-            <div key={unit.id} className="relative z-0">
+            <motion.div 
+              key={unit.id} 
+              className="relative z-0"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              onPanEnd={(e, info) => {
+                 const swipeThreshold = 50;
+                 if (Math.abs(info.offset.x) > Math.abs(info.offset.y) && Math.abs(info.offset.x) > swipeThreshold) {
+                     if (info.offset.x < 0) {
+                        if (activeUnitIndex < UNITS.length - 1) handleUnitSelect(activeUnitIndex + 1);
+                        else setIsUnitsModalOpen(true);
+                     } else {
+                        if (activeUnitIndex > 0) handleUnitSelect(activeUnitIndex - 1);
+                        else setIsUnitsModalOpen(true);
+                     }
+                 }
+              }}
+            >
               <div 
                 onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
                 className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} rounded-2xl text-white shadow-md relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform`}
@@ -424,7 +442,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                      </div>
                  )}
               </div>
-            </div>
+            </motion.div>
           );
         })()}
       </main>
