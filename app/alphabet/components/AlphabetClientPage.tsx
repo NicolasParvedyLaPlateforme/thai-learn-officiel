@@ -332,35 +332,28 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                             setModalLevel(Math.min(level, 3));
                           }}
                         >
-                          <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
+                          <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-2xl sm:text-3xl font-thai shadow-sm overflow-hidden
                             ${isMaxLevel 
                               ? unit.colorClass + ' text-white ' + unit.borderClass 
                               : level >= 3 ? unit.shades.l3 : level >= 2 ? unit.shades.l2 : level >= 1 ? unit.shades.l1
                               : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}
                           >
-                            {lesson.imageUrl ? (
-                              <>
-                                <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
-                                {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={40} className="stroke-[3] text-white" /></div>}
-                              </>
-                            ) : (
-                              <>
-                                {lesson.items[0] ? formatCombiningChar(lesson.items[0].letter) : ''}
-                                {isMaxLevel ? (
-                                  <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-emerald-200 z-20">
-                                    <div className="bg-emerald-500 rounded-full flex items-center justify-center w-6 h-6">
-                                      <CheckCircle size={14} className="text-white fill-emerald-500" />
-                                    </div>
-                                  </div>
-                                ) : level > 0 ? (
-                                  <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-slate-200 z-20">
-                                    <div className={`${unit.colorClass} rounded-full flex items-center justify-center w-6 h-6`}>
-                                      <span className="text-white text-[10px] font-bold tracking-tight">{level}/4</span>
-                                    </div>
-                                  </div>
-                                ) : null}
-                              </>
-                            )}
+                            <div className={`flex items-center justify-center tracking-widest ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''}`}>
+                              {lesson.items.map(i => formatCombiningChar(i.letter)).join('')}
+                            </div>
+                            {isMaxLevel ? (
+                              <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-emerald-200 z-20">
+                                <div className="bg-emerald-500 rounded-full flex items-center justify-center w-6 h-6">
+                                  <CheckCircle size={14} className="text-white fill-emerald-500" />
+                                </div>
+                              </div>
+                            ) : level > 0 ? (
+                              <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-slate-200 z-20">
+                                <div className={`${unit.colorClass} rounded-full flex items-center justify-center w-6 h-6`}>
+                                  <span className="text-white text-[10px] font-bold tracking-tight">{level}/4</span>
+                                </div>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                         
@@ -525,30 +518,23 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                                 setShowDesktopUnitsList(false);
                               }}
                             >
-                              <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-10 transition-transform text-3xl font-thai overflow-hidden ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : level >= 3 ? unit.shades.l3 : level >= 2 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
-                                {lesson.imageUrl ? (
-                                  <>
-                                    <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
-                                    {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={32} className="stroke-[3] text-white" /></div>}
-                                  </>
-                                ) : (
-                                  <>
-                                    {lesson.items[0] ? formatCombiningChar(lesson.items[0].letter) : ''}
-                                    {isMaxLevel ? (
-                                      <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-emerald-200 z-20">
-                                        <div className="bg-emerald-500 rounded-full flex items-center justify-center w-5 h-5">
-                                          <CheckCircle size={12} className="text-white fill-emerald-500" />
-                                        </div>
-                                      </div>
-                                    ) : level > 0 ? (
-                                      <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-slate-200 z-20">
-                                        <div className={`${unit.colorClass} rounded-full flex items-center justify-center w-5 h-5`}>
-                                          <span className="text-white text-[9px] font-bold tracking-tight">{level}/4</span>
-                                        </div>
-                                      </div>
-                                    ) : null}
-                                  </>
-                                )}
+                              <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-10 transition-transform text-xl md:text-2xl font-thai overflow-hidden ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : level >= 3 ? unit.shades.l3 : level >= 2 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
+                                <div className={`flex items-center justify-center tracking-widest ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''}`}>
+                                  {lesson.items.map(i => formatCombiningChar(i.letter)).join('')}
+                                </div>
+                                {isMaxLevel ? (
+                                  <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-emerald-200 z-20">
+                                    <div className="bg-emerald-500 rounded-full flex items-center justify-center w-5 h-5">
+                                      <CheckCircle size={12} className="text-white fill-emerald-500" />
+                                    </div>
+                                  </div>
+                                ) : level > 0 ? (
+                                  <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 bg-white rounded-full p-0.5 shadow-sm border border-slate-200 z-20">
+                                    <div className={`${unit.colorClass} rounded-full flex items-center justify-center w-5 h-5`}>
+                                      <span className="text-white text-[9px] font-bold tracking-tight">{level}/4</span>
+                                    </div>
+                                  </div>
+                                ) : null}
                               </div>
                               
                               {showLineToNext && (
@@ -668,14 +654,14 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                 <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar pt-6">
                   {selectedLesson && (
                     <>
-                      {/* Image Header */}
                       <div className="w-full shrink-0 z-0">
-                         <div className={`w-full h-[120px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
-                           {selectedLesson?.lesson.imageUrl ? (
-                              <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
-                           ) : (
-                              <BookOpen size={48} className="text-amber-500/50" />
-                           )}
+                         <div className={`w-full h-[120px] ${selectedLesson?.unitColor || 'bg-amber-50'} flex items-center justify-center relative overflow-hidden`}>
+                           <div className="text-5xl text-white font-thai tracking-widest drop-shadow-sm font-bold flex items-center justify-center h-full pt-2">
+                             {selectedLesson?.lesson.items.map(i => formatCombiningChar(i.letter)).join('')}
+                           </div>
+                           <div className={`absolute -bottom-8 -right-8 opacity-20 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
+                             <BookOpen size={120} />
+                           </div>
                          </div>
                       </div>
 
