@@ -161,9 +161,9 @@ export function DesktopSidebarRight({
                         disabled={!isAccessible}
                       >
                         <div className={`
-                          w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300
-                          ${isSelected ? 'scale-110 ring-[4px] ring-offset-[3px] ring-slate-300 shadow-lg relative z-10' : ''}
-                          ${isCompleted ? 'bg-amber-400 border border-amber-500 shadow-sm text-amber-900' :
+                          w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border-b-2 border-[#cbcbcb]
+                          ${isSelected ? 'scale-110 ring-[2px] ring-offset-[3px] ring-yellow-500 shadow-lg relative z-10' : ''}
+                          ${isCompleted ? 'bg-[oklch(0.96_0.06_88.64)] border border-amber-500 shadow-sm text-amber-900 ' :
                             isCurrent ? `bg-white border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` :
                               'bg-slate-50 border border-slate-200 text-slate-300'
                           }
