@@ -175,6 +175,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             const time = (currentLevel + 1) * 2 * 60;
             setTimeLeft(time);
             setInitialTime(time);
+         } else if (currentLevel === 10) {
+            const time = 20 * 60;
+            setTimeLeft(time);
+            setInitialTime(time);
          } else {
             setTimeLeft(null);
             setInitialTime(null);
@@ -244,7 +248,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         } else {
           setIsFinished(true);
           completeLesson(lesson.id, 10 + exercises.length, currentLevel, earnedStars);
-          if (lesson.isReview && initialTime !== null && timeLeft !== null) {
+          if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
           }
           confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
@@ -268,7 +272,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             // Finished
             setIsFinished(true);
             completeLesson(lesson.id, 10 + exercises.length, currentLevel, earnedStars);
-            if (lesson.isReview && initialTime !== null && timeLeft !== null) {
+            if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
             }
             confetti({
@@ -589,7 +593,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                               10 + exercises.length,
                               currentLevel,
                             );
-                            if (lesson.isReview && initialTime !== null && timeLeft !== null) {
+                            if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                               saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
                             }
                             confetti({

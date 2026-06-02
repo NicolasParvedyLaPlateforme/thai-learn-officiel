@@ -832,6 +832,32 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         );
                       })}
                     </div>
+                    
+                    {/* Mastery Level Button */}
+                    {selectedLesson && (() => {
+                      const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
+                      const isUnlocked = currentProgress >= 10;
+                      const isSelected = modalLevel === 10;
+                      return (
+                        <button
+                          onClick={() => {
+                            if (isUnlocked) setModalLevel(10);
+                          }}
+                          className={`w-full max-w-[16rem] mx-auto py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm border-2
+                            ${isUnlocked 
+                               ? (isSelected ? `bg-amber-50 border-amber-400 text-amber-700 ring-4 ring-amber-400/20` : `bg-gradient-to-r from-amber-400 to-amber-500 border-amber-500 text-white hover:scale-105 active:scale-95`)
+                               : `bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed`
+                            }
+                          `}
+                          disabled={!isUnlocked}
+                        >
+                           {isUnlocked ? <Star fill="currentColor" size={20} className={isSelected ? 'text-amber-500' : 'text-amber-100'} /> : <Lock size={20} />}
+                           <span className="font-extrabold tracking-widest text-sm uppercase">
+                              {language === 'en' ? 'Mastery Level' : 'Niveau Ultime'}
+                           </span>
+                        </button>
+                      );
+                    })()}
                   </div>
 
                   {selectedLesson && (() => {
@@ -848,6 +874,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                     let estimatedMins = Math.ceil(estimatedSecs / 60);
                     if (selectedLesson.lesson.isReview) {
                         estimatedMins = (modalLevel + 1) * 2;
+                    } else if (modalLevel === 10) {
+                        estimatedMins = 20;
                     } else {
                         if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
                         else estimatedMins = Math.max(1, estimatedMins);
@@ -871,17 +899,19 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         <div className="mb-4">
                           <div className="flex items-center justify-between mb-4">
                             <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                              {selectedLesson.lesson.isReview 
-                                ? (language === 'en' ? `Bilan Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`)
+                              {selectedLesson.lesson.isReview || modalLevel === 10
+                                ? (modalLevel === 10 
+                                    ? (language === 'en' ? `Stats (MASTERY) :` : `Statistiques (ULTIME) :`) 
+                                    : (language === 'en' ? `Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`))
                                 : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
                               }
                             </h4>
-                            {!selectedLesson.lesson.isReview && (
+                            {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
                               <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
                             )}
                           </div>
 
-                          {selectedLesson.lesson.isReview ? (
+                          {selectedLesson.lesson.isReview || modalLevel === 10 ? (
                             <div className="flex flex-col gap-3">
                                 {(() => {
                                     const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
