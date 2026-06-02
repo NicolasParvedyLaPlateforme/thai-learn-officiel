@@ -454,7 +454,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
               showRomanization={showRomanization}
               setShowRomanization={setShowRomanization}
               setShowInfoModal={setShowInfoModal}
-              isReview={lesson.isReview}
+              isReview={lesson.isReview || currentLevel === 10}
               timeLeft={timeLeft}
               initialTime={initialTime}
             />

@@ -200,7 +200,7 @@ export function DesktopSidebarRight({
                       onClick={() => {
                         if (isUnlocked) setModalLevel(10);
                       }}
-                      className={`w-full max-w-[17rem] mx-auto py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm border-2
+                      className={`w-full max-w-[17rem] mx-auto mb-6 py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm border-2
                         ${isUnlocked 
                            ? (isSelected ? `bg-amber-50 border-amber-400 text-amber-700 ring-4 ring-amber-400/20` : `bg-gradient-to-r from-amber-400 to-amber-500 border-amber-500 text-white hover:scale-105 active:scale-95`)
                            : `bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed`
