@@ -98,12 +98,14 @@ export default function ResultScreen({
         ))}
       </div>
       <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
-        {language === "en"
-          ? `Level ${currentLevel + 1} completed!`
-          : `Niveau ${currentLevel + 1} terminé !`}
+        {currentLevel === 10 
+          ? (language === "en" ? "Mastery Level completed!" : "Niveau de Maîtrise terminé !")
+          : (language === "en"
+              ? `Level ${currentLevel + 1} completed!`
+              : `Niveau ${currentLevel + 1} terminé !`)}
       </h1>
       
-      {lesson.isReview && timeTakenSec !== null ? (
+      {(lesson.isReview || currentLevel === 10) && timeTakenSec !== null ? (
         <p className="text-indigo-500 mb-8 text-center text-lg font-bold flex items-center justify-center gap-2">
           <Clock size={20} />
           {language === "en" ? `Time: ${formatTime(timeTakenSec)}` : `Temps : ${formatTime(timeTakenSec)}`}
@@ -126,7 +128,7 @@ export default function ResultScreen({
             {language === "en" ? "Next Unit" : "Aller à l'unité suivante"}
           </button>
         )}
-        {currentLevel + 1 < 9 && (
+        {currentLevel + 1 < 10 && (
           <button
             onClick={() =>
               router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}`)
@@ -134,6 +136,15 @@ export default function ResultScreen({
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {language === "en" ? "Next Level" : "Prochain Niveau"}
+          </button>
+        )}
+        {currentLevel === 10 && (
+          <button
+            onClick={() => window.location.reload()}
+            className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
+          >
+            <RotateCcw size={20} />
+            {language === "en" ? "Retry" : "Réessayer"}
           </button>
         )}
         <button

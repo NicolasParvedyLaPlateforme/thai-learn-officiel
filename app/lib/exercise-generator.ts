@@ -1077,7 +1077,48 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     }
     finalExercises = wrPool.slice(0, 10);
   } else if (level === 9) {
-    // Level 10 combined: First run levels 0-8, then append free typing test
+    // Level 10: Only free typing test
+    let ftPool: Exercise[] = [];
+    
+    // First add words
+    validLessonWords.forEach(w => {
+      ftPool.push({
+        id: `ft-word-${w.id}-${Date.now()}-${Math.random()}`,
+        type: 'free-typing',
+        question: language === 'en' ? (w.en || w.fr) : w.fr,
+        answer: w.th,
+        options: [],
+        hideHints: true,
+        imageUrl: w.imageUrl
+      });
+    });
+
+    // Then add phrases
+    let ftPhrases: Exercise[] = [];
+    lesson.phrases.forEach(p => {
+      ftPhrases.push({
+        id: `ft-phrase-${p.id}-${Date.now()}-${Math.random()}`,
+        type: 'free-typing',
+        question: language === 'en' ? (p.en || p.fr) : p.fr,
+        answer: p.th,
+        options: [],
+        hideHints: true,
+        imageUrl: p.imageUrl
+      });
+    });
+
+    ftPool = shuffle(ftPool);
+    ftPhrases = shuffle(ftPhrases);
+    
+    let combinedPool = [...ftPool, ...ftPhrases];
+    while (combinedPool.length < 10 && combinedPool.length > 0) combinedPool = [...combinedPool, ...shuffle(combinedPool)];
+    
+    return combinedPool.slice(0, 10).map(ex => ({
+      ...ex,
+      forceHideRomanization: true
+    }));
+  } else if (level === 10) {
+    // Niveau Ultime / Maîtrise: First run levels 0-8, then append free typing test
     let previousLevels: Exercise[] = [];
     for (let l = 0; l <= 8; l++) {
       // Collect exercises from levels 1-9 (indices 0-8)
