@@ -267,29 +267,34 @@ export default function DetectiveGame({ level }: Props) {
 
       {/* Game Area */}
       <div
-        className={`relative w-full bg-slate-800 overflow-hidden shadow-inner flex-1 flex items-center justify-center cursor-crosshair select-none ${isFullscreen ? 'h-full rounded-none' : 'rounded-2xl max-h-[70vh]'}`}
-        ref={containerRef}
-        onClick={handleImageClick}
+        className={`w-full bg-slate-800 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 ${isFullscreen ? 'h-full rounded-none' : 'rounded-2xl max-h-[70vh]'}`}
       >
-        <img
-          src={level.imageUrl}
-          alt="Level"
-          className="w-full h-full object-contain pointer-events-none"
-        />
-
-        {/* Found objects overlay (circle highlights) */}
-        {foundObjects.map(obj => (
-          <div
-            key={obj.id}
-            className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
-            style={{
-              left: `${obj.x}%`,
-              top: `${obj.y}%`,
-              width: `${obj.radius * 2}%`,
-              paddingTop: `${obj.radius * 2}%`,
-            }}
+        <div 
+          className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
+          ref={containerRef}
+          onClick={handleImageClick}
+        >
+          <img
+            src={level.imageUrl}
+            alt="Level"
+            className="block max-w-full max-h-full pointer-events-none object-contain"
+            style={{ width: 'auto', height: 'auto', maxHeight: isFullscreen ? '100dvh' : '70vh' }}
           />
-        ))}
+
+          {/* Found objects overlay (circle highlights) */}
+          {foundObjects.map(obj => (
+            <div
+              key={obj.id}
+              className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
+              style={{
+                left: `${obj.x}%`,
+                top: `${obj.y}%`,
+                width: `${obj.radius * 2}%`,
+                paddingTop: `${obj.radius * 2}%`,
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -141,26 +141,27 @@ export default function DetectiveDevMode({ level }: Props) {
         </button>
       </div>
 
-      <div 
-        className="relative w-full bg-slate-200 rounded-xl overflow-hidden cursor-crosshair select-none flex-1 max-h-[70vh]"
-        ref={containerRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-      >
-        {level.imageUrl ? (
-          <img 
-            src={level.imageUrl} 
-            alt="Level" 
-            className="w-full h-auto object-contain pointer-events-none"
-            style={{ maxHeight: '70vh' }}
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-slate-400">
-            Aucune image (Ajoutez l'URL dans le JSON)
-          </div>
-        )}
+      <div className="w-full bg-slate-200 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 rounded-xl max-h-[70vh]">
+        <div 
+          className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
+          ref={containerRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
+          {level.imageUrl ? (
+            <img 
+              src={level.imageUrl} 
+              alt="Level" 
+              className="block max-w-full max-h-full pointer-events-none object-contain"
+              style={{ width: 'auto', height: 'auto', maxHeight: '70vh' }}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+              Aucune image (Ajoutez l'URL dans le JSON)
+            </div>
+          )}
 
         {/* Existing objects */}
         {objects.map((obj, i) => (
@@ -193,6 +194,7 @@ export default function DetectiveDevMode({ level }: Props) {
             }}
           />
         )}
+        </div>
       </div>
 
       {/* Modal / Form */}
