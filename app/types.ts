@@ -61,3 +61,24 @@ export interface Exercise {
   blankHint?: string;
   prefilledComponents?: string[];
 }
+
+export interface DetectiveObject {
+  id: string;
+  th: string;
+  fr: string;
+  en: string;
+  x: number; // percentage
+  y: number; // percentage
+  radius: number; // percentage
+}
+
+export interface DetectiveLevel {
+  id: string;
+  title: string;
+  titleEn: string;
+  description: string;
+  descriptionEn: string;
+  imageUrl: string;
+  objects: DetectiveObject[];
+}
+

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Search } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 
@@ -23,8 +23,9 @@ export default function BottomNav() {
   const isAlphabetActive = pathname === '/alphabet';
   const isConversationsActive = pathname === '/conversations';
   const isPracticeActive = pathname === '/practice';
+  const isDetectiveActive = pathname.startsWith('/detective');
   
-  const isVisible = isLearnActive || isAlphabetActive || isConversationsActive || isPracticeActive;
+  const isVisible = isLearnActive || isAlphabetActive || isConversationsActive || isPracticeActive || isDetectiveActive;
 
   if (!isVisible || !mounted) return null;
 
@@ -57,6 +58,10 @@ export default function BottomNav() {
         <Link href="/conversations" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isConversationsActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <MessageCircle size={24} className={isConversationsActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
           <span className="text-[10px] font-bold">{language === 'en' ? 'Dialogs' : 'Dialogues'}</span>
+        </Link>
+        <Link href="/detective" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isDetectiveActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
+          <Search size={24} className={isDetectiveActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
+          <span className="text-[10px] font-bold">{language === 'en' ? 'Detective' : 'Détective'}</span>
         </Link>
         <Link href="/practice" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isPracticeActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <Brain size={24} className={isPracticeActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
