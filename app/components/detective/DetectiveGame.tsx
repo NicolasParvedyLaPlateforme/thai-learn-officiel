@@ -3,7 +3,7 @@
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
-import { Volume2, Search, CheckCircle2 } from 'lucide-react';
+import { Volume2, Search, CheckCircle2, Maximize, Minimize } from 'lucide-react';
 import { playThaiTTS } from '../../lib/tts';
 import confetti from 'canvas-confetti';
 
@@ -13,7 +13,7 @@ interface Props {
 
 export default function DetectiveGame({ level }: Props) {
   const { language } = useProgressStore();
-  
+
   const [objects, setObjects] = useState<DetectiveObject[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [levelState, setLevelState] = useState<'intro' | 'playing' | 'completed'>('intro');
@@ -21,6 +21,8 @@ export default function DetectiveGame({ level }: Props) {
   const [difficulty, setDifficulty] = useState<1 | 2>(1);
   const [mistakes, setMistakes] = useState(0);
   const [foundObjects, setFoundObjects] = useState<DetectiveObject[]>([]);
+
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -32,6 +34,46 @@ export default function DetectiveGame({ level }: Props) {
       setObjects(shuffled);
     }
   }, [level]);
+
+  // Handle escape key for fullscreen exit
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isFullscreen) {
+        toggleFullscreen();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isFullscreen]);
+
+  const toggleFullscreen = async () => {
+    if (!isFullscreen) {
+      setIsFullscreen(true);
+      try {
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        }
+        // Force landscape if supported on mobile
+        if (screen.orientation && (screen.orientation as any).lock) {
+          await (screen.orientation as any).lock('landscape').catch(() => { });
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+    } else {
+      setIsFullscreen(false);
+      try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          await document.exitFullscreen();
+        }
+        if (screen.orientation && (screen.orientation as any).unlock) {
+          (screen.orientation as any).unlock();
+        }
+      } catch (e) {
+        // Ignore errors
+      }
+    }
+  };
 
   const startGame = (diff: 1 | 2) => {
     setDifficulty(diff);
@@ -50,7 +92,7 @@ export default function DetectiveGame({ level }: Props) {
     const rect = containerRef.current.getBoundingClientRect();
     const xPixel = e.clientX - rect.left;
     const yPixel = e.clientY - rect.top;
-    
+
     const xPct = (xPixel / rect.width) * 100;
     const yPct = (yPixel / rect.height) * 100;
 
@@ -62,7 +104,7 @@ export default function DetectiveGame({ level }: Props) {
 
     const dx = xPixel - targetXPixel;
     const dy = yPixel - targetYPixel;
-    const distance = Math.sqrt(dx*dx + dy*dy);
+    const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance <= targetRadiusPixel) {
       // Found it!
@@ -75,13 +117,14 @@ export default function DetectiveGame({ level }: Props) {
 
   const handleCorrect = () => {
     playThaiTTS('ถูกต้อง'); // correct (tuk-tong)
-    
+
     // Confetti effect at the bottom of the screen
     confetti({
       particleCount: 50,
       spread: 60,
       origin: { y: 0.9 },
-      colors: ['#10B981', '#F59E0B'] // Emerald and Amber
+      colors: ['#10B981', '#F59E0B'], // Emerald and Amber
+      zIndex: isFullscreen ? 150 : 100 // Ensure confetti is above fullscreen overlay
     });
 
     const currentObj = objects[currentIndex];
@@ -89,7 +132,10 @@ export default function DetectiveGame({ level }: Props) {
 
     if (currentIndex + 1 >= objects.length) {
       // Finished
-      setTimeout(() => setLevelState('completed'), 1000);
+      setTimeout(() => {
+        setLevelState('completed');
+        if (isFullscreen) toggleFullscreen();
+      }, 1000);
     } else {
       setCurrentIndex(currentIndex + 1);
     }
@@ -119,19 +165,19 @@ export default function DetectiveGame({ level }: Props) {
           {language === 'en' ? 'Detective Mode' : 'Mode Détective'}
         </h2>
         <p className="text-slate-600 mb-8">
-          {language === 'en' 
-            ? `Find ${objects.length} hidden objects in the image.` 
+          {language === 'en'
+            ? `Find ${objects.length} hidden objects in the image.`
             : `Trouve les ${objects.length} objets cachés dans l'image.`}
         </p>
 
         <div className="w-full space-y-4">
-          <button 
+          <button
             onClick={() => startGame(1)}
             className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all"
           >
             Niveau 1 (Thaï + Traduction)
           </button>
-          <button 
+          <button
             onClick={() => startGame(2)}
             className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all"
           >
@@ -152,12 +198,12 @@ export default function DetectiveGame({ level }: Props) {
           {language === 'en' ? 'Mission Accomplished!' : 'Mission Accomplie !'}
         </h2>
         <p className="text-slate-600 mb-8">
-          {language === 'en' 
-            ? `You found all ${objects.length} objects with ${mistakes} mistakes.` 
+          {language === 'en'
+            ? `You found all ${objects.length} objects with ${mistakes} mistakes.`
             : `Tu as trouvé les ${objects.length} objets avec ${mistakes} erreurs.`}
         </p>
 
-        <button 
+        <button
           onClick={() => setLevelState('intro')}
           className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all"
         >
@@ -170,12 +216,17 @@ export default function DetectiveGame({ level }: Props) {
   const currentObj = objects[currentIndex];
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Top HUD */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <button 
-            onClick={() => playThaiTTS(currentObj.th)}
+    <div className={isFullscreen ? "fixed inset-0 z-[100] bg-slate-900 flex flex-col" : "flex flex-col h-full"}>
+
+      {/* Top HUD - Floating if fullscreen, normal if not */}
+      <div className={isFullscreen
+        ? "absolute top-4 left-4 right-4 z-10 flex items-start justify-between pointer-events-none"
+        : "bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-4 flex items-center justify-between"
+      }>
+
+        <div className={`flex items-center gap-4 pointer-events-auto ${isFullscreen ? 'bg-white/95 backdrop-blur-sm p-2 pr-4 rounded-full shadow-lg' : ''}`}>
+          <button
+            onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
             className="w-12 h-12 bg-emerald-100 hover:bg-emerald-200 text-emerald-600 rounded-full flex items-center justify-center transition-colors shrink-0"
           >
             <Volume2 className="w-6 h-6" />
@@ -185,38 +236,50 @@ export default function DetectiveGame({ level }: Props) {
               {currentObj.th}
             </h3>
             {difficulty === 1 && (
-              <p className="text-slate-500 font-medium text-sm">
+              <p className="text-slate-500 font-medium text-sm leading-tight">
                 {language === 'en' ? currentObj.en : currentObj.fr}
               </p>
             )}
           </div>
         </div>
-        
-        <div className="text-right">
-          <div className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">
-            {language === 'en' ? 'Progress' : 'Progression'}
+
+        <div className={`pointer-events-auto flex items-center gap-4 ${isFullscreen ? 'bg-white/95 backdrop-blur-sm p-2 px-4 rounded-full shadow-lg' : 'text-right'}`}>
+          <div>
+            {!isFullscreen && (
+              <div className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">
+                {language === 'en' ? 'Progress' : 'Progression'}
+              </div>
+            )}
+            <div className={`font-black text-emerald-500 ${isFullscreen ? 'text-xl' : 'text-lg'}`}>
+              {currentIndex} / {objects.length}
+            </div>
           </div>
-          <div className="text-lg font-black text-emerald-500">
-            {currentIndex} / {objects.length}
-          </div>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
+            className="w-10 h-10 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition-colors shrink-0 ml-2"
+            title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
+          >
+            {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
+          </button>
         </div>
       </div>
 
       {/* Game Area */}
-      <div 
-        className="relative w-full bg-slate-200 rounded-2xl overflow-hidden shadow-inner flex-1 flex items-center justify-center max-h-[70vh] cursor-crosshair select-none"
+      <div
+        className={`relative w-full bg-slate-800 overflow-hidden shadow-inner flex-1 flex items-center justify-center cursor-crosshair select-none ${isFullscreen ? 'h-full rounded-none' : 'rounded-2xl max-h-[70vh]'}`}
         ref={containerRef}
         onClick={handleImageClick}
       >
-        <img 
-          src={level.imageUrl} 
-          alt="Level" 
+        <img
+          src={level.imageUrl}
+          alt="Level"
           className="w-full h-full object-contain pointer-events-none"
         />
 
         {/* Found objects overlay (circle highlights) */}
         {foundObjects.map(obj => (
-          <div 
+          <div
             key={obj.id}
             className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
             style={{
