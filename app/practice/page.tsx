@@ -3,15 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
-import { Brain, BookOpen, Pencil, Star } from 'lucide-react';
+import { Brain, BookOpen, Pencil, Star, Mic } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { WritingConfigModal } from '../components/WritingConfigModal';
+import { SpeakingConfigModal } from '../components/SpeakingConfigModal';
 import PWAInstallButton from '../components/PWAInstallButton';
 import { useIsPWA } from '../../hooks/use-pwa';
 
 export default function PracticePage() {
   const { language, xp, setLanguage } = useProgressStore();
   const [isWritingConfigModalOpen, setWritingConfigModalOpen] = useState(false);
+  const [isSpeakingConfigModalOpen, setSpeakingConfigModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const isPWA = useIsPWA();
   useEffect(() => setMounted(true), []);
@@ -54,6 +56,7 @@ export default function PracticePage() {
       </header>
 
       <WritingConfigModal isOpen={isWritingConfigModalOpen} onClose={() => setWritingConfigModalOpen(false)} />
+      <SpeakingConfigModal isOpen={isSpeakingConfigModalOpen} onClose={() => setSpeakingConfigModalOpen(false)} />
       
       <div className="max-w-4xl mx-auto space-y-8 mt-8 px-4 md:px-8">
         <header className="mb-10 text-center md:text-left">
@@ -194,6 +197,46 @@ export default function PracticePage() {
               {language === 'en' 
                 ? 'Practice structural sentence building and spelling with the virtual keyboard.' 
                 : 'Pratiquez l\'écriture des mots et des phrases avec le clavier virtuel.'}
+            </p>
+          </button>
+          </motion.div>
+
+          {/* Speaking Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.4, ease: 'easeOut' }}
+          >
+          <button 
+            onClick={() => setSpeakingConfigModalOpen(true)}
+            className="group flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-orange-300 active:translate-y-0 active:shadow-md transition-all duration-300 text-left"
+          >
+            {/* Illustration */}
+            <div className="mb-6 w-full h-40 bg-orange-50/50 rounded-2xl border-2 border-orange-100 flex flex-col items-center justify-center gap-4 group-hover:bg-orange-50 transition-colors relative overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(#ffedd5_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
+              
+              {/* Voice Waves */}
+              <div className="flex items-end justify-center gap-1.5 h-16 relative z-10">
+                <div className="w-2 h-6 bg-orange-300 rounded-full group-hover:animate-[bounce_1s_infinite_100ms] transition-all"></div>
+                <div className="w-2 h-10 bg-orange-400 rounded-full group-hover:animate-[bounce_1s_infinite_200ms] transition-all"></div>
+                <div className="w-2 h-14 bg-orange-500 rounded-full group-hover:animate-[bounce_1s_infinite_300ms] transition-all"></div>
+                <div className="w-2 h-8 bg-orange-400 rounded-full group-hover:animate-[bounce_1s_infinite_400ms] transition-all"></div>
+                <div className="w-2 h-4 bg-orange-300 rounded-full group-hover:animate-[bounce_1s_infinite_500ms] transition-all"></div>
+              </div>
+
+              {/* Icon badge */}
+              <div className="absolute top-3 left-3 bg-orange-100 text-orange-600 p-2 rounded-xl">
+                <Mic size={20} />
+              </div>
+            </div>
+
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">
+              {language === 'en' ? 'Speaking' : 'Parler'}
+            </h3>
+            <p className="text-slate-500 font-medium leading-relaxed">
+              {language === 'en' 
+                ? 'Practice your pronunciation with real-time voice recognition.' 
+                : 'Pratiquez votre prononciation avec la reconnaissance vocale en temps réel.'}
             </p>
           </button>
           </motion.div>

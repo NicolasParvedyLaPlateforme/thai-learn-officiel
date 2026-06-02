@@ -13,6 +13,11 @@ export interface WritingConfig {
   hideCharacterHints: boolean;
 }
 
+export interface SpeakingConfig {
+  lessonId: string | 'all';
+  selectedWordIds: string[] | null;
+}
+
 export interface DailyQuest {
   id: string;
   type: 'lessons' | 'review' | 'perfect_lesson' | 'xp';
@@ -111,6 +116,8 @@ interface ProgressState {
   setShowRomanization: (show: boolean) => void;
   writingConfig: WritingConfig;
   setWritingConfig: (config: Partial<WritingConfig>) => void;
+  speakingConfig: SpeakingConfig;
+  setSpeakingConfig: (config: Partial<SpeakingConfig>) => void;
   lastActiveUnitIndex: number;
   setLastActiveUnitIndex: (index: number) => void;
   lastPlayedLessonId: string | null;
@@ -281,6 +288,10 @@ export const useProgressStore = create<ProgressState>()(
         disableDictionaryClick: false,
         hideCharacterHints: false,
       },
+      speakingConfig: {
+        lessonId: 'all',
+        selectedWordIds: null,
+      },
       lastActiveUnitIndex: 0,
       setLastActiveUnitIndex: (index) => set({ lastActiveUnitIndex: index }),
       lastPlayedLessonId: null,
@@ -295,6 +306,7 @@ export const useProgressStore = create<ProgressState>()(
         hiddenInstructions: state.hiddenInstructions.filter((k) => k !== key) 
       })),
       setWritingConfig: (config) => set((state) => ({ writingConfig: { ...state.writingConfig, ...config } })),
+      setSpeakingConfig: (config) => set((state) => ({ speakingConfig: { ...state.speakingConfig, ...config } })),
 
       completeConversation: (convId, level, stars = 3) => {
         set((state) => {
