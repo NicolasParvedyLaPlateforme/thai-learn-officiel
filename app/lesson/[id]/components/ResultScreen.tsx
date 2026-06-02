@@ -79,7 +79,7 @@ export default function ResultScreen({
         <Check size={80} className="mx-auto" />
       </div>
       <div className="flex gap-2 mb-6">
-        {Array.from({ length: 3 }).map((_, i) => (
+        {Array.from({ length: 5 }).map((_, i) => (
           <motion.div
             key={i}
             initial={{ scale: 0, rotate: -45 }}

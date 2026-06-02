@@ -122,7 +122,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const [initialTime, setInitialTime] = useState<number | null>(null);
   const [failedDueToTime, setFailedDueToTime] = useState(false);
 
-  const earnedStars = mistakes < 2 ? 3 : mistakes < 4 ? 2 : 1;
+  const earnedStars = Math.max(0, 5 - mistakes);
 
   const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{
     id: string;
