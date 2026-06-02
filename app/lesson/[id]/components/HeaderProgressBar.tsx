@@ -105,7 +105,7 @@ export default function HeaderProgressBar({
 
           <div className="font-bold text-slate-400 flex items-center gap-2 sm:gap-3 text-sm sm:text-base shrink-0">
             <div className="hidden sm:flex items-center gap-0.5 mr-1">
-              {Array.from({ length: 3 }).map((_, i) => (
+              {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                   key={i}
                   size={16}

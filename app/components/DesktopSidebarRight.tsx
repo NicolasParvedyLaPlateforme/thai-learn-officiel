@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { BookOpen, CheckCircle, Clock, Lock, Pencil, Play, RotateCcw, Star, Volume2, X, Users, Target, ChevronLeft, Flag } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, Lock, Pencil, Play, RotateCcw, Star, Volume2, X, Users, Target, ChevronLeft, Flag, Crown } from 'lucide-react';
 import Link from 'next/link';
 import IconImage from './IconImage';
 import { playThaiTTS } from '../lib/tts';
@@ -31,7 +31,7 @@ interface DesktopSidebarRightProps {
   maxLevelPerLesson?: number;
   suggestionType?: 'learn' | 'alphabet' | string;
   // Modal props
-  selectedLesson?: {lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string} | null;
+  selectedLesson?: { lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string } | null;
   onCloseLesson?: () => void;
   modalLevel?: number;
   setModalLevel?: (level: number) => void;
@@ -68,7 +68,7 @@ export function DesktopSidebarRight({
   const [internalShowUnitsList, setInternalShowUnitsList] = useState(false);
   const showUnitsList = externalShowUnitsList !== undefined ? externalShowUnitsList : internalShowUnitsList;
   const setShowUnitsList = externalSetShowUnitsList || setInternalShowUnitsList;
-  
+
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const levelsScrollRef = useRef<HTMLDivElement>(null);
 
@@ -82,16 +82,16 @@ export function DesktopSidebarRight({
       else if (modalLevel <= 6) secsPerStep = 10;
       else if (modalLevel === 7) secsPerStep = 20;
       else secsPerStep = 40;
-      
+
       let estimatedSecs = stepsCount * secsPerStep;
       let estimatedMins = Math.ceil(estimatedSecs / 60);
       if (selectedLesson.lesson.isReview) {
-          estimatedMins = (modalLevel + 1) * 2;
+        estimatedMins = (modalLevel + 1) * 2;
       } else if (modalLevel === 10) {
-          estimatedMins = 20;
+        estimatedMins = 20;
       } else {
-          if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
-          else estimatedMins = Math.max(1, estimatedMins);
+        if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
+        else estimatedMins = Math.max(1, estimatedMins);
       }
 
       return (
@@ -110,29 +110,29 @@ export function DesktopSidebarRight({
             <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar p-3">
               {/* Image Header */}
               <div className="w-full shrink-0 z-0">
-                 <div className={`w-full h-[180px] relative border-b border-slate-100 flex items-center justify-center ${suggestionType === 'alphabet' ? selectedLesson.unitColor : (!selectedLesson.lesson.imageUrl ? 'bg-amber-50' : '')} overflow-hidden`}>
-                   {suggestionType === 'alphabet' ? (
-                      <>
-                        <div className="text-6xl text-white font-thai tracking-widest drop-shadow-sm font-bold flex items-center justify-center h-full pt-2">
-                           {selectedLesson.lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
-                        </div>
-                        <div className={`absolute -bottom-10 -right-10 opacity-20 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
-                          <BookOpen size={160} />
-                        </div>
-                      </>
-                   ) : selectedLesson.lesson.imageUrl ? (
-                      <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
-                   ) : (
-                      <BookOpen size={48} className="text-slate-200" />
-                   )}
-                 </div>
+                <div className={`w-full h-[180px] relative border-b border-slate-100 flex items-center justify-center ${suggestionType === 'alphabet' ? selectedLesson.unitColor : (!selectedLesson.lesson.imageUrl ? 'bg-amber-50' : '')} overflow-hidden`}>
+                  {suggestionType === 'alphabet' ? (
+                    <>
+                      <div className="text-6xl text-white font-thai tracking-widest drop-shadow-sm font-bold flex items-center justify-center h-full pt-2">
+                        {selectedLesson.lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
+                      </div>
+                      <div className={`absolute -bottom-10 -right-10 opacity-20 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
+                        <BookOpen size={160} />
+                      </div>
+                    </>
+                  ) : selectedLesson.lesson.imageUrl ? (
+                    <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
+                  ) : (
+                    <BookOpen size={48} className="text-slate-200" />
+                  )}
+                </div>
               </div>
 
               <div className="p-6 pt-5 pb-5 flex flex-col">
                 <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
                   {language === 'en' ? (selectedLesson.lesson.titleEn || selectedLesson.lesson.title) : selectedLesson.lesson.title}
                 </h3>
-                
+
                 <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
                   {language === 'en' ? (selectedLesson.lesson.descriptionEn || selectedLesson.lesson.description) : selectedLesson.lesson.description}
                 </p>
@@ -148,7 +148,7 @@ export function DesktopSidebarRight({
                     const isCompleted = levelIndex < currentProgress;
                     const isSelected = modalLevel === levelIndex;
                     const isCurrent = levelIndex === currentProgress;
-                    
+
                     return (
                       <button
                         key={levelIndex}
@@ -163,16 +163,23 @@ export function DesktopSidebarRight({
                         <div className={`
                           w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300
                           ${isSelected ? 'scale-110 ring-[4px] ring-offset-[3px] ring-slate-300 shadow-lg relative z-10' : ''}
-                          ${isCompleted ? 'bg-amber-400 border border-amber-500 shadow-sm text-amber-900' : 
-                            isCurrent ? `bg-white border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` : 
-                            'bg-slate-50 border border-slate-200 text-slate-300'
+                          ${isCompleted ? 'bg-amber-400 border border-amber-500 shadow-sm text-amber-900' :
+                            isCurrent ? `bg-white border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` :
+                              'bg-slate-50 border border-slate-200 text-slate-300'
                           }
                         `}>
                           {isCompleted ? (
-                            <div className="flex gap-[1px]">
-                              {Array.from({ length: 3 }).map((_, i) => (
-                                <Star key={i} className={`stroke-[1.5] ${i < earnedStars ? "fill-amber-900 stroke-amber-900" : "fill-white stroke-white"}`} size={10} />
-                              ))}
+                            <div className="flex flex-col items-center gap-[1px]">
+                              <div className="flex gap-[1px]">
+                                {Array.from({ length: 3 }).map((_, i) => (
+                                  <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
+                                ))}
+                              </div>
+                              <div className="flex gap-[1px]">
+                                {Array.from({ length: 2 }).map((_, i) => (
+                                  <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
+                                ))}
+                              </div>
                             </div>
                           ) : isCurrent ? (
                             <span className="font-extrabold text-lg">{levelIndex + 1}</span>
@@ -189,30 +196,59 @@ export function DesktopSidebarRight({
                     );
                   })}
                 </div>
-                
+
                 {/* Mastery Level Button */}
                 {selectedLesson && (() => {
                   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
                   const isUnlocked = currentProgress >= 10;
                   const isSelected = modalLevel === 10;
+                  const starsArray = lessonStars[selectedLesson.lesson.id] || Array(11).fill(0);
+                  const earnedStars = starsArray[10] || 0;
+                  const isCompleted = isUnlocked && earnedStars > 0;
+
                   return (
-                    <button
-                      onClick={() => {
-                        if (isUnlocked) setModalLevel(10);
-                      }}
-                      className={`w-full max-w-[17rem] mx-auto mb-6 py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm border-2
-                        ${isUnlocked 
-                           ? (isSelected ? `bg-amber-50 border-amber-400 text-amber-700 ring-4 ring-amber-400/20` : `bg-gradient-to-r from-amber-400 to-amber-500 border-amber-500 text-white hover:scale-105 active:scale-95`)
-                           : `bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed`
-                        }
-                      `}
-                      disabled={!isUnlocked}
-                    >
-                       {isUnlocked ? <Star fill="currentColor" size={20} className={isSelected ? 'text-amber-500' : 'text-amber-100'} /> : <Lock size={20} />}
-                       <span className="font-extrabold tracking-widest text-sm uppercase">
-                          {language === 'en' ? 'Mastery Level' : 'Niveau Ultime'}
-                       </span>
-                    </button>
+                    <div className="flex flex-col items-center gap-2 mb-6 mt-2">
+                      <button
+                        onClick={() => {
+                          if (isUnlocked) setModalLevel(10);
+                        }}
+                        className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
+                        disabled={!isUnlocked}
+                      >
+                        <div className={`
+                          w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
+                          ${isSelected ? `scale-110 ring-[4px] ring-offset-[3px] shadow-lg relative z-10 ring-amber-400/50` : ''}
+                          ${isUnlocked
+                            ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-2 border-amber-600 shadow-md text-white'
+                            : 'bg-slate-50 border border-slate-200 text-slate-300'
+                          }
+                        `}>
+                          {isUnlocked ? (
+                            isCompleted ? (
+                              <div className="flex flex-col items-center gap-[1px]">
+                                <div className="flex gap-[1px]">
+                                  {Array.from({ length: 3 }).map((_, i) => (
+                                    <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
+                                  ))}
+                                </div>
+                                <div className="flex gap-[1px]">
+                                  {Array.from({ length: 2 }).map((_, i) => (
+                                    <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
+                                  ))}
+                                </div>
+                              </div>
+                            ) : (
+                              <Crown size={24} className="fill-current stroke-[2]" />
+                            )
+                          ) : (
+                            <Lock size={20} className="stroke-[2.5]" />
+                          )}
+                        </div>
+                        <span className={`text-[10px] font-black tracking-widest uppercase ${isUnlocked ? 'text-amber-500' : 'text-slate-300'}`}>
+                          {language === 'en' ? 'MASTERY' : 'NIVEAU ULTIME'}
+                        </span>
+                      </button>
+                    </div>
                   );
                 })()}
 
@@ -233,10 +269,10 @@ export function DesktopSidebarRight({
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
                       {selectedLesson.lesson.isReview || modalLevel === 10
-                        ? (modalLevel === 10 
-                            ? (language === 'en' ? `Stats (MASTERY) :` : `Statistiques (ULTIME) :`) 
-                            : (language === 'en' ? `Bilan Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`))
-                        : suggestionType === 'alphabet' 
+                        ? (modalLevel === 10
+                          ? (language === 'en' ? `Stats (MASTERY) :` : `Statistiques (ULTIME) :`)
+                          : (language === 'en' ? `Bilan Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`))
+                        : suggestionType === 'alphabet'
                           ? (language === 'en' ? `Letters (${selectedLesson.lesson.items?.length}) :` : `Lettres (${selectedLesson.lesson.items?.length}) :`)
                           : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
                       }
@@ -248,73 +284,73 @@ export function DesktopSidebarRight({
 
                   {selectedLesson.lesson.isReview || modalLevel === 10 ? (
                     <div className="flex flex-col gap-3">
-                        {(() => {
-                            const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
-                            if (stats?.bestTime !== undefined && stats.bestTime !== null) {
-                              const m = Math.floor(stats.bestTime / 60);
-                              const s = stats.bestTime % 60;
-                              return (
-                                <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-200 shadow-sm">
-                                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                                    <Clock size={20} className="stroke-[2.5]" />
-                                  </div>
-                                  <div className="flex flex-col">
-                                    <span className="text-emerald-800 font-bold text-[15px]">
-                                      {language === 'en' ? "Best Time" : "Meilleur Temps"}
-                                    </span>
-                                    <span className="text-emerald-600 font-medium text-sm">
-                                      {m}min {s}s
-                                    </span>
-                                  </div>
-                                </div>
-                              );
-                            } else if (stats?.maxPercentage !== undefined && stats.maxPercentage !== null) {
-                              return (
-                                <div className="flex items-center gap-3 p-4 bg-rose-50 rounded-xl border border-rose-200 shadow-sm">
-                                  <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 shrink-0">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                                  </div>
-                                  <div className="flex flex-col">
-                                    <span className="text-rose-800 font-bold text-[15px]">
-                                      {language === 'en' ? "Best Survival" : "Record de Survie"}
-                                    </span>
-                                    <span className="text-rose-600 font-medium text-sm">
-                                      {stats.maxPercentage}%
-                                    </span>
-                                  </div>
-                                </div>
-                              );
-                            } else {
-                              return (
-                                <div className="flex items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200 text-slate-400 text-sm font-medium">
-                                  {language === 'en' ? "Not completed yet" : "Pas encore terminé"}
-                                </div>
-                              );
-                            }
-                        })()}
+                      {(() => {
+                        const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
+                        if (stats?.bestTime !== undefined && stats.bestTime !== null) {
+                          const m = Math.floor(stats.bestTime / 60);
+                          const s = stats.bestTime % 60;
+                          return (
+                            <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-200 shadow-sm">
+                              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                                <Clock size={20} className="stroke-[2.5]" />
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-emerald-800 font-bold text-[15px]">
+                                  {language === 'en' ? "Best Time" : "Meilleur Temps"}
+                                </span>
+                                <span className="text-emerald-600 font-medium text-sm">
+                                  {m}min {s}s
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        } else if (stats?.maxPercentage !== undefined && stats.maxPercentage !== null) {
+                          return (
+                            <div className="flex items-center gap-3 p-4 bg-rose-50 rounded-xl border border-rose-200 shadow-sm">
+                              <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 shrink-0">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-rose-800 font-bold text-[15px]">
+                                  {language === 'en' ? "Best Survival" : "Record de Survie"}
+                                </span>
+                                <span className="text-rose-600 font-medium text-sm">
+                                  {stats.maxPercentage}%
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        } else {
+                          return (
+                            <div className="flex items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200 text-slate-400 text-sm font-medium">
+                              {language === 'en' ? "Not completed yet" : "Pas encore terminé"}
+                            </div>
+                          );
+                        }
+                      })()}
                     </div>
                   ) : (
                     <div className="flex flex-wrap gap-2.5 pb-2">
-                        {suggestionType === 'alphabet' ? (
-                          selectedLesson.lesson.items?.slice(0, 10).map((i: any) => (
-                            <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
-                                <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] font-thai transition-colors`}>{formatCombiningChar(i.letter)}</span> 
-                                <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({i.romanization})</span>
-                            </button>
-                          ))
-                        ) : (
-                          selectedLesson.lesson.words?.map((w: any) => (
-                            <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
-                                <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] transition-colors`}>{w.th}</span> 
-                                <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({language === 'en' ? w.en : w.fr})</span>
-                            </button>
-                          ))
-                        )}
-                        {suggestionType === 'alphabet' && selectedLesson.lesson.items && selectedLesson.lesson.items.length > 10 && (
-                          <div className="shrink-0 border border-dashed border-slate-300 text-slate-400 rounded-[2rem] px-4 py-2 flex items-center justify-center font-medium text-[13px]">
-                             +{selectedLesson.lesson.items.length - 10} {language === 'en' ? 'others' : 'autres'}
-                          </div>
-                        )}
+                      {suggestionType === 'alphabet' ? (
+                        selectedLesson.lesson.items?.slice(0, 10).map((i: any) => (
+                          <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
+                            <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] font-thai transition-colors`}>{formatCombiningChar(i.letter)}</span>
+                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({i.romanization})</span>
+                          </button>
+                        ))
+                      ) : (
+                        selectedLesson.lesson.words?.map((w: any) => (
+                          <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
+                            <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] transition-colors`}>{w.th}</span>
+                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({language === 'en' ? w.en : w.fr})</span>
+                          </button>
+                        ))
+                      )}
+                      {suggestionType === 'alphabet' && selectedLesson.lesson.items && selectedLesson.lesson.items.length > 10 && (
+                        <div className="shrink-0 border border-dashed border-slate-300 text-slate-400 rounded-[2rem] px-4 py-2 flex items-center justify-center font-medium text-[13px]">
+                          +{selectedLesson.lesson.items.length - 10} {language === 'en' ? 'others' : 'autres'}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -323,35 +359,35 @@ export function DesktopSidebarRight({
 
             {/* Sticky Actions Footer */}
             <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-                {selectedLesson.isCompleted && (
-                  <div className="flex gap-3 mb-1">
-                    {suggestionType !== 'alphabet' && (
-                      <Link
-                        href={`/writing?lessonId=${selectedLesson.lesson.id}`}
-                        className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors"
-                      >
-                        <Pencil size={16} className="mr-2" />
-                        {language === 'en' ? 'Writing' : 'Écriture'}
-                      </Link>
-                    )}
-                    <button
-                      onClick={() => {
-                        resetLessonLevel(selectedLesson.lesson.id);
-                        setModalLevel(0);
-                      }}
-                      className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
+              {selectedLesson.isCompleted && (
+                <div className="flex gap-3 mb-1">
+                  {suggestionType !== 'alphabet' && (
+                    <Link
+                      href={`/writing?lessonId=${selectedLesson.lesson.id}`}
+                      className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors"
                     >
-                      <RotateCcw size={16} className="mr-2" />
-                      {language === 'en' ? 'Reset' : 'Réinitialiser'}
-                    </button>
-                  </div>
-                )}
-                <Link
-                  href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
-                >
-                  {language === 'en' ? `Start lesson` : `Commencer la leçon`}
-                </Link>
+                      <Pencil size={16} className="mr-2" />
+                      {language === 'en' ? 'Writing' : 'Écriture'}
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      resetLessonLevel(selectedLesson.lesson.id);
+                      setModalLevel(0);
+                    }}
+                    className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
+                  >
+                    <RotateCcw size={16} className="mr-2" />
+                    {language === 'en' ? 'Reset' : 'Réinitialiser'}
+                  </button>
+                </div>
+              )}
+              <Link
+                href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+              >
+                {language === 'en' ? `Start lesson` : `Commencer la leçon`}
+              </Link>
             </div>
           </div>
         </motion.div>
@@ -361,37 +397,37 @@ export function DesktopSidebarRight({
     if (!showUnitsList) {
       return (
         <motion.div
-           key="dashboard-view"
-           initial={{ opacity: 0, x: -20 }}
-           animate={{ opacity: 1, x: 0 }}
-           exit={{ opacity: 0, x: 20 }}
-           transition={{ duration: 0.2, ease: "easeOut" }}
-           className="w-full h-full relative px-6 overflow-y-auto hide-scrollbar pt-6 pb-16 flex flex-col gap-6"
+          key="dashboard-view"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="w-full h-full relative px-6 overflow-y-auto hide-scrollbar pt-6 pb-16 flex flex-col gap-6"
         >
-           <button 
-             onClick={() => setShowUnitsList(true)}
-             className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-2xl transition-colors group cursor-pointer"
-           >
-             <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                 <BookOpen size={20} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
-               </div>
-               <div className="flex flex-col text-left">
-                 <span className="font-bold text-slate-800 tracking-tight">
-                   {language === 'en' ? 'Course Units' : 'Unités du Cours'}
-                 </span>
-                 <span className="text-xs text-slate-500 font-medium">
-                   {language === 'en' ? 'Change or view units' : 'Changer ou voir les unités'}
-                 </span>
-               </div>
-             </div>
-             <ChevronLeft size={20} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-1" />
-           </button>
+          <button
+            onClick={() => setShowUnitsList(true)}
+            className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-2xl transition-colors group cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                <BookOpen size={20} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="font-bold text-slate-800 tracking-tight">
+                  {language === 'en' ? 'Course Units' : 'Unités du Cours'}
+                </span>
+                <span className="text-xs text-slate-500 font-medium">
+                  {language === 'en' ? 'Change or view units' : 'Changer ou voir les unités'}
+                </span>
+              </div>
+            </div>
+            <ChevronLeft size={20} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-1" />
+          </button>
 
-           <div className="w-full flex flex-col gap-6">
-             <DailyQuestsWidget category={questsCategory} />
-             <ConversationObjectiveWidget />
-           </div>
+          <div className="w-full flex flex-col gap-6">
+            <DailyQuestsWidget category={questsCategory} />
+            <ConversationObjectiveWidget />
+          </div>
         </motion.div>
       );
     }
@@ -413,7 +449,7 @@ export function DesktopSidebarRight({
                 {language === 'en' ? 'Units' : 'Unités'}
               </h2>
             </div>
-            <button 
+            <button
               onClick={() => setShowUnitsList(false)}
               className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors cursor-pointer"
             >
@@ -425,10 +461,10 @@ export function DesktopSidebarRight({
               const isCurrent = i === activeUnitIndex;
               const status = isCurrent ? (language === 'en' ? 'In progress' : 'En cours') : '';
               const unitLessons = u.lessons ? u.lessons : lessons.slice(u.startIndex || 0, u.endIndex || 0);
-              
-              const hasSuggestion = globalSuggested?.type === suggestionType && 
-                                    globalSuggested.id && 
-                                    unitLessons.some((l: any) => l.id === globalSuggested.id);
+
+              const hasSuggestion = globalSuggested?.type === suggestionType &&
+                globalSuggested.id &&
+                unitLessons.some((l: any) => l.id === globalSuggested.id);
               const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
               const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + (lessonLevels[l.id] || 0), 0) : 0;
               const progressPercent = mounted && maxLevelsInUnit > 0 ? Math.min(100, (completedLevelsInUnit / maxLevelsInUnit) * 100) : 0;
@@ -437,7 +473,7 @@ export function DesktopSidebarRight({
 
               if (isCurrent) {
                 return (
-                  <div 
+                  <div
                     key={u.id}
                     className={`w-full text-left rounded-2xl transition-all relative overflow-hidden flex flex-col p-4 shrink-0 bg-white border-2 cursor-default ${u.colorClass.replace('bg-', 'border-')} shadow-sm`}
                   >
@@ -453,19 +489,19 @@ export function DesktopSidebarRight({
                         <span className={`text-[13px] font-semibold ${u.textClass} tracking-tight`}>{status}</span>
                       </div>
                     </div>
-                    
+
                     <div className="w-full bg-slate-100 rounded-full h-2 mb-2 overflow-hidden">
-                       <div className={`h-full rounded-full transition-all duration-1000 ${u.colorClass}`} style={{ width: `${progressPercent}%` }}></div>
+                      <div className={`h-full rounded-full transition-all duration-1000 ${u.colorClass}`} style={{ width: `${progressPercent}%` }}></div>
                     </div>
                     <div className="text-[12px] font-medium text-slate-400 select-none">
-                       {completedLessonsCount}/{totalLessonsCount} {language === 'en' ? 'lessons' : 'leçons'}
+                      {completedLessonsCount}/{totalLessonsCount} {language === 'en' ? 'lessons' : 'leçons'}
                     </div>
                   </div>
                 );
               }
 
               return (
-                <button 
+                <button
                   key={u.id}
                   onClick={() => onUnitSelect(i)}
                   className="w-full text-left rounded-2xl transition-all relative flex flex-row items-center p-3 shrink-0 bg-slate-50 border border-transparent hover:border-slate-200 hover:bg-slate-100 active:scale-[0.98] group/btn cursor-pointer"
@@ -474,7 +510,7 @@ export function DesktopSidebarRight({
                     <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-amber-400 rounded-full z-10"></span>
                   )}
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-[15px] bg-white text-slate-400 group-hover/btn:bg-white group-hover/btn:text-slate-500 shrink-0 mr-3 transition-colors shadow-sm">
-                     {i + 1}
+                    {i + 1}
                   </div>
 
                   <div className="flex flex-col justify-center min-w-0 overflow-hidden pr-2">
@@ -490,7 +526,7 @@ export function DesktopSidebarRight({
   };
 
   return (
-    <div 
+    <div
       className="h-screen sticky top-0 hidden xl:block w-[24rem] flex-shrink-0 relative z-40 bg-white border-l border-slate-200 shadow-[-10px_0_30px_rgba(0,0,0,0.02)] overflow-hidden"
       onClick={(e) => e.stopPropagation()}
     >

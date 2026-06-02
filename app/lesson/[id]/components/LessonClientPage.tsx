@@ -122,7 +122,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const [initialTime, setInitialTime] = useState<number | null>(null);
   const [failedDueToTime, setFailedDueToTime] = useState(false);
 
-  const earnedStars = mistakes < 2 ? 3 : mistakes < 4 ? 2 : 1;
+  const earnedStars = Math.max(0, 5 - mistakes);
 
   const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{
     id: string;
@@ -233,6 +233,19 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const currentExercise = exercises.length > 0 ? exercises[currentIndex] : null;
   const progress = exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0;
+
+  // Auto-check for free-typing
+  useEffect(() => {
+    if (currentExercise && currentExercise.type === "free-typing" && !isChecking && typeof selectedAnswer === "string") {
+      const targetLength = currentExercise.answer.replace(/\s+/g, "").length;
+      const currentLength = selectedAnswer.replace(/\s+/g, "").length;
+      if (currentLength >= targetLength && currentLength > 0) {
+         // Use setTimeout to ensure the React state has fully updated the input UI
+         const timer = setTimeout(() => handleCheck(selectedAnswer), 50);
+         return () => clearTimeout(timer);
+      }
+    }
+  }, [selectedAnswer, currentExercise, isChecking]);
 
   const handleCheck = (overrideAnswer?: any) => {
     if (!currentExercise) return;
@@ -399,7 +412,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     ? currentExercise.type === "intro"
       ? true
       : currentExercise.type === "free-typing"
-        ? typeof selectedAnswer === "string" && selectedAnswer.trim().length >= Math.max(1, currentExercise.answer.replace(/\s+/g, "").length - 1)
+        ? false
         : (currentExercise.type === "writing" ||
               currentExercise.type === "sentence-builder") &&
             currentExercise.correctComponents

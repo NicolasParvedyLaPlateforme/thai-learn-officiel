@@ -812,10 +812,17 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                               }
                             `}>
                               {isCompleted ? (
-                                <div className="flex gap-[1px]">
-                                  {Array.from({ length: 3 }).map((_, i) => (
-                                    <Star key={i} className={`stroke-[1.5] ${i < earnedStars ? "fill-amber-900 stroke-amber-900" : "fill-white stroke-white"}`} size={10} />
-                                  ))}
+                                <div className="flex flex-col items-center gap-[1px]">
+                                  <div className="flex gap-[1px]">
+                                    {Array.from({ length: 3 }).map((_, i) => (
+                                      <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-amber-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
+                                    ))}
+                                  </div>
+                                  <div className="flex gap-[1px]">
+                                    {Array.from({ length: 2 }).map((_, i) => (
+                                      <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-amber-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
+                                    ))}
+                                  </div>
                                 </div>
                               ) : isCurrent ? (
                                 <span className="font-extrabold text-lg">{levelIndex + 1}</span>
@@ -838,24 +845,53 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
                       const isUnlocked = currentProgress >= 10;
                       const isSelected = modalLevel === 10;
+                      const starsArray = lessonStars[selectedLesson.lesson.id] || Array(11).fill(0);
+                      const earnedStars = starsArray[10] || 0;
+                      const isCompleted = isUnlocked && earnedStars > 0;
+
                       return (
-                        <button
-                          onClick={() => {
-                            if (isUnlocked) setModalLevel(10);
-                          }}
-                          className={`w-full max-w-[16rem] mx-auto mb-6 py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm border-2
-                            ${isUnlocked 
-                               ? (isSelected ? `bg-amber-50 border-amber-400 text-amber-700 ring-4 ring-amber-400/20` : `bg-gradient-to-r from-amber-400 to-amber-500 border-amber-500 text-white hover:scale-105 active:scale-95`)
-                               : `bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed`
-                            }
-                          `}
-                          disabled={!isUnlocked}
-                        >
-                           {isUnlocked ? <Star fill="currentColor" size={20} className={isSelected ? 'text-amber-500' : 'text-amber-100'} /> : <Lock size={20} />}
-                           <span className="font-extrabold tracking-widest text-sm uppercase">
-                              {language === 'en' ? 'Mastery Level' : 'Niveau Ultime'}
-                           </span>
-                        </button>
+                        <div className="flex flex-col items-center gap-2 mb-6 mt-2">
+                          <button
+                            onClick={() => {
+                              if (isUnlocked) setModalLevel(10);
+                            }}
+                            className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
+                            disabled={!isUnlocked}
+                          >
+                            <div className={`
+                              w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
+                              ${isSelected ? `scale-110 ring-[4px] ring-offset-[3px] shadow-lg relative z-10 ring-amber-400/50` : ''}
+                              ${isUnlocked 
+                                  ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-2 border-amber-600 shadow-md text-white' 
+                                  : 'bg-slate-50 border border-slate-200 text-slate-300'
+                              }
+                            `}>
+                               {isUnlocked ? (
+                                 isCompleted ? (
+                                   <div className="flex flex-col items-center gap-[1px]">
+                                     <div className="flex gap-[1px]">
+                                       {Array.from({ length: 3 }).map((_, i) => (
+                                         <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
+                                       ))}
+                                     </div>
+                                     <div className="flex gap-[1px]">
+                                       {Array.from({ length: 2 }).map((_, i) => (
+                                         <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
+                                       ))}
+                                     </div>
+                                   </div>
+                                 ) : (
+                                   <Crown size={24} className="fill-current stroke-[2]" />
+                                 )
+                               ) : (
+                                 <Lock size={20} className="stroke-[2.5]" />
+                               )}
+                            </div>
+                            <span className={`text-[10px] font-black tracking-widest uppercase ${isUnlocked ? 'text-amber-500' : 'text-slate-300'}`}>
+                               {language === 'en' ? 'MASTERY' : 'NIVEAU ULTIME'}
+                            </span>
+                          </button>
+                        </div>
                       );
                     })()}
                   </div>
