@@ -1,0 +1,66 @@
+[
+    {
+        "id": "bureau-1",
+        "title": "Bureau",
+        "titleEn": "Office",
+        "description": "Retrouvez les objets cachés dans ce bureau traditionnel thaïlandais.",
+        "descriptionEn": "Find the hidden objects in this traditional Thai office.",
+        "imageUrl": "/images/detective/niveau1.png",
+        "objects": [
+            {
+                "id": "d8h8yv8hv",
+                "x": 58.22,
+                "y": 69.39,
+                "radius": 10.43,
+                "th": "โน้ตบุ๊ก",
+                "fr": "คอมพิวเตอร์พกพา",
+                "en": "Laptop"
+            },
+            {
+                "id": "0oxioqb1d",
+                "x": 93.4,
+                "y": 65.36,
+                "radius": 9.37,
+                "th": "เสื้อหม้อห้อม",
+                "fr": "Mohom",
+                "en": "Mo Hom"
+            },
+            {
+                "id": "91nvp8tad",
+                "x": 38.08,
+                "y": 48.59,
+                "radius": 5.23,
+                "th": "พระพุทธรูป",
+                "fr": "Statue de Bouddha",
+                "en": "Statue of Bouddha"
+            },
+            {
+                "id": "tbieurgp6",
+                "x": 34.84,
+                "y": 14,
+                "radius": 13.22,
+                "th": "หน้าต่าง",
+                "fr": "Fenêtre",
+                "en": "Window"
+            },
+            {
+                "id": "7lw6pbhcj",
+                "x": 75,
+                "y": 75.33,
+                "radius": 6.11,
+                "th": "กล้องถ่ายรูป",
+                "fr": "Appareil à photo",
+                "en": "Camera"
+            },
+            {
+                "id": "3nlabdd94",
+                "x": 10.42,
+                "y": 50.93,
+                "radius": 5.59,
+                "th": "เครื่องพิมพ์ดีด",
+                "fr": "Machine à écrire",
+                "en": "Typewriter"
+            }
+        ]
+    }
+]
