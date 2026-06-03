@@ -62,5 +62,159 @@
                 "en": "Typewriter"
             }
         ]
+    },
+    {
+        "id": "supermarche-2",
+        "title": "Supermarché",
+        "titleEn": "Supermarket",
+        "description": "Trouvez les ustensiles et ingrédients cachés dans ce supermarché thaïlandais.",
+        "descriptionEn": "Find the hidden utensils and ingredients in this Thai supermarket.",
+        "imageUrl": "/images/detective/niveau2.png",
+        "objects": [
+            {
+                "id": "s73v2kqb5",
+                "x": 14.41,
+                "y": 31.19,
+                "radius": 6.53,
+                "th": "กล้วย",
+                "fr": "Bananes",
+                "en": "Bananas"
+            },
+            {
+                "id": "wwdloxjz1",
+                "x": 29.62,
+                "y": 84.69,
+                "radius": 7.87,
+                "th": "แอปเปิ้ล",
+                "fr": "Pommes",
+                "en": "Apples"
+            },
+            {
+                "id": "rsf7l3zsi",
+                "x": 9.64,
+                "y": 63.75,
+                "radius": 2.83,
+                "th": "มะนาว",
+                "fr": "Citron",
+                "en": "Lemons / Limes"
+            },
+            {
+                "id": "7lc8x3u1y",
+                "x": 43.59,
+                "y": 50.33,
+                "radius": 2.29,
+                "th": "ส้ม",
+                "fr": "Orange",
+                "en": "Orange"
+            },
+            {
+                "id": "md8coved3",
+                "x": 49.26,
+                "y": 53.65,
+                "radius": 2.22,
+                "th": "อะโวคาโด",
+                "fr": "Avocat",
+                "en": "Avocado"
+            },
+            {
+                "id": "df8ck7hx6",
+                "x": 91.43,
+                "y": 50.03,
+                "radius": 3.35,
+                "th": "มะเขือเทศ",
+                "fr": "Tomates",
+                "en": "Tomatoes"
+            },
+            {
+                "id": "ullc9b1wg",
+                "x": 78.28,
+                "y": 41.29,
+                "radius": 3.68,
+                "th": "ซูคินี",
+                "fr": "Courgettes",
+                "en": "Zucchinis"
+            },
+            {
+                "id": "l4tdqw9nl",
+                "x": 73.34,
+                "y": 45.51,
+                "radius": 3.54,
+                "th": "พริกหวาน",
+                "fr": "Poivron",
+                "en": "Bell peppers"
+            },
+            {
+                "id": "19x2h9idn",
+                "x": 80.17,
+                "y": 53.05,
+                "radius": 6.19,
+                "th": "แครอท",
+                "fr": "Carottes",
+                "en": "Carrots"
+            },
+            {
+                "id": "fxv9108o6",
+                "x": 72.11,
+                "y": 70.07,
+                "radius": 5.59,
+                "th": "แตงกวา",
+                "fr": "Concombre",
+                "en": "Cucumber"
+            },
+            {
+                "id": "dwtafliec",
+                "x": 5.7,
+                "y": 41.14,
+                "radius": 4.88,
+                "th": "ผักกาดหอม",
+                "fr": "Salade",
+                "en": "Salad"
+            },
+            {
+                "id": "cnrqa3qi1",
+                "x": 59.37,
+                "y": 55.16,
+                "radius": 6.41,
+                "th": "เครื่องชั่ง",
+                "fr": "Balance",
+                "en": "Scale"
+            },
+            {
+                "id": "dna808ida",
+                "x": 61.02,
+                "y": 33.3,
+                "radius": 5.93,
+                "th": "ถุงพลาสติก",
+                "fr": "Sac en plastique",
+                "en": "Plastic bag"
+            },
+            {
+                "id": "eh4sfhanw",
+                "x": 8.74,
+                "y": 73.24,
+                "radius": 3.62,
+                "th": "ป้ายราคา",
+                "fr": "Etiquette de prix",
+                "en": "Price tag"
+            },
+            {
+                "id": "lxddnkjfk",
+                "x": 60.36,
+                "y": 86.5,
+                "radius": 11.47,
+                "th": "รถเข็น / ตะกร้า",
+                "fr": "Cadie / Panier",
+                "en": "Shopping cart / Basket"
+            },
+            {
+                "id": "rsne5y0ay",
+                "x": 88.63,
+                "y": 79.57,
+                "radius": 6.47,
+                "th": "เจลแอลกอฮอล์",
+                "fr": "Gel hydroalcoolique",
+                "en": "Hand sanitizer"
+            }
+        ]
     }
 ]
