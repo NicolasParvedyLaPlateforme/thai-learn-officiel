@@ -17,7 +17,7 @@ export default function DetectiveClientWrapper({ level, isDev }: Props) {
   const { language } = useProgressStore();
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-slate-50 w-full max-w-4xl mx-auto pb-24 md:pb-8">
+    <div className="flex-1 flex flex-col min-h-screen bg-slate-50 w-full pb-24 md:pb-8">
       {/* Header */}
       <div className="flex items-center gap-4 p-4 border-b border-slate-200 bg-white sticky top-0 z-10">
         <Link href="/detective" className="p-2 -ml-2 rounded-xl hover:bg-slate-100 text-slate-500 transition-colors">

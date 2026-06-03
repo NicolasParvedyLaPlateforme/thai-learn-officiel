@@ -50,8 +50,11 @@ export default function DetectiveGame({ level }: Props) {
     if (!isFullscreen) {
       setIsFullscreen(true);
       try {
-        if (document.documentElement.requestFullscreen) {
-          await document.documentElement.requestFullscreen();
+        const docEl = document.documentElement as any;
+        if (docEl.requestFullscreen) {
+          await docEl.requestFullscreen();
+        } else if (docEl.webkitRequestFullscreen) {
+          await docEl.webkitRequestFullscreen();
         }
         // Force landscape if supported on mobile
         if (screen.orientation && (screen.orientation as any).lock) {
@@ -65,6 +68,8 @@ export default function DetectiveGame({ level }: Props) {
       try {
         if (document.fullscreenElement && document.exitFullscreen) {
           await document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen) {
+          await ((document as any).webkitExitFullscreen)();
         }
         if (screen.orientation && (screen.orientation as any).unlock) {
           (screen.orientation as any).unlock();
@@ -219,10 +224,17 @@ export default function DetectiveGame({ level }: Props) {
     <div className={isFullscreen ? "fixed inset-0 z-[100] bg-slate-900 flex flex-col" : "flex flex-col h-full"}>
 
       {/* Top HUD - Floating if fullscreen, normal if not */}
-      <div className={isFullscreen
-        ? "absolute top-4 left-4 right-4 z-10 flex items-start justify-between pointer-events-none"
-        : "bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-4 flex items-center justify-between"
-      }>
+      <div 
+        className={isFullscreen
+          ? "absolute z-10 flex items-start justify-between pointer-events-none"
+          : "bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-4 flex items-center justify-between"
+        }
+        style={isFullscreen ? {
+          top: 'max(1rem, env(safe-area-inset-top))',
+          left: 'max(1rem, env(safe-area-inset-left))',
+          right: 'max(1rem, env(safe-area-inset-right))'
+        } : undefined}
+      >
 
         <div className={`flex items-center gap-4 pointer-events-auto ${isFullscreen ? 'bg-white/95 backdrop-blur-sm p-2 pr-4 rounded-full shadow-lg' : ''}`}>
           <button
@@ -267,7 +279,7 @@ export default function DetectiveGame({ level }: Props) {
 
       {/* Game Area */}
       <div
-        className={`w-full bg-slate-800 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 ${isFullscreen ? 'h-full rounded-none' : 'rounded-2xl max-h-[70vh]'}`}
+        className={`w-full bg-slate-800 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 ${isFullscreen ? 'h-full rounded-none' : 'rounded-2xl max-h-[85vh]'}`}
       >
         <div 
           className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
