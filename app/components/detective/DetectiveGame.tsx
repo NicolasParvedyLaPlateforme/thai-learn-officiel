@@ -257,9 +257,6 @@ export default function DetectiveGame({ level }: Props) {
         >
           {/* Top Actions */}
           <div className="flex flex-row gap-2 items-center justify-center w-full">
-             <button onClick={() => setMobileSidebarOpen(true)} className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
-               <Menu className="w-6 h-6" />
-             </button>
              <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
                <ChevronLeft className="w-6 h-6" />
              </Link>
@@ -285,7 +282,7 @@ export default function DetectiveGame({ level }: Props) {
             </div>
           </div>
 
-          {/* Bottom: Progress & Fullscreen */}
+          {/* Bottom: Progress */}
           <div className="flex flex-col items-center gap-4 w-full">
             <div className="bg-slate-900/50 px-4 py-2 rounded-xl border border-slate-700/50 w-full text-center">
               <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5">
@@ -295,13 +292,6 @@ export default function DetectiveGame({ level }: Props) {
                 {currentIndex} / {objects.length}
               </div>
             </div>
-            
-            <button
-              onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
-              className="p-3 rounded-xl bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors w-full flex justify-center"
-            >
-              {isFullscreen ? <Minimize className="w-6 h-6" /> : <Maximize className="w-6 h-6" />}
-            </button>
           </div>
         </div>
 
