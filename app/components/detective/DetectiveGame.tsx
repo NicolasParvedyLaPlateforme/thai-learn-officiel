@@ -3,7 +3,8 @@
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
-import { Volume2, Search, CheckCircle2, Maximize, Minimize } from 'lucide-react';
+import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft } from 'lucide-react';
+import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
 import confetti from 'canvas-confetti';
 
@@ -222,54 +223,54 @@ export default function DetectiveGame({ level }: Props) {
 
   return (
     <div className={isFullscreen ? "fixed inset-0 z-[100] bg-slate-900 flex flex-col" : "flex flex-col h-full"}>
-
-      {/* Top HUD - Floating if fullscreen, normal if not */}
+      {/* HUD - Bottom on mobile, Top on desktop */}
       <div 
         className={isFullscreen
-          ? "absolute z-10 flex items-start justify-between pointer-events-none"
-          : "bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-4 flex items-center justify-between"
+          ? "absolute top-6 left-1/2 -translate-x-1/2 z-10 flex items-center justify-between pointer-events-auto bg-white/95 backdrop-blur-md px-3 py-2 rounded-full shadow-2xl w-[90%] max-w-2xl border border-white/40"
+          : "order-last md:order-first [@media(max-height:600px)_and_(orientation:landscape)]:order-first [@media(max-height:600px)_and_(orientation:landscape)]:ml-16 flex items-center justify-between pointer-events-auto bg-white p-4 pt-5 pb-6 md:p-4 md:mb-4 [@media(max-height:600px)_and_(orientation:landscape)]:p-3 [@media(max-height:600px)_and_(orientation:landscape)]:mb-2 md:rounded-2xl [@media(max-height:600px)_and_(orientation:landscape)]:rounded-xl border-t md:border border-slate-100 shadow-[0_-15px_40px_-10px_rgba(0,0,0,0.15)] md:shadow-sm z-10"
         }
         style={isFullscreen ? {
-          top: 'max(1rem, env(safe-area-inset-top))',
-          left: 'max(1rem, env(safe-area-inset-left))',
-          right: 'max(1rem, env(safe-area-inset-right))'
+          top: 'max(1.5rem, env(safe-area-inset-top))',
         } : undefined}
       >
 
-        <div className={`flex items-center gap-4 pointer-events-auto ${isFullscreen ? 'bg-white/95 backdrop-blur-sm p-2 pr-4 rounded-full shadow-lg' : ''}`}>
+        <div className={`flex items-center gap-3 ${isFullscreen ? '' : 'bg-white/95 backdrop-blur-md p-2 pr-5 rounded-full shadow-xl md:bg-transparent md:p-0 md:shadow-none md:rounded-none [@media(max-height:600px)_and_(orientation:landscape)]:bg-transparent [@media(max-height:600px)_and_(orientation:landscape)]:p-0 [@media(max-height:600px)_and_(orientation:landscape)]:shadow-none'}`}>
+          <Link href="/detective" className="hidden [@media(max-height:600px)_and_(orientation:landscape)]:flex p-2 -ml-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors shrink-0" title="Retour">
+            <ChevronLeft className="w-6 h-6" />
+          </Link>
           <button
             onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
-            className="w-12 h-12 bg-emerald-100 hover:bg-emerald-200 text-emerald-600 rounded-full flex items-center justify-center transition-colors shrink-0"
+            className={`w-12 h-12 rounded-full flex items-center justify-center transition-transform active:scale-95 shrink-0 ${isFullscreen ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-600' : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/40 md:bg-emerald-100 md:text-emerald-600 md:shadow-none md:hover:bg-emerald-200 [@media(max-height:600px)_and_(orientation:landscape)]:bg-emerald-100 [@media(max-height:600px)_and_(orientation:landscape)]:text-emerald-600 [@media(max-height:600px)_and_(orientation:landscape)]:shadow-none'}`}
           >
             <Volume2 className="w-6 h-6" />
           </button>
-          <div>
-            <h3 className="text-2xl font-bold font-thai text-slate-800">
+          <div className="flex flex-col justify-center">
+            <h3 className="text-xl md:text-2xl font-bold font-thai text-slate-800 leading-tight">
               {currentObj.th}
             </h3>
             {difficulty === 1 && (
-              <p className="text-slate-500 font-medium text-sm leading-tight">
+              <p className="text-slate-500 font-medium text-xs md:text-sm leading-tight">
                 {language === 'en' ? currentObj.en : currentObj.fr}
               </p>
             )}
           </div>
         </div>
 
-        <div className={`pointer-events-auto flex items-center gap-4 ${isFullscreen ? 'bg-white/95 backdrop-blur-sm p-2 px-4 rounded-full shadow-lg' : 'text-right'}`}>
-          <div>
+        <div className={`flex items-center gap-3 text-right`}>
+          <div className="flex flex-col items-end justify-center">
             {!isFullscreen && (
-              <div className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">
+              <div className="hidden md:block [@media(max-height:600px)_and_(orientation:landscape)]:block text-sm font-bold text-slate-400 uppercase tracking-wider mb-1 leading-none">
                 {language === 'en' ? 'Progress' : 'Progression'}
               </div>
             )}
-            <div className={`font-black text-emerald-500 ${isFullscreen ? 'text-xl' : 'text-lg'}`}>
+            <div className={`font-black text-emerald-600 px-3 py-1.5 rounded-xl ${isFullscreen ? 'text-xl bg-emerald-50' : 'text-lg leading-none bg-emerald-50 md:bg-transparent md:p-0 md:rounded-none md:mt-0 [@media(max-height:600px)_and_(orientation:landscape)]:bg-transparent [@media(max-height:600px)_and_(orientation:landscape)]:p-0'}`}>
               {currentIndex} / {objects.length}
             </div>
           </div>
 
           <button
             onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
-            className="w-10 h-10 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition-colors shrink-0 ml-2"
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-95 shrink-0 ml-1 ${isFullscreen ? 'bg-slate-100 hover:bg-slate-200 text-slate-600' : 'bg-slate-100 hover:bg-slate-200 text-slate-600 shadow-sm border border-slate-200 md:border-none md:shadow-none [@media(max-height:600px)_and_(orientation:landscape)]:border-none [@media(max-height:600px)_and_(orientation:landscape)]:shadow-none'}`}
             title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
           >
             {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
@@ -279,7 +280,7 @@ export default function DetectiveGame({ level }: Props) {
 
       {/* Game Area */}
       <div
-        className={`w-full bg-slate-800 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 ${isFullscreen ? 'h-full rounded-none' : 'rounded-2xl max-h-[85vh]'}`}
+        className={`w-full shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 ${isFullscreen ? 'bg-slate-800 h-full rounded-none' : 'order-first md:order-last bg-slate-900 md:bg-slate-800 rounded-none md:rounded-2xl max-h-none md:max-h-[85vh]'}`}
       >
         <div 
           className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
