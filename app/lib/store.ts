@@ -147,6 +147,9 @@ interface ProgressState {
   
   reviewStats: Record<string, Record<number, { bestTime?: number, maxPercentage?: number }>>;
   saveReviewStat: (lessonId: string, level: number, stats: { bestTime?: number, maxPercentage?: number }) => void;
+  
+  isMobileSidebarOpen: boolean;
+  setMobileSidebarOpen: (open: boolean) => void;
 }
 
 export const useProgressStore = create<ProgressState>()(
@@ -154,6 +157,8 @@ export const useProgressStore = create<ProgressState>()(
     (set, get) => ({
       _hasHydrated: false,
       setHasHydrated: (state) => set({ _hasHydrated: state }),
+      isMobileSidebarOpen: false,
+      setMobileSidebarOpen: (open) => set({ isMobileSidebarOpen: open }),
       language: 'fr',
       languageSetByUser: false,
       completedLessons: [],
@@ -439,7 +444,7 @@ export const useProgressStore = create<ProgressState>()(
       name: 'thai-learning-progress',
       storage: createJSONStorage(() => safeStorage),
       partialize: (state) => Object.fromEntries(
-        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal'].includes(key))
+        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal', 'isMobileSidebarOpen'].includes(key))
       ),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);

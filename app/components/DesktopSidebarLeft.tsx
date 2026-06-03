@@ -9,7 +9,7 @@ import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 
 export default function DesktopSidebarLeft() {
   const pathname = usePathname();
-  const { language, setLanguage, xp, currentStreak, completedLessons, isExerciseRunning } = useProgressStore();
+  const { language, setLanguage, xp, currentStreak, completedLessons, isExerciseRunning, isMobileSidebarOpen, setMobileSidebarOpen } = useProgressStore();
   const globalSuggested = useGlobalSuggestedLesson();
 
   // Hidden on routes where we don't want the app shell
@@ -23,7 +23,6 @@ export default function DesktopSidebarLeft() {
   
   const [mounted, setMounted] = useState(false);
   const [isMobileLandscape, setIsMobileLandscape] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -50,28 +49,18 @@ export default function DesktopSidebarLeft() {
 
   return (
     <>
-      {/* Mobile Landscape Burger Button */}
-      {isMobileLandscape && !isDrawerOpen && (
-        <button 
-          onClick={() => setIsDrawerOpen(true)}
-          className="fixed top-4 left-4 z-[60] bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg border border-slate-200 text-slate-700 hover:bg-emerald-50 transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-        </button>
-      )}
-
       {/* Spacer for desktop layout so content doesn't get hidden behind absolute sidebar depending on setup we want */}
       <div className={`hidden md:block shrink-0 transition-all duration-300 ease-in-out ${isMobileLandscape ? 'w-0' : 'w-20 xl:w-64'}`}></div>
 
       <nav 
         className={`hidden md:flex fixed top-0 left-0 h-screen bg-[#F0FDF4] border-r border-emerald-100 flex-col py-6 transition-all duration-300 ease-in-out z-[70] shadow-sm ${
           isMobileLandscape 
-            ? (isDrawerOpen ? 'w-64 px-4 translate-x-0' : 'w-64 px-4 -translate-x-full')
+            ? (isMobileSidebarOpen ? 'w-64 px-4 translate-x-0' : 'w-64 px-4 -translate-x-full')
             : 'w-20 px-2 hover:w-64 hover:px-4 xl:w-64 xl:px-4'
         } group`}
       >
-        {isMobileLandscape && isDrawerOpen && (
-           <button onClick={() => setIsDrawerOpen(false)} className="absolute top-4 right-4 p-2 text-slate-500 hover:bg-emerald-100 rounded-lg">
+        {isMobileLandscape && isMobileSidebarOpen && (
+           <button onClick={() => setMobileSidebarOpen(false)} className="absolute top-4 right-4 p-2 text-slate-500 hover:bg-emerald-100 rounded-lg">
              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
            </button>
         )}
