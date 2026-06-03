@@ -17,9 +17,9 @@ export default function DetectiveClientWrapper({ level, isDev }: Props) {
   const { language } = useProgressStore();
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-slate-50 w-full max-w-4xl mx-auto pb-24 md:pb-8">
+    <div className="flex-1 flex flex-col min-h-screen bg-slate-50 w-full pb-24 md:pb-8">
       {/* Header */}
-      <div className="flex items-center gap-4 p-4 border-b border-slate-200 bg-white sticky top-0 z-10">
+      <div className="flex items-center gap-4 p-4 border-b border-slate-200 bg-white sticky top-0 z-10 [@media(max-height:600px)_and_(orientation:landscape)]:hidden">
         <Link href="/detective" className="p-2 -ml-2 rounded-xl hover:bg-slate-100 text-slate-500 transition-colors">
           <ChevronLeft className="w-6 h-6" />
         </Link>
@@ -35,7 +35,7 @@ export default function DetectiveClientWrapper({ level, isDev }: Props) {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col p-4 relative overflow-hidden">
+      <div className="flex-1 flex flex-col p-0 md:p-4 relative overflow-hidden">
         {isDev ? (
           <DetectiveDevMode level={level} />
         ) : (

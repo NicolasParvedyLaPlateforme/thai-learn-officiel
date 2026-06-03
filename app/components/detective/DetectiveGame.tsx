@@ -3,39 +3,69 @@
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
-import { Volume2, Search, CheckCircle2, Maximize, Minimize } from 'lucide-react';
+import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star } from 'lucide-react';
+import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
 import confetti from 'canvas-confetti';
+import detectiveData from '../../data/detective.json';
 
 interface Props {
   level: DetectiveLevel;
 }
 
 export default function DetectiveGame({ level }: Props) {
-  const { language } = useProgressStore();
+  const { language, setMobileSidebarOpen } = useProgressStore();
 
   const [objects, setObjects] = useState<DetectiveObject[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [levelState, setLevelState] = useState<'intro' | 'playing' | 'completed'>('intro');
-  // Niveau 1 = Thaï + FR, Niveau 2 = Thaï uniquement
   const [difficulty, setDifficulty] = useState<1 | 2>(1);
   const [mistakes, setMistakes] = useState(0);
+  const [currentMistakes, setCurrentMistakes] = useState(0);
   const [foundObjects, setFoundObjects] = useState<DetectiveObject[]>([]);
+  const [showStarLoss, setShowStarLoss] = useState(false);
+  const prevStars = useRef(5);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isPortraitPhone, setIsPortraitPhone] = useState(false);
+  const [isLandscapePhone, setIsLandscapePhone] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Initialisation (mélanger les objets pour que ce ne soit pas toujours dans le même ordre)
+  useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setIsPortraitPhone(w < 768 && h > w);
+      setIsLandscapePhone(h < 600 && w > h);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     if (level.objects && level.objects.length > 0) {
-      // Shuffle array
       const shuffled = [...level.objects].sort(() => 0.5 - Math.random());
       setObjects(shuffled);
     }
   }, [level]);
 
-  // Handle escape key for fullscreen exit
+  useEffect(() => {
+    if (levelState === 'playing' && objects[currentIndex]) {
+      playThaiTTS(objects[currentIndex].th);
+    }
+  }, [currentIndex, levelState, objects]);
+
+  useEffect(() => {
+    const stars = Math.max(0, 5 - Math.floor(mistakes / 2));
+    if (stars < prevStars.current && levelState === 'playing') {
+      setShowStarLoss(true);
+      setTimeout(() => setShowStarLoss(false), 2000);
+      prevStars.current = stars;
+    }
+  }, [mistakes, levelState]);
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isFullscreen) {
@@ -50,28 +80,22 @@ export default function DetectiveGame({ level }: Props) {
     if (!isFullscreen) {
       setIsFullscreen(true);
       try {
-        if (document.documentElement.requestFullscreen) {
-          await document.documentElement.requestFullscreen();
-        }
-        // Force landscape if supported on mobile
+        const docEl = document.documentElement as any;
+        if (docEl.requestFullscreen) await docEl.requestFullscreen();
+        else if (docEl.webkitRequestFullscreen) await docEl.webkitRequestFullscreen();
         if (screen.orientation && (screen.orientation as any).lock) {
           await (screen.orientation as any).lock('landscape').catch(() => { });
         }
-      } catch (e) {
-        // Ignore errors
-      }
+      } catch (e) { /* ignore */ }
     } else {
       setIsFullscreen(false);
       try {
-        if (document.fullscreenElement && document.exitFullscreen) {
-          await document.exitFullscreen();
-        }
+        if (document.fullscreenElement && document.exitFullscreen) await document.exitFullscreen();
+        else if ((document as any).webkitExitFullscreen) await ((document as any).webkitExitFullscreen)();
         if (screen.orientation && (screen.orientation as any).unlock) {
           (screen.orientation as any).unlock();
         }
-      } catch (e) {
-        // Ignore errors
-      }
+      } catch (e) { /* ignore */ }
     }
   };
 
@@ -80,6 +104,8 @@ export default function DetectiveGame({ level }: Props) {
     setCurrentIndex(0);
     setFoundObjects([]);
     setMistakes(0);
+    setCurrentMistakes(0);
+    prevStars.current = 5;
     setLevelState('playing');
   };
 
@@ -90,48 +116,51 @@ export default function DetectiveGame({ level }: Props) {
     if (!currentObj) return;
 
     const rect = containerRef.current.getBoundingClientRect();
-    const xPixel = e.clientX - rect.left;
-    const yPixel = e.clientY - rect.top;
+    let containerX, containerY;
+    
+    if (isPortraitPhone) {
+      const screenOffsetX = e.clientX - rect.left;
+      const screenOffsetY = e.clientY - rect.top;
+      // Rotated 90deg clockwise: screen Y is container X, inverted screen X is container Y
+      containerX = screenOffsetY;
+      containerY = rect.width - screenOffsetX;
+    } else {
+      containerX = e.clientX - rect.left;
+      containerY = e.clientY - rect.top;
+    }
 
-    const xPct = (xPixel / rect.width) * 100;
-    const yPct = (yPixel / rect.height) * 100;
+    const unrotatedWidth = isPortraitPhone ? rect.height : rect.width;
+    const unrotatedHeight = isPortraitPhone ? rect.width : rect.height;
 
-    // Calculer la distance entre le clic et le centre de l'objet (en considérant que le rayon est basé sur la largeur)
-    // Pour être juste, il faut convertir les pct en pixels pour calculer la vraie distance
-    const targetXPixel = (currentObj.x / 100) * rect.width;
-    const targetYPixel = (currentObj.y / 100) * rect.height;
-    const targetRadiusPixel = (currentObj.radius / 100) * rect.width;
+    const targetXPixel = (currentObj.x / 100) * unrotatedWidth;
+    const targetYPixel = (currentObj.y / 100) * unrotatedHeight;
+    const targetRadiusPixel = (currentObj.radius / 100) * unrotatedWidth;
 
-    const dx = xPixel - targetXPixel;
-    const dy = yPixel - targetYPixel;
+    const dx = containerX - targetXPixel;
+    const dy = containerY - targetYPixel;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance <= targetRadiusPixel) {
-      // Found it!
       handleCorrect();
     } else {
-      // Missed
       handleMistake();
     }
   };
 
   const handleCorrect = () => {
-    playThaiTTS('ถูกต้อง'); // correct (tuk-tong)
-
-    // Confetti effect at the bottom of the screen
     confetti({
       particleCount: 50,
       spread: 60,
       origin: { y: 0.9 },
-      colors: ['#10B981', '#F59E0B'], // Emerald and Amber
-      zIndex: isFullscreen ? 150 : 100 // Ensure confetti is above fullscreen overlay
+      colors: ['#10B981', '#F59E0B'],
+      zIndex: isFullscreen || isPortraitPhone ? 150 : 100
     });
 
     const currentObj = objects[currentIndex];
     setFoundObjects([...foundObjects, currentObj]);
+    setCurrentMistakes(0);
 
     if (currentIndex + 1 >= objects.length) {
-      // Finished
       setTimeout(() => {
         setLevelState('completed');
         if (isFullscreen) toggleFullscreen();
@@ -143,16 +172,12 @@ export default function DetectiveGame({ level }: Props) {
 
   const handleMistake = () => {
     setMistakes(m => m + 1);
-    // Vibrate si possible
+    setCurrentMistakes(m => m + 1);
     if (navigator.vibrate) navigator.vibrate(200);
   };
 
   if (!level.objects || level.objects.length === 0) {
-    return (
-      <div className="flex-1 flex items-center justify-center text-slate-500">
-        Ce niveau ne contient aucun objet à trouver.
-      </div>
-    );
+    return <div className="flex-1 flex items-center justify-center text-slate-500">Ce niveau ne contient aucun objet à trouver.</div>;
   }
 
   if (levelState === 'intro') {
@@ -165,22 +190,14 @@ export default function DetectiveGame({ level }: Props) {
           {language === 'en' ? 'Detective Mode' : 'Mode Détective'}
         </h2>
         <p className="text-slate-600 mb-8">
-          {language === 'en'
-            ? `Find ${objects.length} hidden objects in the image.`
-            : `Trouve les ${objects.length} objets cachés dans l'image.`}
+          {language === 'en' ? `Find ${objects.length} hidden objects in the image.` : `Trouve les ${objects.length} objets cachés dans l'image.`}
         </p>
 
         <div className="w-full space-y-4">
-          <button
-            onClick={() => startGame(1)}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all"
-          >
+          <button onClick={() => startGame(1)} className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all">
             Niveau 1 (Thaï + Traduction)
           </button>
-          <button
-            onClick={() => startGame(2)}
-            className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all"
-          >
+          <button onClick={() => startGame(2)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all">
             Niveau 2 (Thaï uniquement)
           </button>
         </div>
@@ -189,6 +206,10 @@ export default function DetectiveGame({ level }: Props) {
   }
 
   if (levelState === 'completed') {
+    const currentLevelIndex = detectiveData.findIndex(l => l.id === level.id);
+    const nextLevel = currentLevelIndex >= 0 && currentLevelIndex < detectiveData.length - 1 ? detectiveData[currentLevelIndex + 1] : null;
+    const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
+
     return (
       <div className="flex-1 flex flex-col items-center justify-center max-w-md mx-auto w-full text-center animate-in fade-in zoom-in duration-500">
         <div className="w-32 h-32 bg-emerald-100 rounded-full flex items-center justify-center mb-6 shadow-inner">
@@ -197,104 +218,163 @@ export default function DetectiveGame({ level }: Props) {
         <h2 className="text-2xl font-black text-slate-800 mb-2">
           {language === 'en' ? 'Mission Accomplished!' : 'Mission Accomplie !'}
         </h2>
+        <div className="flex items-center gap-1 mb-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star
+              key={i}
+              size={24}
+              className={
+                i < earnedStars
+                  ? "fill-amber-400 text-amber-400"
+                  : "fill-slate-200 text-slate-200"
+              }
+            />
+          ))}
+        </div>
         <p className="text-slate-600 mb-8">
-          {language === 'en'
-            ? `You found all ${objects.length} objects with ${mistakes} mistakes.`
-            : `Tu as trouvé les ${objects.length} objets avec ${mistakes} erreurs.`}
+          {language === 'en' ? `You found all ${objects.length} objects with ${mistakes} mistakes.` : `Tu as trouvé les ${objects.length} objets avec ${mistakes} erreurs.`}
         </p>
-
-        <button
-          onClick={() => setLevelState('intro')}
-          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all"
-        >
-          {language === 'en' ? 'Play Again' : 'Rejouer'}
-        </button>
+        <div className="w-full flex flex-col gap-3 px-4">
+          {nextLevel && (
+            <button onClick={() => { window.location.href = `/detective/level/${nextLevel.id}`; }} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all text-center">
+              {language === 'en' ? 'Next Level' : 'Niveau Suivant'}
+            </button>
+          )}
+          <button onClick={() => setLevelState('intro')} className={`w-full ${nextLevel ? 'bg-slate-200 hover:bg-slate-300 text-slate-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} font-bold py-4 rounded-2xl shadow-sm transition-all`}>
+            {language === 'en' ? 'Play Again' : 'Rejouer'}
+          </button>
+        </div>
       </div>
     );
   }
 
   const currentObj = objects[currentIndex];
+  const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
+
+  const renderGameArea = () => (
+    <div
+      className="w-full shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 bg-slate-900 h-full rounded-none"
+    >
+      <div 
+        className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
+        ref={containerRef}
+        onClick={handleImageClick}
+      >
+        <img
+          src={level.imageUrl}
+          alt="Level"
+          className="block max-w-full max-h-full pointer-events-none object-contain"
+          style={{ width: 'auto', height: 'auto', maxHeight: '100dvh' }}
+        />
+
+        {foundObjects.map(obj => (
+          <div
+            key={obj.id}
+            className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
+            style={{
+              left: `${obj.x}%`,
+              top: `${obj.y}%`,
+              width: `${obj.radius * 2}%`,
+              paddingTop: `${obj.radius * 2}%`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 
   return (
-    <div className={isFullscreen ? "fixed inset-0 z-[100] bg-slate-900 flex flex-col" : "flex flex-col h-full"}>
+    <div 
+      className={`z-[100] bg-slate-900 flex flex-row overflow-hidden fixed inset-0`}
+      style={isPortraitPhone ? {
+        width: '100vh',
+        height: '100vw',
+        transform: 'rotate(90deg) translateY(-100%)',
+        transformOrigin: 'top left'
+      } : undefined}
+    >
+      {/* Left HUD Panel */}
+      <div 
+        className="w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] bg-slate-800 border-r border-slate-700 flex flex-col items-center py-2 md:py-4 px-2 md:px-6 shrink-0 h-full overflow-y-auto"
+        style={{ 
+          paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(0.5rem, env(safe-area-inset-left))'
+        }}
+      >
+        {/* Top Actions */}
+        <div className="flex flex-row gap-2 items-center justify-center w-full shrink-0">
+           <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
+             <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
+           </Link>
+           {!isPortraitPhone && (
+             <button
+               onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
+               className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors hidden md:block"
+               title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
+             >
+               {isFullscreen ? <Minimize className="w-5 h-5 md:w-7 md:h-7" /> : <Maximize className="w-5 h-5 md:w-7 md:h-7" />}
+             </button>
+           )}
+        </div>
 
-      {/* Top HUD - Floating if fullscreen, normal if not */}
-      <div className={isFullscreen
-        ? "absolute top-4 left-4 right-4 z-10 flex items-start justify-between pointer-events-none"
-        : "bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-4 flex items-center justify-between"
-      }>
-
-        <div className={`flex items-center gap-4 pointer-events-auto ${isFullscreen ? 'bg-white/95 backdrop-blur-sm p-2 pr-4 rounded-full shadow-lg' : ''}`}>
+        {/* Middle: Word & Sound */}
+        <div className="flex-1 flex flex-col items-center justify-center gap-1 md:gap-4 w-full px-1 my-2 md:my-4">
           <button
             onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
-            className="w-12 h-12 bg-emerald-100 hover:bg-emerald-200 text-emerald-600 rounded-full flex items-center justify-center transition-colors shrink-0"
+            className="w-8 h-8 md:w-16 md:h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0"
           >
-            <Volume2 className="w-6 h-6" />
+            <Volume2 className="w-4 h-4 md:w-8 md:h-8" />
           </button>
-          <div>
-            <h3 className="text-2xl font-bold font-thai text-slate-800">
+          <div className="text-center w-full px-1 pt-1 pb-2">
+            <h3 className="text-base sm:text-lg md:text-3xl font-bold font-thai text-white leading-normal break-words">
               {currentObj.th}
             </h3>
-            {difficulty === 1 && (
-              <p className="text-slate-500 font-medium text-sm leading-tight">
+            {(difficulty === 1 || currentMistakes >= 2) && (
+              <p className="text-emerald-400/80 font-medium text-[10px] sm:text-xs md:text-base mt-1 md:mt-2 leading-tight">
                 {language === 'en' ? currentObj.en : currentObj.fr}
               </p>
             )}
           </div>
         </div>
 
-        <div className={`pointer-events-auto flex items-center gap-4 ${isFullscreen ? 'bg-white/95 backdrop-blur-sm p-2 px-4 rounded-full shadow-lg' : 'text-right'}`}>
-          <div>
-            {!isFullscreen && (
-              <div className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">
-                {language === 'en' ? 'Progress' : 'Progression'}
-              </div>
+        {/* Bottom: Progress */}
+        <div className="flex flex-col items-center w-full shrink-0 mt-auto">
+          <div className="flex items-center gap-0.5 mb-2 relative">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                size={12}
+                className={
+                  i < earnedStars
+                    ? "fill-amber-400 text-amber-400"
+                    : "fill-slate-600 text-slate-600"
+                }
+              />
+            ))}
+            {showStarLoss && (
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
+                  -1 <Star size={12} className="fill-rose-500" />
+               </div>
             )}
-            <div className={`font-black text-emerald-500 ${isFullscreen ? 'text-xl' : 'text-lg'}`}>
+          </div>
+          <div className="bg-slate-900/50 px-2 py-2 md:px-4 md:py-4 rounded-xl border border-slate-700/50 w-full text-center">
+            <div className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5 md:mb-2 line-clamp-1">
+              {language === 'en' ? 'Progress' : 'Progression'}
+            </div>
+            <div className="font-black text-emerald-500 text-base md:text-2xl">
               {currentIndex} / {objects.length}
             </div>
           </div>
-
-          <button
-            onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
-            className="w-10 h-10 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition-colors shrink-0 ml-2"
-            title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
-          >
-            {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
-          </button>
         </div>
       </div>
 
-      {/* Game Area */}
-      <div
-        className={`w-full bg-slate-800 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 ${isFullscreen ? 'h-full rounded-none' : 'rounded-2xl max-h-[70vh]'}`}
+      {/* Right Image Panel */}
+      <div 
+        className="flex-1 flex flex-col relative overflow-hidden"
+        style={{ 
+          paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(0.5rem, env(safe-area-inset-right))'
+        }}
       >
-        <div 
-          className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
-          ref={containerRef}
-          onClick={handleImageClick}
-        >
-          <img
-            src={level.imageUrl}
-            alt="Level"
-            className="block max-w-full max-h-full pointer-events-none object-contain"
-            style={{ width: 'auto', height: 'auto', maxHeight: isFullscreen ? '100dvh' : '70vh' }}
-          />
-
-          {/* Found objects overlay (circle highlights) */}
-          {foundObjects.map(obj => (
-            <div
-              key={obj.id}
-              className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
-              style={{
-                left: `${obj.x}%`,
-                top: `${obj.y}%`,
-                width: `${obj.radius * 2}%`,
-                paddingTop: `${obj.radius * 2}%`,
-              }}
-            />
-          ))}
-        </div>
+        {renderGameArea()}
       </div>
     </div>
   );
