@@ -216,5 +216,96 @@
                 "en": "Hand sanitizer"
             }
         ]
+    },
+    {
+        "id": "restaurant-3",
+        "title": "Restaurant",
+        "titleEn": "Restaurant",
+        "description": "Trouvez les ustensiles et ingrédients cachés dans ce restaurant thaïlandais.",
+        "descriptionEn": "Find the hidden utensils and ingredients in this Thai restaurant.",
+        "imageUrl": "/images/detective/niveau3-restaurant.jpg",
+        "objects": [
+            {
+                "id": "1tkf4xnv0",
+                "x": 26.08,
+                "y": 31.19,
+                "radius": 7.62,
+                "th": "พนักงานเสิร์ฟ",
+                "fr": "Serveur / Serveuse",
+                "en": "Waiter / Waitress"
+            },
+            {
+                "id": "gew5sybwu",
+                "x": 48.93,
+                "y": 89.97,
+                "radius": 8.71,
+                "th": "เมนู",
+                "fr": "Menu",
+                "en": "Menu"
+            },
+            {
+                "id": "tdwp5f23q",
+                "x": 19.18,
+                "y": 48.83,
+                "radius": 2.84,
+                "th": "เช็คบิล / เก็บตังค์",
+                "fr": "Addition / La note",
+                "en": "Bill / Check"
+            },
+            {
+                "id": "p1g9xl9nb",
+                "x": 77.78,
+                "y": 70.38,
+                "radius": 3.21,
+                "th": "ช้อน",
+                "fr": "Cuillère",
+                "en": "Spoon"
+            },
+            {
+                "id": "voqonj6j4",
+                "x": 52.3,
+                "y": 59.38,
+                "radius": 6,
+                "th": "ส้อม",
+                "fr": "Fourchette",
+                "en": "Fork"
+            },
+            {
+                "id": "fdh8hjcgx",
+                "x": 69.65,
+                "y": 65.86,
+                "radius": 4.51,
+                "th": "ตะเกียบ",
+                "fr": "Baguettes",
+                "en": "Chopsticks"
+            },
+            {
+                "id": "yi6yo3auy",
+                "x": 41.53,
+                "y": 58.92,
+                "radius": 3.93,
+                "th": "แก้วน้ำ",
+                "fr": "Verre",
+                "en": "Glass"
+            },
+            {
+                "id": "95fgkkmzp",
+                "x": 37.59,
+                "y": 69.92,
+                "radius": 4.56,
+                "th": "น้ำเปล่า",
+                "fr": "Eau potable",
+                "en": "Drinking water"
+            },
+            {
+                "id": "g44kx9oer",
+                "x": 77.54,
+                "y": 86.2,
+                "radius": 5.33,
+                "th": "ข้าวเหนียวมะม่วง",
+                "fr": "Riz gluant à la mangue",
+                "en": "Mango sticky rice"
+            }
+        ]
     }
 ]

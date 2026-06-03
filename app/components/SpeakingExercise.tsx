@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Word, Phrase } from '../types';
 import { Mic, MicOff, CheckCircle, XCircle, ArrowRight, Play, Loader2, RefreshCw } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
@@ -11,15 +11,54 @@ import { motion, AnimatePresence } from 'motion/react';
 
 // Normalize string for comparison (removes spaces, punctuation, special chars)
 const normalizeThai = (str: string) => {
-  return str.replace(/[\s\.\?!,ๆ]/g, '').toLowerCase();
+  return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
 };
+
+function colorizeSpoken(spoken: string, target: string) {
+  const m = spoken.length;
+  const n = target.length;
+  const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
+  
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (spoken[i - 1] === target[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+  
+  let i = m, j = n;
+  const lcsIndices = new Set();
+  while (i > 0 && j > 0) {
+    if (spoken[i - 1] === target[j - 1]) {
+      lcsIndices.add(i - 1);
+      i--;
+      j--;
+    } else if (dp[i - 1][j] > dp[i][j - 1]) {
+      i--;
+    } else {
+      j--;
+    }
+  }
+  
+  return spoken.split('').map((char, index) => ({
+    char,
+    correct: lcsIndices.has(index)
+  }));
+}
 
 export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word | Phrase)[], onComplete: () => void }) {
   const { language } = useProgressStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [attempts, setAttempts] = useState(0);
-  const [status, setStatus] = useState<'idle' | 'listening' | 'success' | 'failed' | 'partial_fail'>('idle');
+  const [status, setStatus] = useState<'idle' | 'listening' | 'success' | 'failed' | 'partial_fail' | 'evaluating'>('idle');
   const [similarityScore, setSimilarityScore] = useState<number | null>(null);
+  
+  const [spokenHistory, setSpokenHistory] = useState("");
+  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentItem = vocabulary[currentIndex];
 
@@ -30,77 +69,131 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
+  // Combined transcript for logic and display
+  const currentFullTranscript = (spokenHistory + (transcript ? (spokenHistory.endsWith(' ; ') ? transcript : (spokenHistory ? ' ' + transcript : transcript)) : '')).trim();
+
+  // Instant validation
   useEffect(() => {
-    if (listening) {
-      setStatus('listening');
-    } else if (status === 'listening' && transcript) {
-       handleTranscriptComplete(transcript);
-    }
-  }, [listening, transcript]);
+    if (!currentFullTranscript || status === 'success' || status === 'failed' || status === 'evaluating') return;
 
-  // Reset when changing word
-  useEffect(() => {
-    resetTranscript();
-    setAttempts(0);
-    setStatus('idle');
-    setSimilarityScore(null);
-  }, [currentIndex]);
-
-  const handleTranscriptComplete = (spokenText: string) => {
-    if (!spokenText) {
-      setStatus('idle');
-      return;
-    }
-
-    const normalizedSpoken = normalizeThai(spokenText);
+    const normalizedSpoken = normalizeThai(currentFullTranscript);
     const normalizedTarget = normalizeThai(currentItem.th);
 
     if (normalizedSpoken === normalizedTarget || normalizedSpoken.includes(normalizedTarget)) {
       setStatus('success');
+      SpeechRecognition.stopListening();
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+      if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
       playSuccessSound();
-    } else {
-      const currentAttempts = attempts + 1;
-      setAttempts(currentAttempts);
-      
-      if (currentAttempts >= 3) {
-        // Calculate similarity using levenshtein
-        const distance = levenshtein.get(normalizedSpoken, normalizedTarget);
-        const maxLength = Math.max(normalizedSpoken.length, normalizedTarget.length);
-        const similarity = Math.max(0, Math.round(((maxLength - distance) / maxLength) * 100));
+    }
+  }, [currentFullTranscript, currentItem, status]);
+
+  // Pause detection
+  useEffect(() => {
+    if (status !== 'listening' || !transcript) return;
+
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+
+    pauseTimeoutRef.current = setTimeout(() => {
+      setSpokenHistory(prev => {
+        const prefix = prev ? prev + (prev.endsWith(' ; ') ? '' : ' ') : '';
+        return prefix + transcript + ' ; ';
+      });
+      resetTranscript();
+    }, 1500);
+
+    return () => {
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, [transcript, status, resetTranscript]);
+
+  // 5-second max timer
+  useEffect(() => {
+    if (status === 'listening') {
+      listeningTimerRef.current = setTimeout(() => {
+        SpeechRecognition.stopListening();
         
-        setSimilarityScore(similarity);
-        setStatus('failed');
-        playFailSound();
-      } else {
-        setStatus('partial_fail');
-        // Auto reset to try again
+        // Short delay to let the final transcripts settle before evaluating
         setTimeout(() => {
           setStatus(prev => {
-             if (prev === 'partial_fail') {
-                resetTranscript();
-                return 'idle';
-             }
-             return prev;
+            if (prev === 'listening' || prev === 'idle') {
+               return 'evaluating';
+            }
+            return prev;
           });
-        }, 2500);
+        }, 300);
+      }, 5000);
+    }
+
+    return () => {
+      if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+    };
+  }, [status]);
+
+  // Handle failure evaluation
+  useEffect(() => {
+    if (status === 'evaluating') {
+      const normalizedSpoken = normalizeThai(currentFullTranscript);
+      const normalizedTarget = normalizeThai(currentItem.th);
+
+      if (normalizedSpoken === normalizedTarget || normalizedSpoken.includes(normalizedTarget)) {
+         setStatus('success');
+         playSuccessSound();
+      } else {
+         const currentAttempts = attempts + 1;
+         setAttempts(currentAttempts);
+         
+         if (currentAttempts >= 3) {
+           const distance = levenshtein.get(normalizedSpoken, normalizedTarget);
+           const maxLength = Math.max(normalizedSpoken.length, normalizedTarget.length);
+           const similarity = Math.max(0, Math.round(((maxLength - distance) / maxLength) * 100));
+           
+           setSimilarityScore(similarity);
+           setStatus('failed');
+           playFailSound();
+         } else {
+           setStatus('partial_fail');
+           playFailSound();
+           setTimeout(() => {
+             setStatus(prev => {
+                if (prev === 'partial_fail') {
+                   setSpokenHistory("");
+                   resetTranscript();
+                   return 'idle';
+                }
+                return prev;
+             });
+           }, 3500);
+         }
       }
     }
-  };
+  }, [status, currentFullTranscript, currentItem, attempts, resetTranscript]);
+
+  // Reset when changing word
+  useEffect(() => {
+    resetTranscript();
+    setSpokenHistory("");
+    setAttempts(0);
+    setStatus('idle');
+    setSimilarityScore(null);
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+  }, [currentIndex, resetTranscript]);
 
   const playSuccessSound = () => {
-    try {
-      const audio = new Audio('/sounds/correct.mp3');
-      audio.volume = 0.5;
-      audio.play();
-    } catch(e) {}
+    // try {
+    //   const audio = new Audio('/sounds/correct.mp3');
+    //   audio.volume = 0.5;
+    //   audio.play();
+    // } catch(e) {}
   };
 
   const playFailSound = () => {
-    try {
-      const audio = new Audio('/sounds/wrong.mp3');
-      audio.volume = 0.5;
-      audio.play();
-    } catch(e) {}
+    // try {
+    //   const audio = new Audio('/sounds/wrong.mp3');
+    //   audio.volume = 0.5;
+    //   audio.play();
+    // } catch(e) {}
   };
 
   const playTTS = () => {
@@ -119,8 +212,9 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
 
   const startListening = () => {
     resetTranscript();
+    setSpokenHistory("");
     setStatus('listening');
-    SpeechRecognition.startListening({ language: 'th-TH', continuous: false });
+    SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
   };
 
   if (!browserSupportsSpeechRecognition) {
@@ -134,6 +228,11 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
   }
 
   const progress = ((currentIndex) / vocabulary.length) * 100;
+  
+  // Colorized output for failed attempts
+  const coloredOutput = (status === 'failed' || status === 'partial_fail') && currentFullTranscript 
+    ? colorizeSpoken(currentFullTranscript, currentItem.th) 
+    : null;
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -149,7 +248,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
        </div>
 
        {/* Word Card */}
-       <div className="bg-white border-2 border-slate-200 rounded-3xl p-8 w-full max-w-md text-center shadow-lg mb-8 relative">
+       <div className="bg-white border-2 border-slate-200 rounded-3xl p-8 w-full max-w-md text-center shadow-lg mb-4 relative">
           <button 
             onClick={playTTS}
             className="absolute top-4 right-4 w-10 h-10 bg-slate-100 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50 rounded-full flex items-center justify-center transition-colors"
@@ -171,8 +270,22 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
           </p>
        </div>
 
+       {/* Real-time transcript display */}
+       <div className="min-h-[4rem] w-full max-w-md px-4 mb-4">
+         {status === 'listening' && (
+           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full text-2xl font-thai text-slate-700 bg-white p-4 rounded-2xl border-2 border-orange-300 shadow-inner min-h-[4rem] flex flex-wrap items-center">
+             {currentFullTranscript ? (
+               <span>{currentFullTranscript}</span>
+             ) : (
+               <span className="text-slate-400 font-sans text-base italic">{language === 'en' ? 'Speak now...' : 'Parlez maintenant...'}</span>
+             )}
+             <span className="inline-block w-1.5 h-6 ml-1 bg-orange-500 animate-pulse"></span>
+           </motion.div>
+         )}
+       </div>
+
        {/* Status Messages */}
-       <div className="h-20 flex items-center justify-center w-full max-w-md">
+       <div className="min-h-[5rem] flex items-center justify-center w-full max-w-md">
           <AnimatePresence mode="wait">
              {status === 'success' && (
                 <motion.div 
@@ -188,15 +301,19 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
                 <motion.div 
                    key="partial"
                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                   className="text-amber-600 font-bold flex items-center gap-2 text-lg bg-amber-50 px-6 py-3 rounded-full border border-amber-200"
+                   className="text-amber-600 flex items-start gap-3 text-lg bg-amber-50 px-6 py-4 rounded-2xl border border-amber-200 w-full"
                 >
-                   <XCircle /> 
-                   <span>
-                      {language === 'en' ? "Not quite, try again!" : "Pas tout à fait, réessaie !"}
-                      <span className="block text-sm font-normal text-amber-700/80 mt-0.5">
-                        {transcript ? `Entendu : ${transcript}` : ''}
-                      </span>
-                   </span>
+                   <XCircle className="mt-0.5 shrink-0" /> 
+                   <div className="flex flex-col items-start w-full">
+                      <span className="font-bold">{language === 'en' ? "Not quite, try again!" : "Pas tout à fait, réessaie !"}</span>
+                      {coloredOutput && (
+                        <div className="mt-2 bg-white p-2.5 rounded-xl border border-amber-200 w-full break-words text-left font-thai text-xl leading-relaxed shadow-sm">
+                          {coloredOutput.map((item, i) => (
+                             <span key={i} className={item.correct ? 'text-emerald-500 font-bold' : 'text-red-500'}>{item.char}</span>
+                          ))}
+                        </div>
+                      )}
+                   </div>
                 </motion.div>
              )}
 
@@ -204,16 +321,22 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
                 <motion.div 
                    key="failed"
                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                   className="text-red-500 font-bold flex items-center gap-2 text-lg bg-red-50 px-6 py-3 rounded-full border border-red-200"
+                   className="text-red-500 flex items-start gap-3 text-lg bg-red-50 px-6 py-4 rounded-2xl border border-red-200 w-full"
                 >
-                   <XCircle /> 
-                   <span>
-                     {language === 'en' ? 'Failed.' : 'Échec.'} 
-                     {similarityScore !== null && ` Précision : ${similarityScore}%`}
-                     <span className="block text-sm font-normal text-red-700/80 mt-0.5">
-                        {transcript ? `Entendu : ${transcript}` : ''}
+                   <XCircle className="mt-0.5 shrink-0" /> 
+                   <div className="flex flex-col items-start w-full">
+                     <span className="font-bold">
+                       {language === 'en' ? 'Failed.' : 'Échec.'} 
+                       {similarityScore !== null && ` Précision : ${similarityScore}%`}
                      </span>
-                   </span>
+                     {coloredOutput && (
+                        <div className="mt-2 bg-white p-2.5 rounded-xl border border-red-200 w-full break-words text-left font-thai text-xl leading-relaxed shadow-sm">
+                          {coloredOutput.map((item, i) => (
+                             <span key={i} className={item.correct ? 'text-emerald-500 font-bold' : 'text-red-500'}>{item.char}</span>
+                          ))}
+                        </div>
+                      )}
+                   </div>
                 </motion.div>
              )}
 
@@ -230,7 +353,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
        </div>
 
        {/* Controls */}
-       <div className="mt-8 flex items-center gap-4">
+       <div className="mt-6 flex items-center gap-4">
          {(status === 'idle' || status === 'partial_fail') && (
             <button 
                onClick={startListening}
@@ -259,3 +382,4 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
     </div>
   );
 }
+
