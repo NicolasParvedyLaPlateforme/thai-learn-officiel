@@ -271,11 +271,15 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
        </div>
 
        {/* Real-time transcript display */}
-       <div className="min-h-[3rem] w-full max-w-md text-center px-4 mb-4">
-         {currentFullTranscript && status === 'listening' && (
-           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-lg font-thai text-slate-700 bg-white p-3 rounded-xl border border-slate-200 shadow-sm inline-block max-w-full break-words">
-             {currentFullTranscript}
-             <span className="inline-block w-1.5 h-4 ml-1 bg-orange-400 animate-pulse"></span>
+       <div className="min-h-[4rem] w-full max-w-md px-4 mb-4">
+         {status === 'listening' && (
+           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full text-2xl font-thai text-slate-700 bg-white p-4 rounded-2xl border-2 border-orange-300 shadow-inner min-h-[4rem] flex flex-wrap items-center">
+             {currentFullTranscript ? (
+               <span>{currentFullTranscript}</span>
+             ) : (
+               <span className="text-slate-400 font-sans text-base italic">{language === 'en' ? 'Speak now...' : 'Parlez maintenant...'}</span>
+             )}
+             <span className="inline-block w-1.5 h-6 ml-1 bg-orange-500 animate-pulse"></span>
            </motion.div>
          )}
        </div>
