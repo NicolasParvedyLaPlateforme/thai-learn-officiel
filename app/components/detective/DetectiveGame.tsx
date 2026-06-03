@@ -3,10 +3,11 @@
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
-import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu } from 'lucide-react';
+import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star } from 'lucide-react';
 import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
 import confetti from 'canvas-confetti';
+import detectiveData from '../../data/detective.json';
 
 interface Props {
   level: DetectiveLevel;
@@ -20,7 +21,10 @@ export default function DetectiveGame({ level }: Props) {
   const [levelState, setLevelState] = useState<'intro' | 'playing' | 'completed'>('intro');
   const [difficulty, setDifficulty] = useState<1 | 2>(1);
   const [mistakes, setMistakes] = useState(0);
+  const [currentMistakes, setCurrentMistakes] = useState(0);
   const [foundObjects, setFoundObjects] = useState<DetectiveObject[]>([]);
+  const [showStarLoss, setShowStarLoss] = useState(false);
+  const prevStars = useRef(5);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPortraitPhone, setIsPortraitPhone] = useState(false);
@@ -46,6 +50,21 @@ export default function DetectiveGame({ level }: Props) {
       setObjects(shuffled);
     }
   }, [level]);
+
+  useEffect(() => {
+    if (levelState === 'playing' && objects[currentIndex]) {
+      playThaiTTS(objects[currentIndex].th);
+    }
+  }, [currentIndex, levelState, objects]);
+
+  useEffect(() => {
+    const stars = Math.max(0, 5 - Math.floor(mistakes / 2));
+    if (stars < prevStars.current && levelState === 'playing') {
+      setShowStarLoss(true);
+      setTimeout(() => setShowStarLoss(false), 2000);
+      prevStars.current = stars;
+    }
+  }, [mistakes, levelState]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -85,6 +104,8 @@ export default function DetectiveGame({ level }: Props) {
     setCurrentIndex(0);
     setFoundObjects([]);
     setMistakes(0);
+    setCurrentMistakes(0);
+    prevStars.current = 5;
     setLevelState('playing');
   };
 
@@ -127,7 +148,6 @@ export default function DetectiveGame({ level }: Props) {
   };
 
   const handleCorrect = () => {
-    playThaiTTS('ถูกต้อง');
     confetti({
       particleCount: 50,
       spread: 60,
@@ -138,6 +158,7 @@ export default function DetectiveGame({ level }: Props) {
 
     const currentObj = objects[currentIndex];
     setFoundObjects([...foundObjects, currentObj]);
+    setCurrentMistakes(0);
 
     if (currentIndex + 1 >= objects.length) {
       setTimeout(() => {
@@ -151,6 +172,7 @@ export default function DetectiveGame({ level }: Props) {
 
   const handleMistake = () => {
     setMistakes(m => m + 1);
+    setCurrentMistakes(m => m + 1);
     if (navigator.vibrate) navigator.vibrate(200);
   };
 
@@ -184,6 +206,10 @@ export default function DetectiveGame({ level }: Props) {
   }
 
   if (levelState === 'completed') {
+    const currentLevelIndex = detectiveData.findIndex(l => l.id === level.id);
+    const nextLevel = currentLevelIndex >= 0 && currentLevelIndex < detectiveData.length - 1 ? detectiveData[currentLevelIndex + 1] : null;
+    const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
+
     return (
       <div className="flex-1 flex flex-col items-center justify-center max-w-md mx-auto w-full text-center animate-in fade-in zoom-in duration-500">
         <div className="w-32 h-32 bg-emerald-100 rounded-full flex items-center justify-center mb-6 shadow-inner">
@@ -192,17 +218,38 @@ export default function DetectiveGame({ level }: Props) {
         <h2 className="text-2xl font-black text-slate-800 mb-2">
           {language === 'en' ? 'Mission Accomplished!' : 'Mission Accomplie !'}
         </h2>
+        <div className="flex items-center gap-1 mb-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star
+              key={i}
+              size={24}
+              className={
+                i < earnedStars
+                  ? "fill-amber-400 text-amber-400"
+                  : "fill-slate-200 text-slate-200"
+              }
+            />
+          ))}
+        </div>
         <p className="text-slate-600 mb-8">
           {language === 'en' ? `You found all ${objects.length} objects with ${mistakes} mistakes.` : `Tu as trouvé les ${objects.length} objets avec ${mistakes} erreurs.`}
         </p>
-        <button onClick={() => setLevelState('intro')} className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all">
-          {language === 'en' ? 'Play Again' : 'Rejouer'}
-        </button>
+        <div className="w-full flex flex-col gap-3 px-4">
+          {nextLevel && (
+            <button onClick={() => { window.location.href = `/detective/level/${nextLevel.id}`; }} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all text-center">
+              {language === 'en' ? 'Next Level' : 'Niveau Suivant'}
+            </button>
+          )}
+          <button onClick={() => setLevelState('intro')} className={`w-full ${nextLevel ? 'bg-slate-200 hover:bg-slate-300 text-slate-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} font-bold py-4 rounded-2xl shadow-sm transition-all`}>
+            {language === 'en' ? 'Play Again' : 'Rejouer'}
+          </button>
+        </div>
       </div>
     );
   }
 
   const currentObj = objects[currentIndex];
+  const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
 
   const renderGameArea = () => (
     <div
@@ -281,7 +328,7 @@ export default function DetectiveGame({ level }: Props) {
             <h3 className="text-base sm:text-lg md:text-3xl font-bold font-thai text-white leading-normal break-words">
               {currentObj.th}
             </h3>
-            {difficulty === 1 && (
+            {(difficulty === 1 || currentMistakes >= 2) && (
               <p className="text-emerald-400/80 font-medium text-[10px] sm:text-xs md:text-base mt-1 md:mt-2 leading-tight">
                 {language === 'en' ? currentObj.en : currentObj.fr}
               </p>
@@ -291,6 +338,24 @@ export default function DetectiveGame({ level }: Props) {
 
         {/* Bottom: Progress */}
         <div className="flex flex-col items-center w-full shrink-0 mt-auto">
+          <div className="flex items-center gap-0.5 mb-2 relative">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                size={12}
+                className={
+                  i < earnedStars
+                    ? "fill-amber-400 text-amber-400"
+                    : "fill-slate-600 text-slate-600"
+                }
+              />
+            ))}
+            {showStarLoss && (
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
+                  -1 <Star size={12} className="fill-rose-500" />
+               </div>
+            )}
+          </div>
           <div className="bg-slate-900/50 px-2 py-2 md:px-4 md:py-4 rounded-xl border border-slate-700/50 w-full text-center">
             <div className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5 md:mb-2 line-clamp-1">
               {language === 'en' ? 'Progress' : 'Progression'}
