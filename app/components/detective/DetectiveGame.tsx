@@ -248,15 +248,15 @@ export default function DetectiveGame({ level }: Props) {
     >
       {/* Left HUD Panel */}
       <div 
-        className="w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] bg-slate-800 border-r border-slate-700 flex flex-col items-center py-4 px-2 md:px-6 justify-between shrink-0"
+        className="w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] bg-slate-800 border-r border-slate-700 flex flex-col items-center py-2 md:py-4 px-2 md:px-6 shrink-0 h-full overflow-y-auto"
         style={{ 
           paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(0.5rem, env(safe-area-inset-left))'
         }}
       >
         {/* Top Actions */}
-        <div className="flex flex-row gap-2 items-center justify-center w-full">
+        <div className="flex flex-row gap-2 items-center justify-center w-full shrink-0">
            <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
-             <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+             <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
            </Link>
            {!isPortraitPhone && (
              <button
@@ -264,25 +264,25 @@ export default function DetectiveGame({ level }: Props) {
                className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors hidden md:block"
                title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
              >
-               {isFullscreen ? <Minimize className="w-6 h-6 md:w-7 md:h-7" /> : <Maximize className="w-6 h-6 md:w-7 md:h-7" />}
+               {isFullscreen ? <Minimize className="w-5 h-5 md:w-7 md:h-7" /> : <Maximize className="w-5 h-5 md:w-7 md:h-7" />}
              </button>
            )}
         </div>
 
         {/* Middle: Word & Sound */}
-        <div className="flex flex-col items-center gap-4 w-full px-1 mt-4 md:mt-8">
+        <div className="flex-1 flex flex-col items-center justify-center gap-1 md:gap-4 w-full px-1 my-2 md:my-4">
           <button
             onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
-            className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0"
+            className="w-8 h-8 md:w-16 md:h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0"
           >
-            <Volume2 className="w-8 h-8 md:w-10 md:h-10" />
+            <Volume2 className="w-4 h-4 md:w-8 md:h-8" />
           </button>
-          <div className="text-center w-full flex-1 overflow-y-auto mt-2 md:mt-6">
-            <h3 className="text-2xl md:text-4xl font-bold font-thai text-white leading-tight break-words">
+          <div className="text-center w-full px-1 pt-1 pb-2">
+            <h3 className="text-base sm:text-lg md:text-3xl font-bold font-thai text-white leading-normal break-words">
               {currentObj.th}
             </h3>
             {difficulty === 1 && (
-              <p className="text-emerald-400/80 font-medium text-sm md:text-lg mt-1 md:mt-3 leading-tight line-clamp-2 md:line-clamp-none">
+              <p className="text-emerald-400/80 font-medium text-[10px] sm:text-xs md:text-base mt-1 md:mt-2 leading-tight">
                 {language === 'en' ? currentObj.en : currentObj.fr}
               </p>
             )}
@@ -290,12 +290,12 @@ export default function DetectiveGame({ level }: Props) {
         </div>
 
         {/* Bottom: Progress */}
-        <div className="flex flex-col items-center gap-4 w-full mb-2 md:mb-4">
-          <div className="bg-slate-900/50 px-4 py-2 md:py-4 rounded-xl border border-slate-700/50 w-full text-center">
-            <div className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5 md:mb-2">
+        <div className="flex flex-col items-center w-full shrink-0 mt-auto">
+          <div className="bg-slate-900/50 px-2 py-2 md:px-4 md:py-4 rounded-xl border border-slate-700/50 w-full text-center">
+            <div className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5 md:mb-2 line-clamp-1">
               {language === 'en' ? 'Progress' : 'Progression'}
             </div>
-            <div className="font-black text-emerald-500 text-lg md:text-2xl">
+            <div className="font-black text-emerald-500 text-base md:text-2xl">
               {currentIndex} / {objects.length}
             </div>
           </div>
