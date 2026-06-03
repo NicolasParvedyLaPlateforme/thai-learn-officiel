@@ -5,7 +5,7 @@
         "titleEn": "Office",
         "description": "Retrouvez les objets cachés dans ce bureau traditionnel thaïlandais.",
         "descriptionEn": "Find the hidden objects in this traditional Thai office.",
-        "imageUrl": "/images/detective/niveau1.png",
+        "imageUrl": "/images/detective/niveau1.jpg",
         "objects": [
             {
                 "id": "d8h8yv8hv",
@@ -69,7 +69,7 @@
         "titleEn": "Supermarket",
         "description": "Trouvez les ustensiles et ingrédients cachés dans ce supermarché thaïlandais.",
         "descriptionEn": "Find the hidden utensils and ingredients in this Thai supermarket.",
-        "imageUrl": "/images/detective/niveau2.png",
+        "imageUrl": "/images/detective/niveau2.webp",
         "objects": [
             {
                 "id": "s73v2kqb5",
