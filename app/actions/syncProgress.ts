@@ -1,7 +1,8 @@
 "use server";
 
 import { getServerSession } from "next-auth/next";
-import { authOptions, prisma } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/auth";
+import { prisma } from "@/app/lib/prisma";
 
 export async function saveProgress(data: any) {
   const session = await getServerSession(authOptions);

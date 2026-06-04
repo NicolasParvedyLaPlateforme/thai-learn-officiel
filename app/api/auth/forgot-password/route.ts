@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "../[...nextauth]/route";
+import { prisma } from "@/app/lib/prisma";
 import { v4 as uuidv4 } from "uuid";
 import { sendPasswordResetEmail } from "@/app/lib/mail";
 
