@@ -35,6 +35,13 @@ export default function DetectiveGame({ level }: Props) {
   const [imgLayout, setImgLayout] = useState({ width: 100, height: 100, offsetX: 0, offsetY: 0, unrotatedW: 100, unrotatedH: 100 });
   const [layoutTrigger, setLayoutTrigger] = useState(0);
   const [debugInfo, setDebugInfo] = useState<any>(null); // -- A SUPPRIMER --
+  const [isDev, setIsDev] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsDev(window.location.search.includes('dev=dev'));
+    }
+  }, []);
 
   useEffect(() => {
     let timeoutIds: NodeJS.Timeout[] = [];
@@ -302,7 +309,7 @@ export default function DetectiveGame({ level }: Props) {
           }}
           // -- DEBUG DEBUT (à supprimer) --
           onPointerDownCapture={(e) => {
-            if (!currentObj) return;
+            if (!isDev || !currentObj) return;
             const rect = e.currentTarget.getBoundingClientRect();
             let clickX, clickY;
             if (isPortraitPhone) {
