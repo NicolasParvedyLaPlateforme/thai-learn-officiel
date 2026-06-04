@@ -134,14 +134,14 @@ export default function DesktopSidebarLeft() {
               <div className="h-10 w-full animate-pulse bg-slate-200 rounded-xl" />
             ) : session?.user ? (
               <div className="flex items-center justify-between gap-2 w-full group-hover:px-2 xl:px-2 transition-all">
-                <div className="flex items-center gap-2 overflow-hidden flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto transition-all duration-300">
+                <Link href="/profile" className="flex items-center gap-2 overflow-hidden flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto transition-all duration-300 hover:opacity-80">
                   <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold shrink-0">
                     {session.user.name?.[0]?.toUpperCase() || 'U'}
                   </div>
                   <span className="text-sm font-semibold text-slate-700 truncate">
                     {session.user.name}
                   </span>
-                </div>
+                </Link>
                 <button
                   onClick={() => signOut()}
                   className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0"
