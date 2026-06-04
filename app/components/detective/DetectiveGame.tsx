@@ -256,15 +256,26 @@ export default function DetectiveGame({ level }: Props) {
       className="w-full shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 bg-slate-900 h-full rounded-none"
     >
       <div 
-        className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
+        className="relative inline-block cursor-crosshair select-none"
         ref={containerRef}
         onClick={handleImageClick}
+        style={{
+          maxWidth: '100%',
+          maxHeight: '100%',
+          minWidth: 0,
+          minHeight: 0,
+        }}
       >
         <img
           src={level.imageUrl}
           alt="Level"
-          className="block max-w-full max-h-full pointer-events-none object-contain"
-          style={{ width: 'auto', height: 'auto', maxHeight: '100dvh' }}
+          className="block pointer-events-none"
+          style={{ 
+             maxWidth: '100%', 
+             maxHeight: '100%',
+             width: 'auto',
+             height: 'auto'
+          }}
         />
 
         {foundObjects.map(obj => (
