@@ -58,49 +58,53 @@ export default function DetectiveDevMode({ level }: Props) {
     return () => observer.disconnect();
   }, [layoutTrigger]);
 
-  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (editingIndex !== null) return; // Don't draw if editing
-    if (!containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
-
-    // Map click to image coordinates
-    const imgX = clickX - imgLayout.offsetX;
-    const imgY = clickY - imgLayout.offsetY;
-
+    
+    // e.nativeEvent.offsetX/Y gives the exact pixel coordinate inside the overlay div
+    let clickX = (e.nativeEvent as any).offsetX;
+    let clickY = (e.nativeEvent as any).offsetY;
+    
+    // Fallback if missing
+    if (clickX === undefined) {
+       const rect = e.currentTarget.getBoundingClientRect();
+       clickX = e.clientX - rect.left;
+       clickY = e.clientY - rect.top;
+    }
+    
     // Convert to percentage of visual image
-    const xPct = (imgX / imgLayout.width) * 100;
-    const yPct = (imgY / imgLayout.height) * 100;
+    const xPct = (clickX / imgLayout.width) * 100;
+    const yPct = (clickY / imgLayout.height) * 100;
 
     setIsDrawing(true);
     setCurrentCircle({ x: xPct, y: yPct, r: 0 });
   };
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!isDrawing || !currentCircle || !containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
-
-    const imgX = clickX - imgLayout.offsetX;
-    const imgY = clickY - imgLayout.offsetY;
-
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDrawing || !currentCircle) return;
+    
+    let clickX = (e.nativeEvent as any).offsetX;
+    let clickY = (e.nativeEvent as any).offsetY;
+    
+    if (clickX === undefined) {
+       const rect = e.currentTarget.getBoundingClientRect();
+       clickX = e.clientX - rect.left;
+       clickY = e.clientY - rect.top;
+    }
+    
     const startXPixel = (currentCircle.x / 100) * imgLayout.width;
     const startYPixel = (currentCircle.y / 100) * imgLayout.height;
-
-    const dx = imgX - startXPixel;
-    const dy = imgY - startYPixel;
-    const radiusPixel = Math.sqrt(dx * dx + dy * dy);
-
+    
+    const dx = clickX - startXPixel;
+    const dy = clickY - startYPixel;
+    const radiusPixel = Math.sqrt(dx*dx + dy*dy);
+    
     const rPct = (radiusPixel / imgLayout.width) * 100;
-
+    
     setCurrentCircle({ ...currentCircle, r: rPct });
   };
 
-  const handleMouseUp = () => {
+  const handlePointerUp = () => {
     if (!isDrawing || !currentCircle) return;
     setIsDrawing(false);
 
@@ -188,13 +192,9 @@ export default function DetectiveDevMode({ level }: Props) {
       </div>
 
       <div className="w-full bg-slate-200 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 rounded-xl">
-        <div
-          className="relative w-full h-full flex items-center justify-center cursor-crosshair select-none"
+        <div 
+          className="relative w-full h-full flex items-center justify-center select-none"
           ref={containerRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
         >
           {level.imageUrl ? (
             <img
@@ -210,14 +210,21 @@ export default function DetectiveDevMode({ level }: Props) {
             </div>
           )}
 
-          <div
-            className="absolute pointer-events-none"
+          <div 
+            className="absolute"
             style={{
               left: `${imgLayout.offsetX}px`,
               top: `${imgLayout.offsetY}px`,
               width: `${imgLayout.width}px`,
               height: `${imgLayout.height}px`,
+              pointerEvents: 'auto',
+              cursor: 'crosshair',
+              touchAction: 'none'
             }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerUp}
           >
             {/* Existing objects */}
             {objects.map((obj, i) => (

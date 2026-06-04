@@ -123,29 +123,32 @@ export default function DetectiveGame({ level }: Props) {
     setLevelState('playing');
   };
 
-  const handleImageClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (levelState !== 'playing' || !containerRef.current) return;
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (levelState !== 'playing') return;
 
     const currentObj = objects[currentIndex];
     if (!currentObj) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    let clickX, clickY;
+    // e.nativeEvent.offsetX/Y gives the exact pixel coordinate inside the target element.
+    // Since this is attached to the inner div that perfectly overlays the image,
+    // it automatically accounts for any CSS rotation, scaling, or letterboxing!
+    let clickX = e.nativeEvent.offsetX;
+    let clickY = e.nativeEvent.offsetY;
 
-    if (isPortraitPhone) {
-      const screenOffsetX = e.clientX - rect.left;
-      const screenOffsetY = e.clientY - rect.top;
-      clickX = screenOffsetY;
-      clickY = rect.width - screenOffsetX;
-    } else {
-      clickX = e.clientX - rect.left;
-      clickY = e.clientY - rect.top;
+    // Fallback for older browsers if offsetX is missing on touch
+    if (clickX === undefined) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      if (isPortraitPhone) {
+        clickX = e.clientY - rect.top;
+        clickY = rect.width - (e.clientX - rect.left);
+      } else {
+        clickX = e.clientX - rect.left;
+        clickY = e.clientY - rect.top;
+      }
     }
 
-    // clickX and clickY are relative to the container.
-    // Convert to target pixel inside the rendered image.
-    const targetXPixel = imgLayout.offsetX + (currentObj.x / 100) * imgLayout.width;
-    const targetYPixel = imgLayout.offsetY + (currentObj.y / 100) * imgLayout.height;
+    const targetXPixel = (currentObj.x / 100) * imgLayout.width;
+    const targetYPixel = (currentObj.y / 100) * imgLayout.height;
     const targetRadiusPixel = (currentObj.radius / 100) * imgLayout.width;
 
     const dx = clickX - targetXPixel;
@@ -267,9 +270,8 @@ export default function DetectiveGame({ level }: Props) {
       className="w-full shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 bg-slate-900 h-full rounded-none"
     >
       <div
-        className="relative w-full h-full flex items-center justify-center cursor-crosshair select-none"
+        className="relative w-full h-full flex items-center justify-center select-none"
         ref={containerRef}
-        onClick={handleImageClick}
       >
         <img
           ref={imgRef}
@@ -281,13 +283,17 @@ export default function DetectiveGame({ level }: Props) {
 
         {/* This div exactly perfectly overlays the rendered image */}
         <div
-          className="absolute pointer-events-none"
+          className="absolute"
           style={{
             left: `${imgLayout.offsetX}px`,
             top: `${imgLayout.offsetY}px`,
             width: `${imgLayout.width}px`,
             height: `${imgLayout.height}px`,
+            pointerEvents: 'auto',
+            cursor: 'crosshair',
+            touchAction: 'none' // Prevent pull-to-refresh or scrolling on touch
           }}
+          onPointerDown={handlePointerDown}
         >
           {foundObjects.map(obj => (
             <div
