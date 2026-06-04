@@ -26,7 +26,7 @@ export default function DetectiveGame({ level }: Props) {
   const [showStarLoss, setShowStarLoss] = useState(false);
   const prevStars = useRef(5);
 
-  const [isFullscreen, setIsFullscreen] = useState(false);
+
   const [isPortraitPhone, setIsPortraitPhone] = useState(false);
   const [isLandscapePhone, setIsLandscapePhone] = useState(false);
 
@@ -110,38 +110,7 @@ export default function DetectiveGame({ level }: Props) {
     }
   }, [mistakes, levelState]);
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isFullscreen) {
-        toggleFullscreen();
-      }
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [isFullscreen]);
 
-  const toggleFullscreen = async () => {
-    if (!isFullscreen) {
-      setIsFullscreen(true);
-      try {
-        const docEl = document.documentElement as any;
-        if (docEl.requestFullscreen) await docEl.requestFullscreen();
-        else if (docEl.webkitRequestFullscreen) await docEl.webkitRequestFullscreen();
-        if (screen.orientation && (screen.orientation as any).lock) {
-          await (screen.orientation as any).lock('landscape').catch(() => { });
-        }
-      } catch (e) { /* ignore */ }
-    } else {
-      setIsFullscreen(false);
-      try {
-        if (document.fullscreenElement && document.exitFullscreen) await document.exitFullscreen();
-        else if ((document as any).webkitExitFullscreen) await ((document as any).webkitExitFullscreen)();
-        if (screen.orientation && (screen.orientation as any).unlock) {
-          (screen.orientation as any).unlock();
-        }
-      } catch (e) { /* ignore */ }
-    }
-  };
 
   const startGame = (diff: 1 | 2) => {
     setDifficulty(diff);
@@ -205,7 +174,6 @@ export default function DetectiveGame({ level }: Props) {
     if (currentIndex + 1 >= objects.length) {
       setTimeout(() => {
         setLevelState('completed');
-        if (isFullscreen) toggleFullscreen();
       }, 1000);
     } else {
       setCurrentIndex(currentIndex + 1);
@@ -362,15 +330,6 @@ export default function DetectiveGame({ level }: Props) {
            <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
              <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
            </Link>
-           {!isPortraitPhone && (
-             <button
-               onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
-               className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors hidden md:block"
-               title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
-             >
-               {isFullscreen ? <Minimize className="w-5 h-5 md:w-7 md:h-7" /> : <Maximize className="w-5 h-5 md:w-7 md:h-7" />}
-             </button>
-           )}
         </div>
 
         {/* Middle: Word & Sound */}
