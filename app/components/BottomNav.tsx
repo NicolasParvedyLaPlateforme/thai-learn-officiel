@@ -36,7 +36,7 @@ export default function BottomNav() {
   return (
     <>
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center h-[72px] pb-[env(safe-area-inset-bottom)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center h-[72px]">
         <Link href={getHrefWithHash('/learn', 'learn')} className={`flex flex-col items-center justify-center w-full h-full transition-colors relative ${isLearnActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <div className="relative">
             <BookOpen size={24} className={isLearnActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />

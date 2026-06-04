@@ -26,23 +26,109 @@ export default function DetectiveGame({ level }: Props) {
   const [showStarLoss, setShowStarLoss] = useState(false);
   const prevStars = useRef(5);
 
-  const [isFullscreen, setIsFullscreen] = useState(false);
+
   const [isPortraitPhone, setIsPortraitPhone] = useState(false);
   const [isLandscapePhone, setIsLandscapePhone] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [imgLayout, setImgLayout] = useState({ width: 100, height: 100, offsetX: 0, offsetY: 0, unrotatedW: 100, unrotatedH: 100 });
+  const [layoutTrigger, setLayoutTrigger] = useState(0);
+  const [debugInfo, setDebugInfo] = useState<any>(null); // -- A SUPPRIMER --
+  const [isDev, setIsDev] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
+    if (typeof window !== 'undefined') {
+      setIsDev(window.location.search.includes('dev=dev'));
+    }
+  }, []);
+
+  useEffect(() => {
+    let timeoutIds: NodeJS.Timeout[] = [];
+    
+    const checkOrientation = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
       setIsPortraitPhone(w < 768 && h > w);
       setIsLandscapePhone(h < 600 && w > h);
+      setLayoutTrigger(t => t + 1);
+
+      // Safari iOS PWA fix: Force the browser to reset its touch-layer offset
+      window.scrollTo(0, 0);
+      if (document.body) {
+        const oldHeight = document.body.style.height;
+        document.body.style.height = `${window.innerHeight}px`;
+        setTimeout(() => {
+          document.body.style.height = oldHeight;
+        }, 50);
+      }
     };
+
+    const handleResize = () => {
+      checkOrientation();
+      
+      // Force layout recalculations during and after the mobile rotation animation
+      // We must re-measure window dimensions because iOS updates them AFTER orientationchange
+      timeoutIds.forEach(clearTimeout);
+      timeoutIds = [
+        setTimeout(checkOrientation, 150),
+        setTimeout(checkOrientation, 400),
+        setTimeout(checkOrientation, 800)
+      ];
+    };
+    
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+      timeoutIds.forEach(clearTimeout);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!imgRef.current || !containerRef.current) return;
+
+    const updateLayout = () => {
+      if (!imgRef.current || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const unrotatedW = isPortraitPhone ? rect.height : rect.width;
+      const unrotatedH = isPortraitPhone ? rect.width : rect.height;
+
+      const natW = imgRef.current.naturalWidth || 1;
+      const natH = imgRef.current.naturalHeight || 1;
+
+      const containerRatio = unrotatedW / unrotatedH;
+      const imgRatio = natW / natH;
+
+      let renderedW = unrotatedW;
+      let renderedH = unrotatedH;
+      let offX = 0;
+      let offY = 0;
+
+      if (imgRatio > containerRatio) {
+        // Image is wider, letterboxed top/bottom
+        renderedH = unrotatedW / imgRatio;
+        offY = (unrotatedH - renderedH) / 2;
+      } else {
+        renderedW = unrotatedH * imgRatio;
+        offX = (unrotatedW - renderedW) / 2;
+      }
+
+      setImgLayout({ width: renderedW, height: renderedH, offsetX: offX, offsetY: offY, unrotatedW, unrotatedH });
+    };
+
+    updateLayout();
+
+    const observer = new ResizeObserver(() => {
+      updateLayout();
+    });
+    observer.observe(containerRef.current);
+
+    return () => observer.disconnect();
+  }, [isPortraitPhone, layoutTrigger]);
 
   useEffect(() => {
     if (level.objects && level.objects.length > 0) {
@@ -66,38 +152,20 @@ export default function DetectiveGame({ level }: Props) {
     }
   }, [mistakes, levelState]);
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isFullscreen) {
-        toggleFullscreen();
-      }
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [isFullscreen]);
 
-  const toggleFullscreen = async () => {
-    if (!isFullscreen) {
-      setIsFullscreen(true);
-      try {
-        const docEl = document.documentElement as any;
-        if (docEl.requestFullscreen) await docEl.requestFullscreen();
-        else if (docEl.webkitRequestFullscreen) await docEl.webkitRequestFullscreen();
-        if (screen.orientation && (screen.orientation as any).lock) {
-          await (screen.orientation as any).lock('landscape').catch(() => { });
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (imgRef.current && (!imgRef.current.complete || imgRef.current.naturalWidth <= 1)) {
+      interval = setInterval(() => {
+        if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 1) {
+          setLayoutTrigger(t => t + 1);
+          clearInterval(interval);
         }
-      } catch (e) { /* ignore */ }
-    } else {
-      setIsFullscreen(false);
-      try {
-        if (document.fullscreenElement && document.exitFullscreen) await document.exitFullscreen();
-        else if ((document as any).webkitExitFullscreen) await ((document as any).webkitExitFullscreen)();
-        if (screen.orientation && (screen.orientation as any).unlock) {
-          (screen.orientation as any).unlock();
-        }
-      } catch (e) { /* ignore */ }
+      }, 100);
     }
-  };
+    return () => clearInterval(interval);
+  }, [level.imageUrl]);
 
   const startGame = (diff: 1 | 2) => {
     setDifficulty(diff);
@@ -109,51 +177,13 @@ export default function DetectiveGame({ level }: Props) {
     setLevelState('playing');
   };
 
-  const handleImageClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (levelState !== 'playing' || !containerRef.current) return;
-
-    const currentObj = objects[currentIndex];
-    if (!currentObj) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    let containerX, containerY;
-    
-    if (isPortraitPhone) {
-      const screenOffsetX = e.clientX - rect.left;
-      const screenOffsetY = e.clientY - rect.top;
-      // Rotated 90deg clockwise: screen Y is container X, inverted screen X is container Y
-      containerX = screenOffsetY;
-      containerY = rect.width - screenOffsetX;
-    } else {
-      containerX = e.clientX - rect.left;
-      containerY = e.clientY - rect.top;
-    }
-
-    const unrotatedWidth = isPortraitPhone ? rect.height : rect.width;
-    const unrotatedHeight = isPortraitPhone ? rect.width : rect.height;
-
-    const targetXPixel = (currentObj.x / 100) * unrotatedWidth;
-    const targetYPixel = (currentObj.y / 100) * unrotatedHeight;
-    const targetRadiusPixel = (currentObj.radius / 100) * unrotatedWidth;
-
-    const dx = containerX - targetXPixel;
-    const dy = containerY - targetYPixel;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance <= targetRadiusPixel) {
-      handleCorrect();
-    } else {
-      handleMistake();
-    }
-  };
-
   const handleCorrect = () => {
     confetti({
       particleCount: 50,
       spread: 60,
       origin: { y: 0.9 },
       colors: ['#10B981', '#F59E0B'],
-      zIndex: isFullscreen || isPortraitPhone ? 150 : 100
+      zIndex: isPortraitPhone ? 150 : 100
     });
 
     const currentObj = objects[currentIndex];
@@ -163,7 +193,6 @@ export default function DetectiveGame({ level }: Props) {
     if (currentIndex + 1 >= objects.length) {
       setTimeout(() => {
         setLevelState('completed');
-        if (isFullscreen) toggleFullscreen();
       }, 1000);
     } else {
       setCurrentIndex(currentIndex + 1);
@@ -255,47 +284,109 @@ export default function DetectiveGame({ level }: Props) {
     <div
       className="w-full shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 bg-slate-900 h-full rounded-none"
     >
-      <div 
-        className="relative inline-block cursor-crosshair select-none"
+      <div
+        className="relative w-full h-full flex items-center justify-center select-none"
         ref={containerRef}
-        onClick={handleImageClick}
-        style={{
-          maxWidth: '100%',
-          maxHeight: '100%',
-          minWidth: 0,
-          minHeight: 0,
-        }}
       >
         <img
+          ref={imgRef}
           src={level.imageUrl}
           alt="Level"
-          className="block pointer-events-none"
-          style={{ 
-             maxWidth: '100%', 
-             maxHeight: '100%',
-             width: 'auto',
-             height: 'auto'
-          }}
+          className="block w-full h-full pointer-events-none object-contain"
+          onLoad={() => setLayoutTrigger(t => t + 1)}
         />
 
-        {foundObjects.map(obj => (
-          <div
-            key={obj.id}
-            className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
-            style={{
-              left: `${obj.x}%`,
-              top: `${obj.y}%`,
-              width: `${obj.radius * 2}%`,
-              paddingTop: `${obj.radius * 2}%`,
-            }}
-          />
-        ))}
+        {/* This div exactly perfectly overlays the rendered image */}
+        <div
+          className="absolute"
+          style={{
+            left: `${imgLayout.offsetX}px`,
+            top: `${imgLayout.offsetY}px`,
+            width: `${imgLayout.width}px`,
+            height: `${imgLayout.height}px`,
+            pointerEvents: 'auto',
+            touchAction: 'none' // Prevent pull-to-refresh or scrolling on touch
+          }}
+          // -- DEBUG DEBUT (à supprimer) --
+          onPointerDownCapture={(e) => {
+            if (!isDev || !currentObj) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            let clickX, clickY;
+            if (isPortraitPhone) {
+              clickX = e.clientY - rect.top;
+              clickY = rect.width - (e.clientX - rect.left);
+            } else {
+              clickX = e.clientX - rect.left;
+              clickY = e.clientY - rect.top;
+            }
+            const targetXPixel = (currentObj.x / 100) * imgLayout.width;
+            const targetYPixel = (currentObj.y / 100) * imgLayout.height;
+            const targetRadiusPixel = (currentObj.radius / 100) * imgLayout.width;
+            const dx = clickX - targetXPixel;
+            const dy = clickY - targetYPixel;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            setDebugInfo({
+              targetX: targetXPixel.toFixed(1),
+              targetY: targetYPixel.toFixed(1),
+              clickX: clickX.toFixed(1),
+              clickY: clickY.toFixed(1),
+              distance: distance.toFixed(1),
+              radius: targetRadiusPixel.toFixed(1),
+              isHit: distance <= targetRadiusPixel,
+              objName: currentObj.th + " (" + currentObj.fr + ")",
+              clientY: e.clientY,
+              rectTop: rect.top,
+              rectHeight: rect.height,
+              imgLayoutHeight: imgLayout.height.toFixed(1)
+            });
+          }}
+          // -- DEBUG FIN --
+          onPointerDown={(e) => {
+            if (levelState === 'playing') {
+              handleMistake();
+            }
+          }}
+        >
+          {/* Active Hitbox: perfectly aligns and relies on browser's native hit testing */}
+          {currentObj && levelState === 'playing' && (
+             <div
+               className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-crosshair z-10"
+               style={{
+                 left: `${currentObj.x}%`,
+                 top: `${currentObj.y}%`,
+                 width: `${currentObj.radius * 2}%`,
+                 paddingTop: `${currentObj.radius * 2}%`,
+               }}
+               onPointerDown={(e) => {
+                 e.stopPropagation(); // Prevent the mistake handler from firing
+                 e.preventDefault();
+                 if (levelState === 'playing') {
+                   handleCorrect();
+                 }
+               }}
+             />
+          )}
+
+          {foundObjects.map(obj => (
+            <div
+              key={obj.id}
+              className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in z-0"
+              style={{
+                left: `${obj.x}%`,
+                top: `${obj.y}%`,
+                width: `${obj.radius * 2}%`,
+                paddingTop: `${obj.radius * 2}%`,
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
 
   return (
-    <div 
+    <div
       className={`z-[100] bg-slate-900 flex flex-row overflow-hidden fixed inset-0`}
       style={isPortraitPhone ? {
         width: '100vh',
@@ -305,42 +396,33 @@ export default function DetectiveGame({ level }: Props) {
       } : undefined}
     >
       {/* Left HUD Panel */}
-      <div 
-        className="w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] bg-slate-800 border-r border-slate-700 flex flex-col items-center py-2 md:py-4 px-2 md:px-6 shrink-0 h-full overflow-y-auto"
-        style={{ 
+      <div
+        className={`${isLandscapePhone ? 'w-[15%] min-w-[100px] max-w-[140px] px-2 py-2' : 'w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] py-2 md:py-4 px-2 md:px-6'} bg-slate-800 border-r border-slate-700 flex flex-col items-center shrink-0 h-full overflow-y-auto`}
+        style={{
           paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(0.5rem, env(safe-area-inset-left))'
         }}
       >
         {/* Top Actions */}
         <div className="flex flex-row gap-2 items-center justify-center w-full shrink-0">
-           <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
-             <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
-           </Link>
-           {!isPortraitPhone && (
-             <button
-               onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
-               className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors hidden md:block"
-               title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
-             >
-               {isFullscreen ? <Minimize className="w-5 h-5 md:w-7 md:h-7" /> : <Maximize className="w-5 h-5 md:w-7 md:h-7" />}
-             </button>
-           )}
+          <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
+            <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
+          </Link>
         </div>
 
         {/* Middle: Word & Sound */}
-        <div className="flex-1 flex flex-col items-center justify-center gap-1 md:gap-4 w-full px-1 my-2 md:my-4">
+        <div className={`flex-1 flex flex-col items-center justify-center gap-1 w-full px-1 ${isLandscapePhone ? 'my-1' : 'md:gap-4 my-2 md:my-4'}`}>
           <button
             onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
-            className="w-8 h-8 md:w-16 md:h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0"
+            className={`rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0 ${isLandscapePhone ? 'w-8 h-8 md:w-10 md:h-10' : 'w-8 h-8 md:w-16 md:h-16'}`}
           >
-            <Volume2 className="w-4 h-4 md:w-8 md:h-8" />
+            <Volume2 className={isLandscapePhone ? 'w-4 h-4 md:w-5 md:h-5' : 'w-4 h-4 md:w-8 md:h-8'} />
           </button>
           <div className="text-center w-full px-1 pt-1 pb-2">
-            <h3 className="text-base sm:text-lg md:text-3xl font-bold font-thai text-white leading-normal break-words">
+            <h3 className={`${isLandscapePhone ? 'text-sm md:text-base' : 'text-base sm:text-lg md:text-3xl'} font-bold font-thai text-white leading-normal break-words`}>
               {currentObj.th}
             </h3>
             {(difficulty === 1 || currentMistakes >= 2) && (
-              <p className="text-emerald-400/80 font-medium text-[10px] sm:text-xs md:text-base mt-1 md:mt-2 leading-tight">
+              <p className={`text-emerald-400/80 font-medium leading-tight ${isLandscapePhone ? 'text-[9px] md:text-[10px] mt-0.5' : 'text-[10px] sm:text-xs md:text-base mt-1 md:mt-2'}`}>
                 {language === 'en' ? currentObj.en : currentObj.fr}
               </p>
             )}
@@ -362,16 +444,16 @@ export default function DetectiveGame({ level }: Props) {
               />
             ))}
             {showStarLoss && (
-               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
-                  -1 <Star size={12} className="fill-rose-500" />
-               </div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
+                -1 <Star size={12} className="fill-rose-500" />
+              </div>
             )}
           </div>
-          <div className="bg-slate-900/50 px-2 py-2 md:px-4 md:py-4 rounded-xl border border-slate-700/50 w-full text-center">
-            <div className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5 md:mb-2 line-clamp-1">
+          <div className={`bg-slate-900/50 rounded-xl border border-slate-700/50 w-full text-center ${isLandscapePhone ? 'px-2 py-1 md:px-3 md:py-2' : 'px-2 py-2 md:px-4 md:py-4'}`}>
+            <div className={`font-bold text-slate-500 uppercase tracking-wider line-clamp-1 ${isLandscapePhone ? 'text-[8px] md:text-[9px] mb-0.5' : 'text-[9px] md:text-xs mb-0.5 md:mb-2'}`}>
               {language === 'en' ? 'Progress' : 'Progression'}
             </div>
-            <div className="font-black text-emerald-500 text-base md:text-2xl">
+            <div className={`font-black text-emerald-500 ${isLandscapePhone ? 'text-sm md:text-base' : 'text-base md:text-2xl'}`}>
               {currentIndex} / {objects.length}
             </div>
           </div>
@@ -379,14 +461,41 @@ export default function DetectiveGame({ level }: Props) {
       </div>
 
       {/* Right Image Panel */}
-      <div 
+      <div
         className="flex-1 flex flex-col relative overflow-hidden"
-        style={{ 
+        style={{
           paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(0.5rem, env(safe-area-inset-right))'
         }}
       >
         {renderGameArea()}
       </div>
+
+      {/* -- DEBUG MODAL DEBUT (à supprimer) -- */}
+      {debugInfo && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4">
+          <div className="bg-white text-slate-800 p-6 rounded-2xl max-w-sm w-full space-y-2 text-sm shadow-xl" style={{ transform: isPortraitPhone ? 'rotate(-90deg)' : 'none' }}>
+            <h3 className="font-bold text-lg mb-2 text-indigo-600">Debug PWA Clic</h3>
+            <p><strong>Objet :</strong> {debugInfo.objName}</p>
+            <p><strong>Cible estimée :</strong> X: {debugInfo.targetX} | Y: {debugInfo.targetY}</p>
+            <p><strong>Position cliquée :</strong> X: {debugInfo.clickX} | Y: {debugInfo.clickY}</p>
+            <p><strong>Distance (Écart) :</strong> {debugInfo.distance} px</p>
+            <p><strong>Périmètre (Rayon) :</strong> {debugInfo.radius} px</p>
+            <p><strong>Dans la zone ? :</strong> {debugInfo.isHit ? <span className="text-emerald-500 font-bold">OUI (Touché)</span> : <span className="text-rose-500 font-bold">NON (Raté)</span>}</p>
+            <hr className="my-2 border-slate-200" />
+            <p className="text-xs text-slate-500"><strong>Détails OS :</strong></p>
+            <p className="text-xs text-slate-500">clientY: {debugInfo.clientY} | rectTop: {debugInfo.rectTop}</p>
+            <p className="text-xs text-slate-500">rectHeight: {debugInfo.rectHeight} | layoutHeight: {debugInfo.imgLayoutHeight}</p>
+            
+            <button 
+              onClick={() => setDebugInfo(null)}
+              className="mt-4 w-full py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-xl"
+            >
+              Fermer la modale
+            </button>
+          </div>
+        </div>
+      )}
+      {/* -- DEBUG MODAL FIN -- */}
     </div>
   );
 }
