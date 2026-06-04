@@ -38,18 +38,24 @@ export default function DetectiveGame({ level }: Props) {
   useEffect(() => {
     let timeoutIds: NodeJS.Timeout[] = [];
     
-    const handleResize = () => {
+    const checkOrientation = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
       setIsPortraitPhone(w < 768 && h > w);
       setIsLandscapePhone(h < 600 && w > h);
+      setLayoutTrigger(t => t + 1);
+    };
+
+    const handleResize = () => {
+      checkOrientation();
       
       // Force layout recalculations during and after the mobile rotation animation
+      // We must re-measure window dimensions because iOS updates them AFTER orientationchange
       timeoutIds.forEach(clearTimeout);
       timeoutIds = [
-        setTimeout(() => setLayoutTrigger(t => t + 1), 100),
-        setTimeout(() => setLayoutTrigger(t => t + 1), 300),
-        setTimeout(() => setLayoutTrigger(t => t + 1), 700)
+        setTimeout(checkOrientation, 150),
+        setTimeout(checkOrientation, 400),
+        setTimeout(checkOrientation, 800)
       ];
     };
     
