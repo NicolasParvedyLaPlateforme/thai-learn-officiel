@@ -471,7 +471,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
       {/* Bottom HUD Panel */}
       <div
-        className={`h-24 md:h-32 bg-[#faf7ec] border-t-4 border-[#e0d6b8] flex flex-row items-center justify-between shrink-0 w-full z-[120] shadow-[0_-5px_15px_rgba(0,0,0,0.1)]`}
+        className={`h-14 lg:h-32 bg-[#faf7ec] border-t-4 border-[#e0d6b8] flex flex-row items-center justify-between shrink-0 w-full z-[120] shadow-[0_-5px_15px_rgba(0,0,0,0.1)]`}
         style={{
           paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(1rem, env(safe-area-inset-left))',
           paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(1rem, env(safe-area-inset-right))',
@@ -479,54 +479,54 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         }}
       >
         {/* Left side: Back & Progress */}
-        <div className="flex items-center gap-2 md:gap-4 h-full pl-2">
-          <Link href="/detective" className="p-2 md:p-3 text-[#5c4a3d] hover:bg-[#e0d6b8]/50 rounded-full transition-colors shrink-0">
-            <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+        <div className="flex items-center gap-1.5 lg:gap-4 h-full pl-1 lg:pl-2">
+          <Link href="/detective" className="p-1.5 lg:p-3 text-[#5c4a3d] hover:bg-[#e0d6b8]/50 rounded-full transition-colors shrink-0">
+            <ChevronLeft className="w-5 h-5 lg:w-8 lg:h-8" />
           </Link>
           <div className="flex flex-col justify-center h-full">
-            <div className="flex gap-1 mb-1 relative">
+            <div className="flex gap-0.5 lg:gap-1 mb-0.5 lg:mb-1 relative">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={isLandscapePhone ? 12 : 16} className={i < earnedStars ? "fill-amber-400 text-amber-400" : "fill-[#d4c8a9] text-[#d4c8a9]"} />
+                <Star key={i} size={isLandscapePhone || isPortraitPhone ? 10 : 16} className={i < earnedStars ? "fill-amber-400 text-amber-400" : "fill-[#d4c8a9] text-[#d4c8a9]"} />
               ))}
               {showStarLoss && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
-                  -1 <Star size={12} className="fill-rose-500" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-[10px] lg:text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-1.5 lg:px-2 py-0.5 lg:py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
+                  -1 <Star size={isLandscapePhone || isPortraitPhone ? 10 : 12} className="fill-rose-500" />
                 </div>
               )}
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-20 sm:w-24 md:w-32 h-3 bg-[#d4c8a9] rounded-full overflow-hidden border border-[#c1b596] shadow-inner">
+            <div className="flex items-center gap-1.5 lg:gap-2">
+              <div className="w-16 lg:w-32 h-2 lg:h-3 bg-[#d4c8a9] rounded-full overflow-hidden border border-[#c1b596] shadow-inner">
                 <div className="h-full bg-emerald-500 transition-all duration-300" style={{ width: `${(currentIndex / (level.objects?.length || 1)) * 100}%` }} />
               </div>
-              <span className="text-xs md:text-sm font-bold text-[#5c4a3d] min-w-[2rem]">{currentIndex}/{level.objects?.length || 0}</span>
+              <span className="text-[10px] lg:text-sm font-bold text-[#5c4a3d] min-w-[1.5rem] lg:min-w-[2rem]">{currentIndex}/{level.objects?.length || 0}</span>
             </div>
           </div>
         </div>
 
         {/* Center: Current Word */}
-        <div className="flex-1 flex items-center justify-center gap-3 md:gap-6 px-2">
+        <div className="flex-1 flex items-center justify-center gap-2 lg:gap-6 px-1 lg:px-2">
           <button 
             onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }} 
-            className="w-12 h-12 md:w-16 md:h-16 bg-emerald-500 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-lg shrink-0 transition-transform active:scale-95 border-2 border-emerald-400"
+            className="w-8 h-8 lg:w-16 lg:h-16 bg-emerald-500 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-md lg:shadow-lg shrink-0 transition-transform active:scale-95 border lg:border-2 border-emerald-400"
           >
-            <Volume2 className="w-6 h-6 md:w-8 md:h-8" />
+            <Volume2 className="w-4 h-4 lg:w-8 lg:h-8" />
           </button>
           
-          <div className="flex flex-col items-center justify-center min-w-[120px] md:min-w-[200px]">
-            <div className="text-2xl md:text-4xl font-bold font-thai text-[#3a2f26] mb-1 drop-shadow-sm tracking-wide">
+          <div className="flex flex-col items-center justify-center min-w-[80px] lg:min-w-[200px]">
+            <div className="text-lg lg:text-4xl font-bold font-thai text-[#3a2f26] mb-0 lg:mb-1 drop-shadow-sm tracking-wide">
               {currentObj.th}
             </div>
-            <div className="h-6 md:h-8 flex items-center justify-center">
+            <div className="h-4 lg:h-8 flex items-center justify-center">
               {difficulty === 2 ? (
-                <span className="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">{language === 'en' ? 'Hard Mode' : 'Mode Difficile'}</span>
+                <span className="text-[9px] lg:text-sm font-bold text-slate-400 uppercase tracking-widest">{language === 'en' ? 'Hard Mode' : 'Mode Difficile'}</span>
               ) : (
                 isTranslationRevealed || currentMistakes >= 2 ? (
-                  <span className="text-sm md:text-lg font-bold text-emerald-600 animate-in fade-in slide-in-from-bottom-1 px-3 py-0.5 bg-emerald-100/50 rounded-full">
+                  <span className="text-[10px] lg:text-lg font-bold text-emerald-600 animate-in fade-in slide-in-from-bottom-1 px-2 lg:px-3 py-0 lg:py-0.5 bg-emerald-100/50 rounded-full">
                     {language === 'en' ? currentObj.en : currentObj.fr}
                   </span>
                 ) : (
-                  <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 bg-[#e0d6b8] hover:bg-[#d4c8a9] text-[#5c4a3d] rounded-full text-xs md:text-sm font-bold transition-colors shadow-sm active:scale-95">
-                    <Eye className="w-3.5 h-3.5 md:w-4 md:h-4" /> {language === 'en' ? 'Show Hint' : 'Voir l\'indice'}
+                  <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-[#e0d6b8] hover:bg-[#d4c8a9] text-[#5c4a3d] rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
+                    <Eye className="w-3 h-3 lg:w-4 lg:h-4" /> {language === 'en' ? 'Show Hint' : 'Voir l\'indice'}
                   </button>
                 )
               )}
@@ -535,17 +535,17 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         </div>
 
         {/* Right side: Magnifying Glass Bonus */}
-        <div className="flex items-center justify-end w-[80px] md:w-[120px] pr-2">
+        <div className="flex items-center justify-end w-[60px] lg:w-[120px] pr-1 lg:pr-2">
           <button 
             onClick={() => setIsMagnifierActive(!isMagnifierActive)}
-            className={`relative w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-lg transition-all border-2 overflow-hidden
+            className={`relative w-8 h-8 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shadow-md lg:shadow-lg transition-all border lg:border-2 overflow-hidden
               ${isMagnifierActive 
                 ? 'bg-amber-400 border-amber-300 text-amber-900 scale-95 shadow-inner' 
                 : 'bg-gradient-to-b from-[#4bc4e6] to-[#2c98b8] border-[#227b96] text-white hover:scale-105 hover:shadow-xl'
               }
             `}
           >
-            <Search className={`w-6 h-6 md:w-8 md:h-8 relative z-10 ${isMagnifierActive ? 'drop-shadow-sm' : 'drop-shadow-md'}`} />
+            <Search className={`w-4 h-4 lg:w-8 lg:h-8 relative z-10 ${isMagnifierActive ? 'drop-shadow-sm' : 'drop-shadow-md'}`} />
             {/* Shine effect */}
             {!isMagnifierActive && <div className="absolute inset-0 z-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-50"></div>}
           </button>
