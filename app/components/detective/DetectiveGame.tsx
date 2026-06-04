@@ -45,6 +45,16 @@ export default function DetectiveGame({ level }: Props) {
       setIsPortraitPhone(w < 768 && h > w);
       setIsLandscapePhone(h < 600 && w > h);
       setLayoutTrigger(t => t + 1);
+
+      // Safari iOS PWA fix: Force the browser to reset its touch-layer offset
+      window.scrollTo(0, 0);
+      if (document.body) {
+        const oldHeight = document.body.style.height;
+        document.body.style.height = `${window.innerHeight}px`;
+        setTimeout(() => {
+          document.body.style.height = oldHeight;
+        }, 50);
+      }
     };
 
     const handleResize = () => {
