@@ -113,6 +113,19 @@ export default function DetectiveGame({ level }: Props) {
 
 
 
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (imgRef.current && (!imgRef.current.complete || imgRef.current.naturalWidth <= 1)) {
+      interval = setInterval(() => {
+        if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 1) {
+          setLayoutTrigger(t => t + 1);
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [level.imageUrl]);
+
   const startGame = (diff: 1 | 2) => {
     setDifficulty(diff);
     setCurrentIndex(0);
@@ -129,22 +142,20 @@ export default function DetectiveGame({ level }: Props) {
     const currentObj = objects[currentIndex];
     if (!currentObj) return;
 
-    // e.nativeEvent.offsetX/Y gives the exact pixel coordinate inside the target element.
-    // Since this is attached to the inner div that perfectly overlays the image,
-    // it automatically accounts for any CSS rotation, scaling, or letterboxing!
-    let clickX = e.nativeEvent.offsetX;
-    let clickY = e.nativeEvent.offsetY;
+    // Use getBoundingClientRect and clientX/Y to compute exact coordinates.
+    // This is mathematically robust and bypasses buggy e.nativeEvent.offsetX on mobile/touch.
+    const rect = e.currentTarget.getBoundingClientRect();
+    let clickX, clickY;
 
-    // Fallback for older browsers if offsetX is missing on touch
-    if (clickX === undefined) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      if (isPortraitPhone) {
-        clickX = e.clientY - rect.top;
-        clickY = rect.width - (e.clientX - rect.left);
-      } else {
-        clickX = e.clientX - rect.left;
-        clickY = e.clientY - rect.top;
-      }
+    if (isPortraitPhone) {
+      // In CSS-rotated mode (rotate(90deg) translateY(-100%)), 
+      // the screen coordinates translate to layout coordinates like this:
+      clickX = e.clientY - rect.top;
+      clickY = rect.width - (e.clientX - rect.left);
+    } else {
+      // Normal native landscape or desktop
+      clickX = e.clientX - rect.left;
+      clickY = e.clientY - rect.top;
     }
 
     const targetXPixel = (currentObj.x / 100) * imgLayout.width;
