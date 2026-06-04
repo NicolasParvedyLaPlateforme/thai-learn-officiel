@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const domain = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+const resend = new Resend(process.env.RESEND_API_KEY || process.env.API_RESEND);
+const domain = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/api/auth/verify-email?token=${token}`;
