@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, MouseEvent } from 'react';
+import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import Image from 'next/image';
 
@@ -11,8 +11,8 @@ interface Props {
 export default function DetectiveDevMode({ level }: Props) {
   const [objects, setObjects] = useState<DetectiveObject[]>(level.objects || []);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [currentCircle, setCurrentCircle] = useState<{x: number, y: number, r: number} | null>(null);
-  
+  const [currentCircle, setCurrentCircle] = useState<{ x: number, y: number, r: number } | null>(null);
+
   // For the form
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [formData, setFormData] = useState({ th: '', fr: '', en: '' });
@@ -24,22 +24,22 @@ export default function DetectiveDevMode({ level }: Props) {
 
   useEffect(() => {
     if (!imgRef.current || !containerRef.current) return;
-    
+
     const updateLayout = () => {
       if (!imgRef.current || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      
+
       const natW = imgRef.current.naturalWidth || 1;
       const natH = imgRef.current.naturalHeight || 1;
-      
+
       const containerRatio = rect.width / rect.height;
       const imgRatio = natW / natH;
-      
+
       let renderedW = rect.width;
       let renderedH = rect.height;
       let offX = 0;
       let offY = 0;
-      
+
       if (imgRatio > containerRatio) {
         // Image is wider, letterboxed top/bottom
         renderedH = rect.width / imgRatio;
@@ -48,7 +48,7 @@ export default function DetectiveDevMode({ level }: Props) {
         renderedW = rect.height * imgRatio;
         offX = (rect.width - renderedW) / 2;
       }
-      
+
       setImgLayout({ width: renderedW, height: renderedH, offsetX: offX, offsetY: offY });
     };
 
@@ -61,15 +61,15 @@ export default function DetectiveDevMode({ level }: Props) {
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (editingIndex !== null) return; // Don't draw if editing
     if (!containerRef.current) return;
-    
+
     const rect = containerRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
-    
+
     // Map click to image coordinates
     const imgX = clickX - imgLayout.offsetX;
     const imgY = clickY - imgLayout.offsetY;
-    
+
     // Convert to percentage of visual image
     const xPct = (imgX / imgLayout.width) * 100;
     const yPct = (imgY / imgLayout.height) * 100;
@@ -80,30 +80,30 @@ export default function DetectiveDevMode({ level }: Props) {
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!isDrawing || !currentCircle || !containerRef.current) return;
-    
+
     const rect = containerRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
-    
+
     const imgX = clickX - imgLayout.offsetX;
     const imgY = clickY - imgLayout.offsetY;
-    
+
     const startXPixel = (currentCircle.x / 100) * imgLayout.width;
     const startYPixel = (currentCircle.y / 100) * imgLayout.height;
-    
+
     const dx = imgX - startXPixel;
     const dy = imgY - startYPixel;
-    const radiusPixel = Math.sqrt(dx*dx + dy*dy);
-    
+    const radiusPixel = Math.sqrt(dx * dx + dy * dy);
+
     const rPct = (radiusPixel / imgLayout.width) * 100;
-    
+
     setCurrentCircle({ ...currentCircle, r: rPct });
   };
 
   const handleMouseUp = () => {
     if (!isDrawing || !currentCircle) return;
     setIsDrawing(false);
-    
+
     if (currentCircle.r > 1) { // Minimum size to avoid accidental clicks
       setEditingIndex(-1); // -1 means new object
       setFormData({ th: '', fr: '', en: '' });
@@ -129,7 +129,7 @@ export default function DetectiveDevMode({ level }: Props) {
 
   const saveObject = () => {
     if (!currentCircle) return;
-    
+
     const newObj: DetectiveObject = {
       id: editingIndex !== null && editingIndex >= 0 ? objects[editingIndex].id : Math.random().toString(36).substr(2, 9),
       x: Number(currentCircle.x.toFixed(2)),
@@ -179,7 +179,7 @@ export default function DetectiveDevMode({ level }: Props) {
           <h2 className="font-bold">Outil Détective</h2>
           <p className="text-sm text-slate-300">Cliquez et glissez pour créer une zone</p>
         </div>
-        <button 
+        <button
           onClick={generateJson}
           className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold transition-colors"
         >
@@ -188,7 +188,7 @@ export default function DetectiveDevMode({ level }: Props) {
       </div>
 
       <div className="w-full bg-slate-200 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 rounded-xl">
-        <div 
+        <div
           className="relative w-full h-full flex items-center justify-center cursor-crosshair select-none"
           ref={containerRef}
           onMouseDown={handleMouseDown}
@@ -197,10 +197,10 @@ export default function DetectiveDevMode({ level }: Props) {
           onMouseLeave={handleMouseUp}
         >
           {level.imageUrl ? (
-            <img 
+            <img
               ref={imgRef}
-              src={level.imageUrl} 
-              alt="Level" 
+              src={level.imageUrl}
+              alt="Level"
               className="block w-full h-full pointer-events-none object-contain"
               onLoad={() => setLayoutTrigger(t => t + 1)}
             />
@@ -210,7 +210,7 @@ export default function DetectiveDevMode({ level }: Props) {
             </div>
           )}
 
-          <div 
+          <div
             className="absolute pointer-events-none"
             style={{
               left: `${imgLayout.offsetX}px`,
@@ -221,7 +221,7 @@ export default function DetectiveDevMode({ level }: Props) {
           >
             {/* Existing objects */}
             {objects.map((obj, i) => (
-              <div 
+              <div
                 key={obj.id}
                 className={`absolute border-2 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-colors cursor-pointer hover:bg-emerald-500/20 hover:z-10 ${editingIndex === i ? 'border-amber-400 bg-amber-400/20 z-20' : 'border-emerald-400'}`}
                 style={{
@@ -233,15 +233,15 @@ export default function DetectiveDevMode({ level }: Props) {
                 }}
                 onMouseDown={(e) => handleCircleClick(e, i)}
               >
-                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white text-[10px] px-1 rounded whitespace-nowrap pointer-events-none">
-                   {obj.th || '?'}
-                 </div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white text-[10px] px-1 rounded whitespace-nowrap pointer-events-none">
+                  {obj.th || '?'}
+                </div>
               </div>
             ))}
 
             {/* Current drawing circle */}
             {isDrawing && currentCircle && (
-              <div 
+              <div
                 className="absolute border-2 border-amber-400 bg-amber-400/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                 style={{
                   left: `${currentCircle.x}%`,
@@ -262,14 +262,14 @@ export default function DetectiveDevMode({ level }: Props) {
             <h3 className="text-xl font-bold mb-4">
               {editingIndex === -1 ? 'Nouvel objet' : 'Modifier l\'objet'}
             </h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-1">Mot en Thaï</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={formData.th}
-                  onChange={e => setFormData({...formData, th: e.target.value})}
+                  onChange={e => setFormData({ ...formData, th: e.target.value })}
                   className="w-full border-2 border-slate-200 rounded-lg p-2 focus:border-emerald-500 outline-none"
                   placeholder="ex: แมว"
                   autoFocus
@@ -277,20 +277,20 @@ export default function DetectiveDevMode({ level }: Props) {
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-1">Mot en Français</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={formData.fr}
-                  onChange={e => setFormData({...formData, fr: e.target.value})}
+                  onChange={e => setFormData({ ...formData, fr: e.target.value })}
                   className="w-full border-2 border-slate-200 rounded-lg p-2 focus:border-emerald-500 outline-none"
                   placeholder="ex: chat"
                 />
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-1">Mot en Anglais</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={formData.en}
-                  onChange={e => setFormData({...formData, en: e.target.value})}
+                  onChange={e => setFormData({ ...formData, en: e.target.value })}
                   className="w-full border-2 border-slate-200 rounded-lg p-2 focus:border-emerald-500 outline-none"
                   placeholder="ex: cat"
                 />
@@ -298,20 +298,20 @@ export default function DetectiveDevMode({ level }: Props) {
             </div>
 
             <div className="mt-6 flex justify-between">
-              <button 
+              <button
                 onClick={deleteObject}
                 className="text-rose-500 font-bold px-4 py-2 hover:bg-rose-50 rounded-lg transition-colors"
               >
                 Supprimer
               </button>
               <div className="flex gap-2">
-                <button 
+                <button
                   onClick={closeModal}
                   className="text-slate-500 font-bold px-4 py-2 hover:bg-slate-50 rounded-lg transition-colors"
                 >
                   Annuler
                 </button>
-                <button 
+                <button
                   onClick={saveObject}
                   className="bg-emerald-500 text-white font-bold px-4 py-2 hover:bg-emerald-600 rounded-lg transition-colors"
                 >
