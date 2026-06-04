@@ -18,17 +18,60 @@ export default function DetectiveDevMode({ level }: Props) {
   const [formData, setFormData] = useState({ th: '', fr: '', en: '' });
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [imgLayout, setImgLayout] = useState({ width: 100, height: 100, offsetX: 0, offsetY: 0 });
+
+  useEffect(() => {
+    if (!imgRef.current || !containerRef.current) return;
+    
+    const updateLayout = () => {
+      if (!imgRef.current || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      
+      const natW = imgRef.current.naturalWidth || 1;
+      const natH = imgRef.current.naturalHeight || 1;
+      
+      const containerRatio = rect.width / rect.height;
+      const imgRatio = natW / natH;
+      
+      let renderedW = rect.width;
+      let renderedH = rect.height;
+      let offX = 0;
+      let offY = 0;
+      
+      if (imgRatio > containerRatio) {
+        // Image is wider, letterboxed top/bottom
+        renderedH = rect.width / imgRatio;
+        offY = (rect.height - renderedH) / 2;
+      } else {
+        renderedW = rect.height * imgRatio;
+        offX = (rect.width - renderedW) / 2;
+      }
+      
+      setImgLayout({ width: renderedW, height: renderedH, offsetX: offX, offsetY: offY });
+    };
+
+    updateLayout();
+    const observer = new ResizeObserver(() => updateLayout());
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (editingIndex !== null) return; // Don't draw if editing
     if (!containerRef.current) return;
     
     const rect = containerRef.current.getBoundingClientRect();
-    const xPixel = e.clientX - rect.left;
-    const yPixel = e.clientY - rect.top;
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
     
-    const xPct = (xPixel / rect.width) * 100;
-    const yPct = (yPixel / rect.height) * 100;
+    // Map click to image coordinates
+    const imgX = clickX - imgLayout.offsetX;
+    const imgY = clickY - imgLayout.offsetY;
+    
+    // Convert to percentage of visual image
+    const xPct = (imgX / imgLayout.width) * 100;
+    const yPct = (imgY / imgLayout.height) * 100;
 
     setIsDrawing(true);
     setCurrentCircle({ x: xPct, y: yPct, r: 0 });
@@ -38,18 +81,20 @@ export default function DetectiveDevMode({ level }: Props) {
     if (!isDrawing || !currentCircle || !containerRef.current) return;
     
     const rect = containerRef.current.getBoundingClientRect();
-    const xPixel = e.clientX - rect.left;
-    const yPixel = e.clientY - rect.top;
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
     
-    const startXPixel = (currentCircle.x / 100) * rect.width;
-    const startYPixel = (currentCircle.y / 100) * rect.height;
+    const imgX = clickX - imgLayout.offsetX;
+    const imgY = clickY - imgLayout.offsetY;
     
-    const dx = xPixel - startXPixel;
-    const dy = yPixel - startYPixel;
+    const startXPixel = (currentCircle.x / 100) * imgLayout.width;
+    const startYPixel = (currentCircle.y / 100) * imgLayout.height;
+    
+    const dx = imgX - startXPixel;
+    const dy = imgY - startYPixel;
     const radiusPixel = Math.sqrt(dx*dx + dy*dy);
     
-    // Radius as a percentage of the width
-    const rPct = (radiusPixel / rect.width) * 100;
+    const rPct = (radiusPixel / imgLayout.width) * 100;
     
     setCurrentCircle({ ...currentCircle, r: rPct });
   };
@@ -141,9 +186,9 @@ export default function DetectiveDevMode({ level }: Props) {
         </button>
       </div>
 
-      <div className="w-full bg-slate-200 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 rounded-xl max-h-[70vh]">
+      <div className="w-full bg-slate-200 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 rounded-xl">
         <div 
-          className="relative max-w-full max-h-full flex items-center justify-center cursor-crosshair select-none"
+          className="relative w-full h-full flex items-center justify-center cursor-crosshair select-none"
           ref={containerRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -152,10 +197,11 @@ export default function DetectiveDevMode({ level }: Props) {
         >
           {level.imageUrl ? (
             <img 
+              ref={imgRef}
               src={level.imageUrl} 
               alt="Level" 
-              className="block max-w-full max-h-full pointer-events-none object-contain"
-              style={{ width: 'auto', height: 'auto', maxHeight: '70vh' }}
+              className="block w-full h-full pointer-events-none object-contain"
+              onLoad={() => window.dispatchEvent(new Event('resize'))}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-slate-400">
@@ -163,37 +209,48 @@ export default function DetectiveDevMode({ level }: Props) {
             </div>
           )}
 
-        {/* Existing objects */}
-        {objects.map((obj, i) => (
           <div 
-            key={obj.id}
-            className={`absolute border-2 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-colors cursor-pointer hover:bg-emerald-500/20 hover:z-10 ${editingIndex === i ? 'border-amber-400 bg-amber-400/20 z-20' : 'border-emerald-400'}`}
+            className="absolute pointer-events-none"
             style={{
-              left: `${obj.x}%`,
-              top: `${obj.y}%`,
-              width: `${obj.radius * 2}%`,
-              paddingTop: `${obj.radius * 2}%`, // Trick to keep it circular since width is % of container width
+              left: `${imgLayout.offsetX}px`,
+              top: `${imgLayout.offsetY}px`,
+              width: `${imgLayout.width}px`,
+              height: `${imgLayout.height}px`,
             }}
-            onClick={(e) => handleCircleClick(e, i)}
           >
-             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white text-[10px] px-1 rounded whitespace-nowrap pointer-events-none">
-               {obj.th || '?'}
-             </div>
-          </div>
-        ))}
+            {/* Existing objects */}
+            {objects.map((obj, i) => (
+              <div 
+                key={obj.id}
+                className={`absolute border-2 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-colors cursor-pointer hover:bg-emerald-500/20 hover:z-10 ${editingIndex === i ? 'border-amber-400 bg-amber-400/20 z-20' : 'border-emerald-400'}`}
+                style={{
+                  left: `${obj.x}%`,
+                  top: `${obj.y}%`,
+                  width: `${obj.radius * 2}%`,
+                  paddingTop: `${obj.radius * 2}%`,
+                  pointerEvents: 'auto', // override pointer-events-none from parent
+                }}
+                onMouseDown={(e) => handleCircleClick(e, i)}
+              >
+                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 text-white text-[10px] px-1 rounded whitespace-nowrap pointer-events-none">
+                   {obj.th || '?'}
+                 </div>
+              </div>
+            ))}
 
-        {/* Current drawing circle */}
-        {isDrawing && currentCircle && (
-          <div 
-            className="absolute border-2 border-amber-400 bg-amber-400/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-            style={{
-              left: `${currentCircle.x}%`,
-              top: `${currentCircle.y}%`,
-              width: `${currentCircle.r * 2}%`,
-              paddingTop: `${currentCircle.r * 2}%`,
-            }}
-          />
-        )}
+            {/* Current drawing circle */}
+            {isDrawing && currentCircle && (
+              <div 
+                className="absolute border-2 border-amber-400 bg-amber-400/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                style={{
+                  left: `${currentCircle.x}%`,
+                  top: `${currentCircle.y}%`,
+                  width: `${currentCircle.r * 2}%`,
+                  paddingTop: `${currentCircle.r * 2}%`,
+                }}
+              />
+            )}
+          </div>
         </div>
       </div>
 

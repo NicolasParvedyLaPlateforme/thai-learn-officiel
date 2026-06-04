@@ -320,7 +320,7 @@ export default function DetectiveGame({ level }: Props) {
     >
       {/* Left HUD Panel */}
       <div
-        className="w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] bg-slate-800 border-r border-slate-700 flex flex-col items-center py-2 md:py-4 px-2 md:px-6 shrink-0 h-full overflow-y-auto"
+        className={`${isLandscapePhone ? 'w-[15%] min-w-[100px] max-w-[140px] px-2 py-2' : 'w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] py-2 md:py-4 px-2 md:px-6'} bg-slate-800 border-r border-slate-700 flex flex-col items-center shrink-0 h-full overflow-y-auto`}
         style={{
           paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(0.5rem, env(safe-area-inset-left))'
         }}
@@ -333,19 +333,19 @@ export default function DetectiveGame({ level }: Props) {
         </div>
 
         {/* Middle: Word & Sound */}
-        <div className="flex-1 flex flex-col items-center justify-center gap-1 md:gap-4 w-full px-1 my-2 md:my-4">
+        <div className={`flex-1 flex flex-col items-center justify-center gap-1 w-full px-1 ${isLandscapePhone ? 'my-1' : 'md:gap-4 my-2 md:my-4'}`}>
           <button
             onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
-            className="w-8 h-8 md:w-16 md:h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0"
+            className={`rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0 ${isLandscapePhone ? 'w-8 h-8 md:w-10 md:h-10' : 'w-8 h-8 md:w-16 md:h-16'}`}
           >
-            <Volume2 className="w-4 h-4 md:w-8 md:h-8" />
+            <Volume2 className={isLandscapePhone ? 'w-4 h-4 md:w-5 md:h-5' : 'w-4 h-4 md:w-8 md:h-8'} />
           </button>
           <div className="text-center w-full px-1 pt-1 pb-2">
-            <h3 className="text-base sm:text-lg md:text-3xl font-bold font-thai text-white leading-normal break-words">
+            <h3 className={`${isLandscapePhone ? 'text-sm md:text-base' : 'text-base sm:text-lg md:text-3xl'} font-bold font-thai text-white leading-normal break-words`}>
               {currentObj.th}
             </h3>
             {(difficulty === 1 || currentMistakes >= 2) && (
-              <p className="text-emerald-400/80 font-medium text-[10px] sm:text-xs md:text-base mt-1 md:mt-2 leading-tight">
+              <p className={`text-emerald-400/80 font-medium leading-tight ${isLandscapePhone ? 'text-[9px] md:text-[10px] mt-0.5' : 'text-[10px] sm:text-xs md:text-base mt-1 md:mt-2'}`}>
                 {language === 'en' ? currentObj.en : currentObj.fr}
               </p>
             )}
@@ -372,11 +372,11 @@ export default function DetectiveGame({ level }: Props) {
               </div>
             )}
           </div>
-          <div className="bg-slate-900/50 px-2 py-2 md:px-4 md:py-4 rounded-xl border border-slate-700/50 w-full text-center">
-            <div className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-wider mb-0.5 md:mb-2 line-clamp-1">
+          <div className={`bg-slate-900/50 rounded-xl border border-slate-700/50 w-full text-center ${isLandscapePhone ? 'px-2 py-1 md:px-3 md:py-2' : 'px-2 py-2 md:px-4 md:py-4'}`}>
+            <div className={`font-bold text-slate-500 uppercase tracking-wider line-clamp-1 ${isLandscapePhone ? 'text-[8px] md:text-[9px] mb-0.5' : 'text-[9px] md:text-xs mb-0.5 md:mb-2'}`}>
               {language === 'en' ? 'Progress' : 'Progression'}
             </div>
-            <div className="font-black text-emerald-500 text-base md:text-2xl">
+            <div className={`font-black text-emerald-500 ${isLandscapePhone ? 'text-sm md:text-base' : 'text-base md:text-2xl'}`}>
               {currentIndex} / {objects.length}
             </div>
           </div>
