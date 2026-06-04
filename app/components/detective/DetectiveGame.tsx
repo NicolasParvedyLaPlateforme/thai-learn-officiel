@@ -48,24 +48,24 @@ export default function DetectiveGame({ level }: Props) {
 
   useEffect(() => {
     if (!imgRef.current || !containerRef.current) return;
-    
+
     const updateLayout = () => {
       if (!imgRef.current || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const unrotatedW = isPortraitPhone ? rect.height : rect.width;
       const unrotatedH = isPortraitPhone ? rect.width : rect.height;
-      
+
       const natW = imgRef.current.naturalWidth || 1;
       const natH = imgRef.current.naturalHeight || 1;
-      
+
       const containerRatio = unrotatedW / unrotatedH;
       const imgRatio = natW / natH;
-      
+
       let renderedW = unrotatedW;
       let renderedH = unrotatedH;
       let offX = 0;
       let offY = 0;
-      
+
       if (imgRatio > containerRatio) {
         // Image is wider, letterboxed top/bottom
         renderedH = unrotatedW / imgRatio;
@@ -74,17 +74,17 @@ export default function DetectiveGame({ level }: Props) {
         renderedW = unrotatedH * imgRatio;
         offX = (unrotatedW - renderedW) / 2;
       }
-      
+
       setImgLayout({ width: renderedW, height: renderedH, offsetX: offX, offsetY: offY, unrotatedW, unrotatedH });
     };
 
     updateLayout();
-    
+
     const observer = new ResizeObserver(() => {
       updateLayout();
     });
     observer.observe(containerRef.current);
-    
+
     return () => observer.disconnect();
   }, [isPortraitPhone]);
 
@@ -130,7 +130,7 @@ export default function DetectiveGame({ level }: Props) {
 
     const rect = containerRef.current.getBoundingClientRect();
     let clickX, clickY;
-    
+
     if (isPortraitPhone) {
       const screenOffsetX = e.clientX - rect.left;
       const screenOffsetY = e.clientY - rect.top;
@@ -164,7 +164,7 @@ export default function DetectiveGame({ level }: Props) {
       spread: 60,
       origin: { y: 0.9 },
       colors: ['#10B981', '#F59E0B'],
-      zIndex: isFullscreen || isPortraitPhone ? 150 : 100
+      zIndex: isPortraitPhone ? 150 : 100
     });
 
     const currentObj = objects[currentIndex];
@@ -265,7 +265,7 @@ export default function DetectiveGame({ level }: Props) {
     <div
       className="w-full shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 bg-slate-900 h-full rounded-none"
     >
-      <div 
+      <div
         className="relative w-full h-full flex items-center justify-center cursor-crosshair select-none"
         ref={containerRef}
         onClick={handleImageClick}
@@ -282,7 +282,7 @@ export default function DetectiveGame({ level }: Props) {
         />
 
         {/* This div exactly perfectly overlays the rendered image */}
-        <div 
+        <div
           className="absolute pointer-events-none"
           style={{
             left: `${imgLayout.offsetX}px`,
@@ -309,7 +309,7 @@ export default function DetectiveGame({ level }: Props) {
   );
 
   return (
-    <div 
+    <div
       className={`z-[100] bg-slate-900 flex flex-row overflow-hidden fixed inset-0`}
       style={isPortraitPhone ? {
         width: '100vh',
@@ -319,17 +319,17 @@ export default function DetectiveGame({ level }: Props) {
       } : undefined}
     >
       {/* Left HUD Panel */}
-      <div 
+      <div
         className="w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] bg-slate-800 border-r border-slate-700 flex flex-col items-center py-2 md:py-4 px-2 md:px-6 shrink-0 h-full overflow-y-auto"
-        style={{ 
+        style={{
           paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(0.5rem, env(safe-area-inset-left))'
         }}
       >
         {/* Top Actions */}
         <div className="flex flex-row gap-2 items-center justify-center w-full shrink-0">
-           <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
-             <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
-           </Link>
+          <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
+            <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
+          </Link>
         </div>
 
         {/* Middle: Word & Sound */}
@@ -367,9 +367,9 @@ export default function DetectiveGame({ level }: Props) {
               />
             ))}
             {showStarLoss && (
-               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
-                  -1 <Star size={12} className="fill-rose-500" />
-               </div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
+                -1 <Star size={12} className="fill-rose-500" />
+              </div>
             )}
           </div>
           <div className="bg-slate-900/50 px-2 py-2 md:px-4 md:py-4 rounded-xl border border-slate-700/50 w-full text-center">
@@ -384,9 +384,9 @@ export default function DetectiveGame({ level }: Props) {
       </div>
 
       {/* Right Image Panel */}
-      <div 
+      <div
         className="flex-1 flex flex-col relative overflow-hidden"
-        style={{ 
+        style={{
           paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(0.5rem, env(safe-area-inset-right))'
         }}
       >
