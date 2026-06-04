@@ -6,7 +6,7 @@ import IconImage from '../components/IconImage';
 import { motion, AnimatePresence } from 'motion/react';
 import { useProgressStore } from '../lib/store';
 import PWAInstallButton from '../components/PWAInstallButton';
-import { ArrowLeft, MessageCircle, Star, BookOpen, Info, ChevronRight, Play, X, Book, Image as ImageIcon, Lock, Check, Clock, Users, Volume2, MapPin } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Star, BookOpen, Info, ChevronRight, Play, X, Book, Image as ImageIcon, Lock, Check, Clock, Users, Volume2, MapPin, User } from 'lucide-react';
 import conversationsData from '../data/conversations.json';
 import CONVERSATION_UNITS from '../data/conversation_units.json';
 import { useIsPWA } from '../../hooks/use-pwa';
@@ -131,6 +131,12 @@ export default function ConversationsPage() {
                   <span>{xp} XP</span>
                 </div>
               )}
+              <Link
+                href="/profile"
+                className="flex items-center justify-center p-1.5 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+              >
+                <User size={18} />
+              </Link>
             </div>
           </div>
         </header>

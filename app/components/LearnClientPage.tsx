@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 import { useProgressStore } from '../lib/store';
 import { playThaiTTS } from '../lib/tts';
 import { Drawer } from 'vaul';
-import { BookOpen, CheckCircle, Star, Play, Crown, RotateCcw, Pencil, X, Unlock, Brain, MessageCircle, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Heart, Users, Flame, Target } from 'lucide-react';
+import { BookOpen, CheckCircle, Star, Play, Crown, RotateCcw, Pencil, X, Unlock, Brain, MessageCircle, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Heart, Users, Flame, Target, User } from 'lucide-react';
 import { Lesson } from '../types';
 import IconImage from '../components/IconImage';
 
@@ -261,6 +261,13 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                 >
                   <Target size={18} />
                 </button>
+
+                <Link
+                  href="/profile"
+                  className="md:hidden flex items-center justify-center p-1.5 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+                >
+                  <User size={18} />
+                </Link>
               </div>
             )}
           </div>

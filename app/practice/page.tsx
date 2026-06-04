@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
-import { Brain, BookOpen, Pencil, Star, Mic } from 'lucide-react';
+import { Brain, BookOpen, Pencil, Star, Mic, User } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { WritingConfigModal } from '../components/WritingConfigModal';
 import { SpeakingConfigModal } from '../components/SpeakingConfigModal';
@@ -51,6 +51,12 @@ export default function PracticePage() {
                 <span>{xp} XP</span>
               </div>
             )}
+            <Link
+              href="/profile"
+              className="flex items-center justify-center p-1.5 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+            >
+              <User size={18} />
+            </Link>
           </div>
         </div>
       </header>

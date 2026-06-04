@@ -9,7 +9,7 @@ import { useProgressStore } from '../../lib/store';
 import { getAlphabetLessons, AlphabetLessonDef, formatCombiningChar } from '../../lib/alphabet-utils';
 import { playThaiTTS } from '../../lib/tts';
 import { Drawer } from 'vaul';
-import { BookOpen, CheckCircle, Star, Play, Crown, X, Unlock, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Users, Flame, Target } from 'lucide-react';
+import { BookOpen, CheckCircle, Star, Play, Crown, X, Unlock, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Users, Flame, Target, User } from 'lucide-react';
 import IconImage from '../../components/IconImage';
 
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
@@ -209,6 +209,13 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                 >
                   <Target size={18} />
                 </button>
+
+                <Link
+                  href="/profile"
+                  className="md:hidden flex items-center justify-center p-1.5 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+                >
+                  <User size={18} />
+                </Link>
               </div>
             )}
           </div>
