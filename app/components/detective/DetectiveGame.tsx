@@ -11,15 +11,16 @@ import detectiveData from '../../data/detective.json';
 
 interface Props {
   level: DetectiveLevel;
+  initialDiff?: 1 | 2;
 }
 
-export default function DetectiveGame({ level }: Props) {
+export default function DetectiveGame({ level, initialDiff }: Props) {
   const { language, setMobileSidebarOpen } = useProgressStore();
 
   const [objects, setObjects] = useState<DetectiveObject[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [levelState, setLevelState] = useState<'intro' | 'playing' | 'completed'>('intro');
-  const [difficulty, setDifficulty] = useState<1 | 2>(1);
+  const [levelState, setLevelState] = useState<'intro' | 'playing' | 'completed'>(initialDiff ? 'playing' : 'intro');
+  const [difficulty, setDifficulty] = useState<1 | 2>(initialDiff || 1);
   const [mistakes, setMistakes] = useState(0);
   const [currentMistakes, setCurrentMistakes] = useState(0);
   const [foundObjects, setFoundObjects] = useState<DetectiveObject[]>([]);
@@ -219,7 +220,7 @@ export default function DetectiveGame({ level }: Props) {
           {language === 'en' ? 'Detective Mode' : 'Mode Détective'}
         </h2>
         <p className="text-slate-600 mb-8">
-          {language === 'en' ? `Find ${objects.length} hidden objects in the image.` : `Trouve les ${objects.length} objets cachés dans l'image.`}
+          {language === 'en' ? `Find ${level.objects?.length || 0} hidden objects in the image.` : `Trouve les ${level.objects?.length || 0} objets cachés dans l'image.`}
         </p>
 
         <div className="w-full space-y-4">
@@ -261,18 +262,26 @@ export default function DetectiveGame({ level }: Props) {
           ))}
         </div>
         <p className="text-slate-600 mb-8">
-          {language === 'en' ? `You found all ${objects.length} objects with ${mistakes} mistakes.` : `Tu as trouvé les ${objects.length} objets avec ${mistakes} erreurs.`}
+          {language === 'en' ? `You found all ${level.objects?.length || 0} objects with ${mistakes} mistakes.` : `Tu as trouvé les ${level.objects?.length || 0} objets avec ${mistakes} erreurs.`}
         </p>
         <div className="w-full flex flex-col gap-3 px-4">
           {nextLevel && (
-            <button onClick={() => { window.location.href = `/detective/level/${nextLevel.id}`; }} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all text-center">
+            <button onClick={() => { window.location.href = `/detective/level/${nextLevel.id}${initialDiff ? `?diff=${initialDiff}` : ''}`; }} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all text-center">
               {language === 'en' ? 'Next Level' : 'Niveau Suivant'}
             </button>
           )}
-          <button onClick={() => setLevelState('intro')} className={`w-full ${nextLevel ? 'bg-slate-200 hover:bg-slate-300 text-slate-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} font-bold py-4 rounded-2xl shadow-sm transition-all`}>
+          <button onClick={() => initialDiff ? startGame(initialDiff) : setLevelState('intro')} className={`w-full ${nextLevel ? 'bg-slate-200 hover:bg-slate-300 text-slate-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} font-bold py-4 rounded-2xl shadow-sm transition-all`}>
             {language === 'en' ? 'Play Again' : 'Rejouer'}
           </button>
         </div>
+      </div>
+    );
+  }
+
+  if (levelState === 'playing' && objects.length === 0) {
+    return (
+      <div className="fixed inset-0 z-[100] bg-slate-900 flex items-center justify-center">
+        <Search className="w-12 h-12 animate-pulse text-emerald-500" />
       </div>
     );
   }
@@ -454,7 +463,7 @@ export default function DetectiveGame({ level }: Props) {
               {language === 'en' ? 'Progress' : 'Progression'}
             </div>
             <div className={`font-black text-emerald-500 ${isLandscapePhone ? 'text-sm md:text-base' : 'text-base md:text-2xl'}`}>
-              {currentIndex} / {objects.length}
+              {currentIndex} / {level.objects?.length || 0}
             </div>
           </div>
         </div>

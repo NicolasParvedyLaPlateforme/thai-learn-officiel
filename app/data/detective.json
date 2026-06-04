@@ -1,6 +1,7 @@
 [
     {
         "id": "bureau-1",
+        "categoryId": "travail",
         "title": "Bureau",
         "titleEn": "Office",
         "description": "Retrouvez les objets cachés dans ce bureau traditionnel thaïlandais.",
@@ -65,6 +66,7 @@
     },
     {
         "id": "supermarche-2",
+        "categoryId": "vie-quotidienne",
         "title": "Supermarché",
         "titleEn": "Supermarket",
         "description": "Trouvez les ustensiles et ingrédients cachés dans ce supermarché thaïlandais.",
@@ -219,6 +221,7 @@
     },
     {
         "id": "restaurant-3",
+        "categoryId": "loisir",
         "title": "Restaurant",
         "titleEn": "Restaurant",
         "description": "Trouvez les ustensiles et ingrédients cachés dans ce restaurant thaïlandais.",

@@ -1,0 +1,32 @@
+{
+  "travail": {
+    "en": "Work",
+    "fr": "Travail",
+    "emoji": "💼",
+    "imageUrl": "/images/detective/niveau1.jpg",
+    "description": {
+      "en": "Vocabulary related to the workplace.",
+      "fr": "Vocabulaire lié au monde du travail."
+    }
+  },
+  "vie-quotidienne": {
+    "en": "Daily Life",
+    "fr": "Vie de tous les jours",
+    "emoji": "🛒",
+    "imageUrl": "/images/detective/niveau2.webp",
+    "description": {
+      "en": "Vocabulary for everyday situations.",
+      "fr": "Vocabulaire pour les situations de tous les jours."
+    }
+  },
+  "loisir": {
+    "en": "Leisure",
+    "fr": "Loisir",
+    "emoji": "🍽️",
+    "imageUrl": "/images/detective/niveau3-restaurant.jpg",
+    "description": {
+      "en": "Vocabulary for going out and having fun.",
+      "fr": "Vocabulaire pour les sorties et divertissements."
+    }
+  }
+}

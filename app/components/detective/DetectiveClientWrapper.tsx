@@ -11,9 +11,10 @@ import { useProgressStore } from '../../lib/store';
 interface Props {
   level: DetectiveLevel;
   isDev: boolean;
+  initialDiff?: 1 | 2;
 }
 
-export default function DetectiveClientWrapper({ level, isDev }: Props) {
+export default function DetectiveClientWrapper({ level, isDev, initialDiff }: Props) {
   const { language } = useProgressStore();
 
   return (
@@ -39,7 +40,7 @@ export default function DetectiveClientWrapper({ level, isDev }: Props) {
         {isDev ? (
           <DetectiveDevMode level={level} />
         ) : (
-          <DetectiveGame level={level} />
+          <DetectiveGame level={level} initialDiff={initialDiff} />
         )}
       </div>
     </div>
