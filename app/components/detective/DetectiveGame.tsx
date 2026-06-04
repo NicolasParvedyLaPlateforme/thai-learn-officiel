@@ -159,43 +159,6 @@ export default function DetectiveGame({ level }: Props) {
     setLevelState('playing');
   };
 
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (levelState !== 'playing') return;
-
-    const currentObj = objects[currentIndex];
-    if (!currentObj) return;
-
-    // Use getBoundingClientRect and clientX/Y to compute exact coordinates.
-    // This is mathematically robust and bypasses buggy e.nativeEvent.offsetX on mobile/touch.
-    const rect = e.currentTarget.getBoundingClientRect();
-    let clickX, clickY;
-
-    if (isPortraitPhone) {
-      // In CSS-rotated mode (rotate(90deg) translateY(-100%)), 
-      // the screen coordinates translate to layout coordinates like this:
-      clickX = e.clientY - rect.top;
-      clickY = rect.width - (e.clientX - rect.left);
-    } else {
-      // Normal native landscape or desktop
-      clickX = e.clientX - rect.left;
-      clickY = e.clientY - rect.top;
-    }
-
-    const targetXPixel = (currentObj.x / 100) * imgLayout.width;
-    const targetYPixel = (currentObj.y / 100) * imgLayout.height;
-    const targetRadiusPixel = (currentObj.radius / 100) * imgLayout.width;
-
-    const dx = clickX - targetXPixel;
-    const dy = clickY - targetYPixel;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance <= targetRadiusPixel) {
-      handleCorrect();
-    } else {
-      handleMistake();
-    }
-  };
-
   const handleCorrect = () => {
     confetti({
       particleCount: 50,
@@ -324,15 +287,38 @@ export default function DetectiveGame({ level }: Props) {
             width: `${imgLayout.width}px`,
             height: `${imgLayout.height}px`,
             pointerEvents: 'auto',
-            cursor: 'crosshair',
             touchAction: 'none' // Prevent pull-to-refresh or scrolling on touch
           }}
-          onPointerDown={handlePointerDown}
+          onPointerDown={(e) => {
+            if (levelState === 'playing') {
+              handleMistake();
+            }
+          }}
         >
+          {/* Active Hitbox: perfectly aligns and relies on browser's native hit testing */}
+          {currentObj && levelState === 'playing' && (
+             <div
+               className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-crosshair z-10"
+               style={{
+                 left: `${currentObj.x}%`,
+                 top: `${currentObj.y}%`,
+                 width: `${currentObj.radius * 2}%`,
+                 paddingTop: `${currentObj.radius * 2}%`,
+               }}
+               onPointerDown={(e) => {
+                 e.stopPropagation(); // Prevent the mistake handler from firing
+                 e.preventDefault();
+                 if (levelState === 'playing') {
+                   handleCorrect();
+                 }
+               }}
+             />
+          )}
+
           {foundObjects.map(obj => (
             <div
               key={obj.id}
-              className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
+              className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in z-0"
               style={{
                 left: `${obj.x}%`,
                 top: `${obj.y}%`,
