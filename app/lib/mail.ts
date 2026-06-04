@@ -1,13 +1,21 @@
-import { Resend } from "resend";
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY || process.env.API_RESEND);
 const domain = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
+// Création du transporteur Nodemailer avec Gmail
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_SERVER_USER,
+    pass: process.env.EMAIL_SERVER_PASSWORD,
+  },
+});
 
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/api/auth/verify-email?token=${token}`;
 
-  await resend.emails.send({
-    from: "ThaiLearn <onboarding@resend.dev>",
+  const mailOptions = {
+    from: `"ThaiLearn" <${process.env.EMAIL_SERVER_USER}>`,
     to: email,
     subject: "Confirme ton adresse email - ThaiLearn",
     html: `
@@ -20,14 +28,21 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">Si tu n'as pas créé ce compte, tu peux ignorer cet email.</p>
       </div>
     `,
-  });
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Nodemailer Error (Verification):", error);
+    throw new Error("Erreur lors de l'envoi de l'email");
+  }
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const resetLink = `${domain}/reset-password?token=${token}`;
 
-  await resend.emails.send({
-    from: "ThaiLearn <onboarding@resend.dev>",
+  const mailOptions = {
+    from: `"ThaiLearn" <${process.env.EMAIL_SERVER_USER}>`,
     to: email,
     subject: "Réinitialisation de ton mot de passe - ThaiLearn",
     html: `
@@ -40,5 +55,12 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
         <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">Si tu n'as pas fait cette demande, tu peux ignorer cet email.</p>
       </div>
     `,
-  });
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Nodemailer Error (Reset Password):", error);
+    throw new Error("Erreur lors de l'envoi de l'email");
+  }
 };
