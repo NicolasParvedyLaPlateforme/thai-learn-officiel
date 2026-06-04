@@ -74,6 +74,7 @@ export interface DetectiveObject {
 
 export interface DetectiveLevel {
   id: string;
+  categoryId?: string;
   title: string;
   titleEn: string;
   description: string;

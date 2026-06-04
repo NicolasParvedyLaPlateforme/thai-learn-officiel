@@ -1,86 +1,382 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import IconImage from '../components/IconImage';
+import { motion } from 'motion/react';
 import { useProgressStore } from '../lib/store';
-import { Search, ChevronRight } from 'lucide-react';
+import PWAInstallButton from '../components/PWAInstallButton';
+import { ArrowLeft, Search, Star, ChevronRight, Play, MapPin } from 'lucide-react';
 import detectiveData from '../data/detective.json';
+import DETECTIVE_CATEGORIES from '../data/detective_categories.json';
+import { useIsPWA } from '../../hooks/use-pwa';
 import { DetectiveLevel } from '../types';
 
+const CATEGORIES: Record<string, { en: string, fr: string, emoji: string, imageUrl?: string, description?: { en: string, fr: string } }> = DETECTIVE_CATEGORIES;
+
 export default function DetectivePage() {
-  const { language } = useProgressStore();
+  const [mounted, setMounted] = useState(false);
+  const isPWA = useIsPWA();
+  const { language, xp } = useProgressStore();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [selectedLevelId, setSelectedLevelId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    // On desktop, auto-select first category
+    if (window.innerWidth >= 768) {
+       const firstCat = Object.keys(CATEGORIES)[0];
+       if (firstCat) {
+           setSelectedCategoryId(firstCat);
+       }
+    }
+  }, []);
+
+  if (!mounted) return null;
+
   const levels = detectiveData as DetectiveLevel[];
 
-  return (
-    <div className="flex-1 pb-24 max-w-2xl mx-auto w-full px-4 pt-6 md:pt-10">
-      <header className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="bg-emerald-100 p-2 rounded-xl">
-            <Search className="w-6 h-6 text-emerald-600" />
-          </div>
-          <h1 className="text-3xl font-black text-slate-800">
-            {language === 'en' ? 'Detective' : 'Détective'}
-          </h1>
-        </div>
-        <p className="text-slate-600">
-          {language === 'en' 
-            ? 'Find hidden objects in images to learn Thai vocabulary.'
-            : 'Trouvez les objets cachés dans les images pour apprendre le vocabulaire thaï.'}
-        </p>
-      </header>
+  // Group levels by category
+  const groupedLevels = levels.reduce((acc, level) => {
+    const catId = level.categoryId || 'unknown';
+    if (!acc[catId]) acc[catId] = [];
+    acc[catId].push(level);
+    return acc;
+  }, {} as Record<string, DetectiveLevel[]>);
 
-      <div className="space-y-4">
-        {levels.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-2xl border-2 border-dashed border-slate-200">
-            <Search className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500 font-medium">
-              {language === 'en' 
-                ? 'No levels available yet. New levels are coming soon!'
-                : 'Aucun niveau disponible pour le moment. De nouveaux niveaux arrivent bientôt !'}
-            </p>
+  const selectedLevel = levels.find(l => l.id === selectedLevelId) as DetectiveLevel | undefined;
+  const currentCategoryLevels = selectedCategoryId ? (groupedLevels[selectedCategoryId] || []) : [];
+  const selectedCategory = selectedCategoryId ? CATEGORIES[selectedCategoryId] : null;
+
+  // Determine what is shown on mobile based on state hierarchy
+  const mobileView = selectedLevelId 
+                     ? 'level' 
+                     : (selectedCategoryId ? 'category' : 'categories_list');
+
+  return (
+    <div className="relative h-[100dvh] md:h-screen lg:h-[100dvh] bg-[#F5F7FA] md:bg-white font-sans text-slate-800 flex flex-col md:flex-row overflow-hidden pb-[72px] md:pb-0">
+      
+      {/* LEFT PANEL : Categories or Levels List */}
+      <div className={`w-full md:w-[60%] lg:w-[65%] flex flex-col h-full shrink-0 transition-transform duration-300 md:border-r border-slate-200 bg-white ${mobileView !== 'categories_list' && mobileView !== 'category' ? 'max-md:-translate-x-full max-md:hidden' : ''} ${mobileView === 'level' ? 'max-md:hidden' : ''}`}>
+        
+        {/* Mobile Header (hide on md) */}
+        <header className="bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[3.75rem] md:hidden shrink-0 border-b border-slate-100">
+           <div className="flex items-center justify-between w-full h-full px-4 gap-2">
+            <div className="flex items-center gap-3">
+              {mobileView === 'category' && (
+                 <button 
+                    onClick={() => { setSelectedCategoryId(null); setSelectedLevelId(null); }}
+                    className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shadow-sm"
+                 >
+                    <ArrowLeft size={20} />
+                 </button>
+              )}
+              {mobileView === 'categories_list' && (
+                 <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-sm md:hidden">
+                    <Search size={20} />
+                 </div>
+              )}
+              <h1 className="text-xl font-extrabold text-slate-800 tracking-tight md:hidden">
+                 {mobileView === 'categories_list' ? (language === 'en' ? 'Detective' : 'Détective') : (selectedCategory ? (language === 'en' ? selectedCategory.en : selectedCategory.fr) : '')}
+              </h1>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              {mobileView === 'categories_list' && <PWAInstallButton />}
+              {(mounted && isPWA) && (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
+                  <Star size={18} className="fill-amber-400 stroke-amber-400" />
+                  <span>{xp} XP</span>
+                </div>
+              )}
+            </div>
           </div>
-        ) : (
-          levels.map((level) => (
-            <Link 
-              key={level.id} 
-              href={`/detective/level/${level.id}`}
-              className="group block bg-white rounded-2xl p-4 border-2 border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all relative overflow-hidden"
-            >
-              <div className="flex gap-4 items-center">
-                <div className="w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-slate-100 relative">
-                  {level.imageUrl ? (
-                    <Image 
-                      src={level.imageUrl} 
-                      alt={language === 'en' ? level.titleEn : level.title} 
-                      fill 
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Search className="w-8 h-8 text-slate-300" />
-                    </div>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-xl font-bold text-slate-800 mb-1 group-hover:text-emerald-600 transition-colors">
-                    {language === 'en' ? level.titleEn : level.title}
-                  </h2>
-                  <p className="text-sm text-slate-500 line-clamp-2">
-                    {language === 'en' ? level.descriptionEn : level.description}
-                  </p>
-                  <div className="mt-2 flex items-center gap-2">
-                    <span className="text-xs font-bold bg-emerald-50 text-emerald-600 px-2 py-1 rounded-md">
-                      {level.objects?.length || 0} {language === 'en' ? 'objects' : 'objets'}
-                    </span>
-                  </div>
-                </div>
-                <ChevronRight className="w-6 h-6 text-slate-300 group-hover:text-emerald-500 transition-colors" />
-              </div>
-            </Link>
-          ))
+        </header>
+
+        {/* Desktop Header for Categories List (only show if no category selected) */}
+        {!selectedCategoryId && (
+            <div className="hidden md:flex h-16 items-center justify-between px-6 border-b border-slate-100 shrink-0">
+               <h1 className="text-xl font-extrabold text-slate-800 tracking-tight flex items-center gap-2">
+                  <Search size={24} className="text-emerald-500" />
+                  {language === 'en' ? 'Detective Categories' : 'Catégories Détective'}
+               </h1>
+            </div>
         )}
+
+        {/* Main List Area */}
+        <div className="flex-1 overflow-y-auto w-full">
+          
+          {/* View: Categories List */}
+          {!selectedCategoryId && (
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8">
+               {Object.entries(CATEGORIES).map(([catId, cat], idx) => {
+                  const hasLevels = groupedLevels[catId] && groupedLevels[catId].length > 0;
+                  if (!hasLevels) return null;
+                  return (
+                    <motion.button
+                      key={catId}
+                      initial={window.innerWidth < 768 ? false : { opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: window.innerWidth < 768 ? 0 : idx * 0.1, ease: "easeOut" }}
+                      style={{ WebkitTransform: 'translateZ(0)', willChange: 'transform, opacity' }}
+                      onClick={() => {
+                        setSelectedCategoryId(catId);
+                        if (window.innerWidth >= 768 && groupedLevels[catId]?.length > 0) {
+                           setSelectedLevelId(groupedLevels[catId][0].id);
+                        }
+                      }}
+                      className="group flex flex-col items-start p-4 rounded-3xl border-2 border-slate-100 bg-white hover:border-emerald-200 transition-all text-left shadow-sm hover:shadow-md w-full relative overflow-hidden"
+                    >
+                       {cat.imageUrl && (
+                          <div className="w-full h-40 rounded-2xl bg-slate-100 overflow-hidden relative mb-4">
+                            <IconImage src={cat.imageUrl} alt={cat.en} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                            <div className="absolute top-3 left-3 bg-white/90 backdrop-blur rounded-xl px-2 py-1 shadow-sm text-lg">
+                               {cat.emoji}
+                            </div>
+                          </div>
+                       )}
+                       <div className="flex flex-col gap-1 w-full flex-1">
+                         <h2 className="text-lg font-extrabold text-slate-800 flex items-center gap-2">
+                           {!cat.imageUrl && <span className="text-2xl">{cat.emoji}</span>}
+                           {language === 'en' ? cat.en : cat.fr}
+                         </h2>
+                         {cat.description && (
+                            <p className="text-sm text-slate-500 mt-1 line-clamp-2">
+                              {language === 'en' ? cat.description.en : cat.description.fr}
+                            </p>
+                         )}
+                         <div className="mt-auto pt-4 flex items-center text-emerald-600 font-bold text-sm">
+                            {language === 'en' ? 'Explore Category' : 'Explorer la catégorie'}
+                            <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                         </div>
+                       </div>
+                    </motion.button>
+                  );
+               })}
+             </div>
+          )}
+
+          {/* View: Levels List for Selected Category */}
+          {selectedCategoryId && selectedCategory && (
+             <div className="flex flex-col h-full bg-[#fdfdfd]">
+                {/* Desktop Breadcrumb & Category Header */}
+                <div className="p-4 md:p-8 shrink-0 md:border-b border-slate-100 bg-white shadow-[0_4px_20px_-15px_rgba(0,0,0,0.1)] relative z-10">
+                     <div className="hidden md:flex items-center gap-2 text-sm font-bold text-slate-400 mb-6">
+                          <button onClick={() => { setSelectedCategoryId(null); setSelectedLevelId(null); }} className="hover:text-slate-600 transition-colors">
+                              {language === 'en' ? 'Categories' : 'Catégories'}
+                          </button>
+                          <ChevronRight size={16} />
+                          <span className="text-slate-700">{language === 'en' ? selectedCategory.en : selectedCategory.fr}</span>
+                     </div>
+
+                     {/* Mobile Header Hero Layout */}
+                     <div className="md:hidden flex flex-col gap-4">
+                         <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] rounded-3xl overflow-hidden shadow-lg border border-slate-200">
+                              {selectedCategory.imageUrl ? (
+                                  <>
+                                      <IconImage src={selectedCategory.imageUrl} alt="" fill className="object-cover" />
+                                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent" />
+                                  </>
+                              ) : (
+                                  <div className="absolute inset-0 bg-emerald-100 flex items-center justify-center">
+                                      <Search size={64} className="text-emerald-500 opacity-50" />
+                                  </div>
+                              )}
+                              
+                              <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-2">
+                                  {selectedCategory.imageUrl && <div className="text-3xl drop-shadow-md mb-1">{selectedCategory.emoji}</div>}
+                                  <h1 className={`text-2xl font-extrabold leading-tight ${selectedCategory.imageUrl ? 'text-white' : 'text-slate-800'}`}>
+                                       {language === 'en' ? selectedCategory.en : selectedCategory.fr}
+                                  </h1>
+                                  <p className={`text-sm leading-relaxed line-clamp-3 ${selectedCategory.imageUrl ? 'text-slate-200' : 'text-slate-600'}`}>
+                                       {language === 'en' && selectedCategory.description ? selectedCategory.description.en : selectedCategory.description?.fr}
+                                  </p>
+                              </div>
+                         </div>
+                     </div>
+
+                     {/* Desktop Header Layout */}
+                     <div className="hidden md:flex flex-row gap-6 items-start">
+                          {selectedCategory.imageUrl && (
+                              <div className="w-56 h-36 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow relative shrink-0">
+                                  <IconImage src={selectedCategory.imageUrl} alt="" fill className="object-cover" />
+                                  <div className="absolute bottom-3 left-3 text-3xl drop-shadow-md">{selectedCategory.emoji}</div>
+                              </div>
+                          )}
+                          <div className="flex-1 flex flex-col w-full">
+                              <h1 className="text-3xl font-extrabold text-slate-900 mb-3">
+                                   {language === 'en' ? selectedCategory.en : selectedCategory.fr}
+                              </h1>
+                              <p className="text-slate-500 text-base leading-relaxed mb-6 line-clamp-3">
+                                   {language === 'en' && selectedCategory.description ? selectedCategory.description.en : selectedCategory.description?.fr}
+                              </p>
+                          </div>
+                     </div>
+                </div>
+
+                {/* Chapters list (vertical timeline style) */}
+                <div className="flex-1 p-4 md:p-8 relative min-h-0">
+                     <div className="flex flex-col gap-4 md:gap-6 relative z-10 w-full max-w-4xl mx-auto pb-8">
+                         {currentCategoryLevels.map((level, index) => {
+                             const isSelected = selectedLevelId === level.id;
+                             
+                             return (
+                               <div key={level.id} className="flex gap-4 md:gap-6 items-stretch relative">
+                                   {/* Timeline circle */}
+                                   <div className="hidden md:flex flex-col items-center shrink-0 w-10 mt-6 relative z-10">
+                                       <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-base z-10 transition-colors shadow-[0_0_15px_-3px_rgba(0,0,0,0.1)]
+                                           ${isSelected ? 'bg-emerald-100 text-emerald-600 ring-4 ring-emerald-50' : 
+                                             'bg-slate-100 text-slate-500 hover:bg-emerald-50 hover:text-emerald-500' 
+                                           }`}>
+                                            {index + 1}
+                                       </div>
+                                   </div>
+
+                                   {/* The Card */}
+                                   <motion.button
+                                     initial={window.innerWidth < 768 ? false : { opacity: 0, x: 20 }}
+                                     animate={{ opacity: 1, x: 0 }}
+                                     transition={{ duration: 0.4, delay: window.innerWidth < 768 ? 0 : index * 0.1, ease: "easeOut" }}
+                                     style={{ WebkitTransform: 'translateZ(0)', willChange: 'transform, opacity' }}
+                                     onClick={() => setSelectedLevelId(level.id)}
+                                     className={`group flex-1 flex flex-col md:flex-row items-stretch md:items-center p-3 md:p-4 rounded-3xl border-2 transition-all text-left relative overflow-hidden
+                                       ${isSelected ? 'border-emerald-400 bg-emerald-50/10 shadow-md ring-4 ring-emerald-50' : 
+                                         'border-transparent bg-white shadow-sm hover:shadow-md hover:border-slate-200'} ...
+                                     `}
+                                   >
+                                      {/* Inside the card */}
+                                      <div className="flex items-center gap-4 w-full">
+                                         {level.imageUrl ? (
+                                             <div className={`w-28 h-20 md:w-40 md:h-28 rounded-2xl overflow-hidden shrink-0 relative transition-all`}>
+                                                 <IconImage src={level.imageUrl} alt="" fill className="object-cover" />
+                                             </div>
+                                         ) : (
+                                            <div className={`w-28 h-20 md:w-40 md:h-28 rounded-2xl shrink-0 flex items-center justify-center bg-slate-100`}>
+                                               <Search size={32} className="text-slate-300 relative z-0" />
+                                            </div>
+                                         )}
+
+                                         <div className="flex-1 min-w-0 pr-2 py-1 md:py-2 flex flex-col h-full justify-center">
+                                            <div className="mb-auto">
+                                                <h3 className={`font-extrabold text-base md:text-lg text-slate-800 truncate`}>
+                                                     {index + 1}. {language === 'en' ? level.titleEn : level.title}
+                                                </h3>
+                                                <p className={`hidden md:block text-sm text-slate-500 truncate mt-1`}>
+                                                     {language === 'en' ? level.descriptionEn : level.description}
+                                                </p>
+                                            </div>
+
+                                            <div className={`mt-3 flex items-center gap-3 md:gap-4 text-[11px] md:text-xs font-bold`}>
+                                                <div className="flex items-center gap-1.5 text-slate-400">
+                                                   <Search size={14} /> {level.objects?.length || 0} {language === 'en' ? 'objects' : 'objets'}
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-orange-400">
+                                                   <Star size={14} className="fill-current" /> +50
+                                                </div>
+                                            </div>
+                                         </div>
+                                         <ChevronRight size={20} className={`text-slate-300 shrink-0 mx-2 hidden md:block transition-transform ${isSelected ? 'translate-x-1 text-emerald-400' : 'group-hover:translate-x-1'}`} />
+                                      </div>
+                                   </motion.button>
+                               </div>
+                             );
+                         })}
+                     </div>
+                </div>
+             </div>
+          )}
+        </div>
       </div>
+
+      {/* RIGHT PANEL : Detail & Action */}
+      <div className={`flex-1 flex flex-col h-full bg-[#f8fafc] md:bg-white z-20 shadow-[-10px_0_30px_-15px_rgba(0,0,0,0.05)] w-full md:w-[40%] lg:w-[35%] relative ${mobileView === 'level' ? 'translate-x-0 absolute inset-0' : 'max-md:hidden'} md:relative`}>
+         {selectedLevel ? (
+             <div className="flex flex-col h-full overflow-y-auto">
+                {/* Detail Header (Mobile has back button) */}
+                <div className="md:hidden h-[3.75rem] flex items-center px-4 bg-white/80 backdrop-blur sticky top-0 z-50 border-b border-slate-100 shrink-0">
+                   <button 
+                     onClick={() => setSelectedLevelId(null)}
+                     className="w-10 h-10 -ml-2 mr-2 bg-slate-100 rounded-full flex justify-center items-center text-slate-600"
+                   >
+                     <ArrowLeft size={20} />
+                   </button>
+                   <h2 className="text-lg font-extrabold text-slate-800 truncate">
+                      {language === 'en' ? selectedLevel.titleEn : selectedLevel.title}
+                   </h2>
+                </div>
+
+                <div className="p-4 md:p-8 flex flex-col relative w-full max-w-xl mx-auto">
+                   {/* Big Image Cover */}
+                   <div className="w-full aspect-video md:h-56 rounded-3xl overflow-hidden relative shadow-md shrink-0 mb-6 group bg-slate-200">
+                       {selectedLevel.imageUrl ? (
+                           <IconImage src={selectedLevel.imageUrl} alt="" fill className="object-cover" />
+                       ) : (
+                           <div className="w-full h-full flex items-center justify-center flex-col bg-gradient-to-br from-emerald-100 to-emerald-50 text-emerald-400">
+                              <Search size={48} className="mb-2" />
+                           </div>
+                       )}
+                       
+                       {/* Mock location tag if you want, similar to conversations */}
+                       <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur text-slate-600 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm">
+                           <MapPin size={12} className="text-emerald-500" /> {language === 'en' ? 'Exploration' : 'Exploration'}
+                       </div>
+                   </div>
+
+                   {/* Title & Desc */}
+                   <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3 leading-tight">
+                       {language === 'en' ? selectedLevel.titleEn : selectedLevel.title}
+                   </h2>
+                   <p className="text-slate-500 text-sm md:text-base mb-6 leading-relaxed">
+                       {language === 'en' ? selectedLevel.descriptionEn : selectedLevel.description}
+                   </p>
+
+                   {/* Stats row */}
+                   <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-8 border-b border-slate-100 pb-6">
+                       <div className="flex items-center gap-2 text-sm text-slate-500 font-bold bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+                           <Search size={16} className="text-slate-400" /> {selectedLevel.objects?.length || 0} {language === 'en' ? 'objects to find' : 'objets à trouver'}
+                       </div>
+                       <div className="flex items-center gap-2 text-sm text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg border border-orange-100">
+                           <Star size={16} className="fill-orange-400 text-orange-400" /> +50 XP
+                       </div>
+                   </div>
+
+                   {/* Play Button */}
+                   <div className="flex flex-col gap-3 pb-8">
+                       <Link href={`/detective/level/${selectedLevel.id}`} className="group flex items-center p-4 rounded-3xl border-2 border-emerald-400 bg-emerald-500 hover:bg-emerald-600 transition-colors shadow-lg">
+                           <div className="w-12 h-12 rounded-2xl bg-white/20 text-white flex items-center justify-center shrink-0 mr-4 shadow-sm backdrop-blur-sm">
+                               <Play size={24} className="fill-current" />
+                           </div>
+                           <div className="flex-1">
+                               <div className="font-extrabold text-white text-lg">
+                                   {language === 'en' ? 'Start Level' : 'Démarrer le niveau'}
+                               </div>
+                               <div className="text-sm font-medium text-emerald-100">
+                                   {language === 'en' ? 'Find hidden objects' : 'Trouver les objets cachés'}
+                               </div>
+                           </div>
+                           <ChevronRight className="text-white shrink-0" />
+                       </Link>
+                   </div>
+
+                </div>
+             </div>
+         ) : (
+             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-slate-50/50 hidden md:flex">
+                <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
+                   <Search size={40} className="text-slate-300" />
+                </div>
+                <h3 className="text-xl font-extrabold text-slate-800 mb-2">
+                    {language === 'en' ? 'Select a level' : 'Sélectionnez un niveau'}
+                </h3>
+                <p className="text-slate-500 max-w-xs">
+                    {language === 'en' 
+                      ? 'Choose a category and select a level to start finding hidden objects and learning Thai vocabulary.' 
+                      : 'Choisissez une catégorie puis sélectionnez un niveau pour commencer à trouver des objets cachés et apprendre du vocabulaire.'}
+                </p>
+             </div>
+         )}
+      </div>
+
     </div>
   );
 }
