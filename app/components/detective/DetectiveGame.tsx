@@ -36,15 +36,32 @@ export default function DetectiveGame({ level }: Props) {
   const [layoutTrigger, setLayoutTrigger] = useState(0);
 
   useEffect(() => {
+    let timeoutIds: NodeJS.Timeout[] = [];
+    
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
       setIsPortraitPhone(w < 768 && h > w);
       setIsLandscapePhone(h < 600 && w > h);
+      
+      // Force layout recalculations during and after the mobile rotation animation
+      timeoutIds.forEach(clearTimeout);
+      timeoutIds = [
+        setTimeout(() => setLayoutTrigger(t => t + 1), 100),
+        setTimeout(() => setLayoutTrigger(t => t + 1), 300),
+        setTimeout(() => setLayoutTrigger(t => t + 1), 700)
+      ];
     };
+    
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+      timeoutIds.forEach(clearTimeout);
+    };
   }, []);
 
   useEffect(() => {
