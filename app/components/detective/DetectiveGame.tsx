@@ -31,6 +31,8 @@ export default function DetectiveGame({ level }: Props) {
   const [isLandscapePhone, setIsLandscapePhone] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [imgLayout, setImgLayout] = useState({ width: 100, height: 100, offsetX: 0, offsetY: 0, unrotatedW: 100, unrotatedH: 100 });
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,6 +45,48 @@ export default function DetectiveGame({ level }: Props) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!imgRef.current || !containerRef.current) return;
+    
+    const updateLayout = () => {
+      if (!imgRef.current || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const unrotatedW = isPortraitPhone ? rect.height : rect.width;
+      const unrotatedH = isPortraitPhone ? rect.width : rect.height;
+      
+      const natW = imgRef.current.naturalWidth || 1;
+      const natH = imgRef.current.naturalHeight || 1;
+      
+      const containerRatio = unrotatedW / unrotatedH;
+      const imgRatio = natW / natH;
+      
+      let renderedW = unrotatedW;
+      let renderedH = unrotatedH;
+      let offX = 0;
+      let offY = 0;
+      
+      if (imgRatio > containerRatio) {
+        // Image is wider, letterboxed top/bottom
+        renderedH = unrotatedW / imgRatio;
+        offY = (unrotatedH - renderedH) / 2;
+      } else {
+        renderedW = unrotatedH * imgRatio;
+        offX = (unrotatedW - renderedW) / 2;
+      }
+      
+      setImgLayout({ width: renderedW, height: renderedH, offsetX: offX, offsetY: offY, unrotatedW, unrotatedH });
+    };
+
+    updateLayout();
+    
+    const observer = new ResizeObserver(() => {
+      updateLayout();
+    });
+    observer.observe(containerRef.current);
+    
+    return () => observer.disconnect();
+  }, [isPortraitPhone]);
 
   useEffect(() => {
     if (level.objects && level.objects.length > 0) {
@@ -116,28 +160,26 @@ export default function DetectiveGame({ level }: Props) {
     if (!currentObj) return;
 
     const rect = containerRef.current.getBoundingClientRect();
-    let containerX, containerY;
+    let clickX, clickY;
     
     if (isPortraitPhone) {
       const screenOffsetX = e.clientX - rect.left;
       const screenOffsetY = e.clientY - rect.top;
-      // Rotated 90deg clockwise: screen Y is container X, inverted screen X is container Y
-      containerX = screenOffsetY;
-      containerY = rect.width - screenOffsetX;
+      clickX = screenOffsetY;
+      clickY = rect.width - screenOffsetX;
     } else {
-      containerX = e.clientX - rect.left;
-      containerY = e.clientY - rect.top;
+      clickX = e.clientX - rect.left;
+      clickY = e.clientY - rect.top;
     }
 
-    const unrotatedWidth = isPortraitPhone ? rect.height : rect.width;
-    const unrotatedHeight = isPortraitPhone ? rect.width : rect.height;
+    // clickX and clickY are relative to the container.
+    // Convert to target pixel inside the rendered image.
+    const targetXPixel = imgLayout.offsetX + (currentObj.x / 100) * imgLayout.width;
+    const targetYPixel = imgLayout.offsetY + (currentObj.y / 100) * imgLayout.height;
+    const targetRadiusPixel = (currentObj.radius / 100) * imgLayout.width;
 
-    const targetXPixel = (currentObj.x / 100) * unrotatedWidth;
-    const targetYPixel = (currentObj.y / 100) * unrotatedHeight;
-    const targetRadiusPixel = (currentObj.radius / 100) * unrotatedWidth;
-
-    const dx = containerX - targetXPixel;
-    const dy = containerY - targetYPixel;
+    const dx = clickX - targetXPixel;
+    const dy = clickY - targetYPixel;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance <= targetRadiusPixel) {
@@ -256,40 +298,44 @@ export default function DetectiveGame({ level }: Props) {
       className="w-full shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 bg-slate-900 h-full rounded-none"
     >
       <div 
-        className="relative inline-block cursor-crosshair select-none"
+        className="relative w-full h-full flex items-center justify-center cursor-crosshair select-none"
         ref={containerRef}
         onClick={handleImageClick}
-        style={{
-          maxWidth: '100%',
-          maxHeight: '100%',
-          minWidth: 0,
-          minHeight: 0,
-        }}
       >
         <img
+          ref={imgRef}
           src={level.imageUrl}
           alt="Level"
-          className="block pointer-events-none"
-          style={{ 
-             maxWidth: '100%', 
-             maxHeight: '100%',
-             width: 'auto',
-             height: 'auto'
+          className="block w-full h-full pointer-events-none object-contain"
+          onLoad={() => {
+            // Trigger a resize calculation when image loads
+            window.dispatchEvent(new Event('resize'));
           }}
         />
 
-        {foundObjects.map(obj => (
-          <div
-            key={obj.id}
-            className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
-            style={{
-              left: `${obj.x}%`,
-              top: `${obj.y}%`,
-              width: `${obj.radius * 2}%`,
-              paddingTop: `${obj.radius * 2}%`,
-            }}
-          />
-        ))}
+        {/* This div exactly perfectly overlays the rendered image */}
+        <div 
+          className="absolute pointer-events-none"
+          style={{
+            left: `${imgLayout.offsetX}px`,
+            top: `${imgLayout.offsetY}px`,
+            width: `${imgLayout.width}px`,
+            height: `${imgLayout.height}px`,
+          }}
+        >
+          {foundObjects.map(obj => (
+            <div
+              key={obj.id}
+              className="absolute border-4 border-emerald-500/50 bg-emerald-500/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500 animate-in zoom-in"
+              style={{
+                left: `${obj.x}%`,
+                top: `${obj.y}%`,
+                width: `${obj.radius * 2}%`,
+                paddingTop: `${obj.radius * 2}%`,
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
