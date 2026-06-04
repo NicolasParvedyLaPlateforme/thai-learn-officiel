@@ -3,7 +3,7 @@
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
-import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star } from 'lucide-react';
+import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star, Eye } from 'lucide-react';
 import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
 import confetti from 'canvas-confetti';
@@ -37,6 +37,11 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
   const [layoutTrigger, setLayoutTrigger] = useState(0);
   const [debugInfo, setDebugInfo] = useState<any>(null); // -- A SUPPRIMER --
   const [isDev, setIsDev] = useState(false);
+  const [isTranslationRevealed, setIsTranslationRevealed] = useState(false);
+  const [isMagnifierActive, setIsMagnifierActive] = useState(false);
+  const [timerSeconds, setTimerSeconds] = useState(0);
+
+  const AUTO_HIGHLIGHT_TIME = 15;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -141,8 +146,21 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
   useEffect(() => {
     if (levelState === 'playing' && objects[currentIndex]) {
       playThaiTTS(objects[currentIndex].th);
+      setIsTranslationRevealed(false);
+      setIsMagnifierActive(false);
+      setTimerSeconds(0);
     }
   }, [currentIndex, levelState, objects]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (levelState === 'playing') {
+      interval = setInterval(() => {
+        setTimerSeconds(prev => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [currentIndex, levelState]);
 
   useEffect(() => {
     const stars = Math.max(0, 5 - Math.floor(mistakes / 2));
@@ -359,22 +377,47 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         >
           {/* Active Hitbox: perfectly aligns and relies on browser's native hit testing */}
           {currentObj && levelState === 'playing' && (
-             <div
-               className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-crosshair z-10"
-               style={{
-                 left: `${currentObj.x}%`,
-                 top: `${currentObj.y}%`,
-                 width: `${currentObj.radius * 2}%`,
-                 paddingTop: `${currentObj.radius * 2}%`,
-               }}
-               onPointerDown={(e) => {
-                 e.stopPropagation(); // Prevent the mistake handler from firing
-                 e.preventDefault();
-                 if (levelState === 'playing') {
-                   handleCorrect();
-                 }
-               }}
-             />
+             <>
+               {timerSeconds >= AUTO_HIGHLIGHT_TIME && !isMagnifierActive && (
+                 <div
+                   className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 animate-ping opacity-60 bg-amber-400"
+                   style={{
+                     left: `${currentObj.x}%`,
+                     top: `${currentObj.y}%`,
+                     width: `${currentObj.radius * 2.5}%`,
+                     paddingTop: `${currentObj.radius * 2.5}%`,
+                   }}
+                 />
+               )}
+               {timerSeconds >= AUTO_HIGHLIGHT_TIME && !isMagnifierActive && (
+                 <div
+                   className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 opacity-40 bg-amber-400 blur-sm"
+                   style={{
+                     left: `${currentObj.x}%`,
+                     top: `${currentObj.y}%`,
+                     width: `${currentObj.radius * 2.2}%`,
+                     paddingTop: `${currentObj.radius * 2.2}%`,
+                   }}
+                 />
+               )}
+               <div
+                 className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-crosshair z-10"
+                 style={{
+                   left: `${currentObj.x}%`,
+                   top: `${currentObj.y}%`,
+                   width: `${currentObj.radius * 2}%`,
+                   paddingTop: `${currentObj.radius * 2}%`,
+                 }}
+                 onPointerDown={(e) => {
+                   e.stopPropagation(); // Prevent the mistake handler from firing
+                   e.preventDefault();
+                   if (levelState === 'playing') {
+                     if (isMagnifierActive) setIsMagnifierActive(false);
+                     handleCorrect();
+                   }
+                 }}
+               />
+             </>
           )}
 
           {foundObjects.map(obj => (
@@ -389,6 +432,16 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
               }}
             />
           ))}
+
+          {/* Magnifier Overlay */}
+          {isMagnifierActive && currentObj && levelState === 'playing' && (
+            <div 
+              className="absolute inset-0 pointer-events-none z-20 transition-opacity duration-500"
+              style={{
+                background: `radial-gradient(circle at ${currentObj.x}% ${currentObj.y}%, transparent 0%, rgba(0,0,0,0.85) ${Math.max(12, currentObj.radius * 2.5)}%, rgba(0,0,0,0.95) 100%)`
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -396,7 +449,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
   return (
     <div
-      className={`z-[100] bg-slate-900 flex flex-row overflow-hidden fixed inset-0`}
+      className={`z-[100] bg-slate-900 flex flex-col overflow-hidden fixed inset-0 font-sans`}
       style={isPortraitPhone ? {
         width: '100vh',
         height: '100vw',
@@ -404,79 +457,99 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         transformOrigin: 'top left'
       } : undefined}
     >
-      {/* Left HUD Panel */}
-      <div
-        className={`${isLandscapePhone ? 'w-[15%] min-w-[100px] max-w-[140px] px-2 py-2' : 'w-[25%] md:w-[30%] max-w-[160px] md:max-w-[300px] min-w-[110px] md:min-w-[200px] py-2 md:py-4 px-2 md:px-6'} bg-slate-800 border-r border-slate-700 flex flex-col items-center shrink-0 h-full overflow-y-auto`}
-        style={{
-          paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(0.5rem, env(safe-area-inset-left))'
-        }}
-      >
-        {/* Top Actions */}
-        <div className="flex flex-row gap-2 items-center justify-center w-full shrink-0">
-          <Link href="/detective" className="p-2 text-slate-400 hover:text-white bg-slate-700/50 hover:bg-slate-700 rounded-xl transition-colors">
-            <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
-          </Link>
-        </div>
-
-        {/* Middle: Word & Sound */}
-        <div className={`flex-1 flex flex-col items-center justify-center gap-1 w-full px-1 ${isLandscapePhone ? 'my-1' : 'md:gap-4 my-2 md:my-4'}`}>
-          <button
-            onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
-            className={`rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/40 transition-transform active:scale-95 shrink-0 ${isLandscapePhone ? 'w-8 h-8 md:w-10 md:h-10' : 'w-8 h-8 md:w-16 md:h-16'}`}
-          >
-            <Volume2 className={isLandscapePhone ? 'w-4 h-4 md:w-5 md:h-5' : 'w-4 h-4 md:w-8 md:h-8'} />
-          </button>
-          <div className="text-center w-full px-1 pt-1 pb-2">
-            <h3 className={`${isLandscapePhone ? 'text-sm md:text-base' : 'text-base sm:text-lg md:text-3xl'} font-bold font-thai text-white leading-normal break-words`}>
-              {currentObj.th}
-            </h3>
-            {(difficulty === 1 || currentMistakes >= 2) && (
-              <p className={`text-emerald-400/80 font-medium leading-tight ${isLandscapePhone ? 'text-[9px] md:text-[10px] mt-0.5' : 'text-[10px] sm:text-xs md:text-base mt-1 md:mt-2'}`}>
-                {language === 'en' ? currentObj.en : currentObj.fr}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom: Progress */}
-        <div className="flex flex-col items-center w-full shrink-0 mt-auto">
-          <div className="flex items-center gap-0.5 mb-2 relative">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                size={12}
-                className={
-                  i < earnedStars
-                    ? "fill-amber-400 text-amber-400"
-                    : "fill-slate-600 text-slate-600"
-                }
-              />
-            ))}
-            {showStarLoss && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-2 py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
-                -1 <Star size={12} className="fill-rose-500" />
-              </div>
-            )}
-          </div>
-          <div className={`bg-slate-900/50 rounded-xl border border-slate-700/50 w-full text-center ${isLandscapePhone ? 'px-2 py-1 md:px-3 md:py-2' : 'px-2 py-2 md:px-4 md:py-4'}`}>
-            <div className={`font-bold text-slate-500 uppercase tracking-wider line-clamp-1 ${isLandscapePhone ? 'text-[8px] md:text-[9px] mb-0.5' : 'text-[9px] md:text-xs mb-0.5 md:mb-2'}`}>
-              {language === 'en' ? 'Progress' : 'Progression'}
-            </div>
-            <div className={`font-black text-emerald-500 ${isLandscapePhone ? 'text-sm md:text-base' : 'text-base md:text-2xl'}`}>
-              {currentIndex} / {level.objects?.length || 0}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Image Panel */}
+      {/* Top Image Panel */}
       <div
         className="flex-1 flex flex-col relative overflow-hidden"
         style={{
-          paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(0.5rem, env(safe-area-inset-right))'
+          paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(0.5rem, env(safe-area-inset-left))',
+          paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(0.5rem, env(safe-area-inset-right))',
+          paddingTop: '0.5rem'
         }}
       >
         {renderGameArea()}
+      </div>
+
+      {/* Bottom HUD Panel */}
+      <div
+        className={`h-14 lg:h-32 bg-[#faf7ec] border-t-4 border-[#e0d6b8] flex flex-row items-center justify-between shrink-0 w-full z-[120] shadow-[0_-5px_15px_rgba(0,0,0,0.1)]`}
+        style={{
+          paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(1rem, env(safe-area-inset-left))',
+          paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(1rem, env(safe-area-inset-right))',
+          paddingBottom: isPortraitPhone ? '0' : 'env(safe-area-inset-bottom)'
+        }}
+      >
+        {/* Left side: Back & Progress */}
+        <div className="flex items-center gap-1.5 lg:gap-4 h-full pl-1 lg:pl-2">
+          <Link href="/detective" className="p-1.5 lg:p-3 text-[#5c4a3d] hover:bg-[#e0d6b8]/50 rounded-full transition-colors shrink-0">
+            <ChevronLeft className="w-5 h-5 lg:w-8 lg:h-8" />
+          </Link>
+          <div className="flex flex-col justify-center h-full">
+            <div className="flex gap-0.5 lg:gap-1 mb-0.5 lg:mb-1 relative">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={isLandscapePhone || isPortraitPhone ? 10 : 16} className={i < earnedStars ? "fill-amber-400 text-amber-400" : "fill-[#d4c8a9] text-[#d4c8a9]"} />
+              ))}
+              {showStarLoss && (
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-[10px] lg:text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-1.5 lg:px-2 py-0.5 lg:py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
+                  -1 <Star size={isLandscapePhone || isPortraitPhone ? 10 : 12} className="fill-rose-500" />
+                </div>
+              )}
+            </div>
+            <div className="flex items-center gap-1.5 lg:gap-2">
+              <div className="w-16 lg:w-32 h-2 lg:h-3 bg-[#d4c8a9] rounded-full overflow-hidden border border-[#c1b596] shadow-inner">
+                <div className="h-full bg-emerald-500 transition-all duration-300" style={{ width: `${(currentIndex / (level.objects?.length || 1)) * 100}%` }} />
+              </div>
+              <span className="text-[10px] lg:text-sm font-bold text-[#5c4a3d] min-w-[1.5rem] lg:min-w-[2rem]">{currentIndex}/{level.objects?.length || 0}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Center: Current Word */}
+        <div className="flex-1 flex items-center justify-center gap-2 lg:gap-6 px-1 lg:px-2">
+          <button 
+            onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }} 
+            className="w-8 h-8 lg:w-16 lg:h-16 bg-emerald-500 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-md lg:shadow-lg shrink-0 transition-transform active:scale-95 border lg:border-2 border-emerald-400"
+          >
+            <Volume2 className="w-4 h-4 lg:w-8 lg:h-8" />
+          </button>
+          
+          <div className="flex flex-col items-center justify-center min-w-[80px] lg:min-w-[200px]">
+            <div className="text-lg lg:text-4xl font-bold font-thai text-[#3a2f26] mb-0 lg:mb-1 drop-shadow-sm tracking-wide">
+              {currentObj.th}
+            </div>
+            <div className="h-4 lg:h-8 flex items-center justify-center">
+              {difficulty === 2 ? (
+                <span className="text-[9px] lg:text-sm font-bold text-slate-400 uppercase tracking-widest">{language === 'en' ? 'Hard Mode' : 'Mode Difficile'}</span>
+              ) : (
+                isTranslationRevealed || currentMistakes >= 2 ? (
+                  <span className="text-[10px] lg:text-lg font-bold text-emerald-600 animate-in fade-in slide-in-from-bottom-1 px-2 lg:px-3 py-0 lg:py-0.5 bg-emerald-100/50 rounded-full">
+                    {language === 'en' ? currentObj.en : currentObj.fr}
+                  </span>
+                ) : (
+                  <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-[#e0d6b8] hover:bg-[#d4c8a9] text-[#5c4a3d] rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
+                    <Eye className="w-3 h-3 lg:w-4 lg:h-4" /> {language === 'en' ? 'Show Hint' : 'Voir l\'indice'}
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Right side: Magnifying Glass Bonus */}
+        <div className="flex items-center justify-end w-[60px] lg:w-[120px] pr-1 lg:pr-2">
+          <button 
+            onClick={() => setIsMagnifierActive(!isMagnifierActive)}
+            className={`relative w-8 h-8 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shadow-md lg:shadow-lg transition-all border lg:border-2 overflow-hidden
+              ${isMagnifierActive 
+                ? 'bg-amber-400 border-amber-300 text-amber-900 scale-95 shadow-inner' 
+                : 'bg-gradient-to-b from-[#4bc4e6] to-[#2c98b8] border-[#227b96] text-white hover:scale-105 hover:shadow-xl'
+              }
+            `}
+          >
+            <Search className={`w-4 h-4 lg:w-8 lg:h-8 relative z-10 ${isMagnifierActive ? 'drop-shadow-sm' : 'drop-shadow-md'}`} />
+            {/* Shine effect */}
+            {!isMagnifierActive && <div className="absolute inset-0 z-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-50"></div>}
+          </button>
+        </div>
       </div>
 
       {/* -- DEBUG MODAL DEBUT (à supprimer) -- */}
