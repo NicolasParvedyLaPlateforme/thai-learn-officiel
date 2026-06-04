@@ -33,6 +33,7 @@ export default function DetectiveGame({ level }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgLayout, setImgLayout] = useState({ width: 100, height: 100, offsetX: 0, offsetY: 0, unrotatedW: 100, unrotatedH: 100 });
+  const [layoutTrigger, setLayoutTrigger] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,7 +87,7 @@ export default function DetectiveGame({ level }: Props) {
     observer.observe(containerRef.current);
 
     return () => observer.disconnect();
-  }, [isPortraitPhone]);
+  }, [isPortraitPhone, layoutTrigger]);
 
   useEffect(() => {
     if (level.objects && level.objects.length > 0) {
@@ -275,10 +276,7 @@ export default function DetectiveGame({ level }: Props) {
           src={level.imageUrl}
           alt="Level"
           className="block w-full h-full pointer-events-none object-contain"
-          onLoad={() => {
-            // Trigger a resize calculation when image loads
-            window.dispatchEvent(new Event('resize'));
-          }}
+          onLoad={() => setLayoutTrigger(t => t + 1)}
         />
 
         {/* This div exactly perfectly overlays the rendered image */}

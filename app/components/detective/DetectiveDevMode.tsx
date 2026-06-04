@@ -20,6 +20,7 @@ export default function DetectiveDevMode({ level }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgLayout, setImgLayout] = useState({ width: 100, height: 100, offsetX: 0, offsetY: 0 });
+  const [layoutTrigger, setLayoutTrigger] = useState(0);
 
   useEffect(() => {
     if (!imgRef.current || !containerRef.current) return;
@@ -55,7 +56,7 @@ export default function DetectiveDevMode({ level }: Props) {
     const observer = new ResizeObserver(() => updateLayout());
     observer.observe(containerRef.current);
     return () => observer.disconnect();
-  }, []);
+  }, [layoutTrigger]);
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (editingIndex !== null) return; // Don't draw if editing
@@ -201,7 +202,7 @@ export default function DetectiveDevMode({ level }: Props) {
               src={level.imageUrl} 
               alt="Level" 
               className="block w-full h-full pointer-events-none object-contain"
-              onLoad={() => window.dispatchEvent(new Event('resize'))}
+              onLoad={() => setLayoutTrigger(t => t + 1)}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-slate-400">
