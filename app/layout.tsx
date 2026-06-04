@@ -34,18 +34,23 @@ export const metadata: Metadata = {
 
 import DesktopSidebarLeft from './components/DesktopSidebarLeft';
 import { CommunityModal } from './components/CommunityModal';
+import AuthProvider from './components/AuthProvider';
+import SyncProgress from './components/SyncProgress';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${inter.variable} ${sarabun.variable}`}>
        <body className="font-sans antialiased text-slate-900 bg-slate-50 min-h-screen flex" suppressHydrationWarning>
-         <DesktopSidebarLeft />
-         <CommunityModal />
-         <div className="flex-1 flex flex-col min-h-screen min-w-0">
-           {children}
-           <BottomNav />
-         </div>
-         <Analytics />
+         <AuthProvider>
+           <SyncProgress />
+           <DesktopSidebarLeft />
+           <CommunityModal />
+           <div className="flex-1 flex flex-col min-h-screen min-w-0">
+             {children}
+             <BottomNav />
+           </div>
+           <Analytics />
+         </AuthProvider>
        </body>
     </html>
   );

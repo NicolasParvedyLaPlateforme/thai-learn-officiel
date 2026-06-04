@@ -3,12 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function DesktopSidebarLeft() {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
   const { language, setLanguage, xp, currentStreak, completedLessons, isExerciseRunning, isMobileSidebarOpen, setMobileSidebarOpen } = useProgressStore();
   const globalSuggested = useGlobalSuggestedLesson();
 
@@ -125,6 +127,43 @@ export default function DesktopSidebarLeft() {
               {language === 'fr' ? 'FR' : 'EN'}
             </div>
           </button>
+
+          {/* User Account / Auth */}
+          <div className="mt-2 w-full pt-2 border-t border-emerald-200/60">
+            {status === 'loading' ? (
+              <div className="h-10 w-full animate-pulse bg-slate-200 rounded-xl" />
+            ) : session?.user ? (
+              <div className="flex items-center justify-between gap-2 w-full group-hover:px-2 xl:px-2 transition-all">
+                <div className="flex items-center gap-2 overflow-hidden flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold shrink-0">
+                    {session.user.name?.[0]?.toUpperCase() || 'U'}
+                  </div>
+                  <span className="text-sm font-semibold text-slate-700 truncate">
+                    {session.user.name}
+                  </span>
+                </div>
+                <button
+                  onClick={() => signOut()}
+                  className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0"
+                  title="Se déconnecter"
+                >
+                  <LogOut size={20} />
+                </button>
+              </div>
+            ) : (
+              <Link 
+                href="/login"
+                className="w-full h-10 flex items-center justify-center rounded-xl font-bold bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors px-0 group-hover:px-3 xl:px-3"
+              >
+                <div className="shrink-0 flex items-center justify-center w-6 h-6 transition-transform duration-300 relative">
+                  <User size={20} />
+                </div>
+                <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto ml-0 group-hover:ml-2 xl:ml-2 text-sm whitespace-nowrap">
+                  Se connecter
+                </span>
+              </Link>
+            )}
+          </div>
         </div>
       </nav>
     </>
