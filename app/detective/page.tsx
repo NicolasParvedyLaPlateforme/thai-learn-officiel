@@ -340,18 +340,33 @@ export default function DetectivePage() {
                        </div>
                    </div>
 
-                   {/* Play Button */}
+                   {/* Play Buttons */}
                    <div className="flex flex-col gap-3 pb-8">
-                       <Link href={`/detective/level/${selectedLevel.id}`} className="group flex items-center p-4 rounded-3xl border-2 border-emerald-400 bg-emerald-500 hover:bg-emerald-600 transition-colors shadow-lg">
+                       <Link href={`/detective/level/${selectedLevel.id}?diff=1`} className="group flex items-center p-4 rounded-3xl border-2 border-emerald-400 bg-emerald-500 hover:bg-emerald-600 transition-colors shadow-lg">
                            <div className="w-12 h-12 rounded-2xl bg-white/20 text-white flex items-center justify-center shrink-0 mr-4 shadow-sm backdrop-blur-sm">
                                <Play size={24} className="fill-current" />
                            </div>
                            <div className="flex-1">
                                <div className="font-extrabold text-white text-lg">
-                                   {language === 'en' ? 'Start Level' : 'Démarrer le niveau'}
+                                   {language === 'en' ? 'Level 1 (Thai + Translation)' : 'Niveau 1 (Thaï + Traduction)'}
                                </div>
                                <div className="text-sm font-medium text-emerald-100">
                                    {language === 'en' ? 'Find hidden objects' : 'Trouver les objets cachés'}
+                               </div>
+                           </div>
+                           <ChevronRight className="text-white shrink-0" />
+                       </Link>
+
+                       <Link href={`/detective/level/${selectedLevel.id}?diff=2`} className="group flex items-center p-4 rounded-3xl border-2 border-amber-400 bg-amber-500 hover:bg-amber-600 transition-colors shadow-lg">
+                           <div className="w-12 h-12 rounded-2xl bg-white/20 text-white flex items-center justify-center shrink-0 mr-4 shadow-sm backdrop-blur-sm">
+                               <Star size={24} className="fill-current" />
+                           </div>
+                           <div className="flex-1">
+                               <div className="font-extrabold text-white text-lg">
+                                   {language === 'en' ? 'Level 2 (Thai only)' : 'Niveau 2 (Thaï uniquement)'}
+                               </div>
+                               <div className="text-sm font-medium text-amber-100">
+                                   {language === 'en' ? 'No translations, Thai script only' : 'Aucune traduction, écriture thaï uniquement'}
                                </div>
                            </div>
                            <ChevronRight className="text-white shrink-0" />

@@ -16,6 +16,8 @@ export default async function DetectiveLevelPage(
   const level = (detectiveData as DetectiveLevel[]).find((l) => l.id === id);
 
   const isDev = searchParams?.dev === 'dev';
+  const diffParam = searchParams?.diff;
+  const initialDiff = diffParam === '2' ? 2 : (diffParam === '1' ? 1 : undefined);
 
   // Si le niveau n'existe pas et qu'on est pas en mode dev, on retourne une 404
   if (!level && !isDev) {
@@ -32,5 +34,5 @@ export default async function DetectiveLevelPage(
     objects: []
   };
 
-  return <DetectiveClientWrapper level={effectiveLevel} isDev={isDev} />;
+  return <DetectiveClientWrapper level={effectiveLevel} isDev={isDev} initialDiff={initialDiff} />;
 }
