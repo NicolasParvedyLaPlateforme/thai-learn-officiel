@@ -34,6 +34,7 @@ export default function DetectiveGame({ level }: Props) {
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgLayout, setImgLayout] = useState({ width: 100, height: 100, offsetX: 0, offsetY: 0, unrotatedW: 100, unrotatedH: 100 });
   const [layoutTrigger, setLayoutTrigger] = useState(0);
+  const [debugInfo, setDebugInfo] = useState<any>(null); // -- A SUPPRIMER --
 
   useEffect(() => {
     let timeoutIds: NodeJS.Timeout[] = [];
@@ -289,6 +290,41 @@ export default function DetectiveGame({ level }: Props) {
             pointerEvents: 'auto',
             touchAction: 'none' // Prevent pull-to-refresh or scrolling on touch
           }}
+          // -- DEBUG DEBUT (à supprimer) --
+          onPointerDownCapture={(e) => {
+            if (!currentObj) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            let clickX, clickY;
+            if (isPortraitPhone) {
+              clickX = e.clientY - rect.top;
+              clickY = rect.width - (e.clientX - rect.left);
+            } else {
+              clickX = e.clientX - rect.left;
+              clickY = e.clientY - rect.top;
+            }
+            const targetXPixel = (currentObj.x / 100) * imgLayout.width;
+            const targetYPixel = (currentObj.y / 100) * imgLayout.height;
+            const targetRadiusPixel = (currentObj.radius / 100) * imgLayout.width;
+            const dx = clickX - targetXPixel;
+            const dy = clickY - targetYPixel;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            setDebugInfo({
+              targetX: targetXPixel.toFixed(1),
+              targetY: targetYPixel.toFixed(1),
+              clickX: clickX.toFixed(1),
+              clickY: clickY.toFixed(1),
+              distance: distance.toFixed(1),
+              radius: targetRadiusPixel.toFixed(1),
+              isHit: distance <= targetRadiusPixel,
+              objName: currentObj.th + " (" + currentObj.fr + ")",
+              clientY: e.clientY,
+              rectTop: rect.top,
+              rectHeight: rect.height,
+              imgLayoutHeight: imgLayout.height.toFixed(1)
+            });
+          }}
+          // -- DEBUG FIN --
           onPointerDown={(e) => {
             if (levelState === 'playing') {
               handleMistake();
@@ -416,6 +452,33 @@ export default function DetectiveGame({ level }: Props) {
       >
         {renderGameArea()}
       </div>
+
+      {/* -- DEBUG MODAL DEBUT (à supprimer) -- */}
+      {debugInfo && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4">
+          <div className="bg-white text-slate-800 p-6 rounded-2xl max-w-sm w-full space-y-2 text-sm shadow-xl" style={{ transform: isPortraitPhone ? 'rotate(-90deg)' : 'none' }}>
+            <h3 className="font-bold text-lg mb-2 text-indigo-600">Debug PWA Clic</h3>
+            <p><strong>Objet :</strong> {debugInfo.objName}</p>
+            <p><strong>Cible estimée :</strong> X: {debugInfo.targetX} | Y: {debugInfo.targetY}</p>
+            <p><strong>Position cliquée :</strong> X: {debugInfo.clickX} | Y: {debugInfo.clickY}</p>
+            <p><strong>Distance (Écart) :</strong> {debugInfo.distance} px</p>
+            <p><strong>Périmètre (Rayon) :</strong> {debugInfo.radius} px</p>
+            <p><strong>Dans la zone ? :</strong> {debugInfo.isHit ? <span className="text-emerald-500 font-bold">OUI (Touché)</span> : <span className="text-rose-500 font-bold">NON (Raté)</span>}</p>
+            <hr className="my-2 border-slate-200" />
+            <p className="text-xs text-slate-500"><strong>Détails OS :</strong></p>
+            <p className="text-xs text-slate-500">clientY: {debugInfo.clientY} | rectTop: {debugInfo.rectTop}</p>
+            <p className="text-xs text-slate-500">rectHeight: {debugInfo.rectHeight} | layoutHeight: {debugInfo.imgLayoutHeight}</p>
+            
+            <button 
+              onClick={() => setDebugInfo(null)}
+              className="mt-4 w-full py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-xl"
+            >
+              Fermer la modale
+            </button>
+          </div>
+        </div>
+      )}
+      {/* -- DEBUG MODAL FIN -- */}
     </div>
   );
 }
