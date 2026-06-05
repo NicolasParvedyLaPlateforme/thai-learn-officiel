@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import questsConfig from '../data/quests.json';
 
-export type AppLanguage = 'fr' | 'en';
+export type AppLanguage = 'fr' | 'en' | 'de' | 'es' | 'it';
 
 export interface WritingConfig {
   lessonId: string | 'all';
@@ -131,6 +131,8 @@ interface ProgressState {
   setHasSeenCommunityModal: (seen: boolean) => void;
   showCommunityModal: boolean;
   setShowCommunityModal: (show: boolean) => void;
+  showLanguageModal: boolean;
+  setShowLanguageModal: (show: boolean) => void;
   conversationStars: Record<string, number[]>;
   completedConversations: Record<string, number>;
   completeConversation: (convId: string, level: number, stars?: number) => void;
@@ -170,8 +172,10 @@ export const useProgressStore = create<ProgressState>()(
       hiddenInstructions: [],
       hasSeenCommunityModal: false,
       showCommunityModal: false,
+      showLanguageModal: false,
       setHasSeenCommunityModal: (seen) => set({ hasSeenCommunityModal: seen }),
       setShowCommunityModal: (show) => set({ showCommunityModal: show }),
+      setShowLanguageModal: (show) => set({ showLanguageModal: show }),
       currentStreak: 0,
       longestStreak: 0,
       lastActiveDate: null,
@@ -348,13 +352,19 @@ export const useProgressStore = create<ProgressState>()(
         }
       },
 
-      setLanguage: (lang) => set({ language: lang, languageSetByUser: true }),
+      setLanguage: (lang) => set({ language: lang, languageSetByUser: true, showLanguageModal: false }),
       autoDetectLanguage: () => {
         const state = get();
         if (!state.languageSetByUser && typeof window !== 'undefined' && window.navigator && window.navigator.language) {
           const browserLang = window.navigator.language.toLowerCase();
           if (browserLang.startsWith('en')) {
             set({ language: 'en' });
+          } else if (browserLang.startsWith('de')) {
+            set({ language: 'de' });
+          } else if (browserLang.startsWith('es')) {
+            set({ language: 'es' });
+          } else if (browserLang.startsWith('it')) {
+            set({ language: 'it' });
           } else if (browserLang.startsWith('fr')) {
             set({ language: 'fr' });
           }
@@ -444,7 +454,7 @@ export const useProgressStore = create<ProgressState>()(
       name: 'thai-learning-progress',
       storage: createJSONStorage(() => safeStorage),
       partialize: (state) => Object.fromEntries(
-        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal', 'isMobileSidebarOpen'].includes(key))
+        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal', 'showLanguageModal', 'isMobileSidebarOpen'].includes(key))
       ),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);

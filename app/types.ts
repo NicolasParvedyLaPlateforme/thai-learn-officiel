@@ -3,6 +3,9 @@ export interface Word {
   th: string;
   fr: string;
   en?: string;
+  de?: string;
+  es?: string;
+  it?: string;
   phonetic: string;
   explanation?: string;
   imageUrl?: string;
@@ -13,6 +16,9 @@ export interface Phrase {
   th: string;
   fr: string;
   en?: string;
+  de?: string;
+  es?: string;
+  it?: string;
   phonetic: string;
   components: string[]; // array of word ids
   explanation?: string;
@@ -23,8 +29,14 @@ export interface Lesson {
   id: string;
   title: string;
   titleEn?: string;
+  titleDe?: string;
+  titleEs?: string;
+  titleIt?: string;
   description: string;
   descriptionEn?: string;
+  descriptionDe?: string;
+  descriptionEs?: string;
+  descriptionIt?: string;
   imageUrl?: string;
   words: Word[];
   phrases: Phrase[];
@@ -67,6 +79,9 @@ export interface DetectiveObject {
   th: string;
   fr: string;
   en: string;
+  de?: string;
+  es?: string;
+  it?: string;
   x: number; // percentage
   y: number; // percentage
   radius: number; // percentage
@@ -77,8 +92,14 @@ export interface DetectiveLevel {
   categoryId?: string;
   title: string;
   titleEn: string;
+  titleDe?: string;
+  titleEs?: string;
+  titleIt?: string;
   description: string;
   descriptionEn: string;
+  descriptionDe?: string;
+  descriptionEs?: string;
+  descriptionIt?: string;
   imageUrl: string;
   objects: DetectiveObject[];
 }

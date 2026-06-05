@@ -6,10 +6,11 @@ import { usePathname } from 'next/navigation';
 import { BookOpen, MessageCircle, Brain, Search } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
+import { useTranslation } from '../hooks/useTranslation';
 
 export default function BottomNav() {
   const pathname = usePathname();
-  const { language } = useProgressStore();
+  const { t } = useTranslation();
   const globalSuggested = useGlobalSuggestedLesson();
 
   const [mounted, setMounted] = React.useState(false);
@@ -44,7 +45,7 @@ export default function BottomNav() {
               <span className="absolute -top-1 -right-1.5 w-3 h-3 bg-amber-400 border-2 border-white rounded-full"></span>
             )}
           </div>
-          <span className="text-[10px] font-bold">{language === 'en' ? 'Path' : 'Parcours'}</span>
+          <span className="text-[10px] font-bold">{t('sidebar.path')}</span>
         </Link>
         <Link href={getHrefWithHash('/alphabet', 'alphabet')} className={`flex flex-col items-center justify-center w-full h-full transition-colors relative ${isAlphabetActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <div className="relative">
@@ -53,19 +54,19 @@ export default function BottomNav() {
               <span className="absolute -top-0 -right-1.5 w-3 h-3 bg-amber-400 border-2 border-white rounded-full"></span>
             )}
           </div>
-          <span className="text-[10px] font-bold">Alphabet</span>
+          <span className="text-[10px] font-bold">{t('sidebar.alphabet')}</span>
         </Link>
         <Link href="/conversations" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isConversationsActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <MessageCircle size={24} className={isConversationsActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
-          <span className="text-[10px] font-bold">{language === 'en' ? 'Dialogs' : 'Dialogues'}</span>
+          <span className="text-[10px] font-bold">{t('sidebar.dialogs')}</span>
         </Link>
         <Link href="/detective" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isDetectiveActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <Search size={24} className={isDetectiveActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
-          <span className="text-[10px] font-bold">{language === 'en' ? 'Detective' : 'Détective'}</span>
+          <span className="text-[10px] font-bold">{t('sidebar.detective')}</span>
         </Link>
         <Link href="/practice" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isPracticeActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <Brain size={24} className={isPracticeActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
-          <span className="text-[10px] font-bold">{language === 'en' ? 'Practice' : 'Pratique'}</span>
+          <span className="text-[10px] font-bold">{t('sidebar.practice')}</span>
         </Link>
       </nav>
     </>

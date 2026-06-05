@@ -4,6 +4,7 @@ import { Exercise, Lesson, Word } from "../../../types";
 import { SentenceWithHints } from "../../../components/Hints";
 import { playThaiTTS } from "../../../lib/tts";
 import { motion } from "motion/react";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 interface QuestionAreaProps {
   currentExercise: Exercise;
@@ -22,6 +23,8 @@ export default function QuestionArea({
   isChecking,
   selectedAnswer,
 }: QuestionAreaProps) {
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (currentExercise.type === "intro") {
       playThaiTTS(currentExercise.answer);
@@ -202,9 +205,7 @@ const imageUrl = hideImageForNumbers
                     !currentExercise.forceHideRomanization && (
                       <div className="flex flex-col border-l-2 border-emerald-100 pl-3">
                         <span className="font-medium text-slate-500 text-sm">
-                          {language === "en"
-                            ? "Pronunciation"
-                            : "Prononciation"}
+                          {t('exercise.pronunciation')}
                         </span>
                         <span className="font-bold text-slate-700">
                           {currentExercise.introItem.phonetic}
@@ -258,11 +259,7 @@ const imageUrl = hideImageForNumbers
                       <button
                         onClick={() => playThaiTTS(currentExercise.answer)}
                         className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0 ml-2"
-                        title={
-                          language === "en"
-                            ? "Listen to pronunciation"
-                            : "Écouter la prononciation"
-                        }
+                        title={t('exercise.listen')}
                       >
                         <svg
                           width="20"
