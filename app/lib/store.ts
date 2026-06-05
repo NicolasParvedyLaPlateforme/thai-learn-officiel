@@ -311,7 +311,6 @@ export const useProgressStore = create<ProgressState>()(
         return Object.keys(updates).length > 0 ? updates : {};
       }),
 
-      xp: 0,
       seenAlphabets: [],
       isExerciseRunning: false,
       setExerciseRunning: (state) => set({ isExerciseRunning: state }),
