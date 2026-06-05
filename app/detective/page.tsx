@@ -18,7 +18,7 @@ const CATEGORIES: Record<string, { en: string, fr: string, emoji: string, imageU
 export default function DetectivePage() {
   const [mounted, setMounted] = useState(false);
   const isPWA = useIsPWA();
-  const { language, xp } = useProgressStore();
+  const { language, xp, completedToday } = useProgressStore();
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [selectedLevelId, setSelectedLevelId] = useState<string | null>(null);
 
@@ -280,7 +280,15 @@ export default function DetectivePage() {
                                                    <Search size={14} /> {level.objects?.length || 0} {getTranslation('auto.objects', language)}
                                                 </div>
                                                 <div className="flex items-center gap-1.5 text-orange-400">
-                                                   <Star size={14} className="fill-current" /> +50
+                                                   <Star size={14} className="fill-current" /> 
+                                                   {(completedToday || []).some(k => k.startsWith(`detective_${level.id}_`)) ? (
+                                                     <>
+                                                       <span className="line-through text-slate-400 mr-1 opacity-70">+50</span>
+                                                       <span className="font-bold">+20</span>
+                                                     </>
+                                                   ) : (
+                                                     "+50"
+                                                   )}
                                                 </div>
                                             </div>
                                          </div>
@@ -345,7 +353,15 @@ export default function DetectivePage() {
                            <Search size={16} className="text-slate-400" /> {selectedLevel.objects?.length || 0} {getTranslation('auto.objects_to_find', language)}
                        </div>
                        <div className="flex items-center gap-2 text-sm text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg border border-orange-100">
-                           <Star size={16} className="fill-orange-400 text-orange-400" /> +50 XP
+                           <Star size={16} className="fill-orange-400 text-orange-400" /> 
+                           {(completedToday || []).some(k => k.startsWith(`detective_${selectedLevel.id}_`)) ? (
+                             <>
+                               <span className="line-through text-orange-300 mr-1">+50</span>
+                               <span>+20 XP</span>
+                             </>
+                           ) : (
+                             "+50 XP"
+                           )}
                        </div>
                    </div>
 

@@ -97,6 +97,7 @@ interface ProgressState {
   language: AppLanguage;
   languageSetByUser: boolean;
   completedLessons: string[];
+  completedToday: string[];
   unlockedLessons: string[];
   lessonLevels: Record<string, number>;
   xp: number;
@@ -106,7 +107,8 @@ interface ProgressState {
   setHasHydrated: (state: boolean) => void;
   setLanguage: (lang: AppLanguage) => void;
   autoDetectLanguage: () => void;
-  completeLesson: (lessonId: string, earnedXp: number, playedLevel?: number, earnedStars?: number) => void;
+  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean) => { xp: number, isFirstTime: boolean, key: string };
+  completeLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number, isBilan?: boolean) => void;
   addXp: (amount: number) => void;
   unlockLessonManual: (lessonId: string) => void;
   resetProgress: () => void;
@@ -164,6 +166,7 @@ export const useProgressStore = create<ProgressState>()(
       language: 'fr',
       languageSetByUser: false,
       completedLessons: [],
+      completedToday: [],
       completedConversations: {},
       conversationStars: {},
       unlockedLessons: [],
@@ -277,7 +280,8 @@ export const useProgressStore = create<ProgressState>()(
         if (state.questsDate !== today || isLegacyQuests) {
           return {
             questsDate: today,
-            dailyQuests: generateNewQuests()
+            dailyQuests: generateNewQuests(),
+            completedToday: [] // Reset daily XP rewards
           };
         }
         return {};
@@ -370,7 +374,35 @@ export const useProgressStore = create<ProgressState>()(
           }
         }
       },
-      completeLesson: (lessonId, earnedXp, playedLevel, earnedStars = 3) => {
+      getExpectedXp: (lessonId, levelIndex, isBilan) => {
+        const state = get();
+        const completedToday = state.completedToday || [];
+        let isFirstTime = false;
+        let xp = 0;
+        let key = '';
+
+        if (lessonId.startsWith('detective_')) {
+           key = lessonId;
+           isFirstTime = !completedToday.includes(key);
+           xp = isFirstTime ? 50 : 20;
+        } else if (levelIndex === 10) {
+           key = `learn_${lessonId}_level-10`;
+           isFirstTime = !completedToday.includes(key);
+           xp = isFirstTime ? 200 : 50;
+        } else if (isBilan) {
+           key = `learn_${lessonId}_level-${levelIndex}`;
+           isFirstTime = !completedToday.includes(key);
+           xp = isFirstTime ? 50 : 25;
+        } else {
+           const type = lessonId.startsWith('alphabet_') ? 'alphabet' : 'learn';
+           key = `${type}_${lessonId}_level-${levelIndex}`;
+           isFirstTime = !completedToday.includes(key);
+           xp = isFirstTime ? 20 : 5;
+        }
+
+        return { xp, isFirstTime, key };
+      },
+      completeLesson: (lessonId, fallbackXp, playedLevel, earnedStars = 3, isBilan = false) => {
         set((state) => {
           const currentLevel = state.lessonLevels[lessonId] || 0;
           let newLevel = currentLevel;
@@ -392,10 +424,17 @@ export const useProgressStore = create<ProgressState>()(
             type = 'alphabet';
           }
 
+          const { xp: calculatedXp, isFirstTime, key } = get().getExpectedXp(lessonId, playedLevel !== undefined ? playedLevel : currentLevel, isBilan);
+          const finalXp = lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp);
+
+          const newCompletedToday = state.completedToday || [];
+          const updatedCompletedToday = isFirstTime ? [...newCompletedToday, key] : newCompletedToday;
+
           return {
             completedLessons: state.completedLessons.includes(lessonId) 
               ? state.completedLessons 
               : [...state.completedLessons, lessonId],
+            completedToday: updatedCompletedToday,
             lessonLevels: {
               ...state.lessonLevels,
               [lessonId]: newLevel
@@ -404,7 +443,7 @@ export const useProgressStore = create<ProgressState>()(
               ...state.lessonStars,
               [lessonId]: currentStars
             },
-            xp: state.xp + earnedXp,
+            xp: state.xp + finalXp,
             lastPlayedLessonId: lessonId,
             lastPlayedLessonType: type
           };
@@ -418,7 +457,10 @@ export const useProgressStore = create<ProgressState>()(
         }
 
         get().progressQuest(type, 'lessons', 1);
-        get().progressQuest(type, 'xp', earnedXp);
+        
+        const { xp: finalXp } = get().getExpectedXp(lessonId, playedLevel !== undefined ? playedLevel : (get().lessonLevels[lessonId] || 0), isBilan);
+        const actualXp = lessonId.startsWith('detective_') ? finalXp : (finalXp || fallbackXp);
+        get().progressQuest(type, 'xp', actualXp);
         if (earnedStars >= 3) {
           get().progressQuest(type, 'perfect_lesson', 1);
         }

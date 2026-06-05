@@ -50,6 +50,7 @@ function AlphabetLessonContent() {
   const [showExerciseUI, setShowExerciseUI] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [mistakes, setMistakes] = useState(0);
+  const [earnedXp, setEarnedXp] = useState<number>(0);
 
   const earnedStars = mistakes < 2 ? 3 : mistakes < 4 ? 2 : 1;
 
@@ -113,8 +114,12 @@ function AlphabetLessonContent() {
 
   useEffect(() => {
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
+      if (lesson) {
+        const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, false);
+        setEarnedXp(expected.xp);
+        completeLesson(lesson.id, 0, currentLevel, 3, false);
+      }
       setIsFinished(true);
-      if (lesson) completeLesson(lesson.id, 15, currentLevel, 3);
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
@@ -180,8 +185,12 @@ function AlphabetLessonContent() {
       setSelectedOption(null);
       setShowHint(false);
     } else {
+      if (lesson) {
+        const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, false);
+        setEarnedXp(expected.xp);
+        completeLesson(lesson.id, 0, currentLevel, earnedStars, false);
+      }
       setIsFinished(true);
-      if (lesson) completeLesson(lesson.id, 15, currentLevel, earnedStars);
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }});
     }
   };
@@ -215,7 +224,7 @@ function AlphabetLessonContent() {
         <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
           {language === 'en' ? `Level ${currentLevel + 1} completed!` : `Niveau ${currentLevel + 1} terminé !`}
         </h1>
-        <p className="text-slate-500 mb-8 text-center text-lg font-medium">+ 15 XP</p>
+        <p className="text-slate-500 mb-8 text-center text-lg font-medium">+ {earnedXp || 15} XP</p>
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           {isEndOfUnit && nextUnitIndex !== -1 && (
              <button 

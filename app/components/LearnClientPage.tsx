@@ -60,7 +60,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
   }, [lightweightLessons]);
 
   const router = useRouter();
-  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, language, setLanguage, unlockLessonManual, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex, reviewStats } = useProgressStore();
+  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, language, setLanguage, unlockLessonManual, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex, reviewStats, getExpectedXp } = useProgressStore();
   const learnQuests = dailyQuests?.learn || [];
   const [mounted, setMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -925,6 +925,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                     else estimatedMins = Math.max(1, estimatedMins);
                   }
 
+                  const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'));
+
                   return (
                     <div className="px-7 pt-2 flex flex-col">
                       {/* Badges Container */}
@@ -935,7 +937,12 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         </div>
                         <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
                           <Star size={16} className="fill-amber-500 text-amber-600" />
-                          {selectedLesson.lesson.words ? `+${selectedLesson.lesson.words.length * 2} XP` : '+15 XP'}
+                          {isFirstTime ? `+${expectedXp} XP` : (
+                            <>
+                              <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                              <span>+{expectedXp} XP</span>
+                            </>
+                          )}
                         </div>
                       </div>
 

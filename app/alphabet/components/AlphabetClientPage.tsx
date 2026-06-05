@@ -24,7 +24,7 @@ import { useIsPWA } from '../../../hooks/use-pwa';
 export default function AlphabetClientPage({ lightweightLessons }: { lightweightLessons: any[] }) {
   const router = useRouter();
   const isPWA = useIsPWA();
-  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, unlockLessonManual, language, setLanguage, autoDetectLanguage } = useProgressStore();
+  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, unlockLessonManual, language, setLanguage, autoDetectLanguage, getExpectedXp } = useProgressStore();
   const alphabetQuests = dailyQuests?.alphabet || [];
   const [mounted, setMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -770,6 +770,8 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                         let estimatedSecs = stepsCount * secsPerStep;
                         let estimatedMins = Math.max(1, Math.ceil(estimatedSecs / 60));
                         
+                        const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, false);
+                        
                         return (
                           <div className="px-7 pt-2 flex flex-col">
                         {/* Badges Container */}
@@ -780,7 +782,12 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                           </div>
                           <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
                             <Star size={16} className="fill-amber-500 text-amber-600" />
-                            +15 XP
+                            {isFirstTime ? `+${expectedXp} XP` : (
+                              <>
+                                <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                                <span>+{expectedXp} XP</span>
+                              </>
+                            )}
                           </div>
                         </div>
 

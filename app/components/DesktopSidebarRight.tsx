@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { DailyQuestsWidget } from './DailyQuestsWidget';
 import { ConversationObjectiveWidget } from './ConversationObjectiveWidget';
 import { LeaderboardWidget } from './LeaderboardWidget';
+import { useProgressStore } from '../lib/store';
 
 interface Unit {
   id: string;
@@ -254,17 +255,28 @@ export function DesktopSidebarRight({
                   );
                 })()}
 
-                {/* Badges Container */}
-                <div className="flex items-center justify-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full flex-wrap">
-                  <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
-                    <Clock size={16} className="text-slate-500" />
-                    {estimatedMins} min
-                  </div>
-                  <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
-                    <Star size={16} className="fill-amber-500 text-amber-600" />
-                    +15 XP
-                  </div>
-                </div>
+                {(() => {
+                  const { getExpectedXp } = useProgressStore.getState();
+                  const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'));
+                  
+                  return (
+                    <div className="flex items-center justify-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full flex-wrap">
+                      <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
+                        <Clock size={16} className="text-slate-500" />
+                        {estimatedMins} min
+                      </div>
+                      <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
+                        <Star size={16} className="fill-amber-500 text-amber-600" />
+                        {isFirstTime ? `+${expectedXp} XP` : (
+                          <>
+                            <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                            <span>+{expectedXp} XP</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 {/* Vocab/Letters preview or Bilan Stats */}
                 <div className="mb-4">

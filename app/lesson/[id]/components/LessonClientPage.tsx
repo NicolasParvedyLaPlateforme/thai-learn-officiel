@@ -122,6 +122,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [initialTime, setInitialTime] = useState<number | null>(null);
   const [failedDueToTime, setFailedDueToTime] = useState(false);
+  const [earnedXp, setEarnedXp] = useState<number>(0);
 
   const earnedStars = Math.max(0, 5 - mistakes);
 
@@ -201,8 +202,11 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   useEffect(() => {
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
+      const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
+      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+      setEarnedXp(expected.xp);
       setIsFinished(true);
-      completeLesson(lesson.id, 10 + exercises.length, currentLevel, 3);
+      completeLesson(lesson.id, 0, currentLevel, 3, isBilan);
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
@@ -260,8 +264,11 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setIsCorrect(null);
           setSelectedAnswer(null);
         } else {
+          const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
+          const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+          setEarnedXp(expected.xp);
           setIsFinished(true);
-          completeLesson(lesson.id, 10 + exercises.length, currentLevel, earnedStars);
+          completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
           if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
           }
@@ -284,8 +291,11 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             setSelectedAnswer(null);
           } else {
             // Finished
+            const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
+            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+            setEarnedXp(expected.xp);
             setIsFinished(true);
-            completeLesson(lesson.id, 10 + exercises.length, currentLevel, earnedStars);
+            completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
             }
@@ -405,6 +415,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         timeLeft={timeLeft}
         initialTime={initialTime}
         currentIndex={currentIndex}
+        earnedXp={earnedXp}
       />
     );
   }
@@ -601,11 +612,16 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                             setIsCorrect(null);
                             setSelectedAnswer(null);
                           } else {
+                            const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
+                            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+                            setEarnedXp(expected.xp);
                             setIsFinished(true);
                             completeLesson(
                               lesson.id,
-                              10 + exercises.length,
+                              0,
                               currentLevel,
+                              earnedStars,
+                              isBilan
                             );
                             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                               saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });

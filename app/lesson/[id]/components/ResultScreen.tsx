@@ -16,6 +16,7 @@ interface ResultScreenProps {
   timeLeft?: number | null;
   initialTime?: number | null;
   currentIndex?: number;
+  earnedXp?: number;
 }
 
 export default function ResultScreen({
@@ -29,6 +30,7 @@ export default function ResultScreen({
   timeLeft,
   initialTime,
   currentIndex,
+  earnedXp,
 }: ResultScreenProps) {
   const router = useRouter();
   const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
@@ -113,7 +115,7 @@ export default function ResultScreen({
         </p>
       ) : (
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
-          + {10 + exercisesLength} XP
+          + {earnedXp !== undefined ? earnedXp : 10 + exercisesLength} XP
         </p>
       )}
       
