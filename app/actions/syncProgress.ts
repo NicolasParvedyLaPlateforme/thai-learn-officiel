@@ -12,15 +12,17 @@ export async function saveProgress(data: any) {
   }
 
   try {
-    const { xp, currentStreak, longestStreak, lastActiveDate, ...restProgress } = data;
+    const { xp, currentStreak, longestStreak, lastActiveDate, goldCoins, lastConversionMonth, ...restProgress } = data;
 
     await prisma.user.update({
       where: { email: session.user.email },
       data: {
-        xp: xp || 0,
+        xp: xp !== undefined ? xp : 0,
         currentStreak: currentStreak || 0,
         longestStreak: longestStreak || 0,
         lastActiveDate: lastActiveDate || null,
+        goldCoins: goldCoins || 0,
+        lastConversionMonth: lastConversionMonth || null,
         progressData: restProgress,
       },
     });
@@ -47,6 +49,8 @@ export async function getProgress() {
         currentStreak: true,
         longestStreak: true,
         lastActiveDate: true,
+        goldCoins: true,
+        lastConversionMonth: true,
         progressData: true,
       }
     });
@@ -58,6 +62,8 @@ export async function getProgress() {
       currentStreak: user.currentStreak,
       longestStreak: user.longestStreak,
       lastActiveDate: user.lastActiveDate,
+      goldCoins: user.goldCoins,
+      lastConversionMonth: user.lastConversionMonth,
       ...(typeof user.progressData === 'object' && user.progressData ? user.progressData : {})
     };
 

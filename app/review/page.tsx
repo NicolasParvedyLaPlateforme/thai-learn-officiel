@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../lib/store';
@@ -92,16 +93,16 @@ export default function ReviewPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
         <h1 className="text-3xl font-extrabold text-slate-800 mb-4 text-center">
-          {language === 'en' ? 'No completed lessons' : 'Aucune leçon complétée'}
+          {getTranslation('auto.no_completed_lessons', language)}
         </h1>
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
-          {language === 'en' ? 'You must complete at least one lesson to access this!' : 'Vous devez compléter au moins une leçon pour pouvoir y accéder !'}
+          {getTranslation('auto.you_must_complete_at_least_one', language)}
         </p>
         <button 
           onClick={() => router.push('/practice')}
           className="px-12 py-3 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest w-full max-w-sm"
         >
-          {language === 'en' ? 'Back' : 'Retour'}
+          {getTranslation('auto.back', language)}
         </button>
       </div>
     );
@@ -116,7 +117,7 @@ export default function ReviewPage() {
           </button>
           <div className="text-xl font-bold text-slate-700 flex items-center gap-2">
             <Settings size={20} className="text-indigo-500" />
-            {language === 'en' ? 'Review Options' : 'Options de rappel'}
+            {getTranslation('auto.review_options', language)}
           </div>
           <div className="w-11"></div>
         </header>
@@ -127,8 +128,8 @@ export default function ReviewPage() {
             {/* Option 1: Tooltips (Aide au survol) */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-lg text-slate-800">{language === 'en' ? 'Word hints on hover' : 'Aide au survol (points soulignés)'}</h3>
-                <p className="text-slate-500 text-sm mt-1">{language === 'en' ? 'Show translation and audio when you hover over words' : 'Afficher la traduction et le son au survol des mots'}</p>
+                <h3 className="font-bold text-lg text-slate-800">{getTranslation('auto.word_hints_on_hover', language)}</h3>
+                <p className="text-slate-500 text-sm mt-1">{getTranslation('auto.show_translation_and_audio_whe', language)}</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={options.showWordHints} onChange={() => setOptions({...options, showWordHints: !options.showWordHints})} />
@@ -141,8 +142,8 @@ export default function ReviewPage() {
             {/* Option 2: Useful Vocab */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-lg text-slate-800">{language === 'en' ? 'Useful vocabulary block' : 'Bloc vocabulaire utile'}</h3>
-                <p className="text-slate-500 text-sm mt-1">{language === 'en' ? 'Show the list of words involved under the exercise' : 'Afficher la liste des mots impliqués sous l\'exercice'}</p>
+                <h3 className="font-bold text-lg text-slate-800">{getTranslation('auto.useful_vocabulary_block', language)}</h3>
+                <p className="text-slate-500 text-sm mt-1">{getTranslation('auto.show_the_list_of_words_involve', language)}</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={options.showUsefulVocab} onChange={() => setOptions({...options, showUsefulVocab: !options.showUsefulVocab})} />
@@ -155,8 +156,8 @@ export default function ReviewPage() {
             {/* Option 3: Distractors */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-lg text-slate-800">{language === 'en' ? 'False answers (Distractors)' : 'Faux choix (Distracteurs)'}</h3>
-                <p className="text-slate-500 text-sm mt-1">{language === 'en' ? 'Include wrong choices in options' : 'Inclure de mauvaises réponses dans les choix'}</p>
+                <h3 className="font-bold text-lg text-slate-800">{getTranslation('auto.false_answers_distractors', language)}</h3>
+                <p className="text-slate-500 text-sm mt-1">{getTranslation('auto.include_wrong_choices_in_optio', language)}</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={options.includeDistractors} onChange={() => setOptions({...options, includeDistractors: !options.includeDistractors})} />
@@ -172,7 +173,7 @@ export default function ReviewPage() {
               className="w-full py-4 rounded-2xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-extrabold text-xl shadow-sm hover:bg-indigo-400 active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2"
             >
               <Play size={24} className="fill-white" />
-              {language === 'en' ? 'START REVIEW' : 'COMMENCER LE RAPPEL'}
+              {getTranslation('auto.start_review', language)}
             </button>
           </div>
         </div>
@@ -318,7 +319,7 @@ export default function ReviewPage() {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="font-bold text-slate-400">{language === 'en' ? 'Review ∞' : 'Rappel ∞'}</div>
+          <div className="font-bold text-slate-400">{getTranslation('auto.review_9', language)}</div>
         </div>
       </header>
 

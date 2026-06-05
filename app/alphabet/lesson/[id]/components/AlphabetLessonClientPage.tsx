@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../../../../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useProgressStore } from '../../../../lib/store';
@@ -49,6 +50,7 @@ function AlphabetLessonContent() {
   const [showExerciseUI, setShowExerciseUI] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [mistakes, setMistakes] = useState(0);
+  const [earnedXp, setEarnedXp] = useState<number>(0);
 
   const earnedStars = mistakes < 2 ? 3 : mistakes < 4 ? 2 : 1;
 
@@ -112,8 +114,12 @@ function AlphabetLessonContent() {
 
   useEffect(() => {
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
+      if (lesson) {
+        const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, false);
+        setEarnedXp(expected.xp);
+        completeLesson(lesson.id, 0, currentLevel, 3, false);
+      }
       setIsFinished(true);
-      if (lesson) completeLesson(lesson.id, 15, currentLevel, 3);
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
@@ -179,8 +185,12 @@ function AlphabetLessonContent() {
       setSelectedOption(null);
       setShowHint(false);
     } else {
+      if (lesson) {
+        const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, false);
+        setEarnedXp(expected.xp);
+        completeLesson(lesson.id, 0, currentLevel, earnedStars, false);
+      }
       setIsFinished(true);
-      if (lesson) completeLesson(lesson.id, 15, currentLevel, earnedStars);
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }});
     }
   };
@@ -214,14 +224,14 @@ function AlphabetLessonContent() {
         <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
           {language === 'en' ? `Level ${currentLevel + 1} completed!` : `Niveau ${currentLevel + 1} terminé !`}
         </h1>
-        <p className="text-slate-500 mb-8 text-center text-lg font-medium">+ 15 XP</p>
+        <p className="text-slate-500 mb-8 text-center text-lg font-medium">+ {earnedXp || 15} XP</p>
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           {isEndOfUnit && nextUnitIndex !== -1 && (
              <button 
                onClick={() => router.push(`/alphabet?unit=${nextUnitIndex}`)}
                className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all text-center"
              >
-               {language === 'en' ? 'Next Unit' : 'Aller à l\'unité suivante'}
+               {getTranslation('auto.next_unit', language)}
              </button>
           )}
           {currentLevel + 1 < 4 && (
@@ -229,14 +239,14 @@ function AlphabetLessonContent() {
               onClick={() => router.push(`/alphabet/lesson/${lesson?.id}?level=${currentLevel + 2}`)}
               className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
             >
-              {language === 'en' ? 'Next Level' : 'Prochain Niveau'}
+              {getTranslation('auto.next_level', language)}
             </button>
           )}
           <button 
             onClick={() => router.push(`/alphabet#lesson-${lesson?.id}`)}
             className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
-            {language === 'en' ? 'Back' : 'Retour'}
+            {getTranslation('auto.back', language)}
           </button>
         </div>
       </div>
@@ -251,7 +261,7 @@ function AlphabetLessonContent() {
       return (
         <div className="flex-1 flex flex-col items-center">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-800 text-center mb-8">
-            {language === 'en' ? 'New letter!' : 'Nouvelle lettre !'}
+            {getTranslation('auto.new_letter', language)}
           </h1>
           <AlphabetCard item={currentExercise.item} onPlayAudio={() => playThaiTTS(currentExercise.item.exampleWord)} />
           <div className="mt-8 space-y-4 text-center">
@@ -269,7 +279,7 @@ function AlphabetLessonContent() {
       return (
         <div className="flex-1 flex flex-col items-center pt-8">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-800 text-center mb-12">
-            {language === 'en' ? 'Review these letters' : 'Revoyons ces lettres'}
+            {getTranslation('auto.review_these_letters', language)}
           </h1>
           <div className="flex gap-4 sm:gap-8 justify-center flex-wrap">
             {currentExercise.options.map(item => (
@@ -286,7 +296,7 @@ function AlphabetLessonContent() {
       return (
         <div className="flex-1 flex flex-col items-center w-full max-w-lg mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 text-center">
-            {language === 'en' ? 'Which letter matches this sound?' : 'Quelle lettre correspond à ce son ?'}
+            {getTranslation('auto.which_letter_matches_this_soun', language)}
           </h2>
 
           <div className="flex items-center gap-4 bg-white p-8 rounded-3xl shadow-sm border-2 border-slate-100 mb-10 w-full justify-center text-center flex-col">
@@ -333,7 +343,7 @@ function AlphabetLessonContent() {
       return (
         <div className="flex-1 flex flex-col items-center w-full max-w-lg mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 text-center">
-            {language === 'en' ? 'Listen and select the correct letter' : 'Écoutez et sélectionnez la bonne lettre'}
+            {getTranslation('auto.listen_and_select_the_correct', language)}
           </h2>
 
           <div className="flex items-center gap-4 bg-white p-8 rounded-3xl shadow-sm border-2 border-slate-100 mb-10 w-full justify-center text-center flex-col">
@@ -392,7 +402,7 @@ function AlphabetLessonContent() {
     return (
       <div className="flex-1 flex flex-col items-center w-full max-w-lg mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 text-center">
-          {language === 'en' ? 'Find the correct letter' : 'Trouvez la bonne lettre'}
+          {getTranslation('auto.find_the_correct_letter', language)}
         </h2>
 
         <div className="flex items-center gap-4 bg-white p-6 rounded-3xl shadow-sm border-2 border-slate-100 mb-10 w-full justify-center text-center flex-col">
@@ -418,7 +428,7 @@ function AlphabetLessonContent() {
                <button 
                  onClick={() => setShowHint(!showHint)}
                  className={`ml-1 md:ml-2 p-1.5 rounded-full transition-colors ${showHint ? 'bg-indigo-100 text-indigo-600' : 'text-slate-400 hover:text-indigo-500 hover:bg-slate-100'}`}
-                 title={language === 'en' ? "Show hint" : "Afficher l'indice"}
+                 title={getTranslation('auto.show_hint_24', language)}
                >
                  <HelpCircle size={20} />
                </button>
@@ -439,9 +449,7 @@ function AlphabetLessonContent() {
                      ) : (
                        <div className="leading-relaxed flex flex-col gap-1.5">
                          <p>
-                           {language === 'en' 
-                             ? `Hint: The letter is called `
-                             : `Indice : La lettre s'appelle `}
+                           {getTranslation('auto.hint_the_letter_is_called', language)}
                            <span className="font-bold font-thai text-lg">{currentExercise.item.exampleWord}</span> 
                            <span className="opacity-80"> ({currentExercise.item.pronunciation})</span>.
                          </p>
@@ -454,9 +462,7 @@ function AlphabetLessonContent() {
                          )}
                          {currentExercise.item.type === 'vowel' && (
                            <p className="text-sm mt-1 bg-indigo-100/50 p-2 rounded">
-                             {language === 'en'
-                               ? "💡 Tip: A double letter in the pronunciation (like 'aa' or 'ii') means it's a long vowel, while a single letter means a short vowel."
-                               : "💡 Astuce : Une double voyelle dans la transcription (comme 'aa' ou 'ii') indique que c'est une voyelle longue. Une lettre simple (comme 'a' ou 'i') indique une voyelle courte."}
+                             {getTranslation('auto.tip_a_double_letter_in_the_pr', language)}
                            </p>
                          )}
                        </div>
@@ -533,8 +539,8 @@ function AlphabetLessonContent() {
           </div>
           <div className="font-bold text-slate-400 flex items-center gap-3">
              {lesson?.type === 'consonant' 
-                ? (language === 'en' ? 'Consonants' : 'Consonnes')
-                : (language === 'en' ? 'Vowels' : 'Voyelles')}
+                ? (getTranslation('auto.consonants', language))
+                : (getTranslation('auto.vowels', language))}
           </div>
         </div>
       </header>
@@ -584,17 +590,17 @@ function AlphabetLessonContent() {
                 {isChecking && isCorrect && (
                   <div className="flex items-center justify-center sm:justify-start gap-3 text-emerald-600 font-extrabold text-xl">
                     <div className="bg-white text-emerald-500 rounded-full p-1"><Check size={24} strokeWidth={3} /></div>
-                    {language === 'en' ? 'Excellent!' : 'Excellent !'}
+                    {getTranslation('auto.excellent', language)}
                   </div>
                 )}
                 {isChecking && !isCorrect && (
                   <div className="flex flex-col text-rose-600 font-extrabold text-xl gap-1 items-center sm:items-start">
                     <div className="flex items-center gap-3">
                       <div className="bg-white text-rose-500 rounded-full p-1"><X size={24} strokeWidth={3} /></div>
-                      {language === 'en' ? 'Incorrect.' : 'Incorrect.'}
+                      {getTranslation('auto.incorrect', language)}
                     </div>
                     <div className="text-rose-800 text-sm mt-1 uppercase tracking-widest">
-                      {language === 'en' ? 'Correct answer:' : 'Réponse correcte :'}
+                      {getTranslation('auto.correct_answer', language)}
                     </div>
                     <div className="text-rose-900 font-medium font-thai text-xl md:text-2xl mt-1 sm:mt-0">{formatCombiningChar(currentExercise.letterToPick!)}</div>
                   </div>
@@ -613,7 +619,7 @@ function AlphabetLessonContent() {
                     : 'bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400'}
                 `}
               >
-                {(currentExercise.type === 'intro' || currentExercise.type === 'review') || isChecking ? (language === 'en' ? 'Continue' : 'Continuer') : (language === 'en' ? 'Check' : 'Vérifier')}
+                {(currentExercise.type === 'intro' || currentExercise.type === 'review') || isChecking ? (getTranslation('auto.continue', language)) : (getTranslation('auto.check', language))}
               </button>
             </div>
           </motion.footer>

@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { useState, useMemo } from 'react';
 import { Exercise } from '../../../types';
 import { playThaiTTS } from '../../../lib/tts';
@@ -99,7 +100,7 @@ export default function WordMatch({ exercise, selected, onChange, disabled, onAu
         <div className="w-full max-w-2xl mx-auto mb-4 bg-indigo-50/50 rounded-2xl p-4 border border-indigo-100 flex flex-col items-center gap-3">
             <div className="text-sm font-bold text-indigo-800 flex items-center gap-2 text-center">
                <Sparkles size={16} />
-               {language === 'en' ? 'Only one letter differentiates them!' : 'Une seule lettre les différencie !'}
+               {getTranslation('auto.only_one_letter_differentiates', language)}
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
                 <button
@@ -112,7 +113,7 @@ export default function WordMatch({ exercise, selected, onChange, disabled, onAu
                 >
                    <Volume2 size={16} /> 
                    <span className="hidden sm:inline">
-                      {showHint1 ? (language === 'en' ? 'Replay Sound' : 'Rejouer le son') : (language === 'en' ? 'Hint 1' : 'Indice 1')}
+                      {showHint1 ? (getTranslation('auto.replay_sound', language)) : (getTranslation('auto.hint_1', language))}
                    </span>
                 </button>
 
@@ -124,7 +125,7 @@ export default function WordMatch({ exercise, selected, onChange, disabled, onAu
                   className={`px-3 py-1.5 rounded-xl text-sm font-bold border-2 transition-all flex items-center gap-2 min-h-[36px] ${showHint2 ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                 >
                    {!showHint2 && <ImageIcon size={16} />} 
-                   {showHint2 ? <span className="text-xl leading-none">{diffAnalysis.matchedLetter.mnemonicEmoji || '?'}</span> : <span className="hidden sm:inline">{language === 'en' ? 'Hint 2' : 'Indice 2'}</span>}
+                   {showHint2 ? <span className="text-xl leading-none">{diffAnalysis.matchedLetter.mnemonicEmoji || '?'}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_2', language)}</span>}
                 </button>
 
                 <button
@@ -135,23 +136,23 @@ export default function WordMatch({ exercise, selected, onChange, disabled, onAu
                   className={`px-3 py-1.5 rounded-xl text-sm font-bold border-2 transition-all flex items-center gap-2 min-h-[36px] ${showHint3 ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                 >
                    {!showHint3 && <Type size={16} />} 
-                   {showHint3 ? <span>{diffAnalysis.matchedLetter.pronunciation}</span> : <span className="hidden sm:inline">{language === 'en' ? 'Hint 3' : 'Indice 3'}</span>}
+                   {showHint3 ? <span>{diffAnalysis.matchedLetter.pronunciation}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
                 </button>
                 
                 <button
                   onClick={() => setShowColor(!showColor)}
                   className={`px-3 py-1.5 rounded-xl text-sm font-bold border-2 transition-all flex items-center gap-2 min-h-[36px] ${showColor ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
-                  title={language === 'en' ? 'Highlight differences' : 'Surligner les différences'}
+                  title={getTranslation('auto.highlight_differences', language)}
                 >
                    <Sparkles size={16} />
                    <span className="hidden sm:inline">
-                      {showColor ? (language === 'en' ? 'Colors ON' : 'Couleurs ON') : (language === 'en' ? 'Reveal Differences' : 'Révéler la différence')}
+                      {showColor ? (getTranslation('auto.colors_on', language)) : (getTranslation('auto.reveal_differences', language))}
                    </span>
                 </button>
             </div>
             {hintsUsedCount >= 3 && (
                <div className="text-xs font-bold text-rose-500 animate-pulse mt-1 drop-shadow-sm bg-rose-50 px-2 py-1 rounded-md border border-rose-100">
-                  {language === 'en' ? '-1 Star (3 hints used)' : '-1 Étoile (3 indices utilisés)'}
+                  {getTranslation('auto.1_star_3_hints_used', language)}
                </div>
             )}
         </div>

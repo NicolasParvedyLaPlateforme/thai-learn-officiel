@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { useState, useEffect } from "react";
 import { Drawer } from "vaul";
 import { Lesson } from "../../../types";
@@ -77,7 +78,7 @@ export default function GlossaryModal({
           onClick={onClose}
           className="w-full py-4 bg-slate-200 text-slate-600 font-bold rounded-2xl hover:bg-slate-300 transition-colors text-lg shadow-sm"
         >
-          {language === "en" ? "Close List" : "Fermer la liste"}
+          {getTranslation('auto.close_list', language)}
         </button>
       </div>
     </div>
@@ -86,13 +87,13 @@ export default function GlossaryModal({
   const headerContent = (
     <div className="w-full max-w-3xl mx-auto flex items-center justify-between h-full">
       <h2 className="text-xl font-bold text-slate-800">
-        {language === "en" ? "Vocabulary List" : "Liste de vocabulaire"}
+        {getTranslation('auto.vocabulary_list', language)}
       </h2>
       <button
         onClick={onClose}
         className="text-slate-500 font-bold bg-slate-100 px-4 py-2 rounded-xl hover:bg-slate-200 transition-colors text-sm"
       >
-        {language === "en" ? "Close" : "Fermer"}
+        {getTranslation('auto.close', language)}
       </button>
     </div>
   );

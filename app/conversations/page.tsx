@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import IconImage from '../components/IconImage';
@@ -84,7 +85,7 @@ export default function ConversationsPage() {
                      ? 'conversation' 
                      : (selectedStoryId ? 'story' : 'stories_list');
 
-  const selectedSpeakers = selectedConv ? Array.from(new Set(selectedConv.dialogs.map(d => d.speaker || (language === 'en' ? 'Character' : 'Personnage')))) : [];
+  const selectedSpeakers = selectedConv ? Array.from(new Set(selectedConv.dialogs.map(d => d.speaker || (getTranslation('auto.character', language))))) : [];
 
   const handlePlayExcerpt = () => {
      if (selectedConv && selectedConv.dialogs.length > 0) {
@@ -125,6 +126,14 @@ export default function ConversationsPage() {
             
             <div className="flex items-center gap-2">
               {mobileView === 'stories_list' && <PWAInstallButton />}
+              {mounted && (
+                <button 
+                   onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
+                   className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase md:hidden"
+                >
+                   {language}
+                </button>
+              )}
               {(mounted && isPWA) && (
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
                   <Star size={18} className="fill-amber-400 stroke-amber-400" />
@@ -145,7 +154,7 @@ export default function ConversationsPage() {
         {!selectedStoryId && (
             <div className="hidden md:flex h-16 items-center justify-between px-6 border-b border-slate-100 shrink-0">
                <h1 className="text-xl font-extrabold text-slate-800 tracking-tight">
-                  {language === 'en' ? 'Stories' : 'Histoires'}
+                  {getTranslation('auto.stories', language)}
                </h1>
             </div>
         )}
@@ -193,7 +202,7 @@ export default function ConversationsPage() {
                             </p>
                          )}
                          <div className="mt-auto pt-4 flex items-center text-emerald-600 font-bold text-sm">
-                            {language === 'en' ? 'Explore Story' : 'Explorer l\'histoire'}
+                            {getTranslation('auto.explore_story', language)}
                             <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                          </div>
                        </div>
@@ -210,7 +219,7 @@ export default function ConversationsPage() {
                 <div className="p-4 md:p-8 shrink-0 md:border-b border-slate-100 bg-white shadow-[0_4px_20px_-15px_rgba(0,0,0,0.1)] relative z-10">
                      <div className="hidden md:flex items-center gap-2 text-sm font-bold text-slate-400 mb-6">
                           <button onClick={() => { setSelectedStoryId(null); setSelectedConvId(null); }} className="hover:text-slate-600 transition-colors">
-                              {language === 'en' ? 'Stories' : 'Histoires'}
+                              {getTranslation('auto.stories', language)}
                           </button>
                           <ChevronRight size={16} />
                           <span className="text-slate-700">{language === 'en' ? selectedStory.en : selectedStory.fr}</span>
@@ -242,9 +251,9 @@ export default function ConversationsPage() {
                          </div>
                          <div className="w-full pl-1 pr-1">
                               <div className="flex justify-between items-end text-xs font-bold text-slate-500 mb-2">
-                                  <span>{language === 'en' ? 'Story progression' : 'Progression de l\'histoire'}</span>
+                                  <span>{getTranslation('auto.story_progression', language)}</span>
                                   <span className="text-emerald-500 text-sm">
-                                     {currentStoryConvs.filter(c => (completedConversations[c.id] ?? -1) >= 3).length}/{currentStoryConvs.length} {language === 'en' ? 'chapters' : 'chapitres'}
+                                     {currentStoryConvs.filter(c => (completedConversations[c.id] ?? -1) >= 3).length}/{currentStoryConvs.length} {getTranslation('auto.chapters', language)}
                                   </span>
                               </div>
                               <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -271,9 +280,9 @@ export default function ConversationsPage() {
                               
                               <div className="mt-auto w-full">
                                   <div className="flex justify-between items-end text-xs font-bold text-slate-500 mb-2">
-                                      <span>{language === 'en' ? 'Story progression' : 'Progression de l\'histoire'}</span>
+                                      <span>{getTranslation('auto.story_progression', language)}</span>
                                       <span className="text-emerald-500 text-sm">
-                                         {currentStoryConvs.filter(c => (completedConversations[c.id] ?? -1) >= 3).length}/{currentStoryConvs.length} {language === 'en' ? 'chapters' : 'chapitres'}
+                                         {currentStoryConvs.filter(c => (completedConversations[c.id] ?? -1) >= 3).length}/{currentStoryConvs.length} {getTranslation('auto.chapters', language)}
                                       </span>
                                   </div>
                                   <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -348,7 +357,7 @@ export default function ConversationsPage() {
                                                  {isSelected && !isCompleted && !isStoryLocked && (
                                                      <div className="absolute bottom-2 left-2 bg-orange-500 text-white text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-md">
                                                          <Play size={10} className="fill-current" />
-                                                         {language === 'en' ? 'In progress' : 'En cours'}
+                                                         {getTranslation('auto.in_progress_7', language)}
                                                      </div>
                                                  )}
                                                  {/* Locked badge overlay */}
@@ -402,7 +411,7 @@ export default function ConversationsPage() {
                                          <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-10 flex flex-col items-center justify-center">
                                              <div className="bg-blue-600 text-white text-[11px] md:text-xs font-bold px-4 py-2 rounded-xl shadow-sm flex items-center gap-2">
                                                   <BookOpen size={14} />
-                                                  {language === 'en' ? 'Prérequis manquants' : 'Prérequis de vocabulaire manquants'}
+                                                  {getTranslation('auto.pr_requis_manquants', language)}
                                              </div>
                                          </div>
                                       )}
@@ -449,7 +458,7 @@ export default function ConversationsPage() {
                        <div className="absolute inset-0 flex items-center justify-center bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity">
                            <button onClick={handlePlayExcerpt} className="bg-white/95 backdrop-blur text-slate-800 text-sm font-bold px-6 py-3 rounded-2xl flex items-center gap-2 shadow-xl hover:scale-105 active:scale-95 transition-all">
                                <Volume2 size={18} className="text-emerald-500" />
-                               {language === 'en' ? 'Play an excerpt' : 'Ecouter un extrait'}
+                               {getTranslation('auto.play_an_excerpt', language)}
                            </button>
                        </div>
                        
@@ -475,7 +484,7 @@ export default function ConversationsPage() {
                            <Clock size={16} className="text-slate-400" /> 8 min
                        </div>
                        <div className="flex items-center gap-2 text-sm text-slate-500 font-bold bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-                           <Users size={16} className="text-slate-400" /> {selectedSpeakers.length} {language === 'en' ? 'characters' : 'personnages'}
+                           <Users size={16} className="text-slate-400" /> {selectedSpeakers.length} {getTranslation('auto.characters', language)}
                        </div>
                        <div className="flex items-center gap-2 text-sm text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg border border-orange-100">
                            <Star size={16} className="fill-orange-400 text-orange-400" /> +75 XP
@@ -485,7 +494,7 @@ export default function ConversationsPage() {
                    {/* Personnages */}
                    <div className="mb-8 p-5 bg-slate-50/80 rounded-3xl border border-slate-100">
                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 pl-1">
-                           {language === 'en' ? 'Characters' : 'Personnages'}
+                           {getTranslation('auto.characters_8', language)}
                        </div>
                        <div className="flex flex-wrap gap-2">
                            {selectedSpeakers.map((sp, i) => (
@@ -505,8 +514,8 @@ export default function ConversationsPage() {
                            {isSelectedConvStoryLocked 
                               ? '' 
                               : isSelectedConvVocabLocked 
-                                 ? (language === 'en' ? 'Missing Prerequisites' : 'Prérequis manquants')
-                                 : (language === 'en' ? 'Difficulty Levels' : 'Niveaux de difficulté')
+                                 ? (getTranslation('auto.missing_prerequisites', language))
+                                 : (getTranslation('auto.difficulty_levels', language))
                            }
                        </div>
 
@@ -515,15 +524,13 @@ export default function ConversationsPage() {
                                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-slate-100 mb-4 flex items-center justify-center">
                                     <Lock size={32} className="text-slate-300" />
                                 </div>
-                                <h3 className="text-lg font-bold text-slate-700 mb-2">{language === 'en' ? 'Chapter Locked' : 'Chapitre bloqué'}</h3>
-                                <p className="text-slate-500 text-sm max-w-xs leading-relaxed">{language === 'en' ? 'Complete Level 2 of the previous conversation to continue the story.' : 'Terminer le Niveau 2 de la conversation précédente pour continuer l\'histoire.'}</p>
+                                <h3 className="text-lg font-bold text-slate-700 mb-2">{getTranslation('auto.chapter_locked', language)}</h3>
+                                <p className="text-slate-500 text-sm max-w-xs leading-relaxed">{getTranslation('auto.complete_level_2_of_the_previo', language)}</p>
                            </div>
                        ) : isSelectedConvVocabLocked ? (
                            <div className="flex flex-col gap-4">
                                <div className="bg-blue-50 border-2 border-blue-100 rounded-2xl p-4 text-sm text-blue-700 font-medium mb-2">
-                                  {language === 'en' 
-                                      ? 'You must complete Level 1 of the following lessons to learn the required vocabulary.' 
-                                      : 'Vous devez réaliser le Niveau 1 des leçons suivantes pour apprendre le vocabulaire.'}
+                                  {getTranslation('auto.you_must_complete_level_1_of_t', language)}
                                </div>
                                {selectedConvMissingReqs.map(req => (
                                     <div key={req.lessonId} className="bg-white border-2 border-slate-100/60 rounded-[24px] p-5 md:p-6 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.04)] transition-all hover:shadow-md hover:border-slate-200 group relative overflow-hidden">
@@ -535,7 +542,7 @@ export default function ConversationsPage() {
                                        </h4>
                                        
                                        <div className="text-[11px] font-extrabold text-[#869ab8] uppercase tracking-[0.12em] mb-4">
-                                           {language === 'en' ? 'Words to learn' : 'Mots à apprendre'} :
+                                           {getTranslation('auto.words_to_learn', language)} :
                                        </div>
                                        
                                        <div className="flex flex-wrap gap-2.5 mb-6">
@@ -553,7 +560,7 @@ export default function ConversationsPage() {
                                           className="flex w-full items-center justify-center gap-2 bg-[#2d7ef8] hover:bg-[#2067d5] active:scale-[0.98] text-white font-bold py-3.5 rounded-xl transition-all shadow-sm"
                                        >
                                           <Play size={16} className="fill-current" />
-                                          {language === 'en' ? 'Learn words' : 'Apprendre ces mots'}
+                                          {getTranslation('auto.learn_words', language)}
                                        </Link>
                                     </div>
                                 ))}
@@ -576,10 +583,10 @@ export default function ConversationsPage() {
                                              </div>
                                              <div className="flex-1">
                                                  <div className="font-extrabold text-slate-800 text-base group-hover:text-emerald-700 transition-colors">
-                                                     {language === 'en' ? 'Base conversation' : 'Conversation de base'}
+                                                     {getTranslation('auto.base_conversation', language)}
                                                  </div>
                                                  <div className="text-sm font-medium text-slate-500">
-                                                     {language === 'en' ? 'Listen and read' : 'Écouter et lire'}
+                                                     {getTranslation('auto.listen_and_read', language)}
                                                  </div>
                                              </div>
                                              <ChevronRight className="text-emerald-500 shrink-0" />
@@ -609,7 +616,7 @@ export default function ConversationsPage() {
                                                    )}
                                                 </div>
                                                 <div className={`font-extrabold text-base transition-colors ${isLevel1Locked ? 'text-slate-600' : 'text-slate-800 group-hover:text-orange-700'}`}>
-                                                    {language === 'en' ? 'Fill in the blanks' : 'Remplir la conversation'}
+                                                    {getTranslation('auto.fill_in_the_blanks', language)}
                                                 </div>
                                             </div>
                                             {!isLevel1Locked && <ChevronRight className="text-orange-400 shrink-0" />}
@@ -639,7 +646,7 @@ export default function ConversationsPage() {
                                                    )}
                                                 </div>
                                                 <div className={`font-extrabold text-base transition-colors ${isLevel2Locked ? 'text-slate-600' : 'text-slate-800 group-hover:text-purple-700'}`}>
-                                                    {language === 'en' ? 'Fill in the word' : 'Remplir le mot'}
+                                                    {getTranslation('auto.fill_in_the_word', language)}
                                                 </div>
                                                 {isLevel2Locked && <div className="text-xs font-medium text-slate-500 mt-0.5">Terminer le Niveau 1</div>}
                                             </div>
@@ -670,7 +677,7 @@ export default function ConversationsPage() {
                                                    )}
                                                 </div>
                                                 <div className={`font-extrabold text-base transition-colors ${isLevel3Locked ? 'text-slate-600' : 'text-slate-800 group-hover:text-blue-700'}`}>
-                                                    {language === 'en' ? 'Choose the phrase' : 'Choisir la phrase'}
+                                                    {getTranslation('auto.choose_the_phrase', language)}
                                                 </div>
                                                 {isLevel3Locked && <div className="text-xs font-medium text-slate-500 mt-0.5">Terminer le Niveau 2</div>}
                                             </div>
@@ -691,12 +698,10 @@ export default function ConversationsPage() {
                       <BookOpen size={48} className="opacity-50" />
                    </div>
                    <h3 className="text-2xl font-extrabold text-slate-800 mb-2">
-                       {language === 'en' ? 'Start practicing' : 'Pratiquez un dialogue'}
+                       {getTranslation('auto.start_practicing', language)}
                    </h3>
                    <p className="text-slate-500 leading-relaxed font-medium">
-                       {language === 'en' 
-                          ? 'Select a conversation from the story to view its details, characters, and difficulty levels.'
-                          : 'Sélectionnez une conversation de l\'histoire pour voir les chapitres et commencer à repousser vos limites.'}
+                       {getTranslation('auto.select_a_conversation_from_the', language)}
                    </p>
                 </div>
              </div>

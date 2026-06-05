@@ -1,3 +1,4 @@
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { useProgressStore } from "../lib/store";
@@ -54,7 +55,7 @@ export function LoadingScreen({ isLoadingData, onReady }: { isLoadingData: boole
                 <div className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '150ms' }} />
                 <div className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '300ms' }} />
               </>
-            ) : (language === 'en' ? "Ready!" : "Prêt !")}
+            ) : (getTranslation('auto.ready', language))}
          </div>
          <div className="text-6xl font-extrabold text-slate-800 tracking-tighter w-36 justify-center flex font-mono border-b-2 border-indigo-100 pb-2">
             {Math.min(100, Math.floor(progress))}

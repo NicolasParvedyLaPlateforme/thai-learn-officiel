@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../lib/store';
@@ -44,10 +45,10 @@ export default function SpeakingPage() {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center justify-center p-4">
         <p className="text-xl text-slate-600 mb-6">
-          {language === 'en' ? 'No words selected.' : 'Aucun mot sélectionné.'}
+          {getTranslation('auto.no_words_selected', language)}
         </p>
         <button onClick={() => router.push('/practice')} className="px-6 py-3 bg-orange-500 text-white rounded-xl font-bold hover:bg-orange-600 transition-colors">
-          {language === 'en' ? 'Go back' : 'Retour'}
+          {getTranslation('auto.go_back', language)}
         </button>
       </div>
     );
@@ -63,7 +64,7 @@ export default function SpeakingPage() {
           <ArrowLeft size={24} />
         </button>
         <div className="flex-1 font-bold text-center text-slate-600">
-           {language === 'en' ? 'Speaking Practice' : 'Pratique de Prononciation'}
+           {getTranslation('auto.speaking_practice', language)}
         </div>
         <div className="w-10"></div> {/* Spacer to center title */}
       </header>

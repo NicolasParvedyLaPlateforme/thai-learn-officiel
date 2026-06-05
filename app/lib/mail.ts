@@ -19,21 +19,27 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendVerificationEmail = async (email: string, token: string) => {
+export const sendVerificationEmail = async (email: string, token: string, language: string = 'fr') => {
   const confirmLink = `${domain}/api/auth/verify-email?token=${token}`;
+
+  const subject = language === 'en' ? "Confirm your email address - ThaiLearn" : "Confirme ton adresse email - ThaiLearn";
+  const title = language === 'en' ? "Welcome to ThaiLearn!" : "Bienvenue sur ThaiLearn !";
+  const body = language === 'en' ? "Thank you for registering. To verify your account, click the link below:" : "Merci de t'être inscrit(e). Pour vérifier ton compte, clique sur le lien ci-dessous :";
+  const btn = language === 'en' ? "Confirm my email" : "Confirmer mon email";
+  const ignore = language === 'en' ? "If you didn't create this account, you can ignore this email." : "Si tu n'as pas créé ce compte, tu peux ignorer cet email.";
 
   const mailOptions = {
     from: `"ThaiLearn" <${process.env.EMAIL_SERVER_USER}>`,
     to: email,
-    subject: "Confirme ton adresse email - ThaiLearn",
+    subject: subject,
     html: `
       <div style="font-family: sans-serif; padding: 20px;">
-        <h1 style="color: #4f46e5;">Bienvenue sur ThaiLearn !</h1>
-        <p>Merci de t'être inscrit(e). Pour vérifier ton compte, clique sur le lien ci-dessous :</p>
+        <h1 style="color: #4f46e5;">${title}</h1>
+        <p>${body}</p>
         <a href="${confirmLink}" style="display: inline-block; background-color: #4f46e5; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 10px; font-weight: bold;">
-          Confirmer mon email
+          ${btn}
         </a>
-        <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">Si tu n'as pas créé ce compte, tu peux ignorer cet email.</p>
+        <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">${ignore}</p>
       </div>
     `,
   };
@@ -46,21 +52,27 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   }
 };
 
-export const sendPasswordResetEmail = async (email: string, token: string) => {
+export const sendPasswordResetEmail = async (email: string, token: string, language: string = 'fr') => {
   const resetLink = `${domain}/reset-password?token=${token}`;
+
+  const subject = language === 'en' ? "Reset your password - ThaiLearn" : "Réinitialisation de ton mot de passe - ThaiLearn";
+  const title = language === 'en' ? "Password Reset" : "Réinitialisation de mot de passe";
+  const body = language === 'en' ? "You requested to reset your password. Click the link below to change it:" : "Tu as demandé à réinitialiser ton mot de passe. Clique sur le lien ci-dessous pour le changer :";
+  const btn = language === 'en' ? "Reset my password" : "Réinitialiser mon mot de passe";
+  const ignore = language === 'en' ? "If you didn't make this request, you can ignore this email." : "Si tu n'as pas fait cette demande, tu peux ignorer cet email.";
 
   const mailOptions = {
     from: `"ThaiLearn" <${process.env.EMAIL_SERVER_USER}>`,
     to: email,
-    subject: "Réinitialisation de ton mot de passe - ThaiLearn",
+    subject: subject,
     html: `
       <div style="font-family: sans-serif; padding: 20px;">
-        <h1 style="color: #4f46e5;">Réinitialisation de mot de passe</h1>
-        <p>Tu as demandé à réinitialiser ton mot de passe. Clique sur le lien ci-dessous pour le changer :</p>
+        <h1 style="color: #4f46e5;">${title}</h1>
+        <p>${body}</p>
         <a href="${resetLink}" style="display: inline-block; background-color: #4f46e5; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 10px; font-weight: bold;">
-          Réinitialiser mon mot de passe
+          ${btn}
         </a>
-        <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">Si tu n'as pas fait cette demande, tu peux ignorer cet email.</p>
+        <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">${ignore}</p>
       </div>
     `,
   };

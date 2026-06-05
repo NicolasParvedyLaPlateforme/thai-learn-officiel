@@ -1,3 +1,4 @@
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useState, useEffect } from 'react';
 import { Word } from '../types';
 import { Volume2 } from 'lucide-react';
@@ -224,7 +225,7 @@ export default function PairMatch({ pairs, mode = 'normal', onComplete, forceHid
           >
             <div className="bg-emerald-500 text-white font-black text-3xl md:text-5xl px-8 py-6 rounded-[2rem] shadow-2xl flex items-center gap-4 border-b-[6px] border-emerald-700">
               <span className="text-4xl md:text-5xl">✨</span>
-              {language === 'en' ? 'Excellent!' : 'Bravo !'}
+              {getTranslation('auto.excellent', language)}
             </div>
           </motion.div>
         )}

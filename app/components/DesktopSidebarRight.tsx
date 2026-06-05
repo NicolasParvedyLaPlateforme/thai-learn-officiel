@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { BookOpen, CheckCircle, Clock, Lock, Pencil, Play, RotateCcw, Star, Volume2, X, Users, Target, ChevronLeft, Flag, Crown } from 'lucide-react';
+import { Play, PlayCircle, Star, Target, CheckCircle2, Lock, Clock, GraduationCap, Medal, Pencil, RotateCcw, BookOpen, X, Users, ChevronLeft, Flag, Crown } from 'lucide-react';
 import Link from 'next/link';
 import IconImage from './IconImage';
 import { playThaiTTS } from '../lib/tts';
@@ -7,6 +7,9 @@ import { formatCombiningChar } from '../lib/alphabet-utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { DailyQuestsWidget } from './DailyQuestsWidget';
 import { ConversationObjectiveWidget } from './ConversationObjectiveWidget';
+import { LeaderboardWidget } from './LeaderboardWidget';
+import { useProgressStore } from '../lib/store';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 
 interface Unit {
   id: string;
@@ -23,7 +26,7 @@ interface DesktopSidebarRightProps {
   units: Unit[];
   activeUnitIndex: number;
   onUnitSelect: (index: number) => void;
-  language: 'fr' | 'en';
+  language: string;
   globalSuggested?: any;
   lessons: any[];
   lessonLevels: Record<string, number>;
@@ -190,7 +193,7 @@ export function DesktopSidebarRight({
                         <span className={`text-[9px] font-black tracking-widest uppercase
                           ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
                         `}>
-                          {isCurrent ? (language === 'en' ? 'IN PROGRESS' : 'EN COURS') : `NIV. ${levelIndex + 1}`}
+                          {isCurrent ? (getTranslation('auto.in_progress', language)) : `NIV. ${levelIndex + 1}`}
                         </span>
                       </button>
                     );
@@ -245,24 +248,35 @@ export function DesktopSidebarRight({
                           )}
                         </div>
                         <span className={`text-[10px] font-black tracking-widest uppercase ${isUnlocked ? 'text-amber-500' : 'text-slate-300'}`}>
-                          {language === 'en' ? 'MASTERY' : 'NIVEAU ULTIME'}
+                          {getTranslation('auto.mastery', language)}
                         </span>
                       </button>
                     </div>
                   );
                 })()}
 
-                {/* Badges Container */}
-                <div className="flex items-center justify-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full flex-wrap">
-                  <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
-                    <Clock size={16} className="text-slate-500" />
-                    {estimatedMins} min
-                  </div>
-                  <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
-                    <Star size={16} className="fill-amber-500 text-amber-600" />
-                    +15 XP
-                  </div>
-                </div>
+                {(() => {
+                  const { getExpectedXp } = useProgressStore.getState();
+                  const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'));
+                  
+                  return (
+                    <div className="flex items-center justify-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full flex-wrap">
+                      <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
+                        <Clock size={16} className="text-slate-500" />
+                        {estimatedMins} min
+                      </div>
+                      <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
+                        <Star size={16} className="fill-amber-500 text-amber-600" />
+                        {isFirstTime ? `+${expectedXp} XP` : (
+                          <>
+                            <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                            <span>+{expectedXp} XP</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 {/* Vocab/Letters preview or Bilan Stats */}
                 <div className="mb-4">
@@ -270,11 +284,11 @@ export function DesktopSidebarRight({
                     <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
                       {selectedLesson.lesson.isReview || modalLevel === 10
                         ? (modalLevel === 10
-                          ? (language === 'en' ? `Stats (MASTERY) :` : `Statistiques (ULTIME) :`)
-                          : (language === 'en' ? `Bilan Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`))
+                          ? (getTranslation('auto.stats_mastery', language))
+                          : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
                         : suggestionType === 'alphabet'
-                          ? (language === 'en' ? `Letters (${selectedLesson.lesson.items?.length}) :` : `Lettres (${selectedLesson.lesson.items?.length}) :`)
-                          : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
+                          ? (`${getTranslation('auto.letters', language)} (${selectedLesson.lesson.items?.length}) :`)
+                          : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
                       }
                     </h4>
                     {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
@@ -296,7 +310,7 @@ export function DesktopSidebarRight({
                               </div>
                               <div className="flex flex-col">
                                 <span className="text-emerald-800 font-bold text-[15px]">
-                                  {language === 'en' ? "Best Time" : "Meilleur Temps"}
+                                  {getTranslation('auto.best_time', language)}
                                 </span>
                                 <span className="text-emerald-600 font-medium text-sm">
                                   {m}min {s}s
@@ -312,7 +326,7 @@ export function DesktopSidebarRight({
                               </div>
                               <div className="flex flex-col">
                                 <span className="text-rose-800 font-bold text-[15px]">
-                                  {language === 'en' ? "Best Survival" : "Record de Survie"}
+                                  {getTranslation('auto.best_survival', language)}
                                 </span>
                                 <span className="text-rose-600 font-medium text-sm">
                                   {stats.maxPercentage}%
@@ -323,7 +337,7 @@ export function DesktopSidebarRight({
                         } else {
                           return (
                             <div className="flex items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200 text-slate-400 text-sm font-medium">
-                              {language === 'en' ? "Not completed yet" : "Pas encore terminé"}
+                              {getTranslation('auto.not_completed_yet', language)}
                             </div>
                           );
                         }
@@ -342,13 +356,13 @@ export function DesktopSidebarRight({
                         selectedLesson.lesson.words?.map((w: any) => (
                           <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
                             <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] transition-colors`}>{w.th}</span>
-                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({language === 'en' ? w.en : w.fr})</span>
+                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({getLocalizedField(w, '', language)})</span>
                           </button>
                         ))
                       )}
                       {suggestionType === 'alphabet' && selectedLesson.lesson.items && selectedLesson.lesson.items.length > 10 && (
                         <div className="shrink-0 border border-dashed border-slate-300 text-slate-400 rounded-[2rem] px-4 py-2 flex items-center justify-center font-medium text-[13px]">
-                          +{selectedLesson.lesson.items.length - 10} {language === 'en' ? 'others' : 'autres'}
+                          +{selectedLesson.lesson.items.length - 10} {getTranslation('auto.others', language)}
                         </div>
                       )}
                     </div>
@@ -367,7 +381,7 @@ export function DesktopSidebarRight({
                       className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors"
                     >
                       <Pencil size={16} className="mr-2" />
-                      {language === 'en' ? 'Writing' : 'Écriture'}
+                      {getTranslation('auto.writing', language)}
                     </Link>
                   )}
                   <button
@@ -378,7 +392,7 @@ export function DesktopSidebarRight({
                     className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
                   >
                     <RotateCcw size={16} className="mr-2" />
-                    {language === 'en' ? 'Reset' : 'Réinitialiser'}
+                    {getTranslation('auto.reset', language)}
                   </button>
                 </div>
               )}
@@ -386,7 +400,7 @@ export function DesktopSidebarRight({
                 href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
                 className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
               >
-                {language === 'en' ? `Start lesson` : `Commencer la leçon`}
+                {getTranslation('auto.start_lesson', language)}
               </Link>
             </div>
           </div>
@@ -414,10 +428,10 @@ export function DesktopSidebarRight({
               </div>
               <div className="flex flex-col text-left">
                 <span className="font-bold text-slate-800 tracking-tight">
-                  {language === 'en' ? 'Course Units' : 'Unités du Cours'}
+                  {getTranslation('auto.course_units', language)}
                 </span>
                 <span className="text-xs text-slate-500 font-medium">
-                  {language === 'en' ? 'Change or view units' : 'Changer ou voir les unités'}
+                  {getTranslation('auto.change_or_view_units', language)}
                 </span>
               </div>
             </div>
@@ -427,6 +441,7 @@ export function DesktopSidebarRight({
           <div className="w-full flex flex-col gap-6">
             <DailyQuestsWidget category={questsCategory} />
             <ConversationObjectiveWidget />
+            <LeaderboardWidget />
           </div>
         </motion.div>
       );
@@ -446,7 +461,7 @@ export function DesktopSidebarRight({
             <div className="flex items-center gap-3 text-slate-800 font-bold">
               <BookOpen size={20} className="text-slate-400 shrink-0" />
               <h2 className="whitespace-nowrap text-lg text-slate-600">
-                {language === 'en' ? 'Units' : 'Unités'}
+                {getTranslation('auto.units', language)}
               </h2>
             </div>
             <button
@@ -459,7 +474,7 @@ export function DesktopSidebarRight({
           <div className="flex flex-col gap-3 pb-6 w-full">
             {units.map((u, i) => {
               const isCurrent = i === activeUnitIndex;
-              const status = isCurrent ? (language === 'en' ? 'In progress' : 'En cours') : '';
+              const status = isCurrent ? (getTranslation('auto.in_progress_1', language)) : '';
               const unitLessons = u.lessons ? u.lessons : lessons.slice(u.startIndex || 0, u.endIndex || 0);
 
               const hasSuggestion = globalSuggested?.type === suggestionType &&
@@ -494,7 +509,7 @@ export function DesktopSidebarRight({
                       <div className={`h-full rounded-full transition-all duration-1000 ${u.colorClass}`} style={{ width: `${progressPercent}%` }}></div>
                     </div>
                     <div className="text-[12px] font-medium text-slate-400 select-none">
-                      {completedLessonsCount}/{totalLessonsCount} {language === 'en' ? 'lessons' : 'leçons'}
+                      {completedLessonsCount}/{totalLessonsCount} {getTranslation('auto.lessons', language)}
                     </div>
                   </div>
                 );

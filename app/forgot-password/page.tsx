@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, ArrowLeft } from "lucide-react";
+import { Mail, ArrowLeft, ChevronLeft } from "lucide-react";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function ForgotPasswordPage() {
+  const { t, language } = useTranslation();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -18,42 +20,47 @@ export default function ForgotPasswordPage() {
       const res = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, language }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
         setStatus("success");
-        setMessage("Si un compte existe avec cet email, un lien de réinitialisation vous a été envoyé.");
+        setMessage(t('auth.check_email'));
       } else {
         setStatus("error");
-        setMessage(data.message || "Une erreur est survenue.");
+        setMessage(data.message || t('auth.error_network'));
       }
     } catch (err) {
       setStatus("error");
-      setMessage("Erreur réseau. Veuillez réessayer.");
+      setMessage(t('auth.error_network'));
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 relative">
+      <Link href="/learn" className="absolute top-6 left-6 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm hover:shadow border border-slate-100 flex items-center gap-2 text-sm font-medium">
+        <ChevronLeft size={20} />
+        {t('auth.back')}
+      </Link>
+
       <Link href="/" className="mb-8 font-thai font-bold text-3xl text-indigo-600">
         ThaiLearn
       </Link>
-      
+
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
         <Link href="/login" className="flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-1" /> Retour à la connexion
+          <ArrowLeft className="w-4 h-4 mr-1" /> {t('auth.back_login')}
         </Link>
-        
+
         <h1 className="text-2xl font-bold text-slate-800 mb-2">
-          Mot de passe oublié ?
+          {t('auth.forgot_title')}
         </h1>
         <p className="text-slate-600 text-sm mb-6">
-          Entrez l'adresse email associée à votre compte et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+          {t('auth.forgot_desc')}
         </p>
-        
+
         {status === "success" && (
           <div className="bg-emerald-50 text-emerald-700 p-4 rounded-xl mb-6 text-sm font-medium border border-emerald-100">
             {message}
@@ -69,7 +76,7 @@ export default function ForgotPasswordPage() {
         {status !== "success" && (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.email_label')}</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
                 <input
@@ -78,7 +85,7 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-                  placeholder="ton@email.com"
+                  placeholder={t('auth.email_placeholder')}
                 />
               </div>
             </div>
@@ -91,7 +98,7 @@ export default function ForgotPasswordPage() {
               {status === "loading" ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
-                "Envoyer le lien"
+                t('auth.send_link')
               )}
             </button>
           </form>

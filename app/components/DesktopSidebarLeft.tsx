@@ -3,15 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 import { useSession, signOut } from 'next-auth/react';
+import { useTranslation } from '../hooks/useTranslation';
 
 export default function DesktopSidebarLeft() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const { language, setLanguage, xp, currentStreak, completedLessons, isExerciseRunning, isMobileSidebarOpen, setMobileSidebarOpen } = useProgressStore();
+  const { language, setLanguage, xp, goldCoins, currentStreak, completedLessons, isExerciseRunning, isMobileSidebarOpen, setMobileSidebarOpen, setShowLanguageModal } = useProgressStore();
+  const { t } = useTranslation();
   const globalSuggested = useGlobalSuggestedLesson();
 
   // Hidden on routes where we don't want the app shell
@@ -43,7 +45,7 @@ export default function DesktopSidebarLeft() {
 
   // Compute a simple level based on completed lessons 
   const userLevel = Math.floor(completedLessons.length / 5) + 1;
-  const levelTitle = userLevel < 5 ? (language === 'en' ? 'Beginner' : 'Débutant') : userLevel < 10 ? 'Intermediate' : 'Advanced';
+  const levelTitle = userLevel < 5 ? t('sidebar.level.beginner') : userLevel < 10 ? t('sidebar.level.intermediate') : t('sidebar.level.advanced');
 
   const getHrefWithHash = (basePath: string, type: 'learn' | 'alphabet') => {
     return globalSuggested?.type === type ? `${basePath}#${globalSuggested.id}` : basePath;
@@ -76,18 +78,18 @@ export default function DesktopSidebarLeft() {
           <button 
             onClick={() => useProgressStore.getState().setShowCommunityModal(true)}
             className="text-rose-500 bg-rose-50 p-1.5 rounded-full hover:bg-rose-100 transition-all opacity-0 w-0 md:group-hover:opacity-100 md:group-hover:w-auto xl:opacity-100 xl:w-auto ml-1 shrink-0"
-            title="Soutien & Communauté"
+            title={t('sidebar.support')}
           >
             <Heart size={16} fill="currentColor" />
           </button>
         </div>
 
         <div className="flex flex-col gap-2 flex-1 w-full">
-          <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={24} />} label={language === 'en' ? 'Path' : 'Parcours'} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} />
-          <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={24} />} label="Alphabet" active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} />
-          <NavItem href="/conversations" icon={<MessageCircle size={24} />} label={language === 'en' ? 'Dialogs' : 'Dialogues'} active={isConversationsActive} />
-          <NavItem href="/detective" icon={<Search size={24} />} label={language === 'en' ? 'Detective' : 'Détective'} active={isDetectiveActive} />
-          <NavItem href="/practice" icon={<Brain size={24} />} label={language === 'en' ? 'Practice' : 'Pratique'} active={isPracticeActive} />
+          <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={24} />} label={t('sidebar.path')} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} />
+          <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={24} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} />
+          <NavItem href="/conversations" icon={<MessageCircle size={24} />} label={t('sidebar.dialogs')} active={isConversationsActive} />
+          <NavItem href="/detective" icon={<Search size={24} />} label={t('sidebar.detective')} active={isDetectiveActive} />
+          <NavItem href="/practice" icon={<Brain size={24} />} label={t('sidebar.practice')} active={isPracticeActive} />
         </div>
 
         {/* User Summary / Level */}
@@ -103,6 +105,16 @@ export default function DesktopSidebarLeft() {
                  <Star size={20} fill="currentColor" />
               </div>
             </div>
+
+            <div className="bg-yellow-100 text-yellow-600 font-bold rounded-xl shadow-sm h-10 flex-1 flex items-center justify-center whitespace-nowrap px-0 group-hover:px-2 xl:px-2 overflow-hidden border border-yellow-200 relative group/stat">
+              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-sm">
+                <Coins size={16} fill="currentColor" />
+                {goldCoins || 0}
+              </span>
+              <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
+                 <Coins size={20} fill="currentColor" />
+              </div>
+            </div>
             
             <div className="bg-orange-100 text-orange-500 font-bold rounded-xl shadow-sm h-10 flex-1 flex items-center justify-center whitespace-nowrap px-0 group-hover:px-2 xl:px-2 overflow-hidden border border-orange-200 relative group/stat">
               <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-sm">
@@ -116,15 +128,15 @@ export default function DesktopSidebarLeft() {
           </div>
 
           <button 
-            onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
+            onClick={() => setShowLanguageModal(true)}
             className="mt-2 w-full h-10 flex items-center justify-center rounded-xl font-bold border-2 border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors shadow-sm overflow-hidden px-0 group-hover:px-3 xl:px-3"
-            title={language === 'fr' ? "Switch to English" : "Passer en Français"}
+            title={t('sidebar.language')}
           >
             <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto mr-0 group-hover:mr-2 xl:mr-2 text-sm whitespace-nowrap">
-              {language === 'fr' ? 'Langue' : 'Language'}
+              {t('sidebar.language')}
             </span>
-            <div className="flex items-center justify-center shrink-0 w-6 h-6 bg-slate-200 text-slate-700 rounded text-xs">
-              {language === 'fr' ? 'FR' : 'EN'}
+            <div className="flex items-center justify-center shrink-0 w-6 h-6 bg-slate-200 text-slate-700 rounded text-xs uppercase">
+              {language}
             </div>
           </button>
 
@@ -145,7 +157,7 @@ export default function DesktopSidebarLeft() {
                 <button
                   onClick={() => signOut()}
                   className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0"
-                  title="Se déconnecter"
+                  title={t('sidebar.logout')}
                 >
                   <LogOut size={20} />
                 </button>
@@ -159,7 +171,7 @@ export default function DesktopSidebarLeft() {
                   <User size={20} />
                 </div>
                 <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto ml-0 group-hover:ml-2 xl:ml-2 text-sm whitespace-nowrap">
-                  Se connecter
+                  {t('sidebar.login')}
                 </span>
               </Link>
             )}
@@ -171,6 +183,7 @@ export default function DesktopSidebarLeft() {
 }
 
 function NavItem({ href, icon, label, active, hasSuggestion }: { href: string, icon: React.ReactNode, label: string, active: boolean, hasSuggestion?: boolean }) {
+  const { t } = useTranslation();
   return (
     <Link 
       href={href} 
@@ -186,7 +199,7 @@ function NavItem({ href, icon, label, active, hasSuggestion }: { href: string, i
         {label}
         {hasSuggestion && (
            <span className="bg-amber-400 text-amber-900 text-[10px] font-black uppercase px-2 py-0.5 rounded-full ml-2">
-              Suggéré
+              {t('sidebar.suggested')}
            </span>
         )}
       </span>

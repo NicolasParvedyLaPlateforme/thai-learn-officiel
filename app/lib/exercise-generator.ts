@@ -1,3 +1,4 @@
+import { getExerciseTranslation, getMissingWordHint } from './translation-utils';
 import { Lesson, Exercise, Word, Phrase } from '../types';
 
 export function shuffle<T>(array: T[]): T[] {
@@ -144,8 +145,8 @@ export function generateWritingExercises(
 
   const candidateItems: { fr: string, th: string, id: string, imageUrl?: string }[] = [];
   completedLessons.forEach(l => {
-    l.words.filter(w => w.id !== 'w_dots').forEach(w => candidateItems.push({ fr: language === 'en' ? (w.en || w.fr) : w.fr, th: w.th, id: w.id, imageUrl: w.imageUrl }));
-    l.phrases.forEach(p => candidateItems.push({ fr: language === 'en' ? (p.en || p.fr) : p.fr, th: p.th, id: p.id, imageUrl: p.imageUrl }));
+    l.words.filter(w => w.id !== 'w_dots').forEach(w => candidateItems.push({ fr: getExerciseTranslation(w, language), th: w.th, id: w.id, imageUrl: w.imageUrl }));
+    l.phrases.forEach(p => candidateItems.push({ fr: getExerciseTranslation(p, language), th: p.th, id: p.id, imageUrl: p.imageUrl }));
   });
 
   const filteredItems = selectedWordIds 
@@ -215,7 +216,7 @@ export function generateEndlessReviewExercises(
       exercises.push({
         id: `endless-wm-${word.id}-${Date.now()}-${Math.random()}`,
         type: 'word-match',
-        question: language === 'en' ? (word.en || word.fr) : word.fr,
+        question: getExerciseTranslation(word, language),
         answer: word.th,
         options: shuffle([word, ...distractors]),
         hideHints: !defaultOptions.showUsefulVocab,
@@ -232,7 +233,7 @@ export function generateEndlessReviewExercises(
       exercises.push({
         id: `endless-sb-${phrase.id}-${Date.now()}-${Math.random()}`,
         type: 'sentence-builder',
-        question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+        question: getExerciseTranslation(phrase, language),
         answer: phrase.th,
         options: shuffle([...phraseWords, ...distractors]),
         correctComponents: phrase.components,
@@ -345,7 +346,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
             reviewExercises.push({
                 id: `rev-ft-${item.id}-${Math.random()}`,
                 type: 'free-typing',
-                question: language === 'en' ? (item.en || item.fr) : item.fr,
+                question: getExerciseTranslation(item, language),
                 answer: item.th,
                 options: [],
                 hideHints: true,
@@ -370,7 +371,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
                 reviewExercises.push({
                     id: `rev-wm-dist-${word.id}-${Math.random()}`,
                     type: 'word-match',
-                    question: language === 'en' ? (word.en || word.fr) : word.fr,
+                    question: getExerciseTranslation(word, language),
                     answer: word.th,
                     options: shuffle([word, ...distractors]),
                     hideHints: true,
@@ -383,7 +384,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
                 reviewExercises.push({
                     id: `rev-wm-misspelled-${word.id}-${Math.random()}`,
                     type: 'word-match',
-                    question: language === 'en' ? (word.en || word.fr) : word.fr,
+                    question: getExerciseTranslation(word, language),
                     answer: word.th,
                     options: shuffle([word, ...distractors]) as any,
                     hideHints: true,
@@ -411,13 +412,13 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
                    const w = globalWordsPool.find(w => w.id === id);
                    return w ? w.th : id;
                });
-               const missingWordFr = language === 'en' ? (blankWord.en || blankWord.fr) : blankWord.fr;
+               const missingWordFr = getExerciseTranslation(blankWord, language);
                const blankHint = language === 'en' ? `(Missing: ${missingWordFr})` : `(Mot manquant : ${missingWordFr})`;
 
                reviewExercises.push({
                   id: `rev-fib-${phrase.id}-${Math.random()}`,
                   type: 'sentence-builder',
-                  question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+                  question: getExerciseTranslation(phrase, language),
                   answer: phrase.th,
                   options: shuffle([blankWord, ...misspelledOptions]) as any,
                   correctComponents: phrase.components,
@@ -443,7 +444,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
             reviewExercises.push({
                 id: `rev-sb-${phrase.id}-${Math.random()}`,
                 type: 'sentence-builder',
-                question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+                question: getExerciseTranslation(phrase, language),
                 answer: phrase.th,
                 options: shuffle([...phraseWords, ...distractors]),
                 correctComponents: phrase.components,
@@ -463,7 +464,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
            reviewExercises.push({
               id: `rev-pmatch-${phrase.id}-${Math.random()}`,
               type: 'word-match',
-              question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+              question: getExerciseTranslation(phrase, language),
               answer: phrase.th,
               options: shuffle([
                 { id: phrase.id, th: phrase.th, fr: phrase.fr, phonetic: phrase.phonetic },
@@ -487,7 +488,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
             reviewExercises.push({
                 id: `rev-pair-normal-${Math.random()}`,
                 type: 'pair-matching',
-                question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+                question: (language === 'en' ? 'Match the pairs' : language === 'fr' ? 'Reliez les paires correspondantes' : 'Match the pairs'),
                 answer: '',
                 options: pairs as any,
                 pairs: pairs as any,
@@ -504,7 +505,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
             reviewExercises.push({
                 id: `rev-pair-audio-${Math.random()}`,
                 type: 'pair-matching',
-                question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+                question: (language === 'en' ? 'Match the pairs' : language === 'fr' ? 'Reliez les paires correspondantes' : 'Match the pairs'),
                 answer: '',
                 options: pairs as any,
                 pairs: pairs as any,
@@ -521,7 +522,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
             reviewExercises.push({
                 id: `rev-pair-script-${Math.random()}`,
                 type: 'pair-matching',
-                question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+                question: (language === 'en' ? 'Match the pairs' : language === 'fr' ? 'Reliez les paires correspondantes' : 'Match the pairs'),
                 answer: '',
                 options: pairs as any,
                 pairs: pairs as any,
@@ -539,7 +540,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
            reviewExercises.push({
               id: `rev-wr-word-${w.id}-${Math.random()}`,
               type: 'writing',
-              question: language === 'en' ? (w.en || w.fr) : w.fr,
+              question: getExerciseTranslation(w, language),
               answer: w.th,
               options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
               correctComponents: characters,
@@ -561,7 +562,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
            reviewExercises.push({
               id: `rev-wr-phrase-${p.id}-${Math.random()}`,
               type: 'writing',
-              question: language === 'en' ? (p.en || p.fr) : p.fr,
+              question: getExerciseTranslation(p, language),
               answer: p.th,
               options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
               correctComponents: characters,
@@ -588,7 +589,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     wmExercises.push({
       id: `wm-${word.id}-${Date.now()}-${Math.random()}`,
       type: 'word-match',
-      question: language === 'en' ? (word.en || word.fr) : word.fr,
+      question: getExerciseTranslation(word, language),
       answer: word.th,
       options: shuffle([word, ...distractors]),
       hideHints: false,
@@ -603,7 +604,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     sbExercises.push({
       id: `sb-${phrase.id}-${Date.now()}-${Math.random()}`,
       type: 'sentence-builder',
-      question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+      question: getExerciseTranslation(phrase, language),
       answer: phrase.th,
       options: shuffle([...phraseWords, ...distractors]),
       correctComponents: phrase.components,
@@ -624,7 +625,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       level0Exercises.push({
           id: `intro-${word.id}-${Math.random()}`,
           type: 'intro',
-          question: language === 'en' ? (word.en || word.fr) : word.fr,
+          question: getExerciseTranslation(word, language),
           answer: word.th,
           options: [],
           introItem: word,
@@ -639,7 +640,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       level0Exercises.push({
           id: `wm2-${word.id}-${Date.now()}-${Math.random()}`,
           type: 'word-match',
-          question: language === 'en' ? (word.en || word.fr) : word.fr,
+          question: getExerciseTranslation(word, language),
           answer: word.th,
           options: shuffle([word, ...step2Distractor]),
           hideHints: false,
@@ -655,7 +656,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       level0Exercises.push({
           id: `wm4-${word.id}-${Date.now()}-${Math.random()}`,
           type: 'word-match',
-          question: language === 'en' ? (word.en || word.fr) : word.fr,
+          question: getExerciseTranslation(word, language),
           answer: word.th,
           options: shuffle([word, ...step3Distractors]),
           hideHints: false,
@@ -668,7 +669,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       level0Exercises.push({
           id: `wm-misspelled-${word.id}-${Date.now()}-${Math.random()}`,
           type: 'word-match',
-          question: language === 'en' ? (word.en || word.fr) : word.fr,
+          question: getExerciseTranslation(word, language),
           answer: word.th,
           options: shuffle([word, ...step4Distractors]) as any,
           hideHints: false,
@@ -698,7 +699,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
           level1WmExercises.push({
               id: `wm2-dist-${word.id}-${i}-${Date.now()}-${Math.random()}`,
               type: 'word-match',
-              question: language === 'en' ? (word.en || word.fr) : word.fr,
+              question: getExerciseTranslation(word, language),
               answer: word.th,
               options: shuffle([word, ...stepDistractors]),
               hideHints: false,
@@ -710,7 +711,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
           level1WmExercises.push({
               id: `wm2-misspelled-${word.id}-${i}-${Date.now()}-${Math.random()}`,
               type: 'word-match',
-              question: language === 'en' ? (word.en || word.fr) : word.fr,
+              question: getExerciseTranslation(word, language),
               answer: word.th,
               options: shuffle([word, ...stepDistractors]) as any,
               hideHints: false,
@@ -765,7 +766,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
            return w ? w.th : id;
        });
        
-       const missingWordFr = language === 'en' ? (blankWord.en || blankWord.fr) : blankWord.fr;
+       const missingWordFr = getExerciseTranslation(blankWord, language);
        const blankHint = language === 'en' ? `(Missing: ${missingWordFr})` : `(Mot manquant : ${missingWordFr})`;
 
        fillInBlankPool.push({
@@ -788,7 +789,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       sbPool = globalWords.slice(0, 2).map((w, i) => ({
         id: `fallback-sb-${Date.now()}-${i}`,
         type: 'sentence-builder',
-        question: language === 'en' ? (w.en || w.fr) : w.fr,
+        question: getExerciseTranslation(w, language),
         answer: w.th,
         options: [w],
         correctComponents: [w.th]
@@ -814,7 +815,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
         level2WmExercises.push({
             id: `wm3-dist-${word.id}-${Date.now()}-${Math.random()}`,
             type: 'word-match',
-            question: language === 'en' ? (word.en || word.fr) : word.fr,
+            question: getExerciseTranslation(word, language),
             answer: word.th,
             options: shuffle([word, ...stepDistractors]),
             hideHints: false,
@@ -826,7 +827,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
         level2WmExercises.push({
             id: `wm3-misspelled-${word.id}-${Date.now()}-${Math.random()}`,
             type: 'word-match',
-            question: language === 'en' ? (word.en || word.fr) : word.fr,
+            question: getExerciseTranslation(word, language),
             answer: word.th,
             options: shuffle([word, ...stepDistractors]) as any,
             hideHints: false,
@@ -875,7 +876,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
            return w ? w.th : id;
        });
        
-       const missingWordFr = language === 'en' ? (blankWord.en || blankWord.fr) : blankWord.fr;
+       const missingWordFr = getExerciseTranslation(blankWord, language);
        const blankHint = language === 'en' ? `(Missing: ${missingWordFr})` : `(Mot manquant : ${missingWordFr})`;
 
        fillInBlankPool.push({
@@ -896,7 +897,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       sbPool = globalWords.slice(0, 2).map((w, i) => ({
         id: `fallback-sb-3-${Date.now()}-${i}`,
         type: 'sentence-builder',
-        question: language === 'en' ? (w.en || w.fr) : w.fr,
+        question: getExerciseTranslation(w, language),
         answer: w.th,
         options: [w],
         correctComponents: [w.th]
@@ -928,7 +929,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
            return w ? w.th : id;
        });
        
-       const missingWordFr = language === 'en' ? (blankWord.en || blankWord.fr) : blankWord.fr;
+       const missingWordFr = getExerciseTranslation(blankWord, language);
        const blankHint = language === 'en' ? `(Missing: ${missingWordFr})` : `(Mot manquant : ${missingWordFr})`;
 
        fillInBlankPool.push({
@@ -958,7 +959,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
        phraseMatchPool.push({
           id: `pmatch-${phrase.id}-${Date.now()}-${Math.random()}`,
           type: 'word-match',
-          question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+          question: getExerciseTranslation(phrase, language),
           answer: phrase.th,
           options: shuffle([
             { id: phrase.id, th: phrase.th, fr: phrase.fr, phonetic: phrase.phonetic },
@@ -1002,7 +1003,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       pmExercises.push({
         id: `pm-${Date.now()}-${Math.random()}`,
         type: 'pair-matching',
-        question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+        question: (language === 'en' ? 'Match the pairs' : language === 'fr' ? 'Reliez les paires correspondantes' : 'Match the pairs'),
         answer: '',
         options: selectedPairs as any,
         pairs: selectedPairs as any,
@@ -1020,7 +1021,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
        wrPool.push({
           id: `wr-blind-word-${w.id}-${Date.now()}-${Math.random()}`,
           type: 'writing',
-          question: language === 'en' ? (w.en || w.fr) : w.fr,
+          question: getExerciseTranslation(w, language),
           answer: w.th,
           options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
           correctComponents: characters,
@@ -1042,7 +1043,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
        wrPool.push({
           id: `wr-blind-phrase-${p.id}-${Date.now()}-${Math.random()}`,
           type: 'writing',
-          question: language === 'en' ? (p.en || p.fr) : p.fr,
+          question: getExerciseTranslation(p, language),
           answer: p.th,
           options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
           correctComponents: characters,
@@ -1061,7 +1062,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
          wrPool.push({
             id: `wr-blind-word-${w.id}-${Date.now()}-${Math.random()}`,
             type: 'writing',
-            question: language === 'en' ? (w.en || w.fr) : w.fr,
+            question: getExerciseTranslation(w, language),
             answer: w.th,
             options: shuffle(characters.map((c, i) => ({ id: `c-${i}`, th: c, fr: '', phonetic: '' }))),
             correctComponents: characters,
@@ -1085,7 +1086,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       ftPool.push({
         id: `ft-word-${w.id}-${Date.now()}-${Math.random()}`,
         type: 'free-typing',
-        question: language === 'en' ? (w.en || w.fr) : w.fr,
+        question: getExerciseTranslation(w, language),
         answer: w.th,
         options: [],
         hideHints: true,
@@ -1099,7 +1100,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       ftPhrases.push({
         id: `ft-phrase-${p.id}-${Date.now()}-${Math.random()}`,
         type: 'free-typing',
-        question: language === 'en' ? (p.en || p.fr) : p.fr,
+        question: getExerciseTranslation(p, language),
         answer: p.th,
         options: [],
         hideHints: true,
@@ -1133,7 +1134,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       ftPool.push({
         id: `ft-word-${w.id}-${Date.now()}-${Math.random()}`,
         type: 'free-typing',
-        question: language === 'en' ? (w.en || w.fr) : w.fr,
+        question: getExerciseTranslation(w, language),
         answer: w.th,
         options: [],
         hideHints: true,
@@ -1147,7 +1148,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       ftPhrases.push({
         id: `ft-phrase-${p.id}-${Date.now()}-${Math.random()}`,
         type: 'free-typing',
-        question: language === 'en' ? (p.en || p.fr) : p.fr,
+        question: getExerciseTranslation(p, language),
         answer: p.th,
         options: [],
         hideHints: true,
@@ -1205,7 +1206,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
         exercisesWithIntros.push({
           id: `intro-${word.id}-${Math.random()}`,
           type: 'intro',
-          question: language === 'en' ? (word.en || word.fr) : word.fr,
+          question: getExerciseTranslation(word, language),
           answer: word.th,
           options: [],
           introItem: word,
@@ -1219,7 +1220,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
         exercisesWithIntros.push({
           id: `intro-${phrase.id}-${Math.random()}`,
           type: 'intro',
-          question: language === 'en' ? (phrase.en || phrase.fr) : phrase.fr,
+          question: getExerciseTranslation(phrase, language),
           answer: phrase.th,
           options: [],
           introItem: phrase,
@@ -1281,7 +1282,7 @@ export function generateEndlessPairMatching(
     exercises.push({
       id: `endless-pm-${Date.now()}-${Math.random()}`,
       type: 'pair-matching',
-      question: language === 'en' ? 'Match the pairs' : 'Reliez les paires correspondantes',
+      question: (language === 'en' ? 'Match the pairs' : language === 'fr' ? 'Reliez les paires correspondantes' : 'Match the pairs'),
       answer: '',
       options: selectedPairs as any,
       pairs: selectedPairs as any,

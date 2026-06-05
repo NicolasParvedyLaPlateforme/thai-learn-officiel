@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
@@ -94,7 +95,7 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
       <div className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
           <h2 className="text-xl font-extrabold text-slate-800">
-            {language === 'en' ? 'Writing Configuration' : 'Configuration d\'écriture'}
+            {getTranslation('auto.writing_configuration', language)}
           </h2>
           <button 
              onClick={onClose}
@@ -109,7 +110,7 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
           {/* Lesson Selection */}
           <div className="space-y-3">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
-              {language === 'en' ? 'Lesson to practice' : 'Leçon à pratiquer'}
+              {getTranslation('auto.lesson_to_practice', language)}
             </h3>
             <select 
               value={selectedLessonId}
@@ -119,7 +120,7 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
               }}
               className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-700 font-medium focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
             >
-              <option value="all">{language === 'en' ? 'All seen lessons' : 'Toutes les leçons vues'}</option>
+              <option value="all">{getTranslation('auto.all_seen_lessons', language)}</option>
               {lessonsList.filter(l => completedLessons.includes(l.id)).map(lesson => (
                 <option key={lesson.id} value={lesson.id}>
                   {language === 'en' && lesson.titleEn ? lesson.titleEn : lesson.title}
@@ -127,7 +128,7 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
               ))}
             </select>
             {completedLessons.length === 0 && (
-              <p className="text-amber-600 text-sm italic">{language === 'en' ? 'You need to complete some lessons first.' : 'Vous devez d\'abord compléter quelques leçons.'}</p>
+              <p className="text-amber-600 text-sm italic">{getTranslation('auto.you_need_to_complete_some_less', language)}</p>
             )}
           </div>
 
@@ -136,14 +137,14 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
-                  {language === 'en' ? 'Vocabulary' : 'Vocabulaire'}
+                  {getTranslation('auto.vocabulary', language)}
                 </h3>
                 <div className="flex gap-2">
                   <button onClick={selectAll} className="text-xs font-bold text-indigo-500 hover:text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md">
-                    {language === 'en' ? 'All' : 'Tout'}
+                    {getTranslation('auto.all', language)}
                   </button>
                   <button onClick={deselectAll} className="text-xs font-bold text-slate-500 hover:text-slate-600 bg-slate-100 px-2 py-1 rounded-md">
-                    {language === 'en' ? 'None' : 'Aucun'}
+                    {getTranslation('auto.none', language)}
                   </button>
                 </div>
               </div>
@@ -171,7 +172,7 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
           {/* Options */}
           <div className="space-y-4">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
-              {language === 'en' ? 'Difficulty Options' : 'Options de difficulté'}
+              {getTranslation('auto.difficulty_options', language)}
             </h3>
             
             <label className="flex items-start gap-4 cursor-pointer group">
@@ -179,8 +180,8 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
                  {hideThai && <Check size={16} strokeWidth={3} />}
                </div>
                <div>
-                 <div className="font-bold text-slate-700">{language === 'en' ? 'Hide Thai translation' : 'Cacher le mot thaï'}</div>
-                 <div className="text-sm text-slate-500">{language === 'en' ? 'Do not display the thai characters to copy' : 'Ne pas afficher les caractères thaï à recopier'}</div>
+                 <div className="font-bold text-slate-700">{getTranslation('auto.hide_thai_translation', language)}</div>
+                 <div className="text-sm text-slate-500">{getTranslation('auto.do_not_display_the_thai_charac', language)}</div>
                </div>
                <input type="checkbox" className="hidden" checked={hideThai} onChange={e => setHideThai(e.target.checked)} />
             </label>
@@ -190,8 +191,8 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
                  {hideTranslation && <Check size={16} strokeWidth={3} />}
                </div>
                <div>
-                 <div className="font-bold text-slate-700">{language === 'en' ? 'Hide standard translation' : 'Cacher la traduction usuelle'}</div>
-                 <div className="text-sm text-slate-500">{language === 'en' ? 'Only show the phonetic spelling, no french/english translation' : 'N\'afficher que la phonétique sans traduction'}</div>
+                 <div className="font-bold text-slate-700">{getTranslation('auto.hide_standard_translation', language)}</div>
+                 <div className="text-sm text-slate-500">{getTranslation('auto.only_show_the_phonetic_spellin', language)}</div>
                </div>
                <input type="checkbox" className="hidden" checked={hideTranslation} onChange={e => setHideTranslation(e.target.checked)} />
             </label>
@@ -201,8 +202,8 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
                  {disableDictionaryClick && <Check size={16} strokeWidth={3} />}
                </div>
                <div>
-                 <div className="font-bold text-slate-700">{language === 'en' ? 'Disable hint clicks' : 'Désactiver les clics sur les mots'}</div>
-                 <div className="text-sm text-slate-500">{language === 'en' ? 'Prevent clicking on a phrase part to reveal the Thai word' : 'Empêcher de cliquer sur une partie de la phrase pour révéler le mot thaï'}</div>
+                 <div className="font-bold text-slate-700">{getTranslation('auto.disable_hint_clicks', language)}</div>
+                 <div className="text-sm text-slate-500">{getTranslation('auto.prevent_clicking_on_a_phrase_p', language)}</div>
                </div>
                <input type="checkbox" className="hidden" checked={disableDictionaryClick} onChange={e => setDisableDictionaryClick(e.target.checked)} />
             </label>
@@ -212,8 +213,8 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
                  {hideCharacterHints && <Check size={16} strokeWidth={3} />}
                </div>
                <div>
-                 <div className="font-bold text-slate-700">{language === 'en' ? 'Hide character tips' : 'Cacher les petites astuces'}</div>
-                 <div className="text-sm text-slate-500">{language === 'en' ? 'Hide the informative bulb tips between each character' : 'Cacher les indices du type 💡 qui apparaissent entre chaque caractère'}</div>
+                 <div className="font-bold text-slate-700">{getTranslation('auto.hide_character_tips', language)}</div>
+                 <div className="text-sm text-slate-500">{getTranslation('auto.hide_the_informative_bulb_tips', language)}</div>
                </div>
                <input type="checkbox" className="hidden" checked={hideCharacterHints} onChange={e => setHideCharacterHints(e.target.checked)} />
             </label>
@@ -228,7 +229,7 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
              disabled={(selectedWordIds !== null && selectedWordIds.length === 0) || completedLessons.length === 0}
              className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-lg py-4 rounded-xl border-b-4 border-emerald-700 shadow-lg active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center disabled:opacity-50 disabled:active:border-b-4 disabled:active:translate-y-0 uppercase tracking-widest"
            >
-             {language === 'en' ? 'Start' : 'Commencer'}
+             {getTranslation('auto.start', language)}
            </button>
         </div>
       </div>

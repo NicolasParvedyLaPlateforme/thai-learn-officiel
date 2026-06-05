@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import React from 'react';
 import { Check } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -9,7 +10,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
            className="text-xl sm:text-2xl font-bold text-slate-800">
-           {language === 'en' ? 'cat' : 'chat'}
+           {getTranslation('auto.cat_19', language)}
         </motion.div>
         <motion.div 
            initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
@@ -33,7 +34,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
            className="text-sm font-medium text-slate-500 mt-2 text-center">
-           <span className="font-bold text-slate-800">{language === 'en' ? 'cat' : 'chat'}</span> {language === 'en' ? 'translates to' : 'se traduit par'} <span className="font-bold text-emerald-600 font-thai text-base">แมว</span>
+           <span className="font-bold text-slate-800">{getTranslation('auto.cat_20', language)}</span> {getTranslation('auto.translates_to', language)} <span className="font-bold text-emerald-600 font-thai text-base">แมว</span>
         </motion.div>
       </div>
     );
@@ -45,7 +46,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
            className="text-xl sm:text-2xl font-bold text-slate-800">
-           {language === 'en' ? 'I eat rice' : 'Je mange du riz'}
+           {getTranslation('auto.i_eat_rice', language)}
         </motion.div>
         
         {/* Selected options area */}
@@ -72,7 +73,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
            className="text-sm font-medium text-slate-500 mt-2 text-center">
-           {language === 'en' ? 'Build the sentence by clicking words in order:' : 'Construisez la phrase en cliquant sur les mots dans l\'ordre :'} 
+           {getTranslation('auto.build_the_sentence_by_clicking', language)} 
            <br/>
            <span className="font-bold text-emerald-600 font-thai text-base mt-1 inline-block">ฉันกินข้าว</span>
         </motion.div>
@@ -87,7 +88,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
              initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
              className="flex justify-between items-center w-full max-w-xs mx-auto gap-3 sm:gap-4">
              <div className="flex-1 p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-700 font-medium text-center relative tracking-wide">
-                {language === 'en' ? 'cat' : 'chat'}
+                {getTranslation('auto.cat_21', language)}
              </div>
              <div className="flex-1 p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-700 font-thai text-xl text-center font-bold relative">
                 แมว
@@ -100,7 +101,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
              initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
              className="flex justify-between items-center w-full max-w-xs mx-auto gap-4">
              <div className="flex-1 p-3 rounded-xl border-2 border-slate-200 bg-white text-slate-500 font-medium text-center tracking-wide">
-                {language === 'en' ? 'dog' : 'chien'}
+                {getTranslation('auto.dog', language)}
              </div>
              <div className="flex-1 p-3 rounded-xl border-2 border-slate-200 bg-white text-slate-500 font-thai text-xl text-center">
                 หมา
@@ -116,7 +117,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
            className="text-xl sm:text-2xl font-bold text-slate-800">
-           {language === 'en' ? 'I eat.' : 'Je mange.'}
+           {getTranslation('auto.i_eat', language)}
         </motion.div>
         
         <motion.div 
@@ -140,7 +141,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
            className="text-sm font-medium text-slate-500 mt-2 text-center">
-           {language === 'en' ? 'Type the translation exactly:' : 'Tapez la traduction exacte :'} 
+           {getTranslation('auto.type_the_translation_exactly', language)} 
            <br/>
            <span className="font-bold text-emerald-600 font-thai text-base mt-1 inline-block">ฉันกิน</span>
         </motion.div>
@@ -154,7 +155,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
            className="text-xl sm:text-2xl font-bold text-slate-800">
-           {language === 'en' ? 'cat' : 'chat'}
+           {getTranslation('auto.cat_22', language)}
         </motion.div>
         
         <motion.div 
@@ -171,7 +172,7 @@ export default function InstructionExample({ typeKey, language }: { typeKey: str
         <motion.div 
            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
            className="text-sm font-medium text-slate-500 mt-2 text-center">
-           {language === 'en' ? 'Type the translation directly using your keyboard:' : 'Tapez la traduction directement avec votre clavier :'} 
+           {getTranslation('auto.type_the_translation_directly', language)} 
            <br/>
            <span className="font-bold text-emerald-600 font-thai text-base mt-1 inline-block">แมว</span>
         </motion.div>

@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { Exercise } from '../../../types';
 import { playThaiTTS } from '../../../lib/tts';
 import { THAI_ALPHABET } from '../../../lib/alphabet-data';
@@ -92,7 +93,7 @@ export default function SentenceBuilder({ exercise, selected, onChange, disabled
       <div className={`min-h-[120px] border-y-2 border-slate-200 py-4 flex flex-col gap-2 items-center justify-center relative`}>
         <div className="flex flex-wrap gap-2 items-center justify-center min-h-[64px] sm:min-h-[80px]">
           {selected.length === 0 && !exercise.isFillInBlank && (
-            <span className="text-slate-400 p-2 font-medium">{language === 'en' ? 'Build the sentence here...' : 'Formez la phrase ici...'}</span>
+            <span className="text-slate-400 p-2 font-medium">{getTranslation('auto.build_the_sentence_here', language)}</span>
           )}
           {(() => {
             const items = [];
@@ -219,7 +220,7 @@ export default function SentenceBuilder({ exercise, selected, onChange, disabled
                 <div 
                   className="bg-amber-100 border-2 border-amber-300 text-amber-800 rounded-xl px-3 py-2 flex flex-col items-center justify-center cursor-pointer shadow-sm animate-pulse-once"
                   onClick={() => playThaiTTS(nextHintLetter)}
-                  title={language === 'en' ? 'Next character hint' : 'Indice de la prochaine lettre'}
+                  title={getTranslation('auto.next_character_hint', language)}
                 >
                    <span className="font-thai text-xl">{nextHintLetter}</span>
                    <span className="text-xs font-semibold mt-0.5">{nextHintPronunciation}</span>
@@ -228,7 +229,7 @@ export default function SentenceBuilder({ exercise, selected, onChange, disabled
                 <button
                   onClick={() => setShowHint(true)}
                   className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600 flex items-center justify-center transition-colors"
-                  title={language === 'en' ? 'Show hint' : 'Afficher un indice'}
+                  title={getTranslation('auto.show_hint_23', language)}
                 >
                   <HelpCircle size={20} />
                 </button>

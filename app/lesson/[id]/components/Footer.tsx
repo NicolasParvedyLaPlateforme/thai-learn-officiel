@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { Exercise, Word } from "../../../types";
@@ -60,7 +61,7 @@ export default function Footer({
                   <div className="bg-white text-emerald-500 rounded-full p-1">
                     <Check size={24} strokeWidth={3} />
                   </div>
-                  {language === "en" ? "Excellent!" : "Excellent !"}
+                  {getTranslation('auto.excellent', language)}
                 </div>
               )}
               {isChecking && !isCorrect && (
@@ -69,7 +70,7 @@ export default function Footer({
                     <div className="bg-white text-rose-500 rounded-full p-1">
                       <X size={24} strokeWidth={3} />
                     </div>
-                    {language === "en" ? "Incorrect." : "Incorrect."}
+                    {getTranslation('auto.incorrect', language)}
                     {currentExercise.type === "writing" &&
                       currentExercise.blindMode &&
                       currentExercise.correctComponents && (
@@ -82,7 +83,7 @@ export default function Footer({
                               currentExercise.correctComponents!.length) *
                               100
                           )}
-                          % {language === "en" ? "match" : "réussite"}
+                          % {getTranslation('auto.match', language)}
                         </span>
                       )}
                     {currentExercise.type === "free-typing" &&
@@ -125,14 +126,12 @@ export default function Footer({
                               })()) *
                               100
                           )}
-                          % {language === "en" ? "match" : "réussite"}
+                          % {getTranslation('auto.match', language)}
                         </span>
                       )}
                   </div>
                   <div className="text-rose-800 text-sm mt-1 uppercase tracking-widest">
-                    {language === "en"
-                      ? "Correct answer:"
-                      : "Réponse correcte :"}
+                    {getTranslation('auto.correct_answer', language)}
                   </div>
                   <div className="font-medium font-thai text-xl md:text-2xl mt-1 sm:mt-0">
                     {currentExercise.type === "writing" &&
@@ -237,12 +236,8 @@ export default function Footer({
               `}
             >
               {currentExercise.type === "intro" || isChecking
-                ? language === "en"
-                  ? "Continue"
-                  : "Continuer"
-                : language === "en"
-                  ? "Check"
-                  : "Vérifier"}
+                ? getTranslation('auto.continue', language)
+                : getTranslation('auto.check', language)}
             </button>
           </div>
         </motion.footer>

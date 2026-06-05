@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { Check } from "lucide-react";
 import InstructionExample from "./InstructionExample";
 import { Exercise } from "../../../types";
@@ -38,9 +39,7 @@ export default function InstructionBlock({
         transition={{ delay: 0.1 }}
         className="w-full bg-amber-100/80 py-2 md:py-3 text-amber-800 font-semibold flex items-center justify-center gap-2 mb-4 md:mb-6 border-b border-amber-200/50 flex-shrink-0">
         <span className="text-xl">💡</span>{" "}
-        {language === "en"
-          ? "Here is how this exercise works"
-          : "Voici comment fonctionne cet exercice"}
+        {getTranslation('auto.here_is_how_this_exercise_work', language)}
       </motion.div>
 
       <div className="flex-1 flex flex-col items-center w-full px-4 md:px-6 max-w-2xl mx-auto gap-4 pb-4">
@@ -60,7 +59,7 @@ export default function InstructionBlock({
             className="bg-white p-5 md:p-8 rounded-3xl w-full max-w-sm sm:max-w-md md:max-w-lg border-2 border-dashed border-amber-300 shadow-sm mx-auto relative mt-2 shrink-0">
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-800 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 shadow-sm border border-amber-200/50">
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-[pulse_2s_ease-in-out_infinite]"></span>
-              {language === "en" ? "Example" : "Exemple"}
+              {getTranslation('auto.example', language)}
             </div>
             <InstructionExample
               typeKey={instructionKey}
@@ -74,9 +73,7 @@ export default function InstructionBlock({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           className="text-slate-500 font-medium text-center text-sm md:text-base max-w-sm leading-relaxed mt-4 shrink-0">
-          {language === "en"
-            ? "In the next steps, you will have to find the correct answer yourself!"
-            : "Dans les prochaines étapes, vous devrez trouver la bonne réponse vous-même !"}
+          {getTranslation('auto.in_the_next_steps_you_will_hav', language)}
         </motion.p>
 
         <motion.div 
@@ -95,9 +92,7 @@ export default function InstructionBlock({
               {dontShowAgain && <Check size={16} strokeWidth={3} />}
             </div>
             <span className="text-sm font-medium text-slate-600 text-center md:text-left">
-              {language === "en"
-                ? "Do not show this automatically for this exercise type"
-                : "Ne plus m'afficher cette aide automatiquement"}
+              {getTranslation('auto.do_not_show_this_automatically', language)}
             </span>
             <input
               type="checkbox"
@@ -123,7 +118,7 @@ export default function InstructionBlock({
             }}
             className="w-full py-4 rounded-2xl bg-zinc-900 border-b-4 border-zinc-950 text-white font-bold text-lg shadow-lg hover:bg-zinc-800 active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2"
           >
-            {language === "en" ? "Got it" : "J'ai compris"}
+            {getTranslation('auto.got_it_18', language)}
             <svg
               width="20"
               height="20"

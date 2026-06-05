@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useState, useEffect, useRef } from 'react';
 import { Word, Phrase } from '../types';
 import { Mic, MicOff, CheckCircle, XCircle, ArrowRight, Play, Loader2, RefreshCw } from 'lucide-react';
@@ -220,9 +221,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
   if (!browserSupportsSpeechRecognition) {
     return (
       <div className="bg-red-50 border border-red-200 text-red-700 p-6 rounded-2xl text-center">
-        {language === 'en' 
-          ? "Your browser doesn't support speech recognition. Please try using Google Chrome on desktop or mobile."
-          : "Votre navigateur ne supporte pas la reconnaissance vocale. Veuillez utiliser Google Chrome sur ordinateur ou mobile."}
+        {getTranslation('auto.your_browser_doesn_t_support_s', language)}
       </div>
     );
   }
@@ -252,7 +251,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
           <button 
             onClick={playTTS}
             className="absolute top-4 right-4 w-10 h-10 bg-slate-100 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50 rounded-full flex items-center justify-center transition-colors"
-            title={language === 'en' ? "Listen to pronunciation" : "Écouter la prononciation"}
+            title={getTranslation('auto.listen_to_pronunciation', language)}
           >
              <Play size={20} className="ml-1" />
           </button>
@@ -277,7 +276,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
              {currentFullTranscript ? (
                <span>{currentFullTranscript}</span>
              ) : (
-               <span className="text-slate-400 font-sans text-base italic">{language === 'en' ? 'Speak now...' : 'Parlez maintenant...'}</span>
+               <span className="text-slate-400 font-sans text-base italic">{getTranslation('auto.speak_now', language)}</span>
              )}
              <span className="inline-block w-1.5 h-6 ml-1 bg-orange-500 animate-pulse"></span>
            </motion.div>
@@ -293,7 +292,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                    className="text-emerald-500 font-bold flex items-center gap-2 text-xl bg-emerald-50 px-6 py-3 rounded-full border border-emerald-200"
                 >
-                   <CheckCircle /> {language === 'en' ? 'Excellent!' : 'Parfait !'}
+                   <CheckCircle /> {getTranslation('auto.excellent', language)}
                 </motion.div>
              )}
              
@@ -305,7 +304,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
                 >
                    <XCircle className="mt-0.5 shrink-0" /> 
                    <div className="flex flex-col items-start w-full">
-                      <span className="font-bold">{language === 'en' ? "Not quite, try again!" : "Pas tout à fait, réessaie !"}</span>
+                      <span className="font-bold">{getTranslation('auto.not_quite_try_again', language)}</span>
                       {coloredOutput && (
                         <div className="mt-2 bg-white p-2.5 rounded-xl border border-amber-200 w-full break-words text-left font-thai text-xl leading-relaxed shadow-sm">
                           {coloredOutput.map((item, i) => (
@@ -326,7 +325,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
                    <XCircle className="mt-0.5 shrink-0" /> 
                    <div className="flex flex-col items-start w-full">
                      <span className="font-bold">
-                       {language === 'en' ? 'Failed.' : 'Échec.'} 
+                       {getTranslation('auto.failed', language)} 
                        {similarityScore !== null && ` Précision : ${similarityScore}%`}
                      </span>
                      {coloredOutput && (
@@ -346,7 +345,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
                    initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
                    className="flex items-center gap-3 text-orange-500 font-bold text-lg"
                 >
-                   <Loader2 className="animate-spin" /> {language === 'en' ? 'Listening...' : 'Écoute en cours...'}
+                   <Loader2 className="animate-spin" /> {getTranslation('auto.listening', language)}
                 </motion.div>
              )}
           </AnimatePresence>
@@ -368,16 +367,14 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
                onClick={nextWord}
                className="px-10 h-16 bg-indigo-500 hover:bg-indigo-400 text-white rounded-2xl flex items-center justify-center gap-2 font-bold text-xl shadow-[0_6px_0_rgb(67,56,202)] active:shadow-[0_0px_0_rgb(67,56,202)] active:translate-y-1.5 transition-all"
             >
-               {language === 'en' ? 'Continue' : 'Continuer'} <ArrowRight size={24} />
+               {getTranslation('auto.continue', language)} <ArrowRight size={24} />
             </button>
          )}
        </div>
 
        {/* Instruction hints */}
        <div className="mt-12 text-slate-400 text-sm font-medium text-center max-w-xs">
-          {language === 'en' 
-             ? "Tap the microphone and read the Thai word aloud clearly."
-             : "Appuyez sur le micro et lisez le mot thaï à voix haute et clairement."}
+          {getTranslation('auto.tap_the_microphone_and_read_th', language)}
        </div>
     </div>
   );

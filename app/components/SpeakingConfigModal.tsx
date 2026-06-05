@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
@@ -81,7 +82,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
       <div className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
           <h2 className="text-xl font-extrabold text-slate-800">
-            {language === 'en' ? 'Speaking Configuration' : 'Configuration de prononciation'}
+            {getTranslation('auto.speaking_configuration', language)}
           </h2>
           <button 
              onClick={onClose}
@@ -96,7 +97,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
           {/* Lesson Selection */}
           <div className="space-y-3">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
-              {language === 'en' ? 'Lesson to practice' : 'Leçon à pratiquer'}
+              {getTranslation('auto.lesson_to_practice', language)}
             </h3>
             <select 
               value={selectedLessonId}
@@ -106,7 +107,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
               }}
               className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-700 font-medium focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
             >
-              <option value="all">{language === 'en' ? 'All seen lessons' : 'Toutes les leçons vues'}</option>
+              <option value="all">{getTranslation('auto.all_seen_lessons', language)}</option>
               {lessonsList.filter(l => completedLessons.includes(l.id)).map(lesson => (
                 <option key={lesson.id} value={lesson.id}>
                   {language === 'en' && lesson.titleEn ? lesson.titleEn : lesson.title}
@@ -114,7 +115,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
               ))}
             </select>
             {completedLessons.length === 0 && (
-              <p className="text-amber-600 text-sm italic">{language === 'en' ? 'You need to complete some lessons first.' : 'Vous devez d\'abord compléter quelques leçons.'}</p>
+              <p className="text-amber-600 text-sm italic">{getTranslation('auto.you_need_to_complete_some_less', language)}</p>
             )}
           </div>
 
@@ -123,14 +124,14 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
-                  {language === 'en' ? 'Vocabulary' : 'Vocabulaire'}
+                  {getTranslation('auto.vocabulary', language)}
                 </h3>
                 <div className="flex gap-2">
                   <button onClick={selectAll} className="text-xs font-bold text-indigo-500 hover:text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md">
-                    {language === 'en' ? 'All' : 'Tout'}
+                    {getTranslation('auto.all', language)}
                   </button>
                   <button onClick={deselectAll} className="text-xs font-bold text-slate-500 hover:text-slate-600 bg-slate-100 px-2 py-1 rounded-md">
-                    {language === 'en' ? 'None' : 'Aucun'}
+                    {getTranslation('auto.none', language)}
                   </button>
                 </div>
               </div>
@@ -163,7 +164,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
              disabled={(selectedWordIds !== null && selectedWordIds.length === 0) || completedLessons.length === 0}
              className="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold text-lg py-4 rounded-xl border-b-4 border-orange-700 shadow-lg active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center disabled:opacity-50 disabled:active:border-b-4 disabled:active:translate-y-0 uppercase tracking-widest"
            >
-             {language === 'en' ? 'Start' : 'Commencer'}
+             {getTranslation('auto.start', language)}
            </button>
         </div>
       </div>

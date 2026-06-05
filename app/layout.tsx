@@ -20,7 +20,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
@@ -34,6 +33,8 @@ export const metadata: Metadata = {
 
 import DesktopSidebarLeft from './components/DesktopSidebarLeft';
 import { CommunityModal } from './components/CommunityModal';
+import { LanguageSelectorModal } from './components/LanguageSelectorModal';
+import { GoldConversionModal } from './components/GoldConversionModal';
 import AuthProvider from './components/AuthProvider';
 import SyncProgress from './components/SyncProgress';
 
@@ -45,6 +46,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
            <SyncProgress />
            <DesktopSidebarLeft />
            <CommunityModal />
+           <LanguageSelectorModal />
+           <GoldConversionModal />
            <div className="flex-1 flex flex-col min-h-screen min-w-0">
              {children}
              <BottomNav />

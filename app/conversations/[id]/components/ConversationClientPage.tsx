@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../../../hooks/useTranslation';
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import IconImage from '../../../components/IconImage';
@@ -322,9 +323,9 @@ function ConversationContent() {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center font-sans text-slate-800">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">{language === 'en' ? 'Conversation not found' : 'Conversation introuvable'}</h2>
+          <h2 className="text-2xl font-bold mb-4">{getTranslation('auto.conversation_not_found', language)}</h2>
           <Link href="/conversations" className="text-orange-500 font-bold hover:underline">
-            {language === 'en' ? 'Return to Conversations' : 'Retour aux Dialogues'}
+            {getTranslation('auto.return_to_conversations', language)}
           </Link>
         </div>
       </div>
@@ -556,12 +557,12 @@ function ConversationContent() {
             )}
             <p className="text-center text-slate-600 font-medium">
               {isLevel1 
-                ? (language === 'en' ? 'Complete the conversation by choosing the right responses.' : 'Complétez la conversation en choisissant les bonnes réponses.')
+                ? (getTranslation('auto.complete_the_conversation_by_c', language))
                 : isLevel2
-                  ? (language === 'en' ? 'Complete the sentences by choosing the correct missing word.' : 'Complétez les phrases en choisissant le bon mot manquant.')
+                  ? (getTranslation('auto.complete_the_sentences_by_choo', language))
                   : isLevel3
-                    ? (language === 'en' ? 'Complete the sentences by choosing the correct phrase.' : 'Complétez les phrases en choisissant la bonne phrase.')
-                    : (language === 'en' ? 'Listen to the conversation to understand the context.' : 'Écoutez la conversation pour comprendre le contexte.')
+                    ? (getTranslation('auto.complete_the_sentences_by_choo_17', language))
+                    : (getTranslation('auto.listen_to_the_conversation_to', language))
               }
             </p>
             <button 
@@ -569,7 +570,7 @@ function ConversationContent() {
               className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-2xl w-full border-b-4 border-orange-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2 text-lg"
             >
               <Play size={24} className="fill-white" />
-              {language === 'en' ? 'Start' : 'Démarrer'}
+              {getTranslation('auto.start', language)}
             </button>
           </div>
         ) : (
@@ -663,7 +664,7 @@ function ConversationContent() {
                       <div className={`px-2 flex flex-col gap-1 ${isRight ? 'text-right' : 'text-left'}`}>
                         {warnings.includes(index) && (
                           <span className="text-xs font-bold text-red-500 bg-red-50 p-1 rounded inline-block w-fit mb-1">
-                            ⚠️ {language === 'en' ? 'No exact word found in course.json' : 'Aucun mot exact trouvé dans course.json'}
+                            ⚠️ {getTranslation('auto.no_exact_word_found_in_course', language)}
                           </span>
                         )}
                         {showRomanization && <span className="text-sm font-bold text-orange-500">{dialog.phonetic}</span>}
@@ -689,7 +690,7 @@ function ConversationContent() {
               <div className="w-full mb-2 bg-indigo-50/50 rounded-2xl p-2 sm:p-3 border border-indigo-100 flex flex-col items-center gap-2">
                  <div className="text-[11px] sm:text-xs font-bold text-indigo-800 flex items-center gap-1.5 text-center">
                     <Sparkles size={14} />
-                    {language === 'en' ? 'Need a hint?' : 'Besoin d\'un indice ?'}
+                    {getTranslation('auto.need_a_hint', language)}
                  </div>
                  <div className="flex w-full overflow-x-auto pb-1 items-center justify-center gap-1.5 sm:gap-2 mt-0.5">
                      <button
@@ -701,7 +702,7 @@ function ConversationContent() {
                      >
                         <Volume2 size={16} /> 
                         <span className="hidden sm:inline">
-                           {hintsUsed[1] ? (language === 'en' ? 'Replay' : 'Rejouer') : (language === 'en' ? 'Hint 1' : 'Indice 1')}
+                           {hintsUsed[1] ? (getTranslation('auto.replay', language)) : (getTranslation('auto.hint_1', language))}
                         </span>
                      </button>
 
@@ -713,7 +714,7 @@ function ConversationContent() {
                        className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] min-w-[70px] ${hintsUsed[2] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         <ImageIcon size={16} />
-                        <span className="hidden sm:inline">{hintsUsed[2] ? (language === 'en' ? 'Image' : 'Image') : (language === 'en' ? 'Hint 2' : 'Indice 2')}</span>
+                        <span className="hidden sm:inline">{hintsUsed[2] ? (getTranslation('auto.image', language)) : (getTranslation('auto.hint_2', language))}</span>
                      </button>
 
                      <button
@@ -723,7 +724,7 @@ function ConversationContent() {
                        className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[3] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         {!hintsUsed[3] && <Type size={16} />} 
-                        {hintsUsed[3] ? <span>{language === 'en' ? hintWord.en : hintWord.fr}</span> : <span className="hidden sm:inline">{language === 'en' ? 'Hint 3' : 'Indice 3'}</span>}
+                        {hintsUsed[3] ? <span>{language === 'en' ? hintWord.en : hintWord.fr}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
                      </button>
                      
                      <button
@@ -731,11 +732,11 @@ function ConversationContent() {
                           attemptApplyHintCost(4);
                        }}
                        className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[4] ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
-                       title={language === 'en' ? 'Highlight differences' : 'Surligner les différences'}
+                       title={getTranslation('auto.highlight_differences', language)}
                      >
                         <Sparkles size={16} />
                         <span className="hidden sm:inline">
-                           {hintsUsed[4] ? (language === 'en' ? 'Focus ON' : 'Focus ON') : (language === 'en' ? 'Hint 4' : 'Indice 4')}
+                           {hintsUsed[4] ? (getTranslation('auto.focus_on', language)) : (getTranslation('auto.hint_4', language))}
                         </span>
                      </button>
                  </div>
@@ -743,7 +744,7 @@ function ConversationContent() {
             )}
             <div className="flex items-end justify-between px-2 mb-0">
                <h3 className="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wide">
-                  {language === 'en' ? 'Choose the correct response:' : 'Choisissez la bonne réponse :'}
+                  {getTranslation('auto.choose_the_correct_response', language)}
                </h3>
             </div>
             {choices.map((choice) => {
@@ -810,7 +811,7 @@ function ConversationContent() {
                 className="flex-[1] bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center gap-2"
               >
                 <RotateCcw size={24} />
-                <span className="hidden sm:inline">{language === 'en' ? 'Listen Again' : 'Réécouter'}</span>
+                <span className="hidden sm:inline">{getTranslation('auto.listen_again', language)}</span>
               </button>
             )}
             {!isInteractive && (
@@ -819,7 +820,7 @@ function ConversationContent() {
                 className="flex-[2] bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-2xl border-b-4 border-orange-700 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center group"
               >
                 <span className="flex items-center gap-2">
-                  {language === 'en' ? 'Start Level 1' : 'Passer au Niveau 1'}
+                  {getTranslation('auto.start_level_1', language)}
                   <div className="bg-white/20 group-hover:bg-white/30 rounded-full p-1 transition-colors">
                      <Star size={16} className="fill-white" />
                   </div>
@@ -839,7 +840,7 @@ function ConversationContent() {
                       className="flex-[2] bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-2xl border-b-4 border-purple-700 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center group"
                     >
                       <span className="flex items-center gap-2">
-                        {language === 'en' ? 'Start Level 2' : 'Passer au Niveau 2'}
+                        {getTranslation('auto.start_level_2', language)}
                         <div className="bg-white/20 group-hover:bg-white/30 rounded-full p-1 transition-colors">
                            <Star size={16} className="fill-white" />
                         </div>
@@ -853,7 +854,7 @@ function ConversationContent() {
                       className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 border-slate-400 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center gap-2"
                     >
                       <RotateCcw size={20} />
-                      {language === 'en' ? 'Retry' : 'Réessayer'} (Score: {stars} / ★★★)
+                      {getTranslation('auto.retry', language)} (Score: {stars} / ★★★)
                     </button>
                   );
                 }
@@ -865,7 +866,7 @@ function ConversationContent() {
                       className="flex-[2] bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-2xl border-b-4 border-purple-700 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center group"
                     >
                       <span className="flex items-center gap-2">
-                        {language === 'en' ? 'Start Level 3' : 'Passer au Niveau 3'}
+                        {getTranslation('auto.start_level_3', language)}
                         <div className="bg-white/20 group-hover:bg-white/30 rounded-full p-1 transition-colors">
                            <Star size={16} className="fill-white" />
                         </div>
@@ -879,7 +880,7 @@ function ConversationContent() {
                       className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 border-slate-400 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center gap-2"
                     >
                       <RotateCcw size={20} />
-                      {language === 'en' ? 'Retry' : 'Réessayer'} (Score: {stars} / ★★★)
+                      {getTranslation('auto.retry', language)} (Score: {stars} / ★★★)
                     </button>
                   );
                 }
@@ -891,7 +892,7 @@ function ConversationContent() {
                       className="flex-[2] bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl border-b-4 border-blue-700 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center gap-2"
                     >
                       <Check size={24} className="text-white" />
-                      {language === 'en' ? 'Complete Level 3' : 'Terminer Niveau 3'}
+                      {getTranslation('auto.complete_level_3', language)}
                     </Link>
                   );
                 } else {
@@ -901,7 +902,7 @@ function ConversationContent() {
                       className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 border-slate-400 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center gap-2"
                     >
                       <RotateCcw size={20} />
-                      {language === 'en' ? 'Retry' : 'Réessayer'} (Score: {stars} / ★★★★)
+                      {getTranslation('auto.retry', language)} (Score: {stars} / ★★★★)
                     </button>
                   );
                 }
@@ -933,7 +934,7 @@ function ConversationContent() {
             <div className="w-48 h-48 relative mb-4 mt-2">
                <IconImage src={hintWord.imageUrl || `/images/w_w_${hintWord.id}.svg`} alt="Hint Image" fill className="object-contain" />
             </div>
-            <p className="text-sm font-bold text-slate-400 mt-2">{language === 'en' ? 'Tap anywhere to close' : 'Appuyez n\'importe où pour fermer'}</p>
+            <p className="text-sm font-bold text-slate-400 mt-2">{getTranslation('auto.tap_anywhere_to_close', language)}</p>
           </div>
         </div>
       )}

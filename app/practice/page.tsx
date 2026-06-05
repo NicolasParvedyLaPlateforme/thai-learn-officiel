@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
@@ -29,7 +30,7 @@ export default function PracticePage() {
               <BookOpen size={20} />
             </Link>
             <h1 className="text-xl font-extrabold text-slate-800 tracking-tight md:hidden">
-              {language === 'en' ? 'Practice' : 'Pratique'}
+              {getTranslation('auto.practice', language)}
             </h1>
           </div>
           
@@ -37,11 +38,10 @@ export default function PracticePage() {
             {mounted && <PWAInstallButton />}
             {mounted && (
               <button 
-                 onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
-                 className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors"
-                 title={language === 'fr' ? "Switch to English" : "Passer en Français"}
+                 onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
+                 className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase"
               >
-                 {language === 'fr' ? 'FR' : 'EN'}
+                 {language}
               </button>
             )}
             
@@ -67,12 +67,10 @@ export default function PracticePage() {
       <div className="max-w-4xl mx-auto space-y-8 mt-8 px-4 md:px-8">
         <header className="mb-10 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight mb-4">
-            {language === 'en' ? 'Practice' : 'Pratique'}
+            {getTranslation('auto.practice', language)}
           </h1>
           <p className="text-lg text-slate-500 font-medium max-w-2xl">
-            {language === 'en' 
-              ? 'Reinforce your skills with targeted exercises. Choose a mode below to start practicing.' 
-              : 'Renforcez vos compétences avec des exercices ciblés. Choisissez un mode ci-dessous pour commencer à pratiquer.'}
+            {getTranslation('auto.reinforce_your_skills_with_tar', language)}
           </p>
         </header>
 
@@ -104,12 +102,10 @@ export default function PracticePage() {
             </div>
 
             <h3 className="text-2xl font-bold text-slate-800 mb-2">
-              {language === 'en' ? 'Review' : 'Rappel'}
+              {getTranslation('auto.review', language)}
             </h3>
             <p className="text-slate-500 font-medium leading-relaxed">
-              {language === 'en' 
-                ? 'Test your memory and reinforce what you have learned with spaced repetition.' 
-                : 'Testez votre mémoire et renforcez ce que vous avez appris avec la répétition espacée.'}
+              {getTranslation('auto.test_your_memory_and_reinforce', language)}
             </p>
           </Link>
           </motion.div>
@@ -131,7 +127,7 @@ export default function PracticePage() {
                     <div className="w-8 h-2 bg-slate-200 rounded-full"></div>
                  </div>
                  <div className="h-10 bg-fuchsia-100 rounded-xl shadow-sm border-2 border-fuchsia-300 flex items-center justify-center group-hover:-translate-y-0.5 transition-all duration-300 text-fuchsia-600 font-bold text-[13px]">
-                    {language === 'en' ? 'Cat' : 'Chat'}
+                    {getTranslation('auto.cat', language)}
                  </div>
                  
                  <div className="h-10 bg-fuchsia-500 rounded-xl shadow-md border-2 border-fuchsia-600 flex items-center justify-center group-hover:translate-y-0.5 transition-all duration-300 delay-75 text-white font-bold text-lg pt-1">
@@ -149,12 +145,10 @@ export default function PracticePage() {
             </div>
 
             <h3 className="text-2xl font-bold text-slate-800 mb-2">
-              {language === 'en' ? 'Pairs' : 'Paires'}
+              {getTranslation('auto.pairs', language)}
             </h3>
             <p className="text-slate-500 font-medium leading-relaxed">
-              {language === 'en' 
-                ? 'Match words with their translations to improve your vocabulary recognition.' 
-                : 'Associez les mots avec leurs traductions pour améliorer votre reconnaissance du vocabulaire.'}
+              {getTranslation('auto.match_words_with_their_transla', language)}
             </p>
           </Link>
           </motion.div>
@@ -197,12 +191,10 @@ export default function PracticePage() {
             </div>
 
             <h3 className="text-2xl font-bold text-slate-800 mb-2">
-              {language === 'en' ? 'Writing' : 'Écriture'}
+              {getTranslation('auto.writing', language)}
             </h3>
             <p className="text-slate-500 font-medium leading-relaxed">
-              {language === 'en' 
-                ? 'Practice structural sentence building and spelling with the virtual keyboard.' 
-                : 'Pratiquez l\'écriture des mots et des phrases avec le clavier virtuel.'}
+              {getTranslation('auto.practice_structural_sentence_b', language)}
             </p>
           </button>
           </motion.div>
@@ -237,12 +229,10 @@ export default function PracticePage() {
             </div>
 
             <h3 className="text-2xl font-bold text-slate-800 mb-2">
-              {language === 'en' ? 'Speaking' : 'Parler'}
+              {getTranslation('auto.speaking', language)}
             </h3>
             <p className="text-slate-500 font-medium leading-relaxed">
-              {language === 'en' 
-                ? 'Practice your pronunciation with real-time voice recognition.' 
-                : 'Pratiquez votre prononciation avec la reconnaissance vocale en temps réel.'}
+              {getTranslation('auto.practice_your_pronunciation_wi', language)}
             </p>
           </button>
           </motion.div>

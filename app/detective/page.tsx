@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import IconImage from '../components/IconImage';
@@ -17,7 +18,7 @@ const CATEGORIES: Record<string, { en: string, fr: string, emoji: string, imageU
 export default function DetectivePage() {
   const [mounted, setMounted] = useState(false);
   const isPWA = useIsPWA();
-  const { language, xp } = useProgressStore();
+  const { language, xp, completedToday } = useProgressStore();
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [selectedLevelId, setSelectedLevelId] = useState<string | null>(null);
 
@@ -77,12 +78,20 @@ export default function DetectivePage() {
                  </div>
               )}
               <h1 className="text-xl font-extrabold text-slate-800 tracking-tight md:hidden">
-                 {mobileView === 'categories_list' ? (language === 'en' ? 'Detective' : 'Détective') : (selectedCategory ? (language === 'en' ? selectedCategory.en : selectedCategory.fr) : '')}
+                 {mobileView === 'categories_list' ? (getTranslation('auto.detective', language)) : (selectedCategory ? (language === 'en' ? selectedCategory.en : selectedCategory.fr) : '')}
               </h1>
             </div>
             
             <div className="flex items-center gap-2">
               {mobileView === 'categories_list' && <PWAInstallButton />}
+              {mounted && (
+                <button 
+                   onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
+                   className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase md:hidden"
+                >
+                   {language}
+                </button>
+              )}
               {(mounted && isPWA) && (
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
                   <Star size={18} className="fill-amber-400 stroke-amber-400" />
@@ -98,7 +107,7 @@ export default function DetectivePage() {
             <div className="hidden md:flex h-16 items-center justify-between px-6 border-b border-slate-100 shrink-0">
                <h1 className="text-xl font-extrabold text-slate-800 tracking-tight flex items-center gap-2">
                   <Search size={24} className="text-emerald-500" />
-                  {language === 'en' ? 'Detective Categories' : 'Catégories Détective'}
+                  {getTranslation('auto.detective_categories', language)}
                </h1>
             </div>
         )}
@@ -146,7 +155,7 @@ export default function DetectivePage() {
                             </p>
                          )}
                          <div className="mt-auto pt-4 flex items-center text-emerald-600 font-bold text-sm">
-                            {language === 'en' ? 'Explore Category' : 'Explorer la catégorie'}
+                            {getTranslation('auto.explore_category', language)}
                             <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                          </div>
                        </div>
@@ -163,7 +172,7 @@ export default function DetectivePage() {
                 <div className="p-4 md:p-8 shrink-0 md:border-b border-slate-100 bg-white shadow-[0_4px_20px_-15px_rgba(0,0,0,0.1)] relative z-10">
                      <div className="hidden md:flex items-center gap-2 text-sm font-bold text-slate-400 mb-6">
                           <button onClick={() => { setSelectedCategoryId(null); setSelectedLevelId(null); }} className="hover:text-slate-600 transition-colors">
-                              {language === 'en' ? 'Categories' : 'Catégories'}
+                              {getTranslation('auto.categories', language)}
                           </button>
                           <ChevronRight size={16} />
                           <span className="text-slate-700">{language === 'en' ? selectedCategory.en : selectedCategory.fr}</span>
@@ -268,10 +277,18 @@ export default function DetectivePage() {
 
                                             <div className={`mt-3 flex items-center gap-3 md:gap-4 text-[11px] md:text-xs font-bold`}>
                                                 <div className="flex items-center gap-1.5 text-slate-400">
-                                                   <Search size={14} /> {level.objects?.length || 0} {language === 'en' ? 'objects' : 'objets'}
+                                                   <Search size={14} /> {level.objects?.length || 0} {getTranslation('auto.objects', language)}
                                                 </div>
                                                 <div className="flex items-center gap-1.5 text-orange-400">
-                                                   <Star size={14} className="fill-current" /> +50
+                                                   <Star size={14} className="fill-current" /> 
+                                                   {(completedToday || []).some(k => k.startsWith(`detective_${level.id}_`)) ? (
+                                                     <>
+                                                       <span className="line-through text-slate-400 mr-1 opacity-70">+50</span>
+                                                       <span className="font-bold">+20</span>
+                                                     </>
+                                                   ) : (
+                                                     "+50"
+                                                   )}
                                                 </div>
                                             </div>
                                          </div>
@@ -318,7 +335,7 @@ export default function DetectivePage() {
                        
                        {/* Mock location tag if you want, similar to conversations */}
                        <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur text-slate-600 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm">
-                           <MapPin size={12} className="text-emerald-500" /> {language === 'en' ? 'Exploration' : 'Exploration'}
+                           <MapPin size={12} className="text-emerald-500" /> {getTranslation('auto.exploration', language)}
                        </div>
                    </div>
 
@@ -333,10 +350,18 @@ export default function DetectivePage() {
                    {/* Stats row */}
                    <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-8 border-b border-slate-100 pb-6">
                        <div className="flex items-center gap-2 text-sm text-slate-500 font-bold bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-                           <Search size={16} className="text-slate-400" /> {selectedLevel.objects?.length || 0} {language === 'en' ? 'objects to find' : 'objets à trouver'}
+                           <Search size={16} className="text-slate-400" /> {selectedLevel.objects?.length || 0} {getTranslation('auto.objects_to_find', language)}
                        </div>
                        <div className="flex items-center gap-2 text-sm text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg border border-orange-100">
-                           <Star size={16} className="fill-orange-400 text-orange-400" /> +50 XP
+                           <Star size={16} className="fill-orange-400 text-orange-400" /> 
+                           {(completedToday || []).some(k => k.startsWith(`detective_${selectedLevel.id}_`)) ? (
+                             <>
+                               <span className="line-through text-orange-300 mr-1">+50</span>
+                               <span>+20 XP</span>
+                             </>
+                           ) : (
+                             "+50 XP"
+                           )}
                        </div>
                    </div>
 
@@ -348,10 +373,10 @@ export default function DetectivePage() {
                            </div>
                            <div className="flex-1">
                                <div className="font-extrabold text-white text-lg">
-                                   {language === 'en' ? 'Level 1 (Thai + Translation)' : 'Niveau 1 (Thaï + Traduction)'}
+                                   {getTranslation('auto.level_1_thai_translation', language)}
                                </div>
                                <div className="text-sm font-medium text-emerald-100">
-                                   {language === 'en' ? 'Find hidden objects' : 'Trouver les objets cachés'}
+                                   {getTranslation('auto.find_hidden_objects', language)}
                                </div>
                            </div>
                            <ChevronRight className="text-white shrink-0" />
@@ -363,10 +388,10 @@ export default function DetectivePage() {
                            </div>
                            <div className="flex-1">
                                <div className="font-extrabold text-white text-lg">
-                                   {language === 'en' ? 'Level 2 (Thai only)' : 'Niveau 2 (Thaï uniquement)'}
+                                   {getTranslation('auto.level_2_thai_only', language)}
                                </div>
                                <div className="text-sm font-medium text-amber-100">
-                                   {language === 'en' ? 'No translations, Thai script only' : 'Aucune traduction, écriture thaï uniquement'}
+                                   {getTranslation('auto.no_translations_thai_script_on', language)}
                                </div>
                            </div>
                            <ChevronRight className="text-white shrink-0" />
@@ -381,12 +406,10 @@ export default function DetectivePage() {
                    <Search size={40} className="text-slate-300" />
                 </div>
                 <h3 className="text-xl font-extrabold text-slate-800 mb-2">
-                    {language === 'en' ? 'Select a level' : 'Sélectionnez un niveau'}
+                    {getTranslation('auto.select_a_level', language)}
                 </h3>
                 <p className="text-slate-500 max-w-xs">
-                    {language === 'en' 
-                      ? 'Choose a category and select a level to start finding hidden objects and learning Thai vocabulary.' 
-                      : 'Choisissez une catégorie puis sélectionnez un niveau pour commencer à trouver des objets cachés et apprendre du vocabulaire.'}
+                    {getTranslation('auto.choose_a_category_and_select_a', language)}
                 </p>
              </div>
          )}
