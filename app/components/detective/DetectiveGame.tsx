@@ -16,7 +16,8 @@ interface Props {
 }
 
 export default function DetectiveGame({ level, initialDiff }: Props) {
-  const { language, setMobileSidebarOpen } = useProgressStore();
+  const { language, setMobileSidebarOpen, completedLessons, completeLesson } = useProgressStore();
+  const [xpAwarded, setXpAwarded] = useState(false);
 
   const [objects, setObjects] = useState<DetectiveObject[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -172,6 +173,18 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
     }
   }, [mistakes, levelState]);
 
+  useEffect(() => {
+    if (levelState === 'completed' && !xpAwarded) {
+      const lessonId = `detective_${level.id}_diff${difficulty}`;
+      const isFirstTime = !completedLessons.includes(lessonId);
+      const earnedXp = isFirstTime ? 50 : 20;
+      const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
+      
+      completeLesson(lessonId, earnedXp, 0, earnedStars);
+      setXpAwarded(true);
+    }
+  }, [levelState, xpAwarded, level.id, difficulty, mistakes, completedLessons, completeLesson]);
+
 
 
   useEffect(() => {
@@ -194,6 +207,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
     setMistakes(0);
     setCurrentMistakes(0);
     prevStars.current = 5;
+    setXpAwarded(false);
     setLevelState('playing');
   };
 

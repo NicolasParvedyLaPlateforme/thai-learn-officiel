@@ -8,6 +8,7 @@ import { formatCombiningChar } from '../lib/alphabet-utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { DailyQuestsWidget } from './DailyQuestsWidget';
 import { ConversationObjectiveWidget } from './ConversationObjectiveWidget';
+import { LeaderboardWidget } from './LeaderboardWidget';
 
 interface Unit {
   id: string;
@@ -428,6 +429,7 @@ export function DesktopSidebarRight({
           <div className="w-full flex flex-col gap-6">
             <DailyQuestsWidget category={questsCategory} />
             <ConversationObjectiveWidget />
+            <LeaderboardWidget />
           </div>
         </motion.div>
       );

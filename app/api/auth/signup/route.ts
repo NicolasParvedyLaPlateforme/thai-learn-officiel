@@ -21,10 +21,16 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    
+    const baseName = name || email.split("@")[0];
+    const pseudoBase = baseName.charAt(0).toUpperCase();
+    const randomDigits = Math.floor(10000 + Math.random() * 90000);
+    const generatedPseudo = `${pseudoBase}-${randomDigits}`;
 
     const user = await prisma.user.create({
       data: {
-        name: name || email.split("@")[0],
+        name: baseName,
+        pseudo: generatedPseudo,
         email,
         password: hashedPassword,
       }
