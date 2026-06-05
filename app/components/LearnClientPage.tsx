@@ -217,11 +217,10 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
             {mounted && <PWAInstallButton />}
             {mounted && (
               <button
-                onClick={() => setLanguage(language === 'fr' ? 'en' : 'fr')}
-                className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors"
-                title={language === 'fr' ? "Switch to English" : "Passer en Français"}
+                onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
+                className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase"
               >
-                {language === 'fr' ? 'FR' : 'EN'}
+                {language}
               </button>
             )}
 

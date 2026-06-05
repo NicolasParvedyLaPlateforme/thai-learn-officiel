@@ -126,6 +126,14 @@ export default function ConversationsPage() {
             
             <div className="flex items-center gap-2">
               {mobileView === 'stories_list' && <PWAInstallButton />}
+              {mounted && (
+                <button 
+                   onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
+                   className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase md:hidden"
+                >
+                   {language}
+                </button>
+              )}
               {(mounted && isPWA) && (
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
                   <Star size={18} className="fill-amber-400 stroke-amber-400" />

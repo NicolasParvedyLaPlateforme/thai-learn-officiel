@@ -172,6 +172,14 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
           
           <div className="flex items-center gap-2">
             {mounted && <PWAInstallButton />}
+            {mounted && (
+              <button 
+                 onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
+                 className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase md:hidden"
+              >
+                 {language}
+              </button>
+            )}
             
             {mounted && (
               <div className="flex items-center gap-1.5 relative">

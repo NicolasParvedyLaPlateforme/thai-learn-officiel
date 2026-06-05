@@ -874,9 +874,9 @@
           "en": "month",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_duean.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "mes",
+          "de": "Monat",
+          "it": "mese"
         },
         {
           "id": "w_khrang",
@@ -886,9 +886,9 @@
           "en": "time",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khrang.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "vez",
+          "de": "Mal",
+          "it": "volta"
         },
         {
           "id": "w_wan",
@@ -898,9 +898,9 @@
           "en": "day",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_wan.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "día",
+          "de": "Tag",
+          "it": "giorno"
         },
         {
           "id": "w_sapdaa",
@@ -910,9 +910,9 @@
           "en": "week",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_sapdaa.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "semana",
+          "de": "Woche",
+          "it": "settimana"
         },
         {
           "id": "w_thuk",
@@ -922,9 +922,9 @@
           "en": "every",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_thuk.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cada",
+          "de": "jede",
+          "it": "ogni"
         }
       ],
       "phrases": [
@@ -940,9 +940,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_2.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "dos meses",
+          "de": "zwei Monate",
+          "it": "due mesi"
         },
         {
           "id": "p_new_l3_3",
@@ -956,9 +956,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_3.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "tres veces",
+          "de": "dreimal",
+          "it": "tre volte"
         },
         {
           "id": "p_new_l3_5",
@@ -972,9 +972,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_5.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cinco meses",
+          "de": "fünf Monate",
+          "it": "cinque mesi"
         },
         {
           "id": "p_sii_sapdaa",
@@ -988,9 +988,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_sii_sapdaa.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cuatro semanas",
+          "de": "vier Wochen",
+          "it": "quattro settimane"
         },
         {
           "id": "p_thuk_wan",
@@ -1004,20 +1004,20 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_thuk_wan.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cada día",
+          "de": "jeden Tag",
+          "it": "ogni giorno"
         }
       ],
       "titleEn": "Duration and Frequency",
       "descriptionEn": "Express the time and frequency of actions",
       "imageUrl": "/images/unite/unite-1-exercice-6-officiel.webp",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Duración y frecuencia",
+      "titleDe": "Dauer und Häufigkeit",
+      "titleIt": "Durata e frequenza",
+      "descriptionEs": "Expresar el tiempo y la frecuencia de las acciones",
+      "descriptionDe": "Zeit und Häufigkeit von Aktionen ausdrücken",
+      "descriptionIt": "Esprimere il tempo e la frequenza delle azioni"
     },
     {
       "id": "bilan-unit-1",
@@ -1029,12 +1029,12 @@
       "descriptionEn": "First challenge! Test your Thai basics: greetings, introductions, numbers from 0 to 10, and early time concepts.",
       "imageUrl": "/images/default-lesson.svg",
       "isReview": true,
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Evaluación de la Unidad 1",
+      "titleDe": "Überprüfung Einheit 1",
+      "titleIt": "Valutazione Unità 1",
+      "descriptionEs": "¡Primer desafío! Evalúa tus conocimientos básicos de tailandés: saludos, presentación, números del 0 al 10 y primeras nociones del tiempo.",
+      "descriptionDe": "Erste Herausforderung! Teste deine Thai-Grundlagen: Begrüßungen, Vorstellung, Zahlen von 0 bis 10 und erste Zeitbegriffe.",
+      "descriptionIt": "Prima sfida! Valuta le tue basi di thailandese: saluti, presentazione, numeri da 0 a 10 e prime nozioni di tempo."
     },
     {
       "id": "lesson-3-quantities",
@@ -1049,9 +1049,9 @@
           "en": "there is / have",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_mee.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hay / tener",
+          "de": "es gibt / haben",
+          "it": "c'è / avere"
         },
         {
           "id": "w_gee",
@@ -1061,9 +1061,9 @@
           "en": "how many",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_gee.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cuántos",
+          "de": "wie viele",
+          "it": "quanti"
         },
         {
           "id": "w_khon",
@@ -1073,9 +1073,9 @@
           "en": "person (and classifier)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khon.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "persona (y clasificador)",
+          "de": "Person (und Klassifikator)",
+          "it": "persona (e classificatore)"
         },
         {
           "id": "w_phuean",
@@ -1085,9 +1085,9 @@
           "en": "friend",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phuean.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "amigo",
+          "de": "Freund",
+          "it": "amico"
         },
         {
           "id": "w_dek",
@@ -1097,9 +1097,9 @@
           "en": "child",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_dek.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "niño",
+          "de": "Kind",
+          "it": "bambino"
         }
       ],
       "phrases": [
@@ -1116,9 +1116,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_how_many_people.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "¿cuántas personas hay?",
+          "de": "Wie viele Personen gibt es?",
+          "it": "quante persone ci sono?"
         },
         {
           "id": "p_five_people",
@@ -1133,9 +1133,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_five_people.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hay cinco personas",
+          "de": "Es gibt fünf Personen",
+          "it": "ci sono cinque persone"
         },
         {
           "id": "p_four_people",
@@ -1150,9 +1150,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_four_people.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hay cuatro personas",
+          "de": "Es gibt vier Personen",
+          "it": "ci sono quattro persone"
         },
         {
           "id": "p_how_many_friends",
@@ -1169,9 +1169,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_how_many_friends.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "¿cuántos amigos tienes?",
+          "de": "Wie viele Freunde hast du?",
+          "it": "quanti amici hai?"
         },
         {
           "id": "p_three_children",
@@ -1187,20 +1187,20 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_three_children.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hay tres niños",
+          "de": "Es gibt drei Kinder",
+          "it": "ci sono tre bambini"
         }
       ],
       "titleEn": "Quantities: People",
       "descriptionEn": "Using numbers to count people",
       "imageUrl": "/images/numbers.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Cantidades: Personas",
+      "titleDe": "Mengen: Personen",
+      "titleIt": "Quantità: Persone",
+      "descriptionEs": "Usar los números para contar personas",
+      "descriptionDe": "Zahlen verwenden, um Personen zu zählen",
+      "descriptionIt": "Usare i numeri per contare le persone"
     },
     {
       "id": "l_nouveau_004",
@@ -1215,9 +1215,9 @@
           "en": "chair",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_gao_ee.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "silla",
+          "de": "Stuhl",
+          "it": "sedia"
         },
         {
           "id": "w_dtua",
@@ -1227,9 +1227,9 @@
           "en": "classifier (objects/animals)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_dtua.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "clasificador (objetos/animales)",
+          "de": "Klassifikator (Gegenstände/Tiere)",
+          "it": "classificatore (oggetti/animali)"
         },
         {
           "id": "w_dto",
@@ -1239,9 +1239,9 @@
           "en": "table",
           "allowIdenticalTranslation": true,
           "imageUrl": "/images/w_w_dto.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "mesa",
+          "de": "Tisch",
+          "it": "tavolo"
         },
         {
           "id": "w_krapao",
@@ -1251,9 +1251,9 @@
           "en": "bag",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_krapao.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "bolsa",
+          "de": "Tasche",
+          "it": "borsa"
         },
         {
           "id": "w_bai_class",
@@ -1263,9 +1263,9 @@
           "en": "classifier (bags/containers)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_bai_class.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "clasificador (bolsas/recipientes)",
+          "de": "Klassifikator (Taschen/Behälter)",
+          "it": "classificatore (borse/contenitori)"
         }
       ],
       "phrases": [
@@ -1283,9 +1283,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_how_many_chairs.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "¿cuántas sillas hay?",
+          "de": "Wie viele Stühle gibt es?",
+          "it": "quante sedie ci sono?"
         },
         {
           "id": "p_three_chairs",
@@ -1301,9 +1301,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_three_chairs.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hay tres sillas",
+          "de": "Es gibt drei Stühle",
+          "it": "ci sono tre sedie"
         },
         {
           "id": "p_two_tables",
@@ -1319,9 +1319,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_two_tables.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hay dos mesas",
+          "de": "Es gibt zwei Tische",
+          "it": "ci sono due tavoli"
         },
         {
           "id": "p_how_many_bags",
@@ -1337,9 +1337,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_how_many_bags.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "¿cuántas bolsas hay?",
+          "de": "Wie viele Taschen gibt es?",
+          "it": "quante borse ci sono?"
         },
         {
           "id": "p_four_bags",
@@ -1355,20 +1355,20 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_four_bags.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hay cuatro bolsas",
+          "de": "Es gibt vier Taschen",
+          "it": "ci sono quattro borse"
         }
       ],
       "titleEn": "Quantities: Items",
       "descriptionEn": "Use classifiers to count objects",
       "imageUrl": "/images/l_nouveau_004.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Cantidades: Objetos",
+      "titleDe": "Mengen: Gegenstände",
+      "titleIt": "Quantità: Oggetti",
+      "descriptionEs": "Utilizar los clasificadores para los objetos",
+      "descriptionDe": "Klassifikatoren für Gegenstände verwenden",
+      "descriptionIt": "Usare i classificatori per gli oggetti"
     },
     {
       "id": "lesson-4",
