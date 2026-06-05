@@ -10,7 +10,7 @@ import { useProgressStore } from '../../lib/store';
 import { getAlphabetLessons, AlphabetLessonDef, formatCombiningChar } from '../../lib/alphabet-utils';
 import { playThaiTTS } from '../../lib/tts';
 import { Drawer } from 'vaul';
-import { Globe, CheckCircle, Star, Play, Lock, ChevronLeft, ChevronRight, X, Sparkles, Volume2, Flame, User, Coins, BookOpen, Users, Target } from 'lucide-react';
+import { Globe, CheckCircle, Star, Play, Lock, ChevronLeft, ChevronRight, X, Sparkles, Volume2, Flame, User, Coins, BookOpen, Users, Target, Clock, Crown, Unlock } from 'lucide-react';
 import IconImage from '../../components/IconImage';
 
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
