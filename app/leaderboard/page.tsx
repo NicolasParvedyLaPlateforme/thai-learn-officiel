@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Crown, Trophy, Medal, ChevronLeft } from 'lucide-react';
+import { useProgressStore } from '../lib/store';
+import { getTranslation } from '../hooks/useTranslation';
 
 interface LeaderboardUser {
   id: string;
@@ -12,6 +14,7 @@ interface LeaderboardUser {
 }
 
 export default function LeaderboardPage() {
+  const { language } = useProgressStore();
   const [users, setUsers] = useState<LeaderboardUser[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,8 +42,8 @@ export default function LeaderboardPage() {
               <Trophy size={28} className="stroke-[2.5]" />
             </div>
             <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight">Classement Global</h1>
-              <p className="text-slate-500 font-medium text-sm">Les meilleurs apprentis détectives et linguistes</p>
+              <h1 className="text-2xl font-black text-slate-800 tracking-tight">{getTranslation('leaderboard.page_title', language)}</h1>
+              <p className="text-slate-500 font-medium text-sm">{getTranslation('leaderboard.page_subtitle', language)}</p>
             </div>
           </div>
         </div>
@@ -58,7 +61,7 @@ export default function LeaderboardPage() {
             </div>
           ) : users.length === 0 ? (
             <div className="p-12 text-center text-slate-500 font-medium">
-              Aucun joueur classé pour le moment. À vous de jouer !
+              {getTranslation('leaderboard.empty', language)}
             </div>
           ) : (
             <div className="flex flex-col">
@@ -92,7 +95,7 @@ export default function LeaderboardPage() {
                         </span>
                         {(isFirst || isSecond || isThird) && (
                           <span className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-0.5">
-                            {isFirst ? 'Champion' : isSecond ? 'Vice-Champion' : 'Challenger'}
+                            {isFirst ? getTranslation('leaderboard.champion', language) : isSecond ? getTranslation('leaderboard.vice_champion', language) : getTranslation('leaderboard.challenger', language)}
                           </span>
                         )}
                       </div>

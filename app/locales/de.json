@@ -290,5 +290,18 @@
   "auth.logout": "Abmelden",
   "auth.save_changes": "Änderungen speichern",
   "auth.email_reset_subject": "Passwort zurücksetzen - ThaiLearn",
-  "auth.email_reset_body": "Klicke hier, um dein Passwort zurückzusetzen:"
+  "auth.email_reset_body": "Klicke hier, um dein Passwort zurückzusetzen:",
+  "leaderboard.title": "Bestenliste",
+  "leaderboard.view_all": "Vollständige Bestenliste ansehen",
+  "leaderboard.page_title": "Globale Bestenliste",
+  "leaderboard.page_subtitle": "Die besten Detektiv- und Sprachschüler",
+  "leaderboard.empty": "Noch keine platzierten Spieler. Du bist dran!",
+  "leaderboard.champion": "Champion",
+  "leaderboard.vice_champion": "Vize-Champion",
+  "leaderboard.challenger": "Herausforderer",
+  "leaderboard.month_ended": "Monatsende!",
+  "leaderboard.month_converted": "Ihre XP aus dem letzten Monat wurden in Goldmünzen umgewandelt. Die Bestenliste wurde für den neuen Monat zurückgesetzt!",
+  "leaderboard.old_xp": "Alte XP",
+  "leaderboard.gold_coins": "Goldmünzen",
+  "leaderboard.collect_coins": "Meine Münzen sammeln"
 }

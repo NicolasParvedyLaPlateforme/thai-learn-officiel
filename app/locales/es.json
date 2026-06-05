@@ -290,5 +290,18 @@
   "auth.logout": "Cerrar sesión",
   "auth.save_changes": "Guardar cambios",
   "auth.email_reset_subject": "Restablecer tu contraseña - ThaiLearn",
-  "auth.email_reset_body": "Haz clic aquí para restablecer tu contraseña:"
+  "auth.email_reset_body": "Haz clic aquí para restablecer tu contraseña:",
+  "leaderboard.title": "Clasificación",
+  "leaderboard.view_all": "Ver la clasificación completa",
+  "leaderboard.page_title": "Clasificación Global",
+  "leaderboard.page_subtitle": "Los mejores aprendices de detectives y lingüistas",
+  "leaderboard.empty": "Aún no hay jugadores clasificados. ¡Te toca jugar!",
+  "leaderboard.champion": "Campeón",
+  "leaderboard.vice_champion": "Subcampeón",
+  "leaderboard.challenger": "Aspirante",
+  "leaderboard.month_ended": "¡Fin de mes!",
+  "leaderboard.month_converted": "Tus XP del mes pasado se han convertido en Monedas de Oro. ¡La clasificación se ha reiniciado para el nuevo mes!",
+  "leaderboard.old_xp": "Antiguo XP",
+  "leaderboard.gold_coins": "Monedas de Oro",
+  "leaderboard.collect_coins": "Recoger mis monedas"
 }

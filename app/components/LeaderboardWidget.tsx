@@ -56,7 +56,7 @@ export function LeaderboardWidget() {
             <Trophy size={18} />
           </div>
           <h2 className="font-extrabold text-slate-800 text-sm">
-            Classement
+            {getTranslation('leaderboard.title', language)}
           </h2>
         </div>
       </div>
@@ -87,7 +87,7 @@ export function LeaderboardWidget() {
         href="/leaderboard"
         className="mt-2 w-full flex items-center justify-center gap-2 py-2.5 rounded-lg font-bold text-sm text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition-colors"
       >
-        Voir le classement complet
+        {getTranslation('leaderboard.view_all', language)}
       </Link>
     </div>
   );

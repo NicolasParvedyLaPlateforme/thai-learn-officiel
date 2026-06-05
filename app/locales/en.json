@@ -290,5 +290,18 @@
   "auth.logout": "Logout",
   "auth.save_changes": "Save changes",
   "auth.email_reset_subject": "Reset your password - ThaiLearn",
-  "auth.email_reset_body": "Click here to reset your password:"
+  "auth.email_reset_body": "Click here to reset your password:",
+  "leaderboard.title": "Leaderboard",
+  "leaderboard.view_all": "View full leaderboard",
+  "leaderboard.page_title": "Global Leaderboard",
+  "leaderboard.page_subtitle": "The best apprentice detectives and linguists",
+  "leaderboard.empty": "No ranked players yet. Your turn to play!",
+  "leaderboard.champion": "Champion",
+  "leaderboard.vice_champion": "Vice-Champion",
+  "leaderboard.challenger": "Challenger",
+  "leaderboard.month_ended": "Month Ended!",
+  "leaderboard.month_converted": "Your XP from last month has been converted into Gold Coins. The leaderboard has been reset for the new month!",
+  "leaderboard.old_xp": "Old XP",
+  "leaderboard.gold_coins": "Gold Coins",
+  "leaderboard.collect_coins": "Collect my coins"
 }

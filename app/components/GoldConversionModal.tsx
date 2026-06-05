@@ -55,18 +55,16 @@ export function GoldConversionModal() {
             </div>
 
             <h2 className="text-2xl font-extrabold text-slate-800 mb-2">
-              {language === 'en' ? 'Month Ended!' : 'Fin du mois !'}
+              {getTranslation('leaderboard.month_ended', language)}
             </h2>
             
             <p className="text-slate-500 mb-8 leading-relaxed">
-              {language === 'en' 
-                ? 'Your XP from last month has been converted into Gold Coins. The leaderboard has been reset for the new month!' 
-                : 'Votre XP du mois dernier a été converti en Pièces d\'Or. Le classement a été réinitialisé pour le nouveau mois !'}
+              {getTranslation('leaderboard.month_converted', language)}
             </p>
 
             <div className="w-full bg-slate-50 rounded-2xl p-6 mb-8 border-2 border-slate-100 flex items-center justify-between">
               <div className="flex flex-col items-center">
-                <span className="text-sm font-bold text-slate-400 mb-1 uppercase tracking-wider">Ancien XP</span>
+                <span className="text-sm font-bold text-slate-400 mb-1 uppercase tracking-wider">{getTranslation('leaderboard.old_xp', language)}</span>
                 <span className="text-2xl font-extrabold text-slate-700 line-through opacity-70">{pendingGoldConversion.oldXp}</span>
               </div>
               
@@ -75,7 +73,7 @@ export function GoldConversionModal() {
               </div>
 
               <div className="flex flex-col items-center">
-                <span className="text-sm font-bold text-amber-500 mb-1 uppercase tracking-wider">Pièces d'Or</span>
+                <span className="text-sm font-bold text-amber-500 mb-1 uppercase tracking-wider">{getTranslation('leaderboard.gold_coins', language)}</span>
                 <div className="flex items-center gap-1.5 text-amber-500 bg-amber-50 px-3 py-1 rounded-xl font-extrabold text-2xl border-2 border-amber-200 shadow-sm">
                   <Coins size={24} />
                   <span>+{pendingGoldConversion.newCoins}</span>
@@ -87,7 +85,7 @@ export function GoldConversionModal() {
               onClick={() => clearPendingGoldConversion()}
               className="w-full bg-amber-500 text-white font-bold text-lg py-4 rounded-xl border-b-4 border-amber-600 active:border-b-0 active:translate-y-1 transition-all shadow-lg hover:bg-amber-400"
             >
-              {language === 'en' ? 'Collect my coins' : 'Récupérer mes pièces'}
+              {getTranslation('leaderboard.collect_coins', language)}
             </button>
           </div>
         </motion.div>

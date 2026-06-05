@@ -290,5 +290,18 @@
   "auth.logout": "Disconnettiti",
   "auth.save_changes": "Salva le modifiche",
   "auth.email_reset_subject": "Reimposta la tua password - ThaiLearn",
-  "auth.email_reset_body": "Clicca qui per reimpostare la tua password:"
+  "auth.email_reset_body": "Clicca qui per reimpostare la tua password:",
+  "leaderboard.title": "Classifica",
+  "leaderboard.view_all": "Vedi la classifica completa",
+  "leaderboard.page_title": "Classifica Globale",
+  "leaderboard.page_subtitle": "I migliori apprendisti investigatori e linguisti",
+  "leaderboard.empty": "Nessun giocatore classificato ancora. Tocca a te!",
+  "leaderboard.champion": "Campione",
+  "leaderboard.vice_champion": "Vice-Campione",
+  "leaderboard.challenger": "Sfidante",
+  "leaderboard.month_ended": "Fine del mese!",
+  "leaderboard.month_converted": "I tuoi XP del mese scorso sono stati convertiti in Monete d'Oro. La classifica è stata azzerata per il nuovo mese!",
+  "leaderboard.old_xp": "Vecchio XP",
+  "leaderboard.gold_coins": "Monete d'Oro",
+  "leaderboard.collect_coins": "Raccogli le mie monete"
 }
