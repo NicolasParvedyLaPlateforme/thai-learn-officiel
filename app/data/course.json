@@ -360,9 +360,9 @@
           "en": "and (to return the question)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_la.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "y (para devolver la pregunta)",
+          "de": "und (um die Frage zurückzugeben)",
+          "it": "e (per rigirare la domanda)"
         },
         {
           "id": "w_laew",
@@ -372,9 +372,9 @@
           "en": "then / and (transition)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_laew.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "entonces / y (transición)",
+          "de": "dann / und (Übergang)",
+          "it": "allora / e (transizione)"
         },
         {
           "id": "w_dots",
@@ -383,9 +383,9 @@
           "fr": "(prénom)",
           "en": "(first name)",
           "allowIdenticalTranslation": false,
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "(nombre)",
+          "de": "(Vorname)",
+          "it": "(nome)"
         },
         {
           "id": "w_go",
@@ -395,9 +395,9 @@
           "en": "also / too",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_go.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "también",
+          "de": "auch",
+          "it": "anche"
         },
         {
           "id": "w_muean_gan",
@@ -407,9 +407,9 @@
           "en": "same / me too",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_muean_gan.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "igual / yo también",
+          "de": "gleich / ich auch",
+          "it": "lo stesso / anche io"
         }
       ],
       "phrases": [
@@ -429,9 +429,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_my_name_and_you_m.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "me llamo (nombre) ¿y tú? (hombre)",
+          "de": "ich heiße (Vorname) und du? (Mann)",
+          "it": "mi chiamo (nome) e tu? (uomo)"
         },
         {
           "id": "p_my_name_and_you_f",
@@ -449,9 +449,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_my_name_and_you_f.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "me llamo (nombre) ¿y tú? (mujer)",
+          "de": "ich heiße (Vorname) und du? (Frau)",
+          "it": "mi chiamo (nome) e tu? (donna)"
         },
         {
           "id": "p_and_you",
@@ -466,9 +466,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_and_you.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "¿Y tú? / ¿Y usted?",
+          "de": "Und du? / Und Sie?",
+          "it": "E tu? / E lei?"
         },
         {
           "id": "p_also_well_m",
@@ -486,9 +486,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_also_well_m.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Yo también estoy bien. (hombre)",
+          "de": "Mir geht es auch gut. (Mann)",
+          "it": "Sto bene anche io. (uomo)"
         },
         {
           "id": "p_also_well_f",
@@ -506,20 +506,20 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_also_well_f.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Yo también estoy bien. (mujer)",
+          "de": "Mir geht es auch gut. (Frau)",
+          "it": "Sto bene anche io. (donna)"
         }
       ],
       "titleEn": "Introducing yourself: What about you?",
       "descriptionEn": "Learn to ask questions about the other person",
       "imageUrl": "/images/unite/unite-1-exercice-3-officiel.webp",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Presentarse: ¿Y tú?",
+      "titleDe": "Sich vorstellen: Und du?",
+      "titleIt": "Presentarsi: E tu?",
+      "descriptionEs": "Aprende a hacer preguntas sobre la otra persona",
+      "descriptionDe": "Lerne, Fragen über die andere Person zu stellen",
+      "descriptionIt": "Impara a fare domande sull'altra persona"
     },
     {
       "id": "lesson-3",
@@ -534,9 +534,9 @@
           "en": "zero",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_0.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cero",
+          "de": "null",
+          "it": "zero"
         },
         {
           "id": "w_1",
@@ -546,9 +546,9 @@
           "en": "one",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_1.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "uno",
+          "de": "eins",
+          "it": "uno"
         },
         {
           "id": "w_2",
@@ -558,9 +558,9 @@
           "en": "two",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_2.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "dos",
+          "de": "zwei",
+          "it": "due"
         },
         {
           "id": "w_3",
@@ -570,9 +570,9 @@
           "en": "three",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_3.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "tres",
+          "de": "drei",
+          "it": "tre"
         },
         {
           "id": "w_4",
@@ -582,9 +582,9 @@
           "en": "four",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_4.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cuatro",
+          "de": "vier",
+          "it": "quattro"
         },
         {
           "id": "w_5",
@@ -594,9 +594,9 @@
           "en": "five",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_5.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cinco",
+          "de": "fünf",
+          "it": "cinque"
         },
         {
           "id": "w_pi",
@@ -606,9 +606,9 @@
           "en": "year / years",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_pi.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "año / años",
+          "de": "Jahr / Jahre",
+          "it": "anno / anni"
         }
       ],
       "phrases": [
@@ -624,9 +624,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_1.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "un año",
+          "de": "ein Jahr",
+          "it": "un anno"
         },
         {
           "id": "p_new_l3_2_pii",
@@ -640,9 +640,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_2_pii.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "dos años",
+          "de": "zwei Jahre",
+          "it": "due anni"
         },
         {
           "id": "p_new_l3_3_pii",
@@ -656,9 +656,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_3_pii.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "tres años",
+          "de": "drei Jahre",
+          "it": "tre anni"
         },
         {
           "id": "p_new_l3_4_pii",
@@ -672,9 +672,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_4_pii.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cuatro años",
+          "de": "vier Jahre",
+          "it": "quattro anni"
         },
         {
           "id": "p_new_l3_5_pii",
@@ -688,20 +688,20 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l3_5_pii.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "cinco años",
+          "de": "fünf Jahre",
+          "it": "cinque anni"
         }
       ],
       "titleEn": "Numbers 0 to 5",
       "descriptionEn": "Learn to count from 1 to 10",
       "imageUrl": "/images/unite/unite-1-exercice-4-officiel.webp",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Los Números: 0 a 5",
+      "titleDe": "Die Zahlen: 0 bis 5",
+      "titleIt": "I Numeri: da 0 a 5",
+      "descriptionEs": "Aprende a contar del 1 al 10",
+      "descriptionDe": "Lerne von 1 bis 10 zu zählen",
+      "descriptionIt": "Impara a contare da 1 a 10"
     },
     {
       "id": "l_nouveau_002",
@@ -716,9 +716,9 @@
           "en": "six",
           "allowIdenticalTranslation": true,
           "imageUrl": "/images/w_w_6.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "seis",
+          "de": "sechs",
+          "it": "sei"
         },
         {
           "id": "w_7",
@@ -728,9 +728,9 @@
           "en": "seven",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_7.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "siete",
+          "de": "sieben",
+          "it": "sette"
         },
         {
           "id": "w_8",
@@ -740,9 +740,9 @@
           "en": "eight",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_8.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "ocho",
+          "de": "acht",
+          "it": "otto"
         },
         {
           "id": "w_9",
@@ -752,9 +752,9 @@
           "en": "nine",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_9.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "nueve",
+          "de": "neun",
+          "it": "nove"
         },
         {
           "id": "w_10",
@@ -764,9 +764,9 @@
           "en": "ten",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_10.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "diez",
+          "de": "zehn",
+          "it": "dieci"
         }
       ],
       "phrases": [
@@ -782,9 +782,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_6_years.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "seis años",
+          "de": "sechs Jahre",
+          "it": "sei anni"
         },
         {
           "id": "p_7_years",
@@ -798,9 +798,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_7_years.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "siete años",
+          "de": "sieben Jahre",
+          "it": "sette anni"
         },
         {
           "id": "p_8_years",
@@ -814,9 +814,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_8_years.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "ocho años",
+          "de": "acht Jahre",
+          "it": "otto anni"
         },
         {
           "id": "p_9_years",
@@ -830,9 +830,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_9_years.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "nueve años",
+          "de": "neun Jahre",
+          "it": "nove anni"
         },
         {
           "id": "p_10_years",
@@ -846,20 +846,20 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_10_years.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "diez años",
+          "de": "zehn Jahre",
+          "it": "dieci anni"
         }
       ],
       "titleEn": "Numbers 6 to 10",
       "descriptionEn": "Learn to count from 6 to 10",
       "imageUrl": "/images/unite/unite-1-exercice-5-officiel.webp",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Los Números: 6 a 10",
+      "titleDe": "Die Zahlen: 6 bis 10",
+      "titleIt": "I Numeri: da 6 a 10",
+      "descriptionEs": "Aprende a contar del 6 al 10",
+      "descriptionDe": "Lerne von 6 bis 10 zu zählen",
+      "descriptionIt": "Impara a contare da 6 a 10"
     },
     {
       "id": "l_nouveau_003",
