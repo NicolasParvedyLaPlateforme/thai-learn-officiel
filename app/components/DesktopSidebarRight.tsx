@@ -1,6 +1,5 @@
-import { getTranslation } from '../hooks/useTranslation';
 import React, { useRef, useState } from 'react';
-import { BookOpen, CheckCircle, Clock, Lock, Pencil, Play, RotateCcw, Star, Volume2, X, Users, Target, ChevronLeft, Flag, Crown } from 'lucide-react';
+import { Play, PlayCircle, Star, Target, CheckCircle2, Lock, Clock, GraduationCap, Medal, Pencil, RotateCcw, BookOpen, X, Users, ChevronLeft, Flag, Crown } from 'lucide-react';
 import Link from 'next/link';
 import IconImage from './IconImage';
 import { playThaiTTS } from '../lib/tts';
@@ -10,6 +9,7 @@ import { DailyQuestsWidget } from './DailyQuestsWidget';
 import { ConversationObjectiveWidget } from './ConversationObjectiveWidget';
 import { LeaderboardWidget } from './LeaderboardWidget';
 import { useProgressStore } from '../lib/store';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 
 interface Unit {
   id: string;
@@ -285,10 +285,10 @@ export function DesktopSidebarRight({
                       {selectedLesson.lesson.isReview || modalLevel === 10
                         ? (modalLevel === 10
                           ? (getTranslation('auto.stats_mastery', language))
-                          : (language === 'en' ? `Bilan Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`))
+                          : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
                         : suggestionType === 'alphabet'
-                          ? (language === 'en' ? `Letters (${selectedLesson.lesson.items?.length}) :` : `Lettres (${selectedLesson.lesson.items?.length}) :`)
-                          : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
+                          ? (`${getTranslation('auto.letters', language)} (${selectedLesson.lesson.items?.length}) :`)
+                          : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
                       }
                     </h4>
                     {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
@@ -356,7 +356,7 @@ export function DesktopSidebarRight({
                         selectedLesson.lesson.words?.map((w: any) => (
                           <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
                             <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] transition-colors`}>{w.th}</span>
-                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({language === 'en' ? w.en : w.fr})</span>
+                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({getLocalizedField(w, '', language)})</span>
                           </button>
                         ))
                       )}
