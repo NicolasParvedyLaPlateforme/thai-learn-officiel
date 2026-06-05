@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../lib/store';
@@ -81,10 +82,10 @@ export default function WritingPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
         <h1 className="text-3xl font-extrabold text-slate-800 mb-4 text-center">
-          {language === 'en' ? 'No completed lessons' : 'Aucune leçon complétée'}
+          {getTranslation('auto.no_completed_lessons', language)}
         </h1>
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
-          {language === 'en' ? 'You must complete at least one lesson to practice writing!' : 'Vous devez compléter au moins une leçon pour pratiquer l\'écriture !'}
+          {getTranslation('auto.you_must_complete_at_least_one_11', language)}
         </p>
         <button 
           onClick={() => {
@@ -96,7 +97,7 @@ export default function WritingPage() {
           }}
           className="px-12 py-3 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest w-full max-w-sm"
         >
-          {language === 'en' ? 'Back' : 'Retour'}
+          {getTranslation('auto.back', language)}
         </button>
       </div>
     );
@@ -206,12 +207,12 @@ export default function WritingPage() {
             <button 
               onClick={() => setShowRomanization(!showRomanization)}
               className={`mr-2 w-9 h-9 flex flex-col items-center justify-center rounded-xl font-bold border-2 transition-colors ${showRomanization ? "border-indigo-200 text-indigo-600 bg-indigo-50 hover:bg-indigo-100" : "border-slate-200 text-slate-400 bg-white hover:bg-slate-100"}`}
-              title={showRomanization ? (language === 'en' ? "Hide Pronunciation" : "Masquer la prononciation") : (language === 'en' ? "Show Pronunciation" : "Afficher la prononciation")}
+              title={showRomanization ? (getTranslation('auto.hide_pronunciation', language)) : (getTranslation('auto.show_pronunciation', language))}
             >
               <span className="text-xs font-mono">{showRomanization ? 'aA' : 'ก'}</span>
             </button>
           )}
-          <div className="font-bold text-slate-400">{language === 'en' ? 'Writing ∞' : 'Écriture ∞'}</div>
+          <div className="font-bold text-slate-400">{getTranslation('auto.writing_12', language)}</div>
         </div>
       </header>
 
@@ -250,7 +251,7 @@ export default function WritingPage() {
                         <button 
                            onClick={() => playThaiTTS(currentExercise.answer)}
                            className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0"
-                           title={language === 'en' ? 'Listen to full phrase' : 'Écouter la phrase entière'}
+                           title={getTranslation('auto.listen_to_full_phrase', language)}
                         >
                            <Volume2 size={24} strokeWidth={2.5} />
                         </button>
@@ -277,7 +278,7 @@ export default function WritingPage() {
                       <button 
                          onClick={() => playThaiTTS(currentExercise.answer)}
                          className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0"
-                         title={language === 'en' ? 'Listen to full phrase' : 'Écouter la phrase entière'}
+                         title={getTranslation('auto.listen_to_full_phrase', language)}
                       >
                          <Volume2 size={24} strokeWidth={2.5} />
                       </button>
@@ -397,16 +398,16 @@ export default function WritingPage() {
               {isCorrect ? (
                 <div className="flex items-center justify-center sm:justify-start gap-3 text-emerald-600 font-extrabold text-xl">
                   <div className="bg-white text-emerald-500 rounded-full p-1"><Check size={24} strokeWidth={3} /></div>
-                  {language === 'en' ? 'Perfect!' : 'Parfait !'}
+                  {getTranslation('auto.perfect', language)}
                 </div>
               ) : (
                 <div className="flex flex-col text-rose-600 font-extrabold text-xl gap-1 items-center sm:items-start">
                   <div className="flex items-center gap-3">
                     <div className="bg-white text-rose-500 rounded-full p-1"><X size={24} strokeWidth={3} /></div>
-                    {language === 'en' ? 'Almost...' : 'Presque...'}
+                    {getTranslation('auto.almost', language)}
                   </div>
                   <div className="text-rose-800 text-sm mt-1 uppercase tracking-widest hidden sm:block">
-                    {language === 'en' ? 'The exact spelling was:' : 'La bonne écriture était :'}
+                    {getTranslation('auto.the_exact_spelling_was', language)}
                   </div>
                   <div className="text-rose-900 font-medium font-thai text-2xl md:text-3xl mt-1 tracking-wider">{currentExercise.answer}</div>
                 </div>
@@ -418,7 +419,7 @@ export default function WritingPage() {
               disabled={selectedAnswer.length === 0}
               className={`w-full sm:w-auto px-12 py-3 rounded-xl border-b-4 font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest disabled:opacity-50 disabled:scale-100 disabled:shadow-none ${isCorrect ? 'bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400' : 'bg-rose-500 border-rose-700 text-white hover:bg-rose-400'}`}
             >
-              {language === 'en' ? 'Continue' : 'Continuer'}
+              {getTranslation('auto.continue', language)}
             </button>
           </div>
         </footer>

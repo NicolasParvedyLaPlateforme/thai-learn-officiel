@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
@@ -202,7 +203,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
               className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors md:hidden"
             >
               <BookOpen size={18} className="text-emerald-600" />
-              <span className="font-extrabold text-slate-700 text-sm">{language === 'en' ? 'Units' : 'Unités'}</span>
+              <span className="font-extrabold text-slate-700 text-sm">{getTranslation('auto.units', language)}</span>
             </button>
             <button
               onClick={() => useProgressStore.getState().setShowCommunityModal(true)}
@@ -322,8 +323,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                   <div className="w-full">
                     <div className="flex flex-col">
                       <div className="flex justify-between text-xs font-bold text-white mb-1 px-1 drop-shadow-sm uppercase tracking-wide">
-                        <span>{language === 'en' ? 'Mastery' : 'Maîtrise'}</span>
-                        <span>{completedLevelsInUnit} / {maxLevelsInUnit} {language === 'en' ? 'levels' : 'niveaux'}</span>
+                        <span>{getTranslation('auto.mastery_3', language)}</span>
+                        <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
                       </div>
                       <div className={`w-full ${unit.imageUrl ? 'bg-black/20 backdrop-blur-sm' : 'bg-black/15'} rounded-full h-2 overflow-hidden mb-1 shadow-inner`}>
                         <div
@@ -332,7 +333,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         ></div>
                       </div>
                       <div className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold text-[10px] px-1 drop-shadow-sm`}>
-                        {language === 'en' ? '10 levels / lesson = Mastery' : '10 niveaux / leçon = Maîtrise totale'}
+                        {getTranslation('auto.10_levels_lesson_mastery', language)}
                       </div>
                     </div>
                   </div>
@@ -361,7 +362,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                     </div>
                     <div className="flex flex-col min-w-0">
                       <span className="text-xs font-semibold text-slate-400">
-                        {language === 'en' ? 'Daily Quest' : 'Quête du jour'}
+                        {getTranslation('auto.daily_quest', language)}
                       </span>
                       {learnQuests.filter(q => !q.completed).length > 0 ? (
                         <span className="text-sm font-bold text-slate-700 truncate">
@@ -371,7 +372,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         </span>
                       ) : (
                         <span className="text-sm font-bold text-emerald-600 truncate">
-                          {language === 'en' ? 'All quests completed!' : 'Toutes les quêtes terminées !'}
+                          {getTranslation('auto.all_quests_completed', language)}
                         </span>
                       )}
                     </div>
@@ -465,11 +466,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       >
                         {isMaxLevel ? (
                           <div className="absolute -top-3.5 left-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                            <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {language === 'en' ? 'MASTERED' : 'MAÎTRISÉ'}
+                            <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
                           </div>
                         ) : suggestedLessonId === lesson.id && (
                           <div className="absolute -top-3.5 left-6 bg-amber-400 text-amber-900 text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                            <Star size={12} fill="currentColor" /> {language === 'en' ? 'SUGGESTED' : 'SUGGÉRÉ'}
+                            <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
                           </div>
                         )}
                         <h4 className={`font-extrabold text-xl text-slate-800`}>
@@ -484,13 +485,13 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           {level === 0 ? (
                             suggestedLessonId === lesson.id ? (
                               <div className="text-sm font-bold text-slate-400 mt-2 py-1">
-                                {language === 'en' ? 'Start learning' : 'Commencer'}
+                                {getTranslation('auto.start_learning', language)}
                               </div>
                             ) : null
                           ) : (
                             <>
                               <div className="flex justify-between text-xs font-bold text-slate-400 mb-1 px-1">
-                                <span>{language === 'en' ? 'Mastery' : 'Maîtrise'}</span>
+                                <span>{getTranslation('auto.mastery_4', language)}</span>
                                 <span className={unit.textClass}>{level}/10</span>
                               </div>
                               <div className="flex justify-between gap-[2px] w-full">
@@ -516,7 +517,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       onClick={() => handleUnitSelect(activeUnitIndex + 1)}
                       className="px-8 py-4 rounded-2xl bg-amber-50 text-amber-500 border-b-4 border-amber-200 hover:bg-amber-100 hover:border-amber-300 hover:text-amber-600 font-extrabold shadow-sm transition-all text-center active:border-b-0 active:translate-y-1 w-full max-w-[280px] sm:max-w-[320px]"
                     >
-                      {mounted && language === 'en' ? 'Next Unit' : 'Unité Suivante'}
+                      {mounted && getTranslation('auto.next_unit', language)}
                     </button>
                   </div>
                 )}
@@ -571,8 +572,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           <div className="flex-1">
                             <div className={`flex flex-col mb-3`}>
                               <div className={`text-sm text-white font-bold mb-2 flex justify-between uppercase tracking-wide drop-shadow-sm`}>
-                                <span>{language === 'en' ? 'Mastery' : 'MAÎTRISE'}</span>
-                                <span>{completedLevelsInUnit} / {maxLevelsInUnit} {language === 'en' ? 'levels' : 'niveaux'}</span>
+                                <span>{getTranslation('auto.mastery_5', language)}</span>
+                                <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
                               </div>
                               <div className={`w-full ${unit.imageUrl ? 'bg-black/20 backdrop-blur-sm' : unit.bgMutedClass} rounded-full h-4 overflow-hidden shadow-inner mb-2`}>
                                 <div
@@ -581,7 +582,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                                 ></div>
                               </div>
                               <div className={`text-sm ${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold drop-shadow-sm`}>
-                                {language === 'en' ? '10 levels per lesson = Total mastery' : '10 niveaux par leçon = Maîtrise totale'}
+                                {getTranslation('auto.10_levels_per_lesson_total_mas', language)}
                               </div>
                             </div>
                           </div>
@@ -666,11 +667,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                             >
                               {isMaxLevel ? (
                                 <div className="absolute -top-3.5 left-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                                  <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {language === 'en' ? 'MASTERED' : 'MAÎTRISÉ'}
+                                  <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
                                 </div>
                               ) : suggestedLessonId === lesson.id && (
                                 <div className="absolute -top-3.5 left-6 bg-amber-400 text-amber-900 text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                                  <Star size={12} fill="currentColor" /> {language === 'en' ? 'SUGGESTED' : 'SUGGÉRÉ'}
+                                  <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
                                 </div>
                               )}
                               <div className="flex flex-col items-start text-left flex-1 md:pr-4">
@@ -687,13 +688,13 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                                 {level === 0 ? (
                                   suggestedLessonId === lesson.id ? (
                                     <div className="text-sm font-bold text-slate-400 text-left md:text-right">
-                                      {language === 'en' ? 'Start learning' : 'Commencer'}
+                                      {getTranslation('auto.start_learning', language)}
                                     </div>
                                   ) : null
                                 ) : (
                                   <>
                                     <div className="flex justify-between text-xs font-bold text-slate-400 mb-1 px-1">
-                                      <span>{language === 'en' ? 'Mastery' : 'Maîtrise'}</span>
+                                      <span>{getTranslation('auto.mastery_6', language)}</span>
                                       <span className={unit.textClass}>{level}/10</span>
                                     </div>
                                     <div className="flex justify-between gap-[2px] w-full">
@@ -719,7 +720,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                             onClick={() => handleUnitSelect(activeUnitIndex + 1)}
                             className="px-8 py-4 rounded-2xl bg-amber-50 text-amber-500 hover:bg-amber-100 hover:text-amber-600 font-extrabold shadow-sm transition-all text-center border-2 border-amber-200 border-b-4 active:border-b-2 active:translate-y-1 text-lg w-full max-w-[280px]"
                           >
-                            {language === 'en' ? 'Next Unit' : 'Unité Suivante'}
+                            {getTranslation('auto.next_unit', language)}
                           </button>
                         </div>
                       )}
@@ -840,7 +841,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           <span className={`text-[9px] font-black tracking-widest uppercase
                               ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
                             `}>
-                            {isCurrent ? (language === 'en' ? 'IN PROGRESS' : 'EN COURS') : `NIV. ${levelIndex + 1}`}
+                            {isCurrent ? (getTranslation('auto.in_progress', language)) : `NIV. ${levelIndex + 1}`}
                           </span>
                         </button>
                       );
@@ -895,7 +896,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                             )}
                           </div>
                           <span className={`text-[10px] font-black tracking-widest uppercase ${isUnlocked ? 'text-amber-500' : 'text-slate-300'}`}>
-                            {language === 'en' ? 'MASTERY' : 'NIVEAU ULTIME'}
+                            {getTranslation('auto.mastery', language)}
                           </span>
                         </button>
                       </div>
@@ -944,7 +945,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
                             {selectedLesson.lesson.isReview || modalLevel === 10
                               ? (modalLevel === 10
-                                ? (language === 'en' ? `Stats (MASTERY) :` : `Statistiques (ULTIME) :`)
+                                ? (getTranslation('auto.stats_mastery', language))
                                 : (language === 'en' ? `Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`))
                               : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
                             }
@@ -968,7 +969,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                                     </div>
                                     <div className="flex flex-col">
                                       <span className="text-emerald-800 font-bold text-[15px]">
-                                        {language === 'en' ? "Best Time" : "Meilleur Temps"}
+                                        {getTranslation('auto.best_time', language)}
                                       </span>
                                       <span className="text-emerald-600 font-medium text-sm">
                                         {m}min {s}s
@@ -984,7 +985,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                                     </div>
                                     <div className="flex flex-col">
                                       <span className="text-rose-800 font-bold text-[15px]">
-                                        {language === 'en' ? "Best Survival" : "Record de Survie"}
+                                        {getTranslation('auto.best_survival', language)}
                                       </span>
                                       <span className="text-rose-600 font-medium text-sm">
                                         {stats.maxPercentage}%
@@ -995,7 +996,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                               } else {
                                 return (
                                   <div className="flex items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200 text-slate-400 text-sm font-medium">
-                                    {language === 'en' ? "Not completed yet" : "Pas encore terminé"}
+                                    {getTranslation('auto.not_completed_yet', language)}
                                   </div>
                                 );
                               }
@@ -1027,7 +1028,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer"
                       >
                         <Pencil size={16} className="mr-2" />
-                        {language === 'en' ? 'Writing' : 'Écriture'}
+                        {getTranslation('auto.writing', language)}
                       </Link>
                       <button
                         onClick={() => {
@@ -1037,7 +1038,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
                       >
                         <RotateCcw size={16} className="mr-2" />
-                        {language === 'en' ? 'Reset' : 'Réinitialiser'}
+                        {getTranslation('auto.reset', language)}
                       </button>
                     </div>
                   )}
@@ -1046,7 +1047,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       href={`/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
                       className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
                     >
-                      {language === 'en' ? `Start lesson` : `Commencer la leçon`}
+                      {getTranslation('auto.start_lesson', language)}
                     </Link>
                   </div>
                 </div>
@@ -1069,7 +1070,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
               </div>
 
               <h3 className="text-xl font-bold text-slate-800 text-center py-4 border-b border-slate-200/50 shrink-0">
-                {language === 'en' ? 'Course Units' : 'Unités du Cours'}
+                {getTranslation('auto.course_units', language)}
               </h3>
 
               <button
@@ -1101,7 +1102,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                         </div>
                         <div className="flex flex-col">
                           <span className={`font-black uppercase text-sm ${isActive ? 'text-emerald-600' : 'text-slate-400'}`}>
-                            {language === 'en' ? 'Unit' : 'Unité'} {i + 1}
+                            {getTranslation('auto.unit', language)} {i + 1}
                           </span>
                           <span className="font-bold text-slate-800">
                             {language === 'en' ? u.titleEn : u.title}
@@ -1172,18 +1173,16 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                   <Lock size={32} className="text-slate-400" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 tracking-tight">
-                  {language === 'en' ? 'Review Locked' : 'Bilan Verrouillé'}
+                  {getTranslation('auto.review_locked', language)}
                 </h3>
                 <p className="text-slate-500 font-medium mb-6">
-                  {language === 'en'
-                    ? 'To prove you are ready for the review, reach at least Level 4 on all lessons in this unit!'
-                    : 'Pour prouver que vous êtes prêt pour le bilan, atteignez au moins le Niveau 4 sur toutes les leçons de cette unité !'}
+                  {getTranslation('auto.to_prove_you_are_ready_for_the', language)}
                 </p>
                 <button
                   onClick={() => setLockedReviewModalOpen(false)}
                   className="w-full py-4 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-700 active:scale-[0.98] transition-all"
                 >
-                  {language === 'en' ? 'Got it!' : 'Compris !'}
+                  {getTranslation('auto.got_it', language)}
                 </button>
               </motion.div>
             </motion.div>

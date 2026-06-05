@@ -1,3 +1,4 @@
+import { getTranslation } from '../hooks/useTranslation';
 import React from 'react';
 import Link from 'next/link';
 import { useProgressStore } from '../lib/store';
@@ -18,7 +19,7 @@ export function ConversationObjectiveWidget() {
             <Map size={18} />
           </div>
           <h2 className="font-extrabold text-slate-800 text-sm">
-            {language === 'en' ? 'Story Objective' : 'Objectif d\'histoire'}
+            {getTranslation('auto.story_objective', language)}
           </h2>
         </div>
       </div>
@@ -28,8 +29,8 @@ export function ConversationObjectiveWidget() {
           <div className="flex flex-col gap-1 pr-2">
             <span className="text-xs font-semibold text-slate-400">
               {objective.type === 'vocab' 
-                ? (language === 'en' ? 'Missing Vocabulary' : 'Vocabulaire manquant')
-                : (language === 'en' ? 'Continue the story' : 'Continuer l\'histoire')}
+                ? (getTranslation('auto.missing_vocabulary', language))
+                : (getTranslation('auto.continue_the_story', language))}
             </span>
             <span className="text-sm font-bold text-slate-700">
                {language === 'en' ? (objective.conversationTitleEn || objective.conversationTitle) : objective.conversationTitle}
@@ -38,7 +39,7 @@ export function ConversationObjectiveWidget() {
             <span className="text-xs text-slate-500 mt-1">
               {objective.type === 'vocab' ? (
                 <>
-                  {language === 'en' ? 'Complete Level 1 of: ' : 'Terminer le Niveau 1 de : '}
+                  {getTranslation('auto.complete_level_1_of', language)}
                   <strong className="text-blue-600">{language === 'en' ? objective.lessonTitleEn : objective.lessonTitle}</strong>
                 </>
               ) : (
@@ -63,7 +64,7 @@ export function ConversationObjectiveWidget() {
           `}
         >
           {objective.type === 'vocab' ? <BookOpen size={16} /> : <Play size={16} className="fill-current" />}
-          {language === 'en' ? 'Go to objective' : 'Aller à l\'objectif'}
+          {getTranslation('auto.go_to_objective', language)}
         </Link>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { useState } from "react";
 import { X, Star, Crown, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -49,25 +50,23 @@ export default function HeaderProgressBar({
         <div className="fixed inset-0 z-[300] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-xl flex flex-col gap-4 text-center">
             <h3 className="text-xl font-bold text-slate-800">
-              {language === "en" ? "Quit lesson?" : "Quitter la leçon ?"}
+              {getTranslation('auto.quit_lesson', language)}
             </h3>
             <p className="text-slate-500 font-medium">
-              {language === "en"
-                ? "Your progress will be lost."
-                : "Votre progression sera perdue."}
+              {getTranslation('auto.your_progress_will_be_lost', language)}
             </p>
             <div className="flex flex-col gap-2 mt-2">
               <button
                 onClick={handleQuit}
                 className="w-full py-3.5 bg-rose-100 text-rose-600 font-bold rounded-xl hover:bg-rose-200 transition-colors"
               >
-                {language === "en" ? "Quit" : "Quitter"}
+                {getTranslation('auto.quit', language)}
               </button>
               <button
                 onClick={() => setShowQuitConfirm(false)}
                 className="w-full py-3.5 bg-slate-100 text-slate-600 font-bold rounded-xl hover:bg-slate-200 transition-colors"
               >
-                {language === "en" ? "Cancel" : "Annuler"}
+                {getTranslation('auto.cancel', language)}
               </button>
             </div>
           </div>
@@ -83,7 +82,7 @@ export default function HeaderProgressBar({
           </button>
 
           <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
-            {language === "en" ? "Lvl." : "Niv."} {currentLevel + 1}
+            {getTranslation('auto.lvl', language)} {currentLevel + 1}
           </div>
 
           <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">
@@ -132,7 +131,7 @@ export default function HeaderProgressBar({
                 >
                   <path d="m9 18 6-6-6-6" />
                 </svg>
-                {language === "en" ? "Lvl." : "Niv."} {currentLevel + 2}
+                {getTranslation('auto.lvl', language)} {currentLevel + 2}
               </span>
             ) : (
               <span className="flex items-center text-amber-500">
@@ -162,12 +161,8 @@ export default function HeaderProgressBar({
                   }`}
                 title={
                   showRomanization
-                    ? language === "en"
-                      ? "Hide Pronunciation"
-                      : "Masquer la prononciation"
-                    : language === "en"
-                      ? "Show Pronunciation"
-                      : "Afficher la prononciation"
+                    ? getTranslation('auto.hide_pronunciation', language)
+                    : getTranslation('auto.show_pronunciation', language)
                 }
               >
                 <span className="text-xs font-mono">
@@ -181,7 +176,7 @@ export default function HeaderProgressBar({
                 onClick={() => setShowInfoModal(true)}
                 className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
                 title={
-                  language === "en" ? "Vocabulary List" : "Liste de vocabulaire"
+                  getTranslation('auto.vocabulary_list', language)
                 }
               >
                 <svg

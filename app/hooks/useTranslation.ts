@@ -13,16 +13,19 @@ const dictionaries: Record<AppLanguage, Record<string, string>> = {
   it
 };
 
+export function getTranslation(key: string, currentLanguage: AppLanguage | string): string {
+  const dict = dictionaries[currentLanguage as AppLanguage] || dictionaries['en'];
+  if (!dict[key] || dict[key].trim() === '') {
+    return dictionaries['en'][key] || key;
+  }
+  return dict[key];
+}
+
 export function useTranslation() {
   const language = useProgressStore(state => state.language);
   
   const t = (key: string): string => {
-    const dict = dictionaries[language] || dictionaries['en'];
-    // Fallback to english if key is empty or missing in the current language
-    if (!dict[key] || dict[key].trim() === '') {
-      return dictionaries['en'][key] || key;
-    }
-    return dict[key];
+    return getTranslation(key, language);
   };
 
   return { t, language };

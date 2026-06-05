@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { useState, useRef, useEffect } from 'react';
 import { Exercise } from '../../../types';
 import { useProgressStore } from '../../../lib/store';
@@ -60,14 +61,14 @@ export default function FreeTypingInput({ exercise, selected, onChange, disabled
               onChange={(e) => onChange(e.target.value)}
               disabled={disabled}
               className="w-full text-center font-thai text-3xl md:text-4xl leading-loose md:leading-loose py-4 px-6 md:py-6 border-4 border-slate-200 rounded-2xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 transition-all text-slate-800 disabled:opacity-50 disabled:bg-slate-50"
-              placeholder={language === 'en' ? "Type in Thai..." : "Tapez en Thaï..."}
+              placeholder={getTranslation('auto.type_in_thai', language)}
               autoFocus
               dir="ltr"
             />
             <button 
               onClick={() => setShowVirtual(!showVirtual)}
               className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-lg transition-all ${showVirtual ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-400 hover:text-slate-600 hover:bg-slate-200'}`}
-              title={language === 'en' ? "Toggle Virtual Keyboard" : "Basculer le clavier virtuel"}
+              title={getTranslation('auto.toggle_virtual_keyboard', language)}
             >
               <Keyboard size={24} />
             </button>
@@ -87,7 +88,7 @@ export default function FreeTypingInput({ exercise, selected, onChange, disabled
                   playThaiTTS(exercise.answer);
                 }
               }}
-              title={language === 'en' ? 'Sound of next letter' : 'Son de la prochaine lettre'}
+              title={getTranslation('auto.sound_of_next_letter', language)}
             >
               <Volume2 size={24} strokeWidth={2.5} />
               <span className="font-bold text-lg leading-none">A</span>

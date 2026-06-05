@@ -1,3 +1,4 @@
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { AlphabetItem } from '../lib/alphabet-data';
@@ -99,7 +100,7 @@ export function AlphabetCard({ item, onPlayAudio, minimal }: AlphabetCardProps) 
           </div>
           
           <div className="absolute bottom-4 text-slate-400 text-xs font-sans">
-             {language === 'en' ? 'Tap to flip' : 'Appuyez pour retourner'}
+             {getTranslation('auto.tap_to_flip', language)}
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { getTranslation } from '../../../hooks/useTranslation';
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useProgressStore } from "../../../lib/store";
@@ -527,10 +528,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                 <button
                   onClick={() => setShowHelpModal(true)}
                   className="text-slate-500 hover:text-amber-600 transition-colors bg-white rounded-full py-1.5 px-3 shadow-sm border border-slate-200 flex items-center gap-1.5 text-sm font-bold active:scale-95"
-                  title={language === "en" ? "Help / Instructions" : "Aide / Instructions"}
+                  title={getTranslation('auto.help_instructions', language)}
                 >
                   <HelpCircle size={18} strokeWidth={2.5} />
-                  {language === "en" ? "Help" : "Aide"}
+                  {getTranslation('auto.help', language)}
                 </button>
               </motion.div>
             )}

@@ -1,3 +1,4 @@
+import { getTranslation } from '../../hooks/useTranslation';
 import React, { useMemo } from 'react';
 import { Exercise } from '../../types';
 import { playThaiTTS } from '../../lib/tts';
@@ -122,7 +123,7 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
           <div className="bg-white border-2 border-b-4 border-slate-200 rounded-xl px-4 py-2 sm:px-5 sm:py-3 shadow-sm text-3xl sm:text-4xl font-thai leading-relaxed text-center break-all min-w-[180px] min-h-[64px] sm:min-h-[76px] flex justify-center items-center">
             {selected.length === 0 ? (
               <span className="text-slate-400 p-2 font-medium text-base sm:text-lg font-sans">
-                {language === 'en' ? 'Choose characters below...' : 'Choisissez des caractères ci-dessous...'}
+                {getTranslation('auto.choose_characters_below', language)}
               </span>
             ) : (
               (() => {
@@ -170,7 +171,7 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
                   playThaiTTS(exercise.answer);
                 }
               }}
-              title={language === 'en' ? 'Sound of next letter' : 'Son de la prochaine lettre'}
+              title={getTranslation('auto.sound_of_next_letter', language)}
             >
               <Volume2 size={24} strokeWidth={2.5} />
               <span className="font-bold text-lg leading-none">A</span>

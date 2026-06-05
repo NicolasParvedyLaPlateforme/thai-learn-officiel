@@ -1,3 +1,4 @@
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useRef, useEffect } from 'react';
 import { Volume2, ChevronDown, ChevronUp } from 'lucide-react';
 import { Word, Phrase } from '../types';
@@ -235,7 +236,7 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
             onClick={() => setIsVocabOpen(!isVocabOpen)}
             className="flex flex-row items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-xs font-bold uppercase tracking-wide transition-colors border-2 border-slate-200 focus:outline-none shrink-0"
           >
-            {language === 'en' ? '💡 Useful vocabulary' : '💡 Vocabulaire utile'}
+            {getTranslation('auto.useful_vocabulary', language)}
             {isVocabOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
           
@@ -255,7 +256,7 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
                       className="inline-flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded border border-slate-200 shadow-sm transition-transform hover:scale-105 active:scale-95 cursor-pointer"
                       tooltipContent={
                         (!forceHideRomanization && showRomanization || isChecking) ? (
-                          <><span className="text-slate-500 font-medium">{language === 'en' ? 'Pronunciation:' : 'Prononciation :'}</span> <span className="font-bold text-base"><ColoredPhonetic phonetic={w.phonetic} /></span></>
+                          <><span className="text-slate-500 font-medium">{getTranslation('auto.pronunciation', language)}</span> <span className="font-bold text-base"><ColoredPhonetic phonetic={w.phonetic} /></span></>
                         ) : (
                           <span className="font-thai text-lg text-slate-800">{w.th}</span>
                         )

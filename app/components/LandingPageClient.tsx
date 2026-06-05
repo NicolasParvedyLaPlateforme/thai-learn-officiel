@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import Link from 'next/link';
 import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -290,7 +291,7 @@ export default function LandingPageClient() {
 
                 <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3 mb-6 w-full max-w-xs cursor-pointer hover:bg-slate-100 transition-colors flex justify-between items-center px-4">
                   <div className="text-[11px] font-bold text-slate-500 flex items-center gap-2">
-                    💡 {language === 'en' ? 'USEFUL VOCABULARY' : 'VOCABULAIRE UTILE'}
+                    💡 {getTranslation('auto.useful_vocabulary_2', language)}
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400"><path d="m6 9 6 6 6-6"></path></svg>
                 </div>
@@ -435,11 +436,11 @@ export default function LandingPageClient() {
                 
                 <div className="mt-8 border-t-2 border-slate-100 pt-4 flex flex-col gap-2">
                    <div className="bg-emerald-50 border-2 border-b-4 border-emerald-400 rounded-xl p-3 text-emerald-900 font-bold flex justify-between items-center shadow-sm relative">
-                      <span className="font-thai">{language === 'en' ? 'Sawatdee Kha' : 'Sawatdee Kha'}</span>
+                      <span className="font-thai">{getTranslation('auto.sawatdee_kha', language)}</span>
                       <Check size={18} className="text-emerald-500" />
                    </div>
                    <div className="bg-white border-2 border-b-4 border-slate-200 rounded-xl p-3 text-slate-800 font-bold opacity-50 relative">
-                      <span className="font-thai">{language === 'en' ? 'Khop Khun Kha' : 'Khop Khun Kha'}</span>
+                      <span className="font-thai">{getTranslation('auto.khop_khun_kha', language)}</span>
                    </div>
                 </div>
               </div>
@@ -476,7 +477,7 @@ export default function LandingPageClient() {
                               <span className="text-7xl font-medium text-teal-600 z-10 drop-shadow-md font-thai">ก</span>
                           </div>
                           <p className="text-[15px] font-semibold mt-1 text-teal-600 px-2 leading-tight text-center max-w-[90%] font-sans">
-                            {language === 'en' ? 'Chicken' : 'Poulet'}
+                            {getTranslation('auto.chicken', language)}
                           </p>
                         </div>
                     </div>

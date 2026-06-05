@@ -1,5 +1,6 @@
 "use client";
 
+import { getTranslation } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import { useProgressStore, DailyQuest } from '../lib/store';
 import { Target, CheckCircle2, Star } from 'lucide-react';
@@ -27,18 +28,18 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
         <div className="flex items-center gap-2">
           <Target size={20} className="text-emerald-500" />
           <h2 className="font-extrabold text-slate-800 text-base">
-            {language === 'en' ? 'Daily Quests' : 'Quêtes journalières'}
+            {getTranslation('auto.daily_quests', language)}
           </h2>
         </div>
         <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
-          {completedCount} / {questsForCategory.length} {language === 'en' ? 'Quests' : 'Quêtes'}
+          {completedCount} / {questsForCategory.length} {getTranslation('auto.quests', language)}
         </span>
       </div>
 
       <div className="flex flex-col gap-3">
         {questsForCategory.length === 0 ? (
           <div className="text-sm font-medium text-slate-500 italic text-center py-4">
-             {language === 'en' ? 'No quests for today.' : 'Pas de quêtes aujourd\'hui.'}
+             {getTranslation('auto.no_quests_for_today', language)}
           </div>
         ) : (
           questsForCategory.map(quest => {

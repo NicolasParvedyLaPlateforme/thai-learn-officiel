@@ -173,6 +173,7 @@ export default function DesktopSidebarLeft() {
 }
 
 function NavItem({ href, icon, label, active, hasSuggestion }: { href: string, icon: React.ReactNode, label: string, active: boolean, hasSuggestion?: boolean }) {
+  const { t } = useTranslation();
   return (
     <Link 
       href={href} 

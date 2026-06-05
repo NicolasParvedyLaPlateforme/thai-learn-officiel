@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../../hooks/useTranslation';
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
@@ -235,7 +236,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
           <Search className="w-16 h-16 text-emerald-500" />
         </div>
         <h2 className="text-2xl font-black text-slate-800 mb-2">
-          {language === 'en' ? 'Detective Mode' : 'Mode Détective'}
+          {getTranslation('auto.detective_mode', language)}
         </h2>
         <p className="text-slate-600 mb-8">
           {language === 'en' ? `Find ${level.objects?.length || 0} hidden objects in the image.` : `Trouve les ${level.objects?.length || 0} objets cachés dans l'image.`}
@@ -264,7 +265,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
           <CheckCircle2 className="w-16 h-16 text-emerald-500" />
         </div>
         <h2 className="text-2xl font-black text-slate-800 mb-2">
-          {language === 'en' ? 'Mission Accomplished!' : 'Mission Accomplie !'}
+          {getTranslation('auto.mission_accomplished', language)}
         </h2>
         <div className="flex items-center gap-1 mb-4">
           {Array.from({ length: 5 }).map((_, i) => (
@@ -285,11 +286,11 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         <div className="w-full flex flex-col gap-3 px-4">
           {nextLevel && (
             <button onClick={() => { window.location.href = `/detective/level/${nextLevel.id}${initialDiff ? `?diff=${initialDiff}` : ''}`; }} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all text-center">
-              {language === 'en' ? 'Next Level' : 'Niveau Suivant'}
+              {getTranslation('auto.next_level', language)}
             </button>
           )}
           <button onClick={() => initialDiff ? startGame(initialDiff) : setLevelState('intro')} className={`w-full ${nextLevel ? 'bg-slate-200 hover:bg-slate-300 text-slate-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} font-bold py-4 rounded-2xl shadow-sm transition-all`}>
-            {language === 'en' ? 'Play Again' : 'Rejouer'}
+            {getTranslation('auto.play_again', language)}
           </button>
         </div>
       </div>
@@ -518,7 +519,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
             </div>
             <div className="h-4 lg:h-8 flex items-center justify-center">
               {difficulty === 2 ? (
-                <span className="text-[9px] lg:text-sm font-bold text-slate-400 uppercase tracking-widest">{language === 'en' ? 'Hard Mode' : 'Mode Difficile'}</span>
+                <span className="text-[9px] lg:text-sm font-bold text-slate-400 uppercase tracking-widest">{getTranslation('auto.hard_mode', language)}</span>
               ) : (
                 isTranslationRevealed || currentMistakes >= 2 ? (
                   <span className="text-[10px] lg:text-lg font-bold text-emerald-600 animate-in fade-in slide-in-from-bottom-1 px-2 lg:px-3 py-0 lg:py-0.5 bg-emerald-100/50 rounded-full">
@@ -526,7 +527,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
                   </span>
                 ) : (
                   <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-[#e0d6b8] hover:bg-[#d4c8a9] text-[#5c4a3d] rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
-                    <Eye className="w-3 h-3 lg:w-4 lg:h-4" /> {language === 'en' ? 'Show Hint' : 'Voir l\'indice'}
+                    <Eye className="w-3 h-3 lg:w-4 lg:h-4" /> {getTranslation('auto.show_hint', language)}
                   </button>
                 )
               )}

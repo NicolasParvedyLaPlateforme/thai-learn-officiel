@@ -1,3 +1,4 @@
+import { getTranslation } from '../../../hooks/useTranslation';
 import { motion } from "framer-motion";
 import { Check, Star, Clock, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -48,7 +49,7 @@ export default function ResultScreen({
           <Clock size={80} className="mx-auto" />
         </div>
         <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center mt-6">
-          {language === "en" ? "Time's Up!" : "Temps Écoulé !"}
+          {getTranslation('auto.time_s_up', language)}
         </h1>
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {language === "en" ? `Completion: ${percentage}%` : `Complété à : ${percentage}%`}
@@ -60,13 +61,13 @@ export default function ResultScreen({
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
-            {language === "en" ? "Retry" : "Réessayer"}
+            {getTranslation('auto.retry', language)}
           </button>
           <button
             onClick={() => router.push(`/learn#lesson-${lesson.id}`)}
             className="px-8 py-3 flex-1 rounded-xl bg-slate-200 border-b-4 border-slate-300 text-slate-500 font-bold text-lg shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
-            {language === "en" ? "Back" : "Retour"}
+            {getTranslation('auto.back', language)}
           </button>
         </div>
       </div>
@@ -99,7 +100,7 @@ export default function ResultScreen({
       </div>
       <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
         {currentLevel === 10 
-          ? (language === "en" ? "Mastery Level completed!" : "Niveau de Maîtrise terminé !")
+          ? (getTranslation('auto.mastery_level_completed', language))
           : (language === "en"
               ? `Level ${currentLevel + 1} completed!`
               : `Niveau ${currentLevel + 1} terminé !`)}
@@ -125,7 +126,7 @@ export default function ResultScreen({
             }}
             className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all text-center"
           >
-            {language === "en" ? "Next Unit" : "Aller à l'unité suivante"}
+            {getTranslation('auto.next_unit', language)}
           </button>
         )}
         {currentLevel + 1 < 10 && (
@@ -135,7 +136,7 @@ export default function ResultScreen({
             }
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
-            {language === "en" ? "Next Level" : "Prochain Niveau"}
+            {getTranslation('auto.next_level', language)}
           </button>
         )}
         {currentLevel === 10 && (
@@ -144,14 +145,14 @@ export default function ResultScreen({
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
-            {language === "en" ? "Retry" : "Réessayer"}
+            {getTranslation('auto.retry', language)}
           </button>
         )}
         <button
           onClick={() => router.push(`/learn#lesson-${lesson.id}`)}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
         >
-          {language === "en" ? "Back" : "Retour"}
+          {getTranslation('auto.back', language)}
         </button>
       </div>
     </div>

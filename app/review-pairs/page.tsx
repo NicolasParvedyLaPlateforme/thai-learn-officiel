@@ -1,5 +1,6 @@
 'use client';
 
+import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../lib/store';
@@ -63,16 +64,16 @@ export default function ReviewPairsPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
         <h1 className="text-3xl font-extrabold text-slate-800 mb-4 text-center">
-          {language === 'en' ? 'No completed lessons' : 'Aucune leçon complétée'}
+          {getTranslation('auto.no_completed_lessons', language)}
         </h1>
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
-          {language === 'en' ? 'You must complete at least one lesson to access this!' : 'Vous devez compléter au moins une leçon pour pouvoir y accéder !'}
+          {getTranslation('auto.you_must_complete_at_least_one', language)}
         </p>
         <button 
           onClick={() => router.push('/practice')}
           className="px-12 py-3 rounded-xl bg-fuchsia-500 border-b-4 border-fuchsia-700 text-white font-bold text-lg shadow-lg hover:bg-fuchsia-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest w-full max-w-sm"
         >
-          {language === 'en' ? 'Back' : 'Retour'}
+          {getTranslation('auto.back', language)}
         </button>
       </div>
     );
@@ -146,7 +147,7 @@ export default function ReviewPairsPage() {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="font-bold text-slate-400">{language === 'en' ? 'Pairs ∞' : 'Paires ∞'}</div>
+          <div className="font-bold text-slate-400">{getTranslation('auto.pairs_10', language)}</div>
         </div>
       </header>
 
