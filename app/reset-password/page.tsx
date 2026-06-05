@@ -3,9 +3,11 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Lock, ArrowRight } from "lucide-react";
+import { Lock, ArrowRight, ChevronLeft } from "lucide-react";
+import { useTranslation } from "../hooks/useTranslation";
 
 function ResetPasswordForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams?.get("token");
@@ -27,7 +29,7 @@ function ResetPasswordForm() {
     
     if (password !== confirmPassword) {
       setStatus("error");
-      setMessage("Les mots de passe ne correspondent pas.");
+      setMessage(t('auth.password_mismatch'));
       return;
     }
 
@@ -51,29 +53,33 @@ function ResetPasswordForm() {
 
       if (res.ok) {
         setStatus("success");
-        setMessage("Votre mot de passe a été réinitialisé avec succès.");
+        setMessage(t('auth.password_updated'));
       } else {
         setStatus("error");
-        setMessage(data.message || "Une erreur est survenue.");
+        setMessage(data.message || t('auth.error_network'));
       }
     } catch (err) {
       setStatus("error");
-      setMessage("Erreur réseau. Veuillez réessayer.");
+      setMessage(t('auth.error_network'));
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 relative">
+      <Link href="/" className="absolute top-6 left-6 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm hover:shadow border border-slate-100 flex items-center gap-2 text-sm font-medium">
+        <ChevronLeft size={20} />
+        {t('auth.back')}
+      </Link>
+
       <Link href="/" className="mb-8 font-thai font-bold text-3xl text-indigo-600">
         ThaiLearn
       </Link>
       
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">
-          Nouveau mot de passe
+          {t('auth.reset_title')}
         </h1>
         <p className="text-slate-600 text-sm mb-6">
-          Veuillez entrer votre nouveau mot de passe ci-dessous.
         </p>
         
         {status === "success" ? (
@@ -85,7 +91,7 @@ function ResetPasswordForm() {
               href="/login"
               className="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all"
             >
-              Se connecter <ArrowRight className="w-4 h-4" />
+              {t('auth.login')} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         ) : (
@@ -98,7 +104,7 @@ function ResetPasswordForm() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Nouveau mot de passe</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.new_password')}</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
                   <input
@@ -114,7 +120,7 @@ function ResetPasswordForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Confirmer le mot de passe</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.confirm_password')}</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
                   <input
@@ -137,7 +143,7 @@ function ResetPasswordForm() {
                 {status === "loading" ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
-                  "Sauvegarder"
+                  t('auth.update_password')
                 )}
               </button>
             </form>

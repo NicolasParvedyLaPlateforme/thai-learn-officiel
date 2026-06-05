@@ -5,7 +5,7 @@ import { sendPasswordResetEmail } from "@/app/lib/mail";
 
 export async function POST(req: Request) {
   try {
-    const { email } = await req.json();
+    const { email, language } = await req.json();
 
     if (!email) {
       return NextResponse.json({ message: "Email requis" }, { status: 400 });
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       }
     });
 
-    await sendPasswordResetEmail(email, token);
+    await sendPasswordResetEmail(email, token, language);
 
     return NextResponse.json({ message: "Si un compte existe, un email a été envoyé." }, { status: 200 });
   } catch (error) {

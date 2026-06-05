@@ -4,9 +4,11 @@ import { useState, useEffect, Suspense } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, AlertCircle, Save, LogOut } from "lucide-react";
+import { ArrowLeft, CheckCircle2, AlertCircle, Save, LogOut, ChevronLeft } from "lucide-react";
+import { useTranslation } from "../hooks/useTranslation";
 
 function ProfilePageContent() {
+  const { t } = useTranslation();
   const { data: session, status, update } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,7 +31,7 @@ function ProfilePageContent() {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
       setPasswordStatus("error");
-      setMessage("Les mots de passe ne correspondent pas.");
+      setMessage(t('auth.password_mismatch'));
       return;
     }
     
@@ -47,17 +49,17 @@ function ProfilePageContent() {
       
       if (res.ok) {
         setPasswordStatus("success");
-        setMessage("Mot de passe mis à jour avec succès.");
+        setMessage(t('auth.password_updated'));
         setCurrentPassword("");
         setNewPassword("");
         setConfirmNewPassword("");
       } else {
         setPasswordStatus("error");
-        setMessage(data.message || "Erreur lors de la mise à jour.");
+        setMessage(data.message || t('auth.error_network'));
       }
     } catch (err) {
       setPasswordStatus("error");
-      setMessage("Erreur réseau.");
+      setMessage(t('auth.error_network'));
     }
   };
 
@@ -69,12 +71,12 @@ function ProfilePageContent() {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 flex justify-center">
-      <div className="w-full max-w-2xl">
-        <Link href="/" className="inline-flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-1" /> Retour à l'accueil
+      <div className="w-full max-w-2xl relative">
+        <Link href="/" className="inline-flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-6 transition-colors bg-white px-3 py-1.5 rounded-full shadow-sm border border-slate-200">
+          <ChevronLeft className="w-4 h-4 mr-1" /> {t('auth.back')}
         </Link>
         
-        <h1 className="text-3xl font-bold text-slate-800 mb-8">Mon Profil</h1>
+        <h1 className="text-3xl font-bold text-slate-800 mb-8">{t('auth.profile_title')}</h1>
         
         {/* En-tête profil */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex items-center gap-6 mb-8">
@@ -93,7 +95,7 @@ function ProfilePageContent() {
             onClick={() => signOut()}
             className="hidden md:flex items-center gap-2 bg-rose-50 text-rose-600 px-4 py-2 rounded-xl font-semibold hover:bg-rose-100 transition-colors"
           >
-            <LogOut size={18} /> Déconnexion
+            <LogOut size={18} /> {t('auth.logout')}
           </button>
         </div>
 
@@ -107,8 +109,7 @@ function ProfilePageContent() {
         {/* Changer le mot de passe */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
           <div className="p-6 border-b border-slate-100">
-            <h3 className="text-lg font-bold text-slate-800">Changer de mot de passe</h3>
-            <p className="text-sm text-slate-500 mt-1">Mets à jour ton mot de passe pour sécuriser ton compte.</p>
+            <h3 className="text-lg font-bold text-slate-800">{t('auth.reset_title')}</h3>
           </div>
           
           <form onSubmit={handlePasswordUpdate} className="p-6 space-y-4">
@@ -136,7 +137,7 @@ function ProfilePageContent() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Nouveau mot de passe</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.new_password')}</label>
                 <input
                   type="password"
                   required
@@ -146,7 +147,7 @@ function ProfilePageContent() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Confirmer</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.confirm_password')}</label>
                 <input
                   type="password"
                   required
@@ -163,7 +164,11 @@ function ProfilePageContent() {
                 disabled={passwordStatus === "loading"}
                 className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-xl transition-all flex items-center gap-2"
               >
-                {passwordStatus === "loading" ? "Chargement..." : <><Save size={18} /> Mettre à jour</>}
+                {passwordStatus === "loading" ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <><Save size={18} /> {t('auth.save_changes')}</>
+                )}
               </button>
             </div>
           </form>

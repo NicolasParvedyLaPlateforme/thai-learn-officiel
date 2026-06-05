@@ -4,9 +4,11 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogIn, UserPlus } from "lucide-react";
+import { LogIn, UserPlus, ChevronLeft } from "lucide-react";
+import { useTranslation } from "../hooks/useTranslation";
 
 export default function LoginPage() {
+  const { t, language } = useTranslation();
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
@@ -38,13 +40,13 @@ export default function LoginPage() {
         const res = await fetch("/api/auth/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
+          body: JSON.stringify({ name, email, password, language }),
         });
 
         const data = await res.json();
 
         if (!res.ok) {
-          setError(data.message || "Erreur lors de l'inscription");
+          setError(data.message || t('auth.error_registration'));
         } else {
           // Inscription réussie, on connecte l'utilisateur
           await signIn("credentials", {
@@ -56,21 +58,26 @@ export default function LoginPage() {
           router.refresh();
         }
       } catch (err) {
-        setError("Erreur réseau");
+        setError(t('auth.error_network'));
       }
     }
     setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 relative">
+      <Link href="/" className="absolute top-6 left-6 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm hover:shadow border border-slate-100 flex items-center gap-2 text-sm font-medium">
+        <ChevronLeft size={20} />
+        {t('auth.back')}
+      </Link>
+
       <Link href="/" className="mb-8 font-thai font-bold text-3xl text-indigo-600">
         ThaiLearn
       </Link>
       
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
         <h1 className="text-2xl font-bold text-slate-800 mb-6 text-center">
-          {isLogin ? "Bon retour ! 👋" : "Créer un compte 🚀"}
+          {isLogin ? t('auth.welcome_back') : t('auth.create_account')}
         </h1>
         
         {error && (
@@ -82,35 +89,35 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Nom ou Pseudo</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.name_label')}</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-                placeholder="Ton prénom"
+                placeholder={t('auth.name_placeholder')}
               />
             </div>
           )}
           
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.email_label')}</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-              placeholder="ton@email.com"
+              placeholder={t('auth.email_placeholder')}
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-sm font-medium text-slate-700">Mot de passe</label>
+              <label className="block text-sm font-medium text-slate-700">{t('auth.password_label')}</label>
               {isLogin && (
                 <Link href="/forgot-password" className="text-xs text-indigo-600 hover:underline font-medium">
-                  Mot de passe oublié ?
+                  {t('auth.forgot_password')}
                 </Link>
               )}
             </div>
@@ -132,15 +139,15 @@ export default function LoginPage() {
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             ) : isLogin ? (
-              <><LogIn className="w-5 h-5" /> Se connecter</>
+              <><LogIn className="w-5 h-5" /> {t('auth.login')}</>
             ) : (
-              <><UserPlus className="w-5 h-5" /> S'inscrire</>
+              <><UserPlus className="w-5 h-5" /> {t('auth.signup')}</>
             )}
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm text-slate-600">
-          {isLogin ? "Pas encore de compte ? " : "Déjà un compte ? "}
+          {isLogin ? t('auth.no_account') : t('auth.has_account')}
           <button
             type="button"
             onClick={() => {
@@ -149,7 +156,7 @@ export default function LoginPage() {
             }}
             className="text-indigo-600 font-semibold hover:underline"
           >
-            {isLogin ? "S'inscrire" : "Se connecter"}
+            {isLogin ? t('auth.signup') : t('auth.login')}
           </button>
         </div>
       </div>
