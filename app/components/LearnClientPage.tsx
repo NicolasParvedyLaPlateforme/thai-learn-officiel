@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
@@ -316,9 +316,9 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                 )}
                 <div className="relative z-10 w-full flex flex-col items-start text-left">
                   <div className="flex justify-between items-start w-full mb-1">
-                    <h2 className="text-xl sm:text-2xl font-extrabold text-white drop-shadow-md uppercase tracking-tight break-words pr-2">{mounted && language === 'en' ? unit.titleEn : unit.title}</h2>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-white drop-shadow-md uppercase tracking-tight break-words pr-2">{mounted ? getLocalizedField(unit, 'title', language) : unit.title}</h2>
                   </div>
-                  <p className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} mb-4 font-medium text-sm sm:text-base leading-snug drop-shadow`}>{mounted && language === 'en' ? unit.descriptionEn : unit.description}</p>
+                  <p className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} mb-4 font-medium text-sm sm:text-base leading-snug drop-shadow`}>{mounted ? getLocalizedField(unit, 'description', language) : unit.description}</p>
 
                   <div className="w-full">
                     <div className="flex flex-col">
@@ -474,10 +474,10 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                           </div>
                         )}
                         <h4 className={`font-extrabold text-xl text-slate-800`}>
-                          {mounted && language === 'en' ? (lesson.titleEn || lesson.title) : lesson.title}
+                          {mounted ? getLocalizedField(lesson, 'title', language) : lesson.title}
                         </h4>
                         <span className={`text-sm font-bold mt-1 tracking-wide text-slate-500`}>
-                          {mounted && language === 'en' ? (lesson.descriptionEn || lesson.description) : lesson.description}
+                          {mounted ? getLocalizedField(lesson, 'description', language) : lesson.description}
                         </span>
 
                         {/* Lesson Progress Bar (Out of 10) */}
@@ -562,10 +562,10 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       )}
                       <div className="relative z-10 w-full">
                         <div className="flex justify-between items-start mb-3">
-                          <h2 className="text-4xl lg:text-5xl font-extrabold text-white drop-shadow-md uppercase tracking-tight">{language === 'en' ? unit.titleEn : unit.title}</h2>
+                          <h2 className="text-4xl lg:text-5xl font-extrabold text-white drop-shadow-md uppercase tracking-tight">{getLocalizedField(unit, 'title', language)}</h2>
                           {/* Changer d'unité removed string */}
                         </div>
-                        <p className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} mb-10 font-medium text-xl drop-shadow`}>{language === 'en' ? unit.descriptionEn : unit.description}</p>
+                        <p className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} mb-10 font-medium text-xl drop-shadow`}>{getLocalizedField(unit, 'description', language)}</p>
 
                         {/* Progress Bar */}
                         <div className="flex items-center gap-6">
@@ -676,10 +676,10 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                               )}
                               <div className="flex flex-col items-start text-left flex-1 md:pr-4">
                                 <h4 className="font-extrabold text-xl text-slate-800">
-                                  {language === 'en' ? (lesson.titleEn || lesson.title) : lesson.title}
+                                  {getLocalizedField(lesson, 'title', language)}
                                 </h4>
                                 <span className={`text-sm font-bold mt-1 tracking-wide text-slate-500`}>
-                                  {language === 'en' ? (lesson.descriptionEn || lesson.description) : lesson.description}
+                                  {getLocalizedField(lesson, 'description', language)}
                                 </span>
                               </div>
 
@@ -781,11 +781,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
 
                 <div className="p-6 pt-5 pb-2 text-center flex flex-col items-center">
                   <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
-                    {selectedLesson && (language === 'en' ? (selectedLesson.lesson.titleEn || selectedLesson.lesson.title) : selectedLesson.lesson.title)}
+                    {selectedLesson && (getLocalizedField(selectedLesson.lesson, 'title', language))}
                   </h3>
 
                   <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
-                    {selectedLesson && (language === 'en' ? (selectedLesson.lesson.descriptionEn || selectedLesson.lesson.description) : selectedLesson.lesson.description)}
+                    {selectedLesson && (getLocalizedField(selectedLesson.lesson, 'description', language))}
                   </p>
 
                   {/* Levels Grid */}
@@ -946,8 +946,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                             {selectedLesson.lesson.isReview || modalLevel === 10
                               ? (modalLevel === 10
                                 ? (getTranslation('auto.stats_mastery', language))
-                                : (language === 'en' ? `Stats (LVL ${modalLevel + 1}) :` : `Statistiques (NIV. ${modalLevel + 1}) :`))
-                              : (language === 'en' ? `Vocabulary (LVL ${modalLevel + 1}) :` : `Vocabulaire (NIV. ${modalLevel + 1}) :`)
+                                : (getTranslation('auto.stats_lvl', language).replace('{level}', String(modalLevel + 1))))
+                              : (getTranslation('auto.vocabulary_lvl', language).replace('{level}', String(modalLevel + 1)))
                             }
                           </h4>
                           {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
@@ -1007,7 +1007,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                             {selectedLesson.lesson.words?.map((w: any) => (
                               <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
                                 <span className={`font-bold text-[17px] ${selectedLesson.unitText}`}>{w.th}</span>
-                                <span className="text-slate-500 text-[13px] font-medium">({language === 'en' ? w.en : w.fr})</span>
+                                <span className="text-slate-500 text-[13px] font-medium">({getLocalizedField(w, '', language)})</span>
                               </button>
                             ))}
                           </div>
