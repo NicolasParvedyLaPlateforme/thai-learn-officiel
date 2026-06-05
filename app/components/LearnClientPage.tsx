@@ -373,9 +373,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                       </span>
                       {learnQuests.filter(q => !q.completed).length > 0 ? (
                         <span className="text-sm font-bold text-slate-700 truncate">
-                          {language === 'en'
-                            ? learnQuests.filter(q => !q.completed)[0].titleEn
-                            : learnQuests.filter(q => !q.completed)[0].titleFr}
+                          {getLocalizedField(learnQuests.filter(q => !q.completed)[0], 'title', language)}
                         </span>
                       ) : (
                         <span className="text-sm font-bold text-emerald-600 truncate">

@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
@@ -318,9 +318,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                       </span>
                       {alphabetQuests.filter(q => !q.completed).length > 0 ? (
                         <span className="text-sm font-bold text-slate-700 truncate">
-                          {language === 'en' 
-                            ? alphabetQuests.filter(q => !q.completed)[0].titleEn 
-                            : alphabetQuests.filter(q => !q.completed)[0].titleFr}
+                          {getLocalizedField(alphabetQuests.filter(q => !q.completed)[0], 'title', language)}
                         </span>
                       ) : (
                         <span className="text-sm font-bold text-emerald-600 truncate">
