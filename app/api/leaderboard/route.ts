@@ -7,11 +7,14 @@ export async function GET(req: Request) {
     const limitParam = searchParams.get('limit');
     const limit = limitParam ? parseInt(limitParam) : 50;
 
+    const currentMonth = new Date().toISOString().substring(0, 7);
+
     const topUsers = await prisma.user.findMany({
       where: {
         xp: {
           gt: 0
-        }
+        },
+        lastConversionMonth: currentMonth
       },
       orderBy: {
         xp: 'desc'

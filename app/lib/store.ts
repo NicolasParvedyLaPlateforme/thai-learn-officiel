@@ -101,6 +101,10 @@ interface ProgressState {
   unlockedLessons: string[];
   lessonLevels: Record<string, number>;
   xp: number;
+  goldCoins: number;
+  lastConversionMonth: string | null;
+  pendingGoldConversion: { oldXp: number, newCoins: number } | null;
+  clearPendingGoldConversion: () => void;
   seenAlphabets: string[]; // Keep track of seen alphabet letters
   isExerciseRunning: boolean;
   setExerciseRunning: (state: boolean) => void;
@@ -172,6 +176,11 @@ export const useProgressStore = create<ProgressState>()(
       unlockedLessons: [],
       lessonLevels: {},
       lessonStars: {},
+      xp: 0,
+      goldCoins: 0,
+      lastConversionMonth: null,
+      pendingGoldConversion: null,
+      clearPendingGoldConversion: () => set({ pendingGoldConversion: null }),
       hiddenInstructions: [],
       hasSeenCommunityModal: false,
       showCommunityModal: false,
@@ -275,16 +284,31 @@ export const useProgressStore = create<ProgressState>()(
 
       checkAndGenerateQuests: () => set((state) => {
         const today = getLocalDateString();
-        // Also check if dailyQuests has the new structure or is null/array
-        const isLegacyQuests = Array.isArray(state.dailyQuests) || !state.dailyQuests;
-        if (state.questsDate !== today || isLegacyQuests) {
-          return {
-            questsDate: today,
-            dailyQuests: generateNewQuests(),
-            completedToday: [] // Reset daily XP rewards
-          };
+        const currentMonth = today.substring(0, 7); // YYYY-MM
+        
+        let updates: Partial<ProgressState> = {};
+        
+        // --- Monthly Gold Coin Conversion Logic ---
+        if (state.lastConversionMonth !== currentMonth) {
+          if (state.xp >= 100) {
+            const newCoins = Math.floor(state.xp / 100);
+            updates.goldCoins = (state.goldCoins || 0) + newCoins;
+            updates.pendingGoldConversion = {
+              oldXp: state.xp,
+              newCoins: newCoins
+            };
+          }
+          updates.xp = 0; // Reset XP at the end of the month
+          updates.lastConversionMonth = currentMonth;
         }
-        return {};
+
+        if (state.questsDate !== today) {
+          updates.dailyQuests = generateNewQuests();
+          updates.questsDate = today;
+          updates.completedToday = []; // Reset completed today
+        }
+        
+        return Object.keys(updates).length > 0 ? updates : {};
       }),
 
       xp: 0,

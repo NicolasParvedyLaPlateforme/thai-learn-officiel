@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 import { useSession, signOut } from 'next-auth/react';
@@ -12,7 +12,7 @@ import { useTranslation } from '../hooks/useTranslation';
 export default function DesktopSidebarLeft() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const { language, setLanguage, xp, currentStreak, completedLessons, isExerciseRunning, isMobileSidebarOpen, setMobileSidebarOpen, setShowLanguageModal } = useProgressStore();
+  const { language, setLanguage, xp, goldCoins, currentStreak, completedLessons, isExerciseRunning, isMobileSidebarOpen, setMobileSidebarOpen, setShowLanguageModal } = useProgressStore();
   const { t } = useTranslation();
   const globalSuggested = useGlobalSuggestedLesson();
 
@@ -103,6 +103,16 @@ export default function DesktopSidebarLeft() {
               </span>
               <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
                  <Star size={20} fill="currentColor" />
+              </div>
+            </div>
+
+            <div className="bg-yellow-100 text-yellow-600 font-bold rounded-xl shadow-sm h-10 flex-1 flex items-center justify-center whitespace-nowrap px-0 group-hover:px-2 xl:px-2 overflow-hidden border border-yellow-200 relative group/stat">
+              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-sm">
+                <Coins size={16} fill="currentColor" />
+                {goldCoins || 0}
+              </span>
+              <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
+                 <Coins size={20} fill="currentColor" />
               </div>
             </div>
             

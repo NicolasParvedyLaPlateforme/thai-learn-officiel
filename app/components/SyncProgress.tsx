@@ -37,9 +37,10 @@ export default function SyncProgress() {
     timeoutRef.current = setTimeout(async () => {
       const state = useProgressStore.getState();
       
-      // Select data to save
       const dataToSave = {
         xp: state.xp,
+        goldCoins: state.goldCoins,
+        lastConversionMonth: state.lastConversionMonth,
         currentStreak: state.currentStreak,
         longestStreak: state.longestStreak,
         lastActiveDate: state.lastActiveDate,
@@ -64,6 +65,8 @@ export default function SyncProgress() {
   }, [
     status,
     store.xp,
+    store.goldCoins,
+    store.lastConversionMonth,
     store.currentStreak,
     store.completedLessons,
     store.unlockedLessons,

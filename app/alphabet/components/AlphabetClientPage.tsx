@@ -10,7 +10,7 @@ import { useProgressStore } from '../../lib/store';
 import { getAlphabetLessons, AlphabetLessonDef, formatCombiningChar } from '../../lib/alphabet-utils';
 import { playThaiTTS } from '../../lib/tts';
 import { Drawer } from 'vaul';
-import { BookOpen, CheckCircle, Star, Play, Crown, X, Unlock, Lock, ChevronLeft, ChevronRight, Clock, Volume2, Users, Flame, Target, User } from 'lucide-react';
+import { Globe, CheckCircle, Star, Play, Lock, ChevronLeft, ChevronRight, X, Sparkles, Volume2, Flame, User, Coins, BookOpen, Users, Target } from 'lucide-react';
 import IconImage from '../../components/IconImage';
 
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
@@ -24,7 +24,7 @@ import { useIsPWA } from '../../../hooks/use-pwa';
 export default function AlphabetClientPage({ lightweightLessons }: { lightweightLessons: any[] }) {
   const router = useRouter();
   const isPWA = useIsPWA();
-  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, currentStreak, dailyQuests, resetLessonLevel, unlockLessonManual, language, setLanguage, autoDetectLanguage, getExpectedXp } = useProgressStore();
+  const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, goldCoins, currentStreak, dailyQuests, resetLessonLevel, unlockLessonManual, language, setLanguage, autoDetectLanguage, getExpectedXp } = useProgressStore();
   const alphabetQuests = dailyQuests?.alphabet || [];
   const [mounted, setMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -200,16 +200,23 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                 </button>
 
                 {isMobileStatsOpen && (
-                  <div className="absolute top-full right-0 mt-2 p-3 bg-white rounded-2xl shadow-xl flex flex-col gap-2 z-50 min-w-[120px] md:hidden border border-slate-100">
-                    <div className="flex items-center gap-2 px-2 py-1">
-                      <Star size={16} className="text-amber-500 fill-amber-500" />
-                      <span className="font-extrabold text-slate-700">{xp}</span>
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setIsMobileStatsOpen(false)}></div>
+                    <div className="absolute top-full right-0 mt-2 p-3 bg-white rounded-2xl shadow-xl flex flex-col gap-2 z-50 min-w-[120px] md:hidden border border-slate-100">
+                      <div className="flex items-center gap-2 px-2 py-1">
+                        <Star size={16} className="text-amber-500 fill-amber-500" />
+                        <span className="font-extrabold text-slate-700">{xp}</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-2 py-1">
+                        <Coins size={16} className="text-yellow-500 fill-yellow-500" />
+                        <span className="font-extrabold text-slate-700">{goldCoins || 0}</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-2 py-1">
+                        <Flame size={16} className={`${currentStreak > 0 ? 'text-orange-500 fill-orange-500' : 'text-slate-300'}`} />
+                        <span className={`font-extrabold ${currentStreak > 0 ? 'text-slate-700' : 'text-slate-400'}`}>{currentStreak}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 px-2 py-1">
-                      <Flame size={16} className={`${currentStreak > 0 ? 'text-orange-500 fill-orange-500' : 'text-slate-300'}`} />
-                      <span className={`font-extrabold ${currentStreak > 0 ? 'text-slate-700' : 'text-slate-400'}`}>{currentStreak}</span>
-                    </div>
-                  </div>
+                  </>
                 )}
 
                 <button 
