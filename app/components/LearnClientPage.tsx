@@ -18,6 +18,7 @@ import { DesktopSidebarRight } from '../components/DesktopSidebarRight';
 import PWAInstallButton from '../components/PWAInstallButton';
 import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
 import { ConversationObjectiveWidget } from '../components/ConversationObjectiveWidget';
+import { LeaderboardWidget } from '../components/LeaderboardWidget';
 import BASE_UNITS from '../data/units.json';
 
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
@@ -1139,6 +1140,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
               <div className="p-6 pb-12 overflow-y-auto flex flex-col gap-6">
                 <DailyQuestsWidget />
                 <ConversationObjectiveWidget />
+                <LeaderboardWidget />
               </div>
             </Drawer.Content>
           </Drawer.Portal>

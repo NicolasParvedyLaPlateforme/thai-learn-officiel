@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 relative">
-      <Link href="/" className="absolute top-6 left-6 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm hover:shadow border border-slate-100 flex items-center gap-2 text-sm font-medium">
+      <Link href="/learn" className="absolute top-6 left-6 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm hover:shadow border border-slate-100 flex items-center gap-2 text-sm font-medium">
         <ChevronLeft size={20} />
         {t('auth.back')}
       </Link>
@@ -48,19 +48,19 @@ export default function ForgotPasswordPage() {
       <Link href="/" className="mb-8 font-thai font-bold text-3xl text-indigo-600">
         ThaiLearn
       </Link>
-      
+
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
         <Link href="/login" className="flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1" /> {t('auth.back_login')}
         </Link>
-        
+
         <h1 className="text-2xl font-bold text-slate-800 mb-2">
           {t('auth.forgot_title')}
         </h1>
         <p className="text-slate-600 text-sm mb-6">
           {t('auth.forgot_desc')}
         </p>
-        
+
         {status === "success" && (
           <div className="bg-emerald-50 text-emerald-700 p-4 rounded-xl mb-6 text-sm font-medium border border-emerald-100">
             {message}

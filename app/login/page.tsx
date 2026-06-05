@@ -66,7 +66,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 relative">
-      <Link href="/" className="absolute top-6 left-6 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm hover:shadow border border-slate-100 flex items-center gap-2 text-sm font-medium">
+      <Link href="/learn" className="absolute top-6 left-6 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm hover:shadow border border-slate-100 flex items-center gap-2 text-sm font-medium">
         <ChevronLeft size={20} />
         {t('auth.back')}
       </Link>
@@ -74,12 +74,12 @@ export default function LoginPage() {
       <Link href="/" className="mb-8 font-thai font-bold text-3xl text-indigo-600">
         ThaiLearn
       </Link>
-      
+
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
         <h1 className="text-2xl font-bold text-slate-800 mb-6 text-center">
           {isLogin ? t('auth.welcome_back') : t('auth.create_account')}
         </h1>
-        
+
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm font-medium">
             {error}
@@ -99,7 +99,7 @@ export default function LoginPage() {
               />
             </div>
           )}
-          
+
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.email_label')}</label>
             <input

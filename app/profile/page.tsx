@@ -23,7 +23,7 @@ function ProfilePageContent() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  
+
   const [pseudo, setPseudo] = useState("");
   const [pseudoStatus, setPseudoStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [pseudoMessage, setPseudoMessage] = useState("");
@@ -49,7 +49,7 @@ function ProfilePageContent() {
       setMessage(t('auth.password_mismatch'));
       return;
     }
-    
+
     setPasswordStatus("loading");
     setMessage("");
 
@@ -59,9 +59,9 @@ function ProfilePageContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ currentPassword, newPassword }),
       });
-      
+
       const data = await res.json();
-      
+
       if (res.ok) {
         setPasswordStatus("success");
         setMessage(t('auth.password_updated'));
@@ -89,9 +89,9 @@ function ProfilePageContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pseudo }),
       });
-      
+
       const data = await res.json();
-      
+
       if (res.ok) {
         setPseudoStatus("success");
         setPseudoMessage("Pseudo mis à jour avec succès.");
@@ -114,12 +114,12 @@ function ProfilePageContent() {
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 flex justify-center">
       <div className="w-full max-w-2xl relative">
-        <Link href="/" className="inline-flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-6 transition-colors bg-white px-3 py-1.5 rounded-full shadow-sm border border-slate-200">
+        <Link href="/learn" className="inline-flex items-center text-sm text-slate-500 hover:text-indigo-600 mb-6 transition-colors bg-white px-3 py-1.5 rounded-full shadow-sm border border-slate-200">
           <ChevronLeft className="w-4 h-4 mr-1" /> {t('auth.back')}
         </Link>
-        
+
         <h1 className="text-3xl font-bold text-slate-800 mb-8">{t('auth.profile_title')}</h1>
-        
+
         {/* En-tête profil */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex items-center gap-6 mb-8">
           <div className="w-20 h-20 bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-3xl rounded-full shrink-0">
@@ -133,7 +133,7 @@ function ProfilePageContent() {
                   donc on affiche juste un avertissement si on vient d'arriver */}
             </div>
           </div>
-          <button 
+          <button
             onClick={() => signOut()}
             className="hidden md:flex items-center gap-2 bg-rose-50 text-rose-600 px-4 py-2 rounded-xl font-semibold hover:bg-rose-100 transition-colors"
           >
@@ -153,7 +153,7 @@ function ProfilePageContent() {
           <div className="p-6 border-b border-slate-100">
             <h3 className="text-lg font-bold text-slate-800">Mon Pseudo</h3>
           </div>
-          
+
           <form onSubmit={handlePseudoUpdate} className="p-6 space-y-4">
             {pseudoStatus === "success" && (
               <div className="bg-emerald-50 text-emerald-700 p-3 rounded-lg text-sm font-medium">
@@ -177,7 +177,7 @@ function ProfilePageContent() {
                 placeholder="Ex: NinjaThai"
               />
             </div>
-            
+
             <div className="pt-2 flex justify-end">
               <button
                 type="submit"
@@ -199,7 +199,7 @@ function ProfilePageContent() {
           <div className="p-6 border-b border-slate-100">
             <h3 className="text-lg font-bold text-slate-800">{t('auth.reset_title')}</h3>
           </div>
-          
+
           <form onSubmit={handlePasswordUpdate} className="p-6 space-y-4">
             {passwordStatus === "success" && (
               <div className="bg-emerald-50 text-emerald-700 p-3 rounded-lg text-sm font-medium">
@@ -222,7 +222,7 @@ function ProfilePageContent() {
                 className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
               />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.new_password')}</label>
