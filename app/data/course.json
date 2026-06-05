@@ -12,9 +12,9 @@
           "phonetic": "sà-wàt-dii",
           "en": "Good morning",
           "imageUrl": "/images/unite-1/mot/bonjour-mot.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Buenos días",
+          "de": "Guten Morgen",
+          "it": "Buongiorno"
         },
         {
           "id": "w_khopkhun",
@@ -23,9 +23,9 @@
           "phonetic": "khɔ̀p-khun",
           "en": "Thanks",
           "imageUrl": "/images/unite-1/mot/merci.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Gracias",
+          "de": "Danke",
+          "it": "Grazie"
         },
         {
           "id": "w_krap",
@@ -34,9 +34,9 @@
           "phonetic": "khráp",
           "en": "polite male particle",
           "imageUrl": "/images/unite-1/mot/homme.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "partícula cortés masculina",
+          "de": "höfliche Partikel für Männer",
+          "it": "particella cortese maschile"
         },
         {
           "id": "w_kha",
@@ -45,9 +45,9 @@
           "phonetic": "khâ",
           "en": "polite female particle",
           "imageUrl": "/images/unite-1/mot/femme.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "partícula cortés femenina",
+          "de": "höfliche Partikel für Frauen",
+          "it": "particella cortese femminile"
         },
         {
           "id": "w_sabai",
@@ -56,9 +56,9 @@
           "phonetic": "sà-baai",
           "en": "good / comfortable",
           "imageUrl": "/images/unite-1/mot/cavabien.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "bien / cómodo",
+          "de": "gut / bequem",
+          "it": "bene / comodo"
         },
         {
           "id": "w_dee",
@@ -67,9 +67,9 @@
           "phonetic": "dii",
           "en": "good",
           "imageUrl": "/images/unite-1/mot/bien.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "bien / bueno",
+          "de": "gut",
+          "it": "bene / buono"
         },
         {
           "id": "w_mai",
@@ -78,9 +78,9 @@
           "phonetic": "mǎi",
           "en": "does (question)",
           "imageUrl": "/images/unite-1/mot/question.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "partícula interrogativa",
+          "de": "Fragepartikel",
+          "it": "particella interrogativa"
         }
       ],
       "phrases": [
@@ -95,9 +95,9 @@
           ],
           "en": "hello (man)",
           "imageUrl": "/images/unite-1/mot/bonjour-mot.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hola (hombre)",
+          "de": "hallo (Mann)",
+          "it": "ciao (uomo)"
         },
         {
           "id": "p_hello_f",
@@ -110,9 +110,9 @@
           ],
           "en": "hello (woman)",
           "imageUrl": "/images/unite-1/phrase/bonjour-femme.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "hola (mujer)",
+          "de": "hallo (Frau)",
+          "it": "ciao (donna)"
         },
         {
           "id": "p_how_are_you",
@@ -126,9 +126,9 @@
           ],
           "en": "How are you ?",
           "imageUrl": "/images/unite-1/phrase/cavabien-question-compress.webp",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "¿cómo estás?",
+          "de": "wie geht es dir?",
+          "it": "come stai?"
         },
         {
           "id": "p_thanks_m",
@@ -141,9 +141,9 @@
           ],
           "en": "thank you (man)",
           "imageUrl": "/images/p_p_thanks_m.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "gracias (hombre)",
+          "de": "danke (Mann)",
+          "it": "grazie (uomo)"
         },
         {
           "id": "p_thanks_f",
@@ -156,9 +156,9 @@
           ],
           "en": "thank you (woman)",
           "imageUrl": "/images/p_p_thanks_f.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "gracias (mujer)",
+          "de": "danke (Frau)",
+          "it": "grazie (donna)"
         },
         {
           "id": "p_i_am_fine",
@@ -171,20 +171,20 @@
           ],
           "en": "I'm doing well",
           "imageUrl": "/images/p_p_i_am_fine.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "estoy bien",
+          "de": "mir geht es gut",
+          "it": "sto bene"
         }
       ],
       "titleEn": "Basics 1: Greetings",
       "descriptionEn": "Learn to say hello and thank you",
       "imageUrl": "/images/salutation.png",
-      "titleEs": "Test de la version espagnol",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Básicos 1: Saludos",
+      "titleDe": "Grundlagen 1: Begrüßungen",
+      "titleIt": "Basi 1: Saluti",
+      "descriptionEs": "Aprende a decir hola y gracias",
+      "descriptionDe": "Lerne Hallo und Danke zu sagen",
+      "descriptionIt": "Impara a dire ciao e grazie"
     },
     {
       "id": "lesson-2",
@@ -199,9 +199,9 @@
           "en": "I (man)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phom.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "yo (hombre)",
+          "de": "ich (Mann)",
+          "it": "io (uomo)"
         },
         {
           "id": "w_chan",
@@ -211,9 +211,9 @@
           "en": "I (woman)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_chan.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "yo (mujer)",
+          "de": "ich (Frau)",
+          "it": "io (donna)"
         },
         {
           "id": "w_khun",
@@ -223,9 +223,9 @@
           "en": "you",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khun.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "tú / usted",
+          "de": "du / Sie",
+          "it": "tu / lei"
         },
         {
           "id": "w_chue",
@@ -235,9 +235,9 @@
           "en": "name / to be called",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_chue.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "nombre / llamarse",
+          "de": "Name / heißen",
+          "it": "nome / chiamarsi"
         },
         {
           "id": "w_arai",
@@ -247,9 +247,9 @@
           "en": "what / which",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_arai.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "qué / cuál",
+          "de": "was / welch-",
+          "it": "cosa / quale"
         }
       ],
       "phrases": [
@@ -266,9 +266,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_name_ask.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "¿Cómo te llamas?",
+          "de": "Wie heißt du?",
+          "it": "Come ti chiami?"
         },
         {
           "id": "p_name_m",
@@ -282,9 +282,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_name_m.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Me llamo (hombre)",
+          "de": "Ich heiße (Mann)",
+          "it": "Mi chiamo (uomo)"
         },
         {
           "id": "p_name_f",
@@ -298,9 +298,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_name_f.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Me llamo (mujer)",
+          "de": "Ich heiße (Frau)",
+          "it": "Mi chiamo (donna)"
         },
         {
           "id": "p_fine_m",
@@ -315,9 +315,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_fine_m.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Estoy bien (hombre)",
+          "de": "Mir geht es gut (Mann)",
+          "it": "Sto bene (uomo)"
         },
         {
           "id": "p_fine_f",
@@ -332,20 +332,20 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_fine_f.svg",
-          "es": "",
-          "de": "",
-          "it": ""
+          "es": "Estoy bien (mujer)",
+          "de": "Mir geht es gut (Frau)",
+          "it": "Sto bene (donna)"
         }
       ],
       "titleEn": "Basics 2: Introduce yourself",
       "descriptionEn": "Learn basic pronouns and introducing yourself",
       "imageUrl": "/images/unite/unite-1-exercice-2-officiel.webp",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Básicos 2: Preséntate",
+      "titleDe": "Grundlagen 2: Sich vorstellen",
+      "titleIt": "Basi 2: Presentati",
+      "descriptionEs": "Aprende los pronombres básicos y a presentarte",
+      "descriptionDe": "Lerne grundlegende Pronomen und dich vorzustellen",
+      "descriptionIt": "Impara i pronomi di base e a presentarti"
     },
     {
       "id": "l_nouveau_001",
