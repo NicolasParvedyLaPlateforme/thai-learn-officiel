@@ -27,6 +27,9 @@ export interface DailyQuest {
   completed: boolean;
   titleEn: string;
   titleFr: string;
+  titleDe?: string;
+  titleEs?: string;
+  titleIt?: string;
 }
 
 export interface QuestsState {
@@ -47,6 +50,9 @@ const generateNewQuestsForCategory = (categoryConfig: any[]): DailyQuest[] => {
     completed: false,
     titleEn: q.titleEn,
     titleFr: q.titleFr,
+    titleDe: q.titleDe,
+    titleEs: q.titleEs,
+    titleIt: q.titleIt,
   }));
 };
 
