@@ -745,10 +745,17 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                                   }
                                 `}>
                                   {isCompleted ? (
-                                    <div className="flex gap-[1px]">
-                                      {Array.from({ length: 3 }).map((_, i) => (
-                                        <Star key={i} className={`stroke-[1.5] ${i < earnedStars ? "fill-amber-900 stroke-amber-900" : "fill-amber-500/30 stroke-amber-700/40"}`} size={10} />
-                                      ))}
+                                    <div className="flex flex-col items-center gap-[1px]">
+                                      <div className="flex gap-[1px]">
+                                        {Array.from({ length: 3 }).map((_, i) => (
+                                          <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-amber-900 stroke-amber-900 drop-shadow-sm" : "fill-amber-500/30 stroke-amber-700/40"}`} size={10} />
+                                        ))}
+                                      </div>
+                                      <div className="flex gap-[1px]">
+                                        {Array.from({ length: 2 }).map((_, i) => (
+                                          <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-amber-900 stroke-amber-900 drop-shadow-sm" : "fill-amber-500/30 stroke-amber-700/40"}`} size={10} />
+                                        ))}
+                                      </div>
                                     </div>
                                   ) : isCurrent ? (
                                     <span className="font-extrabold text-lg">{levelIndex + 1}</span>

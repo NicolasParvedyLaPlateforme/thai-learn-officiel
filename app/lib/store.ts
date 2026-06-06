@@ -427,7 +427,7 @@ export const useProgressStore = create<ProgressState>()(
            isFirstTime = !completedToday.includes(key);
            xp = isFirstTime ? 50 : 25;
         } else {
-           const type = lessonId.startsWith('alphabet_') ? 'alphabet' : 'learn';
+           const type = (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) ? 'alphabet' : 'learn';
            key = `${type}_${lessonId}_level-${levelIndex}`;
            isFirstTime = !completedToday.includes(key);
            xp = isFirstTime ? 20 : 5;
@@ -453,7 +453,7 @@ export const useProgressStore = create<ProgressState>()(
           }
           
           let type: 'learn' | 'alphabet' = 'learn';
-          if (lessonId.startsWith('alphabet_')) {
+          if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
             type = 'alphabet';
           }
 
@@ -485,7 +485,7 @@ export const useProgressStore = create<ProgressState>()(
         get().recordActivity();
         
         let type: 'learn' | 'alphabet' = 'learn';
-        if (lessonId.startsWith('alphabet_')) {
+        if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
           type = 'alphabet';
         }
 

@@ -52,7 +52,7 @@ function AlphabetLessonContent() {
   const [mistakes, setMistakes] = useState(0);
   const [earnedXp, setEarnedXp] = useState<number>(0);
 
-  const earnedStars = mistakes < 2 ? 3 : mistakes < 4 ? 2 : 1;
+  const earnedStars = Math.max(0, 5 - mistakes);
 
   useEffect(() => {
     setIsClient(true);
@@ -218,8 +218,27 @@ function AlphabetLessonContent() {
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
-        <div className="text-orange-500 mb-6">
-          <Check size={120} className="mx-auto" />
+        <div className="text-emerald-500 mb-2">
+          <Check size={80} className="mx-auto" />
+        </div>
+        <div className="flex gap-2 mb-6">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.2 + i * 0.1, type: "spring", stiffness: 200 }}
+            >
+              <Star
+                size={48}
+                className={
+                  i < earnedStars
+                    ? "fill-amber-400 text-amber-500"
+                    : "fill-slate-200 text-slate-300 drop-shadow-sm"
+                }
+              />
+            </motion.div>
+          ))}
         </div>
         <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
           {language === 'en' ? `Level ${currentLevel + 1} completed!` : `Niveau ${currentLevel + 1} terminé !`}
