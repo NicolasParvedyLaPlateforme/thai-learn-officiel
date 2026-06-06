@@ -50,10 +50,10 @@ export default function HeaderProgressBar({
         <div className="fixed inset-0 z-[300] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-xl flex flex-col gap-4 text-center">
             <h3 className="text-xl font-bold text-slate-800">
-              {getTranslation('auto.quit_lesson', language)}
+              {getTranslation('auto.quit_lesson', language) || 'Quitter la leçon ?'}
             </h3>
             <p className="text-slate-500 font-medium">
-              {getTranslation('auto.your_progress_will_be_lost', language)}
+              {getTranslation('auto.your_progress_will_be_saved', language) || 'Votre progression est sauvegardée. Vous pourrez revenir à tout moment pour terminer cet exercice.'}
             </p>
             <div className="flex flex-col gap-2 mt-2">
               <button

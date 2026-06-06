@@ -1,6 +1,16 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import questsConfig from '../data/quests.json';
+import { Exercise } from '../types';
+
+export interface InProgressLessonState {
+  exercises: Exercise[];
+  currentIndex: number;
+  mistakes: number;
+  timeLeft: number | null;
+  initialTime: number | null;
+  lastUpdated: number;
+}
 
 export type AppLanguage = 'fr' | 'en' | 'de' | 'es' | 'it';
 
@@ -164,6 +174,9 @@ interface ProgressState {
   reviewStats: Record<string, Record<number, { bestTime?: number, maxPercentage?: number }>>;
   saveReviewStat: (lessonId: string, level: number, stats: { bestTime?: number, maxPercentage?: number }) => void;
   
+  inProgressLessons: Record<string, InProgressLessonState>;
+  saveInProgressLesson: (key: string, state: InProgressLessonState | null) => void;
+
   isMobileSidebarOpen: boolean;
   setMobileSidebarOpen: (open: boolean) => void;
 }
@@ -204,6 +217,20 @@ export const useProgressStore = create<ProgressState>()(
       dailyQuests: null,
       questsDate: null,
       reviewStats: {},
+      inProgressLessons: {},
+      saveInProgressLesson: (key, stateData) => set((state) => {
+        if (stateData === null) {
+          const newInProgress = { ...state.inProgressLessons };
+          delete newInProgress[key];
+          return { inProgressLessons: newInProgress };
+        }
+        return {
+          inProgressLessons: {
+            ...state.inProgressLessons,
+            [key]: stateData
+          }
+        };
+      }),
       
       saveReviewStat: (lessonId, level, stats) => set((state) => {
         const lessonStats = state.reviewStats[lessonId] || {};

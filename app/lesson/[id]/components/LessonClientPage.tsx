@@ -6,7 +6,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useProgressStore } from "../../../lib/store";
 import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
-import { X, Check, Star, Crown, Volume2, HelpCircle } from "lucide-react";
+import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
 import confetti from "canvas-confetti";
 import { playThaiTTS, preloadThaiVoices } from "../../../lib/tts";
 import { motion, AnimatePresence } from "motion/react";
@@ -139,6 +139,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const currentExerciseTop = exercises[currentIndex];
   const instructionKeyTop = getInstructionKey(currentExerciseTop);
+  const [showResumePrompt, setShowResumePrompt] = useState(false);
+  const { inProgressLessons, saveInProgressLesson } = useProgressStore();
 
   useEffect(() => {
     setIsClient(true);
@@ -163,6 +165,15 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       exercisesGeneratedFor.id !== lesson.id ||
       exercisesGeneratedFor.level !== currentLevel
     ) {
+      const savedStateKey = `${lesson.id}_${currentLevel}`;
+      const savedState = inProgressLessons[savedStateKey];
+
+      if (savedState && savedState.exercises && savedState.exercises.length > 0) {
+        setShowResumePrompt(true);
+        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
+        return;
+      }
+
       preloadThaiVoices();
       getExercisesServer(lesson.id, currentLevel, language).then(generated => {
          setExercises(generated);
@@ -200,6 +211,54 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     exercisesGeneratedFor,
   ]);
 
+  const handleResume = () => {
+    const savedStateKey = `${lesson.id}_${currentLevel}`;
+    const savedState = inProgressLessons[savedStateKey];
+    if (savedState) {
+      setExercises(savedState.exercises);
+      setCurrentIndex(savedState.currentIndex);
+      setMistakes(savedState.mistakes);
+      setTimeLeft(savedState.timeLeft);
+      setInitialTime(savedState.initialTime);
+      setIsFinished(false);
+      setIsChecking(false);
+      setIsCorrect(null);
+      setSelectedAnswer(null);
+      setFailedDueToTime(false);
+    }
+    setShowResumePrompt(false);
+  };
+
+  const handleRestart = () => {
+    const savedStateKey = `${lesson.id}_${currentLevel}`;
+    saveInProgressLesson(savedStateKey, null);
+    setShowResumePrompt(false);
+    
+    preloadThaiVoices();
+    getExercisesServer(lesson.id, currentLevel, language).then(generated => {
+      setExercises(generated);
+      setCurrentIndex(0);
+      setIsFinished(false);
+      setIsChecking(false);
+      setIsCorrect(null);
+      setSelectedAnswer(null);
+      setMistakes(0);
+      setFailedDueToTime(false);
+      if (lesson.isReview) {
+        const time = (currentLevel + 1) * 2 * 60;
+        setTimeLeft(time);
+        setInitialTime(time);
+      } else if (currentLevel === 10) {
+        const time = 20 * 60;
+        setTimeLeft(time);
+        setInitialTime(time);
+      } else {
+        setTimeLeft(null);
+        setInitialTime(null);
+      }
+    });
+  };
+
   useEffect(() => {
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
       const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
@@ -212,6 +271,27 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
 
   const isDataLoaded = isClient && _hasHydrated && !!lesson && exercises.length > 0;
+
+  useEffect(() => {
+    if (exercises.length > 0 && !isFinished && !showResumePrompt && isDataLoaded) {
+       const savedStateKey = `${lesson.id}_${currentLevel}`;
+       saveInProgressLesson(savedStateKey, {
+         exercises,
+         currentIndex,
+         mistakes,
+         timeLeft,
+         initialTime,
+         lastUpdated: Date.now()
+       });
+    }
+  }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson.id, currentLevel, saveInProgressLesson]);
+
+  useEffect(() => {
+    if (isFinished) {
+      const savedStateKey = `${lesson.id}_${currentLevel}`;
+      saveInProgressLesson(savedStateKey, null);
+    }
+  }, [isFinished, lesson.id, currentLevel, saveInProgressLesson]);
 
   useEffect(() => {
     if (timeLeft === null || isFinished || !showExerciseUI || !isDataLoaded) return;
@@ -388,6 +468,38 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     setIsChecking(true);
     playThaiTTS(currentExercise.answer);
   };
+
+  if (showResumePrompt) {
+    return (
+      <div className="h-[100dvh] w-full flex items-center justify-center bg-[#FAFAFA] font-sans">
+        <div className="bg-white rounded-3xl p-8 w-full max-w-sm flex flex-col items-center text-center shadow-xl m-4 border-2 border-slate-100">
+          <div className="w-16 h-16 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mb-6">
+            <RotateCcw size={32} className="stroke-[2.5]" />
+          </div>
+          <h2 className="text-2xl font-extrabold text-slate-800 mb-2">
+            Partie en cours
+          </h2>
+          <p className="text-slate-500 font-medium mb-8 text-sm">
+            Vous avez commencé ce niveau précédemment. Voulez-vous reprendre là où vous en étiez ?
+          </p>
+          <div className="flex flex-col w-full gap-3">
+            <button
+              onClick={handleResume}
+              className="w-full bg-amber-400 text-white font-extrabold rounded-2xl py-4 transition-all shadow-sm border-b-4 border-amber-500 active:translate-y-1 active:border-b-0 hover:bg-amber-300"
+            >
+              Reprendre la partie
+            </button>
+            <button
+              onClick={handleRestart}
+              className="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold rounded-2xl py-4 transition-all"
+            >
+              Recommencer à zéro
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isFinished) {
     const lessonIndex = parseInt(lesson.id.replace("lesson-", "")) - 1;
