@@ -8,6 +8,7 @@ import { Search, ArrowLeft, Wand2, Info, Volume2, Scissors, X } from 'lucide-rea
 import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
 import { AnimatePresence, motion } from 'motion/react';
+import { getPredefinedSyllables } from '../../lib/vocabulary-utils';
 
 export interface ToneAnalyzerContentProps {
   initialWord?: string;
@@ -26,11 +27,29 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [manualBoundaries, setManualBoundaries] = useState<number[]>([]);
 
+  const [predefinedSyllables, setPredefinedSyllables] = useState<string[] | null>(null);
+  const [activePredefinedIndex, setActivePredefinedIndex] = useState(-1);
+
   const [showMobileExplanation, setShowMobileExplanation] = useState(false);
 
   // Reset manual boundaries when target word changes
   useEffect(() => {
     setManualBoundaries([]);
+    if (targetWord) {
+      const bounds = getPredefinedSyllables(targetWord);
+      if (bounds && bounds.length > 0) {
+        const fullBounds = [0, ...[...bounds].sort((a,b) => a-b), targetWord.length];
+        const syllables = [];
+        for (let i = 0; i < fullBounds.length - 1; i++) {
+          syllables.push(targetWord.substring(fullBounds[i], fullBounds[i+1]));
+        }
+        setPredefinedSyllables(syllables);
+      } else {
+        setPredefinedSyllables(null);
+      }
+    } else {
+      setPredefinedSyllables(null);
+    }
   }, [targetWord]);
 
   // Determine the active string, previous and next syllable based on currentIndex
@@ -38,7 +57,11 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
   let previousSyllable = '';
   let nextSyllable = '';
 
-  if (mode === 'guided' && currentIndex >= 0) {
+  if (predefinedSyllables && activePredefinedIndex >= 0) {
+     currentActiveInput = predefinedSyllables[activePredefinedIndex];
+     if (activePredefinedIndex > 0) previousSyllable = predefinedSyllables[activePredefinedIndex - 1];
+     if (activePredefinedIndex < predefinedSyllables.length - 1) nextSyllable = predefinedSyllables[activePredefinedIndex + 1];
+  } else if (!predefinedSyllables && mode === 'guided' && currentIndex >= 0) {
      const boundaries = [0, ...[...manualBoundaries].sort((a, b) => a - b), targetWord.length];
      const syllables = [];
      for (let i = 0; i < boundaries.length - 1; i++) {
@@ -83,6 +106,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
       setTargetWord(initialWord);
       setMode('guided');
       setCurrentIndex(-1);
+      setActivePredefinedIndex(-1);
     }
   }, [initialWord]);
 
@@ -91,6 +115,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
       setTargetWord(input.replace(/\s/g, ''));
       setMode('guided');
       setCurrentIndex(-1);
+      setActivePredefinedIndex(-1);
     }
   };
 
@@ -99,6 +124,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
     setInput('');
     setTargetWord('');
     setCurrentIndex(-1);
+    setActivePredefinedIndex(-1);
   };
 
   const translateTone = (tone: string) => {
@@ -145,7 +171,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
   };
 
   const EquationContent = () => {
-    if (!analysis || analysis.error || currentIndex < 0) return null;
+    if (!analysis || analysis.error || (currentIndex < 0 && activePredefinedIndex < 0)) return null;
     return (
       <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
         <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-sm border border-slate-200 flex flex-col items-center">
@@ -276,54 +302,82 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
             {mode === 'guided' && (
               <div className="mb-6 md:mb-8">
                 <div className="flex flex-col items-center mb-4 md:mb-6">
-                  <p className="text-xs md:text-sm font-bold text-indigo-500 mb-3 md:mb-4 uppercase tracking-wide text-center">
-                    {language === 'en' ? 'Build your word letter by letter' : 'Construisez votre mot lettre par lettre'}
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
-                    {targetWord.split('').map((char, index) => {
-                      const isActive = index <= currentIndex;
-                      const isNext = index === currentIndex + 1;
-                      const isClickable = index <= currentIndex + 1;
-                      const isBoundary = manualBoundaries.includes(index);
+                  {predefinedSyllables ? (
+                    <>
+                      <p className="text-xs md:text-sm font-bold text-indigo-500 mb-3 md:mb-4 uppercase tracking-wide text-center">
+                        {language === 'en' ? 'Select a syllable to analyze' : 'Sélectionnez une syllabe à analyser'}
+                      </p>
+                      <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+                        {predefinedSyllables.map((syllable, index) => {
+                          const isActive = index === activePredefinedIndex;
+                          return (
+                            <button
+                              key={index}
+                              onClick={() => setActivePredefinedIndex(index)}
+                              className={`px-4 py-3 md:px-6 md:py-4 rounded-xl md:rounded-2xl text-2xl md:text-3xl font-thai font-bold transition-all shadow-sm ${
+                                isActive 
+                                  ? 'bg-indigo-600 text-white border-2 border-indigo-600 scale-105' 
+                                  : 'bg-white text-slate-700 border-2 border-indigo-400 hover:bg-indigo-50 hover:scale-105'
+                              }`}
+                            >
+                              {syllable}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-xs md:text-sm font-bold text-indigo-500 mb-3 md:mb-4 uppercase tracking-wide text-center">
+                        {language === 'en' ? 'Build your word letter by letter' : 'Construisez votre mot lettre par lettre'}
+                      </p>
+                      <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
+                        {targetWord.split('').map((char, index) => {
+                          const isActive = index <= currentIndex;
+                          const isNext = index === currentIndex + 1;
+                          const isClickable = index <= currentIndex + 1;
+                          const isBoundary = manualBoundaries.includes(index);
 
-                      return (
-                        <React.Fragment key={index}>
-                          {index > 0 && (
-                            <div className="flex items-center justify-center group relative w-4 md:w-6 mx-0.5">
-                              {isBoundary ? (
-                                <button 
-                                  onClick={() => setManualBoundaries(prev => prev.filter(b => b !== index))}
-                                  className="h-8 md:h-10 w-1.5 bg-rose-400 rounded-full hover:bg-rose-500 hover:scale-110 transition-all cursor-pointer shadow-sm"
-                                  title={language === 'en' ? 'Remove split' : 'Supprimer la coupure'}
-                                />
-                              ) : (
-                                <button 
-                                  onClick={() => setManualBoundaries(prev => [...prev, index].sort((a, b) => a - b))}
-                                  className="h-full w-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                                  title={language === 'en' ? 'Split syllable here' : 'Couper la syllabe ici'}
-                                >
-                                  <Scissors size={16} className="text-indigo-400 hover:text-indigo-600 transition-colors" />
-                                </button>
+                          return (
+                            <React.Fragment key={index}>
+                              {index > 0 && (
+                                <div className="flex items-center justify-center group relative w-4 md:w-6 mx-0.5">
+                                  {isBoundary ? (
+                                    <button 
+                                      onClick={() => setManualBoundaries(prev => prev.filter(b => b !== index))}
+                                      className="h-8 md:h-10 w-1.5 bg-rose-400 rounded-full hover:bg-rose-500 hover:scale-110 transition-all cursor-pointer shadow-sm"
+                                      title={language === 'en' ? 'Remove split' : 'Supprimer la coupure'}
+                                    />
+                                  ) : (
+                                    <button 
+                                      onClick={() => setManualBoundaries(prev => [...prev, index].sort((a, b) => a - b))}
+                                      className="h-full w-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                      title={language === 'en' ? 'Split syllable here' : 'Couper la syllabe ici'}
+                                    >
+                                      <Scissors size={16} className="text-indigo-400 hover:text-indigo-600 transition-colors" />
+                                    </button>
+                                  )}
+                                </div>
                               )}
-                            </div>
-                          )}
-                          <button
-                            onClick={() => isClickable && setCurrentIndex(index)}
-                            disabled={!isClickable}
-                            className={`w-10 h-12 md:w-12 md:h-14 rounded-lg md:rounded-xl text-2xl md:text-3xl font-thai font-bold transition-all shadow-sm ${
-                              isActive 
-                                ? 'bg-indigo-600 text-white border-2 border-indigo-600 scale-105' 
-                                : isNext
-                                  ? 'bg-white text-slate-700 border-2 border-indigo-400 hover:bg-indigo-50 hover:scale-105 animate-[pulse_2s_ease-in-out_infinite]'
-                                  : 'bg-white text-slate-300 border-2 border-slate-200 opacity-50 cursor-not-allowed'
-                            }`}
-                          >
-                            {char}
-                          </button>
-                        </React.Fragment>
-                      );
-                    })}
-                  </div>
+                              <button
+                                onClick={() => isClickable && setCurrentIndex(index)}
+                                disabled={!isClickable}
+                                className={`w-10 h-12 md:w-12 md:h-14 rounded-lg md:rounded-xl text-2xl md:text-3xl font-thai font-bold transition-all shadow-sm ${
+                                  isActive 
+                                    ? 'bg-indigo-600 text-white border-2 border-indigo-600 scale-105' 
+                                    : isNext
+                                      ? 'bg-white text-slate-700 border-2 border-indigo-400 hover:bg-indigo-50 hover:scale-105 animate-[pulse_2s_ease-in-out_infinite]'
+                                      : 'bg-white text-slate-300 border-2 border-slate-200 opacity-50 cursor-not-allowed'
+                                }`}
+                              >
+                                {char}
+                              </button>
+                            </React.Fragment>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="flex justify-center mb-2">
                   <button onClick={resetSearch} className="px-5 py-2 md:px-6 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-xs md:text-sm font-bold transition-colors">
@@ -377,7 +431,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
             <div className="md:hidden">
               <EquationContent />
               
-              {analysis && !analysis.error && currentIndex >= 0 && (
+              {analysis && !analysis.error && (currentIndex >= 0 || activePredefinedIndex >= 0) && (
                 <div className="mt-4 relative flex flex-col items-center">
                   <button 
                     onClick={() => setShowMobileExplanation(!showMobileExplanation)}
@@ -409,7 +463,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                 </div>
               )}
 
-              {analysis?.error && currentIndex >= 0 && (
+              {analysis?.error && (currentIndex >= 0 || activePredefinedIndex >= 0) && (
                 <div className="mt-4 bg-rose-50 rounded-2xl p-4 border border-rose-100 flex items-center gap-3 text-rose-600 animate-in fade-in">
                   <Info size={20} className="shrink-0" />
                   <p className="text-xs font-medium">{analysis.error}</p>
@@ -420,7 +474,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
 
           {/* Right Column: Equation & Explanation (Desktop only) */}
           <div className="hidden md:flex flex-col w-[300px] lg:w-[350px] shrink-0 gap-6">
-            {analysis && !analysis.error && currentIndex >= 0 ? (
+            {analysis && !analysis.error && (currentIndex >= 0 || activePredefinedIndex >= 0) ? (
               <div className="animate-in fade-in slide-in-from-right-4 duration-500 flex flex-col gap-6">
                 <EquationContent />
                 
@@ -444,7 +498,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
               </div>
             )}
             
-            {analysis?.error && currentIndex >= 0 && (
+            {analysis?.error && (currentIndex >= 0 || activePredefinedIndex >= 0) && (
               <div className="bg-rose-50 rounded-3xl p-6 border border-rose-100 flex flex-col items-center gap-4 text-rose-600 text-center animate-in fade-in">
                 <Info size={32} className="shrink-0" />
                 <p className="text-sm font-medium">{analysis.error}</p>
