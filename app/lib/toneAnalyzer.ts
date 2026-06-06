@@ -13,6 +13,7 @@ export interface ToneAnalysis {
   toneMark: ToneMark;
   finalTone: Tone;
   isAksonNamApplied?: boolean;
+  isImplicitShortVowel?: boolean;
   error?: string;
 }
 
@@ -36,7 +37,7 @@ const TONE_MARKS: Record<string, ToneMark> = {
   '๋': 'mai_chattawa'
 };
 
-export function analyzeSyllable(syllable: string, previousSyllable?: string): ToneAnalysis {
+export function analyzeSyllable(syllable: string, previousSyllable?: string, nextSyllable?: string): ToneAnalysis {
   // Simplification for the visualizer: We expect a single syllable.
   // Basic regex for Thai syllable: (Leading Vowel)? (Initial Consonant) (Cluster Consonant)? (Top/Bottom Vowel)? (Tone Mark)? (Top/Bottom Vowel)? (Final Consonant/Vowel)?
   const regex = /^([เแโใไ])?([ก-ฮ])([ก-ฮรลว])?([ะ-ู็])?([่-๋])?([ะ-ู็])?([าอยวำ])?([ก-ฮ])?$/;
@@ -114,6 +115,14 @@ export function analyzeSyllable(syllable: string, previousSyllable?: string): To
     }
   }
 
+  // --- IMPLICIT SHORT VOWEL LOGIC ---
+  let isImplicitShortVowel = false;
+  if (syllable.length === 1 && /^[ก-ฮ]$/.test(syllable) && nextSyllable && nextSyllable.length > 0) {
+      vowelLength = 'short';
+      endingType = 'dead';
+      isImplicitShortVowel = true;
+  }
+
   // 4. Tone Mark
   const toneMark: ToneMark = toneMarkRaw ? TONE_MARKS[toneMarkRaw] : 'none';
 
@@ -151,6 +160,7 @@ export function analyzeSyllable(syllable: string, previousSyllable?: string): To
     endingType,
     toneMark,
     finalTone,
-    isAksonNamApplied
+    isAksonNamApplied,
+    isImplicitShortVowel
   };
 }

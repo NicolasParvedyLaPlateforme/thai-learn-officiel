@@ -27,26 +27,36 @@ function ToneAnalyzerContent() {
     setManualBoundaries([]);
   }, [targetWord]);
 
-  // Determine the active string and previous syllable based on currentIndex
+  // Determine the active string, previous and next syllable based on currentIndex
   let currentActiveInput = '';
   let previousSyllable = '';
+  let nextSyllable = '';
 
   if (mode === 'guided' && currentIndex >= 0) {
-     let startIdx = 0;
-     let prevStartIdx = -1;
-     let prevEndIdx = -1;
-
-     for (let i = 0; i <= currentIndex; i++) {
-        if (manualBoundaries.includes(i)) {
-            prevStartIdx = startIdx;
-            prevEndIdx = i;
-            startIdx = i;
-        }
+     const boundaries = [0, ...[...manualBoundaries].sort((a, b) => a - b), targetWord.length];
+     const syllables = [];
+     for (let i = 0; i < boundaries.length - 1; i++) {
+        syllables.push(targetWord.substring(boundaries[i], boundaries[i+1]));
      }
-     currentActiveInput = targetWord.substring(startIdx, currentIndex + 1);
      
-     if (prevStartIdx >= 0 && prevEndIdx > prevStartIdx) {
-        previousSyllable = targetWord.substring(prevStartIdx, prevEndIdx);
+     let activeSyllableIndex = 0;
+     let cumulativeLength = 0;
+     for (let i = 0; i < syllables.length; i++) {
+         if (currentIndex >= cumulativeLength && currentIndex < cumulativeLength + syllables[i].length) {
+             activeSyllableIndex = i;
+             break;
+         }
+         cumulativeLength += syllables[i].length;
+     }
+
+     currentActiveInput = targetWord.substring(boundaries[activeSyllableIndex], currentIndex + 1);
+
+     if (activeSyllableIndex > 0) {
+         previousSyllable = syllables[activeSyllableIndex - 1];
+     }
+     
+     if (activeSyllableIndex < syllables.length - 1) {
+         nextSyllable = syllables[activeSyllableIndex + 1];
      }
   } else if (mode === 'search') {
      currentActiveInput = input;
@@ -54,11 +64,11 @@ function ToneAnalyzerContent() {
 
   useEffect(() => {
     if (currentActiveInput.trim().length > 0) {
-      setAnalysis(analyzeSyllable(currentActiveInput, previousSyllable));
+      setAnalysis(analyzeSyllable(currentActiveInput, previousSyllable, nextSyllable));
     } else {
       setAnalysis(null);
     }
-  }, [currentActiveInput, previousSyllable]);
+  }, [currentActiveInput, previousSyllable, nextSyllable]);
 
   const handleSearch = () => {
     if (input.trim().length > 0) {
@@ -260,7 +270,12 @@ function ToneAnalyzerContent() {
 
                   <span className="text-slate-300 font-black text-xl">+</span>
 
-                  <div className="flex flex-col items-center p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-600 min-w-[100px]">
+                  <div className="flex flex-col items-center p-3 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-600 min-w-[100px] relative">
+                     {analysis.isImplicitShortVowel && (
+                        <div className="absolute -top-3 -right-3 bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm animate-pulse border-2 border-white">
+                           ✨ Sara A
+                        </div>
+                     )}
                      <span className="text-sm font-bold opacity-70 mb-1">{language === 'en' ? 'Vowel' : 'Voyelle'}</span>
                      <span className="text-lg font-bold mb-1">{analysis.vowelLength === 'short' ? (language === 'en' ? 'Short' : 'Courte') : (language === 'en' ? 'Long' : 'Longue')}</span>
                      <span className="text-[10px] font-medium text-slate-400 text-center uppercase tracking-wider">{analysis.endingType === 'live' ? (language === 'en' ? 'Live Syllable' : 'Syllabe Vivante') : (language === 'en' ? 'Dead Syllable' : 'Syllabe Morte')}</span>
@@ -309,6 +324,15 @@ function ToneAnalyzerContent() {
                   {analysis.toneMark !== 'none' 
                     ? (language === 'en' ? `, and it has the tone mark ${translateMark(analysis.toneMark)}.` : `, et elle possède la marque de ton ${translateMark(analysis.toneMark)}.`)
                     : (language === 'en' ? ' without any tone mark.' : ' sans aucune marque de ton.')}
+                  
+                  {analysis.isImplicitShortVowel && (
+                     <p className="mt-3 text-amber-600 font-bold bg-amber-50 p-2 rounded-xl border border-amber-100">
+                        {language === 'en' 
+                        ? "✨ This is a dead syllable due to an implicit short vowel (Sara A)." 
+                        : "✨ C'est une syllabe morte due à une voyelle courte implicite (Sara A)."}
+                     </p>
+                  )}
+
                   <br/><br/>
                   {language === 'en' ? 'According to Thai tone rules, this combination results in a ' : 'Selon les règles des tons thaïlandais, cette combinaison donne un '}
                   <strong>{translateTone(analysis.finalTone).toLowerCase()}</strong>.
