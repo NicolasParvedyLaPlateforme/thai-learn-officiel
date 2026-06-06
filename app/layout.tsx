@@ -35,6 +35,7 @@ import DesktopSidebarLeft from './components/DesktopSidebarLeft';
 import { CommunityModal } from './components/CommunityModal';
 import { LanguageSelectorModal } from './components/LanguageSelectorModal';
 import { GoldConversionModal } from './components/GoldConversionModal';
+import { ToneAnalyzerModal } from './components/ToneAnalyzerModal';
 import AuthProvider from './components/AuthProvider';
 import SyncProgress from './components/SyncProgress';
 
@@ -48,6 +49,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
            <CommunityModal />
            <LanguageSelectorModal />
            <GoldConversionModal />
+           <ToneAnalyzerModal />
            <div className="flex-1 flex flex-col min-h-screen min-w-0">
              {children}
              <BottomNav />

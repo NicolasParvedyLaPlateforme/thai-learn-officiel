@@ -145,6 +145,8 @@ interface ProgressState {
   setShowCommunityModal: (show: boolean) => void;
   showLanguageModal: boolean;
   setShowLanguageModal: (show: boolean) => void;
+  toneAnalyzerModalWord: string | null;
+  setToneAnalyzerModalWord: (word: string | null) => void;
   conversationStars: Record<string, number[]>;
   completedConversations: Record<string, number>;
   completeConversation: (convId: string, level: number, stars?: number) => void;
@@ -191,9 +193,11 @@ export const useProgressStore = create<ProgressState>()(
       hasSeenCommunityModal: false,
       showCommunityModal: false,
       showLanguageModal: false,
+      toneAnalyzerModalWord: null,
       setHasSeenCommunityModal: (seen) => set({ hasSeenCommunityModal: seen }),
       setShowCommunityModal: (show) => set({ showCommunityModal: show }),
       setShowLanguageModal: (show) => set({ showLanguageModal: show }),
+      setToneAnalyzerModalWord: (word) => set({ toneAnalyzerModalWord: word }),
       currentStreak: 0,
       longestStreak: 0,
       lastActiveDate: null,
@@ -525,7 +529,7 @@ export const useProgressStore = create<ProgressState>()(
       name: 'thai-learning-progress',
       storage: createJSONStorage(() => safeStorage),
       partialize: (state) => Object.fromEntries(
-        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal', 'showLanguageModal', 'isMobileSidebarOpen'].includes(key))
+        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal', 'showLanguageModal', 'isMobileSidebarOpen', 'toneAnalyzerModalWord'].includes(key))
       ),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);

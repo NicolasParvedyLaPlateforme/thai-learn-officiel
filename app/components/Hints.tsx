@@ -88,7 +88,7 @@ export function TooltipHint({ children, tooltipContent, className = '', audioTex
 
 // A simple component to render the french question with tooltips (hints)
 export function SentenceWithHints({text, dictionary, phrases, isSentence, exerciseOptions, hideHints, disableTooltips, hideColors, alwaysShowPhonetic, answerTh, correctComponents, charHintRegex, isChecking, forceHideRomanization, currentThaiWordForAudio, isReverse, rightElement}: {text: string, dictionary: Word[], phrases: Phrase[], isSentence: boolean, exerciseOptions: Word[], hideHints?: boolean, disableTooltips?: boolean, hideColors?: boolean, alwaysShowPhonetic?: boolean, answerTh?: string, correctComponents?: string[], charHintRegex?: RegExp, isChecking?: boolean, forceHideRomanization?: boolean, currentThaiWordForAudio?: string, isReverse?: boolean, rightElement?: React.ReactNode}) {
-  const { language, showRomanization } = useProgressStore();
+  const { language, showRomanization, setToneAnalyzerModalWord } = useProgressStore();
   const [isVocabOpen, setIsVocabOpen] = useState(false);
   // Try to match the ENTIRE phrase/word first
   const exactPhrase = phrases.find(p => p.fr.toLowerCase() === text.toLowerCase() || (p.en?.toLowerCase() === text.toLowerCase()));
@@ -208,9 +208,9 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
       tooltipContent={
         <>
           <span className="font-thai text-lg font-bold text-slate-800 mr-1">{tooltipTranslation}</span>
-          <a href={`/practice/tone-analyzer?word=${encodeURIComponent(tooltipTranslation)}`} target="_blank" rel="noopener noreferrer" className="p-1 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mx-1" title={language === 'en' ? 'Analyze Tone' : 'Analyser le Ton'} onClick={(e) => e.stopPropagation()}>
+          <button onClick={(e) => { e.stopPropagation(); setToneAnalyzerModalWord(tooltipTranslation); }} className="p-1 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mx-1" title={language === 'en' ? 'Analyze Tone' : 'Analyser le Ton'}>
              <Wand2 size={16} />
-          </a>
+          </button>
           {phonetic && (!forceHideRomanization && showRomanization || isChecking) && <span className="text-slate-500 text-xs ml-1">(<ColoredPhonetic phonetic={phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />)</span>}
         </>
       }
