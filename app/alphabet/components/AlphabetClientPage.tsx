@@ -10,11 +10,12 @@ import { useProgressStore } from '../../lib/store';
 import { getAlphabetLessons, AlphabetLessonDef, formatCombiningChar } from '../../lib/alphabet-utils';
 import { playThaiTTS } from '../../lib/tts';
 import { Drawer } from 'vaul';
-import { Globe, CheckCircle, Star, Play, Lock, ChevronLeft, ChevronRight, X, Sparkles, Volume2, Flame, User, Coins, BookOpen, Users, Target, Clock, Crown, Unlock } from 'lucide-react';
+import { CheckCircle, BookOpen, Star, Play, Crown, RotateCcw, Pencil, Lock, ChevronLeft, ChevronRight, Clock, Target, Users, Flame, User, Coins, Menu, Globe, X, Sparkles, Volume2 } from 'lucide-react';
 import IconImage from '../../components/IconImage';
 
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
 import { DesktopSidebarRight } from '../../components/DesktopSidebarRight';
+import { MobileHeaderMenu } from '../../components/MobileHeaderMenu';
 import PWAInstallButton from '../../components/PWAInstallButton';
 import { DailyQuestsWidget } from '../../components/DailyQuestsWidget';
 import { ConversationObjectiveWidget } from '../../components/ConversationObjectiveWidget';
@@ -42,6 +43,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   const [cols, setCols] = useState(5);
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileStatsOpen, setIsMobileStatsOpen] = useState(false);
   const [isUnitsModalOpen, setIsUnitsModalOpen] = useState(false);
   const [showDesktopUnitsList, setShowDesktopUnitsList] = useState(false);
@@ -162,12 +164,6 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
               <BookOpen size={18} className="text-emerald-600" />
               <span className="font-extrabold text-slate-700 text-sm">{getTranslation('auto.units', language)}</span>
             </button>
-            <button 
-              onClick={() => useProgressStore.getState().setShowCommunityModal(true)}
-              className="ml-1 text-rose-500 bg-rose-50 p-2 rounded-full hover:bg-rose-100 transition-colors"
-            >
-              <Users size={18} />
-            </button>
           </div>
           
           <div className="flex items-center gap-2">
@@ -182,61 +178,31 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
             )}
             
             {mounted && (
-              <div className="flex items-center gap-1.5 relative">
-                <div className="hidden md:flex items-center gap-1 px-2 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
-                  <Star size={16} className="fill-amber-400 stroke-amber-400" />
-                  <span>{xp}</span>
-                </div>
-                <div className="hidden md:flex items-center gap-1 px-2 py-1.5 bg-orange-50 text-orange-500 rounded-xl font-extrabold text-sm">
-                  <Flame size={16} fill="currentColor" className={`${currentStreak > 0 ? '' : 'text-slate-400 opacity-50'}`} />
-                  <span className={`${currentStreak > 0 ? '' : 'text-slate-400 opacity-50'}`}>{currentStreak}</span>
-                </div>
-
-                <button
-                  onClick={() => setIsMobileStatsOpen(!isMobileStatsOpen)}
-                  className="md:hidden flex items-center justify-center p-1.5 bg-amber-50 text-amber-500 rounded-xl hover:bg-amber-100 transition-colors"
-                >
-                  <Star size={18} className="fill-amber-400 stroke-amber-400" />
-                </button>
-
-                {isMobileStatsOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setIsMobileStatsOpen(false)}></div>
-                    <div className="absolute top-full right-0 mt-2 p-3 bg-white rounded-2xl shadow-xl flex flex-col gap-2 z-50 min-w-[120px] md:hidden border border-slate-100">
-                      <div className="flex items-center gap-2 px-2 py-1">
-                        <Star size={16} className="text-amber-500 fill-amber-500" />
-                        <span className="font-extrabold text-slate-700">{xp}</span>
-                      </div>
-                      <div className="flex items-center gap-2 px-2 py-1">
-                        <Coins size={16} className="text-yellow-500 fill-yellow-500" />
-                        <span className="font-extrabold text-slate-700">{goldCoins || 0}</span>
-                      </div>
-                      <div className="flex items-center gap-2 px-2 py-1">
-                        <Flame size={16} className={`${currentStreak > 0 ? 'text-orange-500 fill-orange-500' : 'text-slate-300'}`} />
-                        <span className={`font-extrabold ${currentStreak > 0 ? 'text-slate-700' : 'text-slate-400'}`}>{currentStreak}</span>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                <button 
-                  onClick={() => setIsQuestsModalOpen(true)}
-                  className="xl:hidden flex items-center justify-center p-1.5 bg-emerald-50 text-emerald-500 rounded-xl hover:bg-emerald-100 transition-colors"
-                >
-                  <Target size={18} />
-                </button>
-
+              <div className="flex items-center gap-2 relative">
                 <Link
                   href="/profile"
-                  className="md:hidden flex items-center justify-center p-1.5 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+                  className="flex items-center justify-center p-2 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
                 >
                   <User size={18} />
                 </Link>
+
+                <button
+                  onClick={() => setIsMobileMenuOpen(true)}
+                  className="flex items-center justify-center p-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors"
+                >
+                  <Menu size={20} />
+                </button>
               </div>
             )}
           </div>
         </div>
       </header>
+
+      <MobileHeaderMenu 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+        onOpenQuests={() => setIsQuestsModalOpen(true)} 
+      />
 
       {/* Main Content (Mobile Only) */}
       <main className="max-w-2xl mx-auto px-4 mt-2 flex flex-col gap-8 md:hidden">

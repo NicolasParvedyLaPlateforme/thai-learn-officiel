@@ -7,12 +7,14 @@ import IconImage from '../components/IconImage';
 import { motion, AnimatePresence } from 'motion/react';
 import { useProgressStore } from '../lib/store';
 import PWAInstallButton from '../components/PWAInstallButton';
-import { ArrowLeft, MessageCircle, Star, BookOpen, Info, ChevronRight, Play, X, Book, Image as ImageIcon, Lock, Check, Clock, Users, Volume2, MapPin, User } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Star, BookOpen, Info, ChevronRight, Play, X, Book, Image as ImageIcon, Lock, Check, Clock, Users, Volume2, MapPin, User, Menu } from 'lucide-react';
 import conversationsData from '../data/conversations.json';
 import CONVERSATION_UNITS from '../data/conversation_units.json';
 import { useIsPWA } from '../../hooks/use-pwa';
 
 import { getRequiredLessonsForConv, RequiredVocabLesson } from '../lib/vocabulary-utils';
+import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
+import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
 
 const UNITS: Record<string, { en: string, fr: string, emoji: string, imageUrl?: string, description?: { en: string, fr: string } }> = CONVERSATION_UNITS;
 
@@ -37,6 +39,8 @@ export default function ConversationsPage() {
   const [selectedStoryId, setSelectedStoryId] = useState<string | null>(null);
   const [selectedConvId, setSelectedConvId] = useState<string | null>(null);
   const [selectedPrereqConv, setSelectedPrereqConv] = useState<{conv: Conversation, missingReqs: RequiredVocabLesson[]} | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -134,21 +138,42 @@ export default function ConversationsPage() {
                    {language}
                 </button>
               )}
-              {(mounted && isPWA) && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-xl font-extrabold text-sm">
-                  <Star size={18} className="fill-amber-400 stroke-amber-400" />
-                  <span>{xp} XP</span>
+              
+              {mounted && (
+                <div className="flex items-center gap-2 relative">
+                  <Link
+                    href="/profile"
+                    className="flex items-center justify-center p-2 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+                  >
+                    <User size={18} />
+                  </Link>
+  
+                  <button
+                    onClick={() => setIsMobileMenuOpen(true)}
+                    className="flex items-center justify-center p-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors"
+                  >
+                    <Menu size={20} />
+                  </button>
                 </div>
               )}
-              <Link
-                href="/profile"
-                className="flex items-center justify-center p-1.5 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
-              >
-                <User size={18} />
-              </Link>
             </div>
           </div>
         </header>
+
+        <MobileHeaderMenu 
+          isOpen={isMobileMenuOpen} 
+          onClose={() => setIsMobileMenuOpen(false)} 
+          onOpenQuests={() => setIsQuestsModalOpen(true)} 
+        />
+        
+        {isQuestsModalOpen && (
+          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={() => setIsQuestsModalOpen(false)}></div>
+            <div className="relative w-full max-w-sm max-h-[90vh] overflow-y-auto rounded-3xl hide-scrollbar">
+              <DailyQuestsWidget onClose={() => setIsQuestsModalOpen(false)} />
+            </div>
+          </div>
+        )}
 
         {/* Desktop Header for Stories List (only show if no story selected) */}
         {!selectedStoryId && (
