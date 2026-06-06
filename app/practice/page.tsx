@@ -21,7 +21,25 @@ export default function PracticePage() {
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const isPWA = useIsPWA();
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    
+    // Check search params to auto-open modals
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      const action = searchParams.get('action');
+      if (action === 'writing') {
+        setWritingConfigModalOpen(true);
+      } else if (action === 'speaking') {
+        setSpeakingConfigModalOpen(true);
+      }
+      
+      // Optional: Clean up the URL to prevent reopening on reload
+      if (action) {
+         window.history.replaceState({}, '', '/practice');
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-20">
