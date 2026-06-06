@@ -12,6 +12,7 @@ export interface ToneAnalysis {
   endingType: EndingType;
   toneMark: ToneMark;
   finalTone: Tone;
+  isAksonNamApplied?: boolean;
   error?: string;
 }
 
@@ -35,7 +36,7 @@ const TONE_MARKS: Record<string, ToneMark> = {
   '๋': 'mai_chattawa'
 };
 
-export function analyzeSyllable(syllable: string): ToneAnalysis {
+export function analyzeSyllable(syllable: string, previousSyllable?: string): ToneAnalysis {
   // Simplification for the visualizer: We expect a single syllable.
   // Basic regex for Thai syllable: (Leading Vowel)? (Initial Consonant) (Cluster Consonant)? (Top/Bottom Vowel)? (Tone Mark)? (Top/Bottom Vowel)? (Final Consonant/Vowel)?
   const regex = /^([เแโใไ])?([ก-ฮ])([ก-ฮรลว])?([ะ-ู็])?([่-๋])?([ะ-ู็])?([าอยวำ])?([ก-ฮ])?$/;
@@ -75,6 +76,20 @@ export function analyzeSyllable(syllable: string): ToneAnalysis {
     initialClass = 'high';
   } else if (CONSONANT_CLASSES.mid.includes(initCons)) {
     initialClass = 'mid';
+  }
+
+  // --- AKSON NAM LOGIC ---
+  const SONORANTS = ['ง', 'น', 'ม', 'ย', 'ร', 'ล', 'ว'];
+  let isAksonNamApplied = false;
+
+  if (previousSyllable && previousSyllable.length === 1 && /^[ก-ฮ]$/.test(previousSyllable) && SONORANTS.includes(initCons)) {
+      if (CONSONANT_CLASSES.high.includes(previousSyllable)) {
+          initialClass = 'high';
+          isAksonNamApplied = true;
+      } else if (CONSONANT_CLASSES.mid.includes(previousSyllable)) {
+          initialClass = 'mid';
+          isAksonNamApplied = true;
+      }
   }
 
   // 2. Vowel Length
@@ -135,6 +150,7 @@ export function analyzeSyllable(syllable: string): ToneAnalysis {
     vowelLength,
     endingType,
     toneMark,
-    finalTone
+    finalTone,
+    isAksonNamApplied
   };
 }

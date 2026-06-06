@@ -4,7 +4,7 @@ import { getTranslation } from '../../hooks/useTranslation';
 import React, { useState, useEffect, Suspense } from 'react';
 import { useProgressStore } from '../../lib/store';
 import { analyzeSyllable, ToneAnalysis } from '../../lib/toneAnalyzer';
-import { Search, ArrowLeft, Wand2, Info, Volume2 } from 'lucide-react';
+import { Search, ArrowLeft, Wand2, Info, Volume2, Scissors } from 'lucide-react';
 import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
 import { useSearchParams } from 'next/navigation';
@@ -20,16 +20,45 @@ function ToneAnalyzerContent() {
   const [mode, setMode] = useState<'search' | 'guided'>(initialWord ? 'guided' : 'search');
   const [targetWord, setTargetWord] = useState(initialWord);
   const [currentIndex, setCurrentIndex] = useState(-1);
+  const [manualBoundaries, setManualBoundaries] = useState<number[]>([]);
 
-  const currentActiveInput = mode === 'guided' ? (currentIndex >= 0 ? targetWord.substring(0, currentIndex + 1) : '') : input;
+  // Reset manual boundaries when target word changes
+  useEffect(() => {
+    setManualBoundaries([]);
+  }, [targetWord]);
+
+  // Determine the active string and previous syllable based on currentIndex
+  let currentActiveInput = '';
+  let previousSyllable = '';
+
+  if (mode === 'guided' && currentIndex >= 0) {
+     let startIdx = 0;
+     let prevStartIdx = -1;
+     let prevEndIdx = -1;
+
+     for (let i = 0; i <= currentIndex; i++) {
+        if (manualBoundaries.includes(i)) {
+            prevStartIdx = startIdx;
+            prevEndIdx = i;
+            startIdx = i;
+        }
+     }
+     currentActiveInput = targetWord.substring(startIdx, currentIndex + 1);
+     
+     if (prevStartIdx >= 0 && prevEndIdx > prevStartIdx) {
+        previousSyllable = targetWord.substring(prevStartIdx, prevEndIdx);
+     }
+  } else if (mode === 'search') {
+     currentActiveInput = input;
+  }
 
   useEffect(() => {
     if (currentActiveInput.trim().length > 0) {
-      setAnalysis(analyzeSyllable(currentActiveInput));
+      setAnalysis(analyzeSyllable(currentActiveInput, previousSyllable));
     } else {
       setAnalysis(null);
     }
-  }, [currentActiveInput]);
+  }, [currentActiveInput, previousSyllable]);
 
   const handleSearch = () => {
     if (input.trim().length > 0) {
@@ -119,22 +148,44 @@ function ToneAnalyzerContent() {
                   const isActive = index <= currentIndex;
                   const isNext = index === currentIndex + 1;
                   const isClickable = index <= currentIndex + 1;
+                  
+                  const isBoundary = manualBoundaries.includes(index);
 
                   return (
-                    <button
-                      key={index}
-                      onClick={() => isClickable && setCurrentIndex(index)}
-                      disabled={!isClickable}
-                      className={`w-12 h-14 rounded-xl text-3xl font-thai font-bold transition-all shadow-sm ${
-                        isActive 
-                          ? 'bg-indigo-600 text-white border-2 border-indigo-600 scale-105' 
-                          : isNext
-                            ? 'bg-white text-slate-700 border-2 border-indigo-400 hover:bg-indigo-50 hover:scale-105 animate-[pulse_2s_ease-in-out_infinite]'
-                            : 'bg-white text-slate-300 border-2 border-slate-200 opacity-50 cursor-not-allowed'
-                      }`}
-                    >
-                      {char}
-                    </button>
+                    <React.Fragment key={index}>
+                      {index > 0 && (
+                        <div className="flex items-center justify-center group relative w-6 mx-0.5">
+                          {isBoundary ? (
+                            <button 
+                              onClick={() => setManualBoundaries(prev => prev.filter(b => b !== index))}
+                              className="h-10 w-1.5 bg-rose-400 rounded-full hover:bg-rose-500 hover:scale-110 transition-all cursor-pointer shadow-sm"
+                              title={language === 'en' ? 'Remove split' : 'Supprimer la coupure'}
+                            />
+                          ) : (
+                            <button 
+                              onClick={() => setManualBoundaries(prev => [...prev, index].sort((a, b) => a - b))}
+                              className="h-full w-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              title={language === 'en' ? 'Split syllable here' : 'Couper la syllabe ici'}
+                            >
+                              <Scissors size={18} className="text-indigo-400 hover:text-indigo-600 transition-colors" />
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      <button
+                        onClick={() => isClickable && setCurrentIndex(index)}
+                        disabled={!isClickable}
+                        className={`w-12 h-14 rounded-xl text-3xl font-thai font-bold transition-all shadow-sm ${
+                          isActive 
+                            ? 'bg-indigo-600 text-white border-2 border-indigo-600 scale-105' 
+                            : isNext
+                              ? 'bg-white text-slate-700 border-2 border-indigo-400 hover:bg-indigo-50 hover:scale-105 animate-[pulse_2s_ease-in-out_infinite]'
+                              : 'bg-white text-slate-300 border-2 border-slate-200 opacity-50 cursor-not-allowed'
+                        }`}
+                      >
+                        {char}
+                      </button>
+                    </React.Fragment>
                   );
                 })}
               </div>
@@ -196,7 +247,12 @@ function ToneAnalyzerContent() {
                </h2>
                
                <div className="flex flex-wrap justify-center items-center gap-3 w-full">
-                  <div className={`flex flex-col items-center p-3 rounded-2xl border-2 min-w-[100px] ${getClassColor(analysis.initialClass)}`}>
+                  <div className={`flex flex-col items-center p-3 rounded-2xl border-2 min-w-[100px] ${getClassColor(analysis.initialClass)} relative`}>
+                     {analysis.isAksonNamApplied && (
+                        <div className="absolute -top-3 -right-3 bg-indigo-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm animate-pulse border-2 border-white">
+                           ✨ Akson Nam
+                        </div>
+                     )}
                      <span className="text-sm font-bold opacity-70 mb-1">{language === 'en' ? 'Consonant' : 'Consonne'}</span>
                      <span className="text-3xl font-thai font-bold mb-1">{analysis.initCons || '-'}</span>
                      <span className="text-xs font-bold text-center">{translateClass(analysis.initialClass)}</span>
@@ -245,6 +301,11 @@ function ToneAnalyzerContent() {
                   {language === 'en' 
                     ? `This is a ${analysis.endingType === 'live' ? 'live' : 'dead'} syllable starting with a ${analysis.initialClass} class consonant`
                     : `C'est une syllabe ${analysis.endingType === 'live' ? 'vivante' : 'morte'} commençant par une consonne de classe ${analysis.initialClass === 'high' ? 'haute' : analysis.initialClass === 'mid' ? 'moyenne' : 'basse'}`}
+                  {analysis.isAksonNamApplied && (
+                     language === 'en' 
+                     ? " (modified by the previous leading consonant via the Akson Nam rule)"
+                     : " (modifiée par la consonne menante précédente via la règle Akson Nam)"
+                  )}
                   {analysis.toneMark !== 'none' 
                     ? (language === 'en' ? `, and it has the tone mark ${translateMark(analysis.toneMark)}.` : `, et elle possède la marque de ton ${translateMark(analysis.toneMark)}.`)
                     : (language === 'en' ? ' without any tone mark.' : ' sans aucune marque de ton.')}
