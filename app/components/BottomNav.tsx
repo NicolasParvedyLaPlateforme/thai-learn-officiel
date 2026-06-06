@@ -39,8 +39,8 @@ export default function BottomNav() {
   const isLearnActive = pathname === '/learn';
   const isAlphabetActive = pathname === '/alphabet';
   const isConversationsActive = pathname === '/conversations';
-  const isPracticeActive = pathname === '/practice' || pathname.startsWith('/review') || pathname.startsWith('/practice');
-  const isDetectiveActive = pathname.startsWith('/detective');
+  const isPracticeActive = pathname === '/practice';
+  const isDetectiveActive = pathname === '/detective';
   
   const isLearnOrAlphabetActive = isLearnActive || isAlphabetActive;
 
