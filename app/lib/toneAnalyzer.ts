@@ -69,19 +69,22 @@ export function analyzeSyllable(syllable: string, previousSyllable?: string, nex
   }
 
   let initialClass: ConsonantClass = 'low';
+  let isAksonNamApplied = false;
+
   if (initCons === 'ห' && cluster) {
       initialClass = 'high';
+      isAksonNamApplied = true;
   } else if (initCons === 'อ' && cluster === 'ย') {
       initialClass = 'mid';
+      isAksonNamApplied = true;
   } else if (CONSONANT_CLASSES.high.includes(initCons)) {
     initialClass = 'high';
   } else if (CONSONANT_CLASSES.mid.includes(initCons)) {
     initialClass = 'mid';
   }
 
-  // --- AKSON NAM LOGIC ---
+  // --- CROSS-SYLLABLE AKSON NAM LOGIC ---
   const SONORANTS = ['ง', 'น', 'ม', 'ย', 'ร', 'ล', 'ว'];
-  let isAksonNamApplied = false;
 
   if (previousSyllable && previousSyllable.length === 1 && /^[ก-ฮ]$/.test(previousSyllable) && SONORANTS.includes(initCons)) {
       if (CONSONANT_CLASSES.high.includes(previousSyllable)) {
@@ -154,7 +157,7 @@ export function analyzeSyllable(syllable: string, previousSyllable?: string, nex
 
   return {
     syllable,
-    initCons: (initCons === 'ห' && cluster) ? `${initCons}${cluster}` : initCons,
+    initCons: ((initCons === 'ห' || initCons === 'อ') && cluster) ? `${initCons}${cluster}` : initCons,
     initialClass,
     vowelLength,
     endingType,

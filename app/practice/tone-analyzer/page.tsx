@@ -105,10 +105,10 @@ function ToneAnalyzerContent() {
 
   const translateMark = (mark: string) => {
     if (mark === 'none') return language === 'en' ? 'No mark' : 'Aucune marque';
-    if (mark === 'mai_ek') return 'Mai Ek (่)';
-    if (mark === 'mai_tho') return 'Mai Tho (้)';
-    if (mark === 'mai_tri') return 'Mai Tri (๊)';
-    if (mark === 'mai_chattawa') return 'Mai Chattawa (๋)';
+    if (mark === 'mai_ek') return 'Mai Ek ( ◌่ )';
+    if (mark === 'mai_tho') return 'Mai Tho ( ◌้ )';
+    if (mark === 'mai_tri') return 'Mai Tri ( ◌๊ )';
+    if (mark === 'mai_chattawa') return 'Mai Chattawa ( ◌๋ )';
     return mark;
   };
 
