@@ -739,7 +739,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                                 <div className={`
                                   w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
                                   ${isSelected ? `ring-4 ring-offset-2 ${selectedLesson.unitBorder.replace('border-', 'ring-')}/20` : ''}
-                                  ${isCompleted ? 'bg-amber-400 border border-amber-500 shadow-sm text-amber-900' : 
+                                  ${isCompleted ? 'bg-[oklch(0.96_0.06_88.64)] border border-amber-500 shadow-sm text-amber-900' : 
                                     isCurrent ? `bg-white border-[3px] ${selectedLesson.unitBorder} shadow-sm ${selectedLesson.unitText}` : 
                                     'bg-slate-50 border border-slate-200 text-slate-300'
                                   }
@@ -748,12 +748,12 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                                     <div className="flex flex-col items-center gap-[1px]">
                                       <div className="flex gap-[1px]">
                                         {Array.from({ length: 3 }).map((_, i) => (
-                                          <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-amber-900 stroke-amber-900 drop-shadow-sm" : "fill-amber-500/30 stroke-amber-700/40"}`} size={10} />
+                                          <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
                                         ))}
                                       </div>
                                       <div className="flex gap-[1px]">
                                         {Array.from({ length: 2 }).map((_, i) => (
-                                          <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-amber-900 stroke-amber-900 drop-shadow-sm" : "fill-amber-500/30 stroke-amber-700/40"}`} size={10} />
+                                          <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
                                         ))}
                                       </div>
                                     </div>
