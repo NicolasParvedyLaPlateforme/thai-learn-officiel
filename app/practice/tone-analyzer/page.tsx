@@ -4,7 +4,7 @@ import { getTranslation } from '../../hooks/useTranslation';
 import React, { useState, useEffect, Suspense } from 'react';
 import { useProgressStore } from '../../lib/store';
 import { analyzeSyllable, ToneAnalysis } from '../../lib/toneAnalyzer';
-import { Search, ArrowLeft, Wand2, Info } from 'lucide-react';
+import { Search, ArrowLeft, Wand2, Info, Volume2 } from 'lucide-react';
 import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
 import { useSearchParams } from 'next/navigation';
@@ -17,13 +17,34 @@ function ToneAnalyzerContent() {
   const [input, setInput] = useState(initialWord);
   const [analysis, setAnalysis] = useState<ToneAnalysis | null>(null);
 
+  const [mode, setMode] = useState<'search' | 'guided'>(initialWord ? 'guided' : 'search');
+  const [targetWord, setTargetWord] = useState(initialWord);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+
+  const currentActiveInput = mode === 'guided' ? (currentIndex >= 0 ? targetWord.substring(0, currentIndex + 1) : '') : input;
+
   useEffect(() => {
-    if (input.trim().length > 0) {
-      setAnalysis(analyzeSyllable(input));
+    if (currentActiveInput.trim().length > 0) {
+      setAnalysis(analyzeSyllable(currentActiveInput));
     } else {
       setAnalysis(null);
     }
-  }, [input]);
+  }, [currentActiveInput]);
+
+  const handleSearch = () => {
+    if (input.trim().length > 0) {
+      setTargetWord(input.replace(/\s/g, ''));
+      setMode('guided');
+      setCurrentIndex(-1);
+    }
+  };
+
+  const resetSearch = () => {
+    setMode('search');
+    setInput('');
+    setTargetWord('');
+    setCurrentIndex(-1);
+  };
 
   const translateTone = (tone: string) => {
     const tones = {
@@ -87,21 +108,77 @@ function ToneAnalyzerContent() {
       </header>
 
       <main className="max-w-2xl mx-auto px-4 pt-8 pb-12">
+        {mode === 'guided' && (
+          <div className="mb-8">
+            <div className="flex flex-col items-center mb-6">
+              <p className="text-sm font-bold text-indigo-500 mb-4 uppercase tracking-wide">
+                {language === 'en' ? 'Build your word letter by letter' : 'Construisez votre mot lettre par lettre'}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {targetWord.split('').map((char, index) => {
+                  const isActive = index <= currentIndex;
+                  const isNext = index === currentIndex + 1;
+                  const isClickable = index <= currentIndex + 1;
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => isClickable && setCurrentIndex(index)}
+                      disabled={!isClickable}
+                      className={`w-12 h-14 rounded-xl text-3xl font-thai font-bold transition-all shadow-sm ${
+                        isActive 
+                          ? 'bg-indigo-600 text-white border-2 border-indigo-600 scale-105' 
+                          : isNext
+                            ? 'bg-white text-slate-700 border-2 border-indigo-400 hover:bg-indigo-50 hover:scale-105 animate-[pulse_2s_ease-in-out_infinite]'
+                            : 'bg-white text-slate-300 border-2 border-slate-200 opacity-50 cursor-not-allowed'
+                      }`}
+                    >
+                      {char}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex justify-center mb-4">
+              <button onClick={resetSearch} className="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-sm font-bold transition-colors">
+                {language === 'en' ? 'Search another word' : 'Rechercher un autre mot'}
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 mb-8">
           <label className="block text-sm font-bold text-slate-500 mb-2 uppercase tracking-wide">
-            {language === 'en' ? 'Enter a single Thai syllable' : 'Entrez une syllabe thaï'}
+            {language === 'en' ? (mode === 'guided' ? 'Current Syllable' : 'Enter a Thai word') : (mode === 'guided' ? 'Syllabe en cours' : 'Entrez un mot thaï')}
           </label>
           <div className="relative">
             <input 
               type="text" 
-              value={input}
-              onChange={(e) => setInput(e.target.value.replace(/\s/g, ''))}
-              placeholder="Ex: บ้าน, มาก, ดี..."
-              className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl py-4 px-5 text-2xl font-thai text-slate-800 focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 transition-all"
+              value={currentActiveInput}
+              onChange={(e) => {
+                if (mode === 'search') setInput(e.target.value.replace(/\s/g, ''));
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && mode === 'search') {
+                  handleSearch();
+                }
+              }}
+              readOnly={mode === 'guided'}
+              placeholder="Ex: บ้าน, มาก, ดี, สวัสดี..."
+              className={`w-full bg-slate-50 border-2 border-slate-200 rounded-2xl py-4 px-5 text-3xl font-thai text-slate-800 focus:outline-none transition-all ${mode === 'search' ? 'focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100' : ''}`}
             />
-            {input && (
+            {currentActiveInput && mode === 'guided' && (
               <button 
-                onClick={() => playThaiTTS(input)}
+                onClick={() => playThaiTTS(currentActiveInput)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center hover:bg-indigo-200 active:scale-95 transition-all"
+                title={language === 'en' ? 'Listen' : 'Écouter'}
+              >
+                <Volume2 size={20} />
+              </button>
+            )}
+            {input && mode === 'search' && (
+              <button 
+                onClick={handleSearch}
                 className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-indigo-500 text-white rounded-xl flex items-center justify-center hover:bg-indigo-600 active:scale-95 transition-all"
               >
                 <Search size={20} />
@@ -110,7 +187,7 @@ function ToneAnalyzerContent() {
           </div>
         </div>
 
-        {analysis && !analysis.error && (
+        {analysis && !analysis.error && currentIndex >= 0 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* The Equation */}
             <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col items-center">
@@ -180,7 +257,7 @@ function ToneAnalyzerContent() {
           </div>
         )}
 
-        {analysis?.error && input.length > 0 && (
+        {analysis?.error && currentIndex >= 0 && (
           <div className="bg-rose-50 rounded-3xl p-6 border border-rose-100 flex items-center gap-4 text-rose-600 animate-in fade-in">
             <Info size={24} className="shrink-0" />
             <p className="text-sm font-medium">{analysis.error}</p>
