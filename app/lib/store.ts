@@ -463,8 +463,14 @@ export const useProgressStore = create<ProgressState>()(
         return { xp, isFirstTime, key };
       },
       completeLesson: (lessonId, fallbackXp, playedLevel, earnedStars = 3, isBilan = false) => {
+        const state = get();
+        const currentLevel = state.lessonLevels[lessonId] || 0;
+        const actualPlayedLevel = playedLevel !== undefined ? playedLevel : currentLevel;
+        
+        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, actualPlayedLevel, isBilan);
+        const finalXp = lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp);
+
         set((state) => {
-          const currentLevel = state.lessonLevels[lessonId] || 0;
           let newLevel = currentLevel;
           if (playedLevel !== undefined) {
             if (playedLevel === currentLevel) {
@@ -483,9 +489,6 @@ export const useProgressStore = create<ProgressState>()(
           if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
             type = 'alphabet';
           }
-
-          const { xp: calculatedXp, isFirstTime, key } = get().getExpectedXp(lessonId, playedLevel !== undefined ? playedLevel : currentLevel, isBilan);
-          const finalXp = lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp);
 
           const newCompletedToday = state.completedToday || [];
           const updatedCompletedToday = isFirstTime ? [...newCompletedToday, key] : newCompletedToday;
@@ -517,10 +520,7 @@ export const useProgressStore = create<ProgressState>()(
         }
 
         get().progressQuest(type, 'lessons', 1);
-        
-        const { xp: finalXp } = get().getExpectedXp(lessonId, playedLevel !== undefined ? playedLevel : (get().lessonLevels[lessonId] || 0), isBilan);
-        const actualXp = lessonId.startsWith('detective_') ? finalXp : (finalXp || fallbackXp);
-        get().progressQuest(type, 'xp', actualXp);
+        get().progressQuest(type, 'xp', finalXp);
         if (earnedStars >= 3) {
           get().progressQuest(type, 'perfect_lesson', 1);
         }

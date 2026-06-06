@@ -1468,9 +1468,9 @@
           "en": "eat / drink (casual)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_kin.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "comer / beber (informal)",
+          "de": "essen / trinken (informell)",
+          "it": "mangiare / bere (informale)",
           "syllabe": ""
         },
         {
@@ -1481,9 +1481,9 @@
           "en": "rice",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khao.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "arroz",
+          "de": "Reis",
+          "it": "riso",
           "syllabe": ""
         },
         {
@@ -1494,9 +1494,9 @@
           "en": "water",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_nam.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "agua",
+          "de": "Wasser",
+          "it": "acqua",
           "syllabe": ""
         },
         {
@@ -1507,9 +1507,9 @@
           "en": "not",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_mai_neg.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no",
+          "de": "nicht",
+          "it": "non",
           "syllabe": ""
         },
         {
@@ -1520,9 +1520,9 @@
           "en": "want / take",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_ao.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "querer / tomar",
+          "de": "wollen / nehmen",
+          "it": "volere / prendere",
           "syllabe": ""
         },
         {
@@ -1532,9 +1532,9 @@
           "phonetic": "dùuem",
           "en": "drink (formal)",
           "imageUrl": "/images/w_w_duem.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "beber (formal)",
+          "de": "trinken (formell)",
+          "it": "bere (formale)",
           "syllabe": ""
         }
       ],
@@ -1551,9 +1551,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_eat_rice.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "comer (una comida)",
+          "de": "essen (eine Mahlzeit)",
+          "it": "mangiare (un pasto)",
           "syllabe": ""
         },
         {
@@ -1568,9 +1568,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_want_water.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "quiero agua",
+          "de": "ich will Wasser",
+          "it": "voglio dell'acqua",
           "syllabe": ""
         },
         {
@@ -1585,9 +1585,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_want.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no lo quiero",
+          "de": "ich will es nicht",
+          "it": "non lo voglio",
           "syllabe": ""
         },
         {
@@ -1602,9 +1602,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_drink_water_deum.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "beber agua",
+          "de": "Wasser trinken",
+          "it": "bere acqua",
           "syllabe": ""
         },
         {
@@ -1619,21 +1619,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_eat.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no como",
+          "de": "ich esse nicht",
+          "it": "non mangio",
           "syllabe": ""
         }
       ],
       "titleEn": "Food: At the restaurant",
       "descriptionEn": "Eating out",
       "imageUrl": "/images/food.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Alimentación 1: Comer y Beber",
+      "titleDe": "Ernährung 1: Essen und Trinken",
+      "titleIt": "Alimentazione 1: Mangiare e Bere",
+      "descriptionEs": "Comer en el restaurante",
+      "descriptionDe": "Im Restaurant essen",
+      "descriptionIt": "Mangiare al ristorante"
     },
     {
       "id": "l_nouveau_005",
