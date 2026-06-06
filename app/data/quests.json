@@ -6,7 +6,10 @@
       "target": 1,
       "rewardXp": 20,
       "titleEn": "Complete 1 Lesson",
-      "titleFr": "Terminer 1 leçon"
+      "titleFr": "Terminer 1 leçon",
+      "titleDe": "1 Lektion abschließen",
+      "titleEs": "Completar 1 lección",
+      "titleIt": "Completa 1 lezione"
     },
     {
       "id": "l_quest_lesson_3",
@@ -14,7 +17,10 @@
       "target": 3,
       "rewardXp": 50,
       "titleEn": "Complete 3 Lessons",
-      "titleFr": "Terminer 3 leçons"
+      "titleFr": "Terminer 3 leçons",
+      "titleDe": "3 Lektionen abschließen",
+      "titleEs": "Completar 3 lecciones",
+      "titleIt": "Completa 3 lezioni"
     },
     {
       "id": "l_quest_xp_50",
@@ -22,7 +28,10 @@
       "target": 50,
       "rewardXp": 15,
       "titleEn": "Earn 50 XP in Learn",
-      "titleFr": "Gagner 50 XP (Parcours)"
+      "titleFr": "Gagner 50 XP (Parcours)",
+      "titleDe": "50 XP verdienen (Pfad)",
+      "titleEs": "Ganar 50 XP (Ruta)",
+      "titleIt": "Guadagna 50 XP (Percorso)"
     },
     {
       "id": "l_quest_xp_100",
@@ -30,7 +39,10 @@
       "target": 100,
       "rewardXp": 30,
       "titleEn": "Earn 100 XP in Learn",
-      "titleFr": "Gagner 100 XP (Parcours)"
+      "titleFr": "Gagner 100 XP (Parcours)",
+      "titleDe": "100 XP verdienen (Pfad)",
+      "titleEs": "Ganar 100 XP (Ruta)",
+      "titleIt": "Guadagna 100 XP (Percorso)"
     },
     {
       "id": "l_quest_xp_200",
@@ -38,7 +50,10 @@
       "target": 200,
       "rewardXp": 60,
       "titleEn": "Earn 200 XP in Learn",
-      "titleFr": "Gagner 200 XP (Parcours)"
+      "titleFr": "Gagner 200 XP (Parcours)",
+      "titleDe": "200 XP verdienen (Pfad)",
+      "titleEs": "Ganar 200 XP (Ruta)",
+      "titleIt": "Guadagna 200 XP (Percorso)"
     },
     {
       "id": "l_quest_perfect_1",
@@ -46,7 +61,10 @@
       "target": 1,
       "rewardXp": 25,
       "titleEn": "Get 3 stars on a Learn level",
-      "titleFr": "Obtenir 3 étoiles à un niveau (Parcours)"
+      "titleFr": "Obtenir 3 étoiles à un niveau (Parcours)",
+      "titleDe": "3 Sterne in einem Level (Pfad) erhalten",
+      "titleEs": "Conseguir 3 estrellas en un nivel (Ruta)",
+      "titleIt": "Ottieni 3 stelle in un livello (Percorso)"
     },
     {
       "id": "l_quest_perfect_2",
@@ -54,7 +72,10 @@
       "target": 2,
       "rewardXp": 55,
       "titleEn": "Get 3 stars on 2 Learn levels",
-      "titleFr": "Obtenir 3 étoiles sur 2 niveaux (Parcours)"
+      "titleFr": "Obtenir 3 étoiles sur 2 niveaux (Parcours)",
+      "titleDe": "3 Sterne in 2 Leveln (Pfad) erhalten",
+      "titleEs": "Conseguir 3 estrellas en 2 niveles (Ruta)",
+      "titleIt": "Ottieni 3 stelle in 2 livelli (Percorso)"
     }
   ],
   "alphabet": [
@@ -64,7 +85,10 @@
       "target": 1,
       "rewardXp": 20,
       "titleEn": "Complete 1 Alphabet Lesson",
-      "titleFr": "Terminer 1 leçon d'alphabet"
+      "titleFr": "Terminer 1 leçon d'alphabet",
+      "titleDe": "1 Alphabet-Lektion abschließen",
+      "titleEs": "Completar 1 lección de alfabeto",
+      "titleIt": "Completa 1 lezione dell'alfabeto"
     },
     {
       "id": "a_quest_lesson_3",
@@ -72,7 +96,10 @@
       "target": 3,
       "rewardXp": 50,
       "titleEn": "Complete 3 Alphabet Lessons",
-      "titleFr": "Terminer 3 leçons d'alphabet"
+      "titleFr": "Terminer 3 leçons d'alphabet",
+      "titleDe": "3 Alphabet-Lektionen abschließen",
+      "titleEs": "Completar 3 lecciones de alfabeto",
+      "titleIt": "Completa 3 lezioni dell'alfabeto"
     },
     {
       "id": "a_quest_xp_50",
@@ -80,7 +107,10 @@
       "target": 50,
       "rewardXp": 15,
       "titleEn": "Earn 50 XP in Alphabet",
-      "titleFr": "Gagner 50 XP (Alphabet)"
+      "titleFr": "Gagner 50 XP (Alphabet)",
+      "titleDe": "50 XP verdienen (Alphabet)",
+      "titleEs": "Ganar 50 XP (Alfabeto)",
+      "titleIt": "Guadagna 50 XP (Alfabeto)"
     },
     {
       "id": "a_quest_perfect_1",
@@ -88,7 +118,10 @@
       "target": 1,
       "rewardXp": 25,
       "titleEn": "Get 3 stars on an Alphabet level",
-      "titleFr": "Obtenir 3 étoiles à un niveau (Alphabet)"
+      "titleFr": "Obtenir 3 étoiles à un niveau (Alphabet)",
+      "titleDe": "3 Sterne in einem Alphabet-Level erhalten",
+      "titleEs": "Conseguir 3 estrellas en un nivel (Alfabeto)",
+      "titleIt": "Ottieni 3 stelle in un livello (Alfabeto)"
     },
     {
       "id": "a_quest_1780253096623",
@@ -96,7 +129,10 @@
       "target": 300,
       "rewardXp": 50,
       "titleEn": "Earn 300 XP in alphabet",
-      "titleFr": "Gagner 300 XP (Alphabet)"
+      "titleFr": "Gagner 300 XP (Alphabet)",
+      "titleDe": "300 XP verdienen (Alphabet)",
+      "titleEs": "Ganar 300 XP (Alfabeto)",
+      "titleIt": "Guadagna 300 XP (Alfabeto)"
     }
   ]
 }

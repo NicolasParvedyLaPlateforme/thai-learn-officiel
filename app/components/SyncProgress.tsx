@@ -54,6 +54,8 @@ export default function SyncProgress() {
         hiddenInstructions: state.hiddenInstructions,
         reviewStats: state.reviewStats,
         dailyQuests: state.dailyQuests,
+        questsDate: state.questsDate,
+        completedToday: state.completedToday,
       };
 
       await saveProgress(dataToSave);
@@ -74,7 +76,10 @@ export default function SyncProgress() {
     store.lessonStars,
     store.seenAlphabets,
     store.completedConversations,
-    store.reviewStats
+    store.reviewStats,
+    store.dailyQuests,
+    store.questsDate,
+    store.completedToday
   ]);
 
   return null;

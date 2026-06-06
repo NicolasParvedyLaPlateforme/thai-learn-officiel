@@ -27,6 +27,9 @@ export interface DailyQuest {
   completed: boolean;
   titleEn: string;
   titleFr: string;
+  titleDe?: string;
+  titleEs?: string;
+  titleIt?: string;
 }
 
 export interface QuestsState {
@@ -47,6 +50,9 @@ const generateNewQuestsForCategory = (categoryConfig: any[]): DailyQuest[] => {
     completed: false,
     titleEn: q.titleEn,
     titleFr: q.titleFr,
+    titleDe: q.titleDe,
+    titleEs: q.titleEs,
+    titleIt: q.titleIt,
   }));
 };
 
@@ -139,6 +145,8 @@ interface ProgressState {
   setShowCommunityModal: (show: boolean) => void;
   showLanguageModal: boolean;
   setShowLanguageModal: (show: boolean) => void;
+  toneAnalyzerModalWord: string | null;
+  setToneAnalyzerModalWord: (word: string | null) => void;
   conversationStars: Record<string, number[]>;
   completedConversations: Record<string, number>;
   completeConversation: (convId: string, level: number, stars?: number) => void;
@@ -185,9 +193,11 @@ export const useProgressStore = create<ProgressState>()(
       hasSeenCommunityModal: false,
       showCommunityModal: false,
       showLanguageModal: false,
+      toneAnalyzerModalWord: null,
       setHasSeenCommunityModal: (seen) => set({ hasSeenCommunityModal: seen }),
       setShowCommunityModal: (show) => set({ showCommunityModal: show }),
       setShowLanguageModal: (show) => set({ showLanguageModal: show }),
+      setToneAnalyzerModalWord: (word) => set({ toneAnalyzerModalWord: word }),
       currentStreak: 0,
       longestStreak: 0,
       lastActiveDate: null,
@@ -417,7 +427,7 @@ export const useProgressStore = create<ProgressState>()(
            isFirstTime = !completedToday.includes(key);
            xp = isFirstTime ? 50 : 25;
         } else {
-           const type = lessonId.startsWith('alphabet_') ? 'alphabet' : 'learn';
+           const type = (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) ? 'alphabet' : 'learn';
            key = `${type}_${lessonId}_level-${levelIndex}`;
            isFirstTime = !completedToday.includes(key);
            xp = isFirstTime ? 20 : 5;
@@ -443,7 +453,7 @@ export const useProgressStore = create<ProgressState>()(
           }
           
           let type: 'learn' | 'alphabet' = 'learn';
-          if (lessonId.startsWith('alphabet_')) {
+          if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
             type = 'alphabet';
           }
 
@@ -475,7 +485,7 @@ export const useProgressStore = create<ProgressState>()(
         get().recordActivity();
         
         let type: 'learn' | 'alphabet' = 'learn';
-        if (lessonId.startsWith('alphabet_')) {
+        if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
           type = 'alphabet';
         }
 
@@ -519,7 +529,7 @@ export const useProgressStore = create<ProgressState>()(
       name: 'thai-learning-progress',
       storage: createJSONStorage(() => safeStorage),
       partialize: (state) => Object.fromEntries(
-        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal', 'showLanguageModal', 'isMobileSidebarOpen'].includes(key))
+        Object.entries(state).filter(([key]) => !['_hasHydrated', 'isExerciseRunning', 'showCommunityModal', 'showLanguageModal', 'isMobileSidebarOpen', 'toneAnalyzerModalWord'].includes(key))
       ),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);

@@ -37,9 +37,19 @@ export function getLocalizedField(item: any, fieldBase: string, currentLanguage:
     return item[localizedKey];
   }
 
+  const fallbackKey = `${fieldBase}${capLang}`;
+  if (item[fallbackKey] && item[fallbackKey].trim() !== '') {
+    return item[fallbackKey];
+  }
+
   const enKey = `${fieldBase}En`;
   if (item[enKey] && item[enKey].trim() !== '') {
     return item[enKey];
+  }
+
+  const frKey = `${fieldBase}Fr`;
+  if (item[frKey] && item[frKey].trim() !== '') {
+    return item[frKey];
   }
 
   return item[fieldBase] || '';

@@ -1,6 +1,6 @@
 "use client";
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import { useProgressStore, DailyQuest } from '../lib/store';
 import { Target, CheckCircle2, Star } from 'lucide-react';
@@ -16,7 +16,7 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
   if (!mounted) return null;
 
   const getTitle = (quest: DailyQuest) => {
-    return language === 'en' ? quest.titleEn : quest.titleFr;
+    return getLocalizedField(quest, 'title', language);
   };
 
   const questsForCategory = dailyQuests?.[category] || [];

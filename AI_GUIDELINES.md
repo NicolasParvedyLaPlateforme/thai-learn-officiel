@@ -29,7 +29,7 @@ L'application est divisée en sections principales, chacune accessible via son U
 
 4. **Détective (`/detective`)**
    - **But :** Jeu immersif d'objets cachés pour apprendre le vocabulaire en contexte visuel.
-   - **Système :** L'utilisateur clique sur des zones de l'image correspondant aux mots thaïs demandés, avec système de zoom et d'erreurs (perte d'étoiles). Récompense de 50 XP à la première complétion, 20 XP ensuite.
+   - **Système :** L'utilisateur clique sur des zones de l'image correspondant aux mots thaïs demandés, avec système de zoom et d'erreurs (perte d'étoiles). Récompense de 50 XP à la première complétion **de la journée**, 20 XP ensuite (se réinitialise chaque jour).
    - **Fichiers clés :** `app/detective/page.tsx`, `app/components/detective/DetectiveGame.tsx`.
 
 5. **Pratique (`/practice`)**
@@ -97,3 +97,4 @@ Pour comprendre la structure des leçons et exercices, il faut se référer à `
 - **[31/05/2026] Gestion des tooltips (Hints.tsx)** : Ne pas inclure de boutons cliquables à l'intérieur du déclencheur `TooltipHint`, sinon le survol du bouton déclenche la révélation de la réponse par inadvertance.
 - **[05/06/2026] Viewport sur iOS (PWA)** : Attention à ne pas mettre `viewportFit: 'cover'` de façon globale dans `app/layout.tsx` car cela crée un bug de "bounce" / décalage de l'interface en bas d'écran. Ce paramètre doit être restreint aux pages qui en ont expressément besoin (ex: `app/detective/layout.tsx` pour le mode horizontal).
 - **[05/06/2026] NextAuth sur Vercel** : Toujours importer `authOptions` depuis `app/lib/auth.ts` et non depuis la route API pour éviter des erreurs de build.
+- **[06/06/2026] SyncProgress et Zustand** : Lors de l'ajout de variables journalières dans `store.ts` (comme `completedToday` ou `dailyQuests`), il faut impérativement s'assurer qu'elles sont incluses dans le payload de synchronisation vers la BDD dans `SyncProgress.tsx`, sinon ces variables resteront strictement locales à l'appareil et provoqueront des désynchronisations de progression ou d'XP journalier entre mobile et ordinateur.
