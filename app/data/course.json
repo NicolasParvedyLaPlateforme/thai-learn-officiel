@@ -1648,9 +1648,9 @@
           "en": "chicken",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_kai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "pollo",
+          "de": "Hähnchen",
+          "it": "pollo",
           "syllabe": ""
         },
         {
@@ -1661,9 +1661,9 @@
           "en": "pork",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_mu.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "cerdo",
+          "de": "Schweinefleisch",
+          "it": "maiale",
           "syllabe": ""
         },
         {
@@ -1674,9 +1674,9 @@
           "en": "egg",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khai_egg.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "huevo",
+          "de": "Ei",
+          "it": "uovo",
           "syllabe": ""
         },
         {
@@ -1687,9 +1687,9 @@
           "en": "I would like",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_kho_req.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "quisiera / me gustaría",
+          "de": "ich möchte / ich hätte gerne",
+          "it": "vorrei",
           "syllabe": ""
         },
         {
@@ -1700,9 +1700,9 @@
           "en": "meat (beef)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_nuea.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "carne (res)",
+          "de": "Fleisch (Rind)",
+          "it": "carne (manzo)",
           "syllabe": ""
         }
       ],
@@ -1719,9 +1719,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l4_1.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "comer pollo",
+          "de": "Hähnchen essen",
+          "it": "mangiare pollo",
           "syllabe": ""
         },
         {
@@ -1736,9 +1736,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l4_2.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "quiero un huevo",
+          "de": "ich will ein Ei",
+          "it": "voglio un uovo",
           "syllabe": ""
         },
         {
@@ -1754,9 +1754,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l4_5.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no como cerdo",
+          "de": "ich esse kein Schweinefleisch",
+          "it": "non mangio maiale",
           "syllabe": ""
         },
         {
@@ -1771,9 +1771,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l4_6.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "quisiera pollo",
+          "de": "ich hätte gerne Hähnchen",
+          "it": "vorrei del pollo",
           "syllabe": ""
         },
         {
@@ -1789,21 +1789,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_l4_7.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿comes carne?",
+          "de": "isst du Fleisch?",
+          "it": "mangi carne?",
           "syllabe": ""
         }
       ],
       "titleEn": "Food 2: Meat and Eggs",
       "descriptionEn": "Learn the vocabulary for meats and eggs",
       "imageUrl": "/images/l_nouveau_005.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Alimentación 2: Carnes y Huevos",
+      "titleDe": "Ernährung 2: Fleisch und Eier",
+      "titleIt": "Alimentazione 2: Carni e Uova",
+      "descriptionEs": "Aprender el vocabulario de las carnes y los huevos",
+      "descriptionDe": "Das Vokabular für Fleisch und Eier lernen",
+      "descriptionIt": "Imparare il vocabolario delle carni e delle uova"
     },
     {
       "id": "l_nouveau_006",
