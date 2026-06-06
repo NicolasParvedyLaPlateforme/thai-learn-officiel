@@ -312,7 +312,7 @@ function ToneAnalyzerContent() {
                 <h3 className="font-bold text-indigo-900 mb-2">
                    {language === 'en' ? 'Why this tone?' : 'Pourquoi ce ton ?'}
                 </h3>
-                <p className="text-indigo-700/80 text-sm leading-relaxed">
+                <div className="text-indigo-700/80 text-sm leading-relaxed">
                   {language === 'en' 
                     ? `This is a ${analysis.endingType === 'live' ? 'live' : 'dead'} syllable starting with a ${analysis.initialClass} class consonant`
                     : `C'est une syllabe ${analysis.endingType === 'live' ? 'vivante' : 'morte'} commençant par une consonne de classe ${analysis.initialClass === 'high' ? 'haute' : analysis.initialClass === 'mid' ? 'moyenne' : 'basse'}`}
@@ -326,17 +326,17 @@ function ToneAnalyzerContent() {
                     : (language === 'en' ? ' without any tone mark.' : ' sans aucune marque de ton.')}
                   
                   {analysis.isImplicitShortVowel && (
-                     <p className="mt-3 text-amber-600 font-bold bg-amber-50 p-2 rounded-xl border border-amber-100">
+                     <div className="mt-3 text-amber-600 font-bold bg-amber-50 p-2 rounded-xl border border-amber-100">
                         {language === 'en' 
                         ? "✨ This is a dead syllable due to an implicit short vowel (Sara A)." 
                         : "✨ C'est une syllabe morte due à une voyelle courte implicite (Sara A)."}
-                     </p>
+                     </div>
                   )}
 
                   <br/><br/>
                   {language === 'en' ? 'According to Thai tone rules, this combination results in a ' : 'Selon les règles des tons thaïlandais, cette combinaison donne un '}
                   <strong>{translateTone(analysis.finalTone).toLowerCase()}</strong>.
-                </p>
+                </div>
               </div>
             </div>
           </div>
