@@ -69,7 +69,7 @@ export function ToneAnalyzerModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-h-[90vh] w-[600px] flex flex-col rounded-3xl shadow-2xl overflow-hidden bg-[#F5F7FA]"
+            className="relative w-auto min-w-[320px] md:min-w-[500px] max-w-4xl max-h-[90vh] flex flex-col rounded-3xl shadow-2xl overflow-hidden bg-[#F5F7FA]"
           >
             <ToneAnalyzerContent 
               initialWord={toneAnalyzerModalWord} 
