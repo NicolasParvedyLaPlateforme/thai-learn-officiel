@@ -1,22 +1,38 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Search } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { BookOpen, MessageCircle, Brain, Search, ChevronUp, Pencil, Mic, Wand2, GraduationCap } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
-import { useTranslation } from '../hooks/useTranslation';
+import { useTranslation, getTranslation } from '../hooks/useTranslation';
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useTranslation();
+  const { language } = useProgressStore();
   const globalSuggested = useGlobalSuggestedLesson();
 
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [activePopover, setActivePopover] = useState<'learn' | 'practice' | null>(null);
+  const navRef = useRef<HTMLElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Close popover when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setActivePopover(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Define visibility logic
@@ -24,8 +40,11 @@ export default function BottomNav() {
   const isAlphabetActive = pathname === '/alphabet';
   const isConversationsActive = pathname === '/conversations';
   const isPracticeActive = pathname === '/practice';
-  const isDetectiveActive = pathname.startsWith('/detective');
+  const isDetectiveActive = pathname === '/detective';
   
+  const isLearnOrAlphabetActive = isLearnActive || isAlphabetActive;
+
+  // We show BottomNav if we are on any of these main paths
   const isVisible = isLearnActive || isAlphabetActive || isConversationsActive || isPracticeActive || isDetectiveActive;
 
   if (!isVisible || !mounted) return null;
@@ -34,40 +53,152 @@ export default function BottomNav() {
     return globalSuggested?.type === type ? `${basePath}#${globalSuggested.id}` : basePath;
   };
 
+  const handleLearnClick = (e: React.MouseEvent) => {
+    if (activePopover === 'learn') {
+      setActivePopover(null);
+      // Double click goes to default learn page? Optional. Let's just toggle popover
+      e.preventDefault();
+    } else {
+      e.preventDefault();
+      setActivePopover('learn');
+    }
+  };
+
+  const handlePracticeClick = (e: React.MouseEvent) => {
+    if (activePopover === 'practice') {
+      // Allow navigation to /practice on second click
+      setActivePopover(null);
+    } else {
+      e.preventDefault();
+      setActivePopover('practice');
+    }
+  };
+
   return (
     <>
-      {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center h-[72px]">
-        <Link href={getHrefWithHash('/learn', 'learn')} className={`flex flex-col items-center justify-center w-full h-full transition-colors relative ${isLearnActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
-          <div className="relative">
-            <BookOpen size={24} className={isLearnActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
-            {globalSuggested?.type === 'learn' && !isLearnActive && (
+      <nav ref={navRef} className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center h-[72px] px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.1)]">
+        
+        {/* POPOVERS */}
+        <AnimatePresence>
+          {activePopover === 'learn' && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ duration: 0.15 }}
+              className="absolute bottom-[80px] left-4 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 flex flex-col gap-1 z-50 w-44 origin-bottom-left"
+            >
+              <Link href={getHrefWithHash('/learn', 'learn')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isLearnActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
+                 <BookOpen size={20} className={isLearnActive ? 'text-emerald-500' : 'text-slate-400'} />
+                 {t('sidebar.path')}
+                 {globalSuggested?.type === 'learn' && !isLearnActive && (
+                    <span className="w-2 h-2 bg-amber-400 rounded-full ml-auto"></span>
+                 )}
+              </Link>
+              <Link href={getHrefWithHash('/alphabet', 'alphabet')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isAlphabetActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
+                 <div className={`w-5 h-5 flex items-center justify-center font-black text-lg ${isAlphabetActive ? 'text-emerald-500' : 'text-slate-400'}`}>A</div>
+                 {t('sidebar.alphabet')}
+                 {globalSuggested?.type === 'alphabet' && !isAlphabetActive && (
+                    <span className="w-2 h-2 bg-amber-400 rounded-full ml-auto"></span>
+                 )}
+              </Link>
+            </motion.div>
+          )}
+
+          {activePopover === 'practice' && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ duration: 0.15 }}
+              className="absolute bottom-[80px] right-4 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 flex flex-col gap-1 z-50 w-52 origin-bottom-right"
+            >
+              <Link href="/review" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+                 <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                   <Brain size={16} className="text-indigo-500" />
+                 </div>
+                 {getTranslation('auto.review', language)}
+              </Link>
+              <Link href="/review-pairs" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+                 <div className="w-8 h-8 rounded-lg bg-fuchsia-50 flex items-center justify-center shrink-0">
+                   <BookOpen size={16} className="text-fuchsia-500" />
+                 </div>
+                 {getTranslation('auto.pairs', language)}
+              </Link>
+              <Link href="/practice?action=writing" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+                 <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center shrink-0">
+                   <Pencil size={16} className="text-sky-500" />
+                 </div>
+                 {getTranslation('auto.writing', language)}
+              </Link>
+              <Link href="/practice?action=speaking" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+                 <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
+                   <Mic size={16} className="text-orange-500" />
+                 </div>
+                 {getTranslation('auto.speaking', language)}
+              </Link>
+              <Link href="/practice/tone-analyzer" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+                 <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
+                   <Wand2 size={16} className="text-teal-500" />
+                 </div>
+                 {language === 'en' ? 'Tone Analyzer' : 'Calculateur de Tons'}
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* 1. Apprendre Group */}
+        <Link 
+          href="/learn" 
+          onClick={handleLearnClick}
+          className={`flex flex-col items-center justify-center w-full h-full transition-colors relative ${isLearnOrAlphabetActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}
+        >
+          <div className="relative flex items-center justify-center">
+            <GraduationCap size={24} className={isLearnOrAlphabetActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
+            {globalSuggested && !isLearnOrAlphabetActive && (
               <span className="absolute -top-1 -right-1.5 w-3 h-3 bg-amber-400 border-2 border-white rounded-full"></span>
             )}
           </div>
-          <span className="text-[10px] font-bold">{t('sidebar.path')}</span>
-        </Link>
-        <Link href={getHrefWithHash('/alphabet', 'alphabet')} className={`flex flex-col items-center justify-center w-full h-full transition-colors relative ${isAlphabetActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
-          <div className="relative">
-            <div className="w-6 h-6 flex items-center justify-center font-black text-xl mb-1">A</div>
-            {globalSuggested?.type === 'alphabet' && !isAlphabetActive && (
-              <span className="absolute -top-0 -right-1.5 w-3 h-3 bg-amber-400 border-2 border-white rounded-full"></span>
-            )}
+          <div className="flex items-center gap-0.5 text-[10px] font-bold">
+             {language === 'en' ? 'Learn' : 'Apprendre'}
+             <ChevronUp size={12} className={`transition-transform duration-200 ${activePopover === 'learn' ? 'rotate-180' : ''}`} />
           </div>
-          <span className="text-[10px] font-bold">{t('sidebar.alphabet')}</span>
         </Link>
-        <Link href="/conversations" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isConversationsActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
+
+        {/* Separator */}
+        <div className="w-px h-8 bg-slate-200 shrink-0"></div>
+
+        {/* 2. Dialogues */}
+        <Link href="/conversations" onClick={() => setActivePopover(null)} className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isConversationsActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <MessageCircle size={24} className={isConversationsActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
           <span className="text-[10px] font-bold">{t('sidebar.dialogs')}</span>
         </Link>
-        <Link href="/detective" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isDetectiveActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
+
+        {/* Separator */}
+        <div className="w-px h-8 bg-slate-200 shrink-0"></div>
+
+        {/* 3. Détective */}
+        <Link href="/detective" onClick={() => setActivePopover(null)} className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isDetectiveActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
           <Search size={24} className={isDetectiveActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
           <span className="text-[10px] font-bold">{t('sidebar.detective')}</span>
         </Link>
-        <Link href="/practice" className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isPracticeActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}>
+
+        {/* Separator */}
+        <div className="w-px h-8 bg-slate-200 shrink-0"></div>
+
+        {/* 4. Pratique Group */}
+        <Link 
+          href="/practice" 
+          onClick={handlePracticeClick}
+          className={`flex flex-col items-center justify-center w-full h-full transition-colors ${isPracticeActive ? 'text-emerald-500' : 'text-slate-400 hover:text-slate-600'}`}
+        >
           <Brain size={24} className={isPracticeActive ? 'fill-emerald-100 mb-1' : 'mb-1'} />
-          <span className="text-[10px] font-bold">{t('sidebar.practice')}</span>
+          <div className="flex items-center gap-0.5 text-[10px] font-bold">
+             {t('sidebar.practice')}
+             <ChevronUp size={12} className={`transition-transform duration-200 ${activePopover === 'practice' ? 'rotate-180' : ''}`} />
+          </div>
         </Link>
+
       </nav>
     </>
   );

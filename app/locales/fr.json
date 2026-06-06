@@ -219,6 +219,7 @@
   "auto.close": "Fermer",
   "auto.quit_lesson": "Quitter la leçon ?",
   "auto.your_progress_will_be_lost": "Votre progression sera perdue.",
+  "auto.your_progress_will_be_saved": "Votre progression est sauvegardée. Vous pourrez revenir à tout moment pour terminer cet exercice.",
   "auto.quit": "Quitter",
   "auto.cancel": "Annuler",
   "auto.lvl": "Niv.",
