@@ -303,5 +303,11 @@
   "leaderboard.month_converted": "Your XP from last month has been converted into Gold Coins. The leaderboard has been reset for the new month!",
   "leaderboard.old_xp": "Old XP",
   "leaderboard.gold_coins": "Gold Coins",
-  "leaderboard.collect_coins": "Collect my coins"
+  "leaderboard.collect_coins": "Collect my coins",
+  "auth.pseudo_updated_success": "Username successfully updated.",
+  "auth.email_verified_success": "Great! Your email address has been successfully verified.",
+  "auth.my_pseudo": "My Username",
+  "auth.pseudo_label": "Your Username (Displayed on the leaderboard)",
+  "auth.pseudo_placeholder": "Ex: NinjaThai",
+  "auth.current_password": "Current password"
 }

@@ -303,5 +303,11 @@
   "leaderboard.month_converted": "I tuoi XP del mese scorso sono stati convertiti in Monete d'Oro. La classifica è stata azzerata per il nuovo mese!",
   "leaderboard.old_xp": "Vecchio XP",
   "leaderboard.gold_coins": "Monete d'Oro",
-  "leaderboard.collect_coins": "Raccogli le mie monete"
+  "leaderboard.collect_coins": "Raccogli le mie monete",
+  "auth.pseudo_updated_success": "Nome utente aggiornato con successo.",
+  "auth.email_verified_success": "Fantastico! Il tuo indirizzo email è stato verificato con successo.",
+  "auth.my_pseudo": "Il mio nome utente",
+  "auth.pseudo_label": "Il tuo Nome Utente (Mostrato in classifica)",
+  "auth.pseudo_placeholder": "Es: NinjaThai",
+  "auth.current_password": "Password attuale"
 }

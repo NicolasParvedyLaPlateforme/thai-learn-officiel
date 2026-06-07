@@ -304,5 +304,11 @@
   "leaderboard.month_converted": "Votre XP du mois dernier a été converti en Pièces d'Or. Le classement a été réinitialisé pour le nouveau mois !",
   "leaderboard.old_xp": "Ancien XP",
   "leaderboard.gold_coins": "Pièces d'Or",
-  "leaderboard.collect_coins": "Récupérer mes pièces"
+  "leaderboard.collect_coins": "Récupérer mes pièces",
+  "auth.pseudo_updated_success": "Pseudo mis à jour avec succès.",
+  "auth.email_verified_success": "Super ! Ton adresse email a été vérifiée avec succès.",
+  "auth.my_pseudo": "Mon Pseudo",
+  "auth.pseudo_label": "Votre Pseudo (Affiché dans le classement)",
+  "auth.pseudo_placeholder": "Ex: NinjaThai",
+  "auth.current_password": "Mot de passe actuel"
 }
