@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import CryptoJS from 'crypto-js';
+import { generateNetworkSignature } from './security';
 import questsConfig from '../data/quests.json';
 import { Exercise } from '../types';
 
@@ -373,10 +374,14 @@ export const useProgressStore = create<ProgressState>()(
             
             // Sync avec l'API
             if (typeof window !== 'undefined' && newCoins > 0) {
+              const payload = { goldAmount: newCoins };
+              const timestamp = Date.now();
+              const signature = generateNetworkSignature(payload, timestamp);
+              
               fetch('/api/user/sync-stats', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ goldAmount: newCoins })
+                body: JSON.stringify({ payload, timestamp, signature })
               }).then(res => res.json()).then(data => {
                 if (data.success && data.newGoldCoins !== undefined) {
                   useProgressStore.setState({ goldCoins: data.newGoldCoins });
@@ -587,10 +592,14 @@ export const useProgressStore = create<ProgressState>()(
 
         // Sync avec l'API
         if (typeof window !== 'undefined' && amount > 0) {
+          const payload = { xpAmount: amount };
+          const timestamp = Date.now();
+          const signature = generateNetworkSignature(payload, timestamp);
+          
           fetch('/api/user/sync-stats', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ xpAmount: amount })
+            body: JSON.stringify({ payload, timestamp, signature })
           }).then(res => res.json()).then(data => {
             if (data.success && data.newXp !== undefined) {
               useProgressStore.setState({ xp: data.newXp });

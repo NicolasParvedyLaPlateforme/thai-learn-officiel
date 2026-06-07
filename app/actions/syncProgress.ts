@@ -4,7 +4,9 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/lib/auth";
 import { prisma } from "@/app/lib/prisma";
 
-export async function saveProgress(data: any) {
+import { verifyNetworkSignature } from "@/app/lib/security";
+
+export async function saveProgress(data: any, timestamp?: number, signature?: string) {
   const session = await getServerSession(authOptions);
   
   if (!session?.user?.email) {
@@ -12,7 +14,32 @@ export async function saveProgress(data: any) {
   }
 
   try {
+    // Si la sécurité anti-rejeu est fournie (pour prévenir les requêtes forgées)
+    if (timestamp && signature) {
+      if (!verifyNetworkSignature(data, timestamp, signature)) {
+        return { success: false, error: "Signature invalide" };
+      }
+
+      const currentUser = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { progressData: true }
+      });
+
+      if (currentUser) {
+        const currentProgress: any = currentUser.progressData || {};
+        const lastSync = currentProgress.lastSyncTimestamp || 0;
+
+        if (timestamp <= lastSync) {
+          return { success: false, error: "Replay attack detected" };
+        }
+      }
+    }
+
     const { xp, currentStreak, longestStreak, lastActiveDate, goldCoins, lastConversionMonth, ...restProgress } = data;
+    
+    if (timestamp) {
+      restProgress.lastSyncTimestamp = timestamp;
+    }
 
     await prisma.user.update({
       where: { email: session.user.email },

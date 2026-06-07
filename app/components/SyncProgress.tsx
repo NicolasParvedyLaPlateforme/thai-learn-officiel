@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useProgressStore } from "../lib/store";
 import { getProgress, saveProgress } from "../actions/syncProgress";
+import { generateNetworkSignature } from "../lib/security";
 
 export default function SyncProgress() {
   const { data: session, status } = useSession();
@@ -164,7 +165,10 @@ export default function SyncProgress() {
         completedToday: state.completedToday,
       };
 
-      await saveProgress(dataToSave);
+      const timestamp = Date.now();
+      const signature = generateNetworkSignature(dataToSave, timestamp);
+
+      await saveProgress(dataToSave, timestamp, signature);
     }, 2000); // Debounce time: 2 seconds
 
     return () => {
