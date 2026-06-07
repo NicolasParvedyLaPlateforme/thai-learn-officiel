@@ -179,6 +179,9 @@ interface ProgressState {
 
   isMobileSidebarOpen: boolean;
   setMobileSidebarOpen: (open: boolean) => void;
+
+  lastMergedEmail: string | null;
+  setLastMergedEmail: (email: string | null) => void;
 }
 
 export const useProgressStore = create<ProgressState>()(
@@ -218,6 +221,8 @@ export const useProgressStore = create<ProgressState>()(
       questsDate: null,
       reviewStats: {},
       inProgressLessons: {},
+      lastMergedEmail: null,
+      setLastMergedEmail: (email) => set({ lastMergedEmail: email }),
       saveInProgressLesson: (key, stateData) => set((state) => {
         if (stateData === null) {
           const newInProgress = { ...state.inProgressLessons };
@@ -535,7 +540,25 @@ export const useProgressStore = create<ProgressState>()(
           ? (state.unlockedLessons.includes(lessonId) ? state.unlockedLessons : [...state.unlockedLessons, lessonId])
           : [lessonId]
       })),
-      resetProgress: () => set({ completedLessons: [], unlockedLessons: [], lessonLevels: {}, lessonStars: {}, xp: 0, reviewStats: {} }),
+      resetProgress: () => set({ 
+        completedLessons: [], 
+        completedToday: [],
+        completedConversations: {},
+        conversationStars: {},
+        unlockedLessons: [], 
+        lessonLevels: {}, 
+        lessonStars: {}, 
+        xp: 0, 
+        goldCoins: 0,
+        currentStreak: 0,
+        longestStreak: 0,
+        lastActiveDate: null,
+        reviewStats: {},
+        dailyQuests: null,
+        questsDate: null,
+        seenAlphabets: [],
+        lastMergedEmail: null
+      }),
       resetLessonLevel: (lessonId) => set((state) => ({
         lessonLevels: {
           ...state.lessonLevels,

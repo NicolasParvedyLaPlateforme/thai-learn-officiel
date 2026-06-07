@@ -925,8 +925,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                             {selectedLesson.lesson.isReview || modalLevel === 10
                               ? (modalLevel === 10
                                 ? (getTranslation('auto.stats_mastery', language))
-                                : (getTranslation('auto.stats_lvl', language).replace('{level}', String(modalLevel + 1))))
-                              : (getTranslation('auto.vocabulary_lvl', language).replace('{level}', String(modalLevel + 1)))
+                                : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
+                              : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
                             }
                           </h4>
                           {!selectedLesson.lesson.isReview && modalLevel !== 10 && (

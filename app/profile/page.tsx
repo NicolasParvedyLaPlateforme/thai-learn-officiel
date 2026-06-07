@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { useProgressStore } from "../lib/store";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, AlertCircle, Save, LogOut, ChevronLeft } from "lucide-react";
@@ -25,11 +26,21 @@ function ProfilePageContent() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   const [pseudo, setPseudo] = useState("");
+  const [isEmailVerified, setIsEmailVerified] = useState<boolean>(true);
+  const [resendStatus, setResendStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [resendMessage, setResendMessage] = useState("");
+
   const [pseudoStatus, setPseudoStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [pseudoMessage, setPseudoMessage] = useState("");
 
   const [passwordStatus, setPasswordStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteEmail, setDeleteEmail] = useState("");
+  const [showFinalWarning, setShowFinalWarning] = useState(false);
+  const [deleteStatus, setDeleteStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -37,10 +48,34 @@ function ProfilePageContent() {
         .then(res => res.json())
         .then(data => {
           if (data.pseudo) setPseudo(data.pseudo);
+          if (data.isEmailVerified !== undefined) setIsEmailVerified(data.isEmailVerified);
         })
         .catch(console.error);
     }
   }, [status]);
+
+  const handleResendVerification = async () => {
+    setResendStatus("loading");
+    setResendMessage("");
+    try {
+      const res = await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}), 
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setResendStatus("success");
+        setResendMessage(data.message);
+      } else {
+        setResendStatus("error");
+        setResendMessage(data.message || t('auth.error_network'));
+      }
+    } catch (err) {
+      setResendStatus("error");
+      setResendMessage(t('auth.error_network'));
+    }
+  };
 
   const handlePasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,6 +110,37 @@ function ProfilePageContent() {
     } catch (err) {
       setPasswordStatus("error");
       setMessage(t('auth.error_network'));
+    }
+  };
+
+  const handleInitialDeleteClick = () => {
+    if (deleteEmail === session?.user?.email) {
+      setShowFinalWarning(true);
+    }
+  };
+
+  const confirmDeleteAccount = async () => {
+    setDeleteStatus("loading");
+    setDeleteMessage("");
+    try {
+      const res = await fetch("/api/user/delete-account", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: deleteEmail }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setDeleteStatus("success");
+        // Deletion success, logout
+        useProgressStore.getState().resetProgress();
+        signOut();
+      } else {
+        setDeleteStatus("error");
+        setDeleteMessage(data.message || t('auth.error_network'));
+      }
+    } catch (error) {
+      setDeleteStatus("error");
+      setDeleteMessage(t('auth.error_network'));
     }
   };
 
@@ -121,32 +187,63 @@ function ProfilePageContent() {
         <h1 className="text-3xl font-bold text-slate-800 mb-8">{t('auth.profile_title')}</h1>
 
         {/* En-tête profil */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex items-center gap-6 mb-8">
-          <div className="w-20 h-20 bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-3xl rounded-full shrink-0">
-            {session.user.name?.[0]?.toUpperCase() || 'U'}
-          </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold text-slate-800">{session.user.name}</h2>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-slate-500">{session.user.email}</span>
-              {/* Note: NextAuth ne remonte pas emailVerified par défaut dans la session,
-                  donc on affiche juste un avertissement si on vient d'arriver */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
+          <div className="flex items-center gap-6 w-full">
+            <div className="w-20 h-20 bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-3xl rounded-full shrink-0">
+              {session.user.name?.[0]?.toUpperCase() || 'U'}
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <h2 className="text-xl font-bold text-slate-800 truncate">{session.user.name}</h2>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-slate-500 truncate">{session.user.email}</span>
+                {/* Note: NextAuth ne remonte pas emailVerified par défaut dans la session,
+                    donc on affiche juste un avertissement si on vient d'arriver */}
+              </div>
             </div>
           </div>
           <button
-            onClick={() => signOut()}
-            className="hidden md:flex items-center gap-2 bg-rose-50 text-rose-600 px-4 py-2 rounded-xl font-semibold hover:bg-rose-100 transition-colors"
+            onClick={() => {
+              useProgressStore.getState().resetProgress();
+              signOut();
+            }}
+            className="flex w-full md:w-auto justify-center items-center gap-2 bg-rose-50 text-rose-600 px-4 py-2 rounded-xl font-semibold hover:bg-rose-100 transition-colors"
           >
             <LogOut size={18} /> {t('auth.logout')}
           </button>
         </div>
 
-        {searchParams?.get("verified") === "true" && (
+        {searchParams?.get("verified") === "true" ? (
           <div className="bg-emerald-50 text-emerald-700 p-4 rounded-xl mb-8 font-medium border border-emerald-100 flex items-center gap-3">
             <CheckCircle2 className="w-5 h-5" />
             {t('auth.email_verified_success')}
           </div>
-        )}
+        ) : !isEmailVerified ? (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" />
+              <div className="flex-1">
+                <h3 className="text-amber-800 font-semibold mb-1">{t('auth.email_not_verified')}</h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mt-3">
+                  <button
+                    onClick={handleResendVerification}
+                    disabled={resendStatus === "loading" || resendStatus === "success"}
+                    className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-sm font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
+                  >
+                    {resendStatus === "loading" ? (
+                      <div className="w-4 h-4 border-2 border-amber-800 border-t-transparent rounded-full animate-spin"></div>
+                    ) : null}
+                    {t('auth.resend_verification')}
+                  </button>
+                  {resendMessage && (
+                    <span className={`text-sm font-medium ${resendStatus === "success" ? "text-emerald-600" : "text-rose-600"}`}>
+                      {resendMessage}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
         {/* Changer le pseudo */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-8">
@@ -261,6 +358,94 @@ function ProfilePageContent() {
             </div>
           </form>
         </div>
+
+        {/* Delete Account */}
+        <div className="mt-12 mb-8 flex justify-center">
+          <button
+            onClick={() => setShowDeleteModal(true)}
+            className="text-rose-500 hover:text-rose-700 font-semibold underline text-sm transition-colors"
+          >
+            {t('auth.delete_account')}
+          </button>
+        </div>
+
+        {/* Modals de suppression de compte */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
+              {!showFinalWarning ? (
+                <>
+                  <div className="flex items-center gap-3 mb-4 text-rose-600">
+                    <AlertCircle className="w-6 h-6" />
+                    <h3 className="text-xl font-bold">{t('auth.delete_account_confirm_title')}</h3>
+                  </div>
+                  <p className="text-slate-600 mb-6">{t('auth.delete_account_confirm_desc')}</p>
+                  <input
+                    type="email"
+                    value={deleteEmail}
+                    onChange={(e) => setDeleteEmail(e.target.value)}
+                    placeholder={t('auth.delete_account_email_placeholder')}
+                    className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 outline-none transition-all mb-6"
+                  />
+                  <div className="flex gap-3 justify-end">
+                    <button
+                      onClick={() => setShowDeleteModal(false)}
+                      className="px-4 py-2 text-slate-600 font-semibold hover:bg-slate-100 rounded-xl transition-colors"
+                    >
+                      {t('auto.cancel')}
+                    </button>
+                    <button
+                      onClick={handleInitialDeleteClick}
+                      disabled={deleteEmail !== session?.user?.email}
+                      className="px-4 py-2 bg-rose-600 text-white font-semibold rounded-xl hover:bg-rose-700 transition-colors disabled:opacity-50"
+                    >
+                      {t('auto.continue')}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-3 mb-4 text-rose-600">
+                    <AlertCircle className="w-8 h-8" />
+                    <h3 className="text-xl font-bold">{t('auth.delete_account_final_warning_title')}</h3>
+                  </div>
+                  <p className="text-slate-600 mb-6 font-medium bg-rose-50 p-4 rounded-xl border border-rose-100">
+                    {t('auth.delete_account_final_warning_desc')}
+                  </p>
+                  
+                  {deleteStatus === "error" && (
+                    <div className="bg-rose-50 text-rose-600 p-3 rounded-lg text-sm font-medium mb-4">
+                      {deleteMessage}
+                    </div>
+                  )}
+
+                  <div className="flex gap-3 justify-end">
+                    <button
+                      onClick={() => {
+                        setShowDeleteModal(false);
+                        setShowFinalWarning(false);
+                        setDeleteEmail("");
+                      }}
+                      className="px-4 py-2 text-slate-600 font-semibold hover:bg-slate-100 rounded-xl transition-colors"
+                    >
+                      {t('auto.cancel')}
+                    </button>
+                    <button
+                      onClick={confirmDeleteAccount}
+                      disabled={deleteStatus === "loading"}
+                      className="px-4 py-2 bg-rose-600 text-white font-semibold rounded-xl hover:bg-rose-700 transition-colors flex items-center gap-2"
+                    >
+                      {deleteStatus === "loading" ? (
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      ) : null}
+                      {t('auth.delete_account_confirm_btn')}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
