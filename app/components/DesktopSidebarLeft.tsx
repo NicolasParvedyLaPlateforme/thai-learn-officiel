@@ -155,7 +155,10 @@ export default function DesktopSidebarLeft() {
                   </span>
                 </Link>
                 <button
-                  onClick={() => signOut()}
+                  onClick={() => {
+                    useProgressStore.getState().resetProgress();
+                    signOut();
+                  }}
                   className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0"
                   title={t('sidebar.logout')}
                 >

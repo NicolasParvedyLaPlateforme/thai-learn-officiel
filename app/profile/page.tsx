@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { useProgressStore } from "../lib/store";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, AlertCircle, Save, LogOut, ChevronLeft } from "lucide-react";
@@ -162,7 +163,10 @@ function ProfilePageContent() {
             </div>
           </div>
           <button
-            onClick={() => signOut()}
+            onClick={() => {
+              useProgressStore.getState().resetProgress();
+              signOut();
+            }}
             className="hidden md:flex items-center gap-2 bg-rose-50 text-rose-600 px-4 py-2 rounded-xl font-semibold hover:bg-rose-100 transition-colors"
           >
             <LogOut size={18} /> {t('auth.logout')}
