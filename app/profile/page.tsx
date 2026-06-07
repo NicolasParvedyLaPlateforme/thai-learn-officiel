@@ -25,6 +25,10 @@ function ProfilePageContent() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   const [pseudo, setPseudo] = useState("");
+  const [isEmailVerified, setIsEmailVerified] = useState<boolean>(true);
+  const [resendStatus, setResendStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [resendMessage, setResendMessage] = useState("");
+
   const [pseudoStatus, setPseudoStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [pseudoMessage, setPseudoMessage] = useState("");
 
@@ -37,10 +41,34 @@ function ProfilePageContent() {
         .then(res => res.json())
         .then(data => {
           if (data.pseudo) setPseudo(data.pseudo);
+          if (data.isEmailVerified !== undefined) setIsEmailVerified(data.isEmailVerified);
         })
         .catch(console.error);
     }
   }, [status]);
+
+  const handleResendVerification = async () => {
+    setResendStatus("loading");
+    setResendMessage("");
+    try {
+      const res = await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}), 
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setResendStatus("success");
+        setResendMessage(data.message);
+      } else {
+        setResendStatus("error");
+        setResendMessage(data.message || t('auth.error_network'));
+      }
+    } catch (err) {
+      setResendStatus("error");
+      setResendMessage(t('auth.error_network'));
+    }
+  };
 
   const handlePasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,12 +169,38 @@ function ProfilePageContent() {
           </button>
         </div>
 
-        {searchParams?.get("verified") === "true" && (
+        {searchParams?.get("verified") === "true" ? (
           <div className="bg-emerald-50 text-emerald-700 p-4 rounded-xl mb-8 font-medium border border-emerald-100 flex items-center gap-3">
             <CheckCircle2 className="w-5 h-5" />
             {t('auth.email_verified_success')}
           </div>
-        )}
+        ) : !isEmailVerified ? (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" />
+              <div className="flex-1">
+                <h3 className="text-amber-800 font-semibold mb-1">{t('auth.email_not_verified')}</h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mt-3">
+                  <button
+                    onClick={handleResendVerification}
+                    disabled={resendStatus === "loading" || resendStatus === "success"}
+                    className="bg-amber-100 hover:bg-amber-200 text-amber-800 text-sm font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
+                  >
+                    {resendStatus === "loading" ? (
+                      <div className="w-4 h-4 border-2 border-amber-800 border-t-transparent rounded-full animate-spin"></div>
+                    ) : null}
+                    {t('auth.resend_verification')}
+                  </button>
+                  {resendMessage && (
+                    <span className={`text-sm font-medium ${resendStatus === "success" ? "text-emerald-600" : "text-rose-600"}`}>
+                      {resendMessage}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
         {/* Changer le pseudo */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-8">

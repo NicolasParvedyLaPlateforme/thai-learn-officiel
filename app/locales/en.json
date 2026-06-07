@@ -310,6 +310,8 @@
   "auth.pseudo_label": "Your Username (Displayed on the leaderboard)",
   "auth.pseudo_placeholder": "Ex: NinjaThai",
   "auth.current_password": "Current password",
+  "auth.email_not_verified": "Your email address is not verified.",
+  "auth.resend_verification": "Resend verification email",
   "alphabet.think_mnemonic": "Think of the visual mnemonic: \"{0}\"",
   "auto.your_progress_will_be_saved": "Your progress is saved. You can return at any time to finish this exercise.",
   "auto.resume_lesson": "Lesson in progress",
