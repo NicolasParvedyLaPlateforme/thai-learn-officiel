@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, useTranslation } from '../hooks/useTranslation';
 import Link from 'next/link';
 import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check, Search, Trophy, ChevronLeft, Eye, Mic } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -132,6 +132,7 @@ const enContent = {
 export default function LandingPageClient() {
   const [mounted, setMounted] = useState(false);
   const { language, autoDetectLanguage } = useProgressStore();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setMounted(true);
@@ -168,10 +169,10 @@ export default function LandingPageClient() {
           
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-800 leading-[1.1] mb-6 drop-shadow-sm">
-              {content.title1}<span className="text-emerald-500">Thaï</span>{content.title2}
+              {t('landing.title1')}<span className="text-emerald-500">Thaï</span>{t('landing.title2')}
             </h1>
             <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-xl mx-auto md:mx-0 font-medium leading-relaxed">
-              {content.heroDesc}
+              {t('landing.heroDesc')}
             </p>
             
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
@@ -179,15 +180,15 @@ export default function LandingPageClient() {
                 href="/learn"
                 className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 pb-5 rounded-2xl font-bold text-lg border-b-4 border-emerald-700 hover:-translate-y-1 active:translate-y-1 active:border-b-0 transition-all shadow-lg flex items-center justify-center uppercase tracking-wider"
               >
-                {content.startBtn}
+                {t('landing.startBtn')}
               </Link>
             </div>
             
             <div className="mt-8 flex items-center justify-center md:justify-start gap-4 text-sm font-bold text-slate-400 uppercase tracking-widest">
               <Star className="text-amber-400 fill-amber-400" size={18} />
-              {content.free}
+              {t('landing.free')}
               <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-              {content.noAds}
+              {t('landing.noAds')}
             </div>
           </div>
           
@@ -208,8 +209,8 @@ export default function LandingPageClient() {
               </div>
               
               <div className="bg-emerald-500 text-white rounded-3xl p-6 mb-6 shadow-md border-b-4 border-emerald-700 relative overflow-hidden">
-                <h3 className="font-extrabold text-2xl relative z-10">{content.unit1}</h3>
-                <p className="text-emerald-100 mt-2 font-medium relative z-10">{content.unit1Desc}</p>
+                <h3 className="font-extrabold text-2xl relative z-10">{t('landing.unit1')}</h3>
+                <p className="text-emerald-100 mt-2 font-medium relative z-10">{t('landing.unit1Desc')}</p>
                 <BookOpen size={100} className="absolute -bottom-6 -right-6 text-black opacity-10" />
               </div>
               
@@ -242,8 +243,8 @@ export default function LandingPageClient() {
       <section className="bg-slate-50 py-24 border-t border-slate-200 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-slate-800">{content.methodTitle}</h2>
-            <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto font-medium">{content.methodDesc}</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-slate-800">{t('landing.methodTitle')}</h2>
+            <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto font-medium">{t('landing.methodDesc')}</p>
           </div>
 
           <div className="flex flex-col gap-24">
@@ -255,10 +256,10 @@ export default function LandingPageClient() {
                   <div className="bg-indigo-100 text-indigo-500 p-2 rounded-xl">
                     <CheckCircle size={24} />
                   </div>
-                  {content.pairMatchTitle}
+                  {t('landing.pairMatchTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.pairMatchDesc}
+                  {t('landing.pairMatchDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-md bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all">
@@ -283,10 +284,10 @@ export default function LandingPageClient() {
                   <div className="bg-fuchsia-100 text-fuchsia-500 p-2 rounded-xl">
                     <BookOpen size={24} />
                   </div>
-                  {content.sentenceTitle}
+                  {t('landing.sentenceTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.sentenceDesc}
+                  {t('landing.sentenceDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg bg-[#FAFAFA] p-8 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform -rotate-1 hover:rotate-0 transition-all flex flex-col items-center">
@@ -296,7 +297,7 @@ export default function LandingPageClient() {
                 </div>
                 
                 <div className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight text-center relative w-fit mb-6">
-                  {content.sentenceTrB1} {/* Translate to 'merci (femme)' / 'hello (female)' */}
+                  {t('landing.sentenceTrB1')} {/* Translate to 'merci (femme)' / 'hello (female)' */}
                   <div className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-slate-300 border-b border-dashed border-slate-400 opacity-50"></div>
                   <div className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-transparent border-b border-dashed border-white opacity-50 translate-y-px"></div>
                 </div>
@@ -309,7 +310,7 @@ export default function LandingPageClient() {
                 </div>
 
                 <div className="border-t-2 border-b-2 border-slate-200 py-6 mb-8 min-h-[6rem] flex items-center justify-center gap-2 w-full">
-                   <span className="text-slate-400 font-medium text-sm tracking-wide">{content.formHere}</span>
+                   <span className="text-slate-400 font-medium text-sm tracking-wide">{t('landing.formHere')}</span>
                 </div>
 
                 <div className="flex gap-3 justify-center w-full">
@@ -326,10 +327,10 @@ export default function LandingPageClient() {
                   <div className="bg-sky-100 text-sky-500 p-2 rounded-xl">
                     <Volume2 size={24} />
                   </div>
-                  {content.audioTitle}
+                  {t('landing.audioTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.audioDesc}
+                  {t('landing.audioDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-md bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all flex flex-col items-center">
@@ -339,16 +340,16 @@ export default function LandingPageClient() {
                 
                 <div className="grid grid-cols-2 gap-3 w-full">
                   <div className="bg-white p-4 rounded-xl border-2 border-slate-200 border-b-4 text-center font-bold text-slate-700 hover:-translate-y-1 transition-all cursor-pointer">
-                    {content.cat}
+                    {t('landing.cat')}
                   </div>
                   <div className="bg-white p-4 rounded-xl border-2 border-slate-200 border-b-4 text-center font-bold text-slate-700 hover:-translate-y-1 transition-all cursor-pointer">
-                    {content.dog}
+                    {t('landing.dog')}
                   </div>
                   <div className="bg-sky-100 p-4 rounded-xl border-2 border-sky-400 border-b-4 text-center font-bold text-sky-700 scale-105 shadow-sm transition-all cursor-pointer">
-                    {content.bird}
+                    {t('landing.bird')}
                   </div>
                   <div className="bg-white p-4 rounded-xl border-2 border-slate-200 border-b-4 text-center font-bold text-slate-700 hover:-translate-y-1 transition-all cursor-pointer">
-                    {content.fish}
+                    {t('landing.fish')}
                   </div>
                 </div>
               </div>
@@ -361,10 +362,10 @@ export default function LandingPageClient() {
                   <div className="bg-rose-100 text-rose-500 p-2 rounded-xl">
                     <Smartphone size={24} />
                   </div>
-                  {content.writeTitle}
+                  {t('landing.writeTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.writeDesc}
+                  {t('landing.writeDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg bg-white p-8 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform -rotate-1 hover:rotate-0 transition-all flex flex-col">
@@ -373,8 +374,8 @@ export default function LandingPageClient() {
                      ✍️
                    </div>
                    <div>
-                     <h4 className="text-2xl font-bold text-slate-800">{content.writeWord}</h4>
-                     <p className="text-lg text-slate-600 mt-1">{content.one}</p>
+                     <h4 className="text-2xl font-bold text-slate-800">{t('landing.writeWord')}</h4>
+                     <p className="text-lg text-slate-600 mt-1">{t('landing.one')}</p>
                      <p className="text-sm font-mono text-slate-500 mt-1">[<span className="bg-amber-100 text-amber-700 px-1 rounded">n</span>ùeng]</p>
                    </div>
                 </div>
@@ -387,11 +388,11 @@ export default function LandingPageClient() {
                 </div>
 
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-8 text-orange-800 text-sm flex gap-3 items-start shadow-sm">
-                   <span className="text-lg">💡</span> {content.consTip}
+                   <span className="text-lg">💡</span> {t('landing.consTip')}
                 </div>
 
                 <div className="border-t-2 border-b-2 border-slate-100 py-6 mb-8 flex items-center justify-center">
-                   <span className="text-slate-400 font-medium">{content.writeHere}</span>
+                   <span className="text-slate-400 font-medium">{t('landing.writeHere')}</span>
                 </div>
 
                 <div className="flex flex-wrap gap-2 justify-center">
@@ -412,10 +413,10 @@ export default function LandingPageClient() {
                   <div className="bg-amber-100 text-amber-500 p-2 rounded-xl">
                     <MessageCircle size={24} />
                   </div>
-                  {content.discussTitle}
+                  {t('landing.discussTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.discussDesc}
+                  {t('landing.discussDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-md bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all flex flex-col">
@@ -465,10 +466,10 @@ export default function LandingPageClient() {
                   <div className="bg-rose-100 text-rose-500 p-2 rounded-xl">
                     <Type size={24} />
                   </div>
-                  {content.alphaTitle}
+                  {t('landing.alphaTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.alphaDesc}
+                  {t('landing.alphaDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg flex items-center justify-center transform -rotate-2 hover:rotate-0 transition-all">
@@ -505,10 +506,10 @@ export default function LandingPageClient() {
                   <div className="bg-fuchsia-100 text-fuchsia-500 p-2 rounded-xl">
                     <Search size={24} />
                   </div>
-                  {content.detectiveTitle}
+                  {t('landing.detectiveTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.detectiveDesc}
+                  {t('landing.detectiveDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg bg-[#0F172A] rounded-[2rem] shadow-xl border-[6px] border-slate-100 transform rotate-2 hover:rotate-0 transition-all flex flex-col overflow-hidden">
@@ -572,10 +573,10 @@ export default function LandingPageClient() {
                   <div className="bg-amber-100 text-amber-500 p-2 rounded-xl">
                     <Trophy size={24} />
                   </div>
-                  {content.rankTitle}
+                  {t('landing.rankTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.rankDesc}
+                  {t('landing.rankDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform -rotate-1 hover:rotate-0 transition-all flex flex-col">
@@ -627,10 +628,10 @@ export default function LandingPageClient() {
                   <div className="bg-orange-100 text-orange-500 p-2 rounded-xl">
                     <Mic size={24} />
                   </div>
-                  {content.pronunciationTitle}
+                  {t('landing.pronunciationTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.pronunciationDesc}
+                  {t('landing.pronunciationDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg bg-[#FAFAFA] p-8 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all flex flex-col items-center">
@@ -674,9 +675,9 @@ export default function LandingPageClient() {
       {/* Metrics Section */}
       <section className="bg-emerald-500 py-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4">{content.metricsTitle}</h2>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4">{t('landing.metricsTitle')}</h2>
           <p className="text-emerald-100 text-lg md:text-xl font-medium max-w-2xl mx-auto">
-            {content.metricsDesc}
+            {t('landing.metricsDesc')}
           </p>
         </div>
       </section>
@@ -685,28 +686,28 @@ export default function LandingPageClient() {
       <section className="bg-white py-24 border-y border-slate-200">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">{content.featTitle}</h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">{content.featDesc}</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">{t('landing.featTitle')}</h2>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">{t('landing.featDesc')}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard 
               icon={<Play size={32} className="text-emerald-500 fill-emerald-500" />}
               color="bg-emerald-100"
-              title={content.f1Title}
-              text={content.f1Desc}
+              title={t('landing.f1Title')}
+              text={t('landing.f1Desc')}
             />
             <FeatureCard 
               icon={<Globe size={32} className="text-indigo-500" />}
               color="bg-indigo-100"
-              title={content.f2Title}
-              text={content.f2Desc}
+              title={t('landing.f2Title')}
+              text={t('landing.f2Desc')}
             />
             <FeatureCard 
               icon={<Smartphone size={32} className="text-rose-500" />}
               color="bg-rose-100"
-              title={content.f3Title}
-              text={content.f3Desc}
+              title={t('landing.f3Title')}
+              text={t('landing.f3Desc')}
             />
           </div>
         </div>
@@ -715,19 +716,19 @@ export default function LandingPageClient() {
       {/* Bottom CTA */}
       <section className="bg-slate-800 text-white py-24 text-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 relative z-10 text-white">{content.ctaTitle}</h2>
-        <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto relative z-10 font-medium">{content.ctaDesc}</p>
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 relative z-10 text-white">{t('landing.ctaTitle')}</h2>
+        <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto relative z-10 font-medium">{t('landing.ctaDesc')}</p>
         <Link 
           href="/learn"
           className="inline-flex w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-white px-10 py-5 pb-6 rounded-2xl font-black text-xl border-b-[6px] border-emerald-700 hover:-translate-y-1 active:translate-y-1 active:border-b-0 transition-all shadow-xl items-center justify-center uppercase tracking-widest relative z-10"
         >
-          {content.ctaBtn}
+          {t('landing.ctaBtn')}
         </Link>
       </section>
 
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-500 py-8 text-center text-sm font-medium">
-        <p>{content.footer}</p>
+        <p>{t('landing.footer')}</p>
       </footer>
     </div>
   );
