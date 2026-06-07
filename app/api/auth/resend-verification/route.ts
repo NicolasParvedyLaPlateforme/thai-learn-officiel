@@ -28,6 +28,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Votre email est déjà vérifié" }, { status: 400 });
     }
 
+    if (!user.email) {
+      return NextResponse.json({ message: "L'utilisateur n'a pas d'adresse email valide" }, { status: 400 });
+    }
+
     // Generate token
     const token = uuidv4();
     
