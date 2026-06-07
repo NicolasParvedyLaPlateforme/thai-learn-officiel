@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import CryptoJS from 'crypto-js';
 import questsConfig from '../data/quests.json';
 import { Exercise } from '../types';
 
@@ -80,20 +81,41 @@ const getLocalDateString = (date: Date = new Date()) => {
   return `${y}-${m}-${d}`;
 };
 
+const getSecretKey = () => process.env.NEXT_PUBLIC_STORAGE_SECRET || 'default-secret-fallback-key-2026';
+
 const safeStorage = {
   getItem: (name: string): string | null => {
     if (typeof window === 'undefined') return null;
     try {
-      return window.localStorage.getItem(name);
+      const value = window.localStorage.getItem(name);
+      if (!value) return null;
+
+      // Migration: si la donnée est déjà en clair (commence par '{'), on la retourne telle quelle.
+      // Au prochain changement d'état, Zustand sauvegardera et chiffrera tout automatiquement.
+      if (value.startsWith('{')) {
+        return value;
+      }
+
+      // Tentative de déchiffrement
+      const bytes = CryptoJS.AES.decrypt(value, getSecretKey());
+      const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+
+      if (!decryptedString) {
+        console.warn("Échec du déchiffrement du localStorage (donnée corrompue ou clé modifiée).");
+        return null;
+      }
+
+      return decryptedString;
     } catch (e) {
-      console.warn("localStorage not available, defaulting to empty", e);
+      console.warn("localStorage not available or decryption error", e);
       return null;
     }
   },
   setItem: (name: string, value: string): void => {
     if (typeof window === 'undefined') return;
     try {
-      window.localStorage.setItem(name, value);
+      const encryptedValue = CryptoJS.AES.encrypt(value, getSecretKey()).toString();
+      window.localStorage.setItem(name, encryptedValue);
     } catch (e) {
       console.warn("localStorage not available, unable to save state", e);
     }
@@ -224,15 +246,24 @@ export const useProgressStore = create<ProgressState>()(
       lastMergedEmail: null,
       setLastMergedEmail: (email) => set({ lastMergedEmail: email }),
       saveInProgressLesson: (key, stateData) => set((state) => {
+        const now = Date.now();
+        const newInProgress = { ...state.inProgressLessons };
+        
+        // Nettoyage des vieilles leçons (> 48h)
+        for (const k in newInProgress) {
+          if (now - newInProgress[k].lastUpdated > 48 * 60 * 60 * 1000) {
+            delete newInProgress[k];
+          }
+        }
+
         if (stateData === null) {
-          const newInProgress = { ...state.inProgressLessons };
           delete newInProgress[key];
           return { inProgressLessons: newInProgress };
         }
         return {
           inProgressLessons: {
-            ...state.inProgressLessons,
-            [key]: stateData
+            ...newInProgress,
+            [key]: { ...stateData, lastUpdated: now }
           }
         };
       }),
@@ -339,6 +370,19 @@ export const useProgressStore = create<ProgressState>()(
               oldXp: state.xp,
               newCoins: newCoins
             };
+            
+            // Sync avec l'API
+            if (typeof window !== 'undefined' && newCoins > 0) {
+              fetch('/api/user/sync-stats', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ goldAmount: newCoins })
+              }).then(res => res.json()).then(data => {
+                if (data.success && data.newGoldCoins !== undefined) {
+                  useProgressStore.setState({ goldCoins: data.newGoldCoins });
+                }
+              }).catch(console.error);
+            }
           }
           updates.xp = 0; // Reset XP at the end of the month
           updates.lastConversionMonth = currentMonth;
@@ -418,6 +462,12 @@ export const useProgressStore = create<ProgressState>()(
         get().progressQuest('learn', 'lessons', 1);
         if (stars >= 3) {
           get().progressQuest('learn', 'perfect_lesson', 1);
+        }
+        
+        // Ajouter l'XP !
+        const { xp: expectedXp } = get().getExpectedXp(convId, level, false);
+        if (expectedXp > 0) {
+          get().addXp(expectedXp);
         }
       },
 
@@ -534,6 +584,19 @@ export const useProgressStore = create<ProgressState>()(
         set((state) => ({ xp: state.xp + amount }));
         get().recordActivity();
         get().progressQuest('learn', 'xp', amount);
+
+        // Sync avec l'API
+        if (typeof window !== 'undefined' && amount > 0) {
+          fetch('/api/user/sync-stats', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ xpAmount: amount })
+          }).then(res => res.json()).then(data => {
+            if (data.success && data.newXp !== undefined) {
+              useProgressStore.setState({ xp: data.newXp });
+            }
+          }).catch(console.error);
+        }
       },
       unlockLessonManual: (lessonId) => set((state) => ({
         unlockedLessons: state.unlockedLessons 
@@ -557,7 +620,8 @@ export const useProgressStore = create<ProgressState>()(
         dailyQuests: null,
         questsDate: null,
         seenAlphabets: [],
-        lastMergedEmail: null
+        lastMergedEmail: null,
+        inProgressLessons: {}
       }),
       resetLessonLevel: (lessonId) => set((state) => ({
         lessonLevels: {
