@@ -773,7 +773,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                         <div className="mb-4">
                           <div className="flex items-center justify-between mb-4">
                             <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                              {language === 'en' ? `Letters (${letterCount}) :` : `Lettres (${letterCount}) :`}
+                              {getTranslation('auto.letters', language)} ({letterCount}) :
                             </h4>
                             <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
                           </div>
@@ -868,7 +868,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                           {getTranslation('auto.unit', language)} {i + 1}
                         </span>
                         <span className="font-bold text-slate-800">
-                          {language === 'en' ? u.titleEn : u.title}
+                          {getLocalizedField(u, 'title', language)}
                         </span>
                       </div>
                     </div>

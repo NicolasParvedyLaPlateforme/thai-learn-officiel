@@ -1,4 +1,4 @@
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { AlphabetItem } from '../lib/alphabet-data';
@@ -29,7 +29,7 @@ export function AlphabetCard({ item, onPlayAudio, minimal }: AlphabetCardProps) 
   };
 
   const colors = getClassColors();
-  const hintText = language === 'en' ? item.mnemonicHintEn : item.mnemonicHintFr;
+  const hintText = getLocalizedField(item, 'mnemonicHint', language);
 
   const displayLetter = formatCombiningChar(item.letter);
 
