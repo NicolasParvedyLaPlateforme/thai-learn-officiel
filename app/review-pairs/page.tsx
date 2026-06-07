@@ -18,7 +18,7 @@ import Footer from '../lesson/[id]/components/Footer';
 
 export default function ReviewPairsPage() {
   const router = useRouter();
-  const { completedLessons, xp, completeLesson, language, setExerciseRunning } = useProgressStore();
+  const { completedLessons, xp, addXp, language, setExerciseRunning } = useProgressStore();
   
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -94,7 +94,7 @@ export default function ReviewPairsPage() {
           setIsExiting(true);
           setTimeout(() => {
             setIsExiting(false);
-            completeLesson('review-dummy', 1); // grant 1 xp
+            addXp(3);
             if (currentIndex >= exercises.length - 3) {
               fetchMore();
             }
@@ -183,7 +183,7 @@ export default function ReviewPairsPage() {
                          setIsExiting(true);
                          setTimeout(() => {
                            setIsExiting(false);
-                           completeLesson('review-dummy', 1); // grant 1 xp
+                           addXp(3);
                            if (currentIndex >= exercises.length - 3) {
                              fetchMore();
                            }
