@@ -18,7 +18,7 @@ import { AnimatePresence, motion } from "motion/react";
 
 export default function WritingPage() {
   const router = useRouter();
-  const { completedLessons, unlockedLessons, completeLesson, language, _hasHydrated, writingConfig, showRomanization, setShowRomanization, setExerciseRunning } = useProgressStore();
+  const { completedLessons, unlockedLessons, addXp, language, _hasHydrated, writingConfig, showRomanization, setShowRomanization, setExerciseRunning } = useProgressStore();
   
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -117,7 +117,7 @@ export default function WritingPage() {
     if (!currentExercise) return;
     if (isChecking) {
       if (isCorrect) {
-          completeLesson('writing-dummy', 1);
+          addXp(3);
           
           if (currentIndex >= exercises.length - 1) {
             const urlParams = new URLSearchParams(window.location.search);
