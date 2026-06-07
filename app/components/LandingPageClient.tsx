@@ -2,7 +2,7 @@
 
 import { getTranslation } from '../hooks/useTranslation';
 import Link from 'next/link';
-import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check, Search, Trophy } from 'lucide-react';
+import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check, Search, Trophy, ChevronLeft, Eye, Mic } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useProgressStore } from '../lib/store';
 import PWAInstallButton from './PWAInstallButton';
@@ -58,6 +58,8 @@ const frContent = {
   f3Desc: 'Apprenez à orthographier vos premiers mots en sélectionnant visuellement les consonnes et voyelles appropriées.',
   detectiveTitle: 'Jeu immersif : Le Détective',
   detectiveDesc: 'Recherchez des objets cachés dans des décors thaïlandais pour apprendre le vocabulaire en contexte visuel et gagner de l\'XP.',
+  pronunciationTitle: 'Pratique de Prononciation',
+  pronunciationDesc: 'Entraînez-vous à parler avec notre outil de reconnaissance vocale. Perfectionnez votre accent et vos tons thaïs.',
   rankTitle: 'Classement & Compétition',
   rankDesc: 'Gagnez de l\'XP chaque jour, complétez vos leçons et comparez vos progrès avec ceux de la communauté.',
   ctaTitle: 'Apprenez le thaï dès maintenant.',
@@ -117,6 +119,8 @@ const enContent = {
   f3Desc: 'Learn to spell your first words by visually selecting the appropriate consonants and vowels.',
   detectiveTitle: 'Immersive Game: The Detective',
   detectiveDesc: 'Find hidden objects in Thai scenes to learn vocabulary in a visual context and earn XP.',
+  pronunciationTitle: 'Pronunciation Practice',
+  pronunciationDesc: 'Practice speaking with our speech recognition tool. Perfect your Thai accent and tones.',
   rankTitle: 'Ranking & Competition',
   rankDesc: 'Earn XP every day, complete your lessons, and compare your progress with the community.',
   ctaTitle: 'Learn Thai right now.',
@@ -507,39 +511,55 @@ export default function LandingPageClient() {
                   {content.detectiveDesc}
                 </p>
               </div>
-              <div className="flex-1 w-full max-w-lg bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-2 hover:rotate-0 transition-all flex flex-col items-center">
-                <div className="w-full h-48 bg-slate-100 rounded-2xl mb-4 relative overflow-hidden border-2 border-slate-200">
-                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1000')] bg-cover bg-center opacity-70"></div>
+              <div className="flex-1 w-full max-w-lg bg-[#0F172A] rounded-[2rem] shadow-xl border-[6px] border-slate-100 transform rotate-2 hover:rotate-0 transition-all flex flex-col overflow-hidden">
+                {/* Image section */}
+                <div className="w-full h-56 relative overflow-hidden">
+                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1000')] bg-cover bg-center opacity-90"></div>
                    
-                   {/* Target reticle */}
-                   <div className="absolute top-1/2 left-1/3 w-16 h-16 border-4 border-emerald-400 rounded-full flex items-center justify-center -translate-x-1/2 -translate-y-1/2 shadow-[0_0_0_9999px_rgba(0,0,0,0.5)] z-10 transition-all duration-1000">
-                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                      <div className="absolute -top-6 bg-white text-emerald-600 font-bold px-2 py-1 rounded text-xs whitespace-nowrap shadow-md">
-                        {content.cat} (แมว)
-                      </div>
-                   </div>
+                   {/* Green found circles on image */}
+                   <div className="absolute top-6 left-12 w-28 h-28 border-[3px] border-[#00D084] bg-[#00D084]/20 rounded-full"></div>
+                   <div className="absolute bottom-4 right-4 w-24 h-24 border-[3px] border-[#00D084] bg-[#00D084]/20 rounded-full"></div>
                 </div>
                 
-                <div className="flex gap-4 w-full justify-center mt-2">
-                   <div className="flex flex-col items-center gap-1">
-                      <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center border-2 border-emerald-200 shadow-sm">
-                         แมว
-                      </div>
-                      <div className="flex gap-0.5 mt-1">
-                         <Star size={12} className="fill-amber-400 text-amber-400" />
-                         <Star size={12} className="fill-amber-400 text-amber-400" />
-                         <Star size={12} className="fill-amber-400 text-amber-400" />
+                {/* Bottom bar */}
+                <div className="bg-[#F8F6F0] p-4 flex items-center justify-between">
+                   {/* Left side: Back & Stars/Progress */}
+                   <div className="flex items-center gap-2">
+                      <ChevronLeft size={20} className="text-slate-600 cursor-pointer" />
+                      <div className="flex flex-col">
+                         <div className="flex gap-0.5 text-amber-400 mb-1">
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                         </div>
+                         <div className="flex items-center gap-2">
+                            <div className="w-14 h-1.5 bg-slate-300 rounded-full overflow-hidden">
+                               <div className="w-1/3 h-full bg-[#00D084] rounded-full"></div>
+                            </div>
+                            <span className="text-[10px] font-bold text-slate-500">2/6</span>
+                         </div>
                       </div>
                    </div>
-                   <div className="flex flex-col items-center gap-1 opacity-50">
-                      <div className="w-12 h-12 bg-white text-slate-400 rounded-xl flex items-center justify-center border-2 border-slate-200 border-dashed">
-                         หมา
+                   
+                   {/* Middle: Word, Sound, Hint */}
+                   <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-[#00D084] rounded-full flex items-center justify-center text-white shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                         <Volume2 size={20} />
+                      </div>
+                      <div className="flex flex-col items-center">
+                         <div className="text-2xl font-bold text-slate-800 font-thai leading-none mb-1">หน้าต่าง</div>
+                         <div className="bg-[#EAE4D3] text-slate-700 text-[9px] font-bold px-3 py-1 rounded-full flex items-center gap-1 cursor-pointer hover:bg-[#E0D8C3] transition-colors">
+                            <Eye size={10} />
+                            Voir l'indice
+                         </div>
                       </div>
                    </div>
-                   <div className="flex flex-col items-center gap-1 opacity-50">
-                      <div className="w-12 h-12 bg-white text-slate-400 rounded-xl flex items-center justify-center border-2 border-slate-200 border-dashed">
-                         นก
-                      </div>
+                   
+                   {/* Right: Magnifying Glass */}
+                   <div className="w-10 h-10 bg-[#38BDF8] rounded-full flex items-center justify-center text-white border-2 border-slate-800/10 shadow-sm cursor-pointer hover:scale-105 transition-transform">
+                      <Search size={18} />
                    </div>
                 </div>
               </div>
@@ -596,6 +616,53 @@ export default function LandingPageClient() {
                           9,850 XP <span className="text-xs bg-indigo-200 text-indigo-700 px-1.5 py-0.5 rounded font-bold">+50</span>
                        </div>
                     </div>
+                 </div>
+              </div>
+            </div>
+
+            {/* Showcase 9: Pronunciation */}
+            <div className="flex flex-col md:flex-row items-center gap-12">
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3">
+                  <div className="bg-orange-100 text-orange-500 p-2 rounded-xl">
+                    <Mic size={24} />
+                  </div>
+                  {content.pronunciationTitle}
+                </h3>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
+                  {content.pronunciationDesc}
+                </p>
+              </div>
+              <div className="flex-1 w-full max-w-lg bg-[#FAFAFA] p-8 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all flex flex-col items-center">
+                 
+                 {/* Progress */}
+                 <div className="w-full flex justify-between text-xs font-bold text-slate-400 mb-2 px-1">
+                    <span>0 / 33</span>
+                    <span>0%</span>
+                 </div>
+                 <div className="w-full h-2.5 bg-[#E2E8F0] rounded-full mb-10">
+                    <div className="w-0 h-full bg-blue-500 rounded-full"></div>
+                 </div>
+                 
+                 {/* Flashcard */}
+                 <div className="w-full bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-slate-200 p-8 flex flex-col items-center relative mb-12">
+                    <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-100 transition-colors">
+                       <Play size={14} className="ml-0.5" />
+                    </div>
+                    
+                    <div className="text-5xl font-thai text-slate-800 mb-5 mt-2">สบายดี</div>
+                    <div className="bg-slate-100 text-slate-500 px-3 py-1 rounded font-mono text-sm mb-4">sà-baai dii</div>
+                    <div className="text-slate-600 font-medium">je vais bien</div>
+                 </div>
+                 
+                 {/* Mic Button */}
+                 <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 bg-[#F97316] rounded-full flex items-center justify-center text-white border-b-[4px] border-[#C2410C] shadow-md cursor-pointer hover:translate-y-1 hover:border-b-0 transition-all mb-4">
+                       <Mic size={28} />
+                    </div>
+                    <p className="text-center text-[11px] text-slate-400 max-w-[220px] leading-tight">
+                       Appuyez sur le micro et lisez le mot thaï à voix haute et clairement.
+                    </p>
                  </div>
               </div>
             </div>
