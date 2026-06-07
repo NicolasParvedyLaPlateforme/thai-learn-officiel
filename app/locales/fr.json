@@ -311,5 +311,9 @@
   "auth.pseudo_label": "Votre Pseudo (Affiché dans le classement)",
   "auth.pseudo_placeholder": "Ex: NinjaThai",
   "auth.current_password": "Mot de passe actuel",
-  "alphabet.think_mnemonic": "Pensez au moyen mnémotechnique : \"{0}\""
+  "alphabet.think_mnemonic": "Pensez au moyen mnémotechnique : \"{0}\"",
+  "auto.resume_lesson": "Partie en cours",
+  "auto.resume_lesson_desc": "Vous avez commencé ce niveau précédemment. Voulez-vous reprendre là où vous en étiez ?",
+  "auto.resume_button": "Reprendre la partie",
+  "auto.restart_button": "Recommencer à zéro"
 }

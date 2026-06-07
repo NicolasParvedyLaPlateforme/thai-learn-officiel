@@ -310,5 +310,10 @@
   "auth.pseudo_label": "Tu Seudónimo (Mostrado en la clasificación)",
   "auth.pseudo_placeholder": "Ej: NinjaThai",
   "auth.current_password": "Contraseña actual",
-  "alphabet.think_mnemonic": "Piensa en la mnemotecnia visual: \"{0}\""
+  "alphabet.think_mnemonic": "Piensa en la mnemotecnia visual: \"{0}\"",
+  "auto.your_progress_will_be_saved": "Tu progreso se ha guardado. Puedes volver en cualquier momento para terminar este ejercicio.",
+  "auto.resume_lesson": "Lección en progreso",
+  "auto.resume_lesson_desc": "Comenzaste este nivel anteriormente. ¿Quieres reanudar donde lo dejaste?",
+  "auto.resume_button": "Reanudar lección",
+  "auto.restart_button": "Empezar de nuevo"
 }

@@ -310,5 +310,10 @@
   "auth.pseudo_label": "Il tuo Nome Utente (Mostrato in classifica)",
   "auth.pseudo_placeholder": "Es: NinjaThai",
   "auth.current_password": "Password attuale",
-  "alphabet.think_mnemonic": "Pensa alla mnemonica visiva: \"{0}\""
+  "alphabet.think_mnemonic": "Pensa alla mnemonica visiva: \"{0}\"",
+  "auto.your_progress_will_be_saved": "I tuoi progressi sono salvati. Puoi tornare in qualsiasi momento per finire questo esercizio.",
+  "auto.resume_lesson": "Lezione in corso",
+  "auto.resume_lesson_desc": "Hai iniziato questo livello in precedenza. Vuoi riprendere da dove eri rimasto?",
+  "auto.resume_button": "Riprendi lezione",
+  "auto.restart_button": "Ricomincia"
 }

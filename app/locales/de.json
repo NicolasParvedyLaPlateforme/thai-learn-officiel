@@ -310,5 +310,10 @@
   "auth.pseudo_label": "Ihr Benutzername (wird in der Bestenliste angezeigt)",
   "auth.pseudo_placeholder": "Bsp: NinjaThai",
   "auth.current_password": "Aktuelles Passwort",
-  "alphabet.think_mnemonic": "Denk an die visuelle Eselsbrücke: \"{0}\""
+  "alphabet.think_mnemonic": "Denk an die visuelle Eselsbrücke: \"{0}\"",
+  "auto.your_progress_will_be_saved": "Dein Fortschritt wird gespeichert. Du kannst jederzeit zurückkehren, um diese Übung zu beenden.",
+  "auto.resume_lesson": "Lektion in Bearbeitung",
+  "auto.resume_lesson_desc": "Du hast dieses Level bereits begonnen. Möchtest du dort weitermachen, wo du aufgehört hast?",
+  "auto.resume_button": "Lektion fortsetzen",
+  "auto.restart_button": "Neu starten"
 }

@@ -477,23 +477,23 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             <RotateCcw size={32} className="stroke-[2.5]" />
           </div>
           <h2 className="text-2xl font-extrabold text-slate-800 mb-2">
-            Partie en cours
+            {getTranslation('auto.resume_lesson', language) || 'Partie en cours'}
           </h2>
           <p className="text-slate-500 font-medium mb-8 text-sm">
-            Vous avez commencé ce niveau précédemment. Voulez-vous reprendre là où vous en étiez ?
+            {getTranslation('auto.resume_lesson_desc', language) || 'Vous avez commencé ce niveau précédemment. Voulez-vous reprendre là où vous en étiez ?'}
           </p>
           <div className="flex flex-col w-full gap-3">
             <button
               onClick={handleResume}
               className="w-full bg-amber-400 text-white font-extrabold rounded-2xl py-4 transition-all shadow-sm border-b-4 border-amber-500 active:translate-y-1 active:border-b-0 hover:bg-amber-300"
             >
-              Reprendre la partie
+              {getTranslation('auto.resume_button', language) || 'Reprendre la partie'}
             </button>
             <button
               onClick={handleRestart}
               className="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold rounded-2xl py-4 transition-all"
             >
-              Recommencer à zéro
+              {getTranslation('auto.restart_button', language) || 'Recommencer à zéro'}
             </button>
           </div>
         </div>
