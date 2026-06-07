@@ -309,5 +309,6 @@
   "auth.my_pseudo": "Il mio nome utente",
   "auth.pseudo_label": "Il tuo Nome Utente (Mostrato in classifica)",
   "auth.pseudo_placeholder": "Es: NinjaThai",
-  "auth.current_password": "Password attuale"
+  "auth.current_password": "Password attuale",
+  "alphabet.think_mnemonic": "Pensa alla mnemonica visiva: \"{0}\""
 }

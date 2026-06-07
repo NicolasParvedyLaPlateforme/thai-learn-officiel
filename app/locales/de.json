@@ -309,5 +309,6 @@
   "auth.my_pseudo": "Mein Benutzername",
   "auth.pseudo_label": "Ihr Benutzername (wird in der Bestenliste angezeigt)",
   "auth.pseudo_placeholder": "Bsp: NinjaThai",
-  "auth.current_password": "Aktuelles Passwort"
+  "auth.current_password": "Aktuelles Passwort",
+  "alphabet.think_mnemonic": "Denk an die visuelle Eselsbrücke: \"{0}\""
 }

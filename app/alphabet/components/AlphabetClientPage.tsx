@@ -238,9 +238,9 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
               >
                 <div className="relative z-10 w-full flex flex-col items-start text-left">
                   <div className="flex justify-between items-start w-full mb-1">
-                     <h2 className="text-xl sm:text-2xl font-extrabold mb-1 text-white drop-shadow-md uppercase tracking-tight break-words pr-2">{mounted && language === 'en' ? unit.titleEn : unit.title}</h2>
+                     <h2 className="text-xl sm:text-2xl font-extrabold mb-1 text-white drop-shadow-md uppercase tracking-tight break-words pr-2">{mounted ? getLocalizedField(unit, 'title', language) : unit.title}</h2>
                   </div>
-                  <p className="text-white/90 mb-4 font-medium text-sm sm:text-base leading-snug drop-shadow">{mounted && language === 'en' ? unit.descriptionEn : unit.description}</p>
+                  <p className="text-white/90 mb-4 font-medium text-sm sm:text-base leading-snug drop-shadow">{mounted ? getLocalizedField(unit, 'description', language) : unit.description}</p>
                   
                   <div className="w-full">
                     <div className="flex flex-col">
@@ -381,7 +381,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                              </div>
                            )}
                            <h4 className={`font-extrabold text-xl text-slate-800`}>
-                             {mounted && language === 'en' ? lesson.titleEn : lesson.title}
+                             {mounted ? `${getTranslation(lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${lesson.id.split('-').pop()}` : lesson.title}
                            </h4>
                            <span className={`text-base font-bold mt-1 tracking-wide text-slate-500 font-thai`}>
                              {lesson.items.map(i => formatCombiningChar(i.letter)).join(' • ')}
@@ -460,8 +460,8 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                     className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-xl relative overflow-hidden border-b-[6px] ${unit.borderClass} cursor-pointer active:scale-[0.99] transition-transform`}
                   >
                     <div className="relative z-10">
-                      <h2 className="text-4xl font-extrabold mb-3">{language === 'en' ? unit.titleEn : unit.title}</h2>
-                      <p className={`${unit.lightTextClass} mb-8 font-medium text-lg`}>{language === 'en' ? unit.descriptionEn : unit.description}</p>
+                      <h2 className="text-4xl font-extrabold mb-3">{mounted ? getLocalizedField(unit, 'title', language) : unit.title}</h2>
+                      <p className={`${unit.lightTextClass} mb-8 font-medium text-lg`}>{mounted ? getLocalizedField(unit, 'description', language) : unit.description}</p>
                                          {/* Progress Bar + Continue Button */}
                       <div className="flex items-center gap-6">
                         <div className="flex-1">
@@ -568,7 +568,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                                )}
                                <div className="flex flex-col items-start text-left flex-1 md:pr-4">
                                  <h4 className="font-extrabold text-xl text-slate-800">
-                                   {language === 'en' ? lesson.titleEn : lesson.title}
+                                   {mounted ? `${getTranslation(lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${lesson.id.split('-').pop()}` : lesson.title}
                                  </h4>
                                  <span className={`text-base font-bold mt-1 text-slate-500 font-thai tracking-wide`}>
                                    {lesson.items.map(i => formatCombiningChar(i.letter)).join(' • ')}
@@ -672,7 +672,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
 
                       <div className="p-6 pt-5 pb-2 text-center flex flex-col items-center">
                         <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
-                          {language === 'en' ? selectedLesson.lesson.titleEn : selectedLesson.lesson.title}
+                          {mounted ? `${getTranslation(selectedLesson.lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${selectedLesson.lesson.id.split('-').pop()}` : selectedLesson.lesson.title}
                         </h3>
                         
                         <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">

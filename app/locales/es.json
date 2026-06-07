@@ -309,5 +309,6 @@
   "auth.my_pseudo": "Mi seudónimo",
   "auth.pseudo_label": "Tu Seudónimo (Mostrado en la clasificación)",
   "auth.pseudo_placeholder": "Ej: NinjaThai",
-  "auth.current_password": "Contraseña actual"
+  "auth.current_password": "Contraseña actual",
+  "alphabet.think_mnemonic": "Piensa en la mnemotecnia visual: \"{0}\""
 }

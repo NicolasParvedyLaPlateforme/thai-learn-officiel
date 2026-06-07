@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../../../../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../../../../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useProgressStore } from '../../../../lib/store';
@@ -348,7 +348,7 @@ function AlphabetLessonContent() {
                 
                 {(opt.mnemonicHintEn || opt.mnemonicHintFr) && (
                   <span className="w-full text-center text-[10px] md:text-xs leading-tight px-0.5 opacity-90 font-semibold mt-1 md:mt-2 mb-1 hidden sm:block">
-                    {language === 'en' ? opt.mnemonicHintEn : opt.mnemonicHintFr}
+                    {getLocalizedField(opt, 'mnemonicHint', language)}
                   </span>
                 )}
               </button>
@@ -474,9 +474,7 @@ function AlphabetLessonContent() {
                          </p>
                          {(currentExercise.item.mnemonicHintEn || currentExercise.item.mnemonicHintFr) && (
                            <p className="text-sm border-l-2 border-indigo-200 pl-2 opacity-90">
-                             {language === 'en' 
-                               ? `Think of the visual mnemonic: "${currentExercise.item.mnemonicHintEn}".` 
-                               : `Pensez au moyen mnémotechnique : "${currentExercise.item.mnemonicHintFr}".`}
+                             {getTranslation('alphabet.think_mnemonic', language).replace('{0}', getLocalizedField(currentExercise.item, 'mnemonicHint', language))}
                            </p>
                          )}
                          {currentExercise.item.type === 'vowel' && (
