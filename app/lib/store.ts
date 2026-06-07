@@ -224,15 +224,24 @@ export const useProgressStore = create<ProgressState>()(
       lastMergedEmail: null,
       setLastMergedEmail: (email) => set({ lastMergedEmail: email }),
       saveInProgressLesson: (key, stateData) => set((state) => {
+        const now = Date.now();
+        const newInProgress = { ...state.inProgressLessons };
+        
+        // Nettoyage des vieilles leçons (> 48h)
+        for (const k in newInProgress) {
+          if (now - newInProgress[k].lastUpdated > 48 * 60 * 60 * 1000) {
+            delete newInProgress[k];
+          }
+        }
+
         if (stateData === null) {
-          const newInProgress = { ...state.inProgressLessons };
           delete newInProgress[key];
           return { inProgressLessons: newInProgress };
         }
         return {
           inProgressLessons: {
-            ...state.inProgressLessons,
-            [key]: stateData
+            ...newInProgress,
+            [key]: { ...stateData, lastUpdated: now }
           }
         };
       }),
@@ -339,6 +348,19 @@ export const useProgressStore = create<ProgressState>()(
               oldXp: state.xp,
               newCoins: newCoins
             };
+            
+            // Sync avec l'API
+            if (typeof window !== 'undefined' && newCoins > 0) {
+              fetch('/api/user/sync-stats', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ goldAmount: newCoins })
+              }).then(res => res.json()).then(data => {
+                if (data.success && data.newGoldCoins !== undefined) {
+                  useProgressStore.setState({ goldCoins: data.newGoldCoins });
+                }
+              }).catch(console.error);
+            }
           }
           updates.xp = 0; // Reset XP at the end of the month
           updates.lastConversionMonth = currentMonth;
@@ -418,6 +440,12 @@ export const useProgressStore = create<ProgressState>()(
         get().progressQuest('learn', 'lessons', 1);
         if (stars >= 3) {
           get().progressQuest('learn', 'perfect_lesson', 1);
+        }
+        
+        // Ajouter l'XP !
+        const { xp: expectedXp } = get().getExpectedXp(convId, level, false);
+        if (expectedXp > 0) {
+          get().addXp(expectedXp);
         }
       },
 
@@ -534,6 +562,19 @@ export const useProgressStore = create<ProgressState>()(
         set((state) => ({ xp: state.xp + amount }));
         get().recordActivity();
         get().progressQuest('learn', 'xp', amount);
+
+        // Sync avec l'API
+        if (typeof window !== 'undefined' && amount > 0) {
+          fetch('/api/user/sync-stats', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ xpAmount: amount })
+          }).then(res => res.json()).then(data => {
+            if (data.success && data.newXp !== undefined) {
+              useProgressStore.setState({ xp: data.newXp });
+            }
+          }).catch(console.error);
+        }
       },
       unlockLessonManual: (lessonId) => set((state) => ({
         unlockedLessons: state.unlockedLessons 
@@ -557,7 +598,8 @@ export const useProgressStore = create<ProgressState>()(
         dailyQuests: null,
         questsDate: null,
         seenAlphabets: [],
-        lastMergedEmail: null
+        lastMergedEmail: null,
+        inProgressLessons: {}
       }),
       resetLessonLevel: (lessonId) => set((state) => ({
         lessonLevels: {

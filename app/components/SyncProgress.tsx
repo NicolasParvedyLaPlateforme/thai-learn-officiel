@@ -72,6 +72,10 @@ export default function SyncProgress() {
               lessonStars: mergedLessonStars,
               completedConversations: mergedCompletedConversations,
               conversationStars: mergedConversationStars,
+              dailyQuests: localState.dailyQuests || dbState.dailyQuests,
+              questsDate: localState.questsDate || dbState.questsDate,
+              reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
+              inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
               lastMergedEmail: userEmail,
             };
 
@@ -107,6 +111,12 @@ export default function SyncProgress() {
               seenAlphabets: Array.from(new Set([...(dbState.seenAlphabets || []), ...(localState.seenAlphabets || [])])),
               lessonLevels: mergedLessonLevels,
               lessonStars: mergedLessonStars,
+              completedConversations: { ...(dbState.completedConversations || {}), ...(localState.completedConversations || {}) },
+              conversationStars: { ...(dbState.conversationStars || {}), ...(localState.conversationStars || {}) },
+              dailyQuests: localState.dailyQuests || dbState.dailyQuests,
+              questsDate: localState.questsDate || dbState.questsDate,
+              reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
+              inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
               lastMergedEmail: userEmail,
             };
 
