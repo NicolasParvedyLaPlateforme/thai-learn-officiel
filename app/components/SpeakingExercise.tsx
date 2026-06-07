@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState, useEffect, useRef } from 'react';
 import { Word, Phrase } from '../types';
 import { Mic, MicOff, CheckCircle, XCircle, ArrowRight, Play, Loader2, RefreshCw } from 'lucide-react';
@@ -268,7 +268,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
              </p>
           )}
           <p className="text-xl text-slate-600 font-medium">
-             {language === 'en' && currentItem.en ? currentItem.en : currentItem.fr}
+             {getLocalizedField(currentItem, '', language)}
           </p>
        </div>
 
