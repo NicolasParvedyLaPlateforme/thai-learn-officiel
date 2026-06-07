@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import CryptoJS from 'crypto-js';
 import questsConfig from '../data/quests.json';
 import { Exercise } from '../types';
 
@@ -80,20 +81,41 @@ const getLocalDateString = (date: Date = new Date()) => {
   return `${y}-${m}-${d}`;
 };
 
+const getSecretKey = () => process.env.NEXT_PUBLIC_STORAGE_SECRET || 'default-secret-fallback-key-2026';
+
 const safeStorage = {
   getItem: (name: string): string | null => {
     if (typeof window === 'undefined') return null;
     try {
-      return window.localStorage.getItem(name);
+      const value = window.localStorage.getItem(name);
+      if (!value) return null;
+
+      // Migration: si la donnée est déjà en clair (commence par '{'), on la retourne telle quelle.
+      // Au prochain changement d'état, Zustand sauvegardera et chiffrera tout automatiquement.
+      if (value.startsWith('{')) {
+        return value;
+      }
+
+      // Tentative de déchiffrement
+      const bytes = CryptoJS.AES.decrypt(value, getSecretKey());
+      const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+
+      if (!decryptedString) {
+        console.warn("Échec du déchiffrement du localStorage (donnée corrompue ou clé modifiée).");
+        return null;
+      }
+
+      return decryptedString;
     } catch (e) {
-      console.warn("localStorage not available, defaulting to empty", e);
+      console.warn("localStorage not available or decryption error", e);
       return null;
     }
   },
   setItem: (name: string, value: string): void => {
     if (typeof window === 'undefined') return;
     try {
-      window.localStorage.setItem(name, value);
+      const encryptedValue = CryptoJS.AES.encrypt(value, getSecretKey()).toString();
+      window.localStorage.setItem(name, encryptedValue);
     } catch (e) {
       console.warn("localStorage not available, unable to save state", e);
     }
