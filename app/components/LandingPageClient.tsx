@@ -1,8 +1,8 @@
 'use client';
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, useTranslation } from '../hooks/useTranslation';
 import Link from 'next/link';
-import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check } from 'lucide-react';
+import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check, Search, Trophy, ChevronLeft, Eye, Mic } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useProgressStore } from '../lib/store';
 import PWAInstallButton from './PWAInstallButton';
@@ -46,8 +46,8 @@ const frContent = {
   discussDesc: 'Écoutez des conversations et entraînez-vous à répondre en choisissant la bonne option selon le contexte.',
   alphaTitle: 'Maîtriser l\'Alphabet',
   alphaDesc: 'Mémorisez les consonnes et voyelles avec des moyens mnémotechniques simples et ludiques.',
-  metricsTitle: 'Près de 1000 mots et phrases classés',
-  metricsDesc: "Une base de données riche et étudiée, pensée pour vous faire progresser des bases jusqu'aux discussions avancées.",
+  metricsTitle: '500 mots et 500 phrases classés',
+  metricsDesc: 'Un vocabulaire soigneusement sélectionné pour vous faire atteindre le niveau nécessaire pour voyager en Thaïlande en toute sérénité.',
   featTitle: 'Pourquoi choisir ThaiLearn ?',
   featDesc: 'Notre méthode interactive se concentre sur ce dont vous avez besoin pour communiquer rapidement.',
   f1Title: 'Apprentissage par le jeu',
@@ -56,6 +56,12 @@ const frContent = {
   f2Desc: 'Chaque mot possède une prononciation au format phonétique et audio de haute qualité avec les accents justes.',
   f3Title: 'L\'écriture facilitée',
   f3Desc: 'Apprenez à orthographier vos premiers mots en sélectionnant visuellement les consonnes et voyelles appropriées.',
+  detectiveTitle: 'Jeu immersif : Le Détective',
+  detectiveDesc: 'Recherchez des objets cachés dans des décors thaïlandais pour apprendre le vocabulaire en contexte visuel et gagner de l\'XP.',
+  pronunciationTitle: 'Pratique de Prononciation',
+  pronunciationDesc: 'Entraînez-vous à parler avec notre outil de reconnaissance vocale. Perfectionnez votre accent et vos tons thaïs.',
+  rankTitle: 'Classement & Compétition',
+  rankDesc: 'Gagnez de l\'XP chaque jour, complétez vos leçons et comparez vos progrès avec ceux de la communauté.',
   ctaTitle: 'Apprenez le thaï dès maintenant.',
   ctaDesc: 'Rejoignez-nous et commencez l\'Unité 1. Mettez-vous directement dans le bain, aucune inscription requise pour commencer !',
   ctaBtn: "C'est parti !",
@@ -101,8 +107,8 @@ const enContent = {
   discussDesc: 'Listen to real conversations and practice answering them by picking the right response according to context.',
   alphaTitle: 'Master the Alphabet',
   alphaDesc: 'Memorize consonants and vowels with simple and fun mnemonic devices.',
-  metricsTitle: 'Nearly 1000 ranked words and phrases',
-  metricsDesc: "A rich and carefully studied database, designed to take you from the basics to advanced discussions.",
+  metricsTitle: '500 words and 500 sentences',
+  metricsDesc: "Carefully selected vocabulary designed to help you reach the necessary level to travel in Thailand with confidence.",
   featTitle: 'Why choose ThaiLearn?',
   featDesc: 'Our interactive method focuses on what you need to communicate quickly.',
   f1Title: 'Learning through play',
@@ -111,6 +117,12 @@ const enContent = {
   f2Desc: 'Every word has pronunciation in phonetic format and high-quality audio with the right accents.',
   f3Title: 'Writing made easy',
   f3Desc: 'Learn to spell your first words by visually selecting the appropriate consonants and vowels.',
+  detectiveTitle: 'Immersive Game: The Detective',
+  detectiveDesc: 'Find hidden objects in Thai scenes to learn vocabulary in a visual context and earn XP.',
+  pronunciationTitle: 'Pronunciation Practice',
+  pronunciationDesc: 'Practice speaking with our speech recognition tool. Perfect your Thai accent and tones.',
+  rankTitle: 'Ranking & Competition',
+  rankDesc: 'Earn XP every day, complete your lessons, and compare your progress with the community.',
   ctaTitle: 'Learn Thai right now.',
   ctaDesc: 'Join us and start Unit 1. Jump right in, no registration required to begin!',
   ctaBtn: "Let's go!",
@@ -120,6 +132,7 @@ const enContent = {
 export default function LandingPageClient() {
   const [mounted, setMounted] = useState(false);
   const { language, autoDetectLanguage } = useProgressStore();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setMounted(true);
@@ -156,10 +169,10 @@ export default function LandingPageClient() {
           
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-800 leading-[1.1] mb-6 drop-shadow-sm">
-              {content.title1}<span className="text-emerald-500">Thaï</span>{content.title2}
+              {t('landing.title1')}<span className="text-emerald-500">Thaï</span>{t('landing.title2')}
             </h1>
             <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-xl mx-auto md:mx-0 font-medium leading-relaxed">
-              {content.heroDesc}
+              {t('landing.heroDesc')}
             </p>
             
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
@@ -167,15 +180,15 @@ export default function LandingPageClient() {
                 href="/learn"
                 className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 pb-5 rounded-2xl font-bold text-lg border-b-4 border-emerald-700 hover:-translate-y-1 active:translate-y-1 active:border-b-0 transition-all shadow-lg flex items-center justify-center uppercase tracking-wider"
               >
-                {content.startBtn}
+                {t('landing.startBtn')}
               </Link>
             </div>
             
             <div className="mt-8 flex items-center justify-center md:justify-start gap-4 text-sm font-bold text-slate-400 uppercase tracking-widest">
               <Star className="text-amber-400 fill-amber-400" size={18} />
-              {content.free}
+              {t('landing.free')}
               <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-              {content.noAds}
+              {t('landing.noAds')}
             </div>
           </div>
           
@@ -196,8 +209,8 @@ export default function LandingPageClient() {
               </div>
               
               <div className="bg-emerald-500 text-white rounded-3xl p-6 mb-6 shadow-md border-b-4 border-emerald-700 relative overflow-hidden">
-                <h3 className="font-extrabold text-2xl relative z-10">{content.unit1}</h3>
-                <p className="text-emerald-100 mt-2 font-medium relative z-10">{content.unit1Desc}</p>
+                <h3 className="font-extrabold text-2xl relative z-10">{t('landing.unit1')}</h3>
+                <p className="text-emerald-100 mt-2 font-medium relative z-10">{t('landing.unit1Desc')}</p>
                 <BookOpen size={100} className="absolute -bottom-6 -right-6 text-black opacity-10" />
               </div>
               
@@ -230,8 +243,8 @@ export default function LandingPageClient() {
       <section className="bg-slate-50 py-24 border-t border-slate-200 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-slate-800">{content.methodTitle}</h2>
-            <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto font-medium">{content.methodDesc}</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-slate-800">{t('landing.methodTitle')}</h2>
+            <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto font-medium">{t('landing.methodDesc')}</p>
           </div>
 
           <div className="flex flex-col gap-24">
@@ -243,10 +256,10 @@ export default function LandingPageClient() {
                   <div className="bg-indigo-100 text-indigo-500 p-2 rounded-xl">
                     <CheckCircle size={24} />
                   </div>
-                  {content.pairMatchTitle}
+                  {t('landing.pairMatchTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.pairMatchDesc}
+                  {t('landing.pairMatchDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-md bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all">
@@ -271,10 +284,10 @@ export default function LandingPageClient() {
                   <div className="bg-fuchsia-100 text-fuchsia-500 p-2 rounded-xl">
                     <BookOpen size={24} />
                   </div>
-                  {content.sentenceTitle}
+                  {t('landing.sentenceTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.sentenceDesc}
+                  {t('landing.sentenceDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg bg-[#FAFAFA] p-8 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform -rotate-1 hover:rotate-0 transition-all flex flex-col items-center">
@@ -284,7 +297,7 @@ export default function LandingPageClient() {
                 </div>
                 
                 <div className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight text-center relative w-fit mb-6">
-                  {content.sentenceTrB1} {/* Translate to 'merci (femme)' / 'hello (female)' */}
+                  {t('landing.sentenceTrB1')} {/* Translate to 'merci (femme)' / 'hello (female)' */}
                   <div className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-slate-300 border-b border-dashed border-slate-400 opacity-50"></div>
                   <div className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-transparent border-b border-dashed border-white opacity-50 translate-y-px"></div>
                 </div>
@@ -297,7 +310,7 @@ export default function LandingPageClient() {
                 </div>
 
                 <div className="border-t-2 border-b-2 border-slate-200 py-6 mb-8 min-h-[6rem] flex items-center justify-center gap-2 w-full">
-                   <span className="text-slate-400 font-medium text-sm tracking-wide">{content.formHere}</span>
+                   <span className="text-slate-400 font-medium text-sm tracking-wide">{t('landing.formHere')}</span>
                 </div>
 
                 <div className="flex gap-3 justify-center w-full">
@@ -314,10 +327,10 @@ export default function LandingPageClient() {
                   <div className="bg-sky-100 text-sky-500 p-2 rounded-xl">
                     <Volume2 size={24} />
                   </div>
-                  {content.audioTitle}
+                  {t('landing.audioTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.audioDesc}
+                  {t('landing.audioDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-md bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all flex flex-col items-center">
@@ -327,16 +340,16 @@ export default function LandingPageClient() {
                 
                 <div className="grid grid-cols-2 gap-3 w-full">
                   <div className="bg-white p-4 rounded-xl border-2 border-slate-200 border-b-4 text-center font-bold text-slate-700 hover:-translate-y-1 transition-all cursor-pointer">
-                    {content.cat}
+                    {t('landing.cat')}
                   </div>
                   <div className="bg-white p-4 rounded-xl border-2 border-slate-200 border-b-4 text-center font-bold text-slate-700 hover:-translate-y-1 transition-all cursor-pointer">
-                    {content.dog}
+                    {t('landing.dog')}
                   </div>
                   <div className="bg-sky-100 p-4 rounded-xl border-2 border-sky-400 border-b-4 text-center font-bold text-sky-700 scale-105 shadow-sm transition-all cursor-pointer">
-                    {content.bird}
+                    {t('landing.bird')}
                   </div>
                   <div className="bg-white p-4 rounded-xl border-2 border-slate-200 border-b-4 text-center font-bold text-slate-700 hover:-translate-y-1 transition-all cursor-pointer">
-                    {content.fish}
+                    {t('landing.fish')}
                   </div>
                 </div>
               </div>
@@ -349,10 +362,10 @@ export default function LandingPageClient() {
                   <div className="bg-rose-100 text-rose-500 p-2 rounded-xl">
                     <Smartphone size={24} />
                   </div>
-                  {content.writeTitle}
+                  {t('landing.writeTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.writeDesc}
+                  {t('landing.writeDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg bg-white p-8 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform -rotate-1 hover:rotate-0 transition-all flex flex-col">
@@ -361,8 +374,8 @@ export default function LandingPageClient() {
                      ✍️
                    </div>
                    <div>
-                     <h4 className="text-2xl font-bold text-slate-800">{content.writeWord}</h4>
-                     <p className="text-lg text-slate-600 mt-1">{content.one}</p>
+                     <h4 className="text-2xl font-bold text-slate-800">{t('landing.writeWord')}</h4>
+                     <p className="text-lg text-slate-600 mt-1">{t('landing.one')}</p>
                      <p className="text-sm font-mono text-slate-500 mt-1">[<span className="bg-amber-100 text-amber-700 px-1 rounded">n</span>ùeng]</p>
                    </div>
                 </div>
@@ -375,11 +388,11 @@ export default function LandingPageClient() {
                 </div>
 
                 <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-8 text-orange-800 text-sm flex gap-3 items-start shadow-sm">
-                   <span className="text-lg">💡</span> {content.consTip}
+                   <span className="text-lg">💡</span> {t('landing.consTip')}
                 </div>
 
                 <div className="border-t-2 border-b-2 border-slate-100 py-6 mb-8 flex items-center justify-center">
-                   <span className="text-slate-400 font-medium">{content.writeHere}</span>
+                   <span className="text-slate-400 font-medium">{t('landing.writeHere')}</span>
                 </div>
 
                 <div className="flex flex-wrap gap-2 justify-center">
@@ -400,10 +413,10 @@ export default function LandingPageClient() {
                   <div className="bg-amber-100 text-amber-500 p-2 rounded-xl">
                     <MessageCircle size={24} />
                   </div>
-                  {content.discussTitle}
+                  {t('landing.discussTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.discussDesc}
+                  {t('landing.discussDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-md bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all flex flex-col">
@@ -453,10 +466,10 @@ export default function LandingPageClient() {
                   <div className="bg-rose-100 text-rose-500 p-2 rounded-xl">
                     <Type size={24} />
                   </div>
-                  {content.alphaTitle}
+                  {t('landing.alphaTitle')}
                 </h3>
                 <p className="text-lg text-slate-600 font-medium leading-relaxed">
-                  {content.alphaDesc}
+                  {t('landing.alphaDesc')}
                 </p>
               </div>
               <div className="flex-1 w-full max-w-lg flex items-center justify-center transform -rotate-2 hover:rotate-0 transition-all">
@@ -485,6 +498,175 @@ export default function LandingPageClient() {
                 </div>
               </div>
             </div>
+            
+            {/* Showcase 7: Detective Game */}
+            <div className="flex flex-col md:flex-row items-center gap-12">
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3">
+                  <div className="bg-fuchsia-100 text-fuchsia-500 p-2 rounded-xl">
+                    <Search size={24} />
+                  </div>
+                  {t('landing.detectiveTitle')}
+                </h3>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
+                  {t('landing.detectiveDesc')}
+                </p>
+              </div>
+              <div className="flex-1 w-full max-w-lg bg-[#0F172A] rounded-[2rem] shadow-xl border-[6px] border-slate-100 transform rotate-2 hover:rotate-0 transition-all flex flex-col overflow-hidden">
+                {/* Image section */}
+                <div className="w-full h-56 relative overflow-hidden">
+                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1000')] bg-cover bg-center opacity-90"></div>
+                   
+                   {/* Green found circles on image */}
+                   <div className="absolute top-6 left-12 w-28 h-28 border-[3px] border-[#00D084] bg-[#00D084]/20 rounded-full"></div>
+                   <div className="absolute bottom-4 right-4 w-24 h-24 border-[3px] border-[#00D084] bg-[#00D084]/20 rounded-full"></div>
+                </div>
+                
+                {/* Bottom bar */}
+                <div className="bg-[#F8F6F0] p-4 flex items-center justify-between">
+                   {/* Left side: Back & Stars/Progress */}
+                   <div className="flex items-center gap-2">
+                      <ChevronLeft size={20} className="text-slate-600 cursor-pointer" />
+                      <div className="flex flex-col">
+                         <div className="flex gap-0.5 text-amber-400 mb-1">
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                            <Star size={10} className="fill-amber-400" />
+                         </div>
+                         <div className="flex items-center gap-2">
+                            <div className="w-14 h-1.5 bg-slate-300 rounded-full overflow-hidden">
+                               <div className="w-1/3 h-full bg-[#00D084] rounded-full"></div>
+                            </div>
+                            <span className="text-[10px] font-bold text-slate-500">2/6</span>
+                         </div>
+                      </div>
+                   </div>
+                   
+                   {/* Middle: Word, Sound, Hint */}
+                   <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-[#00D084] rounded-full flex items-center justify-center text-white shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                         <Volume2 size={20} />
+                      </div>
+                      <div className="flex flex-col items-center">
+                         <div className="text-2xl font-bold text-slate-800 font-thai leading-none mb-1">หน้าต่าง</div>
+                         <div className="bg-[#EAE4D3] text-slate-700 text-[9px] font-bold px-3 py-1 rounded-full flex items-center gap-1 cursor-pointer hover:bg-[#E0D8C3] transition-colors">
+                            <Eye size={10} />
+                            Voir l'indice
+                         </div>
+                      </div>
+                   </div>
+                   
+                   {/* Right: Magnifying Glass */}
+                   <div className="w-10 h-10 bg-[#38BDF8] rounded-full flex items-center justify-center text-white border-2 border-slate-800/10 shadow-sm cursor-pointer hover:scale-105 transition-transform">
+                      <Search size={18} />
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Showcase 8: Leaderboard */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-12">
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3">
+                  <div className="bg-amber-100 text-amber-500 p-2 rounded-xl">
+                    <Trophy size={24} />
+                  </div>
+                  {t('landing.rankTitle')}
+                </h3>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
+                  {t('landing.rankDesc')}
+                </p>
+              </div>
+              <div className="flex-1 w-full max-w-lg bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform -rotate-1 hover:rotate-0 transition-all flex flex-col">
+                 <div className="flex flex-col gap-3">
+                    {/* Rank 1 */}
+                    <div className="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden shadow-sm">
+                       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-amber-200/50 to-transparent"></div>
+                       <div className="w-8 text-center font-black text-amber-600 text-xl">1</div>
+                       <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-amber-300 relative">
+                          🐯
+                          <div className="absolute -bottom-2 -right-2 bg-amber-400 text-white rounded-full w-6 h-6 flex items-center justify-center border-2 border-white">
+                             <Crown size={12} fill="white" />
+                          </div>
+                       </div>
+                       <div className="flex-1 font-bold text-slate-800">TigreThai</div>
+                       <div className="font-black text-amber-500">12,450 XP</div>
+                    </div>
+                    
+                    {/* Rank 2 */}
+                    <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden">
+                       <div className="w-8 text-center font-bold text-slate-400 text-lg">2</div>
+                       <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-slate-300">
+                          🐘
+                       </div>
+                       <div className="flex-1 font-bold text-slate-700">Elephanthai</div>
+                       <div className="font-bold text-slate-500">10,200 XP</div>
+                    </div>
+                    
+                    {/* Rank 3 (User) */}
+                    <div className="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden shadow-sm transform scale-[1.02]">
+                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500"></div>
+                       <div className="w-8 text-center font-bold text-indigo-600 text-lg">3</div>
+                       <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-indigo-300">
+                          👤
+                       </div>
+                       <div className="flex-1 font-bold text-indigo-900">Vous</div>
+                       <div className="font-bold text-indigo-600 flex items-center gap-1">
+                          9,850 XP <span className="text-xs bg-indigo-200 text-indigo-700 px-1.5 py-0.5 rounded font-bold">+50</span>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+
+            {/* Showcase 9: Pronunciation */}
+            <div className="flex flex-col md:flex-row items-center gap-12">
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3">
+                  <div className="bg-orange-100 text-orange-500 p-2 rounded-xl">
+                    <Mic size={24} />
+                  </div>
+                  {t('landing.pronunciationTitle')}
+                </h3>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
+                  {t('landing.pronunciationDesc')}
+                </p>
+              </div>
+              <div className="flex-1 w-full max-w-lg bg-[#FAFAFA] p-8 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-1 hover:rotate-0 transition-all flex flex-col items-center">
+                 
+                 {/* Progress */}
+                 <div className="w-full flex justify-between text-xs font-bold text-slate-400 mb-2 px-1">
+                    <span>0 / 33</span>
+                    <span>0%</span>
+                 </div>
+                 <div className="w-full h-2.5 bg-[#E2E8F0] rounded-full mb-10">
+                    <div className="w-0 h-full bg-blue-500 rounded-full"></div>
+                 </div>
+                 
+                 {/* Flashcard */}
+                 <div className="w-full bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-slate-200 p-8 flex flex-col items-center relative mb-12">
+                    <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer hover:bg-slate-100 transition-colors">
+                       <Play size={14} className="ml-0.5" />
+                    </div>
+                    
+                    <div className="text-5xl font-thai text-slate-800 mb-5 mt-2">สบายดี</div>
+                    <div className="bg-slate-100 text-slate-500 px-3 py-1 rounded font-mono text-sm mb-4">sà-baai dii</div>
+                    <div className="text-slate-600 font-medium">je vais bien</div>
+                 </div>
+                 
+                 {/* Mic Button */}
+                 <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 bg-[#F97316] rounded-full flex items-center justify-center text-white border-b-[4px] border-[#C2410C] shadow-md cursor-pointer hover:translate-y-1 hover:border-b-0 transition-all mb-4">
+                       <Mic size={28} />
+                    </div>
+                    <p className="text-center text-[11px] text-slate-400 max-w-[220px] leading-tight">
+                       Appuyez sur le micro et lisez le mot thaï à voix haute et clairement.
+                    </p>
+                 </div>
+              </div>
+            </div>
 
           </div>
         </div>
@@ -493,9 +675,9 @@ export default function LandingPageClient() {
       {/* Metrics Section */}
       <section className="bg-emerald-500 py-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4">{content.metricsTitle}</h2>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4">{t('landing.metricsTitle')}</h2>
           <p className="text-emerald-100 text-lg md:text-xl font-medium max-w-2xl mx-auto">
-            {content.metricsDesc}
+            {t('landing.metricsDesc')}
           </p>
         </div>
       </section>
@@ -504,28 +686,28 @@ export default function LandingPageClient() {
       <section className="bg-white py-24 border-y border-slate-200">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">{content.featTitle}</h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">{content.featDesc}</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">{t('landing.featTitle')}</h2>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">{t('landing.featDesc')}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard 
               icon={<Play size={32} className="text-emerald-500 fill-emerald-500" />}
               color="bg-emerald-100"
-              title={content.f1Title}
-              text={content.f1Desc}
+              title={t('landing.f1Title')}
+              text={t('landing.f1Desc')}
             />
             <FeatureCard 
               icon={<Globe size={32} className="text-indigo-500" />}
               color="bg-indigo-100"
-              title={content.f2Title}
-              text={content.f2Desc}
+              title={t('landing.f2Title')}
+              text={t('landing.f2Desc')}
             />
             <FeatureCard 
               icon={<Smartphone size={32} className="text-rose-500" />}
               color="bg-rose-100"
-              title={content.f3Title}
-              text={content.f3Desc}
+              title={t('landing.f3Title')}
+              text={t('landing.f3Desc')}
             />
           </div>
         </div>
@@ -534,19 +716,19 @@ export default function LandingPageClient() {
       {/* Bottom CTA */}
       <section className="bg-slate-800 text-white py-24 text-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 relative z-10 text-white">{content.ctaTitle}</h2>
-        <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto relative z-10 font-medium">{content.ctaDesc}</p>
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 relative z-10 text-white">{t('landing.ctaTitle')}</h2>
+        <p className="text-xl text-slate-300 mb-10 max-w-xl mx-auto relative z-10 font-medium">{t('landing.ctaDesc')}</p>
         <Link 
           href="/learn"
           className="inline-flex w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-white px-10 py-5 pb-6 rounded-2xl font-black text-xl border-b-[6px] border-emerald-700 hover:-translate-y-1 active:translate-y-1 active:border-b-0 transition-all shadow-xl items-center justify-center uppercase tracking-widest relative z-10"
         >
-          {content.ctaBtn}
+          {t('landing.ctaBtn')}
         </Link>
       </section>
 
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-500 py-8 text-center text-sm font-medium">
-        <p>{content.footer}</p>
+        <p>{t('landing.footer')}</p>
       </footer>
     </div>
   );
