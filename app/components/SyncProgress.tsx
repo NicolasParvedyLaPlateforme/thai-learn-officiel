@@ -18,7 +18,7 @@ export default function SyncProgress() {
         const result = await getProgress();
         if (result.success && result.data) {
           const localState = useProgressStore.getState();
-          const dbState = result.data;
+          const dbState = result.data as any;
           
           const isDbEmpty = dbState.xp === 0 && (!dbState.completedLessons || dbState.completedLessons.length === 0);
           const hasLocalProgress = localState.xp > 0 || localState.completedLessons.length > 0;
