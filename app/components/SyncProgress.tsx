@@ -17,7 +17,18 @@ export default function SyncProgress() {
       if (status === "authenticated" && !isInitialSyncDone.current) {
         const result = await getProgress();
         if (result.success && result.data) {
-          useProgressStore.setState(result.data);
+          const localState = useProgressStore.getState();
+          // Si le compte en base de données est vide (nouveau compte)
+          // mais qu'il y a une progression locale, on ne l'écrase PAS.
+          // Le deuxième useEffect (sauvegarde) se chargera d'envoyer la progression locale vers la DB.
+          const isDbEmpty = result.data.xp === 0 && (!result.data.completedLessons || result.data.completedLessons.length === 0);
+          const hasLocalProgress = localState.xp > 0 || localState.completedLessons.length > 0;
+
+          if (isDbEmpty && hasLocalProgress) {
+            console.log("Nouveau compte détecté : Conservation de la progression locale pour l'envoyer en base de données.");
+          } else {
+            useProgressStore.setState(result.data);
+          }
         }
         isInitialSyncDone.current = true;
       }
