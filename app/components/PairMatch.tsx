@@ -1,4 +1,4 @@
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState, useEffect } from 'react';
 import { Word } from '../types';
 import { Volume2 } from 'lucide-react';
@@ -39,7 +39,7 @@ export default function PairMatch({ pairs, mode = 'normal', onComplete, forceHid
   useEffect(() => {
     const lefts = pairs.map(p => ({
       id: p.id,
-      text: language === 'en' ? (p.en || p.fr) : p.fr,
+      text: getLocalizedField(p, '', language),
       type: 'left' as const
     }));
     const rights = pairs.map(p => ({
