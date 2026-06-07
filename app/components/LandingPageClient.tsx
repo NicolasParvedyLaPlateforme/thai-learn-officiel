@@ -2,7 +2,7 @@
 
 import { getTranslation } from '../hooks/useTranslation';
 import Link from 'next/link';
-import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check } from 'lucide-react';
+import { BookOpen, Globe, CheckCircle, Smartphone, Star, Play, Crown, Volume2, MessageCircle, Type, LayoutGrid, Check, Search, Trophy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useProgressStore } from '../lib/store';
 import PWAInstallButton from './PWAInstallButton';
@@ -46,8 +46,8 @@ const frContent = {
   discussDesc: 'Écoutez des conversations et entraînez-vous à répondre en choisissant la bonne option selon le contexte.',
   alphaTitle: 'Maîtriser l\'Alphabet',
   alphaDesc: 'Mémorisez les consonnes et voyelles avec des moyens mnémotechniques simples et ludiques.',
-  metricsTitle: 'Près de 1000 mots et phrases classés',
-  metricsDesc: "Une base de données riche et étudiée, pensée pour vous faire progresser des bases jusqu'aux discussions avancées.",
+  metricsTitle: '500 mots et 500 phrases classés',
+  metricsDesc: 'Un vocabulaire soigneusement sélectionné pour vous faire atteindre le niveau nécessaire pour voyager en Thaïlande en toute sérénité.',
   featTitle: 'Pourquoi choisir ThaiLearn ?',
   featDesc: 'Notre méthode interactive se concentre sur ce dont vous avez besoin pour communiquer rapidement.',
   f1Title: 'Apprentissage par le jeu',
@@ -56,6 +56,10 @@ const frContent = {
   f2Desc: 'Chaque mot possède une prononciation au format phonétique et audio de haute qualité avec les accents justes.',
   f3Title: 'L\'écriture facilitée',
   f3Desc: 'Apprenez à orthographier vos premiers mots en sélectionnant visuellement les consonnes et voyelles appropriées.',
+  detectiveTitle: 'Jeu immersif : Le Détective',
+  detectiveDesc: 'Recherchez des objets cachés dans des décors thaïlandais pour apprendre le vocabulaire en contexte visuel et gagner de l\'XP.',
+  rankTitle: 'Classement & Compétition',
+  rankDesc: 'Gagnez de l\'XP chaque jour, complétez vos leçons et comparez vos progrès avec ceux de la communauté.',
   ctaTitle: 'Apprenez le thaï dès maintenant.',
   ctaDesc: 'Rejoignez-nous et commencez l\'Unité 1. Mettez-vous directement dans le bain, aucune inscription requise pour commencer !',
   ctaBtn: "C'est parti !",
@@ -101,8 +105,8 @@ const enContent = {
   discussDesc: 'Listen to real conversations and practice answering them by picking the right response according to context.',
   alphaTitle: 'Master the Alphabet',
   alphaDesc: 'Memorize consonants and vowels with simple and fun mnemonic devices.',
-  metricsTitle: 'Nearly 1000 ranked words and phrases',
-  metricsDesc: "A rich and carefully studied database, designed to take you from the basics to advanced discussions.",
+  metricsTitle: '500 words and 500 sentences',
+  metricsDesc: "Carefully selected vocabulary designed to help you reach the necessary level to travel in Thailand with confidence.",
   featTitle: 'Why choose ThaiLearn?',
   featDesc: 'Our interactive method focuses on what you need to communicate quickly.',
   f1Title: 'Learning through play',
@@ -111,6 +115,10 @@ const enContent = {
   f2Desc: 'Every word has pronunciation in phonetic format and high-quality audio with the right accents.',
   f3Title: 'Writing made easy',
   f3Desc: 'Learn to spell your first words by visually selecting the appropriate consonants and vowels.',
+  detectiveTitle: 'Immersive Game: The Detective',
+  detectiveDesc: 'Find hidden objects in Thai scenes to learn vocabulary in a visual context and earn XP.',
+  rankTitle: 'Ranking & Competition',
+  rankDesc: 'Earn XP every day, complete your lessons, and compare your progress with the community.',
   ctaTitle: 'Learn Thai right now.',
   ctaDesc: 'Join us and start Unit 1. Jump right in, no registration required to begin!',
   ctaBtn: "Let's go!",
@@ -483,6 +491,112 @@ export default function LandingPageClient() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            
+            {/* Showcase 7: Detective Game */}
+            <div className="flex flex-col md:flex-row items-center gap-12">
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3">
+                  <div className="bg-fuchsia-100 text-fuchsia-500 p-2 rounded-xl">
+                    <Search size={24} />
+                  </div>
+                  {content.detectiveTitle}
+                </h3>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
+                  {content.detectiveDesc}
+                </p>
+              </div>
+              <div className="flex-1 w-full max-w-lg bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform rotate-2 hover:rotate-0 transition-all flex flex-col items-center">
+                <div className="w-full h-48 bg-slate-100 rounded-2xl mb-4 relative overflow-hidden border-2 border-slate-200">
+                   <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1000')] bg-cover bg-center opacity-70"></div>
+                   
+                   {/* Target reticle */}
+                   <div className="absolute top-1/2 left-1/3 w-16 h-16 border-4 border-emerald-400 rounded-full flex items-center justify-center -translate-x-1/2 -translate-y-1/2 shadow-[0_0_0_9999px_rgba(0,0,0,0.5)] z-10 transition-all duration-1000">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="absolute -top-6 bg-white text-emerald-600 font-bold px-2 py-1 rounded text-xs whitespace-nowrap shadow-md">
+                        {content.cat} (แมว)
+                      </div>
+                   </div>
+                </div>
+                
+                <div className="flex gap-4 w-full justify-center mt-2">
+                   <div className="flex flex-col items-center gap-1">
+                      <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center border-2 border-emerald-200 shadow-sm">
+                         แมว
+                      </div>
+                      <div className="flex gap-0.5 mt-1">
+                         <Star size={12} className="fill-amber-400 text-amber-400" />
+                         <Star size={12} className="fill-amber-400 text-amber-400" />
+                         <Star size={12} className="fill-amber-400 text-amber-400" />
+                      </div>
+                   </div>
+                   <div className="flex flex-col items-center gap-1 opacity-50">
+                      <div className="w-12 h-12 bg-white text-slate-400 rounded-xl flex items-center justify-center border-2 border-slate-200 border-dashed">
+                         หมา
+                      </div>
+                   </div>
+                   <div className="flex flex-col items-center gap-1 opacity-50">
+                      <div className="w-12 h-12 bg-white text-slate-400 rounded-xl flex items-center justify-center border-2 border-slate-200 border-dashed">
+                         นก
+                      </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Showcase 8: Leaderboard */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-12">
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3">
+                  <div className="bg-amber-100 text-amber-500 p-2 rounded-xl">
+                    <Trophy size={24} />
+                  </div>
+                  {content.rankTitle}
+                </h3>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
+                  {content.rankDesc}
+                </p>
+              </div>
+              <div className="flex-1 w-full max-w-lg bg-white p-6 rounded-[2.5rem] shadow-xl border-[6px] border-slate-100 transform -rotate-1 hover:rotate-0 transition-all flex flex-col">
+                 <div className="flex flex-col gap-3">
+                    {/* Rank 1 */}
+                    <div className="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden shadow-sm">
+                       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-amber-200/50 to-transparent"></div>
+                       <div className="w-8 text-center font-black text-amber-600 text-xl">1</div>
+                       <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-amber-300 relative">
+                          🐯
+                          <div className="absolute -bottom-2 -right-2 bg-amber-400 text-white rounded-full w-6 h-6 flex items-center justify-center border-2 border-white">
+                             <Crown size={12} fill="white" />
+                          </div>
+                       </div>
+                       <div className="flex-1 font-bold text-slate-800">TigreThai</div>
+                       <div className="font-black text-amber-500">12,450 XP</div>
+                    </div>
+                    
+                    {/* Rank 2 */}
+                    <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden">
+                       <div className="w-8 text-center font-bold text-slate-400 text-lg">2</div>
+                       <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-slate-300">
+                          🐘
+                       </div>
+                       <div className="flex-1 font-bold text-slate-700">Elephanthai</div>
+                       <div className="font-bold text-slate-500">10,200 XP</div>
+                    </div>
+                    
+                    {/* Rank 3 (User) */}
+                    <div className="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-4 flex items-center gap-4 relative overflow-hidden shadow-sm transform scale-[1.02]">
+                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500"></div>
+                       <div className="w-8 text-center font-bold text-indigo-600 text-lg">3</div>
+                       <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm border-2 border-indigo-300">
+                          👤
+                       </div>
+                       <div className="flex-1 font-bold text-indigo-900">Vous</div>
+                       <div className="font-bold text-indigo-600 flex items-center gap-1">
+                          9,850 XP <span className="text-xs bg-indigo-200 text-indigo-700 px-1.5 py-0.5 rounded font-bold">+50</span>
+                       </div>
+                    </div>
+                 </div>
               </div>
             </div>
 
