@@ -133,11 +133,13 @@ export function DesktopSidebarRight({
 
               <div className="p-6 pt-5 pb-5 flex flex-col">
                 <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
-                  {language === 'en' ? (selectedLesson.lesson.titleEn || selectedLesson.lesson.title) : selectedLesson.lesson.title}
+                  {suggestionType === 'alphabet' && (selectedLesson.lesson.type === 'consonant' || selectedLesson.lesson.type === 'vowel')
+                    ? `${getTranslation(selectedLesson.lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${selectedLesson.lesson.id.split('-').pop()}`
+                    : getLocalizedField(selectedLesson.lesson, 'title', language)}
                 </h3>
 
                 <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
-                  {language === 'en' ? (selectedLesson.lesson.descriptionEn || selectedLesson.lesson.description) : selectedLesson.lesson.description}
+                  {getLocalizedField(selectedLesson.lesson, 'description', language)}
                 </p>
 
                 {/* Levels Grid */}
@@ -500,7 +502,7 @@ export function DesktopSidebarRight({
                         {i + 1}
                       </div>
                       <div className="flex flex-col min-w-0 pr-2">
-                        <h3 className="font-bold text-[15px] text-slate-800 truncate leading-tight mb-0.5">{language === 'en' ? (u.titleEn || u.title) : u.title}</h3>
+                        <h3 className="font-bold text-[15px] text-slate-800 truncate leading-tight mb-0.5">{getLocalizedField(u, 'title', language)}</h3>
                         <span className={`text-[13px] font-semibold ${u.textClass} tracking-tight`}>{status}</span>
                       </div>
                     </div>
@@ -529,7 +531,7 @@ export function DesktopSidebarRight({
                   </div>
 
                   <div className="flex flex-col justify-center min-w-0 overflow-hidden pr-2">
-                    <h3 className="font-bold text-[14px] truncate text-slate-400 group-hover/btn:text-slate-500 transition-colors">{language === 'en' ? (u.titleEn || u.title) : u.title}</h3>
+                    <h3 className="font-bold text-[14px] truncate text-slate-400 group-hover/btn:text-slate-500 transition-colors">{getLocalizedField(u, 'title', language)}</h3>
                   </div>
                 </button>
               )

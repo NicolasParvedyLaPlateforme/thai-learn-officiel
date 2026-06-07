@@ -1,4 +1,4 @@
-import { getTranslation } from '../../../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../../../hooks/useTranslation';
 import { useState, useMemo } from 'react';
 import { Exercise } from '../../../types';
 import { playThaiTTS } from '../../../lib/tts';
@@ -191,7 +191,7 @@ export default function WordMatch({ exercise, selected, onChange, disabled, onAu
           }
 
           const displayValue = exercise.reverse 
-            ? (language === 'en' ? ((opt as any).en || (opt as any).fr) : (opt as any).fr) || opt.th
+            ? getLocalizedField(opt, '', language) || opt.th
             : (
                 (diffAnalysis && showColor) 
                 ? (

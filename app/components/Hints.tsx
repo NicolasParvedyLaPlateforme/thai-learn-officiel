@@ -1,4 +1,4 @@
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import { useState, useRef, useEffect } from 'react';
 import { Volume2, ChevronDown, ChevronUp, Wand2 } from 'lucide-react';
 import { Word, Phrase } from '../types';
@@ -112,7 +112,7 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
       const currentDictWord = [...dictionary, ...phrases, ...exerciseOptions].find(w => w.th === currentThaiWordForAudio);
       if (currentDictWord) {
          // the mapping word to highlight:
-         const translatedWord = language === 'en' ? (currentDictWord.en || currentDictWord.fr) : currentDictWord.fr;
+         const translatedWord = getLocalizedField(currentDictWord, '', language);
          if (translatedWord) {
              // 1. Try exact match
              // 2. Try split by slashes (e.g. "bien / à l'aise")
@@ -268,7 +268,7 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
                     >
                       <span className="font-thai text-lg md:text-xl text-emerald-600 font-semibold">{w.th}</span> 
                       <span className="text-slate-400">=</span> 
-                      <span className="italic">{language === 'en' ? (w.en || w.fr) : w.fr}</span>
+                      <span className="italic">{getLocalizedField(w, '', language)}</span>
                     </TooltipHint>
                   ))}
                 </div>

@@ -1,5 +1,6 @@
 import { THAI_ALPHABET, AlphabetItem } from './alphabet-data';
 import { Word, Phrase } from '../types';
+import { getLocalizedField } from '../hooks/useTranslation';
 
 export function formatCombiningChar(charStr: string): string {
   if (!charStr) return charStr;
@@ -77,7 +78,7 @@ export function generateAlphabetExercises(lessonDef: AlphabetLessonDef, level: n
         item,
         options: [],
         targetText: item.exampleWord,
-        targetTranslation: language === 'en' ? (item.exampleTranslationEn || item.exampleTranslation) : item.exampleTranslation,
+        targetTranslation: getLocalizedField(item, 'exampleTranslation', language),
         letterToPick: item.letter,
         phonetic: item.pronunciation
       });
@@ -93,7 +94,7 @@ export function generateAlphabetExercises(lessonDef: AlphabetLessonDef, level: n
          item,
          options,
          targetText: item.exampleWord,
-         targetTranslation: language === 'en' ? (item.exampleTranslationEn || item.exampleTranslation) : item.exampleTranslation,
+         targetTranslation: getLocalizedField(item, 'exampleTranslation', language),
          letterToPick: item.letter,
          phonetic: item.pronunciation
       });
@@ -104,12 +105,12 @@ export function generateAlphabetExercises(lessonDef: AlphabetLessonDef, level: n
       
       if (pool.length === 0) {
          targetText = item.exampleWord;
-         targetTranslation = language === 'en' ? (item.exampleTranslationEn || item.exampleTranslation) : item.exampleTranslation;
+         targetTranslation = getLocalizedField(item, 'exampleTranslation', language);
          phonetic = item.pronunciation;
       } else {
          const picked = pool[Math.floor(Math.random() * pool.length)];
          targetText = picked.th;
-         targetTranslation = language === 'en' ? (picked.en || picked.fr) : picked.fr;
+         targetTranslation = getLocalizedField(picked, '', language);
          phonetic = picked.phonetic;
          explanation = picked.explanation;
       }
@@ -216,12 +217,12 @@ export function generateAlphabetExercises(lessonDef: AlphabetLessonDef, level: n
         let targetText, targetTranslation, phonetic, explanation;
         if (pool.length === 0) {
            targetText = item.exampleWord;
-           targetTranslation = language === 'en' ? (item.exampleTranslationEn || item.exampleTranslation) : item.exampleTranslation;
+           targetTranslation = getLocalizedField(item, 'exampleTranslation', language);
            phonetic = item.pronunciation;
         } else {
            const picked = pool[Math.floor(Math.random() * pool.length)];
            targetText = picked.th;
-           targetTranslation = language === 'en' ? (picked.en || picked.fr) : picked.fr;
+           targetTranslation = getLocalizedField(picked, '', language);
            phonetic = picked.phonetic;
            explanation = picked.explanation;
         }

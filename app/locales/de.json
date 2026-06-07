@@ -303,5 +303,17 @@
   "leaderboard.month_converted": "Ihre XP aus dem letzten Monat wurden in Goldmünzen umgewandelt. Die Bestenliste wurde für den neuen Monat zurückgesetzt!",
   "leaderboard.old_xp": "Alte XP",
   "leaderboard.gold_coins": "Goldmünzen",
-  "leaderboard.collect_coins": "Meine Münzen sammeln"
+  "leaderboard.collect_coins": "Meine Münzen sammeln",
+  "auth.pseudo_updated_success": "Benutzername erfolgreich aktualisiert.",
+  "auth.email_verified_success": "Toll! Ihre E-Mail-Adresse wurde erfolgreich verifiziert.",
+  "auth.my_pseudo": "Mein Benutzername",
+  "auth.pseudo_label": "Ihr Benutzername (wird in der Bestenliste angezeigt)",
+  "auth.pseudo_placeholder": "Bsp: NinjaThai",
+  "auth.current_password": "Aktuelles Passwort",
+  "alphabet.think_mnemonic": "Denk an die visuelle Eselsbrücke: \"{0}\"",
+  "auto.your_progress_will_be_saved": "Dein Fortschritt wird gespeichert. Du kannst jederzeit zurückkehren, um diese Übung zu beenden.",
+  "auto.resume_lesson": "Lektion in Bearbeitung",
+  "auto.resume_lesson_desc": "Du hast dieses Level bereits begonnen. Möchtest du dort weitermachen, wo du aufgehört hast?",
+  "auto.resume_button": "Lektion fortsetzen",
+  "auto.restart_button": "Neu starten"
 }

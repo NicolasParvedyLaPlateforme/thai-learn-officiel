@@ -23,7 +23,7 @@ import { getEndlessReviewServer, getDictionaryForExerciseServer, getPhrasesForEx
 
 export default function ReviewPage() {
   const router = useRouter();
-  const { completedLessons, xp, completeLesson, language, setExerciseRunning } = useProgressStore();
+  const { completedLessons, xp, addXp, language, setExerciseRunning } = useProgressStore();
   
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -197,7 +197,7 @@ export default function ReviewPage() {
       // Move to next exercise
       if (isCorrect) {
           // Give 1 XP per correct answer
-          completeLesson('review-dummy', 1);
+          addXp(3);
           
           if (currentIndex >= exercises.length - 3) {
             // Refill exercises when running low

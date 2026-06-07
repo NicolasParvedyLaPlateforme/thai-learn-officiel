@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState, useEffect, useRef } from 'react';
 import { Word, Phrase } from '../types';
 import { Mic, MicOff, CheckCircle, XCircle, ArrowRight, Play, Loader2, RefreshCw } from 'lucide-react';
@@ -51,7 +51,7 @@ function colorizeSpoken(spoken: string, target: string) {
 }
 
 export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word | Phrase)[], onComplete: () => void }) {
-  const { language } = useProgressStore();
+  const { language, addXp } = useProgressStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [status, setStatus] = useState<'idle' | 'listening' | 'success' | 'failed' | 'partial_fail' | 'evaluating'>('idle');
@@ -204,6 +204,9 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
   };
 
   const nextWord = () => {
+    if (status === 'success') {
+      addXp(3);
+    }
     if (currentIndex + 1 < vocabulary.length) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -265,7 +268,7 @@ export function SpeakingExercise({ vocabulary, onComplete }: { vocabulary: (Word
              </p>
           )}
           <p className="text-xl text-slate-600 font-medium">
-             {language === 'en' && currentItem.en ? currentItem.en : currentItem.fr}
+             {getLocalizedField(currentItem, '', language)}
           </p>
        </div>
 

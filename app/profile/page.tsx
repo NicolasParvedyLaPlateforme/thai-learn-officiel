@@ -94,14 +94,14 @@ function ProfilePageContent() {
 
       if (res.ok) {
         setPseudoStatus("success");
-        setPseudoMessage("Pseudo mis à jour avec succès.");
+        setPseudoMessage(t('auth.pseudo_updated_success'));
       } else {
         setPseudoStatus("error");
-        setPseudoMessage(data.message || "Erreur réseau");
+        setPseudoMessage(data.message || t('auth.error_network'));
       }
     } catch (err) {
       setPseudoStatus("error");
-      setPseudoMessage("Erreur réseau");
+      setPseudoMessage(t('auth.error_network'));
     }
   };
 
@@ -144,14 +144,14 @@ function ProfilePageContent() {
         {searchParams?.get("verified") === "true" && (
           <div className="bg-emerald-50 text-emerald-700 p-4 rounded-xl mb-8 font-medium border border-emerald-100 flex items-center gap-3">
             <CheckCircle2 className="w-5 h-5" />
-            Super ! Ton adresse email a été vérifiée avec succès.
+            {t('auth.email_verified_success')}
           </div>
         )}
 
         {/* Changer le pseudo */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-8">
           <div className="p-6 border-b border-slate-100">
-            <h3 className="text-lg font-bold text-slate-800">Mon Pseudo</h3>
+            <h3 className="text-lg font-bold text-slate-800">{t('auth.my_pseudo')}</h3>
           </div>
 
           <form onSubmit={handlePseudoUpdate} className="p-6 space-y-4">
@@ -167,14 +167,14 @@ function ProfilePageContent() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Votre Pseudo (Affiché dans le classement)</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.pseudo_label')}</label>
               <input
                 type="text"
                 required
                 value={pseudo}
                 onChange={(e) => setPseudo(e.target.value)}
                 className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                placeholder="Ex: NinjaThai"
+                placeholder={t('auth.pseudo_placeholder')}
               />
             </div>
 
@@ -213,7 +213,7 @@ function ProfilePageContent() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Mot de passe actuel</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.current_password')}</label>
               <input
                 type="password"
                 required

@@ -1,4 +1,4 @@
-import { getTranslation } from '../../../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../../../hooks/useTranslation';
 import { useState, useEffect } from "react";
 import { Drawer } from "vaul";
 import { Lesson } from "../../../types";
@@ -47,7 +47,7 @@ export default function GlossaryModal({
             )}
           </div>
           <div className="text-right text-slate-700 font-medium">
-            {language === "en" ? word.en || word.fr : word.fr}
+            {getLocalizedField(word, '', language)}
           </div>
         </div>
       ))}
@@ -68,7 +68,7 @@ export default function GlossaryModal({
             )}
           </div>
           <div className="sm:text-right text-slate-700 font-medium">
-            {language === "en" ? phrase.en || phrase.fr : phrase.fr}
+            {getLocalizedField(phrase, '', language)}
           </div>
         </div>
       ))}
