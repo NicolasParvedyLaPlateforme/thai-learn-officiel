@@ -157,6 +157,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const [isClient, setIsClient] = useState(false);
   const [showExerciseUI, setShowExerciseUI] = useState(false);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [acknowledgedInstructions, setAcknowledgedInstructions] = useState<
     Set<string>
   >(new Set());
@@ -173,6 +174,21 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   useEffect(() => {
     setIsClient(true);
+    const handleFocusIn = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        setIsKeyboardOpen(true);
+      }
+    };
+    const handleFocusOut = () => {
+      setIsKeyboardOpen(false);
+    };
+    document.addEventListener('focusin', handleFocusIn);
+    document.addEventListener('focusout', handleFocusOut);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+      document.removeEventListener('focusout', handleFocusOut);
+    };
   }, []);
 
   useEffect(() => {
@@ -688,7 +704,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             <motion.div
               animate={{ opacity: isExiting ? 0 : 1, y: 0, scale: 1 }}
               transition={{ duration: isExiting ? 0.15 : 0.3, delay: isExiting ? 0 : 0.1 }}
-              className={`${showInstruction || showHelpModal || currentExercise?.type === "pair-matching" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col justify-center hide-scrollbar`}
+              className={`${showInstruction || showHelpModal || currentExercise?.type === "pair-matching" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
             >
               {currentExercise?.type !== "pair-matching" && (
                 <QuestionArea
