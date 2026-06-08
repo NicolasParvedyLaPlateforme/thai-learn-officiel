@@ -15,6 +15,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
   
   const [selectedLessonId, setSelectedLessonId] = useState<string | 'all'>(speakingConfig.lessonId);
   const [selectedWordIds, setSelectedWordIds] = useState<string[] | null>(speakingConfig.selectedWordIds);
+  const [requiredAccuracy, setRequiredAccuracy] = useState<number>(speakingConfig.requiredAccuracy || 50);
   
   const [currentVocabulary, setCurrentVocabulary] = useState<(Word | Phrase)[]>([]);
   const [lessonsList, setLessonsList] = useState<any[]>([]);
@@ -25,6 +26,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
     if (isOpen) {
       setSelectedLessonId(speakingConfig.lessonId);
       setSelectedWordIds(speakingConfig.selectedWordIds);
+      setRequiredAccuracy(speakingConfig.requiredAccuracy || 50);
       
       // Fetch available lessons metadata once
       getLightweightLessons().then(setLessonsList);
@@ -72,6 +74,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
     setSpeakingConfig({
       lessonId: selectedLessonId,
       selectedWordIds,
+      requiredAccuracy,
     });
     onClose();
     router.push('/speaking');
@@ -117,6 +120,33 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
             {completedLessons.length === 0 && (
               <p className="text-amber-600 text-sm italic">{getTranslation('auto.you_need_to_complete_some_less', language)}</p>
             )}
+          </div>
+
+          {/* Accuracy Selection */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+              {language === 'en' ? 'Required Pronunciation Accuracy' : 'Précision de prononciation requise'}
+            </h3>
+            <div className="grid grid-cols-3 gap-2">
+              <button 
+                onClick={() => setRequiredAccuracy(50)}
+                className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 50 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
+              >
+                {language === 'en' ? '50% (Lenient)' : '50% (Tolérant)'}
+              </button>
+              <button 
+                onClick={() => setRequiredAccuracy(80)}
+                className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 80 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
+              >
+                {language === 'en' ? '80% (Strict)' : '80% (Strict)'}
+              </button>
+              <button 
+                onClick={() => setRequiredAccuracy(100)}
+                className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 100 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
+              >
+                {language === 'en' ? '100% (Perfect)' : '100% (Parfait)'}
+              </button>
+            </div>
           </div>
 
           {/* Words Selection */}

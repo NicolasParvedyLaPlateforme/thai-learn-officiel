@@ -28,6 +28,7 @@ export interface WritingConfig {
 export interface SpeakingConfig {
   lessonId: string | 'all';
   selectedWordIds: string[] | null;
+  requiredAccuracy: number;
 }
 
 export interface DailyQuest {
@@ -422,6 +423,7 @@ export const useProgressStore = create<ProgressState>()(
       speakingConfig: {
         lessonId: 'all',
         selectedWordIds: null,
+        requiredAccuracy: 50,
       },
       lastActiveUnitIndex: 0,
       setLastActiveUnitIndex: (index) => set({ lastActiveUnitIndex: index }),
