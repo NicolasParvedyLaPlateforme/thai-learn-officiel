@@ -139,7 +139,7 @@ const imageUrl = hideImageForNumbers
   return (
     <>
       {/* Container for Question Content */}
-      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-8 my-auto md:my-0 w-full">
+      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-8 w-full">
         {/* Image Box */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
