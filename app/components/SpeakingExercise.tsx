@@ -360,16 +360,26 @@ export function SpeakingExercise({
             )}
 
             {status === 'listening' && (
-               <motion.div 
-                  key="listening"
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                  className="flex items-center z-10 max-w-[65vw]"
-               >
-                  <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
-                    <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
-                    <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
-                  </span>
-               </motion.div>
+               <>
+                  <motion.div 
+                     key="listening"
+                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                     className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
+                  >
+                     <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
+                       <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
+                       <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
+                     </span>
+                  </motion.div>
+
+                  <button 
+                     onClick={stopAndEvaluate}
+                     className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] active:shadow-[0_0px_0_rgb(225,29,72)] active:translate-y-2 transition-all group z-10"
+                     title="Stop"
+                  >
+                     <Square size={32} className="fill-current group-hover:scale-110 transition-transform" />
+                  </button>
+               </>
             )}
 
             {/* Right Area (Absolute) */}
@@ -386,15 +396,6 @@ export function SpeakingExercise({
                      title={status === 'success' ? getTranslation('auto.continue', language) : (language === 'en' ? 'Skip' : 'Passer')}
                   >
                      <ArrowRight size={24} />
-                  </button>
-               )}
-               {status === 'listening' && (
-                  <button 
-                     onClick={stopAndEvaluate}
-                     className="w-14 h-14 bg-white hover:bg-rose-50 text-rose-500 rounded-2xl border-2 border-rose-200 hover:border-rose-300 shadow-sm flex items-center justify-center transition-colors shrink-0 ml-2"
-                     title="Stop"
-                  >
-                     <Square size={20} className="fill-current" />
                   </button>
                )}
             </div>
