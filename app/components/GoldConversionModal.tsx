@@ -5,7 +5,6 @@ import { useProgressStore } from '../lib/store';
 import { motion, AnimatePresence } from 'motion/react';
 import { Coins, Sparkles, Trophy } from 'lucide-react';
 import { getTranslation } from '../hooks/useTranslation';
-import confetti from 'canvas-confetti';
 
 export function GoldConversionModal() {
   const { pendingGoldConversion, clearPendingGoldConversion, language } = useProgressStore();
@@ -18,7 +17,8 @@ export function GoldConversionModal() {
   useEffect(() => {
     if (pendingGoldConversion) {
       // Trigger confetti when modal appears
-      setTimeout(() => {
+      setTimeout(async () => {
+        const confetti = (await import('canvas-confetti')).default;
         confetti({
           particleCount: 150,
           spread: 70,

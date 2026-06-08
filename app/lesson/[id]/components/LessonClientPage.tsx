@@ -7,7 +7,6 @@ import { useProgressStore } from "../../../lib/store";
 import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
 import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
-import confetti from "canvas-confetti";
 import { playThaiTTS, preloadThaiVoices } from "../../../lib/tts";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
@@ -29,6 +28,13 @@ import HeaderProgressBar from "./HeaderProgressBar";
 import InstructionBlock from "./InstructionBlock";
 import Footer from "./Footer";
 import QuestionArea from "./QuestionArea";
+
+const triggerConfetti = () => {
+  import("canvas-confetti").then((mod) => {
+    const confetti = mod.default;
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  });
+};
 
 const getInstructionKey = (ex: Exercise | undefined) => {
   if (!ex) return null;
@@ -266,7 +272,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       setEarnedXp(expected.xp);
       setIsFinished(true);
       completeLesson(lesson.id, 0, currentLevel, 3, isBilan);
-      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      triggerConfetti();
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
 
@@ -352,7 +358,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
           }
-          confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+          triggerConfetti();
         }
       }, 150);
       return;
@@ -379,11 +385,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
             }
-            confetti({
-              particleCount: 150,
-              spread: 70,
-              origin: { y: 0.6 },
-            });
+            triggerConfetti();
           }
         } else {
           // If wrong, we re-add the exercise to the end!
@@ -738,11 +740,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                               saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
                             }
-                            confetti({
-                              particleCount: 150,
-                              spread: 70,
-                              origin: { y: 0.6 },
-                            });
+                            triggerConfetti();
                           }
                         }, 150);
                       }

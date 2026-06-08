@@ -2,12 +2,12 @@
 
 import { getTranslation } from '../../hooks/useTranslation';
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
+import { preload } from 'react-dom';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
 import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star, Eye } from 'lucide-react';
 import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
-import confetti from 'canvas-confetti';
 import detectiveData from '../../data/detective.json';
 
 interface Props {
@@ -16,6 +16,10 @@ interface Props {
 }
 
 export default function DetectiveGame({ level, initialDiff }: Props) {
+  if (level?.imageUrl) {
+    preload(level.imageUrl, { as: 'image' });
+  }
+
   const { language, setMobileSidebarOpen, completedLessons, completeLesson } = useProgressStore();
   const [xpAwarded, setXpAwarded] = useState(false);
 
@@ -211,7 +215,8 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
     setLevelState('playing');
   };
 
-  const handleCorrect = () => {
+  const handleCorrect = async () => {
+    const confetti = (await import('canvas-confetti')).default;
     confetti({
       particleCount: 50,
       spread: 60,

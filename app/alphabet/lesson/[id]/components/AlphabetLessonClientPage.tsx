@@ -8,13 +8,19 @@ import { getAlphabetLessons, AlphabetExercise, AlphabetLessonDef, formatCombinin
 import { AlphabetItem } from '../../../../lib/alphabet-data';
 import { getAlphabetExercisesServer } from '../../../../actions/course';
 import { X, Check, Star, Volume2, HelpCircle, Info } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { playThaiTTS, preloadThaiVoices } from '../../../../lib/tts';
 import { motion, AnimatePresence } from 'motion/react';
 import { ColoredPhonetic } from '../../../../components/ColoredPhonetic';
 import { AlphabetCard } from '../../../../components/AlphabetCard';
 import { Suspense } from 'react';
 import { LoadingScreen } from "../../../../components/LoadingScreen";
+
+const triggerConfetti = () => {
+  import("canvas-confetti").then((mod) => {
+    const confetti = mod.default;
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  });
+};
 
 function AlphabetLessonContent() {
   const params = useParams();
@@ -120,7 +126,7 @@ function AlphabetLessonContent() {
         completeLesson(lesson.id, 0, currentLevel, 3, false);
       }
       setIsFinished(true);
-      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      triggerConfetti();
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
 
@@ -191,7 +197,7 @@ function AlphabetLessonContent() {
         completeLesson(lesson.id, 0, currentLevel, earnedStars, false);
       }
       setIsFinished(true);
-      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }});
+      triggerConfetti();
     }
   };
 
