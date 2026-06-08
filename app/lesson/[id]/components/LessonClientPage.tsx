@@ -157,6 +157,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const [isClient, setIsClient] = useState(false);
   const [showExerciseUI, setShowExerciseUI] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const [acknowledgedInstructions, setAcknowledgedInstructions] = useState<
     Set<string>
   >(new Set());
@@ -173,6 +174,16 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   useEffect(() => {
     setIsClient(true);
+    if (typeof window !== 'undefined' && window.visualViewport) {
+      const handleResize = () => setViewportHeight(window.visualViewport!.height);
+      window.visualViewport.addEventListener('resize', handleResize);
+      window.visualViewport.addEventListener('scroll', handleResize);
+      handleResize();
+      return () => {
+        window.visualViewport?.removeEventListener('resize', handleResize);
+        window.visualViewport?.removeEventListener('scroll', handleResize);
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -588,7 +599,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const showInstruction = !!(instructionText && !isAcknowledged);
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-[#FAFAFA] font-sans text-slate-800 overflow-hidden relative">
+    <div 
+      className="flex flex-col bg-[#FAFAFA] font-sans text-slate-800 overflow-hidden relative w-full"
+      style={{ height: viewportHeight ? `${viewportHeight}px` : '100dvh' }}
+    >
       <AnimatePresence mode="wait">
         {!showExerciseUI ? (
           <LoadingScreen 
