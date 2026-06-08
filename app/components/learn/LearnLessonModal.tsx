@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Drawer } from 'vaul';
 import { BookOpen, Star, Lock, Crown, Clock, Pencil, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
@@ -22,7 +23,7 @@ interface LearnLessonModalProps {
 export default function LearnLessonModal({
   isOpen,
   onOpenChange,
-  selectedLesson,
+  selectedLesson: selectedLessonProp,
   modalLevel,
   setModalLevel,
   language,
@@ -32,6 +33,14 @@ export default function LearnLessonModal({
   reviewStats,
   getExpectedXp
 }: LearnLessonModalProps) {
+  const [selectedLesson, setSelectedLesson] = useState(selectedLessonProp);
+  
+  useEffect(() => {
+    if (selectedLessonProp) {
+      setSelectedLesson(selectedLessonProp);
+    }
+  }, [selectedLessonProp]);
+
   if (!selectedLesson) return null;
 
   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
