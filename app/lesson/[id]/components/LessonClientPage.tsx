@@ -174,21 +174,21 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   useEffect(() => {
     setIsClient(true);
-    const handleFocusIn = (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
-        setIsKeyboardOpen(true);
-      }
-    };
-    const handleFocusOut = () => {
-      setIsKeyboardOpen(false);
-    };
-    document.addEventListener('focusin', handleFocusIn);
-    document.addEventListener('focusout', handleFocusOut);
-    return () => {
-      document.removeEventListener('focusin', handleFocusIn);
-      document.removeEventListener('focusout', handleFocusOut);
-    };
+    
+    if (typeof window !== 'undefined' && window.visualViewport) {
+      const handleResize = () => {
+        // If visual viewport is significantly smaller than innerHeight, the keyboard is open.
+        if (window.visualViewport!.height < window.innerHeight * 0.8) {
+          setIsKeyboardOpen(true);
+        } else {
+          setIsKeyboardOpen(false);
+        }
+      };
+      
+      window.visualViewport.addEventListener('resize', handleResize);
+      handleResize();
+      return () => window.visualViewport?.removeEventListener('resize', handleResize);
+    }
   }, []);
 
   useEffect(() => {
