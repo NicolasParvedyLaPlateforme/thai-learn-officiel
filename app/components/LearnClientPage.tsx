@@ -5,17 +5,20 @@ import { useProgressStore } from '../lib/store';
 import BASE_UNITS from '../data/units.json';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 
-import { WritingConfigModal } from '../components/WritingConfigModal';
-import { DesktopSidebarRight } from '../components/DesktopSidebarRight';
-import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
+import dynamic from 'next/dynamic';
+
+const WritingConfigModal = dynamic(() => import('../components/WritingConfigModal').then(mod => mod.WritingConfigModal), { ssr: false });
+const DesktopSidebarRight = dynamic(() => import('../components/DesktopSidebarRight').then(mod => mod.DesktopSidebarRight), { ssr: false });
+const MobileHeaderMenu = dynamic(() => import('../components/MobileHeaderMenu').then(mod => mod.MobileHeaderMenu), { ssr: false });
 
 import LearnMobileHeader from './learn/LearnMobileHeader';
 import LearnMobileTimeline from './learn/LearnMobileTimeline';
 import LearnDesktopTimeline from './learn/LearnDesktopTimeline';
-import LearnLessonModal from './learn/LearnLessonModal';
-import LearnUnitsModal from './learn/LearnUnitsModal';
-import LearnQuestsModal from './learn/LearnQuestsModal';
-import LearnLockedReviewModal from './learn/LearnLockedReviewModal';
+
+const LearnLessonModal = dynamic(() => import('./learn/LearnLessonModal'), { ssr: false });
+const LearnUnitsModal = dynamic(() => import('./learn/LearnUnitsModal'), { ssr: false });
+const LearnQuestsModal = dynamic(() => import('./learn/LearnQuestsModal'), { ssr: false });
+const LearnLockedReviewModal = dynamic(() => import('./learn/LearnLockedReviewModal'), { ssr: false });
 
 export default function LearnClientPage({ lightweightLessons }: { lightweightLessons: any[] }) {
   const data = { lessons: lightweightLessons };
