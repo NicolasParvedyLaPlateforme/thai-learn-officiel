@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from '../lib/store';
 import { useTranslation } from '../hooks/useTranslation';
 import { Star, Flame, Coins, Target, User, Heart, X } from 'lucide-react';

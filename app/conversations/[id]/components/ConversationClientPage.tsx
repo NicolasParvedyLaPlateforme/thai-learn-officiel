@@ -13,7 +13,7 @@ import speakersConfig from '../../../data/speakers.json';
 import { getVocabularyServer } from '../../../actions/course';
 import { Word } from '../../../types';
 import { LoadingScreen } from '../../../components/LoadingScreen';
-import { AnimatePresence, motion } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 
 // Helper to shuffle an array
 function shuffleArray<T>(array: T[]): T[] {

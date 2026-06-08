@@ -3,7 +3,7 @@
 import React from 'react';
 import { useProgressStore, AppLanguage } from '../lib/store';
 import { Globe, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { useTranslation } from '../hooks/useTranslation';
 
 const languages: { code: AppLanguage, name: string, flag: string }[] = [

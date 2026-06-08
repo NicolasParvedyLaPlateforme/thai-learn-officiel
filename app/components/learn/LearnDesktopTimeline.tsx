@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { m as motion } from "motion/react";
 import { BookOpen, Star, CheckCircle, Lock, Play } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';

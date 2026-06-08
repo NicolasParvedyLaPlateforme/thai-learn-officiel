@@ -1,7 +1,7 @@
 import { getTranslation } from '../../../hooks/useTranslation';
 import React from 'react';
 import { Check } from 'lucide-react';
-import { motion } from 'motion/react';
+import { m as motion } from "motion/react";
 
 export default function InstructionExample({ typeKey, language }: { typeKey: string | null, language: string }) {
   if (typeKey === 'word-match') {

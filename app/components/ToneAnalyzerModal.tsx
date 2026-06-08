@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useProgressStore } from '../lib/store';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { Drawer } from 'vaul';
 import { ToneAnalyzerContent } from './tone-analyzer/ToneAnalyzerContent';
 

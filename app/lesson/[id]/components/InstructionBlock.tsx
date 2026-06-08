@@ -2,7 +2,7 @@ import { getTranslation } from '../../../hooks/useTranslation';
 import { Check } from "lucide-react";
 import InstructionExample from "./InstructionExample";
 import { Exercise } from "../../../types";
-import { motion } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 
 interface InstructionBlockProps {
   language: string;

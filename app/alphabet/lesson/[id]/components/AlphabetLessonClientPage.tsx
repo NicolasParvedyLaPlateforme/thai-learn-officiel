@@ -10,7 +10,7 @@ import { AlphabetItem } from '../../../../lib/alphabet-data';
 import { getAlphabetExercisesServer } from '../../../../actions/course';
 import { X, Check, Star, Volume2, HelpCircle, Info } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from '../../../../lib/tts';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { ColoredPhonetic } from '../../../../components/ColoredPhonetic';
 import { AlphabetCard } from '../../../../components/AlphabetCard';
 import { Suspense } from 'react';

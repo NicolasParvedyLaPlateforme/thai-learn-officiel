@@ -8,7 +8,7 @@ import type { ReviewOptions } from '../lib/exercise-generator';
 import { Exercise, CourseData, Word } from '../types';
 import { X, Check, Settings, Play } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from '../lib/tts';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { LoadingScreen } from '../components/LoadingScreen';
 
 // Exercise Components

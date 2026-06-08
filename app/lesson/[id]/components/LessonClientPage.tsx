@@ -9,7 +9,7 @@ import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
 import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
 import { playThaiTTS, preloadThaiVoices } from "../../../lib/tts";
-import { motion, AnimatePresence } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 
 import dynamic from 'next/dynamic';

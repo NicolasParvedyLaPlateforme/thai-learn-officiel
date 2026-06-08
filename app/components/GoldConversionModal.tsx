@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useProgressStore } from '../lib/store';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { Coins, Sparkles, Trophy } from 'lucide-react';
 import { getTranslation } from '../hooks/useTranslation';
 

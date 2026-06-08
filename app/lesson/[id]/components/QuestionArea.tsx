@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Exercise, Lesson, Word } from "../../../types";
 import { SentenceWithHints } from "../../../components/Hints";
 import { playThaiTTS } from "../../../lib/tts";
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { useTranslation } from "../../../hooks/useTranslation";
 
 interface QuestionAreaProps {

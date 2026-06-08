@@ -3,7 +3,7 @@
 import { getTranslation } from '../hooks/useTranslation';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { Brain, BookOpen, Pencil, Star, Mic, User, Wand2, Menu } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { WritingConfigModal } from '../components/WritingConfigModal';

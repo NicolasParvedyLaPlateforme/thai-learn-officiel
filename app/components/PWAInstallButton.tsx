@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Download, X, Share, PlusSquare } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { createPortal } from 'react-dom';
 
 export default function PWAInstallButton() {

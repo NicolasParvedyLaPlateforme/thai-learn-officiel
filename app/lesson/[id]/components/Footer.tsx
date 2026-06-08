@@ -1,5 +1,5 @@
 import { getTranslation } from '../../../hooks/useTranslation';
-import { motion, AnimatePresence } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { Exercise, Word } from "../../../types";
 
