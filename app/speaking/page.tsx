@@ -4,7 +4,7 @@ import { getTranslation } from '../hooks/useTranslation';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../lib/store';
-import { getVocabularyServer } from '../actions/course';
+import { getVocabularyServer, getDictionaryForExerciseServer } from '../actions/course';
 import { Word, Phrase } from '../types';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { SpeakingExercise } from '../components/SpeakingExercise';
@@ -13,6 +13,7 @@ export default function SpeakingPage() {
   const router = useRouter();
   const { language, speakingConfig, completedLessons } = useProgressStore();
   const [vocabulary, setVocabulary] = useState<(Word | Phrase)[]>([]);
+  const [dictionary, setDictionary] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [mounted, setMounted] = useState(false);
@@ -20,7 +21,10 @@ export default function SpeakingPage() {
 
   useEffect(() => {
     async function loadVocab() {
-      const vocab = await getVocabularyServer(speakingConfig.lessonId, completedLessons);
+      const [vocab, dict] = await Promise.all([
+        getVocabularyServer(speakingConfig.lessonId, completedLessons),
+        getDictionaryForExerciseServer()
+      ]);
       let filtered = vocab;
       if (speakingConfig.selectedWordIds) {
         filtered = vocab.filter(item => speakingConfig.selectedWordIds!.includes(item.id));
@@ -28,6 +32,7 @@ export default function SpeakingPage() {
       // Shuffle words
       filtered.sort(() => Math.random() - 0.5);
       setVocabulary(filtered);
+      setDictionary(dict as Word[]);
       setLoading(false);
     }
     loadVocab();
@@ -70,7 +75,7 @@ export default function SpeakingPage() {
       </header>
       
       <main className="flex-1 max-w-3xl w-full mx-auto p-4 md:p-8 flex flex-col justify-center">
-        <SpeakingExercise vocabulary={vocabulary} onComplete={() => router.push('/practice')} />
+        <SpeakingExercise vocabulary={vocabulary} dictionary={dictionary} onComplete={() => router.push('/practice')} />
       </main>
     </div>
   );
