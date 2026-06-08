@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Word } from '../types';
 import { Volume2 } from 'lucide-react';
 import { playThaiTTS } from '../lib/tts';
+import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from '../lib/store';
 import { motion, AnimatePresence } from 'motion/react';
 import { formatCombiningChar } from '../lib/alphabet-utils';
@@ -24,8 +25,13 @@ const pairColors = [
   'bg-cyan-100 border-cyan-300 text-cyan-700',
 ];
 
-export default function PairMatch({ pairs, mode = 'normal', onComplete, forceHideRomanization, disabled }: PairMatchProps) {
-  const { language, showRomanization } = useProgressStore();
+export default React.memo(function PairMatch({ pairs, mode = 'normal', onComplete, forceHideRomanization, disabled }: PairMatchProps) {
+  const { language, showRomanization } = useProgressStore(
+    useShallow(state => ({
+      language: state.language,
+      showRomanization: state.showRomanization
+    }))
+  );
   const [leftCards, setLeftCards] = useState<{id: string, text: string, type: 'left'}[]>([]);
   const [rightCards, setRightCards] = useState<{id: string, text: string, phonetic: string, type: 'right'}[]>([]);
   
@@ -232,4 +238,4 @@ export default function PairMatch({ pairs, mode = 'normal', onComplete, forceHid
       </AnimatePresence>
     </div>
   );
-}
+});

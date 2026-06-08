@@ -3,11 +3,11 @@
 import { getTranslation } from '../../../hooks/useTranslation';
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from "../../../lib/store";
 import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
 import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
-import confetti from "canvas-confetti";
 import { playThaiTTS, preloadThaiVoices } from "../../../lib/tts";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
@@ -29,6 +29,13 @@ import HeaderProgressBar from "./HeaderProgressBar";
 import InstructionBlock from "./InstructionBlock";
 import Footer from "./Footer";
 import QuestionArea from "./QuestionArea";
+
+const triggerConfetti = () => {
+  import("canvas-confetti").then((mod) => {
+    const confetti = mod.default;
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  });
+};
 
 const getInstructionKey = (ex: Exercise | undefined) => {
   if (!ex) return null;
@@ -87,7 +94,24 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     hideInstruction,
     unhideInstruction,
     saveReviewStat,
-  } = useProgressStore();
+  } = useProgressStore(
+    useShallow((state) => ({
+      completeLesson: state.completeLesson,
+      lessonLevels: state.lessonLevels,
+      language: state.language,
+      completedLessons: state.completedLessons,
+      unlockedLessons: state.unlockedLessons,
+      _hasHydrated: state._hasHydrated,
+      showRomanization: state.showRomanization,
+      setShowRomanization: state.setShowRomanization,
+      setLastActiveUnitIndex: state.setLastActiveUnitIndex,
+      setLastPlayedLesson: state.setLastPlayedLesson,
+      hiddenInstructions: state.hiddenInstructions,
+      hideInstruction: state.hideInstruction,
+      unhideInstruction: state.unhideInstruction,
+      saveReviewStat: state.saveReviewStat,
+    }))
+  );
 
   const lessonId = params.id as string;
   const requestedLevelStr = searchParams.get("level");
@@ -140,7 +164,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const currentExerciseTop = exercises[currentIndex];
   const instructionKeyTop = getInstructionKey(currentExerciseTop);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
-  const { inProgressLessons, saveInProgressLesson } = useProgressStore();
+  const { inProgressLessons, saveInProgressLesson } = useProgressStore(
+    useShallow((state) => ({
+      inProgressLessons: state.inProgressLessons,
+      saveInProgressLesson: state.saveInProgressLesson
+    }))
+  );
 
   useEffect(() => {
     setIsClient(true);
@@ -266,7 +295,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       setEarnedXp(expected.xp);
       setIsFinished(true);
       completeLesson(lesson.id, 0, currentLevel, 3, isBilan);
-      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      triggerConfetti();
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
 
@@ -352,7 +381,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
           }
-          confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+          triggerConfetti();
         }
       }, 150);
       return;
@@ -379,11 +408,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
             }
-            confetti({
-              particleCount: 150,
-              spread: 70,
-              origin: { y: 0.6 },
-            });
+            triggerConfetti();
           }
         } else {
           // If wrong, we re-add the exercise to the end!
@@ -738,11 +763,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
                               saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
                             }
-                            confetti({
-                              particleCount: 150,
-                              spread: 70,
-                              origin: { y: 0.6 },
-                            });
+                            triggerConfetti();
                           }
                         }, 150);
                       }

@@ -1,5 +1,5 @@
 import { getTranslation, getLocalizedField } from '../../../hooks/useTranslation';
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Exercise } from '../../../types';
 import { playThaiTTS } from '../../../lib/tts';
 import { formatCombiningChar } from '../../../lib/alphabet-utils';
@@ -71,7 +71,7 @@ function analyzeDifferences(options: string[], answer: string) {
   return null;
 }
 
-export default function WordMatch({ exercise, selected, onChange, disabled, onAutoCheck, isChecking, isCorrect, language = 'fr', onAddMistake }: Props) {
+export default React.memo(function WordMatch({ exercise, selected, onChange, disabled, onAutoCheck, isChecking, isCorrect, language = 'fr', onAddMistake }: Props) {
   const isDense = exercise.options.length > 6;
   const [localErrors, setLocalErrors] = useState<string[]>([]);
 
@@ -240,4 +240,4 @@ export default function WordMatch({ exercise, selected, onChange, disabled, onAu
       </div>
     </div>
   );
-}
+});

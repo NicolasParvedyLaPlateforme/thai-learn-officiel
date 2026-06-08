@@ -1,7 +1,8 @@
 import { getTranslation } from '../../../hooks/useTranslation';
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Exercise } from '../../../types';
 import { useProgressStore } from '../../../lib/store';
+import { useShallow } from 'zustand/react/shallow';
 import { Keyboard, Delete, Volume2, ArrowUp } from 'lucide-react';
 import { playThaiTTS } from '../../../lib/tts';
 
@@ -15,8 +16,8 @@ interface Props {
   isChecking?: boolean;
 }
 
-export default function FreeTypingInput({ exercise, selected, onChange, disabled, isChecking }: Props) {
-  const { language } = useProgressStore();
+export default React.memo(function FreeTypingInput({ exercise, selected, onChange, disabled, isChecking }: Props) {
+  const language = useProgressStore(state => state.language);
   const [showVirtual, setShowVirtual] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -124,4 +125,4 @@ export default function FreeTypingInput({ exercise, selected, onChange, disabled
       )}
     </div>
   );
-}
+});

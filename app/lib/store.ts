@@ -205,6 +205,8 @@ interface ProgressState {
 
   lastMergedEmail: string | null;
   setLastMergedEmail: (email: string | null) => void;
+  forceSyncTrigger: number;
+  triggerForceSync: () => void;
 }
 
 export const useProgressStore = create<ProgressState>()(
@@ -212,6 +214,8 @@ export const useProgressStore = create<ProgressState>()(
     (set, get) => ({
       _hasHydrated: false,
       setHasHydrated: (state) => set({ _hasHydrated: state }),
+      forceSyncTrigger: 0,
+      triggerForceSync: () => set((state) => ({ forceSyncTrigger: state.forceSyncTrigger + 1 })),
       isMobileSidebarOpen: false,
       setMobileSidebarOpen: (open) => set({ isMobileSidebarOpen: open }),
       language: 'fr',
@@ -474,6 +478,7 @@ export const useProgressStore = create<ProgressState>()(
         if (expectedXp > 0) {
           get().addXp(expectedXp);
         }
+        get().triggerForceSync();
       },
 
       setLanguage: (lang) => set({ language: lang, languageSetByUser: true, showLanguageModal: false }),
@@ -584,6 +589,7 @@ export const useProgressStore = create<ProgressState>()(
         if (earnedStars >= 3) {
           get().progressQuest(type, 'perfect_lesson', 1);
         }
+        get().triggerForceSync();
       },
       addXp: (amount) => {
         set((state) => ({ xp: state.xp + amount }));

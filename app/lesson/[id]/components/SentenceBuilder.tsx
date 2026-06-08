@@ -2,7 +2,7 @@ import { getTranslation } from '../../../hooks/useTranslation';
 import { Exercise } from '../../../types';
 import { playThaiTTS } from '../../../lib/tts';
 import { THAI_ALPHABET } from '../../../lib/alphabet-data';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { useProgressStore } from '../../../lib/store';
 
@@ -14,8 +14,8 @@ interface Props {
   onAutoCheck?: (val?: string[]) => void;
 }
 
-export default function SentenceBuilder({ exercise, selected, onChange, disabled, onAutoCheck }: Props) {
-  const { language } = useProgressStore();
+export default React.memo(function SentenceBuilder({ exercise, selected, onChange, disabled, onAutoCheck }: Props) {
+  const language = useProgressStore(state => state.language);
   const [showHint, setShowHint] = useState(false);
   
   const handleSelect = (wordTh: string) => {
@@ -267,4 +267,4 @@ export default function SentenceBuilder({ exercise, selected, onChange, disabled
 
     </div>
   );
-}
+});

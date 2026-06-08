@@ -3,12 +3,12 @@
 import { getTranslation, getLocalizedField } from '../../../../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from '../../../../lib/store';
 import { getAlphabetLessons, AlphabetExercise, AlphabetLessonDef, formatCombiningChar } from '../../../../lib/alphabet-utils';
 import { AlphabetItem } from '../../../../lib/alphabet-data';
 import { getAlphabetExercisesServer } from '../../../../actions/course';
 import { X, Check, Star, Volume2, HelpCircle, Info } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { playThaiTTS, preloadThaiVoices } from '../../../../lib/tts';
 import { motion, AnimatePresence } from 'motion/react';
 import { ColoredPhonetic } from '../../../../components/ColoredPhonetic';
@@ -16,11 +16,30 @@ import { AlphabetCard } from '../../../../components/AlphabetCard';
 import { Suspense } from 'react';
 import { LoadingScreen } from "../../../../components/LoadingScreen";
 
+const triggerConfetti = () => {
+  import("canvas-confetti").then((mod) => {
+    const confetti = mod.default;
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  });
+};
+
 function AlphabetLessonContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { completeLesson, lessonLevels, language, seenAlphabets, markAlphabetSeen, completedLessons, unlockedLessons, _hasHydrated, setLastPlayedLesson } = useProgressStore();
+  const { completeLesson, lessonLevels, language, seenAlphabets, markAlphabetSeen, completedLessons, unlockedLessons, _hasHydrated, setLastPlayedLesson } = useProgressStore(
+    useShallow(state => ({
+      completeLesson: state.completeLesson,
+      lessonLevels: state.lessonLevels,
+      language: state.language,
+      seenAlphabets: state.seenAlphabets,
+      markAlphabetSeen: state.markAlphabetSeen,
+      completedLessons: state.completedLessons,
+      unlockedLessons: state.unlockedLessons,
+      _hasHydrated: state._hasHydrated,
+      setLastPlayedLesson: state.setLastPlayedLesson
+    }))
+  );
   
   const lessonId = params.id as string;
   const requestedLevelStr = searchParams.get('level');
@@ -120,7 +139,7 @@ function AlphabetLessonContent() {
         completeLesson(lesson.id, 0, currentLevel, 3, false);
       }
       setIsFinished(true);
-      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      triggerConfetti();
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
 
@@ -191,7 +210,7 @@ function AlphabetLessonContent() {
         completeLesson(lesson.id, 0, currentLevel, earnedStars, false);
       }
       setIsFinished(true);
-      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }});
+      triggerConfetti();
     }
   };
 
