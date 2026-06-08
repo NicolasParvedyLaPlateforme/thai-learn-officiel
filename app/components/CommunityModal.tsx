@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { m as motion, AnimatePresence } from 'motion/react';
 import { useProgressStore } from '../lib/store';
 import { X, Heart, ExternalLink } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -21,11 +22,15 @@ export function CommunityModal() {
   useEffect(() => {
     setMounted(true);
     // Only auto-show if we haven't seen it AND we are on the /learn page
-    if (!hasSeenCommunityModal && mounted && pathname === '/learn') {
-      setShowCommunityModal(true);
-      setHasSeenCommunityModal(true); // Don't show automatically next time unless they clear storage.
+    // Delay by 3.5s to not block initial paint (Lighthouse LCP) and improve UX
+    if (!hasSeenCommunityModal && pathname === '/learn') {
+      const timer = setTimeout(() => {
+        setShowCommunityModal(true);
+        setHasSeenCommunityModal(true); // Don't show automatically next time unless they clear storage.
+      }, 3500);
+      return () => clearTimeout(timer);
     }
-  }, [hasSeenCommunityModal, setHasSeenCommunityModal, setShowCommunityModal, mounted, pathname]);
+  }, [hasSeenCommunityModal, setHasSeenCommunityModal, setShowCommunityModal, pathname]);
 
   // Adjust logic: If they never checked "Don't show again", we might want to keep showing it? 
   // Let's say we show it once automatically. If they check "Don't show again", we set a persisted flag.
@@ -35,7 +40,7 @@ export function CommunityModal() {
   // So on mount, if !hasSeenCommunityModal, we setShowCommunityModal(true). 
   // We should do this only once per session if not checked, but let's just do it on first visit.
 
-  if (!mounted || !showCommunityModal) return null;
+  if (!mounted) return null;
 
   const handleClose = () => {
     if (dontShowAgain) {
@@ -47,11 +52,22 @@ export function CommunityModal() {
   const isFr = language === 'fr';
 
   return (
-    <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-      <div 
-        className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <AnimatePresence>
+      {showCommunityModal && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+        >
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+            className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
         <div className="bg-emerald-50 p-6 border-b border-emerald-100 flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-emerald-100 text-emerald-600 p-2 rounded-xl">
@@ -133,7 +149,9 @@ export function CommunityModal() {
             {isFr ? "Continuer vers l'application" : "Continue to application"}
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
