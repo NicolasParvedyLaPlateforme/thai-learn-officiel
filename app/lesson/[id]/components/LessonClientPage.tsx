@@ -157,6 +157,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const [isClient, setIsClient] = useState(false);
   const [showExerciseUI, setShowExerciseUI] = useState(false);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [acknowledgedInstructions, setAcknowledgedInstructions] = useState<
     Set<string>
   >(new Set());
@@ -173,6 +174,30 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   useEffect(() => {
     setIsClient(true);
+    
+    if (typeof window !== 'undefined' && window.visualViewport) {
+      let maxVH = window.visualViewport.height;
+
+      const handleResize = () => {
+        const currentVH = window.visualViewport!.height;
+        
+        // Update maxVH if the screen grows (keyboard closed or orientation changed)
+        if (currentVH > maxVH) {
+          maxVH = currentVH;
+        }
+
+        // Keyboard is likely open if current height is at least 150px smaller than the max height
+        if (currentVH < maxVH - 150) {
+          setIsKeyboardOpen(true);
+        } else {
+          setIsKeyboardOpen(false);
+        }
+      };
+      
+      window.visualViewport.addEventListener('resize', handleResize);
+      handleResize();
+      return () => window.visualViewport?.removeEventListener('resize', handleResize);
+    }
   }, []);
 
   useEffect(() => {
@@ -688,7 +713,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             <motion.div
               animate={{ opacity: isExiting ? 0 : 1, y: 0, scale: 1 }}
               transition={{ duration: isExiting ? 0.15 : 0.3, delay: isExiting ? 0 : 0.1 }}
-              className={`${showInstruction || showHelpModal || currentExercise?.type === "pair-matching" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col justify-center hide-scrollbar`}
+              className={`${showInstruction || showHelpModal || currentExercise?.type === "pair-matching" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
             >
               {currentExercise?.type !== "pair-matching" && (
                 <QuestionArea

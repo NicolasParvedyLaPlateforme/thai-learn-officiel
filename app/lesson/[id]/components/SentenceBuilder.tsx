@@ -99,7 +99,14 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
             const items = [];
             if (exercise.isFillInBlank && exercise.correctComponents && exercise.blankIndex !== undefined) {
                for (let i = 0; i < exercise.correctComponents.length; i++) {
-                   if (exercise.correctComponents[i] === 'w_dots') continue;
+                   if (exercise.correctComponents[i] === 'w_dots') {
+                     items.push(
+                       <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
+                         <span className="leading-none text-2xl sm:text-3xl">...</span>
+                       </div>
+                     );
+                     continue;
+                   }
 
                    if (i === exercise.blankIndex) {
                        if (selected.length > 0) {

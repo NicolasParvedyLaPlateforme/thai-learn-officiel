@@ -33,14 +33,14 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
       const j = Math.floor(Math.random() * (i + 1));
       [chars[i], chars[j]] = [chars[j], chars[i]];
     }
-     
+
     setVKeys(chars);
   }, [exercise.answer]);
 
   const handleVKeyClick = (char: string) => {
     onChange(selected + char);
     if (!showVirtual && inputRef.current) {
-        inputRef.current.focus();
+      inputRef.current.focus();
     }
   };
 
@@ -55,7 +55,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
       <div className="relative w-full flex flex-col mb-6">
         <div className="flex gap-3 items-center w-full justify-center">
           <div className="relative flex-grow">
-            <input 
+            <input
               ref={inputRef}
               type="text"
               value={selected}
@@ -66,7 +66,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
               autoFocus
               dir="ltr"
             />
-            <button 
+            <button
               onClick={() => setShowVirtual(!showVirtual)}
               className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-lg transition-all ${showVirtual ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-400 hover:text-slate-600 hover:bg-slate-200'}`}
               title={getTranslation('auto.toggle_virtual_keyboard', language)}
@@ -75,7 +75,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
             </button>
           </div>
           {exercise.type === 'writing' && exercise.blindMode && exercise.correctComponents && !isChecking && (
-            <button 
+            <button
               className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors flex-shrink-0 self-stretch"
               onClick={() => {
                 const selLen = selected.replace(/\s+/g, '').length;
@@ -113,7 +113,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
               </button>
             )
           })}
-          
+
           <button
             onClick={handleBackspace}
             disabled={disabled || selected.length === 0}

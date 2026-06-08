@@ -355,7 +355,7 @@ export function DesktopSidebarRight({
                           </button>
                         ))
                       ) : (
-                        selectedLesson.lesson.words?.map((w: any) => (
+                        selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').map((w: any) => (
                           <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
                             <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] transition-colors`}>{w.th}</span>
                             <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({getLocalizedField(w, '', language)})</span>

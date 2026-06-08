@@ -281,7 +281,7 @@ export default function LearnLessonModal({
                   </div>
                 ) : (
                   <div className="flex flex-wrap gap-2.5 pb-2">
-                    {selectedLesson.lesson.words?.map((w: any) => (
+                    {selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').map((w: any) => (
                       <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
                         <span className={`font-bold text-[17px] ${selectedLesson.unitText}`}>{w.th}</span>
                         <span className="text-slate-500 text-[13px] font-medium">({getLocalizedField(w, '', language)})</span>
