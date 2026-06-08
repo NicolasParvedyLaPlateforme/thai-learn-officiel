@@ -169,7 +169,10 @@ export function SpeakingExercise({
       if (newPlacedIndices.length === targetWords.length) {
         if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
         setStatus('success');
-        SpeechRecognition.abortListening();
+        SpeechRecognition.stopListening();
+        setTimeout(() => {
+           SpeechRecognition.abortListening();
+        }, 50);
       }
    };
 
@@ -200,7 +203,8 @@ export function SpeakingExercise({
     } else if (status === 'idle' || status === 'timeup') {
        SpeechRecognition.stopListening();
     } else if (status === 'success') {
-       SpeechRecognition.abortListening();
+       SpeechRecognition.stopListening();
+       setTimeout(() => SpeechRecognition.abortListening(), 50);
     }
 
     return () => {
@@ -353,6 +357,12 @@ export function SpeakingExercise({
                      <Mic size={32} className="group-hover:scale-110 transition-transform" />
                   )}
                </button>
+            )}
+
+            {status === 'success' && (
+               <div className="w-20 h-20 bg-emerald-500/50 text-white rounded-full flex items-center justify-center z-10 opacity-60 cursor-not-allowed">
+                  <Mic size={32} />
+               </div>
             )}
 
             {status === 'listening' && (
