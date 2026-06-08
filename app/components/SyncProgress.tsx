@@ -11,6 +11,7 @@ export default function SyncProgress() {
   const store = useProgressStore();
   const isInitialSyncDone = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastForceSyncRef = useRef(0);
 
   // Sync DB to Zustand on login
   useEffect(() => {
@@ -136,12 +137,11 @@ export default function SyncProgress() {
   useEffect(() => {
     if (status !== "authenticated" || !isInitialSyncDone.current) return;
 
-    // Use a small debounce to avoid spamming the database
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    timeoutRef.current = setTimeout(async () => {
+    const performSync = async () => {
       const state = useProgressStore.getState();
       
       const dataToSave = {
@@ -169,13 +169,22 @@ export default function SyncProgress() {
       const signature = generateNetworkSignature(dataToSave, timestamp);
 
       await saveProgress(dataToSave, timestamp, signature);
-    }, 2000); // Debounce time: 2 seconds
+    };
+
+    if (store.forceSyncTrigger !== lastForceSyncRef.current) {
+      lastForceSyncRef.current = store.forceSyncTrigger;
+      performSync();
+      return;
+    }
+
+    timeoutRef.current = setTimeout(performSync, 2000); // Debounce time: 2 seconds
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [
     status,
+    store.forceSyncTrigger,
     store.xp,
     store.goldCoins,
     store.lastConversionMonth,
