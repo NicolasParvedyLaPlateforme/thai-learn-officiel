@@ -25,9 +25,9 @@ export default function SpeakingPage() {
         getVocabularyServer(speakingConfig.lessonId, completedLessons),
         getDictionaryForExerciseServer()
       ]);
-      let filtered = vocab;
+      let filtered = vocab.filter(item => item.id !== 'w_dots' && item.th !== '...' && item.th !== '___');
       if (speakingConfig.selectedWordIds) {
-        filtered = vocab.filter(item => speakingConfig.selectedWordIds!.includes(item.id));
+        filtered = filtered.filter(item => speakingConfig.selectedWordIds!.includes(item.id));
       }
       // Shuffle words
       filtered.sort(() => Math.random() - 0.5);

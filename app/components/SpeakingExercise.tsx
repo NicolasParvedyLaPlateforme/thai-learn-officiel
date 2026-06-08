@@ -14,6 +14,21 @@ const normalizeThai = (str: string) => {
   return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
 };
 
+const replaceNumbersWithThai = (text: string) => {
+  const map: Record<string, string> = {
+    '0': 'ศูนย์', '1': 'หนึ่ง', '2': 'สอง', '3': 'สาม', '4': 'สี่',
+    '5': 'ห้า', '6': 'หก', '7': 'เจ็ด', '8': 'แปด', '9': 'เก้า',
+    '10': 'สิบ', '11': 'สิบเอ็ด', '20': 'ยี่สิบ', '100': 'ร้อย'
+  };
+  let res = text;
+  // Replace longer numbers first
+  for (const num of ['100', '20', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']) {
+    const re = new RegExp(`(?<!\\d)${num}(?!\\d)`, 'g');
+    res = res.replace(re, map[num]);
+  }
+  return res;
+};
+
 export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocabulary: (Word | Phrase)[], dictionary: Word[], onComplete: () => void }) {
   const { language, addXp, speakingConfig } = useProgressStore();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -79,7 +94,7 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
     let newlyPlaced = false;
     let newPlacedScores = { ...placedScores };
     let newPlacedIndices = [...placedIndices];
-    let remainingTranscript = normalizeThai(text);
+    let remainingTranscript = normalizeThai(replaceNumbersWithThai(text));
 
     // Sort unplaced targets by length descending to match longest words first
     const unplacedTargets = targetWords
