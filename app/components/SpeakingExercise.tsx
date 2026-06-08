@@ -29,6 +29,7 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
     if (!currentItem) return [];
     if ('components' in currentItem) { // Phrase
       return currentItem.components.map(id => {
+         if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
          const w = dictionary.find(d => d.id === id);
          return w || { id, th: '???', fr: '', phonetic: '' } as Word;
       });
@@ -37,8 +38,8 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
     }
   }, [currentItem, dictionary]);
 
-  const shuffledIndices = useMemo(() => {
-    return Array.from({length: targetWords.length}, (_, i) => i).sort(() => Math.random() - 0.5);
+  const orderedIndices = useMemo(() => {
+    return Array.from({length: targetWords.length}, (_, i) => i);
   }, [targetWords]);
 
   const [placedIndices, setPlacedIndices] = useState<number[]>([]);
@@ -57,10 +58,20 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
     resetTranscript();
     setSpokenHistory("");
     setStatus('idle');
-    setPlacedIndices([]);
-    setPlacedScores({});
+    
+    const dotsIndices: number[] = [];
+    const dotsScores: Record<number, number> = {};
+    targetWords.forEach((tw, i) => {
+       if (tw.id === 'w_dots') {
+          dotsIndices.push(i);
+          dotsScores[i] = 100;
+       }
+    });
+    setPlacedIndices(dotsIndices);
+    setPlacedScores(dotsScores);
+    
     if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
-  }, [currentIndex, resetTranscript]);
+  }, [currentIndex, resetTranscript, targetWords]);
 
   const evaluateTranscript = (text: string) => {
     if (!text || targetWords.length === 0) return;
@@ -155,12 +166,21 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
           });
         }, 500);
       }, 5000);
+    } else if (status === 'idle' || status === 'success' || status === 'timeup') {
+       SpeechRecognition.stopListening();
     }
 
     return () => {
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
     };
   }, [status]);
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      SpeechRecognition.abortListening();
+    };
+  }, []);
 
   const startListening = () => {
     resetTranscript();
@@ -232,6 +252,15 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
        <div className="min-h-[120px] w-full max-w-2xl border-y-2 border-slate-200 py-6 flex flex-wrap gap-3 items-center justify-center mb-8">
           {targetWords.map((word, index) => {
              const isPlaced = placedIndices.includes(index);
+             
+             if (word.id === 'w_dots') {
+                return (
+                   <div key={`fixed-${index}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-14">
+                      <span className="leading-none text-2xl sm:text-3xl">...</span>
+                   </div>
+                );
+             }
+
              if (isPlaced) {
                 const score = placedScores[index];
                 let colorClass = "text-emerald-700 border-emerald-300 bg-emerald-50";
@@ -260,9 +289,11 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
 
        {/* Options Bank (Bottom) */}
        <div className="w-full max-w-2xl flex flex-wrap gap-3 items-center justify-center mb-10 min-h-[4rem]">
-          {shuffledIndices.map((originalIndex) => {
-             const isPlaced = placedIndices.includes(originalIndex);
+          {orderedIndices.map((originalIndex) => {
              const word = targetWords[originalIndex];
+             if (word.id === 'w_dots') return null; // Do not render dots in options
+             
+             const isPlaced = placedIndices.includes(originalIndex);
              if (!isPlaced) {
                 return (
                    <motion.div 
