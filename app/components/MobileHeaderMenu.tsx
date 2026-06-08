@@ -37,10 +37,10 @@ export function MobileHeaderMenu({ isOpen, onClose, onOpenQuests }: MobileHeader
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             drag="y"
-            dragConstraints={{ top: 0 }}
-            dragElastic={0.2}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
             onDragEnd={(e, info) => {
-              if (info.offset.y > 100 || info.velocity.y > 500) {
+              if (info.offset.y > 100 || info.velocity.y > 400) {
                 onClose();
               }
             }}
