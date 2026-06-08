@@ -5,7 +5,7 @@ import { Volume2 } from 'lucide-react';
 import { playThaiTTS } from '../lib/tts';
 import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from '../lib/store';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { formatCombiningChar } from '../lib/alphabet-utils';
 
 interface PairMatchProps {

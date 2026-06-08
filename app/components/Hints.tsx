@@ -5,7 +5,7 @@ import { Word, Phrase } from '../types';
 import { playThaiTTS } from '../lib/tts';
 import { ColoredPhonetic } from './ColoredPhonetic';
 import { useProgressStore } from '../lib/store';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion , AnimatePresence } from "framer-motion";
 
 // A simple component to render tooltips with tap support for mobile
 export function TooltipHint({ children, tooltipContent, className = '', audioText, tooltipPosition = 'top' }: { children: React.ReactNode, tooltipContent: React.ReactNode, className?: string, audioText?: string, tooltipPosition?: 'top' | 'bottom' }) {

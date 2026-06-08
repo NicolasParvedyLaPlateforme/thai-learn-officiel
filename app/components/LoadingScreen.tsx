@@ -1,6 +1,6 @@
 import { getTranslation } from '../hooks/useTranslation';
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { m as motion } from "motion/react";
 import { useProgressStore } from "../lib/store";
 
 export function LoadingScreen({ isLoadingData, onReady }: { isLoadingData: boolean; onReady: () => void }) {

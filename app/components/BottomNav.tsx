@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { BookOpen, MessageCircle, Brain, Search, ChevronUp, Pencil, Mic, Wand2, GraduationCap } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 import { useTranslation, getTranslation } from '../hooks/useTranslation';

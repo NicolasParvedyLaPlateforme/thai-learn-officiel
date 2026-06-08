@@ -1,6 +1,6 @@
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { m as motion } from "motion/react";
 import { AlphabetItem } from '../lib/alphabet-data';
 import { formatCombiningChar } from '../lib/alphabet-utils';
 import { Volume2 } from 'lucide-react';

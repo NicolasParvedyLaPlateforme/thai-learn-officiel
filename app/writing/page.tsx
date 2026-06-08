@@ -14,7 +14,7 @@ import { SentenceWithHints } from '../components/Hints';
 import { formatCombiningChar } from '../lib/alphabet-utils';
 import { getWritingExercisesServer, getDictionaryForExerciseServer, getPhrasesForExerciseServer } from '../actions/course';
 import { LoadingScreen } from '../components/LoadingScreen';
-import { AnimatePresence, motion } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 
 export default function WritingPage() {
   const router = useRouter();

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import IconImage from './IconImage';
 import { playThaiTTS } from '../lib/tts';
 import { formatCombiningChar } from '../lib/alphabet-utils';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { DailyQuestsWidget } from './DailyQuestsWidget';
 import { ConversationObjectiveWidget } from './ConversationObjectiveWidget';
 import { LeaderboardWidget } from './LeaderboardWidget';

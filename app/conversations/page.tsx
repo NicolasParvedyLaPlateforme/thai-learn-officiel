@@ -4,7 +4,7 @@ import { getTranslation } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import IconImage from '../components/IconImage';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from '../lib/store';
 import PWAInstallButton from '../components/PWAInstallButton';
 import { ArrowLeft, MessageCircle, Star, BookOpen, Info, ChevronRight, Play, X, Book, Image as ImageIcon, Lock, Check, Clock, Users, Volume2, MapPin, User, Menu } from 'lucide-react';

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from '../lib/store';
 import { useTranslation } from '../hooks/useTranslation';
 import { Star, Flame, Coins, Target, User, Heart, X } from 'lucide-react';
@@ -37,10 +37,10 @@ export function MobileHeaderMenu({ isOpen, onClose, onOpenQuests }: MobileHeader
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             drag="y"
-            dragConstraints={{ top: 0 }}
-            dragElastic={0.2}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
             onDragEnd={(e, info) => {
-              if (info.offset.y > 100 || info.velocity.y > 500) {
+              if (info.offset.y > 100 || info.velocity.y > 400) {
                 onClose();
               }
             }}

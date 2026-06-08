@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

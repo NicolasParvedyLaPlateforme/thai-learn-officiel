@@ -35,13 +35,15 @@ import DesktopSidebarLeft from './components/DesktopSidebarLeft';
 import AuthProvider from './components/AuthProvider';
 import SyncProgress from './components/SyncProgress';
 import GlobalModals from './components/GlobalModals';
+import MotionProvider from './components/MotionProvider';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${inter.variable} ${sarabun.variable}`}>
        <body className="font-sans antialiased text-slate-900 bg-slate-50 min-h-screen flex" suppressHydrationWarning>
-         <AuthProvider>
-           <SyncProgress />
+         <MotionProvider>
+           <AuthProvider>
+             <SyncProgress />
            <DesktopSidebarLeft />
            <GlobalModals />
            <div className="flex-1 flex flex-col min-h-screen min-w-0">
@@ -50,6 +52,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
            </div>
            <Analytics />
          </AuthProvider>
+       </MotionProvider>
        </body>
     </html>
   );

@@ -8,7 +8,7 @@ import { useProgressStore } from '../lib/store';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
-import { motion, AnimatePresence } from 'motion/react';
+import { m as motion , AnimatePresence } from "motion/react";
 
 // Normalize string for comparison (removes spaces, punctuation, special chars)
 const normalizeThai = (str: string) => {

@@ -1,5 +1,5 @@
 import { getTranslation } from '../../../hooks/useTranslation';
-import { motion } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import { Check, Star, Clock, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Lesson } from "../../../types";
