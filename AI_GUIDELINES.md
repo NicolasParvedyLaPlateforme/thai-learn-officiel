@@ -70,6 +70,10 @@ L'application est entièrement multilingue via le système de locales.
 - Ne **JAMAIS** supprimer de fonctionnalités sans avoir posé la question et obtenu l'accord de l'utilisateur.
 - Si une idée d'amélioration pertinente me vient à l'esprit, je dois la *proposer* d'abord.
 
+### 4. Architecture & Performances ⚡
+- **Modulatité (Petits composants) :** Un composant React ne devrait idéalement pas dépasser 300-400 lignes. S'il grossit, diviser le visuel en sous-composants "bêtes" (ex: `app/components/learn/`) tout en gardant la logique d'état complexe dans le parent.
+- **Lazy Loading (next/dynamic) :** Toutes les Modales, Tiroirs (Drawers) et composants lourds non visibles au chargement initial doivent **impérativement** être importés via `next/dynamic({ ssr: false })`. Cela est critique pour réduire la consommation de RAM sur mobile et alléger le bundle de `layout.tsx`.
+
 ---
 
 ## 🛠️ Types et Modèles de Données (`app/types.ts` & Prisma)

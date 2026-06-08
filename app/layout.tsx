@@ -32,12 +32,9 @@ export const metadata: Metadata = {
 };
 
 import DesktopSidebarLeft from './components/DesktopSidebarLeft';
-import { CommunityModal } from './components/CommunityModal';
-import { LanguageSelectorModal } from './components/LanguageSelectorModal';
-import { GoldConversionModal } from './components/GoldConversionModal';
-import { ToneAnalyzerModal } from './components/ToneAnalyzerModal';
 import AuthProvider from './components/AuthProvider';
 import SyncProgress from './components/SyncProgress';
+import GlobalModals from './components/GlobalModals';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -46,10 +43,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
          <AuthProvider>
            <SyncProgress />
            <DesktopSidebarLeft />
-           <CommunityModal />
-           <LanguageSelectorModal />
-           <GoldConversionModal />
-           <ToneAnalyzerModal />
+           <GlobalModals />
            <div className="flex-1 flex flex-col min-h-screen min-w-0">
              {children}
              <BottomNav />
