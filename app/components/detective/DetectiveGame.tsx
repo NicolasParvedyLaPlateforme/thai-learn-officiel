@@ -2,11 +2,11 @@
 
 import { getTranslation } from '../../hooks/useTranslation';
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
-import { preload } from 'react-dom';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
 import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star, Eye } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { playThaiTTS } from '../../lib/tts';
 import detectiveData from '../../data/detective.json';
 
@@ -16,9 +16,6 @@ interface Props {
 }
 
 export default function DetectiveGame({ level, initialDiff }: Props) {
-  if (level?.imageUrl) {
-    preload(level.imageUrl, { as: 'image' });
-  }
 
   const { language, setMobileSidebarOpen, completedLessons, completeLesson } = useProgressStore();
   const [xpAwarded, setXpAwarded] = useState(false);
@@ -335,11 +332,13 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         className="relative w-full h-full flex items-center justify-center select-none"
         ref={containerRef}
       >
-        <img
+        <Image
           ref={imgRef}
           src={level.imageUrl}
           alt="Level"
-          className="block w-full h-full pointer-events-none object-contain"
+          fill
+          priority
+          className="block pointer-events-none object-contain"
           onLoad={() => setLayoutTrigger(t => t + 1)}
         />
 
