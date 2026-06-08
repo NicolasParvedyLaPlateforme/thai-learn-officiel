@@ -3,7 +3,7 @@
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Word, Phrase } from '../types';
-import { Mic, ArrowRight, Play, Loader2, RotateCcw } from 'lucide-react';
+import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
@@ -179,18 +179,23 @@ export function SpeakingExercise({
     evaluateTranscript(currentFullTranscript);
   }, [currentFullTranscript, status]);
 
+  const stopAndEvaluate = () => {
+    SpeechRecognition.stopListening();
+    setStatus('evaluating');
+    if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+    setTimeout(() => {
+      setStatus(prev => {
+         if (prev === 'evaluating') return 'timeup';
+         return prev;
+      });
+    }, 500);
+  };
+
   // Timer logic
   useEffect(() => {
     if (status === 'listening') {
       listeningTimerRef.current = setTimeout(() => {
-        SpeechRecognition.stopListening();
-        setStatus('evaluating');
-        setTimeout(() => {
-          setStatus(prev => {
-             if (prev === 'evaluating') return 'timeup';
-             return prev;
-          });
-        }, 500);
+        stopAndEvaluate();
       }, 5000);
     } else if (status === 'idle' || status === 'success' || status === 'timeup') {
        SpeechRecognition.stopListening();
@@ -341,12 +346,19 @@ export function SpeakingExercise({
                 <motion.div 
                    key="listening"
                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                   className="w-full text-center"
+                   className="w-full flex items-center justify-center gap-3"
                 >
                    <span className="text-xl font-thai text-slate-600 bg-white px-6 py-3 rounded-full border border-orange-200 shadow-sm inline-flex items-center gap-2">
                      <Loader2 size={18} className="animate-spin text-orange-500" />
                      {currentFullTranscript || <span className="text-slate-400 font-sans italic text-base">{getTranslation('auto.speak_now', language)}</span>}
                    </span>
+                   <button 
+                      onClick={stopAndEvaluate}
+                      className="w-12 h-12 bg-white hover:bg-rose-50 text-rose-500 rounded-2xl border-2 border-rose-200 hover:border-rose-300 shadow-sm flex items-center justify-center transition-colors shrink-0"
+                      title="Stop"
+                   >
+                      <Square size={20} className="fill-current" />
+                   </button>
                 </motion.div>
              )}
           </AnimatePresence>
