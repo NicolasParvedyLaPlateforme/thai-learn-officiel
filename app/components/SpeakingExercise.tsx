@@ -246,8 +246,8 @@ export function SpeakingExercise({
    }
 
    return (
-      <div className="w-full flex flex-col items-center justify-center min-h-[60vh]">
-         {/* Prompt (Translation) */}
+    <div className="w-full flex flex-col items-center justify-center min-h-[60vh] pb-32">
+       {/* Prompt (Translation) */}
          <div className="text-center mb-8 relative w-full max-w-2xl mt-4">
             <h2 className="text-3xl font-bold text-slate-800 leading-relaxed">
                {getLocalizedField(currentItem, '', language)}
@@ -329,79 +329,78 @@ export function SpeakingExercise({
             })}
          </div>
 
-         {/* Transcript display & Status feedback */}
-         <div className="h-12 w-full max-w-2xl flex items-center justify-center">
-            <AnimatePresence mode="wait">
-               {status === 'success' && (
-                  <motion.div
-                     key="success"
-                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                     className="text-emerald-500 font-bold flex items-center gap-2 text-xl bg-emerald-50 px-6 py-2 rounded-full border border-emerald-200 shadow-sm"
-                  >
-                     {getTranslation('auto.excellent', language)}
-                  </motion.div>
-               )}
+        {/* Controls (Fixed Bottom) */}
+       <div className="fixed bottom-0 left-0 right-0 p-6 pb-8 bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/90 to-transparent flex flex-col items-center gap-3 z-50 pointer-events-none">
+         {status === 'timeup' && placedIndices.length < targetWords.length && (
+            <p className="text-amber-600 font-bold animate-pulse text-center bg-white/80 px-4 py-1 rounded-full shadow-sm text-sm pointer-events-auto">
+               {language === 'en' ? 'Timeout! Retry or Skip?' : 'Temps écoulé !'}
+            </p>
+         )}
 
-               {status === 'listening' && (
-                  <motion.div
-                     key="listening"
-                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                     className="w-full flex items-center justify-center gap-3"
-                  >
-                     <span className="text-xl font-thai text-slate-600 bg-white px-6 py-3 rounded-full border border-orange-200 shadow-sm inline-flex items-center gap-2">
-                        <Loader2 size={18} className="animate-spin text-orange-500" />
-                        {currentFullTranscript || <span className="text-slate-400 font-sans italic text-base">{getTranslation('auto.speak_now', language)}</span>}
-                     </span>
-                     <button
-                        onClick={stopAndEvaluate}
-                        className="w-12 h-12 bg-white hover:bg-rose-50 text-rose-500 rounded-2xl border-2 border-rose-200 hover:border-rose-300 shadow-sm flex items-center justify-center transition-colors shrink-0"
-                        title="Stop"
-                     >
-                        <Square size={20} className="fill-current" />
-                     </button>
-                  </motion.div>
-               )}
-            </AnimatePresence>
-         </div>
-
-         {/* Controls */}
-         <div className="flex flex-col items-center gap-4">
-            {status === 'timeup' && placedIndices.length < targetWords.length && (
-               <p className="text-amber-600 font-bold animate-pulse text-center">
-                  {language === 'en' ? 'Timeout! Retry or Skip?' : 'Temps écoulé ! Réessayer ou passer ?'}
-               </p>
+         <div className="relative flex items-center justify-center w-full h-24 pointer-events-auto">
+            
+            {/* Center Area */}
+            {status !== 'listening' && status !== 'success' && (
+               <button 
+                  onClick={startListening}
+                  className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
+               >
+                  {status === 'evaluating' ? (
+                     <Loader2 size={32} className="animate-spin" />
+                  ) : (
+                     <Mic size={32} className="group-hover:scale-110 transition-transform" />
+                  )}
+               </button>
             )}
 
-            <div className="flex items-center justify-center gap-4 sm:gap-6">
-               {(status === 'idle' || status === 'timeup' || status === 'evaluating') && (
-                  <button
-                     onClick={startListening}
-                     className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group relative shrink-0"
-                  >
-                     {status === 'evaluating' ? (
-                        <Loader2 size={32} className="animate-spin" />
-                     ) : (
-                        <Mic size={32} className="group-hover:scale-110 transition-transform" />
-                     )}
-                  </button>
-               )}
+            {status === 'success' && (
+               <div className="w-20 h-20 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(5,150,105)] z-10">
+                  <Mic size={32} />
+               </div>
+            )}
 
+            {status === 'listening' && (
+               <motion.div 
+                  key="listening"
+                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                  className="flex items-center z-10 max-w-[65vw]"
+               >
+                  <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
+                    <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
+                    <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
+                  </span>
+               </motion.div>
+            )}
+
+            {/* Right Area (Absolute) */}
+            <div className="absolute left-[calc(50%+3.5rem)] md:left-[calc(50%+4rem)] flex items-center">
                {(status === 'success' || status === 'timeup') && (
-                  <button
+                  <button 
                      onClick={nextWord}
-                     className={`px-8 h-16 rounded-2xl flex items-center justify-center gap-2 font-bold text-lg transition-all shrink-0
-                    ${status === 'success'
-                           ? 'bg-indigo-500 hover:bg-indigo-400 text-white shadow-[0_6px_0_rgb(67,56,202)] active:shadow-[0_0px_0_rgb(67,56,202)] active:translate-y-1.5'
+                     className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all
+                        ${status === 'success' 
+                           ? 'bg-indigo-500 hover:bg-indigo-400 text-white shadow-[0_6px_0_rgb(67,56,202)] active:shadow-[0_0px_0_rgb(67,56,202)] active:translate-y-1.5' 
                            : 'bg-slate-200 hover:bg-slate-300 text-slate-700 shadow-[0_6px_0_rgb(203,213,225)] active:shadow-[0_0px_0_rgb(203,213,225)] active:translate-y-1.5'
                         }
-                 `}
+                     `}
+                     title={status === 'success' ? getTranslation('auto.continue', language) : (language === 'en' ? 'Skip' : 'Passer')}
                   >
-                     {status === 'success' ? getTranslation('auto.continue', language) : (language === 'en' ? 'Skip' : 'Passer')} <ArrowRight size={20} />
+                     <ArrowRight size={24} />
+                  </button>
+               )}
+               {status === 'listening' && (
+                  <button 
+                     onClick={stopAndEvaluate}
+                     className="w-14 h-14 bg-white hover:bg-rose-50 text-rose-500 rounded-2xl border-2 border-rose-200 hover:border-rose-300 shadow-sm flex items-center justify-center transition-colors shrink-0 ml-2"
+                     title="Stop"
+                  >
+                     <Square size={20} className="fill-current" />
                   </button>
                )}
             </div>
          </div>
+       </div>
 
-      </div>
+    </div>
    );
 }
