@@ -15,43 +15,43 @@ Voici la décomposition exhaustive niveau par niveau :
 ### Niveau 1 (Code interne : `level 0`) - Découverte et Initiation
 - **Objectif :** Introduire les nouveaux mots en douceur.
 - **Logique :** Pour chaque mot de la leçon, l'algorithme génère 4 étapes :
-  1. **Intro :** Affichage du mot en gros avec audio et traduction (pas de question).
-  2. **Word Match (2 options) :** Le mot avec 1 seul distracteur. L'utilisateur n'a droit à aucune erreur (`maxMistakes: 1`).
-  3. **Word Match (4 options) :** Le mot avec 3 distracteurs. (`maxMistakes: 2`).
-  4. **Word Match (Fautes d'orthographe) :** Le mot avec 3 distracteurs générés via `generateMisspelledWords()`. Ces distracteurs sont des mots thaïs qui ressemblent au vrai mot mais contiennent des fautes subtiles de consonnes.
+  1. **Intro :** Affichage du mot en gros avec audio et traduction (pas de question). *(Source : `app/lesson/[id]/components/LessonClientPage.tsx` et `QuestionArea.tsx`)*
+  2. **Word Match (2 options) :** Le mot avec 1 seul distracteur. L'utilisateur n'a droit à aucune erreur (`maxMistakes: 1`). *(Source : `app/lesson/[id]/components/WordMatch.tsx`)*
+  3. **Word Match (4 options) :** Le mot avec 3 distracteurs. (`maxMistakes: 2`). *(Source : `app/lesson/[id]/components/WordMatch.tsx`)*
+  4. **Word Match (Fautes d'orthographe) :** Le mot avec 3 distracteurs générés via `generateMisspelledWords()`. Ces distracteurs sont des mots thaïs qui ressemblent au vrai mot mais contiennent des fautes subtiles de consonnes. *(Source : `app/lesson/[id]/components/WordMatch.tsx`)*
 
 ### Niveau 2 (Code interne : `level 1`) - Transition vers les phrases
 - **Objectif :** Renforcer le vocabulaire et introduire les phrases simples.
 - **Logique :** 
-  - **Moitié Vocabulaire (Word Match) :** L'algorithme pioche aléatoirement parmi 3 variantes (1/3 distracteurs classiques, 1/3 fautes d'orthographe, 1/3 "Reverse" où la question est en thaï et les options sont en français/anglais).
-  - **Moitié Phrases (Fill-in-the-blank) :** Des exercices à trous sur les phrases de la leçon. L'utilisateur doit trouver le mot manquant. S'il n'y a pas de phrase applicable, des exercices de construction de phrases (Sentence Builder) sont utilisés à la place.
+  - **Moitié Vocabulaire (Word Match) :** L'algorithme pioche aléatoirement parmi 3 variantes (1/3 distracteurs classiques, 1/3 fautes d'orthographe, 1/3 "Reverse" où la question est en thaï et les options sont en français/anglais). *(Source : `app/lesson/[id]/components/WordMatch.tsx`)*
+  - **Moitié Phrases (Fill-in-the-blank) :** Des exercices à trous sur les phrases de la leçon. L'utilisateur doit trouver le mot manquant. S'il n'y a pas de phrase applicable, des exercices de construction de phrases (Sentence Builder) sont utilisés à la place. *(Source : `app/lesson/[id]/components/SentenceBuilder.tsx`)*
 
 ### Niveau 3 (Code interne : `level 2`) - Construction de phrases
 - **Objectif :** S'entraîner à la syntaxe thaïlandaise.
 - **Logique :** 
-  - 1 Word Match par mot de la leçon (généré aléatoirement entre classique, orthographe ou reverse).
-  - Exercices à trous (Fill-in-the-blank) pour toutes les phrases.
-  - Sentence Builder "classique" (remettre tous les mots d'une phrase dans l'ordre).
+  - 1 Word Match par mot de la leçon (généré aléatoirement entre classique, orthographe ou reverse). *(Source : `app/lesson/[id]/components/WordMatch.tsx`)*
+  - Exercices à trous (Fill-in-the-blank) pour toutes les phrases. *(Source : `app/lesson/[id]/components/SentenceBuilder.tsx`)*
+  - Sentence Builder "classique" (remettre tous les mots d'une phrase dans l'ordre). *(Source : `app/lesson/[id]/components/SentenceBuilder.tsx`)*
 
 ### Niveau 4 (Code interne : `level 3`) - Traduction et disparition des aides
 - **Objectif :** Compréhension globale et début de l'effacement de la romanisation.
-- **Logique :** Mélange de Fill-in-the-blank, de Sentence Builder, et de **Phrase Match** (une nouveauté où il faut traduire une phrase entière en choisissant parmi des phrases entières similaires).
+- **Logique :** Mélange de Fill-in-the-blank, de Sentence Builder, et de **Phrase Match** (une nouveauté où il faut traduire une phrase entière en choisissant parmi des phrases entières similaires). *(Source Phrase Match : `app/lesson/[id]/components/WordMatch.tsx`)*
 - **Particularité :** La moitié de ces exercices cache la prononciation (romanisation), obligeant l'utilisateur à lire l'alphabet thaï.
 
 ### Niveaux 5, 6 et 7 (Code interne : `level 4, 5, 6`) - Association Rapide (Pair-matching)
 - **Objectif :** Mécanisation de l'association Thaï / Langue maternelle.
-- **Niveau 5 :** Pair-matching classique (relier les paires). 1/3 des questions masquent la romanisation.
-- **Niveau 6 :** Pair-matching **Audio uniquement**. L'utilisateur doit relier le son à la traduction.
-- **Niveau 7 :** Pair-matching **Script uniquement**. L'utilisateur relie le texte thaï à la traduction, mais n'a ni audio, ni romanisation pour s'aider.
+- **Niveau 5 :** Pair-matching classique (relier les paires). 1/3 des questions masquent la romanisation. *(Source : `app/components/PairMatch.tsx`)*
+- **Niveau 6 :** Pair-matching **Audio uniquement**. L'utilisateur doit relier le son à la traduction. *(Source : `app/components/PairMatch.tsx`)*
+- **Niveau 7 :** Pair-matching **Script uniquement**. L'utilisateur relie le texte thaï à la traduction, mais n'a ni audio, ni romanisation pour s'aider. *(Source : `app/components/PairMatch.tsx`)*
 
 ### Niveaux 8 et 9 (Code interne : `level 7 et 8`) - Écriture aveugle (Writing)
 - **Objectif :** Construire les mots soi-même avec le clavier virtuel de l'application.
-- **Niveau 8 :** Écriture des mots (Writing). Les consonnes/voyelles sont mélangées. Mode aveugle (pas de romanisation).
-- **Niveau 9 :** Écriture des phrases (Writing). Pareil, mais pour des phrases entières.
+- **Niveau 8 :** Écriture des mots (Writing). Les consonnes/voyelles sont mélangées. Mode aveugle (pas de romanisation). *(Source : `app/writing/components/VirtualKeyboard.tsx`)*
+- **Niveau 9 :** Écriture des phrases (Writing). Pareil, mais pour des phrases entières. *(Source : `app/writing/components/VirtualKeyboard.tsx`)*
 
 ### Niveau 10 (Code interne : `level 9`) - Saisie Libre (Free Typing)
 - **Objectif :** Écrire avec son propre clavier d'ordinateur ou de téléphone.
-- **Logique :** 10 mots/phrases tirés au sort. L'utilisateur doit les taper au clavier (Free typing). Plus de boutons, plus de romanisation.
+- **Logique :** 10 mots/phrases tirés au sort. L'utilisateur doit les taper au clavier (Free typing). Plus de boutons, plus de romanisation. *(Source : `app/lesson/[id]/components/FreeTypingInput.tsx`)*
 
 ---
 
