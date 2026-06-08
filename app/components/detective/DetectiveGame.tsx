@@ -2,6 +2,7 @@
 
 import { getTranslation } from '../../hooks/useTranslation';
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { DetectiveLevel, DetectiveObject } from '../../types';
 import { useProgressStore } from '../../lib/store';
 import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star, Eye } from 'lucide-react';
@@ -17,7 +18,14 @@ interface Props {
 
 export default function DetectiveGame({ level, initialDiff }: Props) {
 
-  const { language, setMobileSidebarOpen, completedLessons, completeLesson } = useProgressStore();
+  const { language, setMobileSidebarOpen, completedLessons, completeLesson } = useProgressStore(
+    useShallow(state => ({
+      language: state.language,
+      setMobileSidebarOpen: state.setMobileSidebarOpen,
+      completedLessons: state.completedLessons,
+      completeLesson: state.completeLesson
+    }))
+  );
   const [xpAwarded, setXpAwarded] = useState(false);
 
   const [objects, setObjects] = useState<DetectiveObject[]>([]);

@@ -3,6 +3,7 @@
 import { getTranslation } from '../../../hooks/useTranslation';
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from "../../../lib/store";
 import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
@@ -93,7 +94,24 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     hideInstruction,
     unhideInstruction,
     saveReviewStat,
-  } = useProgressStore();
+  } = useProgressStore(
+    useShallow((state) => ({
+      completeLesson: state.completeLesson,
+      lessonLevels: state.lessonLevels,
+      language: state.language,
+      completedLessons: state.completedLessons,
+      unlockedLessons: state.unlockedLessons,
+      _hasHydrated: state._hasHydrated,
+      showRomanization: state.showRomanization,
+      setShowRomanization: state.setShowRomanization,
+      setLastActiveUnitIndex: state.setLastActiveUnitIndex,
+      setLastPlayedLesson: state.setLastPlayedLesson,
+      hiddenInstructions: state.hiddenInstructions,
+      hideInstruction: state.hideInstruction,
+      unhideInstruction: state.unhideInstruction,
+      saveReviewStat: state.saveReviewStat,
+    }))
+  );
 
   const lessonId = params.id as string;
   const requestedLevelStr = searchParams.get("level");
@@ -146,7 +164,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const currentExerciseTop = exercises[currentIndex];
   const instructionKeyTop = getInstructionKey(currentExerciseTop);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
-  const { inProgressLessons, saveInProgressLesson } = useProgressStore();
+  const { inProgressLessons, saveInProgressLesson } = useProgressStore(
+    useShallow((state) => ({
+      inProgressLessons: state.inProgressLessons,
+      saveInProgressLesson: state.saveInProgressLesson
+    }))
+  );
 
   useEffect(() => {
     setIsClient(true);

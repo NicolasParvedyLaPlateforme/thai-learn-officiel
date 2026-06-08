@@ -3,6 +3,7 @@
 import { getTranslation, getLocalizedField } from '../../../../hooks/useTranslation';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from '../../../../lib/store';
 import { getAlphabetLessons, AlphabetExercise, AlphabetLessonDef, formatCombiningChar } from '../../../../lib/alphabet-utils';
 import { AlphabetItem } from '../../../../lib/alphabet-data';
@@ -26,7 +27,19 @@ function AlphabetLessonContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { completeLesson, lessonLevels, language, seenAlphabets, markAlphabetSeen, completedLessons, unlockedLessons, _hasHydrated, setLastPlayedLesson } = useProgressStore();
+  const { completeLesson, lessonLevels, language, seenAlphabets, markAlphabetSeen, completedLessons, unlockedLessons, _hasHydrated, setLastPlayedLesson } = useProgressStore(
+    useShallow(state => ({
+      completeLesson: state.completeLesson,
+      lessonLevels: state.lessonLevels,
+      language: state.language,
+      seenAlphabets: state.seenAlphabets,
+      markAlphabetSeen: state.markAlphabetSeen,
+      completedLessons: state.completedLessons,
+      unlockedLessons: state.unlockedLessons,
+      _hasHydrated: state._hasHydrated,
+      setLastPlayedLesson: state.setLastPlayedLesson
+    }))
+  );
   
   const lessonId = params.id as string;
   const requestedLevelStr = searchParams.get('level');
