@@ -176,9 +176,18 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     setIsClient(true);
     
     if (typeof window !== 'undefined' && window.visualViewport) {
+      let maxVH = window.visualViewport.height;
+
       const handleResize = () => {
-        // If visual viewport is significantly smaller than innerHeight, the keyboard is open.
-        if (window.visualViewport!.height < window.innerHeight * 0.8) {
+        const currentVH = window.visualViewport!.height;
+        
+        // Update maxVH if the screen grows (keyboard closed or orientation changed)
+        if (currentVH > maxVH) {
+          maxVH = currentVH;
+        }
+
+        // Keyboard is likely open if current height is at least 150px smaller than the max height
+        if (currentVH < maxVH - 150) {
           setIsKeyboardOpen(true);
         } else {
           setIsKeyboardOpen(false);
