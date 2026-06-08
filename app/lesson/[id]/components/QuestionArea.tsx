@@ -167,6 +167,7 @@ export default function QuestionArea({
               src={imageUrl}
               alt="word"
               fill
+              priority
               className="object-cover rounded-3xl shadow-lg border-4 border-white"
             />
           ) : (
