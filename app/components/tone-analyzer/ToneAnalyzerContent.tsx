@@ -7,7 +7,7 @@ import { analyzeSyllable, ToneAnalysis } from '../../lib/toneAnalyzer';
 import { Search, ArrowLeft, Wand2, Info, Volume2, Scissors, X } from 'lucide-react';
 import Link from 'next/link';
 import { playThaiTTS } from '../../lib/tts';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m as motion } from 'motion/react';
 import { getPredefinedSyllables } from '../../lib/vocabulary-utils';
 
 export interface ToneAnalyzerContentProps {

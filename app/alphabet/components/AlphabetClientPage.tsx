@@ -2,7 +2,7 @@
 
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m as motion } from 'motion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
