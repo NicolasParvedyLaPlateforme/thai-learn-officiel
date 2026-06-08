@@ -166,10 +166,10 @@ export function SpeakingExercise({
          resetTranscript();
       }
 
-      if (newPlacedIndices.length === targetWords.length && targetWords.length > 0) {
-         setStatus('success');
-         SpeechRecognition.stopListening();
-         if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+      if (newPlacedIndices.length === targetWords.length) {
+        if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+        setStatus('success');
+        SpeechRecognition.abortListening();
       }
    };
 
@@ -193,18 +193,20 @@ export function SpeakingExercise({
 
    // Timer logic
    useEffect(() => {
-      if (status === 'listening') {
-         listeningTimerRef.current = setTimeout(() => {
-            stopAndEvaluate();
-         }, 5000);
-      } else if (status === 'idle' || status === 'success' || status === 'timeup') {
-         SpeechRecognition.stopListening();
-      }
+    if (status === 'listening') {
+      listeningTimerRef.current = setTimeout(() => {
+        stopAndEvaluate();
+      }, 5000);
+    } else if (status === 'idle' || status === 'timeup') {
+       SpeechRecognition.stopListening();
+    } else if (status === 'success') {
+       SpeechRecognition.abortListening();
+    }
 
-      return () => {
-         if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
-      };
-   }, [status]);
+    return () => {
+      if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+    };
+  }, [status]);
 
    // Clean up on unmount
    useEffect(() => {
@@ -351,12 +353,6 @@ export function SpeakingExercise({
                      <Mic size={32} className="group-hover:scale-110 transition-transform" />
                   )}
                </button>
-            )}
-
-            {status === 'success' && (
-               <div className="w-20 h-20 bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(5,150,105)] z-10">
-                  <Mic size={32} />
-               </div>
             )}
 
             {status === 'listening' && (
