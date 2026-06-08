@@ -54,8 +54,8 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
     <Image
       src={src}
       alt={alt}
-      className={`${className} transition-opacity duration-300 ease-out z-10`}
-      style={{ opacity: isLoaded ? undefined : 0 }}
+      className={`${className} ${priority ? '' : 'transition-opacity duration-300 ease-out'} z-10`}
+      style={{ opacity: priority || isLoaded ? undefined : 0 }}
       fill={fill}
       width={width}
       height={height}
