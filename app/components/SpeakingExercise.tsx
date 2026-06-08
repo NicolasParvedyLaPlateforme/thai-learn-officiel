@@ -29,9 +29,20 @@ const replaceNumbersWithThai = (text: string) => {
   return res;
 };
 
-export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocabulary: (Word | Phrase)[], dictionary: Word[], onComplete: () => void }) {
+export function SpeakingExercise({ 
+  vocabulary, 
+  dictionary, 
+  currentIndex,
+  onIndexChange,
+  onComplete 
+}: { 
+  vocabulary: (Word | Phrase)[], 
+  dictionary: Word[], 
+  currentIndex: number,
+  onIndexChange: (idx: number) => void,
+  onComplete: () => void 
+}) {
   const { language, addXp, speakingConfig } = useProgressStore();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [status, setStatus] = useState<'idle' | 'listening' | 'evaluating' | 'success' | 'timeup'>('idle');
   const [spokenHistory, setSpokenHistory] = useState("");
   const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -215,7 +226,7 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
       addXp(3);
     }
     if (currentIndex + 1 < vocabulary.length) {
-      setCurrentIndex(currentIndex + 1);
+      onIndexChange(currentIndex + 1);
     } else {
       onComplete();
     }
@@ -229,38 +240,27 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
     );
   }
 
-  const progress = ((currentIndex) / vocabulary.length) * 100;
-
   return (
     <div className="w-full flex flex-col items-center justify-center min-h-[60vh]">
-       {/* Progress */}
-       <div className="w-full max-w-2xl mb-8 mt-4">
-         <div className="flex justify-between text-sm font-bold text-slate-400 mb-2">
-            <span>{currentIndex} / {vocabulary.length}</span>
-            <span>{Math.round(progress)}%</span>
-         </div>
-         <div className="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
-            <div className="h-full bg-orange-500 transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div>
-         </div>
-       </div>
-
        {/* Prompt (Translation) */}
-       <div className="text-center mb-8 relative w-full max-w-2xl">
-          <button 
-            onClick={playTTS}
-            className="absolute -top-4 right-0 w-10 h-10 bg-slate-100 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50 rounded-full flex items-center justify-center transition-colors"
-            title={getTranslation('auto.listen_to_pronunciation', language)}
-          >
-             <Play size={20} className="ml-1" />
-          </button>
-          <h2 className="text-3xl font-bold text-slate-800 mt-4 leading-relaxed">
+       <div className="text-center mb-8 relative w-full max-w-2xl mt-4">
+          <h2 className="text-3xl font-bold text-slate-800 leading-relaxed">
             {getLocalizedField(currentItem, '', language)}
           </h2>
-          {currentItem.phonetic && (
-             <p className="text-base text-slate-500 font-mono bg-slate-100 inline-block px-3 py-1 rounded-lg mt-3">
-               {currentItem.phonetic}
-             </p>
-          )}
+          <div className="flex items-center justify-center gap-3 mt-3">
+             {currentItem.phonetic && (
+               <p className="text-base text-slate-500 font-mono bg-slate-100 inline-block px-3 py-1 rounded-lg">
+                 {currentItem.phonetic}
+               </p>
+             )}
+             <button 
+               onClick={playTTS}
+               className="w-8 h-8 bg-slate-100 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50 rounded-full flex items-center justify-center transition-colors shrink-0"
+               title={getTranslation('auto.listen_to_pronunciation', language)}
+             >
+                <Play size={16} className="ml-0.5" />
+             </button>
+          </div>
        </div>
 
        {/* Build Zone (Target) */}
@@ -354,39 +354,40 @@ export function SpeakingExercise({ vocabulary, dictionary, onComplete }: { vocab
 
        {/* Controls */}
        <div className="flex flex-col items-center gap-4">
-         {(status === 'idle' || status === 'timeup' || status === 'evaluating') && (
-            <div className="flex flex-col items-center gap-3">
-               <button 
-                  onClick={startListening}
-                  className="w-24 h-24 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group relative"
-               >
-                  {status === 'evaluating' ? (
-                     <Loader2 size={40} className="animate-spin" />
-                  ) : (
-                     <Mic size={40} className="group-hover:scale-110 transition-transform" />
-                  )}
-               </button>
-               {status === 'timeup' && placedIndices.length < targetWords.length && (
-                  <p className="text-amber-600 font-bold mt-2 animate-pulse">
-                     {language === 'en' ? 'Timeout! Retry or Skip?' : 'Temps écoulé ! Réessayer ou passer ?'}
-                  </p>
-               )}
-            </div>
+         {status === 'timeup' && placedIndices.length < targetWords.length && (
+            <p className="text-amber-600 font-bold animate-pulse text-center">
+               {language === 'en' ? 'Timeout! Retry or Skip?' : 'Temps écoulé ! Réessayer ou passer ?'}
+            </p>
          )}
 
-         {(status === 'success' || status === 'timeup') && (
-            <button 
-               onClick={nextWord}
-               className={`px-10 h-16 rounded-2xl flex items-center justify-center gap-2 font-bold text-xl transition-all
-                  ${status === 'success' 
-                     ? 'bg-indigo-500 hover:bg-indigo-400 text-white shadow-[0_6px_0_rgb(67,56,202)] active:shadow-[0_0px_0_rgb(67,56,202)] active:translate-y-1.5' 
-                     : 'bg-slate-200 hover:bg-slate-300 text-slate-700 shadow-[0_6px_0_rgb(203,213,225)] active:shadow-[0_0px_0_rgb(203,213,225)] active:translate-y-1.5 mt-2'
-                  }
-               `}
-            >
-               {status === 'success' ? getTranslation('auto.continue', language) : (language === 'en' ? 'Skip' : 'Passer')} <ArrowRight size={24} />
-            </button>
-         )}
+         <div className="flex items-center justify-center gap-4 sm:gap-6">
+           {(status === 'idle' || status === 'timeup' || status === 'evaluating') && (
+               <button 
+                  onClick={startListening}
+                  className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group relative shrink-0"
+               >
+                  {status === 'evaluating' ? (
+                     <Loader2 size={32} className="animate-spin" />
+                  ) : (
+                     <Mic size={32} className="group-hover:scale-110 transition-transform" />
+                  )}
+               </button>
+           )}
+
+           {(status === 'success' || status === 'timeup') && (
+              <button 
+                 onClick={nextWord}
+                 className={`px-8 h-16 rounded-2xl flex items-center justify-center gap-2 font-bold text-lg transition-all shrink-0
+                    ${status === 'success' 
+                       ? 'bg-indigo-500 hover:bg-indigo-400 text-white shadow-[0_6px_0_rgb(67,56,202)] active:shadow-[0_0px_0_rgb(67,56,202)] active:translate-y-1.5' 
+                       : 'bg-slate-200 hover:bg-slate-300 text-slate-700 shadow-[0_6px_0_rgb(203,213,225)] active:shadow-[0_0px_0_rgb(203,213,225)] active:translate-y-1.5'
+                    }
+                 `}
+              >
+                 {status === 'success' ? getTranslation('auto.continue', language) : (language === 'en' ? 'Skip' : 'Passer')} <ArrowRight size={20} />
+              </button>
+           )}
+         </div>
        </div>
 
     </div>

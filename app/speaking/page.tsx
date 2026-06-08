@@ -15,6 +15,7 @@ export default function SpeakingPage() {
   const [vocabulary, setVocabulary] = useState<(Word | Phrase)[]>([]);
   const [dictionary, setDictionary] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -61,21 +62,31 @@ export default function SpeakingPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
-      <header className="bg-white border-b border-slate-200 px-4 h-16 flex items-center sticky top-0 z-50">
+      <header className="bg-white border-b border-slate-200 px-4 h-16 flex items-center sticky top-0 z-50 gap-4">
         <button 
           onClick={() => router.push('/practice')}
-          className="w-10 h-10 rounded-full flex items-center justify-center text-slate-400 hover:bg-slate-100 transition-colors"
+          className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-slate-400 hover:bg-slate-100 transition-colors"
         >
           <ArrowLeft size={24} />
         </button>
-        <div className="flex-1 font-bold text-center text-slate-600">
-           {getTranslation('auto.speaking_practice', language)}
+        <div className="flex-1 flex items-center gap-4">
+           <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-full bg-orange-500 transition-all duration-500 ease-out" style={{ width: `${vocabulary.length > 0 ? (currentIndex / vocabulary.length) * 100 : 0}%` }}></div>
+           </div>
+           <div className="text-sm font-bold text-slate-400 shrink-0">
+              {currentIndex} / {vocabulary.length}
+           </div>
         </div>
-        <div className="w-10"></div> {/* Spacer to center title */}
       </header>
       
       <main className="flex-1 max-w-3xl w-full mx-auto p-4 md:p-8 flex flex-col justify-center">
-        <SpeakingExercise vocabulary={vocabulary} dictionary={dictionary} onComplete={() => router.push('/practice')} />
+        <SpeakingExercise 
+          vocabulary={vocabulary} 
+          dictionary={dictionary} 
+          currentIndex={currentIndex}
+          onIndexChange={setCurrentIndex}
+          onComplete={() => router.push('/practice')} 
+        />
       </main>
     </div>
   );
