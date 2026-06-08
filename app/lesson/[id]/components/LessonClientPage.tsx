@@ -12,19 +12,21 @@ import { playThaiTTS, preloadThaiVoices } from "../../../lib/tts";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 
-// Exercise Components
-import WordMatch from "./WordMatch";
-import SentenceBuilder from "./SentenceBuilder";
-import PairMatch from "../../../components/PairMatch";
-import { TooltipHint, SentenceWithHints } from "../../../components/Hints";
-import VirtualKeyboard from "../../../writing/components/VirtualKeyboard";
-import FreeTypingInput from "./FreeTypingInput";
-import InstructionExample from "./InstructionExample";
+import dynamic from 'next/dynamic';
+
+// Dynamically imported components
+const WordMatch = dynamic(() => import('./WordMatch'));
+const SentenceBuilder = dynamic(() => import('./SentenceBuilder'));
+const PairMatch = dynamic(() => import('../../../components/PairMatch'));
+const VirtualKeyboard = dynamic(() => import('../../../writing/components/VirtualKeyboard'));
+const FreeTypingInput = dynamic(() => import('./FreeTypingInput'));
+const InstructionExample = dynamic(() => import('./InstructionExample'));
+const GlossaryModal = dynamic(() => import('./GlossaryModal'));
+const ResultScreen = dynamic(() => import('./ResultScreen'));
+
 import { Suspense } from "react";
 import { LoadingScreen } from "../../../components/LoadingScreen";
-
-import GlossaryModal from "./GlossaryModal";
-import ResultScreen from "./ResultScreen";
+import { TooltipHint, SentenceWithHints } from "../../../components/Hints";
 import HeaderProgressBar from "./HeaderProgressBar";
 import InstructionBlock from "./InstructionBlock";
 import Footer from "./Footer";
