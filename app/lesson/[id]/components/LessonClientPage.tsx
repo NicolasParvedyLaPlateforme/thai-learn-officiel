@@ -8,21 +8,21 @@ import { useProgressStore } from "../../../lib/store";
 import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
 import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
-import { playThaiTTS, preloadThaiVoices } from "../../../lib/tts";
+import { playThaiTTS, preloadThaiVoices, preloadThaiAudio } from "../../../lib/tts";
 import { m as motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 
-import dynamic from 'next/dynamic';
+import { ErrorBoundary } from "../../../components/ErrorBoundary";
 
-// Dynamically imported components
-const WordMatch = dynamic(() => import('./WordMatch'));
-const SentenceBuilder = dynamic(() => import('./SentenceBuilder'));
-const PairMatch = dynamic(() => import('../../../components/PairMatch'));
-const VirtualKeyboard = dynamic(() => import('../../../writing/components/VirtualKeyboard'));
-const FreeTypingInput = dynamic(() => import('./FreeTypingInput'));
-const InstructionExample = dynamic(() => import('./InstructionExample'));
-const GlossaryModal = dynamic(() => import('./GlossaryModal'));
-const ResultScreen = dynamic(() => import('./ResultScreen'));
+// Static imports for maximum offline resilience
+import WordMatch from './WordMatch';
+import SentenceBuilder from './SentenceBuilder';
+import PairMatch from '../../../components/PairMatch';
+import VirtualKeyboard from '../../../writing/components/VirtualKeyboard';
+import FreeTypingInput from './FreeTypingInput';
+import InstructionExample from './InstructionExample';
+import GlossaryModal from './GlossaryModal';
+import ResultScreen from './ResultScreen';
 
 import { Suspense } from "react";
 import { LoadingScreen } from "../../../components/LoadingScreen";
@@ -266,6 +266,46 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     unlockedLessons,
     exercisesGeneratedFor,
   ]);
+
+  // Preload images and audio in background
+  useEffect(() => {
+    if (exercises.length > 0) {
+      const imageUrls = new Set<string>();
+      const audioTexts = new Set<string>();
+      
+      exercises.forEach(ex => {
+         if (ex.answer && /[\u0E00-\u0E7F]/.test(ex.answer)) {
+            audioTexts.add(ex.answer);
+         }
+         
+         if (ex.options) {
+            ex.options.forEach((opt: any) => {
+               if (opt.imageUrl) imageUrls.add(opt.imageUrl);
+               if (opt.th) audioTexts.add(opt.th);
+            });
+         }
+         if (ex.pairs) {
+            ex.pairs.forEach((pair: any) => {
+               if (pair.imageUrl) imageUrls.add(pair.imageUrl);
+               if (pair.th) audioTexts.add(pair.th);
+            });
+         }
+      });
+      
+      // Delay slightly to not block initial render
+      setTimeout(() => {
+        imageUrls.forEach(url => {
+           const img = new window.Image();
+           img.src = url;
+        });
+        
+        // Background audio preloading
+        if (audioTexts.size > 0) {
+           preloadThaiAudio(Array.from(audioTexts));
+        }
+      }, 500);
+    }
+  }, [exercises]);
 
   const handleResume = () => {
     const savedStateKey = `${lesson.id}_${currentLevel}`;
@@ -737,8 +777,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
               className={`${showInstruction || showHelpModal ? "hidden" : "flex"} ${currentExercise?.type === "pair-matching" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
             >
               <div className="w-full relative">
-                {currentExercise?.type ===
-                "intro" ? null : currentExercise?.type === "word-match" ? (
+                <ErrorBoundary>
+                  {currentExercise?.type ===
+                  "intro" ? null : currentExercise?.type === "word-match" ? (
                   <WordMatch
                     exercise={currentExercise as Exercise}
                     selected={selectedAnswer as string}
@@ -820,6 +861,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                     onAutoCheck={(val) => handleCheck(val)}
                   />
                 )}
+                </ErrorBoundary>
               </div>
             </motion.div>
             {/* The transparent spacer to allow footer absolute positioning without overlapping options */}
@@ -849,13 +891,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
 export default function LessonClientPage({ lesson }: { lesson: any }) {
   return (
-    <Suspense
-      fallback={
-        <div className="p-8 text-center min-h-screen bg-[#FAFAFA]">
-          Chargement...
-        </div>
-      }
-    >
+    <Suspense fallback={null}>
       <LessonPageContent lesson={lesson} />
     </Suspense>
   );
