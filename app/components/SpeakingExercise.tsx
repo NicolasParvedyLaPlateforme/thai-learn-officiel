@@ -54,14 +54,13 @@ export function SpeakingExercise({
    vocabulary,
    dictionary,
    currentIndex,
-   onIndexChange,
-   onComplete
+   onNext
 }: {
    vocabulary: (Word | Phrase)[],
    dictionary: Word[],
    currentIndex: number,
-   onIndexChange: (idx: number) => void,
-   onComplete: () => void
+   currentIndex: number,
+   onNext: (isSuccess: boolean) => void
 }) {
    const { language, addXp, speakingConfig } = useProgressStore();
    const [status, setStatus] = useState<'idle' | 'listening' | 'evaluating' | 'success' | 'timeup'>('idle');
@@ -298,14 +297,8 @@ export function SpeakingExercise({
    };
 
    const nextWord = () => {
-      if (status === 'success') {
-         addXp(3);
-      }
-      if (currentIndex + 1 < vocabulary.length) {
-         onIndexChange(currentIndex + 1);
-      } else {
-         onComplete();
-      }
+      const isSuccess = status === 'success';
+      onNext(isSuccess);
    };
 
    if (!browserSupportsSpeechRecognition) {

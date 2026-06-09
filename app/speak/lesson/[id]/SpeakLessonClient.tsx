@@ -23,7 +23,9 @@ export default function SpeakLessonClient({
 }) {
   const router = useRouter();
   const { language, completeSpeakLesson, addXp } = useProgressStore();
+  const [exercises, setExercises] = useState(vocabulary);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [successCount, setSuccessCount] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
 
@@ -35,11 +37,23 @@ export default function SpeakLessonClient({
     router.push('/speak');
   };
 
-  const handleQuitEarly = () => {
-    // Give partial XP based on currentIndex, do not complete lesson
-    if (currentIndex > 0) {
-      addXp(currentIndex * 2);
+  const handleNext = (isSuccess: boolean) => {
+    if (isSuccess) {
+      setSuccessCount(prev => prev + 1);
+      addXp(3);
+    } else {
+      setExercises(prev => [...prev, prev[currentIndex]]);
     }
+    
+    const newLength = exercises.length + (isSuccess ? 0 : 1);
+    if (currentIndex + 1 < newLength) {
+      setCurrentIndex(prev => prev + 1);
+    } else {
+      handleComplete();
+    }
+  };
+
+  const handleQuitEarly = () => {
     router.push('/speak');
   };
 
@@ -62,21 +76,20 @@ export default function SpeakLessonClient({
         </button>
         <div className="flex-1 flex items-center gap-4">
            <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div className="h-full bg-orange-500 transition-all duration-500 ease-out" style={{ width: `${vocabulary.length > 0 ? (currentIndex / vocabulary.length) * 100 : 0}%` }}></div>
+              <div className="h-full bg-orange-500 transition-all duration-500 ease-out" style={{ width: `${exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0}%` }}></div>
            </div>
            <div className="text-sm font-bold text-slate-400 shrink-0">
-              {currentIndex} / {vocabulary.length}
+              {currentIndex} / {exercises.length}
            </div>
         </div>
       </header>
       
       <main className="flex-1 max-w-3xl w-full mx-auto p-4 md:p-8 flex flex-col justify-center">
         <SpeakingExercise 
-          vocabulary={vocabulary} 
+          vocabulary={exercises} 
           dictionary={dictionary} 
           currentIndex={currentIndex}
-          onIndexChange={setCurrentIndex}
-          onComplete={handleComplete} 
+          onNext={handleNext} 
         />
       </main>
 
@@ -92,8 +105,8 @@ export default function SpeakLessonClient({
             </h3>
             <p className="text-slate-500 font-medium mb-8">
               {language === 'en' 
-                ? `You won't complete the lesson, but you'll get ${currentIndex * 2} XP for your efforts so far.` 
-                : `Vous ne terminerez pas la leçon, mais vous gagnerez ${currentIndex * 2} XP pour vos efforts.`}
+                ? `You won't complete the lesson, but you keep the ${successCount * 3} XP you earned.` 
+                : `Vous ne terminerez pas la leçon, mais vous conservez les ${successCount * 3} XP gagnés.`}
             </p>
             <div className="flex flex-col gap-3 w-full">
               <button 
