@@ -1,0 +1,26 @@
+{
+  "lessons": [
+    {
+      "id": "speak-1",
+      "title": "Se présenter",
+      "titleEn": "Introduce yourself",
+      "description": "Apprenez à vous présenter",
+      "descriptionEn": "Learn to introduce yourself",
+      "unit": "unit-1",
+      "isReview": false,
+      "imageUrl": "/images/unite-1/phrase/bonjour-femme.webp",
+      "phraseIds": [
+        "p_hello_m",
+        "p_hello_f",
+        "p_how_are_you",
+        "p_thanks_m",
+        "p_thanks_f",
+        "p_i_am_fine",
+        "p_name_ask",
+        "p_name_m",
+        "p_name_f",
+        "p_and_you"
+      ]
+    }
+  ]
+}

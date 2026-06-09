@@ -45,6 +45,19 @@ export default function SyncProgress() {
               }
             }
 
+            const mergedSpeakLessonLevels: Record<string, number> = { ...(dbState.speakLessonLevels || {}) };
+            for (const key in localState.speakLessonLevels) {
+              mergedSpeakLessonLevels[key] = Math.max(localState.speakLessonLevels[key] || 0, mergedSpeakLessonLevels[key] || 0);
+            }
+
+            const mergedSpeakLessonStars: Record<string, number[]> = { ...(dbState.speakLessonStars || {}) };
+            for (const key in localState.speakLessonStars) {
+              if (!mergedSpeakLessonStars[key]) mergedSpeakLessonStars[key] = [...localState.speakLessonStars[key]];
+              else {
+                mergedSpeakLessonStars[key] = mergedSpeakLessonStars[key].map((s, i) => Math.max(s || 0, localState.speakLessonStars[key][i] || 0));
+              }
+            }
+
             const mergedCompletedConversations: Record<string, number> = { ...(dbState.completedConversations || {}) };
             for (const key in localState.completedConversations) {
                mergedCompletedConversations[key] = Math.max(localState.completedConversations[key] || -1, mergedCompletedConversations[key] || -1);
@@ -72,6 +85,9 @@ export default function SyncProgress() {
               seenAlphabets: Array.from(new Set([...(dbState.seenAlphabets || []), ...(localState.seenAlphabets || [])])),
               lessonLevels: mergedLessonLevels,
               lessonStars: mergedLessonStars,
+              speakCompletedLessons: Array.from(new Set([...(dbState.speakCompletedLessons || []), ...(localState.speakCompletedLessons || [])])),
+              speakLessonLevels: mergedSpeakLessonLevels,
+              speakLessonStars: mergedSpeakLessonStars,
               completedConversations: mergedCompletedConversations,
               conversationStars: mergedConversationStars,
               dailyQuests: localState.dailyQuests || dbState.dailyQuests,
@@ -99,6 +115,19 @@ export default function SyncProgress() {
               }
             }
 
+            const mergedSpeakLessonLevels: Record<string, number> = { ...(dbState.speakLessonLevels || {}) };
+            for (const key in localState.speakLessonLevels) {
+              mergedSpeakLessonLevels[key] = Math.max(localState.speakLessonLevels[key] || 0, mergedSpeakLessonLevels[key] || 0);
+            }
+
+            const mergedSpeakLessonStars: Record<string, number[]> = { ...(dbState.speakLessonStars || {}) };
+            for (const key in localState.speakLessonStars) {
+              if (!mergedSpeakLessonStars[key]) mergedSpeakLessonStars[key] = [...localState.speakLessonStars[key]];
+              else {
+                mergedSpeakLessonStars[key] = mergedSpeakLessonStars[key].map((s, i) => Math.max(s || 0, localState.speakLessonStars[key][i] || 0));
+              }
+            }
+
             const safeState = {
               ...dbState,
               xp: Math.max(dbState.xp || 0, localState.xp || 0), // MAX, pas d'addition
@@ -113,6 +142,9 @@ export default function SyncProgress() {
               seenAlphabets: Array.from(new Set([...(dbState.seenAlphabets || []), ...(localState.seenAlphabets || [])])),
               lessonLevels: mergedLessonLevels,
               lessonStars: mergedLessonStars,
+              speakCompletedLessons: Array.from(new Set([...(dbState.speakCompletedLessons || []), ...(localState.speakCompletedLessons || [])])),
+              speakLessonLevels: mergedSpeakLessonLevels,
+              speakLessonStars: mergedSpeakLessonStars,
               completedConversations: { ...(dbState.completedConversations || {}), ...(localState.completedConversations || {}) },
               conversationStars: { ...(dbState.conversationStars || {}), ...(localState.conversationStars || {}) },
               dailyQuests: localState.dailyQuests || dbState.dailyQuests,
@@ -155,6 +187,9 @@ export default function SyncProgress() {
         unlockedLessons: state.unlockedLessons,
         lessonLevels: state.lessonLevels,
         lessonStars: state.lessonStars,
+        speakCompletedLessons: state.speakCompletedLessons,
+        speakLessonLevels: state.speakLessonLevels,
+        speakLessonStars: state.speakLessonStars,
         seenAlphabets: state.seenAlphabets,
         conversationStars: state.conversationStars,
         completedConversations: state.completedConversations,
@@ -193,6 +228,9 @@ export default function SyncProgress() {
     store.unlockedLessons,
     store.lessonLevels,
     store.lessonStars,
+    store.speakCompletedLessons,
+    store.speakLessonLevels,
+    store.speakLessonStars,
     store.seenAlphabets,
     store.completedConversations,
     store.reviewStats,

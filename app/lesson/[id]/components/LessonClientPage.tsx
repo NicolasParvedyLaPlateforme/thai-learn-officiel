@@ -359,6 +359,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   };
 
   useEffect(() => {
+    if (!lesson) return;
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
       const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
       const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
@@ -372,6 +373,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const isDataLoaded = isClient && _hasHydrated && !!lesson && exercises.length > 0;
 
   useEffect(() => {
+    if (!lesson) return;
     if (exercises.length > 0 && !isFinished && !showResumePrompt && isDataLoaded) {
        const savedStateKey = `${lesson.id}_${currentLevel}`;
        saveInProgressLesson(savedStateKey, {
@@ -383,14 +385,15 @@ function LessonPageContent({ lesson }: { lesson: any }) {
          lastUpdated: Date.now()
        });
     }
-  }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson.id, currentLevel, saveInProgressLesson]);
+  }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson?.id, currentLevel, saveInProgressLesson]);
 
   useEffect(() => {
+    if (!lesson) return;
     if (isFinished) {
       const savedStateKey = `${lesson.id}_${currentLevel}`;
       saveInProgressLesson(savedStateKey, null);
     }
-  }, [isFinished, lesson.id, currentLevel, saveInProgressLesson]);
+  }, [isFinished, lesson?.id, currentLevel, saveInProgressLesson]);
 
   useEffect(() => {
     if (timeLeft === null || isFinished || !showExerciseUI || !isDataLoaded) return;
@@ -408,7 +411,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [timeLeft, isFinished, showExerciseUI, isDataLoaded, currentIndex, exercises.length, lesson, currentLevel, saveReviewStat]);
+  }, [timeLeft, isFinished, showExerciseUI, isDataLoaded, currentIndex, exercises.length, lesson?.id, currentLevel, saveReviewStat]);
 
   if (!isDataLoaded && !showExerciseUI) {
     // Need this block to prevent early variable access if exercises is empty

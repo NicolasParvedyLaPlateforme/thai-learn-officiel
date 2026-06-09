@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins, Mic } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 import { useSession, signOut } from 'next-auth/react';
@@ -23,6 +23,7 @@ export default function DesktopSidebarLeft() {
   const isReviewActive = pathname === '/review';
   const isPairsActive = pathname === '/review-pairs';
   const isPracticeActive = pathname === '/practice';
+  const isSpeakActive = pathname === '/speak';
   const isDetectiveActive = pathname.startsWith('/detective');
   
   const [mounted, setMounted] = useState(false);
@@ -39,7 +40,7 @@ export default function DesktopSidebarLeft() {
   }, []);
 
   // Decide whether to show navigation
-  const isVisible = (isLearnActive || isAlphabetActive || isConversationsActive || isReviewActive || isPairsActive || pathname === '/writing' || isPracticeActive || isDetectiveActive) && !isExerciseRunning;
+  const isVisible = (isLearnActive || isAlphabetActive || isConversationsActive || isSpeakActive || isReviewActive || isPairsActive || pathname === '/writing' || isPracticeActive || isDetectiveActive) && !isExerciseRunning;
 
   if (!isVisible || !mounted) return null;
 
@@ -88,6 +89,7 @@ export default function DesktopSidebarLeft() {
           <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={24} />} label={t('sidebar.path')} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} />
           <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={24} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} />
           <NavItem href="/conversations" icon={<MessageCircle size={24} />} label={t('sidebar.dialogs')} active={isConversationsActive} />
+          <NavItem href="/speak" icon={<Mic size={24} />} label={t('sidebar.speaking') || 'Parler'} active={isSpeakActive} />
           <NavItem href="/detective" icon={<Search size={24} />} label={t('sidebar.detective')} active={isDetectiveActive} />
           <NavItem href="/practice" icon={<Brain size={24} />} label={t('sidebar.practice')} active={isPracticeActive} />
         </div>

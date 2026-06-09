@@ -41,11 +41,12 @@ export default function BottomNav() {
   const isConversationsActive = pathname === '/conversations';
   const isPracticeActive = pathname === '/practice';
   const isDetectiveActive = pathname === '/detective';
+  const isSpeakActive = pathname === '/speak';
   
-  const isLearnOrAlphabetActive = isLearnActive || isAlphabetActive;
+  const isLearnOrAlphabetActive = isLearnActive || isAlphabetActive || isSpeakActive;
 
   // We show BottomNav if we are on any of these main paths
-  const isVisible = isLearnActive || isAlphabetActive || isConversationsActive || isPracticeActive || isDetectiveActive;
+  const isVisible = isLearnActive || isAlphabetActive || isConversationsActive || isPracticeActive || isDetectiveActive || isSpeakActive;
 
   if (!isVisible || !mounted) return null;
 
@@ -101,6 +102,10 @@ export default function BottomNav() {
                  {globalSuggested?.type === 'alphabet' && !isAlphabetActive && (
                     <span className="w-2 h-2 bg-amber-400 rounded-full ml-auto"></span>
                  )}
+              </Link>
+              <Link href={getHrefWithHash('/speak', 'speak')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isSpeakActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
+                 <Mic size={20} className={isSpeakActive ? 'text-emerald-500' : 'text-slate-400'} />
+                 {t('sidebar.speaking') || 'Parler'}
               </Link>
             </motion.div>
           )}

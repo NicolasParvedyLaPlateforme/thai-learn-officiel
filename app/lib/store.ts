@@ -177,9 +177,13 @@ interface ProgressState {
   lastActiveUnitIndex: number;
   setLastActiveUnitIndex: (index: number) => void;
   lastPlayedLessonId: string | null;
-  lastPlayedLessonType: 'learn' | 'alphabet' | null;
-  setLastPlayedLesson: (id: string, type: 'learn' | 'alphabet') => void;
+  lastPlayedLessonType: 'learn' | 'alphabet' | 'speak' | null;
+  setLastPlayedLesson: (id: string, type: 'learn' | 'alphabet' | 'speak') => void;
   lessonStars: Record<string, number[]>; // Maps lessonId to array of stars for each level
+  speakCompletedLessons: string[];
+  speakLessonLevels: Record<string, number>;
+  speakLessonStars: Record<string, number[]>;
+  completeSpeakLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number) => void;
   hiddenInstructions: string[];
   hideInstruction: (key: string) => void;
   unhideInstruction: (key: string) => void;
@@ -238,6 +242,9 @@ export const useProgressStore = create<ProgressState>()(
       unlockedLessons: [],
       lessonLevels: {},
       lessonStars: {},
+      speakCompletedLessons: [],
+      speakLessonLevels: {},
+      speakLessonStars: {},
       xp: 0,
       goldCoins: 0,
       lastConversionMonth: null,
@@ -611,6 +618,59 @@ export const useProgressStore = create<ProgressState>()(
         }
         get().triggerForceSync();
       },
+      completeSpeakLesson: (lessonId, fallbackXp, playedLevel, earnedStars = 3) => {
+        const state = get();
+        const currentLevel = state.speakLessonLevels[lessonId] || 0;
+        const actualPlayedLevel = playedLevel !== undefined ? playedLevel : currentLevel;
+        
+        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(`speak_${lessonId}`, actualPlayedLevel, false);
+        const finalXp = calculatedXp || fallbackXp;
+
+        set((state) => {
+          let newLevel = currentLevel;
+          if (playedLevel !== undefined) {
+            if (playedLevel === currentLevel) {
+               newLevel = Math.min(currentLevel + 1, 10);
+            }
+          } else {
+             newLevel = Math.min(currentLevel + 1, 10);
+          }
+          
+          const currentStars = state.speakLessonStars[lessonId] ? [...state.speakLessonStars[lessonId]] : Array(10).fill(0);
+          if (playedLevel !== undefined && playedLevel >= 0 && playedLevel < 10) {
+             currentStars[playedLevel] = Math.max(currentStars[playedLevel], earnedStars);
+          }
+
+          const newCompletedToday = state.completedToday || [];
+          const updatedCompletedToday = isFirstTime ? [...newCompletedToday, key] : newCompletedToday;
+
+          return {
+            speakCompletedLessons: state.speakCompletedLessons.includes(lessonId) 
+              ? state.speakCompletedLessons 
+              : [...state.speakCompletedLessons, lessonId],
+            completedToday: updatedCompletedToday,
+            speakLessonLevels: {
+              ...state.speakLessonLevels,
+              [lessonId]: newLevel
+            },
+            speakLessonStars: {
+              ...state.speakLessonStars,
+              [lessonId]: currentStars
+            },
+            xp: state.xp + finalXp,
+            lastPlayedLessonId: lessonId,
+            lastPlayedLessonType: 'speak'
+          };
+        });
+        
+        get().recordActivity();
+        get().progressQuest('learn', 'lessons', 1);
+        get().progressQuest('learn', 'xp', finalXp);
+        if (earnedStars >= 3) {
+          get().progressQuest('learn', 'perfect_lesson', 1);
+        }
+        get().triggerForceSync();
+      },
       addXp: (amount) => {
         set((state) => ({ xp: state.xp + amount }));
         get().recordActivity();
@@ -646,6 +706,9 @@ export const useProgressStore = create<ProgressState>()(
         unlockedLessons: [], 
         lessonLevels: {}, 
         lessonStars: {}, 
+        speakCompletedLessons: [], 
+        speakLessonLevels: {}, 
+        speakLessonStars: {}, 
         xp: 0, 
         goldCoins: 0,
         currentStreak: 0,
