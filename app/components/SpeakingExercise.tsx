@@ -67,6 +67,7 @@ export function SpeakingExercise({
    const [status, setStatus] = useState<'idle' | 'listening' | 'evaluating' | 'success' | 'timeup'>('idle');
    const [spokenHistory, setSpokenHistory] = useState("");
    const [micAttempts, setMicAttempts] = useState(0);
+   const lastNotifiedAttemptRef = useRef(0);
    const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
 
    const currentItem = vocabulary[currentIndex];
@@ -107,6 +108,7 @@ export function SpeakingExercise({
       setSpokenHistory("");
       setStatus('idle');
       setMicAttempts(0);
+      lastNotifiedAttemptRef.current = 0;
 
       const dotsIndices: number[] = [];
       const dotsScores: Record<number, number> = {};
@@ -268,13 +270,7 @@ export function SpeakingExercise({
       } else if (status === 'idle' || status === 'timeup') {
          SpeechRecognition.stopListening();
          if (status === 'timeup') {
-            setMicAttempts(prev => {
-               const newCount = prev + 1;
-               if (newCount % 2 === 0 && onLoseStar) {
-                  onLoseStar();
-               }
-               return newCount;
-            });
+            setMicAttempts(prev => prev + 1);
          }
       } else if (status === 'success') {
          SpeechRecognition.stopListening();
@@ -285,6 +281,16 @@ export function SpeakingExercise({
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
       };
    }, [status]);
+
+   // Trigger onLoseStar when micAttempts hits multiples of 2
+   useEffect(() => {
+      if (micAttempts > 0 && micAttempts % 2 === 0 && micAttempts !== lastNotifiedAttemptRef.current) {
+         lastNotifiedAttemptRef.current = micAttempts;
+         if (onLoseStar) {
+            onLoseStar();
+         }
+      }
+   }, [micAttempts, onLoseStar]);
 
    // Clean up on unmount
    useEffect(() => {
