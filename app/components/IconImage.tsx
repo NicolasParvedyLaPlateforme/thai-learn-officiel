@@ -14,11 +14,12 @@ interface IconImageProps {
   priority?: boolean;
   sizes?: string;
   referrerPolicy?: React.HTMLAttributeReferrerPolicy;
+  unoptimized?: boolean;
 }
 
 const emojiMapping = emojiMappingData as Record<string, { color: string; emoji: string }>;
 
-export default function IconImage({ src, alt, className = "", fill, width, height, priority, sizes, referrerPolicy }: IconImageProps) {
+export default function IconImage({ src, alt, className = "", fill, width, height, priority, sizes, referrerPolicy, unoptimized = false }: IconImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   if (!src) {
@@ -63,7 +64,7 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
       fetchPriority={priority ? "high" : undefined}
       sizes={sizes || (fill ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" : undefined)}
       referrerPolicy={referrerPolicy}
-      unoptimized={true}
+      unoptimized={unoptimized}
       onLoad={() => setIsLoaded(true)}
     />
   );

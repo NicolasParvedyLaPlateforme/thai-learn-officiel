@@ -168,6 +168,7 @@ export default function QuestionArea({
               alt="word"
               fill
               priority
+              unoptimized={true}
               className="object-cover rounded-3xl shadow-lg border-4 border-white"
             />
           ) : (
