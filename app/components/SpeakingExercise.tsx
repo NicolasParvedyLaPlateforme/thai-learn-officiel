@@ -124,8 +124,8 @@ export function SpeakingExercise({
       if (!text || targetWords.length === 0) return;
 
       let remainingTranscript = normalizeThai(replaceNumbersWithThai(text));
-      let newPlacedIndices: number[] = [];
-      let newPlacedScores: Record<number, number> = {};
+      let calculatedIndices: number[] = [];
+      let calculatedScores: Record<number, number> = {};
 
       // Sort targets by length descending to match longest words first
       const targets = targetWords
@@ -134,8 +134,8 @@ export function SpeakingExercise({
 
       for (const target of targets) {
          if (target.word.id === 'w_dots') {
-            newPlacedIndices.push(target.index);
-            newPlacedScores[target.index] = 100;
+            calculatedIndices.push(target.index);
+            calculatedScores[target.index] = 100;
             continue;
          }
 
@@ -160,8 +160,8 @@ export function SpeakingExercise({
          }
 
          if (matchedExact) {
-            newPlacedIndices.push(target.index);
-            newPlacedScores[target.index] = 100;
+            calculatedIndices.push(target.index);
+            calculatedScores[target.index] = 100;
             remainingTranscript = remainingTranscript.slice(0, matchStart) + "###" + remainingTranscript.slice(matchStart + matchLen);
             continue;
          }
@@ -198,16 +198,37 @@ export function SpeakingExercise({
          }
 
          if (bestSimilarity >= adjustedAccuracy) {
-            newPlacedIndices.push(target.index);
-            newPlacedScores[target.index] = bestSimilarity;
+            calculatedIndices.push(target.index);
+            calculatedScores[target.index] = bestSimilarity;
             remainingTranscript = remainingTranscript.slice(0, bestMatchStart) + "###" + remainingTranscript.slice(bestMatchStart + bestMatchLen);
          }
       }
 
-      setPlacedIndices(newPlacedIndices);
-      setPlacedScores(newPlacedScores);
+      // Merge with existing placed indices to prevent flickering
+      let newPlacedIndices = [...placedIndices];
+      let newPlacedScores = { ...placedScores };
+      let newlyAdded = false;
 
-      if (newPlacedIndices.length === targetWords.length) {
+      for (const idx of calculatedIndices) {
+         if (!newPlacedIndices.includes(idx)) {
+            newPlacedIndices.push(idx);
+            newPlacedScores[idx] = calculatedScores[idx];
+            newlyAdded = true;
+         } else {
+            // Update score if it's better
+            if (calculatedScores[idx] > newPlacedScores[idx]) {
+               newPlacedScores[idx] = calculatedScores[idx];
+               newlyAdded = true;
+            }
+         }
+      }
+
+      if (newlyAdded) {
+         setPlacedIndices(newPlacedIndices);
+         setPlacedScores(newPlacedScores);
+      }
+
+      if (newPlacedIndices.length === targetWords.length && targetWords.length > 0) {
         if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
         setStatus('success');
         SpeechRecognition.stopListening();
