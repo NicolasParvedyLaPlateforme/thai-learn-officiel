@@ -3,7 +3,7 @@
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Word, Phrase } from '../types';
-import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square } from 'lucide-react';
+import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square, Trash2 } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
@@ -54,16 +54,19 @@ export function SpeakingExercise({
    vocabulary,
    dictionary,
    currentIndex,
-   onNext
+   onNext,
+   onLoseStar
 }: {
    vocabulary: (Word | Phrase)[],
    dictionary: Word[],
    currentIndex: number,
-   onNext: (isSuccess: boolean) => void
+   onNext: (isSuccess: boolean, isAbandoned?: boolean) => void,
+   onLoseStar?: () => void
 }) {
    const { language, addXp, speakingConfig } = useProgressStore();
    const [status, setStatus] = useState<'idle' | 'listening' | 'evaluating' | 'success' | 'timeup'>('idle');
    const [spokenHistory, setSpokenHistory] = useState("");
+   const [micAttempts, setMicAttempts] = useState(0);
    const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
 
    const currentItem = vocabulary[currentIndex];
@@ -103,6 +106,7 @@ export function SpeakingExercise({
       resetTranscript();
       setSpokenHistory("");
       setStatus('idle');
+      setMicAttempts(0);
 
       const dotsIndices: number[] = [];
       const dotsScores: Record<number, number> = {};
@@ -263,6 +267,15 @@ export function SpeakingExercise({
          }, 5000);
       } else if (status === 'idle' || status === 'timeup') {
          SpeechRecognition.stopListening();
+         if (status === 'timeup') {
+            setMicAttempts(prev => {
+               const newCount = prev + 1;
+               if (newCount % 2 === 0 && onLoseStar) {
+                  onLoseStar();
+               }
+               return newCount;
+            });
+         }
       } else if (status === 'success') {
          SpeechRecognition.stopListening();
          setTimeout(() => SpeechRecognition.abortListening(), 50);
@@ -401,6 +414,19 @@ export function SpeakingExercise({
             )}
 
             <div className="relative flex items-center justify-center w-full h-24 pointer-events-auto">
+
+               {/* Left Area (Absolute) - Abandon Button */}
+               <div className="absolute left-[calc(50%-7rem)] md:left-[calc(50%-8rem)] flex items-center">
+                  {micAttempts >= 3 && status !== 'success' && (
+                     <button
+                        onClick={() => onNext(false, true)}
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center bg-rose-50 hover:bg-rose-100 text-rose-500 shadow-[0_6px_0_rgb(255,228,230)] active:shadow-[0_0px_0_rgb(255,228,230)] active:translate-y-1.5 transition-all"
+                        title={getTranslation('auto.skip', language) || "Abandonner"}
+                     >
+                        <Trash2 size={24} />
+                     </button>
+                  )}
+               </div>
 
                {/* Center Area */}
                {status !== 'listening' && status !== 'success' && (

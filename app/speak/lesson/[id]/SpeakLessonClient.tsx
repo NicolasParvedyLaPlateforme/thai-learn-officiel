@@ -7,6 +7,14 @@ import { useProgressStore } from '../../../lib/store';
 import { Word, Phrase } from '../../../types';
 import { ArrowLeft, Loader2, X } from 'lucide-react';
 import { SpeakingExercise } from '../../../components/SpeakingExercise';
+import SpeakResultScreen from './SpeakResultScreen';
+
+const triggerConfetti = () => {
+  import("canvas-confetti").then((mod) => {
+    const confetti = mod.default;
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  });
+};
 
 export default function SpeakLessonClient({ 
   lessonId, 
@@ -22,35 +30,50 @@ export default function SpeakLessonClient({
   lessonTitle: string 
 }) {
   const router = useRouter();
-  const { language, completeSpeakLesson, addXp } = useProgressStore();
+  const { language, completeSpeakLesson, addXp, getExpectedXp } = useProgressStore();
   const [exercises, setExercises] = useState(vocabulary);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [successCount, setSuccessCount] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+  const [earnedXp, setEarnedXp] = useState(0);
+  const [mistakes, setMistakes] = useState(0);
+
+  const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
 
   useEffect(() => setMounted(true), []);
 
   const handleComplete = () => {
-    // 20 steps done successfully
-    completeSpeakLesson(lessonId, 50, level - 1, 3);
-    router.push('/speak');
+    const expected = getExpectedXp(`speak_${lessonId}`, level - 1, false);
+    const finalXp = expected.xp || 50;
+    setEarnedXp(finalXp);
+    completeSpeakLesson(lessonId, 50, level - 1, earnedStars);
+    setIsFinished(true);
+    triggerConfetti();
   };
 
-  const handleNext = (isSuccess: boolean) => {
+  const handleNext = (isSuccess: boolean, isAbandoned?: boolean) => {
     if (isSuccess) {
       setSuccessCount(prev => prev + 1);
       addXp(3);
-    } else {
+    } else if (!isAbandoned) {
       setExercises(prev => [...prev, prev[currentIndex]]);
     }
     
-    const newLength = exercises.length + (isSuccess ? 0 : 1);
+    // If it's abandoned, we just move to the next item (or finish)
+    // If we appended to the end, the length increased by 1
+    const newLength = exercises.length + (isSuccess || isAbandoned ? 0 : 1);
+    
     if (currentIndex + 1 < newLength) {
       setCurrentIndex(prev => prev + 1);
     } else {
       handleComplete();
     }
+  };
+
+  const handleLoseStar = () => {
+    setMistakes(prev => prev + 1);
   };
 
   const handleQuitEarly = () => {
@@ -62,6 +85,19 @@ export default function SpeakLessonClient({
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
         <Loader2 className="animate-spin text-orange-500" size={48} />
       </div>
+    );
+  }
+
+  if (isFinished) {
+    return (
+      <SpeakResultScreen 
+        lessonId={lessonId}
+        currentLevel={level - 1}
+        earnedStars={earnedStars}
+        exercisesLength={vocabulary.length}
+        language={language}
+        earnedXp={earnedXp}
+      />
     );
   }
 
@@ -90,6 +126,7 @@ export default function SpeakLessonClient({
           dictionary={dictionary} 
           currentIndex={currentIndex}
           onNext={handleNext} 
+          onLoseStar={handleLoseStar}
         />
       </main>
 
