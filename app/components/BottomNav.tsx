@@ -125,13 +125,25 @@ export default function BottomNav() {
                  </div>
                  {getTranslation('auto.pairs', language)}
               </Link>
-              <Link href="/practice?action=writing" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+              <Link href="/practice?action=writing" onClick={(e) => {
+                 if (pathname === '/practice') {
+                    e.preventDefault();
+                    window.dispatchEvent(new Event('openWritingModal'));
+                 }
+                 setActivePopover(null);
+              }} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
                  <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center shrink-0">
                    <Pencil size={16} className="text-sky-500" />
                  </div>
                  {getTranslation('auto.writing', language)}
               </Link>
-              <Link href="/practice?action=speaking" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+              <Link href="/practice?action=speaking" onClick={(e) => {
+                 if (pathname === '/practice') {
+                    e.preventDefault();
+                    window.dispatchEvent(new Event('openSpeakingModal'));
+                 }
+                 setActivePopover(null);
+              }} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
                  <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
                    <Mic size={16} className="text-orange-500" />
                  </div>

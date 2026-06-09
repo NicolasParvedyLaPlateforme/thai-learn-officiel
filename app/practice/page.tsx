@@ -38,6 +38,15 @@ export default function PracticePage() {
       if (action) {
          window.history.replaceState({}, '', '/practice');
       }
+
+      const handleWriting = () => setWritingConfigModalOpen(true);
+      const handleSpeaking = () => setSpeakingConfigModalOpen(true);
+      window.addEventListener('openWritingModal', handleWriting);
+      window.addEventListener('openSpeakingModal', handleSpeaking);
+      return () => {
+         window.removeEventListener('openWritingModal', handleWriting);
+         window.removeEventListener('openSpeakingModal', handleSpeaking);
+      };
     }
   }, []);
 
