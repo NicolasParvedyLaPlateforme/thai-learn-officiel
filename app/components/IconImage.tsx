@@ -63,6 +63,7 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
       fetchPriority={priority ? "high" : undefined}
       sizes={sizes || (fill ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" : undefined)}
       referrerPolicy={referrerPolicy}
+      unoptimized={true}
       onLoad={() => setIsLoaded(true)}
     />
   );
