@@ -274,6 +274,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       const audioTexts = new Set<string>();
       
       exercises.forEach(ex => {
+         if (ex.imageUrl) imageUrls.add(ex.imageUrl);
+         if (ex.introItem?.imageUrl) imageUrls.add(ex.introItem.imageUrl);
+         
          if (ex.answer && /[\u0E00-\u0E7F]/.test(ex.answer)) {
             audioTexts.add(ex.answer);
          }
