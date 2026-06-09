@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../../../lib/store';
 import { Word, Phrase } from '../../../types';
-import { ArrowLeft, Loader2, X } from 'lucide-react';
+import { ArrowLeft, Loader2, X, Star, Crown } from 'lucide-react';
 import { SpeakingExercise } from '../../../components/SpeakingExercise';
 import SpeakResultScreen from './SpeakResultScreen';
 
@@ -103,20 +103,68 @@ export default function SpeakLessonClient({
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
-      <header className="bg-white border-b border-slate-200 px-4 h-16 flex items-center sticky top-0 z-50 gap-4">
-        <button 
-          onClick={() => setShowQuitConfirm(true)}
-          className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-slate-400 hover:bg-rose-50 hover:text-rose-500 transition-colors"
-        >
-          <X size={24} />
-        </button>
-        <div className="flex-1 flex items-center gap-4">
-           <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div className="h-full bg-orange-500 transition-all duration-500 ease-out" style={{ width: `${exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0}%` }}></div>
-           </div>
-           <div className="text-sm font-bold text-slate-400 shrink-0">
+      <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white sticky top-0 z-50">
+        <div className="flex items-center gap-3 sm:gap-6 w-full max-w-3xl mx-auto h-full px-4 flex-1">
+          <button 
+            onClick={() => setShowQuitConfirm(true)}
+            className="text-slate-400 hover:text-rose-500 transition-colors"
+          >
+            <X size={24} strokeWidth={2.5} />
+          </button>
+
+          <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
+            {getTranslation('auto.lvl', language) || 'Niv.'} {level}
+          </div>
+
+          <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">
+            <div 
+              className="bg-orange-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.3)]" 
+              style={{ width: `${exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0}%` }}
+            ></div>
+          </div>
+
+          <div className="font-bold text-slate-400 flex items-center gap-2 sm:gap-3 text-sm sm:text-base shrink-0">
+            <div className="hidden sm:flex items-center gap-0.5 mr-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  size={16}
+                  className={
+                    i < earnedStars
+                      ? "fill-amber-400 text-amber-400"
+                      : "fill-slate-200 text-slate-200"
+                  }
+                />
+              ))}
+            </div>
+
+            {level < 10 ? (
+              <span className="flex items-center gap-1.5">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-slate-300"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+                {getTranslation('auto.lvl', language) || 'Niv.'} {level + 1}
+              </span>
+            ) : (
+              <span className="flex items-center text-amber-500">
+                <Crown size={18} className="fill-current stroke-[2.5]" />
+              </span>
+            )}
+
+            <span className="bg-slate-100 text-slate-500 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold shrink-0 ml-1 flex items-center gap-1.5 tabular-nums">
               {currentIndex} / {exercises.length}
-           </div>
+            </span>
+          </div>
         </div>
       </header>
       
