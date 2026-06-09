@@ -8,6 +8,7 @@ import { useProgressStore } from '../lib/store';
 import { CourseData, Word, Phrase } from '../types';
 import { X, Check } from 'lucide-react';
 import { getVocabularyServer, getLightweightLessons } from '../actions/course';
+import { Drawer } from 'vaul';
 
 export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const router = useRouter();
@@ -52,7 +53,15 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
   }, [isOpen, selectedLessonId, completedLessons]);
 
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => { 
+    setMounted(true); 
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   if (!isOpen || !mounted) return null;
 
@@ -90,22 +99,21 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
     router.push('/writing');
   };
 
-  return createPortal(
-    <div className="fixed inset-0 bg-slate-900/60 flex items-center justify-center p-4 z-[200] backdrop-blur-sm">
-      <div className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
-          <h2 className="text-xl font-extrabold text-slate-800">
-            {getTranslation('auto.writing_configuration', language)}
-          </h2>
-          <button 
-             onClick={onClose}
-             className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors"
-          >
-            <X size={20} />
-          </button>
-        </div>
+  const renderContent = () => (
+    <>
+      <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
+        <h2 className="text-xl font-extrabold text-slate-800">
+          {getTranslation('auto.writing_configuration', language)}
+        </h2>
+        <button 
+           onClick={onClose}
+           className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors"
+        >
+          <X size={20} />
+        </button>
+      </div>
 
-        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8 hide-scrollbar">
           
           {/* Lesson Selection */}
           <div className="space-y-3">
@@ -232,6 +240,31 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
              {getTranslation('auto.start', language)}
            </button>
         </div>
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+        <Drawer.Portal>
+          <Drawer.Overlay className="fixed inset-0 z-[200] bg-slate-900/40 backdrop-blur-sm" />
+          <Drawer.Content className="bg-white flex flex-col rounded-t-[24px] fixed bottom-0 left-0 right-0 z-[200] max-h-[95vh] outline-none">
+            <div className="w-full flex justify-center py-3 shrink-0 bg-transparent z-10 absolute top-0 left-0 right-0">
+              <div className="w-12 h-1.5 bg-slate-300/50 rounded-full" />
+            </div>
+            <div className="pt-4 flex-1 overflow-y-auto hide-scrollbar flex flex-col">
+              {renderContent()}
+            </div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
+    );
+  }
+
+  return createPortal(
+    <div className="fixed inset-0 bg-slate-900/60 flex items-center justify-center p-4 z-[200] backdrop-blur-sm">
+      <div className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+        {renderContent()}
       </div>
     </div>,
     document.body
