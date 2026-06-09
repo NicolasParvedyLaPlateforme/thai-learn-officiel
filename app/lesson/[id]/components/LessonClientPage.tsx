@@ -13,13 +13,21 @@ import { m as motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 
 import dynamic from 'next/dynamic';
+import { ErrorBoundary } from "../../../components/ErrorBoundary";
+
+const ExerciseFallback = () => (
+  <div className="flex-1 flex flex-col items-center justify-center p-8 w-full h-full">
+    <div className="w-8 h-8 border-4 border-slate-200 border-t-amber-500 rounded-full animate-spin mb-4"></div>
+    <div className="text-slate-400 font-medium text-sm animate-pulse">Chargement...</div>
+  </div>
+);
 
 // Dynamically imported components
-const WordMatch = dynamic(() => import('./WordMatch'));
-const SentenceBuilder = dynamic(() => import('./SentenceBuilder'));
-const PairMatch = dynamic(() => import('../../../components/PairMatch'));
-const VirtualKeyboard = dynamic(() => import('../../../writing/components/VirtualKeyboard'));
-const FreeTypingInput = dynamic(() => import('./FreeTypingInput'));
+const WordMatch = dynamic(() => import('./WordMatch'), { loading: () => <ExerciseFallback /> });
+const SentenceBuilder = dynamic(() => import('./SentenceBuilder'), { loading: () => <ExerciseFallback /> });
+const PairMatch = dynamic(() => import('../../../components/PairMatch'), { loading: () => <ExerciseFallback /> });
+const VirtualKeyboard = dynamic(() => import('../../../writing/components/VirtualKeyboard'), { loading: () => <ExerciseFallback /> });
+const FreeTypingInput = dynamic(() => import('./FreeTypingInput'), { loading: () => <ExerciseFallback /> });
 const InstructionExample = dynamic(() => import('./InstructionExample'));
 const GlossaryModal = dynamic(() => import('./GlossaryModal'));
 const ResultScreen = dynamic(() => import('./ResultScreen'));
@@ -737,8 +745,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
               className={`${showInstruction || showHelpModal ? "hidden" : "flex"} ${currentExercise?.type === "pair-matching" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
             >
               <div className="w-full relative">
-                {currentExercise?.type ===
-                "intro" ? null : currentExercise?.type === "word-match" ? (
+                <ErrorBoundary>
+                  {currentExercise?.type ===
+                  "intro" ? null : currentExercise?.type === "word-match" ? (
                   <WordMatch
                     exercise={currentExercise as Exercise}
                     selected={selectedAnswer as string}
@@ -820,6 +829,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                     onAutoCheck={(val) => handleCheck(val)}
                   />
                 )}
+                </ErrorBoundary>
               </div>
             </motion.div>
             {/* The transparent spacer to allow footer absolute positioning without overlapping options */}
@@ -849,13 +859,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
 export default function LessonClientPage({ lesson }: { lesson: any }) {
   return (
-    <Suspense
-      fallback={
-        <div className="p-8 text-center min-h-screen bg-[#FAFAFA]">
-          Chargement...
-        </div>
-      }
-    >
+    <Suspense fallback={null}>
       <LessonPageContent lesson={lesson} />
     </Suspense>
   );
