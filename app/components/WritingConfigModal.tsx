@@ -249,6 +249,8 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 z-[200] bg-slate-900/40 backdrop-blur-sm" />
           <Drawer.Content className="bg-white flex flex-col rounded-t-[24px] fixed bottom-0 left-0 right-0 z-[200] max-h-[95vh] outline-none">
+            <Drawer.Title className="sr-only">Configuration</Drawer.Title>
+            <Drawer.Description className="sr-only">Configure settings</Drawer.Description>
             <div className="w-full flex justify-center py-3 shrink-0 bg-transparent z-10 absolute top-0 left-0 right-0">
               <div className="w-12 h-1.5 bg-slate-300/50 rounded-full" />
             </div>
