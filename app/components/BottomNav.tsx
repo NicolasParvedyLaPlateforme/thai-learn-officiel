@@ -51,7 +51,7 @@ export default function BottomNav() {
   if (!isVisible || !mounted) return null;
 
   const getHrefWithHash = (basePath: string, type: 'learn' | 'alphabet' | 'speak') => {
-    return globalSuggested?.type === type as any ? `${basePath}#${globalSuggested.id}` : basePath;
+    return (globalSuggested && globalSuggested.type === type as any) ? `${basePath}#${globalSuggested.id}` : basePath;
   };
 
   const handleLearnClick = (e: React.MouseEvent) => {

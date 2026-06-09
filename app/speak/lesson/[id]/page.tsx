@@ -22,7 +22,7 @@ export default async function SpeakLessonPage({
   const dictionary = await getDictionaryForExercise();
 
   // Create the 20 steps (each phrase twice)
-  let exerciseVocabulary = [];
+  let exerciseVocabulary: any[] = [];
   if (lessonData.phrases) {
     exerciseVocabulary = [...lessonData.phrases, ...lessonData.phrases];
     // Shuffle the array

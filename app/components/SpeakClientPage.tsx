@@ -65,7 +65,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
 
   const { speakCompletedLessons, speakLessonLevels, speakLessonStars, dailyQuests, resetLessonLevel, language, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex, reviewStats, getExpectedXp } = useProgressStore();
   
-  const learnQuests = dailyQuests?.speak || [];
+  const learnQuests = dailyQuests?.learn || [];
   const [mounted, setMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -86,8 +86,8 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
   const [lockedReviewModalOpen, setLockedReviewModalOpen] = useState(false);
 
-  const globalSuggested = null;
-  const suggestedLessonId = false ? globalSuggested.id : null;
+  const globalSuggested = null as any;
+  const suggestedLessonId = false ? globalSuggested?.id : null;
 
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
