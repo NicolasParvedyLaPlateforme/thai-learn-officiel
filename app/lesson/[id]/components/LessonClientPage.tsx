@@ -8,29 +8,21 @@ import { useProgressStore } from "../../../lib/store";
 import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
 import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
-import { playThaiTTS, preloadThaiVoices } from "../../../lib/tts";
+import { playThaiTTS, preloadThaiVoices, preloadThaiAudio } from "../../../lib/tts";
 import { m as motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 
-import dynamic from 'next/dynamic';
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
 
-const ExerciseFallback = () => (
-  <div className="flex-1 flex flex-col items-center justify-center p-8 w-full h-full">
-    <div className="w-8 h-8 border-4 border-slate-200 border-t-amber-500 rounded-full animate-spin mb-4"></div>
-    <div className="text-slate-400 font-medium text-sm animate-pulse">Chargement...</div>
-  </div>
-);
-
-// Dynamically imported components
-const WordMatch = dynamic(() => import('./WordMatch'), { loading: () => <ExerciseFallback /> });
-const SentenceBuilder = dynamic(() => import('./SentenceBuilder'), { loading: () => <ExerciseFallback /> });
-const PairMatch = dynamic(() => import('../../../components/PairMatch'), { loading: () => <ExerciseFallback /> });
-const VirtualKeyboard = dynamic(() => import('../../../writing/components/VirtualKeyboard'), { loading: () => <ExerciseFallback /> });
-const FreeTypingInput = dynamic(() => import('./FreeTypingInput'), { loading: () => <ExerciseFallback /> });
-const InstructionExample = dynamic(() => import('./InstructionExample'));
-const GlossaryModal = dynamic(() => import('./GlossaryModal'));
-const ResultScreen = dynamic(() => import('./ResultScreen'));
+// Static imports for maximum offline resilience
+import WordMatch from './WordMatch';
+import SentenceBuilder from './SentenceBuilder';
+import PairMatch from '../../../components/PairMatch';
+import VirtualKeyboard from '../../../writing/components/VirtualKeyboard';
+import FreeTypingInput from './FreeTypingInput';
+import InstructionExample from './InstructionExample';
+import GlossaryModal from './GlossaryModal';
+import ResultScreen from './ResultScreen';
 
 import { Suspense } from "react";
 import { LoadingScreen } from "../../../components/LoadingScreen";
@@ -274,6 +266,46 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     unlockedLessons,
     exercisesGeneratedFor,
   ]);
+
+  // Preload images and audio in background
+  useEffect(() => {
+    if (exercises.length > 0) {
+      const imageUrls = new Set<string>();
+      const audioTexts = new Set<string>();
+      
+      exercises.forEach(ex => {
+         if (ex.answer && /[\u0E00-\u0E7F]/.test(ex.answer)) {
+            audioTexts.add(ex.answer);
+         }
+         
+         if (ex.options) {
+            ex.options.forEach((opt: any) => {
+               if (opt.imageUrl) imageUrls.add(opt.imageUrl);
+               if (opt.th) audioTexts.add(opt.th);
+            });
+         }
+         if (ex.pairs) {
+            ex.pairs.forEach((pair: any) => {
+               if (pair.imageUrl) imageUrls.add(pair.imageUrl);
+               if (pair.th) audioTexts.add(pair.th);
+            });
+         }
+      });
+      
+      // Delay slightly to not block initial render
+      setTimeout(() => {
+        imageUrls.forEach(url => {
+           const img = new window.Image();
+           img.src = url;
+        });
+        
+        // Background audio preloading
+        if (audioTexts.size > 0) {
+           preloadThaiAudio(Array.from(audioTexts));
+        }
+      }, 500);
+    }
+  }, [exercises]);
 
   const handleResume = () => {
     const savedStateKey = `${lesson.id}_${currentLevel}`;

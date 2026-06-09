@@ -248,3 +248,22 @@ export const preloadThaiVoices = () => {
     // ignore
   }
 };
+
+export const preloadThaiAudio = async (texts: string[]) => {
+  if (typeof window === 'undefined') return;
+  // Preload in batches to avoid network congestion
+  for (let i = 0; i < texts.length; i += 5) {
+    const batch = texts.slice(i, i + 5);
+    await Promise.all(
+      batch.map(async (text) => {
+        try {
+          const url = await getAudioUrl(text);
+          // Only preload if it's an actual static file, ignore dynamic /api/tts to avoid hammering the API
+          if (url && !url.includes('/api/tts')) {
+            fetch(url, { mode: 'no-cors', cache: 'force-cache' }).catch(() => {});
+          }
+        } catch (e) {}
+      })
+    );
+  }
+};
