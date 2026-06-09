@@ -3,13 +3,22 @@ import { getDictionaryForExercise } from '../../../actions/course';
 import SpeakLessonClient from './SpeakLessonClient';
 import { notFound } from 'next/navigation';
 
-export default async function SpeakLessonPage({ params, searchParams }: { params: { id: string }, searchParams: { level: string } }) {
-  const lessonData = await getSpeakLessonData(params.id);
+export default async function SpeakLessonPage({ 
+  params, 
+  searchParams 
+}: { 
+  params: Promise<{ id: string }>, 
+  searchParams: Promise<{ level: string }> 
+}) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  
+  const lessonData = await getSpeakLessonData(resolvedParams.id);
   if (!lessonData) {
     notFound();
   }
 
-  const level = parseInt(searchParams.level || '1', 10);
+  const level = parseInt(resolvedSearchParams.level || '1', 10);
   const dictionary = await getDictionaryForExercise();
 
   // Create the 20 steps (each phrase twice)
@@ -22,7 +31,7 @@ export default async function SpeakLessonPage({ params, searchParams }: { params
 
   return (
     <SpeakLessonClient 
-      lessonId={params.id} 
+      lessonId={resolvedParams.id} 
       level={level} 
       vocabulary={exerciseVocabulary} 
       dictionary={dictionary} 
