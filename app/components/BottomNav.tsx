@@ -90,21 +90,21 @@ export default function BottomNav() {
               className="absolute bottom-[80px] left-4 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 flex flex-col gap-1 z-50 w-44 origin-bottom-left"
             >
               <Link href={getHrefWithHash('/learn', 'learn')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isLearnActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
-                 <BookOpen size={20} className={isLearnActive ? 'text-emerald-500' : 'text-slate-400'} />
+                 <BookOpen size={20} className={`shrink-0 ${isLearnActive ? 'text-emerald-500' : 'text-slate-400'}`} />
                  {t('sidebar.path')}
                  {globalSuggested?.type === 'learn' && !isLearnActive && (
                     <span className="w-2 h-2 bg-amber-400 rounded-full ml-auto"></span>
                  )}
               </Link>
               <Link href={getHrefWithHash('/alphabet', 'alphabet')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isAlphabetActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
-                 <div className={`w-5 h-5 flex items-center justify-center font-black text-lg ${isAlphabetActive ? 'text-emerald-500' : 'text-slate-400'}`}>A</div>
+                 <div className={`shrink-0 w-5 h-5 flex items-center justify-center font-black text-lg ${isAlphabetActive ? 'text-emerald-500' : 'text-slate-400'}`}>A</div>
                  {t('sidebar.alphabet')}
                  {globalSuggested?.type === 'alphabet' && !isAlphabetActive && (
                     <span className="w-2 h-2 bg-amber-400 rounded-full ml-auto"></span>
                  )}
               </Link>
               <Link href={getHrefWithHash('/speak', 'speak')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isSpeakActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
-                 <Mic size={20} className={isSpeakActive ? 'text-emerald-500' : 'text-slate-400'} />
+                 <Mic size={20} className={`shrink-0 ${isSpeakActive ? 'text-emerald-500' : 'text-slate-400'}`} />
                  {t('sidebar.speaking') || 'Parler'}
               </Link>
             </motion.div>
