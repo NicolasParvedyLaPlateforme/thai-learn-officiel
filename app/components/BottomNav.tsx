@@ -155,12 +155,6 @@ export default function BottomNav() {
                  </div>
                  {getTranslation('auto.speaking', language)}
               </Link>
-              <Link href="/practice/tone-analyzer" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
-                 <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
-                   <Wand2 size={16} className="text-teal-500" />
-                 </div>
-                 {language === 'en' ? 'Tone Analyzer' : 'Calculateur de Tons'}
-              </Link>
             </motion.div>
           )}
         </AnimatePresence>

@@ -25,6 +25,7 @@ export default function PracticePage() {
   const isPWA = useIsPWA();
   useEffect(() => {
     setMounted(true);
+    useProgressStore.getState().setExerciseRunning(false);
     
     // Check search params to auto-open modals
     if (typeof window !== 'undefined') {
@@ -294,38 +295,6 @@ export default function PracticePage() {
               {getTranslation('auto.practice_your_pronunciation_wi', language)}
             </p>
           </button>
-          </motion.div>
-
-          {/* Tone Analyzer Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5, ease: 'easeOut' }}
-          >
-            <Link href="/practice/tone-analyzer" className="group flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-teal-300 active:translate-y-0 active:shadow-md transition-all duration-300 h-full">
-              {/* Illustration */}
-              <div className="mb-6 w-full h-40 bg-teal-50/50 rounded-2xl border-2 border-teal-100 flex flex-col items-center justify-center gap-2 group-hover:bg-teal-50 transition-colors relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(#ccfbf1_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
-                
-                <div className="flex items-center gap-3 relative z-10 bg-white px-4 py-2 rounded-xl shadow-sm border-2 border-teal-200 group-hover:-translate-y-1 transition-all duration-300">
-                  <span className="text-2xl font-bold font-thai text-teal-600">มาก</span>
-                  <span className="text-slate-300 font-bold">=</span>
-                  <span className="font-bold text-teal-500 uppercase tracking-widest text-xs">Falling</span>
-                </div>
-
-                {/* Icon badge */}
-                <div className="absolute top-3 left-3 bg-teal-100 text-teal-600 p-2 rounded-xl">
-                  <Wand2 size={20} />
-                </div>
-              </div>
-
-              <h3 className="text-2xl font-bold text-slate-800 mb-2">
-                {language === 'en' ? 'Tone Analyzer' : 'Calculateur de Tons'}
-              </h3>
-              <p className="text-slate-500 font-medium leading-relaxed">
-                {language === 'en' ? 'Deconstruct any Thai syllable to understand its tone rules.' : 'Déconstruisez n\'importe quelle syllabe thaï pour comprendre son ton.'}
-              </p>
-            </Link>
           </motion.div>
         </div>
       </div>
