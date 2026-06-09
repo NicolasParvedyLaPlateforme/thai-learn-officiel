@@ -14,6 +14,27 @@ const normalizeThai = (str: string) => {
    return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
 };
 
+const getAliases = (word: string): string[] => {
+   const aliases: Record<string, string[]> = {
+      'ฉัน': ['ชั้น'],
+      'เขา': ['เค้า'],
+      'ไหม': ['มั้ย', 'มั๊ย'],
+      'หรือ': ['หรอ', 'เหรอ'],
+      'หรือเปล่า': ['รึเปล่า', 'ป่าว'],
+      'เปล่า': ['ป่าว'],
+      'อย่างไร': ['ยังไง'],
+      'เท่าไร': ['เท่าไหร่'],
+      'ทำไม': ['ทําไม'],
+      'ก็': ['ก้อ'],
+      'หนึ่ง': ['นึง'],
+      'ค่ะ': ['คะ', 'คา', 'ค่า', 'ขะ', 'ข่า'],
+      'คะ': ['ค่ะ', 'ค้า', 'ขะ', 'คา'],
+      'ครับ': ['คับ', 'ครัช', 'ฮะ'],
+      'อะไร': ['อัลไล']
+   };
+   return aliases[word] || [];
+};
+
 const replaceNumbersWithThai = (text: string) => {
    const map: Record<string, string> = {
       '0': 'ศูนย์', '1': 'หนึ่ง', '2': 'สอง', '3': 'สาม', '4': 'สี่',
@@ -102,28 +123,47 @@ export function SpeakingExercise({
    const evaluateTranscript = (text: string) => {
       if (!text || targetWords.length === 0) return;
 
-      let newlyPlaced = false;
-      let newPlacedScores = { ...placedScores };
-      let newPlacedIndices = [...placedIndices];
       let remainingTranscript = normalizeThai(replaceNumbersWithThai(text));
+      let calculatedIndices: number[] = [];
+      let calculatedScores: Record<number, number> = {};
 
-      // Sort unplaced targets by length descending to match longest words first
-      const unplacedTargets = targetWords
+      // Sort targets by length descending to match longest words first
+      const targets = targetWords
          .map((w, i) => ({ word: w, index: i }))
-         .filter(item => !newPlacedIndices.includes(item.index))
          .sort((a, b) => b.word.th.length - a.word.th.length);
 
-      for (const target of unplacedTargets) {
+      for (const target of targets) {
+         if (target.word.id === 'w_dots') {
+            calculatedIndices.push(target.index);
+            calculatedScores[target.index] = 100;
+            continue;
+         }
+
          const targetNorm = normalizeThai(target.word.th);
          if (!targetNorm) continue;
 
+         // If strictMode is true, we disable aliases and leniency
+         const variants = speakingConfig.strictMode ? [targetNorm] : [targetNorm, ...getAliases(targetNorm)];
+         
+         let matchedExact = false;
+         let matchStart = -1;
+         let matchLen = 0;
+
          // Exact match check first
-         const exactIndex = remainingTranscript.indexOf(targetNorm);
-         if (exactIndex !== -1) {
-            newPlacedIndices.push(target.index);
-            newPlacedScores[target.index] = 100;
-            newlyPlaced = true;
-            remainingTranscript = remainingTranscript.slice(0, exactIndex) + "###" + remainingTranscript.slice(exactIndex + targetNorm.length);
+         for (const variant of variants) {
+            const exactIndex = remainingTranscript.indexOf(variant);
+            if (exactIndex !== -1) {
+               matchedExact = true;
+               matchStart = exactIndex;
+               matchLen = variant.length;
+               break;
+            }
+         }
+
+         if (matchedExact) {
+            calculatedIndices.push(target.index);
+            calculatedScores[target.index] = 100;
+            remainingTranscript = remainingTranscript.slice(0, matchStart) + "###" + remainingTranscript.slice(matchStart + matchLen);
             continue;
          }
 
@@ -132,41 +172,64 @@ export function SpeakingExercise({
          let bestMatchStart = -1;
          let bestMatchLen = 0;
 
-         const targetLen = targetNorm.length;
-         for (let len = Math.max(1, targetLen - 1); len <= targetLen + 1; len++) {
-            for (let i = 0; i <= remainingTranscript.length - len; i++) {
-               const sub = remainingTranscript.substring(i, i + len);
-               if (sub.includes('#')) continue; // skip consumed parts
+         for (const variant of variants) {
+            const vLen = variant.length;
+            for (let len = Math.max(1, vLen - 1); len <= vLen + 1; len++) {
+               for (let i = 0; i <= remainingTranscript.length - len; i++) {
+                  const sub = remainingTranscript.substring(i, i + len);
+                  if (sub.includes('#')) continue; // skip consumed parts
 
-               const dist = levenshtein.get(sub, targetNorm);
-               const maxL = Math.max(sub.length, targetNorm.length);
-               const sim = Math.max(0, Math.round(((maxL - dist) / maxL) * 100));
+                  const dist = levenshtein.get(sub, variant);
+                  const maxL = Math.max(sub.length, variant.length);
+                  const sim = Math.max(0, Math.round(((maxL - dist) / maxL) * 100));
 
-               if (sim > bestSimilarity) {
-                  bestSimilarity = sim;
-                  bestMatchStart = i;
-                  bestMatchLen = len;
+                  if (sim > bestSimilarity) {
+                     bestSimilarity = sim;
+                     bestMatchStart = i;
+                     bestMatchLen = len;
+                  }
                }
             }
          }
 
-         if (bestSimilarity >= requiredAccuracy) {
-            newPlacedIndices.push(target.index);
-            newPlacedScores[target.index] = bestSimilarity;
-            newlyPlaced = true;
+         // Special leniency for very short words (disabled in strict mode)
+         let adjustedAccuracy = requiredAccuracy;
+         if (targetNorm.length <= 3 && requiredAccuracy > 60 && !speakingConfig.strictMode) {
+            adjustedAccuracy = 60; // 1 mistake allowed on a 3 char word gives 66%
+         }
+
+         if (bestSimilarity >= adjustedAccuracy) {
+            calculatedIndices.push(target.index);
+            calculatedScores[target.index] = bestSimilarity;
             remainingTranscript = remainingTranscript.slice(0, bestMatchStart) + "###" + remainingTranscript.slice(bestMatchStart + bestMatchLen);
          }
       }
 
-      if (newlyPlaced) {
-         setPlacedIndices(newPlacedIndices);
-         setPlacedScores(newPlacedScores);
-         // Reset transcript buffer so they don't have to worry about past mistakes
-         setSpokenHistory("");
-         resetTranscript();
+      // Merge with existing placed indices to prevent flickering
+      let newPlacedIndices = [...placedIndices];
+      let newPlacedScores = { ...placedScores };
+      let newlyAdded = false;
+
+      for (const idx of calculatedIndices) {
+         if (!newPlacedIndices.includes(idx)) {
+            newPlacedIndices.push(idx);
+            newPlacedScores[idx] = calculatedScores[idx];
+            newlyAdded = true;
+         } else {
+            // Update score if it's better
+            if (calculatedScores[idx] > newPlacedScores[idx]) {
+               newPlacedScores[idx] = calculatedScores[idx];
+               newlyAdded = true;
+            }
+         }
       }
 
-      if (newPlacedIndices.length === targetWords.length) {
+      if (newlyAdded) {
+         setPlacedIndices(newPlacedIndices);
+         setPlacedScores(newPlacedScores);
+      }
+
+      if (newPlacedIndices.length === targetWords.length && targetWords.length > 0) {
         if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
         setStatus('success');
         SpeechRecognition.stopListening();
@@ -220,8 +283,10 @@ export function SpeakingExercise({
    }, []);
 
    const startListening = () => {
+      if (transcript) {
+         setSpokenHistory(currentFullTranscript + " ");
+      }
       resetTranscript();
-      setSpokenHistory("");
       setStatus('listening');
       SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
    };

@@ -23,25 +23,10 @@ import { getEndlessReviewServer, getDictionaryForExerciseServer, getPhrasesForEx
 
 export default function ReviewPage() {
   const router = useRouter();
-  const { completedLessons, xp, addXp, language, setExerciseRunning } = useProgressStore();
+  const { completedLessons, xp, addXp, language, setExerciseRunning, reviewConfig } = useProgressStore();
   
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // Options State
-  const [showOptions, setShowOptions] = useState(true);
-  
-  useEffect(() => {
-    // Return to default state when exiting component
-    return () => setExerciseRunning(false);
-  }, [setExerciseRunning]);
-
-  const [options, setOptions] = useState<ReviewOptions>({
-    showWordHints: true,
-    showUsefulVocab: true,
-    includeDistractors: true,
-    limitDistractors: 2,
-  });
   
   // Interaction State
   const [selectedAnswer, setSelectedAnswer] = useState<string | string[] | null>(null);
@@ -71,18 +56,17 @@ export default function ReviewPage() {
     return () => clearTimeout(timer);
   }, [completedLessons, language]);
 
-  const handleStartReview = () => {
-    if (completedLessons.length > 0) {
-      getEndlessReviewServer(completedLessons, language, options).then(generated => {
-        setExercises(generated);
-        setShowOptions(false);
-        setExerciseRunning(true);
-      });
-    }
-  };
+  useEffect(() => {
+    if (!mounted || completedLessons.length === 0) return;
+    // Launch review immediately instead of waiting for start button
+    getEndlessReviewServer(completedLessons, language, reviewConfig).then(generated => {
+      setExercises(generated);
+      setExerciseRunning(true);
+    });
+  }, [mounted, completedLessons, language, reviewConfig, setExerciseRunning]);
 
   const fetchMore = () => {
-    getEndlessReviewServer(completedLessons, language, options).then(generated => {
+    getEndlessReviewServer(completedLessons, language, reviewConfig).then(generated => {
       setExercises(prev => [...prev, ...generated]);
     });
   };
@@ -104,79 +88,6 @@ export default function ReviewPage() {
         >
           {getTranslation('auto.back', language)}
         </button>
-      </div>
-    );
-  }
-
-  if (showOptions) {
-    return (
-      <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 flex flex-col items-center p-4">
-        <header className="w-full max-w-2xl mt-4 flex items-center justify-between mb-8">
-          <button onClick={() => router.push('/practice')} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
-            <X size={28} />
-          </button>
-          <div className="text-xl font-bold text-slate-700 flex items-center gap-2">
-            <Settings size={20} className="text-indigo-500" />
-            {getTranslation('auto.review_options', language)}
-          </div>
-          <div className="w-11"></div>
-        </header>
-
-        <div className="w-full max-w-2xl bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200">
-          <div className="space-y-6">
-            
-            {/* Option 1: Tooltips (Aide au survol) */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-bold text-lg text-slate-800">{getTranslation('auto.word_hints_on_hover', language)}</h3>
-                <p className="text-slate-500 text-sm mt-1">{getTranslation('auto.show_translation_and_audio_whe', language)}</p>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" className="sr-only peer" checked={options.showWordHints} onChange={() => setOptions({...options, showWordHints: !options.showWordHints})} />
-                <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-indigo-500"></div>
-              </label>
-            </div>
-
-            <div className="w-full h-px bg-slate-100"></div>
-
-            {/* Option 2: Useful Vocab */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-bold text-lg text-slate-800">{getTranslation('auto.useful_vocabulary_block', language)}</h3>
-                <p className="text-slate-500 text-sm mt-1">{getTranslation('auto.show_the_list_of_words_involve', language)}</p>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" className="sr-only peer" checked={options.showUsefulVocab} onChange={() => setOptions({...options, showUsefulVocab: !options.showUsefulVocab})} />
-                <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-indigo-500"></div>
-              </label>
-            </div>
-
-            <div className="w-full h-px bg-slate-100"></div>
-
-            {/* Option 3: Distractors */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-bold text-lg text-slate-800">{getTranslation('auto.false_answers_distractors', language)}</h3>
-                <p className="text-slate-500 text-sm mt-1">{getTranslation('auto.include_wrong_choices_in_optio', language)}</p>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" className="sr-only peer" checked={options.includeDistractors} onChange={() => setOptions({...options, includeDistractors: !options.includeDistractors})} />
-                <div className="w-14 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-indigo-500"></div>
-              </label>
-            </div>
-
-          </div>
-
-          <div className="mt-10">
-            <button 
-              onClick={handleStartReview}
-              className="w-full py-4 rounded-2xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-extrabold text-xl shadow-sm hover:bg-indigo-400 active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2"
-            >
-              <Play size={24} className="fill-white" />
-              {getTranslation('auto.start_review', language)}
-            </button>
-          </div>
-        </div>
       </div>
     );
   }
@@ -342,8 +253,8 @@ export default function ReviewPage() {
                   <QuestionArea
                     currentExercise={{
                         ...currentExercise,
-                        hideHints: !options.showWordHints,
-                        disableTooltips: !options.showWordHints,
+                        hideHints: !reviewConfig.showWordHints,
+                        disableTooltips: !reviewConfig.showWordHints,
                       }}
                     lesson={{ words: allWords, phrases: allPhrases } as any}
                     language={language}

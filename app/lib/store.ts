@@ -29,6 +29,14 @@ export interface SpeakingConfig {
   lessonId: string | 'all';
   selectedWordIds: string[] | null;
   requiredAccuracy: number;
+  strictMode?: boolean;
+}
+
+export interface ReviewConfig {
+  showWordHints: boolean;
+  showUsefulVocab: boolean;
+  includeDistractors: boolean;
+  limitDistractors: number;
 }
 
 export interface DailyQuest {
@@ -164,6 +172,8 @@ interface ProgressState {
   setWritingConfig: (config: Partial<WritingConfig>) => void;
   speakingConfig: SpeakingConfig;
   setSpeakingConfig: (config: Partial<SpeakingConfig>) => void;
+  reviewConfig: ReviewConfig;
+  setReviewConfig: (config: Partial<ReviewConfig>) => void;
   lastActiveUnitIndex: number;
   setLastActiveUnitIndex: (index: number) => void;
   lastPlayedLessonId: string | null;
@@ -424,6 +434,13 @@ export const useProgressStore = create<ProgressState>()(
         lessonId: 'all',
         selectedWordIds: null,
         requiredAccuracy: 50,
+        strictMode: false,
+      },
+      reviewConfig: {
+        showWordHints: true,
+        showUsefulVocab: true,
+        includeDistractors: true,
+        limitDistractors: 2,
       },
       lastActiveUnitIndex: 0,
       setLastActiveUnitIndex: (index) => set({ lastActiveUnitIndex: index }),
@@ -440,6 +457,7 @@ export const useProgressStore = create<ProgressState>()(
       })),
       setWritingConfig: (config) => set((state) => ({ writingConfig: { ...state.writingConfig, ...config } })),
       setSpeakingConfig: (config) => set((state) => ({ speakingConfig: { ...state.speakingConfig, ...config } })),
+      setReviewConfig: (config) => set((state) => ({ reviewConfig: { ...state.reviewConfig, ...config } })),
 
       completeConversation: (convId, level, stars = 3) => {
         set((state) => {

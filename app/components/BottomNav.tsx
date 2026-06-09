@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Search, ChevronUp, Pencil, Mic, Wand2, GraduationCap } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Search, ChevronUp, Pencil, Mic, Wand2, GraduationCap, RotateCcw } from 'lucide-react';
 import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
@@ -113,11 +113,17 @@ export default function BottomNav() {
               transition={{ duration: 0.15 }}
               className="absolute bottom-[80px] right-4 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 flex flex-col gap-1 z-50 w-52 origin-bottom-right"
             >
-              <Link href="/review" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+              <Link href="/practice?action=review" onClick={(e) => {
+                 if (pathname === '/practice') {
+                    e.preventDefault();
+                    window.dispatchEvent(new Event('openReviewModal'));
+                 }
+                 setActivePopover(null);
+              }} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
                  <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                   <Brain size={16} className="text-indigo-500" />
+                   <RotateCcw size={16} className="text-indigo-500" />
                  </div>
-                 {getTranslation('auto.review', language)}
+                 {getTranslation('auto.review_9', language)}
               </Link>
               <Link href="/review-pairs" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
                  <div className="w-8 h-8 rounded-lg bg-fuchsia-50 flex items-center justify-center shrink-0">
@@ -125,23 +131,29 @@ export default function BottomNav() {
                  </div>
                  {getTranslation('auto.pairs', language)}
               </Link>
-              <Link href="/practice?action=writing" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+              <Link href="/practice?action=writing" onClick={(e) => {
+                 if (pathname === '/practice') {
+                    e.preventDefault();
+                    window.dispatchEvent(new Event('openWritingModal'));
+                 }
+                 setActivePopover(null);
+              }} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
                  <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center shrink-0">
                    <Pencil size={16} className="text-sky-500" />
                  </div>
                  {getTranslation('auto.writing', language)}
               </Link>
-              <Link href="/practice?action=speaking" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
+              <Link href="/practice?action=speaking" onClick={(e) => {
+                 if (pathname === '/practice') {
+                    e.preventDefault();
+                    window.dispatchEvent(new Event('openSpeakingModal'));
+                 }
+                 setActivePopover(null);
+              }} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
                  <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0">
                    <Mic size={16} className="text-orange-500" />
                  </div>
                  {getTranslation('auto.speaking', language)}
-              </Link>
-              <Link href="/practice/tone-analyzer" onClick={() => setActivePopover(null)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors text-slate-700 font-bold text-sm">
-                 <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
-                   <Wand2 size={16} className="text-teal-500" />
-                 </div>
-                 {language === 'en' ? 'Tone Analyzer' : 'Calculateur de Tons'}
               </Link>
             </motion.div>
           )}

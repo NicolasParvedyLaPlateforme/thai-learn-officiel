@@ -4,10 +4,11 @@ import { getTranslation } from '../hooks/useTranslation';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { m as motion , AnimatePresence } from "motion/react";
-import { Brain, BookOpen, Pencil, Star, Mic, User, Wand2, Menu } from 'lucide-react';
+import { Brain, BookOpen, Pencil, Star, Mic, User, Wand2, Menu, RotateCcw } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { WritingConfigModal } from '../components/WritingConfigModal';
 import { SpeakingConfigModal } from '../components/SpeakingConfigModal';
+import { ReviewConfigModal } from '../components/ReviewConfigModal';
 import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
 import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
 import PWAInstallButton from '../components/PWAInstallButton';
@@ -17,12 +18,14 @@ export default function PracticePage() {
   const { language, xp, setLanguage } = useProgressStore();
   const [isWritingConfigModalOpen, setWritingConfigModalOpen] = useState(false);
   const [isSpeakingConfigModalOpen, setSpeakingConfigModalOpen] = useState(false);
+  const [isReviewConfigModalOpen, setReviewConfigModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const isPWA = useIsPWA();
   useEffect(() => {
     setMounted(true);
+    useProgressStore.getState().setExerciseRunning(false);
     
     // Check search params to auto-open modals
     if (typeof window !== 'undefined') {
@@ -32,12 +35,26 @@ export default function PracticePage() {
         setWritingConfigModalOpen(true);
       } else if (action === 'speaking') {
         setSpeakingConfigModalOpen(true);
+      } else if (action === 'review') {
+        setReviewConfigModalOpen(true);
       }
       
       // Optional: Clean up the URL to prevent reopening on reload
       if (action) {
          window.history.replaceState({}, '', '/practice');
       }
+
+      const handleWriting = () => setWritingConfigModalOpen(true);
+      const handleSpeaking = () => setSpeakingConfigModalOpen(true);
+      const handleReview = () => setReviewConfigModalOpen(true);
+      window.addEventListener('openWritingModal', handleWriting);
+      window.addEventListener('openSpeakingModal', handleSpeaking);
+      window.addEventListener('openReviewModal', handleReview);
+      return () => {
+         window.removeEventListener('openWritingModal', handleWriting);
+         window.removeEventListener('openSpeakingModal', handleSpeaking);
+         window.removeEventListener('openReviewModal', handleReview);
+      };
     }
   }, []);
 
@@ -105,6 +122,7 @@ export default function PracticePage() {
 
       <WritingConfigModal isOpen={isWritingConfigModalOpen} onClose={() => setWritingConfigModalOpen(false)} />
       <SpeakingConfigModal isOpen={isSpeakingConfigModalOpen} onClose={() => setSpeakingConfigModalOpen(false)} />
+      <ReviewConfigModal isOpen={isReviewConfigModalOpen} onClose={() => setReviewConfigModalOpen(false)} />
       
       <div className="max-w-4xl mx-auto space-y-8 mt-8 px-4 md:px-8">
         <header className="mb-10 text-center md:text-left">
@@ -123,7 +141,7 @@ export default function PracticePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1, ease: 'easeOut' }}
           >
-            <Link href="/review" className="group flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-indigo-300 active:translate-y-0 active:shadow-md transition-all duration-300">
+            <button onClick={() => setReviewConfigModalOpen(true)} className="group flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-indigo-300 active:translate-y-0 active:shadow-md transition-all duration-300 text-left w-full h-full">
             {/* Illustration */}
             <div className="mb-6 w-full h-40 bg-indigo-50/50 rounded-2xl border-2 border-indigo-100 relative overflow-hidden flex items-center justify-center group-hover:bg-indigo-50 transition-colors">
               <div className="absolute inset-0 bg-[radial-gradient(#e0e7ff_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
@@ -139,7 +157,7 @@ export default function PracticePage() {
 
               {/* Icon badge */}
               <div className="absolute top-3 left-3 bg-indigo-100 text-indigo-600 p-2 rounded-xl">
-                <Brain size={20} />
+                <RotateCcw size={20} />
               </div>
             </div>
 
@@ -149,7 +167,7 @@ export default function PracticePage() {
             <p className="text-slate-500 font-medium leading-relaxed">
               {getTranslation('auto.test_your_memory_and_reinforce', language)}
             </p>
-          </Link>
+          </button>
           </motion.div>
           
           {/* Pairs Card */}
@@ -277,38 +295,6 @@ export default function PracticePage() {
               {getTranslation('auto.practice_your_pronunciation_wi', language)}
             </p>
           </button>
-          </motion.div>
-
-          {/* Tone Analyzer Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5, ease: 'easeOut' }}
-          >
-            <Link href="/practice/tone-analyzer" className="group flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-teal-300 active:translate-y-0 active:shadow-md transition-all duration-300 h-full">
-              {/* Illustration */}
-              <div className="mb-6 w-full h-40 bg-teal-50/50 rounded-2xl border-2 border-teal-100 flex flex-col items-center justify-center gap-2 group-hover:bg-teal-50 transition-colors relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(#ccfbf1_1px,transparent_1px)] [background-size:16px_16px] opacity-40"></div>
-                
-                <div className="flex items-center gap-3 relative z-10 bg-white px-4 py-2 rounded-xl shadow-sm border-2 border-teal-200 group-hover:-translate-y-1 transition-all duration-300">
-                  <span className="text-2xl font-bold font-thai text-teal-600">มาก</span>
-                  <span className="text-slate-300 font-bold">=</span>
-                  <span className="font-bold text-teal-500 uppercase tracking-widest text-xs">Falling</span>
-                </div>
-
-                {/* Icon badge */}
-                <div className="absolute top-3 left-3 bg-teal-100 text-teal-600 p-2 rounded-xl">
-                  <Wand2 size={20} />
-                </div>
-              </div>
-
-              <h3 className="text-2xl font-bold text-slate-800 mb-2">
-                {language === 'en' ? 'Tone Analyzer' : 'Calculateur de Tons'}
-              </h3>
-              <p className="text-slate-500 font-medium leading-relaxed">
-                {language === 'en' ? 'Deconstruct any Thai syllable to understand its tone rules.' : 'Déconstruisez n\'importe quelle syllabe thaï pour comprendre son ton.'}
-              </p>
-            </Link>
           </motion.div>
         </div>
       </div>
