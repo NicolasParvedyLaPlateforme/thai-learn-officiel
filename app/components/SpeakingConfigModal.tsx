@@ -16,6 +16,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
   const [selectedLessonId, setSelectedLessonId] = useState<string | 'all'>(speakingConfig.lessonId);
   const [selectedWordIds, setSelectedWordIds] = useState<string[] | null>(speakingConfig.selectedWordIds);
   const [requiredAccuracy, setRequiredAccuracy] = useState<number>(speakingConfig.requiredAccuracy || 50);
+  const [strictMode, setStrictMode] = useState<boolean>(speakingConfig.strictMode || false);
   
   const [currentVocabulary, setCurrentVocabulary] = useState<(Word | Phrase)[]>([]);
   const [lessonsList, setLessonsList] = useState<any[]>([]);
@@ -27,6 +28,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
       setSelectedLessonId(speakingConfig.lessonId);
       setSelectedWordIds(speakingConfig.selectedWordIds);
       setRequiredAccuracy(speakingConfig.requiredAccuracy || 50);
+      setStrictMode(speakingConfig.strictMode || false);
       
       // Fetch available lessons metadata once
       getLightweightLessons().then(setLessonsList);
@@ -75,6 +77,7 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
       lessonId: selectedLessonId,
       selectedWordIds,
       requiredAccuracy,
+      strictMode,
     });
     onClose();
     router.push('/speaking');
@@ -127,24 +130,30 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
               {language === 'en' ? 'Required Pronunciation Accuracy' : 'Précision de prononciation requise'}
             </h3>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <button 
-                onClick={() => setRequiredAccuracy(50)}
+                onClick={() => { setRequiredAccuracy(50); setStrictMode(false); }}
                 className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 50 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
               >
                 {language === 'en' ? '50% (Lenient)' : '50% (Tolérant)'}
               </button>
               <button 
-                onClick={() => setRequiredAccuracy(80)}
+                onClick={() => { setRequiredAccuracy(80); setStrictMode(false); }}
                 className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 80 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
               >
                 {language === 'en' ? '80% (Strict)' : '80% (Strict)'}
               </button>
               <button 
-                onClick={() => setRequiredAccuracy(100)}
-                className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 100 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
+                onClick={() => { setRequiredAccuracy(100); setStrictMode(false); }}
+                className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 100 && !strictMode ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
               >
-                {language === 'en' ? '100% (Perfect)' : '100% (Parfait)'}
+                {language === 'en' ? '100% (With Help)' : '100% (Avec aide)'}
+              </button>
+              <button 
+                onClick={() => { setRequiredAccuracy(100); setStrictMode(true); }}
+                className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 100 && strictMode ? 'bg-purple-50 border-purple-500 text-purple-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
+              >
+                {language === 'en' ? '100% (Ultimate)' : '100% (Ultime)'}
               </button>
             </div>
           </div>

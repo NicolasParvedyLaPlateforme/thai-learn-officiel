@@ -142,7 +142,8 @@ export function SpeakingExercise({
          const targetNorm = normalizeThai(target.word.th);
          if (!targetNorm) continue;
 
-         const variants = [targetNorm, ...getAliases(targetNorm)];
+         // If strictMode is true, we disable aliases and leniency
+         const variants = speakingConfig.strictMode ? [targetNorm] : [targetNorm, ...getAliases(targetNorm)];
          
          let matchedExact = false;
          let matchStart = -1;
@@ -191,9 +192,9 @@ export function SpeakingExercise({
             }
          }
 
-         // Special leniency for very short words
+         // Special leniency for very short words (disabled in strict mode)
          let adjustedAccuracy = requiredAccuracy;
-         if (targetNorm.length <= 3 && requiredAccuracy > 60) {
+         if (targetNorm.length <= 3 && requiredAccuracy > 60 && !speakingConfig.strictMode) {
             adjustedAccuracy = 60; // 1 mistake allowed on a 3 char word gives 66%
          }
 
