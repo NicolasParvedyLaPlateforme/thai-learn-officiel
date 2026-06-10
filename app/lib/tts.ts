@@ -240,6 +240,7 @@ const fallbackTTS = (text: string) => {
 
 export const stopTTS = () => {
   if (typeof window === 'undefined') return;
+  playToken = null;
   if (currentAudio) {
     currentAudio.pause();
     currentAudio.currentTime = 0;

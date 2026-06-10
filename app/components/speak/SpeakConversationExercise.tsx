@@ -393,7 +393,14 @@ export function SpeakConversationExercise({
                <div className="absolute left-[calc(50%-7rem)] md:left-[calc(50%-8rem)] flex items-center">
                   {status !== 'success' && (
                      <button
-                        onClick={() => playThaiTTSAsync(currentItem?.th || '')}
+                        onClick={() => {
+                           if (status === 'listening' || status === 'evaluating') {
+                              SpeechRecognition.abortListening();
+                              if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+                              setStatus('idle');
+                           }
+                           playThaiTTSAsync(currentItem?.th || '');
+                        }}
                         className="w-14 h-14 rounded-2xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 shadow-[0_6px_0_rgb(203,213,225)] active:shadow-[0_0px_0_rgb(203,213,225)] active:translate-y-1.5 transition-all"
                         title={getTranslation('auto.listen', language)}
                      >
