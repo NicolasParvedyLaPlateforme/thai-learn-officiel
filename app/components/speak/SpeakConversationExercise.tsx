@@ -81,6 +81,12 @@ export function SpeakConversationExercise({
    const currentItem = currentLine?.phraseData;
    const requiredAccuracy = speakingConfig.requiredAccuracy || 50;
 
+   // Determine sides dynamically based on the first speaker
+   const firstSpeaker = dialogue.length > 0 ? dialogue[0].speaker : null;
+
+   // Refs for auto-scrolling
+   const activeItemRef = useRef<HTMLDivElement>(null);
+
    // Derive target components
    const targetWords = useMemo(() => {
       if (!currentItem) return [];
@@ -116,11 +122,11 @@ export function SpeakConversationExercise({
       setPlacedScores({});
 
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
-      
-      // Auto-scroll to bottom
+
+      // Auto-scroll to center the active item
       setTimeout(() => {
-         if (scrollRef.current) {
-             scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+         if (activeItemRef.current) {
+             activeItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
          }
       }, 150);
    }, [currentIndex, resetTranscript]);
@@ -323,13 +329,14 @@ export function SpeakConversationExercise({
                  if (!isVisible) return null;
                  
                  const speakerAvatar = line.speaker === 'Kanya' ? '/deedee-no-bg.png' : '/tom.png';
-                 const isRight = line.speaker === 'Tom';
+                 const isRight = line.speaker !== firstSpeaker;
                  const isCurrent = index === currentIndex;
                  const phrase = line.phraseData as Phrase;
                  
                  return (
                      <motion.div 
                          key={index}
+                         ref={isCurrent ? activeItemRef : null}
                          initial={{ opacity: 0, y: 10 }}
                          animate={{ opacity: 1, y: 0 }}
                          className={`flex w-full gap-3 py-1 ${isRight ? 'justify-end flex-row-reverse' : 'justify-start'}`}
@@ -385,7 +392,6 @@ export function SpeakConversationExercise({
                      </motion.div>
                  );
              })}
-             <div ref={scrollRef} />
          </div>
 
          {/* Controls */}
