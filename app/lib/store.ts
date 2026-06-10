@@ -421,6 +421,12 @@ export const useProgressStore = create<ProgressState>()(
           updates.dailyQuests = generateNewQuests();
           updates.questsDate = today;
           updates.completedToday = []; // Reset completed today
+        } else if (state.dailyQuests && !state.dailyQuests.speak) {
+          // Migration: if user already has quests for today but no speak quests
+          updates.dailyQuests = {
+            ...state.dailyQuests,
+            speak: generateNewQuestsForCategory(questsConfig.speak)
+          };
         }
         
         return Object.keys(updates).length > 0 ? updates : {};
