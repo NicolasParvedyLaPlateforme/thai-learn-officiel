@@ -108,7 +108,7 @@ export default function SpeakLessonModal({
               </p>
 
               <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full mb-6 max-w-[16rem] mx-auto">
-                {[0].map((levelIndex) => {
+                {[0, 1].map((levelIndex) => {
                   const starsArray = lessonStars[selectedLesson.lesson.id] || [0];
                   const earnedStars = starsArray[levelIndex] || 0;
 
@@ -189,7 +189,7 @@ export default function SpeakLessonModal({
                   <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
                     {selectedLesson.lesson.isReview
                       ? (`${getTranslation('auto.stats', language) || 'Stats'} :`)
-                      : (`PRONONCIATION (RÉUSSITE 50%) :`)
+                      : (modalLevel === 1 ? `CONVERSATION (DIALOGUE AU MICRO) :` : `PRONONCIATION (RÉUSSITE 50%) :`)
                     }
                   </h4>
                 </div>

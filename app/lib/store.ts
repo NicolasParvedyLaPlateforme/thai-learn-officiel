@@ -624,7 +624,10 @@ export const useProgressStore = create<ProgressState>()(
         const actualPlayedLevel = playedLevel !== undefined ? playedLevel : currentLevel;
         
         const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(`speak_${lessonId}`, actualPlayedLevel, false);
-        const finalXp = calculatedXp || fallbackXp;
+        let finalXp = calculatedXp || fallbackXp;
+        if (actualPlayedLevel === 1 && fallbackXp !== undefined) {
+           finalXp = fallbackXp;
+        }
 
         set((state) => {
           let newLevel = currentLevel;

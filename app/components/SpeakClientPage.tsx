@@ -367,7 +367,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             lessons={data.lessons}
             lessonLevels={speakLessonLevels}
             mounted={mounted}
-            maxLevelPerLesson={1}
+            maxLevelPerLesson={2}
             suggestionType="speak"
             selectedLesson={selectedLesson}
             onCloseLesson={() => setSelectedLesson(null)}

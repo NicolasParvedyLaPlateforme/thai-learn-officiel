@@ -1,0 +1,42 @@
+{
+  "dialogues": {
+    "speak-1": [
+      {
+        "speaker": "Tom",
+        "phraseId": "p_hello_m"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_hello_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_how_are_you"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_i_am_fine"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_and_you"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_i_am_fine"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_name_ask"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_name_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_name_m"
+      }
+    ]
+  }
+}
