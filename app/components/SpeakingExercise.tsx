@@ -303,14 +303,12 @@ export function SpeakingExercise({
    const startListening = () => {
       stopTTS();
       SpeechRecognition.abortListening();
-      setTimeout(() => {
-         if (transcript) {
-            setSpokenHistory(currentFullTranscript + " ");
-         }
-         resetTranscript();
-         setStatus('listening');
-         SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
-      }, 50);
+      if (transcript) {
+         setSpokenHistory(currentFullTranscript + " ");
+      }
+      resetTranscript();
+      setStatus('listening');
+      SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
    };
 
    const playTTS = () => {
