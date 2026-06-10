@@ -234,7 +234,19 @@ const fallbackTTS = (text: string) => {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'th-TH';
   utterance.rate = 0.8;
+  utterance.rate = 0.8;
   window.speechSynthesis.speak(utterance);
+};
+
+export const stopTTS = () => {
+  if (typeof window === 'undefined') return;
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
 };
 
 export const preloadThaiVoices = () => {

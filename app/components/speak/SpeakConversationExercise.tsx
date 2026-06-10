@@ -9,7 +9,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
-import { playThaiTTSAsync } from '../../lib/tts';
+import { playThaiTTSAsync, stopTTS } from '../../lib/tts';
 import IconImage from '../IconImage';
 
 const normalizeThai = (str: string) => {
@@ -278,10 +278,14 @@ export function SpeakConversationExercise({
    }, []);
 
    const startListening = () => {
-      if (transcript) setSpokenHistory(currentFullTranscript + " ");
-      resetTranscript();
-      setStatus('listening');
-      SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
+      stopTTS();
+      SpeechRecognition.abortListening();
+      setTimeout(() => {
+         if (transcript) setSpokenHistory(currentFullTranscript + " ");
+         resetTranscript();
+         setStatus('listening');
+         SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
+      }, 50);
    };
 
    const nextWord = (forceSkip = false) => {

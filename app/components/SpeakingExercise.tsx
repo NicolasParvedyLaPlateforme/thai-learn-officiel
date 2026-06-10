@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Word, Phrase } from '../types';
 import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square, Trash2 } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
+import { stopTTS } from '../lib/tts';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
@@ -300,12 +301,16 @@ export function SpeakingExercise({
    }, []);
 
    const startListening = () => {
-      if (transcript) {
-         setSpokenHistory(currentFullTranscript + " ");
-      }
-      resetTranscript();
-      setStatus('listening');
-      SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
+      stopTTS();
+      SpeechRecognition.abortListening();
+      setTimeout(() => {
+         if (transcript) {
+            setSpokenHistory(currentFullTranscript + " ");
+         }
+         resetTranscript();
+         setStatus('listening');
+         SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
+      }, 50);
    };
 
    const playTTS = () => {
