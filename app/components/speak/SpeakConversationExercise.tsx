@@ -339,7 +339,7 @@ export function SpeakConversationExercise({
                          ref={isCurrent ? activeItemRef : null}
                          initial={{ opacity: 0, y: 10 }}
                          animate={{ opacity: 1, y: 0 }}
-                         className={`flex w-full gap-3 py-1 ${isRight ? 'justify-end flex-row-reverse' : 'justify-start'}`}
+                         className={`flex w-full gap-3 py-1 ${isRight ? 'flex-row-reverse justify-start' : 'justify-start'}`}
                      >
                          <div className="flex-shrink-0 mt-6">
                             <IconImage 
