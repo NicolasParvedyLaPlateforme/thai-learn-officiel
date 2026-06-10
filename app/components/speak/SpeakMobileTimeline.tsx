@@ -36,10 +36,13 @@ export default function SpeakMobileTimeline({
   setIsQuestsModalOpen,
   setSelectedLesson,
   setModalLevel,
-  setLockedReviewModalOpen
+  setLockedReviewModalOpen,
+  maxLevelPerLesson
 }: SpeakMobileTimelineProps) {
-  const maxLevelsInUnit = unitLessons.length * 10;
-  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc, l) => acc + (lessonLevels[l.id] || 0), 0) : 0;
+  const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 10);
+  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => {
+    return acc + Math.min(lessonLevels[l.id] || 0, (maxLevelPerLesson || 10));
+  }, 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
   return (
@@ -96,7 +99,7 @@ export default function SpeakMobileTimeline({
                   ></div>
                 </div>
                 <div className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold text-[10px] px-1 drop-shadow-sm`}>
-                  {getTranslation('auto.10_levels_lesson_mastery', language)}
+                  {(maxLevelPerLesson || 10) === 10 ? getTranslation('auto.10_levels_lesson_mastery', language) : `${(maxLevelPerLesson || 10)} ${getTranslation('auto.levels', language) || 'niveaux'}`}
                 </div>
               </div>
             </div>
@@ -159,7 +162,7 @@ export default function SpeakMobileTimeline({
               isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
             }
 
-            const isMaxLevel = level >= 10;
+            const isMaxLevel = level >= (maxLevelPerLesson || 10);
             const showLineToNext = idx < unitLessons.length - 1;
             const lineToNextColor = level > 0 ? unit.colorClass : "bg-slate-200";
 
@@ -181,7 +184,7 @@ export default function SpeakMobileTimeline({
                       return;
                     }
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(Math.min(level, 9));
+                    setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
                   }}
                 >
                   <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
@@ -213,7 +216,7 @@ export default function SpeakMobileTimeline({
                       return;
                     }
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(Math.min(level, 9));
+                    setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
                   }}
                 >
                   {isMaxLevel ? (
@@ -240,17 +243,17 @@ export default function SpeakMobileTimeline({
                         </div>
                       ) : null
                     ) : (
-                      <>
+                      <div className="flex flex-col w-full px-2 gap-1.5 opacity-90 mt-1 z-10">
                         <div className="flex justify-between text-xs font-bold text-slate-400 mb-1 px-1">
                           <span>{getTranslation('auto.mastery_4', language)}</span>
-                          <span className={unit.textClass}>{level}/10</span>
+                          <span className={unit.textClass}>{level}/{maxLevelPerLesson || 10}</span>
                         </div>
                         <div className="flex justify-between gap-[2px] w-full">
-                          {Array.from({ length: 10 }).map((_, i) => (
+                          {Array.from({ length: maxLevelPerLesson || 10 }).map((_, i) => (
                             <div key={i} className={`h-2.5 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? unit.colorClass : 'bg-slate-100'}`}></div>
                           ))}
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                 </div>

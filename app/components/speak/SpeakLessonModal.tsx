@@ -18,6 +18,7 @@ interface SpeakLessonModalProps {
   resetLessonLevel: (lessonId: string) => void;
   reviewStats: Record<string, Record<number, any>>;
   getExpectedXp: (lessonId: string, level: number, isReview: boolean) => { xp: number, isFirstTime: boolean };
+  maxLevelPerLesson?: number;
 }
 
 export default function SpeakLessonModal({
@@ -31,7 +32,8 @@ export default function SpeakLessonModal({
   lessonStars,
   resetLessonLevel,
   reviewStats,
-  getExpectedXp
+  getExpectedXp,
+  maxLevelPerLesson = 10
 }: SpeakLessonModalProps) {
   const [selectedLesson, setSelectedLesson] = useState(selectedLessonProp);
   
@@ -59,7 +61,7 @@ export default function SpeakLessonModal({
   
   if (selectedLesson.lesson.isReview) {
     estimatedMins = (modalLevel + 1) * 2;
-  } else if (modalLevel === 10) {
+  } else if (modalLevel === maxLevelPerLesson) {
     estimatedMins = 20;
   } else {
     if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
@@ -70,10 +72,10 @@ export default function SpeakLessonModal({
   const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, !!isReviewOrBilan);
 
   // Mastery Logic
-  const isUnlockedMastery = currentProgress >= 10;
-  const isSelectedMastery = modalLevel === 10;
-  const starsArrayMastery = lessonStars[selectedLesson.lesson.id] || Array(11).fill(0);
-  const earnedStarsMastery = starsArrayMastery[10] || 0;
+  const isUnlockedMastery = currentProgress >= maxLevelPerLesson;
+  const isSelectedMastery = modalLevel === maxLevelPerLesson;
+  const starsArrayMastery = lessonStars[selectedLesson.lesson.id] || Array(maxLevelPerLesson + 1).fill(0);
+  const earnedStarsMastery = starsArrayMastery[maxLevelPerLesson] || 0;
   const isCompletedMastery = isUnlockedMastery && earnedStarsMastery > 0;
 
   return (
@@ -108,7 +110,7 @@ export default function SpeakLessonModal({
               </p>
 
               <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full mb-6 max-w-[16rem] mx-auto">
-                {[0, 1].map((levelIndex) => {
+                {Array.from({ length: maxLevelPerLesson }).map((_, levelIndex) => {
                   const starsArray = lessonStars[selectedLesson.lesson.id] || [0];
                   const earnedStars = starsArray[levelIndex] || 0;
 

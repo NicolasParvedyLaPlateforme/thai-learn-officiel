@@ -29,7 +29,7 @@ export default function SpeakQuestsModal({ isOpen, onOpenChange }: SpeakQuestsMo
           </button>
 
           <div className="p-6 pb-12 overflow-y-auto flex flex-col gap-6">
-            <DailyQuestsWidget />
+            <DailyQuestsWidget category="speak" />
             <ConversationObjectiveWidget />
             <LeaderboardWidget />
           </div>

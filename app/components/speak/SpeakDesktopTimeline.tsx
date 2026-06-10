@@ -32,10 +32,11 @@ export default function SpeakDesktopTimeline({
   setShowDesktopUnitsList,
   setSelectedLesson,
   setModalLevel,
-  setLockedReviewModalOpen
+  setLockedReviewModalOpen,
+  maxLevelPerLesson
 }: SpeakDesktopTimelineProps) {
-  const maxLevelsInUnit = unitLessons.length * 10;
-  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc, l) => acc + (lessonLevels[l.id] || 0), 0) : 0;
+  const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 10);
+  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson || 10), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
   return (
@@ -74,8 +75,8 @@ export default function SpeakDesktopTimeline({
                     style={{ width: `${progressPercent}%` }}
                   ></div>
                 </div>
-                <div className={`text-sm ${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold drop-shadow-sm`}>
-                  {getTranslation('auto.10_levels_per_lesson_total_mas', language)}
+                <div className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold text-xs px-2 drop-shadow-sm`}>
+                  {(maxLevelPerLesson || 10) === 10 ? getTranslation('auto.10_levels_per_lesson_total_mas', language) : `${maxLevelPerLesson} ${getTranslation('auto.levels', language) || 'niveaux'}`}
                 </div>
               </div>
             </div>
@@ -93,6 +94,7 @@ export default function SpeakDesktopTimeline({
 
         {unitLessons.map((lesson, idx) => {
           const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
+          const isMaxLevel = level >= (maxLevelPerLesson || 10);
           let isReviewLocked = false;
           if (lesson.isReview && mounted) {
             const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview);
@@ -101,7 +103,6 @@ export default function SpeakDesktopTimeline({
 
           const showLineToNext = idx < unitLessons.length - 1;
           const lineToNextColor = level > 0 ? unit.colorClass : "bg-slate-200";
-          const isMaxLevel = level >= 10;
 
           return (
             <motion.div
@@ -121,7 +122,7 @@ export default function SpeakDesktopTimeline({
                     return;
                   }
                   setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(Math.min(level, 9));
+                  setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
                   setShowDesktopUnitsList(false);
                 }}
               >
@@ -147,7 +148,7 @@ export default function SpeakDesktopTimeline({
                     return;
                   }
                   setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(Math.min(level, 9));
+                  setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
                   setShowDesktopUnitsList(false);
                 }}
               >
@@ -177,17 +178,17 @@ export default function SpeakDesktopTimeline({
                       </div>
                     ) : null
                   ) : (
-                    <>
+                    <div className="flex flex-col justify-center gap-1.5 opacity-90 w-full md:w-48 shrink-0 mt-4 md:mt-0">
                       <div className="flex justify-between text-xs font-bold text-slate-400 mb-1 px-1">
-                        <span>{getTranslation('auto.mastery_6', language)}</span>
-                        <span className={unit.textClass}>{level}/10</span>
+                        <span>{getTranslation('auto.mastery_4', language)}</span>
+                        <span className={unit.textClass}>{level}/{maxLevelPerLesson || 10}</span>
                       </div>
                       <div className="flex justify-between gap-[2px] w-full">
-                        {Array.from({ length: 10 }).map((_, i) => (
+                        {Array.from({ length: maxLevelPerLesson || 10 }).map((_, i) => (
                           <div key={i} className={`h-3 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? unit.colorClass : 'bg-slate-100'}`}></div>
                         ))}
                       </div>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>

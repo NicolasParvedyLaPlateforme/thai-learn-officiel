@@ -56,6 +56,7 @@ export interface DailyQuest {
 export interface QuestsState {
   learn: DailyQuest[];
   alphabet: DailyQuest[];
+  speak: DailyQuest[];
 }
 
 const generateNewQuestsForCategory = (categoryConfig: any[]): DailyQuest[] => {
@@ -81,6 +82,7 @@ const generateNewQuests = (): QuestsState => {
   return {
     learn: generateNewQuestsForCategory(questsConfig.learn),
     alphabet: generateNewQuestsForCategory(questsConfig.alphabet),
+    speak: generateNewQuestsForCategory(questsConfig.speak),
   };
 };
 
@@ -206,7 +208,7 @@ interface ProgressState {
   dailyQuests: QuestsState | null;
   questsDate: string | null;
   recordActivity: () => void;
-  progressQuest: (category: 'learn' | 'alphabet', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => void;
+  progressQuest: (category: 'learn' | 'alphabet' | 'speak', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => void;
   checkAndGenerateQuests: () => void;
   
   reviewStats: Record<string, Record<number, { bestTime?: number, maxPercentage?: number }>>;
@@ -667,10 +669,10 @@ export const useProgressStore = create<ProgressState>()(
         });
         
         get().recordActivity();
-        get().progressQuest('learn', 'lessons', 1);
-        get().progressQuest('learn', 'xp', finalXp);
+        get().progressQuest('speak', 'lessons', 1);
+        get().progressQuest('speak', 'xp', finalXp);
         if (earnedStars >= 3) {
-          get().progressQuest('learn', 'perfect_lesson', 1);
+          get().progressQuest('speak', 'perfect_lesson', 1);
         }
         get().triggerForceSync();
       },
