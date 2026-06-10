@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useProgressStore } from '../lib/store';
-import BASE_UNITS from '../data/units.json';
+import BASE_UNITS from '../data/speak_units.json';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 
 import dynamic from 'next/dynamic';
@@ -367,7 +367,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             lessons={data.lessons}
             lessonLevels={speakLessonLevels}
             mounted={mounted}
-            maxLevelPerLesson={10}
+            maxLevelPerLesson={1}
             suggestionType="speak"
             selectedLesson={selectedLesson}
             onCloseLesson={() => setSelectedLesson(null)}

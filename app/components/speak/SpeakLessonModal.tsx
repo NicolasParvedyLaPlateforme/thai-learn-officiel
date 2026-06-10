@@ -108,8 +108,8 @@ export default function SpeakLessonModal({
               </p>
 
               <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full mb-6 max-w-[16rem] mx-auto">
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((levelIndex) => {
-                  const starsArray = lessonStars[selectedLesson.lesson.id] || Array(10).fill(0);
+                {[0].map((levelIndex) => {
+                  const starsArray = lessonStars[selectedLesson.lesson.id] || [0];
                   const earnedStars = starsArray[levelIndex] || 0;
 
                   const isAccessible = levelIndex <= currentProgress;
@@ -165,49 +165,7 @@ export default function SpeakLessonModal({
                 })}
               </div>
 
-              <div className="flex flex-col items-center gap-2 mb-6 mt-2">
-                <button
-                  onClick={() => {
-                    if (isUnlockedMastery) setModalLevel(10);
-                  }}
-                  className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
-                  disabled={!isUnlockedMastery}
-                >
-                  <div className={`
-                      w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
-                      ${isSelectedMastery ? `scale-110 ring-[4px] ring-offset-[3px] shadow-lg relative z-10 ring-amber-400/50` : ''}
-                      ${isUnlockedMastery
-                      ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-2 border-amber-600 shadow-md text-white'
-                      : 'bg-slate-50 border border-slate-200 text-slate-300'
-                    }
-                    `}>
-                    {isUnlockedMastery ? (
-                      isCompletedMastery ? (
-                        <div className="flex flex-col items-center gap-[1px]">
-                          <div className="flex gap-[1px]">
-                            {Array.from({ length: 3 }).map((_, i) => (
-                              <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStarsMastery ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
-                            ))}
-                          </div>
-                          <div className="flex gap-[1px]">
-                            {Array.from({ length: 2 }).map((_, i) => (
-                              <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStarsMastery ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
-                            ))}
-                          </div>
-                        </div>
-                      ) : (
-                        <Crown size={24} className="fill-current stroke-[2]" />
-                      )
-                    ) : (
-                      <Lock size={20} className="stroke-[2.5]" />
-                    )}
-                  </div>
-                  <span className={`text-[10px] font-black tracking-widest uppercase ${isUnlockedMastery ? 'text-amber-500' : 'text-slate-300'}`}>
-                    {getTranslation('auto.mastery', language)}
-                  </span>
-                </button>
               </div>
-            </div>
 
             <div className="px-7 pt-2 flex flex-col">
               <div className="flex items-center justify-center gap-3 mb-8 border-b border-slate-100 pb-8 w-full flex-wrap">
@@ -229,19 +187,14 @@ export default function SpeakLessonModal({
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                    {selectedLesson.lesson.isReview || modalLevel === 10
-                      ? (modalLevel === 10
-                        ? (getTranslation('auto.stats_mastery', language))
-                        : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
-                      : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
+                    {selectedLesson.lesson.isReview
+                      ? (`${getTranslation('auto.stats', language) || 'Stats'} :`)
+                      : (`PRONONCIATION (RÉUSSITE 50%) :`)
                     }
                   </h4>
-                  {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
-                    <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
-                  )}
                 </div>
 
-                {selectedLesson.lesson.isReview || modalLevel === 10 ? (
+                {selectedLesson.lesson.isReview ? (
                   <div className="flex flex-col gap-3">
                     {(() => {
                       const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
@@ -289,11 +242,11 @@ export default function SpeakLessonModal({
                     })()}
                   </div>
                 ) : (
-                  <div className="flex flex-wrap gap-2.5 pb-2">
-                    {selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').map((w: any) => (
-                      <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
-                        <span className={`font-bold text-[17px] ${selectedLesson.unitText}`}>{w.th}</span>
-                        <span className="text-slate-500 text-[13px] font-medium">({getLocalizedField(w, '', language)})</span>
+                  <div className="flex flex-col gap-2 w-full pb-2">
+                    {selectedLesson.lesson.phrases?.map((p: any) => (
+                      <button onClick={() => playThaiTTS(p.th)} key={p.id} className={`w-full group bg-white border border-slate-200 rounded-xl px-4 py-3 flex flex-col items-start gap-1 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
+                        <span className={`font-bold text-[15px] ${selectedLesson.unitText}`}>{p.th}</span>
+                        <span className="text-slate-500 text-[13px] font-medium text-left">({getLocalizedField(p, '', language)})</span>
                       </button>
                     ))}
                   </div>

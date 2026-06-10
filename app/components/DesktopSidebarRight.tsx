@@ -203,7 +203,7 @@ export function DesktopSidebarRight({
                 </div>
 
                 {/* Mastery Level Button */}
-                {selectedLesson && (() => {
+                {selectedLesson && suggestionType !== 'speak' && (() => {
                   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
                   const isUnlocked = currentProgress >= 10;
                   const isSelected = modalLevel === 10;
@@ -290,10 +290,12 @@ export function DesktopSidebarRight({
                           : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
                         : suggestionType === 'alphabet'
                           ? (`${getTranslation('auto.letters', language)} (${selectedLesson.lesson.items?.length}) :`)
-                          : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
+                          : suggestionType === 'speak'
+                            ? (`PRONONCIATION (RÉUSSITE 50%) :`)
+                            : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
                       }
                     </h4>
-                    {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
+                    {!selectedLesson.lesson.isReview && modalLevel !== 10 && suggestionType !== 'speak' && (
                       <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
                     )}
                   </div>
@@ -354,6 +356,15 @@ export function DesktopSidebarRight({
                             <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({i.romanization})</span>
                           </button>
                         ))
+                      ) : suggestionType === 'speak' ? (
+                        <div className="flex flex-col gap-2 w-full">
+                          {selectedLesson.lesson.phrases?.map((p: any) => (
+                            <button onClick={() => playThaiTTS(p.th)} key={p.id} className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-3 flex flex-col items-start gap-1 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95 group`}>
+                              <span className={`${selectedLesson.unitText} group-hover:text-white text-[15px] transition-colors font-bold text-left`}>{p.th}</span>
+                              <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors text-left">{getLocalizedField(p, '', language)}</span>
+                            </button>
+                          ))}
+                        </div>
                       ) : (
                         selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').map((w: any) => (
                           <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
