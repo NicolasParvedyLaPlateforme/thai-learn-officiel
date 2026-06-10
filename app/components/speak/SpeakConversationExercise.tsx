@@ -9,7 +9,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
-import { playThaiTTSAsync, stopTTS } from '../../lib/tts';
+import { stopTTS } from '../../lib/tts';
 import IconImage from '../IconImage';
 
 const normalizeThai = (str: string) => {
@@ -277,6 +277,13 @@ export function SpeakConversationExercise({
       };
    }, []);
 
+   const playTTS = () => {
+      if (!currentItem?.th) return;
+      const utterance = new SpeechSynthesisUtterance(currentItem.th);
+      utterance.lang = 'th-TH';
+      window.speechSynthesis.speak(utterance);
+   };
+
    const startListening = () => {
       stopTTS();
       SpeechRecognition.abortListening();
@@ -399,7 +406,7 @@ export function SpeakConversationExercise({
                               if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
                               setStatus('idle');
                            }
-                           playThaiTTSAsync(currentItem?.th || '');
+                           playTTS();
                         }}
                         className="w-14 h-14 rounded-2xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 shadow-[0_6px_0_rgb(203,213,225)] active:shadow-[0_0px_0_rgb(203,213,225)] active:translate-y-1.5 transition-all"
                         title={getTranslation('auto.listen', language)}
