@@ -155,13 +155,13 @@ export function SpeakAnswerMeExercise({
 
   const evaluateTranscription = () => {
       if (!currentFullTranscript) {
-         setStatus('failed');
+         setStatus('idle');
          return;
       }
       
       const normalizedSpoken = normalizeThai(currentFullTranscript);
       if (!normalizedSpoken) {
-         setStatus('failed');
+         setStatus('idle');
          return;
       }
 

@@ -94,7 +94,7 @@ export default function SpeakLessonClient({
   const handleComplete = (finalEarnedXp: number, finalStars: number) => {
     setEarnedXp(finalEarnedXp);
     completeSpeakLesson(lessonId, finalEarnedXp, level - 1, finalStars);
-    if (isLevel2) {
+    if (isLevel2 || isLevel3) {
        saveInProgressLesson(storageKey, null);
     }
     setIsFinished(true);
@@ -122,7 +122,12 @@ export default function SpeakLessonClient({
     const newTotalScore = totalScorePercentage + partialScore;
     setTotalScorePercentage(newTotalScore);
     
-    const maxLen = isLevel2 ? dialogue.length : answerMeData.length;
+    let maxLen = isLevel2 ? dialogue.length : answerMeData.length;
+    
+    if (!isSuccess && !isAbandoned && isLevel3) {
+      setAnswerMeData(prev => [...prev, prev[currentIndex]]);
+      maxLen += 1;
+    }
     
     if (currentIndex + 1 < maxLen) {
       setCurrentIndex(prev => prev + 1);
