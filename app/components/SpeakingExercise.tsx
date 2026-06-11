@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Word, Phrase } from '../types';
 import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square, Trash2, Zap } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
-import { stopTTS } from '../lib/tts';
+import { stopTTS, playThaiTTS } from '../lib/tts';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
@@ -337,9 +337,12 @@ export function SpeakingExercise({
    }, [currentIndex]);
 
    const playTTS = () => {
-      const utterance = new SpeechSynthesisUtterance(currentItem.th);
-      utterance.lang = 'th-TH';
-      window.speechSynthesis.speak(utterance);
+      if (status === 'listening' || status === 'evaluating') {
+         SpeechRecognition.abortListening();
+         if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+         setStatus('idle');
+      }
+      playThaiTTS(currentItem.th);
    };
 
    const nextWord = () => {
@@ -475,7 +478,7 @@ export function SpeakingExercise({
 
                {status !== 'listening' && status !== 'success' && (
                   <button
-                     onClick={startListening}
+                     onClick={() => startListening(false)}
                      className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
                   >
                      {status === 'evaluating' ? (

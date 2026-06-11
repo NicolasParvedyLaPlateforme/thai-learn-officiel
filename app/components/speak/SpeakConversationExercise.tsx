@@ -9,7 +9,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
-import { stopTTS } from '../../lib/tts';
+import { stopTTS, playThaiTTS } from '../../lib/tts';
 import IconImage from '../IconImage';
 
 const normalizeThai = (str: string) => {
@@ -285,9 +285,7 @@ export function SpeakConversationExercise({
 
    const playTTS = () => {
       if (!currentItem?.th) return;
-      const utterance = new SpeechSynthesisUtterance(currentItem.th);
-      utterance.lang = 'th-TH';
-      window.speechSynthesis.speak(utterance);
+      playThaiTTS(currentItem.th);
    };
 
    const startListening = () => {
