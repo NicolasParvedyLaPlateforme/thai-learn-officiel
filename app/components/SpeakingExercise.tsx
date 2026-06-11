@@ -3,7 +3,7 @@
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Word, Phrase } from '../types';
-import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square, Trash2 } from 'lucide-react';
+import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square, Trash2, Zap } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { stopTTS } from '../lib/tts';
 import 'regenerator-runtime/runtime';
@@ -68,6 +68,8 @@ export function SpeakingExercise({
    const [status, setStatus] = useState<'idle' | 'listening' | 'evaluating' | 'success' | 'timeup'>('idle');
    const [spokenHistory, setSpokenHistory] = useState("");
    const [micAttempts, setMicAttempts] = useState(0);
+   const [isAutoMicEnabled, setIsAutoMicEnabled] = useState(false);
+   const autoStartNextRef = useRef(false);
    const lastNotifiedAttemptRef = useRef(0);
    const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -278,8 +280,11 @@ export function SpeakingExercise({
          setTimeout(() => SpeechRecognition.abortListening(), 50);
 
          const autoNextTimer = setTimeout(() => {
+            if (isAutoMicEnabled) {
+               autoStartNextRef.current = true;
+            }
             onNext(placedIndices.length >= targetWords.length, false);
-         }, 1000);
+         }, 1500);
 
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
          listeningTimerRef.current = autoNextTimer;
@@ -307,16 +312,29 @@ export function SpeakingExercise({
       };
    }, []);
 
-   const startListening = () => {
+   const startListening = (clearHistory = true) => {
       stopTTS();
       SpeechRecognition.abortListening();
-      if (transcript) {
+      if (!clearHistory && transcript) {
          setSpokenHistory(currentFullTranscript + " ");
+      }
+      if (clearHistory) {
+         setSpokenHistory("");
       }
       resetTranscript();
       setStatus('listening');
       SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
    };
+
+   // Auto-start mic on next item if enabled
+   useEffect(() => {
+      if (autoStartNextRef.current) {
+         autoStartNextRef.current = false;
+         setTimeout(() => {
+            startListening(true);
+         }, 300);
+      }
+   }, [currentIndex]);
 
    const playTTS = () => {
       const utterance = new SpeechSynthesisUtterance(currentItem.th);
@@ -445,6 +463,16 @@ export function SpeakingExercise({
                </div>
 
                {/* Center Area */}
+               <div className="absolute -top-14 left-1/2 -translate-x-1/2 flex items-center justify-center">
+                  <button
+                     onClick={() => setIsAutoMicEnabled(!isAutoMicEnabled)}
+                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm ${isAutoMicEnabled ? 'bg-emerald-100 text-emerald-600 border border-emerald-300' : 'bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200'}`}
+                     title={isAutoMicEnabled ? 'Désactiver le micro automatique' : 'Activer le micro automatique'}
+                  >
+                     <Zap size={20} className={isAutoMicEnabled ? 'fill-emerald-500' : ''} />
+                  </button>
+               </div>
+
                {status !== 'listening' && status !== 'success' && (
                   <button
                      onClick={startListening}
