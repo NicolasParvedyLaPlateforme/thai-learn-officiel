@@ -342,7 +342,15 @@ export function SpeakingExercise({
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
          setStatus('idle');
       }
-      playThaiTTS(currentItem.th);
+      
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+         const utterance = new SpeechSynthesisUtterance(currentItem.th);
+         utterance.lang = 'th-TH';
+         window.speechSynthesis.speak(utterance);
+      } else {
+         playThaiTTS(currentItem.th);
+      }
    };
 
    const nextWord = () => {
