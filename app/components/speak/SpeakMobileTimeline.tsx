@@ -19,6 +19,7 @@ interface SpeakMobileTimelineProps {
   setSelectedLesson: (data: any) => void;
   setModalLevel: (level: number) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
+  maxLevelPerLesson?: number;
 }
 
 export default function SpeakMobileTimeline({
