@@ -276,6 +276,13 @@ export function SpeakingExercise({
       } else if (status === 'success') {
          SpeechRecognition.stopListening();
          setTimeout(() => SpeechRecognition.abortListening(), 50);
+
+         const autoNextTimer = setTimeout(() => {
+            onNext(placedIndices.length >= targetWords.length, false);
+         }, 1000);
+
+         if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
+         listeningTimerRef.current = autoNextTimer;
       }
 
       return () => {

@@ -201,7 +201,7 @@ export default function SpeakLessonModal({
                   <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
                     {selectedLesson.lesson.isReview
                       ? (`${getTranslation('auto.stats', language) || 'Stats'} :`)
-                      : (modalLevel === 1 ? `CONVERSATION (DIALOGUE AU MICRO) :` : `PRONONCIATION (RÉUSSITE 50%) :`)
+                      : (modalLevel === 1 ? `CONVERSATION (RÉUSSITE 50%) :` : `PRONONCIATION (RÉUSSITE 50%) :`)
                     }
                   </h4>
                 </div>

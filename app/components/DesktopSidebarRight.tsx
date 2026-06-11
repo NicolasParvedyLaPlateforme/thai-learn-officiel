@@ -301,7 +301,7 @@ export function DesktopSidebarRight({
                         : suggestionType === 'alphabet'
                           ? (`${getTranslation('auto.letters', language)} (${selectedLesson.lesson.items?.length}) :`)
                           : suggestionType === 'speak'
-                            ? (modalLevel === 1 ? `CONVERSATION (DIALOGUE AU MICRO) :` : `PRONONCIATION (RÉUSSITE 50%) :`)
+                            ? (modalLevel === 1 ? `CONVERSATION (RÉUSSITE 50%) :` : `PRONONCIATION (RÉUSSITE 50%) :`)
                             : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
                       }
                     </h4>
