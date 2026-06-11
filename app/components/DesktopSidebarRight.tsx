@@ -75,6 +75,16 @@ export function DesktopSidebarRight({
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const levelsScrollRef = useRef<HTMLDivElement>(null);
 
+  const [isBrave, setIsBrave] = useState(false);
+  React.useEffect(() => {
+    const checkBrave = async () => {
+      if ((navigator as any).brave && await (navigator as any).brave.isBrave()) {
+        setIsBrave(true);
+      }
+    };
+    checkBrave();
+  }, []);
+
   const renderContent = () => {
     if (selectedLesson && setModalLevel && lessonStars && resetLessonLevel && onCloseLesson) {
       const wordCount = selectedLesson.lesson.words?.length || 0;
@@ -409,12 +419,21 @@ export function DesktopSidebarRight({
                   </button>
                 </div>
               )}
-              <Link
-                href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
-              >
-                {getTranslation('auto.start_lesson', language)}
-              </Link>
+              {isBrave && suggestionType === 'speak' ? (
+                <button
+                  disabled
+                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
+                >
+                  Indisponible sur Brave
+                </button>
+              ) : (
+                <Link
+                  href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                >
+                  {getTranslation('auto.start_lesson', language)}
+                </Link>
+              )}
             </div>
           </div>
         </motion.div>

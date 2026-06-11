@@ -36,12 +36,22 @@ export default function SpeakLessonModal({
   maxLevelPerLesson = 10
 }: SpeakLessonModalProps) {
   const [selectedLesson, setSelectedLesson] = useState(selectedLessonProp);
+  const [isBrave, setIsBrave] = useState(false);
   
   useEffect(() => {
     if (selectedLessonProp) {
       setSelectedLesson(selectedLessonProp);
     }
   }, [selectedLessonProp]);
+
+  useEffect(() => {
+    const checkBrave = async () => {
+      if ((navigator as any).brave && await (navigator as any).brave.isBrave()) {
+        setIsBrave(true);
+      }
+    };
+    checkBrave();
+  }, []);
 
   if (!selectedLesson) return null;
 
@@ -280,12 +290,21 @@ export default function SpeakLessonModal({
               </div>
             )}
             <div className="flex items-center gap-3 w-full mt-1">
-              <Link
-                href={`/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
-              >
-                {getTranslation('auto.start_lesson', language)}
-              </Link>
+              {isBrave ? (
+                <button
+                  disabled
+                  className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
+                >
+                  Indisponible sur Brave
+                </button>
+              ) : (
+                <Link
+                  href={`/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                  className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                >
+                  {getTranslation('auto.start_lesson', language)}
+                </Link>
+              )}
             </div>
           </div>
         </Drawer.Content>
