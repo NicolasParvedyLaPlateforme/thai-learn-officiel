@@ -231,7 +231,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             setSelectedLesson={setSelectedLesson}
             setModalLevel={setModalLevel}
             setLockedReviewModalOpen={setLockedReviewModalOpen}
-            maxLevelPerLesson={3}
+            maxLevelPerLesson={4}
           />
         );
       })()}
@@ -351,7 +351,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
                     setSelectedLesson={setSelectedLesson}
                     setModalLevel={setModalLevel}
                     setLockedReviewModalOpen={setLockedReviewModalOpen}
-                    maxLevelPerLesson={3}
+                    maxLevelPerLesson={4}
                   />
                 );
               })()}
@@ -369,7 +369,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             lessons={data.lessons}
             lessonLevels={speakLessonLevels}
             mounted={mounted}
-            maxLevelPerLesson={3}
+            maxLevelPerLesson={4}
             suggestionType="speak"
             selectedLesson={selectedLesson}
             onCloseLesson={() => setSelectedLesson(null)}
@@ -396,7 +396,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
           resetLessonLevel={resetLessonLevel}
           reviewStats={reviewStats}
           getExpectedXp={getExpectedXp}
-          maxLevelPerLesson={3}
+          maxLevelPerLesson={4}
         />
       )}
 
