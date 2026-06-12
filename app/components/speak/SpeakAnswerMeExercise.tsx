@@ -110,7 +110,15 @@ export function SpeakAnswerMeExercise({
         if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         setStatus('idle');
      }
-     playThaiTTS(promptItem.th);
+     
+     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+     if (isMobile) {
+        const utterance = new SpeechSynthesisUtterance(promptItem.th);
+        utterance.lang = 'th-TH';
+        window.speechSynthesis.speak(utterance);
+     } else {
+        playThaiTTS(promptItem.th);
+     }
   };
 
   const startListening = () => {
