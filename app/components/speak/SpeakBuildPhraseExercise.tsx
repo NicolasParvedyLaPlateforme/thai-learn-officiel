@@ -128,8 +128,11 @@ export function SpeakBuildPhraseExercise({
          
          for (const p of shuffledAvailable) {
             const firstWordId = p.components.find(c => c !== 'w_dots');
-            if (firstWordId && !seenFirstWords.has(firstWordId)) {
-               seenFirstWords.add(firstWordId);
+            const wordObj = dictionary.find(w => w.id === firstWordId);
+            const wordTh = wordObj ? normalizeThai(wordObj.th) : firstWordId;
+            
+            if (firstWordId && !seenFirstWords.has(wordTh || '')) {
+               seenFirstWords.add(wordTh || '');
                selectedPhrases.push(p);
                if (selectedPhrases.length === 3) break;
             }
@@ -157,7 +160,14 @@ export function SpeakBuildPhraseExercise({
          if (!targetWord) return;
 
          // Pick 2 random words from dictionary that are not the target word
-         const others = dictionary.filter(w => w.id !== targetWord.id && w.id !== 'w_dots' && w.th && w.th.trim().length > 0);
+         const targetNorm = normalizeThai(targetWord.th);
+         const others = dictionary.filter(w => 
+            w.id !== targetWord.id && 
+            w.id !== 'w_dots' && 
+            w.th && 
+            w.th.trim().length > 0 &&
+            normalizeThai(w.th) !== targetNorm
+         );
          const randomOthers = shuffle(others).slice(0, 2);
          const newOptions = shuffle([targetWord, ...randomOthers]);
          
@@ -246,8 +256,9 @@ export function SpeakBuildPhraseExercise({
             
             if (selectedPhrase) {
                setLockedPhraseId(selectedPhrase.id);
-               setStep(1); // Usually first word is at index 0, so next is 1
-               resetListeningContext();
+               const firstWordIndex = selectedPhrase.components.findIndex(c => c !== 'w_dots');
+               setStep(firstWordIndex + 1);
+               resetListeningContext(true); // Auto-start next word
                if (isAutoMicEnabled) autoStartNextRef.current = true;
             }
          } else {
@@ -259,7 +270,7 @@ export function SpeakBuildPhraseExercise({
                   handlePhraseFinish();
                } else {
                   setStep(s => s + 1);
-                  resetListeningContext();
+                  resetListeningContext(true); // ALWAYS auto-start for the next word in the phrase
                   if (isAutoMicEnabled) autoStartNextRef.current = true;
                }
             } else {
@@ -451,7 +462,7 @@ export function SpeakBuildPhraseExercise({
 
                {status !== 'listening' && status !== 'success' && (
                   <button
-                     onClick={() => startListening(false)}
+                     onClick={() => startListening(true)}
                      className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
                   >
                      {status === 'evaluating' ? <Loader2 size={32} className="animate-spin" /> : <Mic size={32} className="group-hover:scale-110" />}
