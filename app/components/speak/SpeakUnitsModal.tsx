@@ -1,6 +1,6 @@
 import { Drawer } from 'vaul';
 import { X, BookOpen, CheckCircle } from 'lucide-react';
-import { getTranslation } from '../../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 
 interface SpeakUnitsModalProps {
   isOpen: boolean;
@@ -68,7 +68,7 @@ export default function SpeakUnitsModal({
                         {getTranslation('auto.unit', language)} {i + 1}
                       </span>
                       <span className="font-bold text-slate-800">
-                        {language === 'en' ? u.titleEn : u.title}
+                        {getLocalizedField(u, 'title', language)}
                       </span>
                     </div>
                   </div>

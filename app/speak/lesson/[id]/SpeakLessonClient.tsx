@@ -297,25 +297,25 @@ export default function SpeakLessonClient({
               <X size={32} strokeWidth={3} />
             </div>
             <h3 className="text-2xl font-extrabold text-slate-800 mb-2">
-              {language === 'en' ? 'Quit early?' : 'Abandonner ?'}
+              {getTranslation('auto.quit_lesson', language) || 'Quitter la leçon ?'}
             </h3>
             <p className="text-slate-500 font-medium mb-8">
               {isLevel2 || isLevel3
-                ? (language === 'en' ? 'Your progress has been saved. You will not earn XP until you finish.' : 'Votre progression est sauvegardée. Vous ne gagnerez de l\'XP qu\'à la fin.')
-                : (language === 'en' ? `You won't complete the lesson, but you keep the ${successCount * 3} XP you earned.` : `Vous ne terminerez pas la leçon, mais vous conservez les ${successCount * 3} XP gagnés.`)}
+                ? (getTranslation('auto.your_progress_will_be_saved', language) || 'Votre progression est sauvegardée. Vous pourrez revenir à tout moment pour terminer cet exercice.')
+                : (getTranslation('auto.your_progress_will_be_lost', language) || 'Votre progression sera perdue.')}
             </p>
             <div className="flex flex-col gap-3 w-full">
               <button 
                 onClick={handleQuitEarly}
                 className="w-full py-4 bg-rose-500 text-white rounded-2xl font-extrabold shadow-[0_4px_0_rgb(225,29,72)] active:translate-y-1 active:shadow-[0_0px_0_rgb(225,29,72)] transition-all"
               >
-                {language === 'en' ? 'Yes, quit' : 'Oui, quitter'}
+                {getTranslation('auto.quit', language) || 'Quitter'}
               </button>
               <button 
                 onClick={() => setShowQuitConfirm(false)}
                 className="w-full py-4 bg-slate-100 text-slate-500 rounded-2xl font-extrabold hover:bg-slate-200 transition-colors"
               >
-                {language === 'en' ? 'Cancel' : 'Annuler'}
+                {getTranslation('auto.cancel', language) || 'Annuler'}
               </button>
             </div>
           </div>

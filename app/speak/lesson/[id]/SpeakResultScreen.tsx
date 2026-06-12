@@ -49,9 +49,7 @@ export default function SpeakResultScreen({
       <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
         {currentLevel === 10 
           ? (getTranslation('auto.mastery_level_completed', language))
-          : (language === "en"
-              ? `Level ${currentLevel + 1} completed!`
-              : `Niveau ${currentLevel + 1} terminé !`)}
+          : (getTranslation('auto.level_completed', language) || 'Niveau {level} terminé !').replace('{level}', String(currentLevel + 1))}
       </h1>
       
       <p className="text-slate-500 mb-8 text-center text-lg font-medium">

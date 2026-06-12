@@ -383,5 +383,7 @@
   "landing.ctaTitle": "Impara il thailandese ora.",
   "landing.ctaDesc": "Unisciti a noi e inizia l'Unità 1. Tuffati subito, nessuna registrazione richiesta per iniziare!",
   "landing.ctaBtn": "Andiamo!",
-  "landing.footer": "© 2026 ThaiLearn. Imparare il thailandese non è mai stato così facile."
+  "landing.footer": "© 2026 ThaiLearn. Imparare il thailandese non è mai stato così facile.",
+  "auto.skip": "Salta",
+  "auto.level_completed": "Livello {level} completato!"
 }

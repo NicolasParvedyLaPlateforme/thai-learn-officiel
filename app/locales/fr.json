@@ -383,5 +383,7 @@
   "landing.ctaTitle": "Apprenez le thaï dès maintenant.",
   "landing.ctaDesc": "Rejoignez-nous et commencez l'Unité 1. Mettez-vous directement dans le bain, aucune inscription requise pour commencer !",
   "landing.ctaBtn": "C'est parti !",
-  "landing.footer": "© 2026 ThaiLearn. Apprendre le thaï n'a jamais été aussi facile."
+  "landing.footer": "© 2026 ThaiLearn. Apprendre le thaï n'a jamais été aussi facile.",
+  "auto.skip": "Passer",
+  "auto.level_completed": "Niveau {level} terminé !"
 }

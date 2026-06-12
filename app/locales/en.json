@@ -383,5 +383,7 @@
   "landing.ctaTitle": "Learn Thai right now.",
   "landing.ctaDesc": "Join us and start Unit 1. Jump right in, no registration required to begin!",
   "landing.ctaBtn": "Let's go!",
-  "landing.footer": "© 2026 ThaiLearn. Learning Thai has never been easier."
+  "landing.footer": "© 2026 ThaiLearn. Learning Thai has never been easier.",
+  "auto.skip": "Skip",
+  "auto.level_completed": "Level {level} completed!"
 }

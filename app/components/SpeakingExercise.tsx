@@ -454,7 +454,7 @@ export function SpeakingExercise({
          <div className="fixed bottom-0 left-0 right-0 p-6 pb-8 bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/90 to-transparent flex flex-col items-center gap-3 z-50 pointer-events-none">
             {status === 'timeup' && placedIndices.length < targetWords.length && (
                <p className="text-amber-600 font-bold animate-pulse text-center bg-white/80 px-4 py-1 rounded-full shadow-sm text-sm pointer-events-auto">
-                  {language === 'en' ? 'Timeout! Retry or Skip?' : 'Temps écoulé !'}
+                  {getTranslation('auto.time_s_up', language) || 'Temps écoulé !'}
                </p>
             )}
 
@@ -537,7 +537,7 @@ export function SpeakingExercise({
                               : 'bg-slate-200 hover:bg-slate-300 text-slate-700 shadow-[0_6px_0_rgb(203,213,225)] active:shadow-[0_0px_0_rgb(203,213,225)] active:translate-y-1.5'
                            }
                      `}
-                        title={status === 'success' ? getTranslation('auto.continue', language) : (language === 'en' ? 'Skip' : 'Passer')}
+                        title={status === 'success' ? getTranslation('auto.continue', language) : (getTranslation('auto.skip', language) || 'Passer')}
                      >
                         <ArrowRight size={24} />
                      </button>
