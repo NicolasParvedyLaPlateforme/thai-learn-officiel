@@ -385,5 +385,7 @@
   "landing.ctaBtn": "Andiamo!",
   "landing.footer": "© 2026 ThaiLearn. Imparare il thailandese non è mai stato così facile.",
   "auto.skip": "Salta",
-  "auto.level_completed": "Livello {level} completato!"
+  "auto.level_completed": "Livello {level} completato!",
+  "auto.choose_first_word": "Pronuncia la prima parola per iniziare:",
+  "auto.waiting_selection": "In attesa di selezione..."
 }

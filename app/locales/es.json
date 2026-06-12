@@ -383,5 +383,7 @@
   "landing.ctaBtn": "¡Vamos!",
   "landing.footer": "© 2026 ThaiLearn. Aprender tailandés nunca ha sido tan fácil.",
   "auto.skip": "Omitir",
-  "auto.level_completed": "¡Nivel {level} completado!"
+  "auto.level_completed": "¡Nivel {level} completado!",
+  "auto.choose_first_word": "Pronuncia la primera palabra para comenzar:",
+  "auto.waiting_selection": "Esperando selección..."
 }

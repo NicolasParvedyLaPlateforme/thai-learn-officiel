@@ -385,5 +385,7 @@
   "landing.ctaBtn": "Los geht's!",
   "landing.footer": "© 2026 ThaiLearn. Thailändisch lernen war noch nie so einfach.",
   "auto.skip": "Überspringen",
-  "auto.level_completed": "Level {level} abgeschlossen!"
+  "auto.level_completed": "Level {level} abgeschlossen!",
+  "auto.choose_first_word": "Sprich das erste Wort, um zu beginnen:",
+  "auto.waiting_selection": "Warten auf Auswahl..."
 }

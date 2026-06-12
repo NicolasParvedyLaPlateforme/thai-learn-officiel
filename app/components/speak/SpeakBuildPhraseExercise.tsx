@@ -438,15 +438,7 @@ export function SpeakBuildPhraseExercise({
             )}
 
             <div className="relative flex items-center justify-center w-full h-24 pointer-events-auto">
-               <div className="absolute left-[calc(50%-7rem)] md:left-[calc(50%-8rem)] flex items-center">
-                  <button
-                     onClick={() => onCompletePhrase(lockedPhraseId || 'abandoned', mistakes, true)}
-                     className="w-14 h-14 rounded-2xl flex items-center justify-center bg-rose-50 hover:bg-rose-100 text-rose-500 shadow-[0_6px_0_rgb(255,228,230)] active:shadow-[0_0px_0_rgb(255,228,230)] active:translate-y-1.5 transition-all"
-                     title={getTranslation('auto.skip', language) || "Abandonner"}
-                  >
-                     <Trash2 size={24} />
-                  </button>
-               </div>
+
 
                <div className="absolute -top-14 left-1/2 -translate-x-1/2 flex items-center justify-center">
                   <button
@@ -480,7 +472,7 @@ export function SpeakBuildPhraseExercise({
                            <span className="truncate">{currentFullTranscript || <span className="text-slate-400 italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
                         </span>
                      </motion.div>
-                     <button onClick={stopAndEvaluate} className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex flex-center shadow-[0_8px_0_rgb(225,29,72)] transition-all">
+                     <button onClick={stopAndEvaluate} className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] transition-all">
                         <Square size={32} className="fill-current" />
                      </button>
                   </>

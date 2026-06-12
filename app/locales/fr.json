@@ -385,5 +385,7 @@
   "landing.ctaBtn": "C'est parti !",
   "landing.footer": "© 2026 ThaiLearn. Apprendre le thaï n'a jamais été aussi facile.",
   "auto.skip": "Passer",
-  "auto.level_completed": "Niveau {level} terminé !"
+  "auto.level_completed": "Niveau {level} terminé !",
+  "auto.choose_first_word": "Prononcez le premier mot pour commencer :",
+  "auto.waiting_selection": "En attente de sélection..."
 }
