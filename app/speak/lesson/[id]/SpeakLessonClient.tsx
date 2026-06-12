@@ -76,14 +76,25 @@ export default function SpeakLessonClient({
          setTotalScorePercentage(savedState.mistakes || 0);
       }
     } else if (isLevel3) {
-      // Load answer me from json
       const answerData = (speakAnswerMe as any).exercises[lessonId] || [];
-      setAnswerMeData(answerData);
-      
       const savedState = inProgressLessons[storageKey];
       if (savedState) {
-         setCurrentIndex(savedState.currentIndex || 0);
-         setTotalScorePercentage(savedState.mistakes || 0); // Reuse mistakes for partial score
+         const currentExercises = (savedState.exercises && savedState.exercises.length > 0) 
+            ? savedState.exercises 
+            : answerData;
+            
+         if (savedState.currentIndex < currentExercises.length) {
+            setAnswerMeData(currentExercises);
+            setCurrentIndex(savedState.currentIndex || 0);
+            setTotalScorePercentage(savedState.mistakes || 0);
+         } else {
+            setAnswerMeData(answerData);
+            setCurrentIndex(0);
+            setTotalScorePercentage(0);
+            saveInProgressLesson(storageKey, null);
+         }
+      } else {
+         setAnswerMeData(answerData);
       }
     }
     setMounted(true);
