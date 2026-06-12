@@ -9,6 +9,7 @@ import { ArrowLeft, Loader2, X, Star, Crown } from 'lucide-react';
 import { SpeakingExercise } from '../../../components/SpeakingExercise';
 import { SpeakConversationExercise, DialogueLine } from '../../../components/speak/SpeakConversationExercise';
 import { SpeakAnswerMeExercise } from '../../../components/speak/SpeakAnswerMeExercise';
+import { SpeakBuildPhraseExercise } from '../../../components/speak/SpeakBuildPhraseExercise';
 import SpeakResultScreen from './SpeakResultScreen';
 import speakDialogues from '../../../data/speak_dialogues.json';
 import speakAnswerMe from '../../../data/speak_answer_me.json';
@@ -55,8 +56,13 @@ export default function SpeakLessonClient({
   // Level 3 specific states
   const [answerMeData, setAnswerMeData] = useState<any[]>([]);
 
+  // Level 4 specific states
+  const [level4Phrases, setLevel4Phrases] = useState<Phrase[]>([]);
+  const [completedLevel4PhraseIds, setCompletedLevel4PhraseIds] = useState<string[]>([]);
+
   const isLevel2 = level === 2;
   const isLevel3 = level === 3;
+  const isLevel4 = level === 4;
   const storageKey = `speak_${lessonId}_lvl${level}`;
 
   useEffect(() => {
@@ -96,9 +102,19 @@ export default function SpeakLessonClient({
       } else {
          setAnswerMeData(answerData);
       }
+    } else if (isLevel4) {
+      const phrases = vocabulary.filter(v => 'components' in v) as Phrase[];
+      setLevel4Phrases(phrases);
+      
+      const savedState = inProgressLessons[storageKey];
+      if (savedState) {
+         setCompletedLevel4PhraseIds(savedState.completedPhraseIds || []);
+         setCurrentIndex(savedState.currentIndex || 0);
+         setTotalScorePercentage(savedState.mistakes || 0);
+      }
     }
     setMounted(true);
-  }, [isLevel2, isLevel3, lessonId, vocabulary, dictionary, inProgressLessons, storageKey]);
+  }, [isLevel2, isLevel3, isLevel4, lessonId, vocabulary, dictionary, inProgressLessons, storageKey]);
 
   const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
 
@@ -163,6 +179,30 @@ export default function SpeakLessonClient({
     }
   };
 
+  const handleNextLevel4 = (phraseId: string, mistakesCount: number, isAbandoned?: boolean) => {
+    const newTotalScore = totalScorePercentage + mistakesCount;
+    setTotalScorePercentage(newTotalScore);
+
+    const newCompleted = phraseId !== 'abandoned' ? [...completedLevel4PhraseIds, phraseId] : completedLevel4PhraseIds;
+    if (phraseId !== 'abandoned') setCompletedLevel4PhraseIds(newCompleted);
+
+    const maxPhrases = Math.min(5, level4Phrases.length || 5);
+    
+    if (currentIndex + 1 < maxPhrases && !isAbandoned) {
+       setCurrentIndex(prev => prev + 1);
+       saveInProgressLesson(storageKey, {
+         completedPhraseIds: newCompleted,
+         currentIndex: currentIndex + 1,
+         mistakes: newTotalScore,
+         lastUpdated: Date.now()
+       });
+    } else {
+       const calculatedXp = getExpectedXp(`speak_${lessonId}`, level - 1, false).xp || 100;
+       const finalStars = Math.max(0, 5 - Math.floor(newTotalScore / 2));
+       handleComplete(calculatedXp, finalStars);
+    }
+  };
+
   const handleLoseStar = () => {
     setMistakes(prev => prev + 1);
   };
@@ -171,7 +211,7 @@ export default function SpeakLessonClient({
     router.push('/speak');
   };
 
-  if (!mounted || (isLevel2 && dialogue.length === 0) || (isLevel3 && answerMeData.length === 0)) {
+  if (!mounted || (isLevel2 && dialogue.length === 0) || (isLevel3 && answerMeData.length === 0) || (isLevel4 && level4Phrases.length === 0)) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
         <Loader2 className="animate-spin text-orange-500" size={48} />
@@ -179,14 +219,14 @@ export default function SpeakLessonClient({
     );
   }
 
-  const currentLength = isLevel3 ? answerMeData.length : isLevel2 ? dialogue.length : exercises.length;
+  const currentLength = isLevel4 ? Math.min(5, level4Phrases.length) : isLevel3 ? answerMeData.length : isLevel2 ? dialogue.length : exercises.length;
 
   if (isFinished) {
     return (
       <SpeakResultScreen 
         lessonId={lessonId}
         currentLevel={level - 1}
-        earnedStars={isLevel2 || isLevel3 ? Math.round((totalScorePercentage / currentLength / 100) * 5) : earnedStars}
+        earnedStars={isLevel4 ? Math.max(0, 5 - Math.floor(totalScorePercentage / 2)) : (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / currentLength / 100) * 5) : earnedStars)}
         exercisesLength={currentLength}
         language={language}
         earnedXp={earnedXp}
@@ -223,7 +263,7 @@ export default function SpeakLessonClient({
                   key={i}
                   size={16}
                   className={
-                    i < (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / Math.max(1, currentIndex) / 100) * 5) : earnedStars)
+                    i < (isLevel4 ? Math.max(0, 5 - Math.floor(totalScorePercentage / 2)) : (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / Math.max(1, currentIndex) / 100) * 5) : earnedStars))
                       ? "fill-amber-400 text-amber-400"
                       : "fill-slate-200 text-slate-200"
                   }
@@ -262,7 +302,16 @@ export default function SpeakLessonClient({
       </header>
       
       <main className="flex-1 max-w-3xl w-full mx-auto p-4 md:p-8 flex flex-col justify-center">
-        {isLevel3 ? (
+        {isLevel4 ? (
+          <SpeakBuildPhraseExercise
+            phrases={level4Phrases}
+            completedPhraseIds={completedLevel4PhraseIds}
+            dictionary={dictionary}
+            language={language}
+            onCompletePhrase={handleNextLevel4}
+            onLoseStar={() => setTotalScorePercentage(prev => prev + 2)} // force star update
+          />
+        ) : isLevel3 ? (
           <SpeakAnswerMeExercise
             exercisesData={answerMeData}
             dictionary={dictionary}
@@ -300,7 +349,7 @@ export default function SpeakLessonClient({
               {getTranslation('auto.quit_lesson', language) || 'Quitter la leçon ?'}
             </h3>
             <p className="text-slate-500 font-medium mb-8">
-              {isLevel2 || isLevel3
+              {isLevel2 || isLevel3 || isLevel4
                 ? (getTranslation('auto.your_progress_will_be_saved', language) || 'Votre progression est sauvegardée. Vous pourrez revenir à tout moment pour terminer cet exercice.')
                 : (getTranslation('auto.your_progress_will_be_lost', language) || 'Votre progression sera perdue.')}
             </p>
