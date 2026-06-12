@@ -119,10 +119,21 @@ export function SpeakBuildPhraseExercise({
       if (status === 'success') return; // wait for transition
 
       if (lockedPhraseId === null) {
-         // Start state: pick up to 3 uncompleted phrases
+         // Start state: pick up to 3 uncompleted phrases with UNIQUE first words
          const available = phrases.filter(p => !completedPhraseIds.includes(p.id));
          const shuffledAvailable = shuffle(available);
-         const selectedPhrases = shuffledAvailable.slice(0, 3);
+         
+         const selectedPhrases: Phrase[] = [];
+         const seenFirstWords = new Set<string>();
+         
+         for (const p of shuffledAvailable) {
+            const firstWordId = p.components.find(c => c !== 'w_dots');
+            if (firstWordId && !seenFirstWords.has(firstWordId)) {
+               seenFirstWords.add(firstWordId);
+               selectedPhrases.push(p);
+               if (selectedPhrases.length === 3) break;
+            }
+         }
          
          const startWords = selectedPhrases.map(p => {
             const firstWordId = p.components.find(c => c !== 'w_dots');
@@ -399,11 +410,11 @@ export function SpeakBuildPhraseExercise({
          {/* Options Bank */}
          <div className="w-full max-w-2xl flex flex-wrap gap-4 items-center justify-center mb-10 min-h-[4rem]">
             <AnimatePresence mode="popLayout">
-               {options.map((word) => {
+               {options.map((word, index) => {
                   const isWrong = wrongOptionIds.includes(word.id);
                   return (
                      <motion.button
-                        key={`bank-${word.id}-${step}`}
+                        key={`bank-${word.id}-${step}-${index}`}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: isWrong ? 0.3 : 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}

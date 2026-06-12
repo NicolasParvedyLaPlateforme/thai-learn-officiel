@@ -191,6 +191,9 @@ export default function SpeakLessonClient({
     if (currentIndex + 1 < maxPhrases && !isAbandoned) {
        setCurrentIndex(prev => prev + 1);
        saveInProgressLesson(storageKey, {
+         exercises: [],
+         timeLeft: null,
+         initialTime: null,
          completedPhraseIds: newCompleted,
          currentIndex: currentIndex + 1,
          mistakes: newTotalScore,

@@ -11,6 +11,7 @@ export interface InProgressLessonState {
   mistakes: number;
   timeLeft: number | null;
   initialTime: number | null;
+  completedPhraseIds?: string[];
   lastUpdated: number;
 }
 
