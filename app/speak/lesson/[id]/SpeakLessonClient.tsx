@@ -121,7 +121,7 @@ export default function SpeakLessonClient({
   const handleComplete = (finalEarnedXp: number, finalStars: number) => {
     setEarnedXp(finalEarnedXp);
     completeSpeakLesson(lessonId, finalEarnedXp, level - 1, finalStars);
-    if (isLevel2 || isLevel3) {
+    if (isLevel2 || isLevel3 || isLevel4) {
        saveInProgressLesson(storageKey, null);
     }
     setIsFinished(true);
