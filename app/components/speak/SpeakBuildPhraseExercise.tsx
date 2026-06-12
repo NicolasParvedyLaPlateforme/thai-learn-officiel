@@ -185,6 +185,10 @@ export function SpeakBuildPhraseExercise({
       
       setTimeout(() => {
          onCompletePhrase(lockedPhraseId!, mistakes);
+         setLockedPhraseId(null);
+         setStep(0);
+         setMistakes(0);
+         resetListeningContext();
       }, 1500);
    };
 
@@ -267,6 +271,7 @@ export function SpeakBuildPhraseExercise({
             if (matchedWord.id === targetWord.id) {
                // Correct!
                if (step + 1 >= targetWords.length) {
+                  setStep(s => s + 1); // Place the last word visually
                   handlePhraseFinish();
                } else {
                   setStep(s => s + 1);
