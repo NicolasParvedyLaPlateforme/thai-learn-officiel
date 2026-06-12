@@ -134,16 +134,18 @@ export default function SpeakLessonClient({
     setTotalScorePercentage(newTotalScore);
     
     let maxLen = isLevel2 ? dialogue.length : answerMeData.length;
+    let newAnswerMeData = answerMeData;
     
     if (!isSuccess && !isAbandoned && isLevel3) {
-      setAnswerMeData(prev => [...prev, prev[currentIndex]]);
+      newAnswerMeData = [...answerMeData, answerMeData[currentIndex]];
+      setAnswerMeData(newAnswerMeData);
       maxLen += 1;
     }
     
     if (currentIndex + 1 < maxLen) {
       setCurrentIndex(prev => prev + 1);
       saveInProgressLesson(storageKey, {
-        exercises: [],
+        exercises: isLevel3 ? newAnswerMeData : [],
         currentIndex: currentIndex + 1,
         mistakes: newTotalScore,
         timeLeft: null,

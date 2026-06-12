@@ -254,7 +254,7 @@ export function SpeakAnswerMeExercise({
             setStatus('failed');
          }
       } else {
-         setStatus('failed');
+         setStatus('idle');
       }
   };
 
