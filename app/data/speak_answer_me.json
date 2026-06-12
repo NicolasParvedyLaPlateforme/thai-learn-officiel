@@ -3,28 +3,68 @@
     "speak-1": [
       {
         "promptId": "p_how_are_you",
-        "options": ["p_i_am_fine", "p_hello_m", "p_thanks_m", "p_name_ask"],
-        "correctOptions": ["p_i_am_fine"]
+        "options": [
+          "p_i_am_fine",
+          "p_hello_m",
+          "p_thanks_m",
+          "p_name_ask"
+        ],
+        "correctOptions": [
+          "p_i_am_fine"
+        ]
       },
       {
         "promptId": "p_hello_m",
-        "options": ["p_hello_m", "p_how_are_you", "p_thanks_f", "p_name_m"],
-        "correctOptions": ["p_hello_m", "p_hello_f"]
+        "options": [
+          "p_hello_m",
+          "p_hello_f",
+          "p_thanks_f",
+          "p_name_m"
+        ],
+        "correctOptions": [
+          "p_hello_m",
+          "p_hello_f"
+        ]
       },
       {
         "promptId": "p_name_ask",
-        "options": ["p_name_m", "p_how_are_you", "p_thanks_m", "p_i_am_fine"],
-        "correctOptions": ["p_name_m", "p_name_f"]
+        "options": [
+          "p_name_m",
+          "p_how_are_you",
+          "p_thanks_m",
+          "p_i_am_fine"
+        ],
+        "correctOptions": [
+          "p_name_m",
+          "p_name_f"
+        ]
       },
       {
         "promptId": "p_hello_f",
-        "options": ["p_hello_f", "p_how_are_you", "p_thanks_m", "p_name_f"],
-        "correctOptions": ["p_hello_m", "p_hello_f"]
+        "options": [
+          "p_hello_f",
+          "p_how_are_you",
+          "p_hello_m",
+          "p_name_f"
+        ],
+        "correctOptions": [
+          "p_hello_m",
+          "p_hello_f"
+        ]
       },
       {
         "promptId": "p_and_you",
-        "options": ["p_i_am_fine", "p_thanks_m", "p_hello_m", "p_name_ask"],
-        "correctOptions": ["p_i_am_fine", "p_also_well_m", "p_also_well_f"]
+        "options": [
+          "p_i_am_fine",
+          "p_thanks_m",
+          "p_hello_m",
+          "p_name_ask"
+        ],
+        "correctOptions": [
+          "p_i_am_fine",
+          "p_also_well_m",
+          "p_also_well_f"
+        ]
       }
     ]
   }
