@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Word, Phrase } from '../../types';
 import { Mic, ArrowRight, Play, Loader2, Volume2, Square, X } from 'lucide-react';
+import { m as motion, AnimatePresence } from 'motion/react';
+import { getTranslation } from '../../hooks/useTranslation';
 import { useProgressStore } from '../../lib/store';
 import { stopTTS, playThaiTTS } from '../../lib/tts';
 import 'regenerator-runtime/runtime';
@@ -19,6 +21,7 @@ interface SpeakAnswerMeProps {
   vocabulary: (Word | Phrase)[];
   currentIndex: number;
   onNext: (isSuccess: boolean, isAbandoned?: boolean, scorePercentage?: number) => void;
+  language: string;
 }
 
 const normalizeThai = (str: string) => {
@@ -52,7 +55,8 @@ export function SpeakAnswerMeExercise({
   dictionary,
   vocabulary,
   currentIndex,
-  onNext
+  onNext,
+  language
 }: SpeakAnswerMeProps) {
   const currentItemData = exercisesData[currentIndex];
   
@@ -322,74 +326,95 @@ export function SpeakAnswerMeExercise({
            })}
         </div>
 
-        {/* Live Transcript */}
-        <div className="h-16 flex items-center justify-center mb-4 w-full">
-           {currentFullTranscript && (
-              <div className="text-lg text-slate-600 bg-slate-100 px-6 py-3 rounded-2xl animate-in fade-in zoom-in font-thai">
-                 {currentFullTranscript}
-              </div>
-           )}
+        {/* Action Area */}
+        <div className="fixed bottom-0 left-0 right-0 p-6 pb-8 bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/90 to-transparent flex flex-col items-center gap-3 z-50 pointer-events-none">
+           <div className="relative flex items-center justify-center w-full h-24 pointer-events-auto">
+              {status !== 'listening' && status !== 'success' && status !== 'failed' && (
+                 <button
+                    onClick={startListening}
+                    className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
+                 >
+                    {status === 'evaluating' ? (
+                       <Loader2 size={32} className="animate-spin" />
+                    ) : (
+                       <Mic size={32} className="group-hover:scale-110 transition-transform" />
+                    )}
+                 </button>
+              )}
+
+              {status === 'success' && (
+                 <div className="w-20 h-20 bg-emerald-500/50 text-white rounded-full flex items-center justify-center z-10 opacity-60 cursor-not-allowed">
+                    <Mic size={32} />
+                 </div>
+              )}
+
+              {status === 'listening' && (
+                 <>
+                    <motion.div
+                       key="listening"
+                       initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                       className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
+                    >
+                       <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
+                          <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
+                          <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language) || 'Parlez...'}</span>}</span>
+                       </span>
+                    </motion.div>
+
+                    <button
+                       onClick={() => {
+                          SpeechRecognition.stopListening();
+                          setTimeout(() => SpeechRecognition.abortListening(), 50);
+                          handleSilenceCutoff();
+                       }}
+                       className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] active:shadow-[0_0px_0_rgb(225,29,72)] active:translate-y-2 transition-all group z-10"
+                       title="Stop"
+                    >
+                       <Square size={32} className="fill-current group-hover:scale-110 transition-transform" />
+                    </button>
+                 </>
+              )}
+           </div>
         </div>
 
-        {/* Action Area */}
-        <div className="w-full max-w-md mx-auto relative flex justify-center mt-4">
-           {status !== 'listening' && status !== 'evaluating' && status !== 'success' && status !== 'failed' && (
-              <button
-                 onClick={startListening}
-                 className="w-24 h-24 bg-rose-500 hover:bg-rose-600 hover:scale-105 active:scale-95 transition-all text-white rounded-3xl flex items-center justify-center shadow-lg shadow-rose-200"
-              >
-                 <Mic size={40} />
-              </button>
-           )}
-
-           {status === 'listening' && (
-              <button
-                 onClick={() => {
-                    SpeechRecognition.stopListening();
-                    setTimeout(() => SpeechRecognition.abortListening(), 50);
-                    handleSilenceCutoff();
-                 }}
-                 className="w-24 h-24 bg-rose-500 animate-pulse text-white rounded-3xl flex items-center justify-center shadow-lg shadow-rose-200"
-              >
-                 <Square size={32} className="fill-current" />
-              </button>
-           )}
-
-           {status === 'evaluating' && (
-              <div className="w-24 h-24 bg-slate-100 text-slate-400 rounded-3xl flex items-center justify-center">
-                 <Loader2 size={32} className="animate-spin" />
-              </div>
-           )}
-           
-           {status === 'success' && (
-              <div className="w-24 h-24 bg-emerald-500 text-white rounded-3xl flex items-center justify-center shadow-lg shadow-emerald-200">
-                 <Mic size={40} />
-              </div>
-           )}
-
+        {/* Validation Footer (replaces the old error overlay) */}
+        <AnimatePresence>
            {status === 'failed' && (
-              <div className="absolute inset-x-0 -bottom-32 bg-rose-50 border-t border-rose-100 p-6 rounded-t-3xl shadow-lg flex flex-col gap-4 w-[120%] -ml-[10%]">
-                 <div className="flex justify-between items-center w-full">
-                    <div>
-                       <div className="text-rose-600 font-extrabold text-xl flex items-center gap-2 mb-1">
-                          <X size={24} strokeWidth={3} />
-                          Incorrect
-                       </div>
-                       <div className="text-xs uppercase font-extrabold text-rose-400/80 tracking-wider">Réponse correcte</div>
-                       <div className="text-lg font-bold text-rose-900 font-thai">
-                          {optionItems.find(o => currentItemData.correctOptions.includes(o.id))?.th || ''}
+              <motion.footer
+                 initial={{ y: "100%", opacity: 0 }}
+                 animate={{ y: 0, opacity: 1 }}
+                 exit={{ y: "100%", opacity: 0 }}
+                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                 className="fixed bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[128px] py-4 md:py-0 border-t-2 items-center justify-center flex transition-colors duration-300 z-[60] bg-rose-50 border-rose-200 shadow-[0_-10px_40px_rgba(244,63,94,0.1)]"
+              >
+                 <div className="w-full max-w-2xl px-4 flex sm:flex-row flex-col items-center justify-between gap-4">
+                    <div className="flex-1 w-full text-center sm:text-left">
+                       <div className="flex flex-col text-rose-600 font-extrabold text-xl gap-1 items-center sm:items-start">
+                          <div className="flex items-center gap-3">
+                             <div className="bg-white text-rose-500 rounded-full p-1">
+                                <X size={24} strokeWidth={3} />
+                             </div>
+                             {getTranslation('auto.incorrect', language) || 'Incorrect'}
+                          </div>
+                          <div className="text-rose-800 text-sm mt-1 uppercase tracking-widest">
+                             {getTranslation('auto.correct_answer', language) || 'Réponse correcte'}
+                          </div>
+                          <div className="font-medium font-thai text-xl md:text-2xl mt-1 sm:mt-0 text-rose-900">
+                             {optionItems.find(o => currentItemData.correctOptions.includes(o.id))?.th || ''}
+                          </div>
                        </div>
                     </div>
+
                     <button
                        onClick={handleNext}
-                       className="py-3 px-8 bg-rose-500 text-white font-extrabold rounded-2xl shadow-[0_4px_0_rgb(225,29,72)] hover:bg-rose-600 hover:shadow-[0_4px_0_rgb(159,18,57)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_0px_0_rgb(225,29,72)] transition-all"
+                       className="w-full sm:w-auto px-12 py-3 rounded-xl border-b-4 font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest bg-rose-500 border-rose-700 text-white hover:bg-rose-400"
                     >
-                       CONTINUER
+                       {getTranslation('auto.continue', language) || 'Continuer'}
                     </button>
                  </div>
-              </div>
+              </motion.footer>
            )}
-        </div>
+        </AnimatePresence>
      </div>
   );
 }

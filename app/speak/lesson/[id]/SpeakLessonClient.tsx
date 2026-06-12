@@ -269,6 +269,7 @@ export default function SpeakLessonClient({
             vocabulary={vocabulary}
             currentIndex={currentIndex}
             onNext={handleNextLevel2And3}
+            language={language}
           />
         ) : isLevel2 ? (
           <SpeakConversationExercise
