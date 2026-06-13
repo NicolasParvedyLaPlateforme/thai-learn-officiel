@@ -40,7 +40,13 @@ const getLetterSpokenName = (char: string): string => {
 
 const getLetterTTSName = (char: string): string => {
    const data = getLetterData(char);
-   if (data) return data.exampleWord.replace(/สระ/g, 'สะระ').replace(/\s+/g, '');
+   if (data) {
+      if (data.type === 'vowel') {
+         // Force exact separated pronunciation for vowels so iOS doesn't shorten them
+         return "สะ ระ " + data.exampleWord.replace('สระ', '').trim();
+      }
+      return data.exampleWord;
+   }
    return char;
 };
 
@@ -184,13 +190,20 @@ export function SpeakBuildByLettersExercise({
                if (opt.isWrong) continue; // Skip already failed options
                
                const optName = normalizeThai(getLetterSpokenName(opt.char));
-               const distance = levenshtein.get(spokenText, optName);
-               const maxLen = Math.max(spokenText.length, optName.length);
-               const similarity = maxLen === 0 ? 100 : ((maxLen - distance) / maxLen) * 100;
-               
+               const dist = levenshtein.get(spokenText, optName);
+               const maxL = Math.max(spokenText.length, optName.length);
+               let similarity = Math.max(0, Math.round(((maxL - dist) / maxL) * 100));
+
+               // Instant match if the speech API correctly recognized and returned the Thai character itself!
+               if (spokenText.includes(opt.char)) {
+                  similarity = 100;
+               }
+
                if (similarity > highestSim) {
                   highestSim = similarity;
                   matchedOptionIndex = i;
+                  
+                  if (similarity === 100) break; // Perfect match found, stop looking
                }
             }
 

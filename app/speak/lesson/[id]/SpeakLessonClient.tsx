@@ -278,20 +278,20 @@ export default function SpeakLessonClient({
           {getTranslation('auto.resume_lesson', language) || "Reprendre la leçon ?"}
         </h2>
         <p className="text-slate-500 mb-10 text-base sm:text-lg max-w-[280px] mx-auto leading-relaxed font-medium">
-          {getTranslation('auto.you_have_an_unfinished_lesso', language) || "Vous avez une leçon en cours. Voulez-vous reprendre là où vous vous étiez arrêté ?"}
+          {getTranslation('auto.resume_lesson_desc', language) || "Vous avez une leçon en cours. Voulez-vous reprendre là où vous vous étiez arrêté ?"}
         </p>
         <div className="flex flex-col gap-3 w-full">
           <button
             onClick={() => handleResumeChoice(true)}
             className="w-full py-4 rounded-xl font-bold text-[17px] text-white bg-indigo-500 hover:bg-indigo-600 active:translate-y-1 shadow-md transition-all flex items-center justify-center"
           >
-            {getTranslation('auto.resume', language) || "Reprendre"}
+            {getTranslation('auto.resume_button', language) || "Reprendre"}
           </button>
           <button
             onClick={() => handleResumeChoice(false)}
             className="w-full py-4 rounded-xl font-bold text-[17px] text-slate-500 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 transition-colors flex items-center justify-center"
           >
-            {getTranslation('auto.start_over', language) || "Recommencer"}
+            {getTranslation('auto.restart_button', language) || "Recommencer"}
           </button>
         </div>
       </div>
