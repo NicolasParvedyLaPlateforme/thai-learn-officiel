@@ -81,6 +81,7 @@ export function SpeakBuildByLettersExercise({
    const [hintRomanization, setHintRomanization] = useState<string | null>(null);
    const [successPhraseId, setSuccessPhraseId] = useState<string | null>(null);
    const [successChar, setSuccessChar] = useState<string | null>(null);
+   const [successScore, setSuccessScore] = useState<number>(0);
 
    const autoStartNextRef = useRef(false);
    const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -169,6 +170,7 @@ export function SpeakBuildByLettersExercise({
                if (similarity >= requiredAccuracy) {
                   stopMic();
                   setStatus('success');
+                  setSuccessScore(similarity);
                   setSuccessPhraseId(phrase.id);
                   playTTS(phrase.th);
                   setTimeout(() => {
@@ -220,6 +222,7 @@ export function SpeakBuildByLettersExercise({
                if (matchedChar === expectedChar) {
                   // Correct
                   setStatus('success');
+                  setSuccessScore(highestSim);
                   setSuccessChar(matchedChar);
                   setTimeout(() => {
                      setSuccessChar(null);
@@ -319,18 +322,26 @@ export function SpeakBuildByLettersExercise({
                <div className="flex flex-col gap-3 w-full max-w-md">
                   {availablePhrases.map((phrase, idx) => {
                      const isSuccess = successPhraseId === phrase.id;
+                     let colorClass = "bg-white border-2 border-slate-200 hover:border-orange-300";
+                     if (isSuccess) {
+                        if (successScore < 100) colorClass = "text-amber-700 border-2 border-amber-300 bg-amber-50 shadow-sm shadow-amber-100";
+                        else colorClass = "text-emerald-700 border-2 border-emerald-300 bg-emerald-50 shadow-sm shadow-emerald-100";
+                     }
                      return (
                         <motion.div 
                            key={idx} 
                            animate={isSuccess ? { scale: [1, 1.05, 1] } : {}}
                            transition={{ duration: 0.4 }}
-                           className={`rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition-colors ${
-                              isSuccess ? 'bg-green-50 border-2 border-green-500 shadow-sm shadow-green-100' : 'bg-white border-2 border-slate-200 hover:border-orange-300'
-                           }`}
+                           className={`rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition-colors ${colorClass}`}
                            onClick={() => playTTS(phrase.th)}
                         >
-                           <span className="text-2xl font-thai text-slate-700 mb-1">{phrase.th}</span>
-                           <span className="text-slate-500 text-sm">{phrase.phonetic}</span>
+                           <span className={`text-2xl font-thai mb-1 ${isSuccess ? '' : 'text-slate-700'}`}>{phrase.th}</span>
+                           <div className="flex gap-2 items-center">
+                              <span className={`text-sm ${isSuccess ? 'opacity-80' : 'text-slate-500'}`}>{phrase.phonetic}</span>
+                              {isSuccess && successScore < 100 && (
+                                 <span className="text-[11px] font-bold opacity-80">{successScore}%</span>
+                              )}
+                           </div>
                         </motion.div>
                      );
                   })}
@@ -405,6 +416,15 @@ export function SpeakBuildByLettersExercise({
                         let displayStr = formatCombiningChar(opt.char);
                         const isSuccess = successChar === opt.char;
                         
+                        let colorClass = opt.isWrong 
+                           ? 'bg-slate-100 border-2 border-slate-200 text-slate-300 pointer-events-none' 
+                           : 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2';
+                           
+                        if (isSuccess) {
+                           if (successScore < 100) colorClass = "text-amber-700 border-amber-300 bg-amber-50 border-2 border-b-4 pointer-events-none shadow-sm";
+                           else colorClass = "text-emerald-700 border-emerald-300 bg-emerald-50 border-2 border-b-4 pointer-events-none shadow-sm";
+                        }
+                        
                         return (
                            <motion.button
                               key={`key-${idx}`}
@@ -413,16 +433,14 @@ export function SpeakBuildByLettersExercise({
                               onClick={() => playTTS(getLetterTTSName(opt.char))}
                               className={`
                                  rounded-xl font-medium font-thai select-none transition-all
-                                 text-4xl sm:text-5xl flex items-center justify-center h-20 sm:h-24
-                                 ${isSuccess 
-                                    ? 'bg-green-500 border-2 border-green-600 border-b-4 text-white shadow-lg shadow-green-200 pointer-events-none' 
-                                    : opt.isWrong 
-                                       ? 'bg-slate-100 border-2 border-slate-200 text-slate-300 pointer-events-none' 
-                                       : 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2'
-                                 }
+                                 text-4xl sm:text-5xl flex flex-col items-center justify-center h-20 sm:h-24
+                                 ${colorClass}
                               `}
                            >
                               <span className="leading-none pt-1">{displayStr}</span>
+                              {isSuccess && successScore < 100 && (
+                                 <span className="text-[11px] font-bold font-sans mt-1 opacity-80">{successScore}%</span>
+                              )}
                            </motion.button>
                         );
                      })}
