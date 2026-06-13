@@ -170,6 +170,7 @@ export function SpeakBuildByLettersExercise({
                if (similarity >= requiredAccuracy) {
                   stopMic();
                   setStatus('success');
+                  new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
                   setSuccessScore(similarity);
                   setSuccessPhraseId(phrase.id);
                   playTTS(phrase.th);
@@ -268,6 +269,7 @@ export function SpeakBuildByLettersExercise({
                if (matchedChar === expectedChar) {
                   // Correct
                   setStatus('success');
+                  new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
                   setSuccessScore(highestSim);
                   setSuccessChar(matchedChar);
                   setTimeout(() => {

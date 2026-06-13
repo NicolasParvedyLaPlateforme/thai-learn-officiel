@@ -180,6 +180,7 @@ export function SpeakBuildPhraseExercise({
 
    const handlePhraseFinish = () => {
       setStatus('success');
+      new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
       SpeechRecognition.stopListening();
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
       
@@ -270,6 +271,7 @@ export function SpeakBuildPhraseExercise({
             const targetWord = targetWords[step];
             if (matchedWord.id === targetWord.id) {
                // Correct!
+               new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
                if (step + 1 >= targetWords.length) {
                   setStep(s => s + 1); // Place the last word visually
                   handlePhraseFinish();

@@ -259,6 +259,7 @@ export function SpeakAnswerMeExercise({
          
          if (currentItemData.correctOptions.includes(bestMatch.optionId)) {
             setStatus('success');
+            new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
             setTimeout(() => {
                onNext(true, false, 100);
             }, 2000);

@@ -234,6 +234,7 @@ export function SpeakConversationExercise({
       if (newPlacedIndices.length >= realTargetsCount && realTargetsCount > 0) {
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
          setStatus('success');
+         new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
          SpeechRecognition.stopListening();
          setTimeout(() => {
             SpeechRecognition.abortListening();

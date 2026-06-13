@@ -562,6 +562,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (!correct) {
       setLastPlayedLesson(lessonId, 'learn');
       setMistakes(m => m + 1);
+    } else {
+      new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
     }
     setIsChecking(true);
     playThaiTTS(currentExercise.answer);

@@ -185,6 +185,7 @@ function AlphabetLessonContent() {
     setIsCorrect(correct);
     setIsChecking(true);
     if(correct) {
+       new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
        if (currentExercise.type === 'phonetic-match' || currentExercise.type === 'audio-match') {
          playThaiTTS(currentExercise.item.exampleWord);
        } else {
