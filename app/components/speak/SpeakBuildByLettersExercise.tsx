@@ -330,8 +330,8 @@ export function SpeakBuildByLettersExercise({
                      return (
                         <motion.div 
                            key={idx} 
-                           animate={isSuccess ? { scale: [1, 1.05, 1] } : {}}
-                           transition={{ duration: 0.4 }}
+                           animate={isSuccess ? { scale: [1, 1.05, 1], y: [0, -5, 5, 0] } : {}}
+                           transition={{ duration: 0.5, type: 'spring', stiffness: 300, damping: 10 }}
                            className={`rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition-colors ${colorClass}`}
                            onClick={() => playTTS(phrase.th)}
                         >
