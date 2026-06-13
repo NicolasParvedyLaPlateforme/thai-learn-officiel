@@ -1,5 +1,8 @@
 {
-  "auto.speak_to_select": "Lisez pour choisir",
+  "auto.resume_lesson": "Reprendre la leçon ?",
+  "auto.you_have_an_unfinished_lesso": "Vous avez une leçon en cours. Voulez-vous reprendre là où vous vous étiez arrêté ?",
+  "auto.resume": "Reprendre",
+  "auto.start_over": "Recommencer",
   "auto.speak_phrase_instruction": "Prononcez la phrase que vous souhaitez travailler",
   "auto.speak_letter_name": "Prononcez le nom de la lettre",
   "auto.choose_first_word": "Prononcez le premier mot",

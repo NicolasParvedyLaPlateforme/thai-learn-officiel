@@ -69,6 +69,8 @@ export default function SpeakLessonClient({
   const storageKey = `speak_${lessonId}_lvl${level}`;
 
   useEffect(() => {
+    if (mounted) return;
+
     if (isLevel2) {
       // Load dialogue from json
       const dialogData = (speakDialogues as any).dialogues[lessonId] || [];
@@ -110,12 +112,17 @@ export default function SpeakLessonClient({
       setLevel4Phrases(phrases);
       
       const savedState = inProgressLessons[storageKey];
-      if (savedState && savedState.completedPhraseIds && savedState.completedPhraseIds.length > 0) {
-         setShowResumePrompt(true);
+      if (savedState) {
+         setCompletedLevel4PhraseIds(savedState.completedPhraseIds || []);
+         setCurrentIndex(savedState.currentIndex || 0);
+         setTotalScorePercentage(savedState.mistakes || 0);
+         if (savedState.completedPhraseIds && savedState.completedPhraseIds.length > 0) {
+            setShowResumePrompt(true);
+         }
       }
     }
     setMounted(true);
-  }, [isLevel2, isLevel3, isLevel4, isLevel5, lessonId, vocabulary, dictionary, inProgressLessons, storageKey]);
+  }, [mounted, isLevel2, isLevel3, isLevel4, isLevel5, lessonId, vocabulary, dictionary, inProgressLessons, storageKey]);
 
   const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
 
@@ -258,7 +265,7 @@ export default function SpeakLessonClient({
     );
   }
 
-  const currentLength = isLevel4 || isLevel5 ? Math.min(5, level4Phrases.length) : isLevel3 ? answerMeData.length : isLevel2 ? dialogue.length : exercises.length;
+  const currentLength = isLevel4 || isLevel5 ? Math.min(3, level4Phrases.length) : isLevel3 ? answerMeData.length : isLevel2 ? dialogue.length : exercises.length;
   const progressPercent = isLevel4 || isLevel5 ? (completedLevel4PhraseIds.length / currentLength) * 100 : (currentLength > 0 ? (currentIndex / currentLength) * 100 : 0);
 
   if (showResumePrompt) {

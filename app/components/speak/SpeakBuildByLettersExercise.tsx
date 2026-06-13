@@ -32,10 +32,15 @@ const getLetterData = (char: string): AlphabetItem | undefined => {
    return THAI_ALPHABET.find(a => a.letter === char);
 };
 
-// Get the spoken name of a character (exampleWord, e.g. "สระ อะ")
 const getLetterSpokenName = (char: string): string => {
    const data = getLetterData(char);
-   if (data) return data.exampleWord.replace(/\s+/g, '');
+   if (data) return data.exampleWord;
+   return char;
+};
+
+const getLetterTTSName = (char: string): string => {
+   const data = getLetterData(char);
+   if (data) return data.exampleWord.replace(/สระ/g, 'สะระ').replace(/\s+/g, '');
    return char;
 };
 
@@ -344,7 +349,7 @@ export function SpeakBuildByLettersExercise({
                               className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
                               onClick={() => {
                                  setHintCount(h => h + 1);
-                                 playTTS(getLetterSpokenName(targetChars[step]));
+                                 playTTS(getLetterTTSName(targetChars[step]));
                                  
                                  const data = getLetterData(targetChars[step]);
                                  if (data) setHintRomanization(data.pronunciation);
@@ -377,7 +382,7 @@ export function SpeakBuildByLettersExercise({
                         return (
                            <button
                               key={`key-${idx}`}
-                              onClick={() => playTTS(getLetterSpokenName(opt.char))}
+                              onClick={() => playTTS(getLetterTTSName(opt.char))}
                               className={`
                                  rounded-xl font-medium font-thai select-none transition-all
                                  text-4xl sm:text-5xl flex items-center justify-center h-20 sm:h-24
