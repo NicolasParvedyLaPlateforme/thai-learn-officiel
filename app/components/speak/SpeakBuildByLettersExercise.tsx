@@ -153,7 +153,7 @@ export function SpeakBuildByLettersExercise({
                if (similarity >= requiredAccuracy || targetText.includes(spokenText)) {
                   stopMic();
                   setStatus('success');
-                  playThaiTTS(phrase.th);
+                  playTTS(phrase.th);
                   setTimeout(() => {
                      setLockedPhraseId(phrase.id);
                   }, 1500);
@@ -195,7 +195,7 @@ export function SpeakBuildByLettersExercise({
                if (matchedChar === expectedChar) {
                   // Correct
                   setStatus('success');
-                  playThaiTTS(matchedChar);
+                  playTTS(matchedChar);
                   setTimeout(() => {
                      if (step + 1 >= targetChars.length) {
                         // Finished phrase
@@ -253,6 +253,21 @@ export function SpeakBuildByLettersExercise({
       if (status === 'listening') setStatus('evaluating');
    };
 
+   const playTTS = (text: string) => {
+      if (status === 'listening' || status === 'evaluating') {
+         stopMic();
+         setStatus('idle');
+      }
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+         const utterance = new SpeechSynthesisUtterance(text);
+         utterance.lang = 'th-TH';
+         window.speechSynthesis.speak(utterance);
+      } else {
+         playThaiTTS(text);
+      }
+   };
+
    const toggleMic = () => {
       if (status === 'listening') {
          stopMic();
@@ -280,7 +295,7 @@ export function SpeakBuildByLettersExercise({
                      <div 
                         key={idx} 
                         className="bg-white border-2 border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-orange-300 transition-colors"
-                        onClick={() => playThaiTTS(phrase.th)}
+                        onClick={() => playTTS(phrase.th)}
                      >
                         <span className="text-2xl font-thai text-slate-700 mb-1">{phrase.th}</span>
                         <span className="text-slate-500 text-sm">{phrase.phonetic}</span>
@@ -325,7 +340,7 @@ export function SpeakBuildByLettersExercise({
                            className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
                            onClick={() => {
                               setHintCount(h => h + 1);
-                              playThaiTTS(getLetterSpokenName(targetChars[step]));
+                              playTTS(getLetterSpokenName(targetChars[step]));
                               if ((hintCount + 1) % 5 === 0 && onLoseStar) {
                                  onLoseStar();
                               }
@@ -348,7 +363,7 @@ export function SpeakBuildByLettersExercise({
                         return (
                            <button
                               key={`key-${idx}`}
-                              onClick={() => playThaiTTS(getLetterSpokenName(opt.char))}
+                              onClick={() => playTTS(getLetterSpokenName(opt.char))}
                               className={`
                                  rounded-xl font-medium font-thai select-none transition-all
                                  text-4xl sm:text-5xl flex items-center justify-center h-20 sm:h-24
