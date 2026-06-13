@@ -41,7 +41,7 @@ const getLetterSpokenName = (char: string): string => {
 const getLetterTTSName = (char: string): string => {
    const data = getLetterData(char);
    if (data) {
-      if (data.type === 'vowel') {
+      if (data.type === 'vowel' && data.exampleWord.includes('สระ')) {
          // Force exact separated pronunciation for vowels so iOS doesn't shorten them
          return "สะ ระ " + data.exampleWord.replace('สระ', '').trim();
       }
@@ -216,7 +216,6 @@ export function SpeakBuildByLettersExercise({
                if (matchedChar === expectedChar) {
                   // Correct
                   setStatus('success');
-                  playTTS(matchedChar);
                   setTimeout(() => {
                      if (step + 1 >= targetChars.length) {
                         // Finished phrase
