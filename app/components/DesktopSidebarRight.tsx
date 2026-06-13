@@ -205,7 +205,7 @@ export function DesktopSidebarRight({
                         <span className={`text-[9px] font-black tracking-widest uppercase
                           ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
                         `}>
-                          {isCurrent ? (getTranslation('auto.in_progress', language)) : `NIV. ${levelIndex + 1}`}
+                          {isCurrent ? (getTranslation('auto.in_progress', language)) : `${getTranslation('auto.lvl', language)} ${levelIndex + 1}`}
                         </span>
                       </button>
                     );
@@ -301,7 +301,7 @@ export function DesktopSidebarRight({
                         : suggestionType === 'alphabet'
                           ? (`${getTranslation('auto.letters', language)} (${selectedLesson.lesson.items?.length}) :`)
                           : suggestionType === 'speak'
-                            ? (modalLevel === 1 ? `CONVERSATION (RÉUSSITE 50%) :` : `PRONONCIATION (RÉUSSITE 50%) :`)
+                            ? (modalLevel === 1 ? getTranslation('auto.conversation_success_50', language) : getTranslation('auto.pronunciation_success_50', language))
                             : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
                       }
                     </h4>
@@ -424,7 +424,7 @@ export function DesktopSidebarRight({
                   disabled
                   className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
                 >
-                  Indisponible sur Brave
+                  {getTranslation('auto.unavailable_on_brave', language)}
                 </button>
               ) : (
                 <Link

@@ -170,7 +170,7 @@ export default function SpeakLessonModal({
                       <span className={`text-[9px] font-black tracking-widest uppercase
                           ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
                         `}>
-                        {isCurrent ? (getTranslation('auto.in_progress', language)) : `NIV. ${levelIndex + 1}`}
+                        {isCurrent ? (getTranslation('auto.in_progress', language)) : `${getTranslation('auto.lvl', language)} ${levelIndex + 1}`}
                       </span>
                     </button>
                   );
@@ -199,9 +199,11 @@ export default function SpeakLessonModal({
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                    {selectedLesson.lesson.isReview
-                      ? (`${getTranslation('auto.stats', language) || 'Stats'} :`)
-                      : (modalLevel === 1 ? `CONVERSATION (RÉUSSITE 50%) :` : `PRONONCIATION (RÉUSSITE 50%) :`)
+                    {selectedLesson.lesson.isReview || modalLevel === 10
+                      ? (modalLevel === 10
+                        ? (getTranslation('auto.stats_mastery', language))
+                        : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
+                      : (modalLevel === 1 ? getTranslation('auto.conversation_success_50', language) : getTranslation('auto.pronunciation_success_50', language))
                     }
                   </h4>
                 </div>
@@ -293,9 +295,9 @@ export default function SpeakLessonModal({
               {isBrave ? (
                 <button
                   disabled
-                  className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
+                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
                 >
-                  Indisponible sur Brave
+                  {getTranslation('auto.unavailable_on_brave', language)}
                 </button>
               ) : (
                 <Link

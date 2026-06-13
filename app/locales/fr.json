@@ -2,7 +2,7 @@
   "auto.speak_to_select": "Lisez pour choisir",
   "auto.speak_phrase_instruction": "Prononcez la phrase que vous souhaitez travailler",
   "auto.speak_letter_name": "Prononcez le nom de la lettre",
-  "auto.choose_first_word": "Prononcez le premier mot",
+  "auto.choose_first_word": "Prononcez le premier mot pour commencer :",
   "auto.waiting_selection": "En attente de sélection...",
   "sidebar.path": "Parcours",
   "sidebar.alphabet": "Alphabet",
@@ -391,6 +391,7 @@
   "landing.footer": "© 2026 ThaiLearn. Apprendre le thaï n'a jamais été aussi facile.",
   "auto.skip": "Passer",
   "auto.level_completed": "Niveau {level} terminé !",
-  "auto.choose_first_word": "Prononcez le premier mot pour commencer :",
-  "auto.waiting_selection": "En attente de sélection..."
+  "auto.unavailable_on_brave": "Indisponible sur Brave",
+  "auto.pronunciation_success_50": "PRONONCIATION (RÉUSSITE 50%) :",
+  "auto.conversation_success_50": "CONVERSATION (RÉUSSITE 50%) :"
 }

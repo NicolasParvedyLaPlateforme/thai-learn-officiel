@@ -2,7 +2,7 @@
   "auto.speak_to_select": "Sprechen zum Auswählen",
   "auto.speak_phrase_instruction": "Sprechen Sie den Satz, den Sie üben möchten",
   "auto.speak_letter_name": "Sprechen Sie den Buchstabennamen",
-  "auto.choose_first_word": "Sprechen Sie das erste Wort",
+  "auto.choose_first_word": "Sprich das erste Wort, um zu beginnen:",
   "auto.waiting_selection": "Warten auf Auswahl...",
   "sidebar.path": "Pfad",
   "sidebar.alphabet": "Alphabet",
@@ -391,6 +391,7 @@
   "landing.footer": "© 2026 ThaiLearn. Thailändisch lernen war noch nie so einfach.",
   "auto.skip": "Überspringen",
   "auto.level_completed": "Level {level} abgeschlossen!",
-  "auto.choose_first_word": "Sprich das erste Wort, um zu beginnen:",
-  "auto.waiting_selection": "Warten auf Auswahl..."
+  "auto.unavailable_on_brave": "Nicht auf Brave verfügbar",
+  "auto.pronunciation_success_50": "AUSSPRACHE (ERFOLG 50%):",
+  "auto.conversation_success_50": "KONVERSATION (ERFOLG 50%):"
 }
