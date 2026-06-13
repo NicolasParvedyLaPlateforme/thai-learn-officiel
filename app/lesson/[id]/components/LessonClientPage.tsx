@@ -144,7 +144,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const [mistakes, setMistakes] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
-  
+
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [initialTime, setInitialTime] = useState<number | null>(null);
   const [failedDueToTime, setFailedDueToTime] = useState(false);
@@ -176,13 +176,13 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   useEffect(() => {
     setIsClient(true);
-    
+
     if (typeof window !== 'undefined' && window.visualViewport) {
       let maxVH = window.visualViewport.height;
 
       const handleResize = () => {
         const currentVH = window.visualViewport!.height;
-        
+
         // Update maxVH if the screen grows (keyboard closed or orientation changed)
         if (currentVH > maxVH) {
           maxVH = currentVH;
@@ -195,7 +195,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setIsKeyboardOpen(false);
         }
       };
-      
+
       window.visualViewport.addEventListener('resize', handleResize);
       handleResize();
       return () => window.visualViewport?.removeEventListener('resize', handleResize);
@@ -232,27 +232,27 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
       preloadThaiVoices();
       getExercisesServer(lesson.id, currentLevel, language).then(generated => {
-         setExercises(generated);
-         setCurrentIndex(0);
-         setIsFinished(false);
-         setIsChecking(false);
-         setIsCorrect(null);
-         setSelectedAnswer(null);
-         setMistakes(0);
-         setFailedDueToTime(false);
-         if (lesson.isReview) {
-            const time = (currentLevel + 1) * 2 * 60;
-            setTimeLeft(time);
-            setInitialTime(time);
-         } else if (currentLevel === 10) {
-            const time = 20 * 60;
-            setTimeLeft(time);
-            setInitialTime(time);
-         } else {
-            setTimeLeft(null);
-            setInitialTime(null);
-         }
-         setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
+        setExercises(generated);
+        setCurrentIndex(0);
+        setIsFinished(false);
+        setIsChecking(false);
+        setIsCorrect(null);
+        setSelectedAnswer(null);
+        setMistakes(0);
+        setFailedDueToTime(false);
+        if (lesson.isReview) {
+          const time = (currentLevel + 1) * 2 * 60;
+          setTimeLeft(time);
+          setInitialTime(time);
+        } else if (currentLevel === 10) {
+          const time = 20 * 60;
+          setTimeLeft(time);
+          setInitialTime(time);
+        } else {
+          setTimeLeft(null);
+          setInitialTime(null);
+        }
+        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
       });
     }
   }, [
@@ -272,39 +272,39 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (exercises.length > 0) {
       const imageUrls = new Set<string>();
       const audioTexts = new Set<string>();
-      
+
       exercises.forEach(ex => {
-         if (ex.imageUrl) imageUrls.add(ex.imageUrl);
-         if (ex.introItem?.imageUrl) imageUrls.add(ex.introItem.imageUrl);
-         
-         if (ex.answer && /[\u0E00-\u0E7F]/.test(ex.answer)) {
-            audioTexts.add(ex.answer);
-         }
-         
-         if (ex.options) {
-            ex.options.forEach((opt: any) => {
-               if (opt.imageUrl) imageUrls.add(opt.imageUrl);
-               if (opt.th) audioTexts.add(opt.th);
-            });
-         }
-         if (ex.pairs) {
-            ex.pairs.forEach((pair: any) => {
-               if (pair.imageUrl) imageUrls.add(pair.imageUrl);
-               if (pair.th) audioTexts.add(pair.th);
-            });
-         }
+        if (ex.imageUrl) imageUrls.add(ex.imageUrl);
+        if (ex.introItem?.imageUrl) imageUrls.add(ex.introItem.imageUrl);
+
+        if (ex.answer && /[\u0E00-\u0E7F]/.test(ex.answer)) {
+          audioTexts.add(ex.answer);
+        }
+
+        if (ex.options) {
+          ex.options.forEach((opt: any) => {
+            if (opt.imageUrl) imageUrls.add(opt.imageUrl);
+            if (opt.th) audioTexts.add(opt.th);
+          });
+        }
+        if (ex.pairs) {
+          ex.pairs.forEach((pair: any) => {
+            if (pair.imageUrl) imageUrls.add(pair.imageUrl);
+            if (pair.th) audioTexts.add(pair.th);
+          });
+        }
       });
-      
+
       // Delay slightly to not block initial render
       setTimeout(() => {
         imageUrls.forEach(url => {
-           const img = new window.Image();
-           img.src = url;
+          const img = new window.Image();
+          img.src = url;
         });
-        
+
         // Background audio preloading
         if (audioTexts.size > 0) {
-           preloadThaiAudio(Array.from(audioTexts));
+          preloadThaiAudio(Array.from(audioTexts));
         }
       }, 500);
     }
@@ -332,7 +332,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     const savedStateKey = `${lesson.id}_${currentLevel}`;
     saveInProgressLesson(savedStateKey, null);
     setShowResumePrompt(false);
-    
+
     preloadThaiVoices();
     getExercisesServer(lesson.id, currentLevel, language).then(generated => {
       setExercises(generated);
@@ -375,15 +375,15 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   useEffect(() => {
     if (!lesson) return;
     if (exercises.length > 0 && !isFinished && !showResumePrompt && isDataLoaded) {
-       const savedStateKey = `${lesson.id}_${currentLevel}`;
-       saveInProgressLesson(savedStateKey, {
-         exercises,
-         currentIndex,
-         mistakes,
-         timeLeft,
-         initialTime,
-         lastUpdated: Date.now()
-       });
+      const savedStateKey = `${lesson.id}_${currentLevel}`;
+      saveInProgressLesson(savedStateKey, {
+        exercises,
+        currentIndex,
+        mistakes,
+        timeLeft,
+        initialTime,
+        lastUpdated: Date.now()
+      });
     }
   }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson?.id, currentLevel, saveInProgressLesson]);
 
@@ -397,13 +397,13 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   useEffect(() => {
     if (timeLeft === null || isFinished || !showExerciseUI || !isDataLoaded) return;
-    
+
     if (timeLeft <= 0) {
-       setIsFinished(true);
-       setFailedDueToTime(true);
-       const percentage = Math.round((currentIndex / exercises.length) * 100);
-       saveReviewStat(lesson.id, currentLevel, { maxPercentage: percentage });
-       return;
+      setIsFinished(true);
+      setFailedDueToTime(true);
+      const percentage = Math.round((currentIndex / exercises.length) * 100);
+      saveReviewStat(lesson.id, currentLevel, { maxPercentage: percentage });
+      return;
     }
 
     const timerId = setInterval(() => {
@@ -427,9 +427,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       const targetLength = currentExercise.answer.replace(/\s+/g, "").length;
       const currentLength = selectedAnswer.replace(/\s+/g, "").length;
       if (currentLength >= targetLength && currentLength > 0) {
-         // Use setTimeout to ensure the React state has fully updated the input UI
-         const timer = setTimeout(() => handleCheck(selectedAnswer), 50);
-         return () => clearTimeout(timer);
+        // Use setTimeout to ensure the React state has fully updated the input UI
+        const timer = setTimeout(() => handleCheck(selectedAnswer), 50);
+        return () => clearTimeout(timer);
       }
     }
   }, [selectedAnswer, currentExercise, isChecking]);
@@ -452,7 +452,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setIsFinished(true);
           completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
           if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
-             saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
+            saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
           }
           triggerConfetti();
         }
@@ -479,7 +479,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             setIsFinished(true);
             completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
-               saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
+              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
             }
             triggerConfetti();
           }
@@ -504,19 +504,19 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       correct = answerToCheck === currentExercise.answer;
     } else if (currentExercise.type === "sentence-builder") {
       if (currentExercise.isFillInBlank && currentExercise.correctComponents && currentExercise.blankIndex !== undefined) {
-         if (Array.isArray(answerToCheck) && answerToCheck.length === 1) {
-             const expectedWordId = currentExercise.correctComponents[currentExercise.blankIndex];
-             const expectedWord = currentExercise.options.find(o => o.id === expectedWordId)?.th;
-             correct = answerToCheck[0] === expectedWord;
-         }
+        if (Array.isArray(answerToCheck) && answerToCheck.length === 1) {
+          const expectedWordId = currentExercise.correctComponents[currentExercise.blankIndex];
+          const expectedWord = currentExercise.options.find(o => o.id === expectedWordId)?.th;
+          correct = answerToCheck[0] === expectedWord;
+        }
       } else {
-         const builtSentence = (answerToCheck as string[])
-           .join("")
-           .replace(/\s+/g, "");
-         const expectedSentence = currentExercise.answer
-           .replace(/\s+/g, "")
-           .replace(/\.\.\./g, "");
-         correct = builtSentence === expectedSentence;
+        const builtSentence = (answerToCheck as string[])
+          .join("")
+          .replace(/\s+/g, "");
+        const expectedSentence = currentExercise.answer
+          .replace(/\s+/g, "")
+          .replace(/\.\.\./g, "");
+        correct = builtSentence === expectedSentence;
       }
     } else if (currentExercise.type === "writing") {
       const builtValue = (answerToCheck as string[])
@@ -562,8 +562,6 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (!correct) {
       setLastPlayedLesson(lessonId, 'learn');
       setMistakes(m => m + 1);
-    } else {
-      new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
     }
     setIsChecking(true);
     playThaiTTS(currentExercise.answer);
@@ -610,8 +608,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     const isEndOfUnit = unitEndIndices.includes(lessonIndex + 1);
     const nextUnitIndex =
       isEndOfUnit &&
-      currentUnitIndex !== -1 &&
-      currentUnitIndex < unitEndIndices.length - 1
+        currentUnitIndex !== -1 &&
+        currentUnitIndex < unitEndIndices.length - 1
         ? currentUnitIndex + 1
         : -1;
 
@@ -638,20 +636,20 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       : currentExercise.type === "free-typing"
         ? false
         : (currentExercise.type === "writing" ||
-              currentExercise.type === "sentence-builder") &&
-            currentExercise.correctComponents
+          currentExercise.type === "sentence-builder") &&
+          currentExercise.correctComponents
           ? Array.isArray(selectedAnswer) &&
-            selectedAnswer.length ===
-              currentExercise.correctComponents.filter((c) => c !== "w_dots")
-                .length
+          selectedAnswer.length ===
+          currentExercise.correctComponents.filter((c) => c !== "w_dots")
+            .length
           : selectedAnswer !== null &&
-            (!Array.isArray(selectedAnswer) ||
-              (selectedAnswer as any[]).length > 0)
+          (!Array.isArray(selectedAnswer) ||
+            (selectedAnswer as any[]).length > 0)
     : false;
 
   const showFooter = currentExercise
     ? (currentExercise.type !== "pair-matching" || (isChecking && !isCorrect)) &&
-      (isChecking || isAnswerComplete)
+    (isChecking || isAnswerComplete)
     : false;
 
   const instructionKey = getInstructionKey(currentExercise || undefined);
@@ -666,10 +664,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     <div className="h-[100dvh] flex flex-col bg-[#FAFAFA] font-sans text-slate-800 overflow-hidden relative">
       <AnimatePresence mode="wait">
         {!showExerciseUI ? (
-          <LoadingScreen 
+          <LoadingScreen
             key="loading-screen"
-            isLoadingData={!isDataLoaded} 
-            onReady={() => setShowExerciseUI(true)} 
+            isLoadingData={!isDataLoaded}
+            onReady={() => setShowExerciseUI(true)}
           />
         ) : (
           <motion.div
@@ -698,198 +696,198 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
             {/* Main Exercise Area */}
             <main className="flex-1 flex flex-col w-full relative">
-        {/* Glossary Modal */}
-        <GlossaryModal 
-           isOpen={showInfoModal}
-           lesson={lesson} 
-           language={language} 
-           showRomanization={showRomanization} 
-           onClose={() => setShowInfoModal(false)} 
-        />
+              {/* Glossary Modal */}
+              <GlossaryModal
+                isOpen={showInfoModal}
+                lesson={lesson}
+                language={language}
+                showRomanization={showRomanization}
+                onClose={() => setShowInfoModal(false)}
+              />
 
-        {/* The Question / Hint System */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentExercise?.id || 'loading'}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 flex flex-col items-center md:justify-center md:overflow-y-auto hide-scrollbar"
-          >
-            {/* Instruction Screen */}
-            {(showInstruction || showHelpModal) && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="w-full flex justify-center"
-              >
-                <InstructionBlock
-                  language={language}
-                  instructionText={instructionText}
-                  instructionKey={instructionKey}
-                  currentExercise={currentExercise as Exercise}
-                  dontShowAgain={dontShowAgain}
-                  setDontShowAgain={setDontShowAgain}
-                  showHelpModal={showHelpModal}
-                  setShowHelpModal={setShowHelpModal}
-                  hideInstruction={hideInstruction}
-                  unhideInstruction={unhideInstruction}
-                  setAcknowledgedInstructions={setAcknowledgedInstructions}
-                />
-              </motion.div>
-            )}
-
-            {/* Help Button - Above Exercise */}
-            {!(showInstruction || showHelpModal) && instructionKey && (
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.05 }}
-                className="w-full max-w-3xl px-4 pt-4 md:pt-6 flex justify-end shrink-0">
-                <button
-                  onClick={() => setShowHelpModal(true)}
-                  className="text-slate-500 hover:text-amber-600 transition-colors bg-white rounded-full py-1.5 px-3 shadow-sm border border-slate-200 flex items-center gap-1.5 text-sm font-bold active:scale-95"
-                  title={getTranslation('auto.help_instructions', language)}
+              {/* The Question / Hint System */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentExercise?.id || 'loading'}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 flex flex-col items-center md:justify-center md:overflow-y-auto hide-scrollbar"
                 >
-                  <HelpCircle size={18} strokeWidth={2.5} />
-                  {getTranslation('auto.help', language)}
-                </button>
-              </motion.div>
-            )}
+                  {/* Instruction Screen */}
+                  {(showInstruction || showHelpModal) && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full flex justify-center"
+                    >
+                      <InstructionBlock
+                        language={language}
+                        instructionText={instructionText}
+                        instructionKey={instructionKey}
+                        currentExercise={currentExercise as Exercise}
+                        dontShowAgain={dontShowAgain}
+                        setDontShowAgain={setDontShowAgain}
+                        showHelpModal={showHelpModal}
+                        setShowHelpModal={setShowHelpModal}
+                        hideInstruction={hideInstruction}
+                        unhideInstruction={unhideInstruction}
+                        setAcknowledgedInstructions={setAcknowledgedInstructions}
+                      />
+                    </motion.div>
+                  )}
 
-            {/* Scrollable Upper Area */}
-            <motion.div
-              animate={{ opacity: isExiting ? 0 : 1, y: 0, scale: 1 }}
-              transition={{ duration: isExiting ? 0.15 : 0.3, delay: isExiting ? 0 : 0.1 }}
-              className={`${showInstruction || showHelpModal || currentExercise?.type === "pair-matching" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
-            >
-              {currentExercise?.type !== "pair-matching" && (
-                <QuestionArea
-                  currentExercise={currentExercise as Exercise}
-                  lesson={lesson}
-                  language={language}
-                  showRomanization={showRomanization}
-                  isChecking={isChecking}
-                  selectedAnswer={selectedAnswer}
-                />
-              )}
-            </motion.div>
+                  {/* Help Button - Above Exercise */}
+                  {!(showInstruction || showHelpModal) && instructionKey && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.05 }}
+                      className="w-full max-w-3xl px-4 pt-4 md:pt-6 flex justify-end shrink-0">
+                      <button
+                        onClick={() => setShowHelpModal(true)}
+                        className="text-slate-500 hover:text-amber-600 transition-colors bg-white rounded-full py-1.5 px-3 shadow-sm border border-slate-200 flex items-center gap-1.5 text-sm font-bold active:scale-95"
+                        title={getTranslation('auto.help_instructions', language)}
+                      >
+                        <HelpCircle size={18} strokeWidth={2.5} />
+                        {getTranslation('auto.help', language)}
+                      </button>
+                    </motion.div>
+                  )}
 
-            {/* Exercise Options (Fixed at bottom on Mobile) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isExiting ? { opacity: 0 } : { opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: isExiting ? 0.15 : 0.3, delay: isExiting ? 0 : 0.3 }}
-              className={`${showInstruction || showHelpModal ? "hidden" : "flex"} ${currentExercise?.type === "pair-matching" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
-            >
-              <div className="w-full relative">
-                <ErrorBoundary>
-                  {currentExercise?.type ===
-                  "intro" ? null : currentExercise?.type === "word-match" ? (
-                  <WordMatch
-                    exercise={currentExercise as Exercise}
-                    selected={selectedAnswer as string}
-                    onChange={setSelectedAnswer}
-                    disabled={isChecking}
-                    isChecking={isChecking}
-                    isCorrect={isCorrect}
-                    onAutoCheck={(val) => handleCheck(val)}
-                    language={language}
-                    onAddMistake={() => setMistakes(m => m + 1)}
-                  />
-                ) : currentExercise?.type === "pair-matching" ? (
-                  <PairMatch
-                    key={currentExercise.id}
-                    pairs={currentExercise.pairs as Word[]}
-                    mode={currentExercise.pairMatchMode}
-                    forceHideRomanization={
-                      currentExercise.forceHideRomanization
-                    }
-                    disabled={isChecking}
-                    onComplete={(failed?: boolean) => {
-                      if (failed) {
-                        setIsCorrect(false);
-                        setIsChecking(true);
-                        setMistakes((m) => m + 1);
-                        setLastPlayedLesson(lessonId, 'learn');
-                        playThaiTTS("ผิดครับ");
-                      } else {
-                        setIsExiting(true);
-                        setTimeout(() => {
-                          setIsExiting(false);
-                          if (currentIndex < exercises.length - 1) {
-                            setCurrentIndex((prev) => prev + 1);
-                            setIsChecking(false);
-                            setIsCorrect(null);
-                            setSelectedAnswer(null);
-                          } else {
-                            const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-                            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
-                            setEarnedXp(expected.xp);
-                            setIsFinished(true);
-                            completeLesson(
-                              lesson.id,
-                              0,
-                              currentLevel,
-                              earnedStars,
-                              isBilan
-                            );
-                            if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
-                              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
-                            }
-                            triggerConfetti();
-                          }
-                        }, 150);
-                      }
-                    }}
-                  />
-                ) : currentExercise?.type === "writing" ? (
-                  <VirtualKeyboard
-                    exercise={currentExercise as Exercise}
-                    selected={(selectedAnswer as string[]) || []}
-                    onChange={setSelectedAnswer as any}
-                    disabled={isChecking}
-                    onAutoCheck={(val) => handleCheck(val)}
-                  />
-                ) : currentExercise?.type === "free-typing" ? (
-                  <FreeTypingInput
-                    exercise={currentExercise as Exercise}
-                    selected={(selectedAnswer as string) || ""}
-                    onChange={setSelectedAnswer as any}
-                    disabled={isChecking}
-                  />
-                ) : currentExercise && (
-                  <SentenceBuilder
-                    exercise={currentExercise as Exercise}
-                    selected={(selectedAnswer as string[]) || []}
-                    onChange={setSelectedAnswer as any}
-                    disabled={isChecking}
-                    onAutoCheck={(val) => handleCheck(val)}
-                  />
-                )}
-                </ErrorBoundary>
-              </div>
-            </motion.div>
-            {/* The transparent spacer to allow footer absolute positioning without overlapping options */}
-            <div
-              className="hidden"
-            ></div>
-          </motion.div>
-        </AnimatePresence>
-      </main>
+                  {/* Scrollable Upper Area */}
+                  <motion.div
+                    animate={{ opacity: isExiting ? 0 : 1, y: 0, scale: 1 }}
+                    transition={{ duration: isExiting ? 0.15 : 0.3, delay: isExiting ? 0 : 0.1 }}
+                    className={`${showInstruction || showHelpModal || currentExercise?.type === "pair-matching" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
+                  >
+                    {currentExercise?.type !== "pair-matching" && (
+                      <QuestionArea
+                        currentExercise={currentExercise as Exercise}
+                        lesson={lesson}
+                        language={language}
+                        showRomanization={showRomanization}
+                        isChecking={isChecking}
+                        selectedAnswer={selectedAnswer}
+                      />
+                    )}
+                  </motion.div>
 
-      {/* Footer Actions */}
-      <Footer
-        currentExercise={currentExercise as Exercise}
-        isChecking={isChecking}
-        isCorrect={isCorrect}
-        language={language}
-        selectedAnswer={selectedAnswer}
-        showFooter={showFooter}
-        handleCheck={handleCheck}
-      />
+                  {/* Exercise Options (Fixed at bottom on Mobile) */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isExiting ? { opacity: 0 } : { opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: isExiting ? 0.15 : 0.3, delay: isExiting ? 0 : 0.3 }}
+                    className={`${showInstruction || showHelpModal ? "hidden" : "flex"} ${currentExercise?.type === "pair-matching" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
+                  >
+                    <div className="w-full relative">
+                      <ErrorBoundary>
+                        {currentExercise?.type ===
+                          "intro" ? null : currentExercise?.type === "word-match" ? (
+                            <WordMatch
+                              exercise={currentExercise as Exercise}
+                              selected={selectedAnswer as string}
+                              onChange={setSelectedAnswer}
+                              disabled={isChecking}
+                              isChecking={isChecking}
+                              isCorrect={isCorrect}
+                              onAutoCheck={(val) => handleCheck(val)}
+                              language={language}
+                              onAddMistake={() => setMistakes(m => m + 1)}
+                            />
+                          ) : currentExercise?.type === "pair-matching" ? (
+                            <PairMatch
+                              key={currentExercise.id}
+                              pairs={currentExercise.pairs as Word[]}
+                              mode={currentExercise.pairMatchMode}
+                              forceHideRomanization={
+                                currentExercise.forceHideRomanization
+                              }
+                              disabled={isChecking}
+                              onComplete={(failed?: boolean) => {
+                                if (failed) {
+                                  setIsCorrect(false);
+                                  setIsChecking(true);
+                                  setMistakes((m) => m + 1);
+                                  setLastPlayedLesson(lessonId, 'learn');
+                                  playThaiTTS("ผิดครับ");
+                                } else {
+                                  setIsExiting(true);
+                                  setTimeout(() => {
+                                    setIsExiting(false);
+                                    if (currentIndex < exercises.length - 1) {
+                                      setCurrentIndex((prev) => prev + 1);
+                                      setIsChecking(false);
+                                      setIsCorrect(null);
+                                      setSelectedAnswer(null);
+                                    } else {
+                                      const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
+                                      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+                                      setEarnedXp(expected.xp);
+                                      setIsFinished(true);
+                                      completeLesson(
+                                        lesson.id,
+                                        0,
+                                        currentLevel,
+                                        earnedStars,
+                                        isBilan
+                                      );
+                                      if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
+                                        saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
+                                      }
+                                      triggerConfetti();
+                                    }
+                                  }, 150);
+                                }
+                              }}
+                            />
+                          ) : currentExercise?.type === "writing" ? (
+                            <VirtualKeyboard
+                              exercise={currentExercise as Exercise}
+                              selected={(selectedAnswer as string[]) || []}
+                              onChange={setSelectedAnswer as any}
+                              disabled={isChecking}
+                              onAutoCheck={(val) => handleCheck(val)}
+                            />
+                          ) : currentExercise?.type === "free-typing" ? (
+                            <FreeTypingInput
+                              exercise={currentExercise as Exercise}
+                              selected={(selectedAnswer as string) || ""}
+                              onChange={setSelectedAnswer as any}
+                              disabled={isChecking}
+                            />
+                          ) : currentExercise && (
+                            <SentenceBuilder
+                              exercise={currentExercise as Exercise}
+                              selected={(selectedAnswer as string[]) || []}
+                              onChange={setSelectedAnswer as any}
+                              disabled={isChecking}
+                              onAutoCheck={(val) => handleCheck(val)}
+                            />
+                          )}
+                      </ErrorBoundary>
+                    </div>
+                  </motion.div>
+                  {/* The transparent spacer to allow footer absolute positioning without overlapping options */}
+                  <div
+                    className="hidden"
+                  ></div>
+                </motion.div>
+              </AnimatePresence>
+            </main>
+
+            {/* Footer Actions */}
+            <Footer
+              currentExercise={currentExercise as Exercise}
+              isChecking={isChecking}
+              isCorrect={isCorrect}
+              language={language}
+              selectedAnswer={selectedAnswer}
+              showFooter={showFooter}
+              handleCheck={handleCheck}
+            />
           </motion.div>
         )}
       </AnimatePresence>

@@ -8,7 +8,7 @@ import type { ReviewOptions } from '../lib/exercise-generator';
 import { Exercise, CourseData, Word } from '../types';
 import { X, Check, Settings, Play } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from '../lib/tts';
-import { m as motion , AnimatePresence } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 import { LoadingScreen } from '../components/LoadingScreen';
 
 // Exercise Components
@@ -24,10 +24,10 @@ import { getEndlessReviewServer, getDictionaryForExerciseServer, getPhrasesForEx
 export default function ReviewPage() {
   const router = useRouter();
   const { completedLessons, xp, addXp, language, setExerciseRunning, reviewConfig } = useProgressStore();
-  
+
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
   // Interaction State
   const [selectedAnswer, setSelectedAnswer] = useState<string | string[] | null>(null);
   const [isChecking, setIsChecking] = useState(false);
@@ -44,7 +44,7 @@ export default function ReviewPage() {
       setMounted(true);
       // We don't generate exercises right away anymore, we wait for user to click Start
     }, 0);
-    
+
     getDictionaryForExerciseServer().then(words => {
       setAllWords(words as Word[]);
     });
@@ -82,7 +82,7 @@ export default function ReviewPage() {
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {getTranslation('auto.you_must_complete_at_least_one', language)}
         </p>
-        <button 
+        <button
           onClick={() => router.push('/practice')}
           className="px-12 py-3 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest w-full max-w-sm"
         >
@@ -107,18 +107,18 @@ export default function ReviewPage() {
     if (isChecking) {
       // Move to next exercise
       if (isCorrect) {
-          // Give 1 XP per correct answer
-          addXp(3);
-          
-          if (currentIndex >= exercises.length - 3) {
-            // Refill exercises when running low
-            fetchMore();
-          }
-          
-          setCurrentIndex(currentIndex + 1);
-          setIsChecking(false);
-          setIsCorrect(null);
-          setSelectedAnswer(null);
+        // Give 1 XP per correct answer
+        addXp(3);
+
+        if (currentIndex >= exercises.length - 3) {
+          // Refill exercises when running low
+          fetchMore();
+        }
+
+        setCurrentIndex(currentIndex + 1);
+        setIsChecking(false);
+        setIsCorrect(null);
+        setSelectedAnswer(null);
       } else {
         // If wrong, we re-add the exercise to the end of the current batch
         setExercises([...exercises, currentExercise]);
@@ -133,7 +133,7 @@ export default function ReviewPage() {
     // Validate
     const answerToCheck = overrideAnswer !== undefined && overrideAnswer !== null && (typeof overrideAnswer === 'string' || Array.isArray(overrideAnswer)) ? overrideAnswer : selectedAnswer;
     if (!answerToCheck) return;
-    
+
     let correct = false;
     if (currentExercise.type === 'word-match' || currentExercise.type === 'intro') {
       correct = answerToCheck === currentExercise.answer;
@@ -184,9 +184,6 @@ export default function ReviewPage() {
 
     setIsCorrect(correct);
     setIsChecking(true);
-    if (correct) {
-      new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
-    }
     playThaiTTS(currentExercise.answer);
   };
 
@@ -208,10 +205,10 @@ export default function ReviewPage() {
     <div className="h-[100dvh] flex flex-col bg-[#FAFAFA] font-sans text-slate-800 overflow-hidden relative">
       <AnimatePresence mode="wait">
         {!showExerciseUI ? (
-          <LoadingScreen 
+          <LoadingScreen
             key="loading-screen"
-            isLoadingData={!isDataLoaded} 
-            onReady={() => setShowExerciseUI(true)} 
+            isLoadingData={!isDataLoaded}
+            onReady={() => setShowExerciseUI(true)}
           />
         ) : (
           <motion.div
@@ -221,105 +218,105 @@ export default function ReviewPage() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex-1 flex flex-col h-full w-full absolute inset-0"
           >
-      {/* Header / Progress bar */}
-      <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white">
-        <div className="flex items-center gap-6 w-full max-w-2xl mx-auto h-full px-4 flex-1">
-          <button onClick={() => router.push('/practice')} className="text-slate-400 hover:text-slate-600 transition-colors">
-            <X size={24} strokeWidth={2.5} />
-          </button>
-          <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-            <div 
-              className="bg-indigo-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="font-bold text-slate-400">{getTranslation('auto.review_9', language)}</div>
-        </div>
-      </header>
-
-      {/* Main Exercise Area */}
-      <main className="flex-1 flex flex-col w-full relative">
-        <AnimatePresence mode="wait">
-          {currentExercise && (
-             <motion.div
-                key={currentExercise.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex flex-col items-center md:justify-center md:overflow-y-auto hide-scrollbar"
-             >
-                {/* Scrollable Upper Area */}
-                <motion.div
-                   className={`flex flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col justify-center hide-scrollbar`}
-                >
-                  <QuestionArea
-                    currentExercise={{
-                        ...currentExercise,
-                        hideHints: !reviewConfig.showWordHints,
-                        disableTooltips: !reviewConfig.showWordHints,
-                      }}
-                    lesson={{ words: allWords, phrases: allPhrases } as any}
-                    language={language}
-                    showRomanization={true}
-                    isChecking={isChecking}
-                    selectedAnswer={selectedAnswer}
+            {/* Header / Progress bar */}
+            <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white">
+              <div className="flex items-center gap-6 w-full max-w-2xl mx-auto h-full px-4 flex-1">
+                <button onClick={() => router.push('/practice')} className="text-slate-400 hover:text-slate-600 transition-colors">
+                  <X size={24} strokeWidth={2.5} />
+                </button>
+                <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+                  <div
+                    className="bg-indigo-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.3)]"
+                    style={{ width: `${progress}%` }}
                   />
-                </motion.div>
+                </div>
+                <div className="font-bold text-slate-400">{getTranslation('auto.review_9', language)}</div>
+              </div>
+            </header>
 
-                {/* Exercise Options (Fixed at bottom on Mobile) */}
-                <motion.div
-                   className={`flex shrink-0 md:shrink-0 bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
-                >
-                  <div className="w-full relative">
-                    {currentExercise.type === 'word-match' ? (
-                      <WordMatch 
-                        exercise={currentExercise} 
-                        selected={selectedAnswer as string} 
-                        onChange={setSelectedAnswer}
-                        disabled={isChecking}
-                        onAutoCheck={(val) => handleCheck(val)}
+            {/* Main Exercise Area */}
+            <main className="flex-1 flex flex-col w-full relative">
+              <AnimatePresence mode="wait">
+                {currentExercise && (
+                  <motion.div
+                    key={currentExercise.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 flex flex-col items-center md:justify-center md:overflow-y-auto hide-scrollbar"
+                  >
+                    {/* Scrollable Upper Area */}
+                    <motion.div
+                      className={`flex flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col justify-center hide-scrollbar`}
+                    >
+                      <QuestionArea
+                        currentExercise={{
+                          ...currentExercise,
+                          hideHints: !reviewConfig.showWordHints,
+                          disableTooltips: !reviewConfig.showWordHints,
+                        }}
+                        lesson={{ words: allWords, phrases: allPhrases } as any}
+                        language={language}
+                        showRomanization={true}
+                        isChecking={isChecking}
+                        selectedAnswer={selectedAnswer}
                       />
-                    ) : currentExercise.type === 'sentence-builder' ? (
-                      <SentenceBuilder 
-                        exercise={currentExercise}
-                        selected={selectedAnswer as string[] || []}
-                        onChange={setSelectedAnswer}
-                        disabled={isChecking}
-                        onAutoCheck={(val) => handleCheck(val)}
-                      />
-                    ) : currentExercise.type === "free-typing" ? (
-                        <FreeTypingInput
-                          exercise={currentExercise}
-                          selected={selectedAnswer as string}
-                          onChange={setSelectedAnswer}
-                          disabled={isChecking}
-                        />
-                    ) : currentExercise.type === "writing" ? (
-                        <VirtualKeyboard
-                          exercise={currentExercise}
-                          selected={selectedAnswer as string[] || []}
-                          onChange={setSelectedAnswer}
-                          disabled={isChecking}
-                          onAutoCheck={(val) => handleCheck(val)}
-                        />
-                    ) : null}
-                  </div>
-                </motion.div>
-             </motion.div>
-          )}
-        </AnimatePresence>
-      </main>
+                    </motion.div>
 
-      <Footer
-        currentExercise={currentExercise!}
-        isChecking={isChecking}
-        isCorrect={isCorrect}
-        language={language}
-        selectedAnswer={selectedAnswer}
-        showFooter={showFooter}
-        handleCheck={handleCheck}
-      />
+                    {/* Exercise Options (Fixed at bottom on Mobile) */}
+                    <motion.div
+                      className={`flex shrink-0 md:shrink-0 bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
+                    >
+                      <div className="w-full relative">
+                        {currentExercise.type === 'word-match' ? (
+                          <WordMatch
+                            exercise={currentExercise}
+                            selected={selectedAnswer as string}
+                            onChange={setSelectedAnswer}
+                            disabled={isChecking}
+                            onAutoCheck={(val) => handleCheck(val)}
+                          />
+                        ) : currentExercise.type === 'sentence-builder' ? (
+                          <SentenceBuilder
+                            exercise={currentExercise}
+                            selected={selectedAnswer as string[] || []}
+                            onChange={setSelectedAnswer}
+                            disabled={isChecking}
+                            onAutoCheck={(val) => handleCheck(val)}
+                          />
+                        ) : currentExercise.type === "free-typing" ? (
+                          <FreeTypingInput
+                            exercise={currentExercise}
+                            selected={selectedAnswer as string}
+                            onChange={setSelectedAnswer}
+                            disabled={isChecking}
+                          />
+                        ) : currentExercise.type === "writing" ? (
+                          <VirtualKeyboard
+                            exercise={currentExercise}
+                            selected={selectedAnswer as string[] || []}
+                            onChange={setSelectedAnswer}
+                            disabled={isChecking}
+                            onAutoCheck={(val) => handleCheck(val)}
+                          />
+                        ) : null}
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </main>
+
+            <Footer
+              currentExercise={currentExercise!}
+              isChecking={isChecking}
+              isCorrect={isCorrect}
+              language={language}
+              selectedAnswer={selectedAnswer}
+              showFooter={showFooter}
+              handleCheck={handleCheck}
+            />
           </motion.div>
         )}
       </AnimatePresence>

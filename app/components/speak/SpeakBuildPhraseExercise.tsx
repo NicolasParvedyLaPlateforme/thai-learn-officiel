@@ -80,7 +80,7 @@ export function SpeakBuildPhraseExercise({
    const [spokenHistory, setSpokenHistory] = useState("");
    const [micAttempts, setMicAttempts] = useState(0);
    const [isAutoMicEnabled, setIsAutoMicEnabled] = useState(false);
-   
+
    const [lockedPhraseId, setLockedPhraseId] = useState<string | null>(null);
    const [step, setStep] = useState(0);
    const [options, setOptions] = useState<Word[]>([]);
@@ -122,27 +122,27 @@ export function SpeakBuildPhraseExercise({
          // Start state: pick up to 3 uncompleted phrases with UNIQUE first words
          const available = phrases.filter(p => !completedPhraseIds.includes(p.id));
          const shuffledAvailable = shuffle(available);
-         
+
          const selectedPhrases: Phrase[] = [];
          const seenFirstWords = new Set<string>();
-         
+
          for (const p of shuffledAvailable) {
             const firstWordId = p.components.find(c => c !== 'w_dots');
             const wordObj = dictionary.find(w => w.id === firstWordId);
             const wordTh = wordObj ? normalizeThai(wordObj.th) : firstWordId;
-            
+
             if (firstWordId && !seenFirstWords.has(wordTh || '')) {
                seenFirstWords.add(wordTh || '');
                selectedPhrases.push(p);
                if (selectedPhrases.length === 3) break;
             }
          }
-         
+
          const startWords = selectedPhrases.map(p => {
             const firstWordId = p.components.find(c => c !== 'w_dots');
             return dictionary.find(w => w.id === firstWordId) || { id: firstWordId || 'unknown', th: '???', fr: '', phonetic: '' } as Word;
          });
-         
+
          setOptions(startWords);
          setWrongOptionIds([]);
       } else if (lockedPhrase && targetWords.length > 0) {
@@ -161,16 +161,16 @@ export function SpeakBuildPhraseExercise({
 
          // Pick 2 random words from dictionary that are not the target word
          const targetNorm = normalizeThai(targetWord.th);
-         const others = dictionary.filter(w => 
-            w.id !== targetWord.id && 
-            w.id !== 'w_dots' && 
-            w.th && 
+         const others = dictionary.filter(w =>
+            w.id !== targetWord.id &&
+            w.id !== 'w_dots' &&
+            w.th &&
             w.th.trim().length > 0 &&
             normalizeThai(w.th) !== targetNorm
          );
          const randomOthers = shuffle(others).slice(0, 2);
          const newOptions = shuffle([targetWord, ...randomOthers]);
-         
+
          setOptions(newOptions);
          // Do not clear wrongOptionIds here if we want to keep them until correct? 
          // Actually we should clear them on new step.
@@ -180,10 +180,9 @@ export function SpeakBuildPhraseExercise({
 
    const handlePhraseFinish = () => {
       setStatus('success');
-      new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
       SpeechRecognition.stopListening();
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
-      
+
       setTimeout(() => {
          onCompletePhrase(lockedPhraseId!, mistakes);
          setLockedPhraseId(null);
@@ -197,7 +196,7 @@ export function SpeakBuildPhraseExercise({
       if (!text || options.length === 0) return;
 
       let remainingTranscript = normalizeThai(replaceNumbersWithThai(text));
-      
+
       let matchedWord: Word | null = null;
       let bestSimGlob = 0;
 
@@ -206,7 +205,7 @@ export function SpeakBuildPhraseExercise({
          if (!targetNorm) continue;
 
          const variants = speakingConfig.strictMode ? [targetNorm] : [targetNorm, ...getAliases(targetNorm)];
-         
+
          let isMatch = false;
          let bestSimForOption = 0;
 
@@ -253,12 +252,12 @@ export function SpeakBuildPhraseExercise({
       if (matchedWord) {
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
          SpeechRecognition.stopListening();
-         
+
          if (lockedPhraseId === null) {
             // Find which phrase this word belongs to (as first word)
             const available = phrases.filter(p => !completedPhraseIds.includes(p.id));
             const selectedPhrase = available.find(p => p.components.find(c => c !== 'w_dots') === matchedWord?.id);
-            
+
             if (selectedPhrase) {
                setLockedPhraseId(selectedPhrase.id);
                const firstWordIndex = selectedPhrase.components.findIndex(c => c !== 'w_dots');
@@ -271,7 +270,6 @@ export function SpeakBuildPhraseExercise({
             const targetWord = targetWords[step];
             if (matchedWord.id === targetWord.id) {
                // Correct!
-               new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
                if (step + 1 >= targetWords.length) {
                   setStep(s => s + 1); // Place the last word visually
                   handlePhraseFinish();
@@ -392,7 +390,7 @@ export function SpeakBuildPhraseExercise({
          <div className="min-h-[120px] w-full max-w-2xl border-y-2 border-slate-200 py-6 flex flex-wrap gap-3 items-center justify-center mb-8">
             {lockedPhraseId !== null ? targetWords.map((word, index) => {
                const isPlaced = index < step;
-               
+
                if (word.id === 'w_dots') {
                   return (
                      <div key={`fixed-${index}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-14">

@@ -52,9 +52,9 @@ const replaceNumbersWithThai = (text: string) => {
 };
 
 export interface DialogueLine {
-  speaker: string;
-  phraseId: string;
-  phraseData?: Phrase | Word;
+   speaker: string;
+   phraseId: string;
+   phraseData?: Phrase | Word;
 }
 
 export function SpeakConversationExercise({
@@ -126,7 +126,7 @@ export function SpeakConversationExercise({
       // Auto-scroll to center the active item
       setTimeout(() => {
          if (activeItemRef.current) {
-             activeItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            activeItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
          }
       }, 150);
    }, [currentIndex, resetTranscript]);
@@ -228,13 +228,12 @@ export function SpeakConversationExercise({
          setPlacedIndices(newPlacedIndices);
          setPlacedScores(newPlacedScores);
       }
-      
+
       const realTargetsCount = targetWords.filter(w => w.id !== 'w_dots').length;
 
       if (newPlacedIndices.length >= realTargetsCount && realTargetsCount > 0) {
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
          setStatus('success');
-         new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
          SpeechRecognition.stopListening();
          setTimeout(() => {
             SpeechRecognition.abortListening();
@@ -286,7 +285,7 @@ export function SpeakConversationExercise({
 
    const playTTS = () => {
       if (!currentItem?.th) return;
-      
+
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
          const utterance = new SpeechSynthesisUtterance(currentItem.th);
@@ -312,12 +311,12 @@ export function SpeakConversationExercise({
       const score = Math.min(100, Math.round((placedIndices.length / realTargetsCount) * 100)) || 0;
       onNext(isSuccess, forceSkip, score);
    };
-   
+
    // Auto skip if 3 attempts failed
    useEffect(() => {
-       if (micAttempts >= 3 && status !== 'success') {
-           nextWord(true);
-       }
+      if (micAttempts >= 3 && status !== 'success') {
+         nextWord(true);
+      }
    }, [micAttempts]);
 
    if (!browserSupportsSpeechRecognition) {
@@ -331,74 +330,74 @@ export function SpeakConversationExercise({
    return (
       <div className="w-full flex flex-col items-center justify-start min-h-[60vh] pb-32 pt-4 relative">
          <div className="w-full max-w-2xl flex flex-col gap-4 mb-20 px-4">
-             {dialogue.map((line, index) => {
-                 const isVisible = index <= currentIndex;
-                 if (!isVisible) return null;
-                 
-                 const speakerAvatar = line.speaker === 'Kanya' ? '/deedee-no-bg.png' : '/tom.png';
-                 const isRight = line.speaker !== firstSpeaker;
-                 const isCurrent = index === currentIndex;
-                 const phrase = line.phraseData as Phrase;
-                 
-                 return (
-                     <motion.div 
-                         key={index}
-                         ref={isCurrent ? activeItemRef : null}
-                         initial={{ opacity: 0, y: 10 }}
-                         animate={{ opacity: 1, y: 0 }}
-                         className={`flex w-full gap-3 py-1 ${isRight ? 'flex-row-reverse justify-start' : 'justify-start'}`}
-                     >
-                         <div className="flex-shrink-0 mt-6">
-                            <IconImage 
-                              src={speakerAvatar} 
-                              alt={line.speaker} 
-                              width={50} 
-                              height={50} 
-                              className={`rounded-full border object-cover bg-white shadow-sm ${isRight ? 'border-blue-200' : 'border-slate-200'}`}
-                            />
-                         </div>
-                         
-                         <div className={`relative max-w-[80%] flex flex-col gap-1 ${isRight ? 'items-end' : 'items-start'}`}>
-                            <span className="text-xs font-bold text-slate-400 px-2 uppercase tracking-wide">
-                                {line.speaker}
-                            </span>
-                            
-                            <div className={`p-4 rounded-3xl shadow-sm border-2 transition-all duration-300
-                                ${isCurrent && !isRight ? 'bg-orange-50 border-orange-200 text-orange-900 rounded-tl-sm' : 
-                                  isCurrent && isRight ? 'bg-blue-50 border-blue-200 text-blue-900 rounded-tr-sm' :
-                                  isRight ? 'bg-slate-100 border-slate-200 text-slate-500 rounded-tr-sm' : 'bg-white border-slate-200 text-slate-500 rounded-tl-sm'}
+            {dialogue.map((line, index) => {
+               const isVisible = index <= currentIndex;
+               if (!isVisible) return null;
+
+               const speakerAvatar = line.speaker === 'Kanya' ? '/deedee-no-bg.png' : '/tom.png';
+               const isRight = line.speaker !== firstSpeaker;
+               const isCurrent = index === currentIndex;
+               const phrase = line.phraseData as Phrase;
+
+               return (
+                  <motion.div
+                     key={index}
+                     ref={isCurrent ? activeItemRef : null}
+                     initial={{ opacity: 0, y: 10 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     className={`flex w-full gap-3 py-1 ${isRight ? 'flex-row-reverse justify-start' : 'justify-start'}`}
+                  >
+                     <div className="flex-shrink-0 mt-6">
+                        <IconImage
+                           src={speakerAvatar}
+                           alt={line.speaker}
+                           width={50}
+                           height={50}
+                           className={`rounded-full border object-cover bg-white shadow-sm ${isRight ? 'border-blue-200' : 'border-slate-200'}`}
+                        />
+                     </div>
+
+                     <div className={`relative max-w-[80%] flex flex-col gap-1 ${isRight ? 'items-end' : 'items-start'}`}>
+                        <span className="text-xs font-bold text-slate-400 px-2 uppercase tracking-wide">
+                           {line.speaker}
+                        </span>
+
+                        <div className={`p-4 rounded-3xl shadow-sm border-2 transition-all duration-300
+                                ${isCurrent && !isRight ? 'bg-orange-50 border-orange-200 text-orange-900 rounded-tl-sm' :
+                              isCurrent && isRight ? 'bg-blue-50 border-blue-200 text-blue-900 rounded-tr-sm' :
+                                 isRight ? 'bg-slate-100 border-slate-200 text-slate-500 rounded-tr-sm' : 'bg-white border-slate-200 text-slate-500 rounded-tl-sm'}
                                 ${isCurrent ? 'ring-4 ring-orange-400 ring-opacity-20 border-orange-300' : ''}
                             `}>
-                                <div className="text-2xl font-medium font-thai leading-relaxed">
-                                   {phrase?.th}
-                                </div>
-                            </div>
-                            
-                            {(!isCurrent || status === 'success') && phrase && (
-                                <div className={`px-2 flex flex-col gap-1 ${isRight ? 'text-right' : 'text-left'}`}>
-                                    <span className="text-sm font-medium text-slate-500">
-                                        {getLocalizedField(phrase, '', language)}
+                           <div className="text-2xl font-medium font-thai leading-relaxed">
+                              {phrase?.th}
+                           </div>
+                        </div>
+
+                        {(!isCurrent || status === 'success') && phrase && (
+                           <div className={`px-2 flex flex-col gap-1 ${isRight ? 'text-right' : 'text-left'}`}>
+                              <span className="text-sm font-medium text-slate-500">
+                                 {getLocalizedField(phrase, '', language)}
+                              </span>
+                           </div>
+                        )}
+
+                        {isCurrent && status !== 'success' && (
+                           <div className="flex flex-wrap gap-1 mt-2 p-2 bg-white rounded-xl shadow-sm border border-slate-200">
+                              {targetWords.map((word, wIdx) => {
+                                 if (word.id === 'w_dots') return null;
+                                 const isPlaced = placedIndices.includes(wIdx);
+                                 return (
+                                    <span key={wIdx} className={`px-2 py-1 rounded-lg text-lg font-thai transition-colors ${isPlaced ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>
+                                       {word.th}
                                     </span>
-                                </div>
-                            )}
-                            
-                            {isCurrent && status !== 'success' && (
-                                <div className="flex flex-wrap gap-1 mt-2 p-2 bg-white rounded-xl shadow-sm border border-slate-200">
-                                   {targetWords.map((word, wIdx) => {
-                                       if (word.id === 'w_dots') return null;
-                                       const isPlaced = placedIndices.includes(wIdx);
-                                       return (
-                                           <span key={wIdx} className={`px-2 py-1 rounded-lg text-lg font-thai transition-colors ${isPlaced ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>
-                                               {word.th}
-                                           </span>
-                                       );
-                                   })}
-                                </div>
-                            )}
-                         </div>
-                     </motion.div>
-                 );
-             })}
+                                 );
+                              })}
+                           </div>
+                        )}
+                     </div>
+                  </motion.div>
+               );
+            })}
          </div>
 
          {/* Controls */}
