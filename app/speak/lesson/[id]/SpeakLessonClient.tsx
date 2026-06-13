@@ -10,6 +10,7 @@ import { SpeakingExercise } from '../../../components/SpeakingExercise';
 import { SpeakConversationExercise, DialogueLine } from '../../../components/speak/SpeakConversationExercise';
 import { SpeakAnswerMeExercise } from '../../../components/speak/SpeakAnswerMeExercise';
 import { SpeakBuildPhraseExercise } from '../../../components/speak/SpeakBuildPhraseExercise';
+import { SpeakBuildByLettersExercise } from '../../../components/speak/SpeakBuildByLettersExercise';
 import SpeakResultScreen from './SpeakResultScreen';
 import speakDialogues from '../../../data/speak_dialogues.json';
 import speakAnswerMe from '../../../data/speak_answer_me.json';
@@ -56,13 +57,14 @@ export default function SpeakLessonClient({
   // Level 3 specific states
   const [answerMeData, setAnswerMeData] = useState<any[]>([]);
 
-  // Level 4 specific states
+  // Level 4 and 5 specific states
   const [level4Phrases, setLevel4Phrases] = useState<Phrase[]>([]);
   const [completedLevel4PhraseIds, setCompletedLevel4PhraseIds] = useState<string[]>([]);
 
   const isLevel2 = level === 2;
   const isLevel3 = level === 3;
   const isLevel4 = level === 4;
+  const isLevel5 = level === 5;
   const storageKey = `speak_${lessonId}_lvl${level}`;
 
   useEffect(() => {
@@ -102,7 +104,7 @@ export default function SpeakLessonClient({
       } else {
          setAnswerMeData(answerData);
       }
-    } else if (isLevel4) {
+    } else if (isLevel4 || isLevel5) {
       const phrases = vocabulary.filter(v => 'components' in v) as Phrase[];
       setLevel4Phrases(phrases);
       
@@ -114,18 +116,45 @@ export default function SpeakLessonClient({
       }
     }
     setMounted(true);
-  }, [isLevel2, isLevel3, isLevel4, lessonId, vocabulary, dictionary, inProgressLessons, storageKey]);
+  }, [isLevel2, isLevel3, isLevel4, isLevel5, lessonId, vocabulary, dictionary, inProgressLessons, storageKey]);
 
   const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
 
   const handleComplete = (finalEarnedXp: number, finalStars: number) => {
     setEarnedXp(finalEarnedXp);
     completeSpeakLesson(lessonId, finalEarnedXp, level - 1, finalStars);
-    if (isLevel2 || isLevel3 || isLevel4) {
+    if (isLevel2 || isLevel3 || isLevel4 || isLevel5) {
        saveInProgressLesson(storageKey, null);
     }
     setIsFinished(true);
     triggerConfetti();
+  };
+
+  const handleNextLevel4And5 = (phraseId: string, mistakesCount: number, isAbandoned?: boolean) => {
+    let newCompleted = completedLevel4PhraseIds;
+    if (!isAbandoned) {
+       newCompleted = [...completedLevel4PhraseIds, phraseId];
+       setCompletedLevel4PhraseIds(newCompleted);
+    }
+    
+    const newTotalMistakes = totalScorePercentage + mistakesCount;
+    setTotalScorePercentage(newTotalMistakes);
+    
+    saveInProgressLesson(storageKey, {
+       exercises: [],
+       currentIndex: 0,
+       timeLeft: null,
+       initialTime: null,
+       lastUpdated: Date.now(),
+       completedPhraseIds: newCompleted,
+       mistakes: newTotalMistakes
+    });
+
+    if (newCompleted.length >= 3 || newCompleted.length >= level4Phrases.length) {
+       const earnedStars = Math.max(0, 5 - Math.floor(newTotalMistakes / 3));
+       const expected = getExpectedXp(`speak_${lessonId}`, level - 1, false);
+       handleComplete(isLevel5 ? 300 : (expected.xp || 150), earnedStars);
+    }
   };
 
   const handleNextLevel1 = (isSuccess: boolean, isAbandoned?: boolean) => {
@@ -179,33 +208,6 @@ export default function SpeakLessonClient({
     }
   };
 
-  const handleNextLevel4 = (phraseId: string, mistakesCount: number, isAbandoned?: boolean) => {
-    const newTotalScore = totalScorePercentage + mistakesCount;
-    setTotalScorePercentage(newTotalScore);
-
-    const newCompleted = phraseId !== 'abandoned' ? [...completedLevel4PhraseIds, phraseId] : completedLevel4PhraseIds;
-    if (phraseId !== 'abandoned') setCompletedLevel4PhraseIds(newCompleted);
-
-    const maxPhrases = Math.min(5, level4Phrases.length || 5);
-    
-    if (currentIndex + 1 < maxPhrases && !isAbandoned) {
-       setCurrentIndex(prev => prev + 1);
-       saveInProgressLesson(storageKey, {
-         exercises: [],
-         timeLeft: null,
-         initialTime: null,
-         completedPhraseIds: newCompleted,
-         currentIndex: currentIndex + 1,
-         mistakes: newTotalScore,
-         lastUpdated: Date.now()
-       });
-    } else {
-       const calculatedXp = getExpectedXp(`speak_${lessonId}`, level - 1, false).xp || 100;
-       const finalStars = Math.max(0, 5 - Math.floor(newTotalScore / 2));
-       handleComplete(calculatedXp, finalStars);
-    }
-  };
-
   const handleLoseStar = () => {
     setMistakes(prev => prev + 1);
   };
@@ -214,7 +216,7 @@ export default function SpeakLessonClient({
     router.push('/speak');
   };
 
-  if (!mounted || (isLevel2 && dialogue.length === 0) || (isLevel3 && answerMeData.length === 0) || (isLevel4 && level4Phrases.length === 0)) {
+  if (!mounted || (isLevel2 && dialogue.length === 0) || (isLevel3 && answerMeData.length === 0) || ((isLevel4 || isLevel5) && level4Phrases.length === 0)) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
         <Loader2 className="animate-spin text-orange-500" size={48} />
@@ -222,14 +224,15 @@ export default function SpeakLessonClient({
     );
   }
 
-  const currentLength = isLevel4 ? Math.min(5, level4Phrases.length) : isLevel3 ? answerMeData.length : isLevel2 ? dialogue.length : exercises.length;
+  const currentLength = isLevel4 || isLevel5 ? Math.min(5, level4Phrases.length) : isLevel3 ? answerMeData.length : isLevel2 ? dialogue.length : exercises.length;
+  const progressPercent = isLevel4 || isLevel5 ? (completedLevel4PhraseIds.length / currentLength) * 100 : (currentLength > 0 ? (currentIndex / currentLength) * 100 : 0);
 
   if (isFinished) {
     return (
       <SpeakResultScreen 
         lessonId={lessonId}
         currentLevel={level - 1}
-        earnedStars={isLevel4 ? Math.max(0, 5 - Math.floor(totalScorePercentage / 2)) : (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / currentLength / 100) * 5) : earnedStars)}
+        earnedStars={isLevel4 || isLevel5 ? Math.max(0, 5 - Math.floor(totalScorePercentage / 3)) : (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / currentLength / 100) * 5) : earnedStars)}
         exercisesLength={currentLength}
         language={language}
         earnedXp={earnedXp}
@@ -255,7 +258,7 @@ export default function SpeakLessonClient({
           <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">
             <div 
               className="bg-orange-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.3)]" 
-              style={{ width: `${currentLength > 0 ? (currentIndex / currentLength) * 100 : 0}%` }}
+              style={{ width: `${progressPercent}%` }}
             ></div>
           </div>
 
@@ -266,7 +269,7 @@ export default function SpeakLessonClient({
                   key={i}
                   size={16}
                   className={
-                    i < (isLevel4 ? Math.max(0, 5 - Math.floor(totalScorePercentage / 2)) : (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / Math.max(1, currentIndex) / 100) * 5) : earnedStars))
+                    i < (isLevel4 || isLevel5 ? Math.max(0, 5 - Math.floor(totalScorePercentage / 3)) : (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / Math.max(1, currentIndex) / 100) * 5) : earnedStars))
                       ? "fill-amber-400 text-amber-400"
                       : "fill-slate-200 text-slate-200"
                   }
@@ -298,7 +301,7 @@ export default function SpeakLessonClient({
             )}
 
             <span className="bg-slate-100 text-slate-500 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold shrink-0 ml-1 flex items-center gap-1.5 tabular-nums">
-              {currentIndex} / {currentLength}
+              {isLevel4 || isLevel5 ? completedLevel4PhraseIds.length : currentIndex} / {currentLength}
             </span>
           </div>
         </div>
@@ -311,8 +314,16 @@ export default function SpeakLessonClient({
             completedPhraseIds={completedLevel4PhraseIds}
             dictionary={dictionary}
             language={language}
-            onCompletePhrase={handleNextLevel4}
-            onLoseStar={() => setTotalScorePercentage(prev => prev + 2)} // force star update
+            onCompletePhrase={handleNextLevel4And5}
+            onLoseStar={() => setTotalScorePercentage(p => p + 2)}
+          />
+        ) : isLevel5 ? (
+          <SpeakBuildByLettersExercise
+            phrases={level4Phrases}
+            completedPhraseIds={completedLevel4PhraseIds}
+            language={language}
+            onCompletePhrase={handleNextLevel4And5}
+            onLoseStar={() => setTotalScorePercentage(p => p + 3)}
           />
         ) : isLevel3 ? (
           <SpeakAnswerMeExercise

@@ -57,7 +57,7 @@ export default function SpeakResultScreen({
       </p>
       
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
-        {currentLevel + 1 < 4 && (
+        {currentLevel + 1 < 5 && (
           <button
             onClick={() =>
               router.push(`/speak/lesson/${lessonId}?level=${currentLevel + 2}`)
