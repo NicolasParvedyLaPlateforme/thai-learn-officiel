@@ -65,7 +65,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
 
   const { speakCompletedLessons, speakLessonLevels, speakLessonStars, dailyQuests, resetLessonLevel, language, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex, reviewStats, getExpectedXp } = useProgressStore();
   
-  const learnQuests = dailyQuests?.learn || [];
+  const speakQuests = dailyQuests?.speak || [];
   const [mounted, setMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -223,7 +223,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             language={language}
             lessonLevels={speakLessonLevels}
             suggestedLessonId={suggestedLessonId}
-            learnQuests={learnQuests}
+            speakQuests={speakQuests}
             mounted={mounted}
             handleUnitSelect={handleUnitSelect}
             setIsUnitsModalOpen={setIsUnitsModalOpen}
@@ -377,6 +377,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             setModalLevel={setModalLevel}
             lessonStars={speakLessonStars}
             resetLessonLevel={resetLessonLevel}
+            questsCategory="speak"
             reviewStats={reviewStats}
           />
         </div>

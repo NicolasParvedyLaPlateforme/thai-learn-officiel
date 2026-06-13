@@ -40,7 +40,7 @@ interface DesktopSidebarRightProps {
   setModalLevel?: (level: number) => void;
   lessonStars?: Record<string, number[]>;
   resetLessonLevel?: (lessonId: string) => void;
-  questsCategory?: 'learn' | 'alphabet';
+  questsCategory?: 'learn' | 'alphabet' | 'speak';
   showUnitsList?: boolean;
   setShowUnitsList?: (show: boolean) => void;
   reviewStats?: Record<string, Record<number, { bestTime?: number, maxPercentage?: number }>>;

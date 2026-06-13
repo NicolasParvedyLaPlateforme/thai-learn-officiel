@@ -11,7 +11,7 @@ interface SpeakMobileTimelineProps {
   language: string;
   lessonLevels: Record<string, number>;
   suggestedLessonId: string | null;
-  learnQuests: any[];
+  speakQuests: any[];
   mounted: boolean;
   handleUnitSelect: (index: number) => void;
   setIsUnitsModalOpen: (open: boolean) => void;
@@ -30,7 +30,7 @@ export default function SpeakMobileTimeline({
   language,
   lessonLevels,
   suggestedLessonId,
-  learnQuests,
+  speakQuests,
   mounted,
   handleUnitSelect,
   setIsUnitsModalOpen,
@@ -130,9 +130,9 @@ export default function SpeakMobileTimeline({
                 <span className="text-xs font-semibold text-slate-400">
                   {getTranslation('auto.daily_quest', language)}
                 </span>
-                {learnQuests.filter(q => !q.completed).length > 0 ? (
+                {speakQuests.filter(q => !q.completed).length > 0 ? (
                   <span className="text-sm font-bold text-slate-700 truncate">
-                    {getLocalizedField(learnQuests.filter(q => !q.completed)[0], 'title', language)}
+                    {getLocalizedField(speakQuests.filter(q => !q.completed)[0], 'title', language)}
                   </span>
                 ) : (
                   <span className="text-sm font-bold text-emerald-600 truncate">
@@ -141,10 +141,10 @@ export default function SpeakMobileTimeline({
                 )}
               </div>
             </div>
-            {learnQuests.filter(q => !q.completed).length > 0 && (
+            {speakQuests.filter(q => !q.completed).length > 0 && (
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
-                  {learnQuests.filter(q => !q.completed)[0].progress} / {learnQuests.filter(q => !q.completed)[0].target}
+                  {speakQuests.filter(q => !q.completed)[0].progress} / {speakQuests.filter(q => !q.completed)[0].target}
                 </span>
                 <ChevronRight size={18} className="text-slate-300 shrink-0" />
               </div>
