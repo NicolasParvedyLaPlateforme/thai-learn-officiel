@@ -3112,9 +3112,9 @@
           "phonetic": "duu",
           "en": "watch",
           "imageUrl": "/images/w_w_du.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "mirar",
+          "de": "schauen",
+          "it": "guardare",
           "syllabe": ""
         },
         {
@@ -3124,9 +3124,9 @@
           "phonetic": "khít",
           "en": "think",
           "imageUrl": "/images/w_w_khit.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "pensar",
+          "de": "denken",
+          "it": "pensare",
           "syllabe": ""
         },
         {
@@ -3136,9 +3136,9 @@
           "phonetic": "rɔɔ",
           "en": "wait",
           "imageUrl": "/images/w_w_ro.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "esperar",
+          "de": "warten",
+          "it": "aspettare",
           "syllabe": ""
         },
         {
@@ -3148,9 +3148,9 @@
           "phonetic": "tham-mai",
           "en": "Why ?",
           "imageUrl": "/images/w_w_thammai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿Por qué?",
+          "de": "Warum?",
+          "it": "Perché?",
           "syllabe": ""
         }
       ],
@@ -3167,9 +3167,9 @@
           ],
           "en": "I want to eat",
           "imageUrl": "/images/p_p_want_eat.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "quiero comer",
+          "de": "ich will essen",
+          "it": "voglio mangiare",
           "syllabe": ""
         },
         {
@@ -3183,9 +3183,9 @@
           ],
           "en": "what are you watching?",
           "imageUrl": "/images/p_p_new_l7_1.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿qué estás mirando?",
+          "de": "Was schaust du?",
+          "it": "cosa stai guardando?",
           "syllabe": ""
         },
         {
@@ -3199,9 +3199,9 @@
           ],
           "en": "what are you thinking about?",
           "imageUrl": "/images/p_p_new_l7_3.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿en qué estás pensando?",
+          "de": "Woran denkst du?",
+          "it": "a cosa stai pensando?",
           "syllabe": ""
         },
         {
@@ -3215,9 +3215,9 @@
           ],
           "en": "want to wait",
           "imageUrl": "/images/p_p_new_l7_2.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "querer esperar",
+          "de": "warten wollen",
+          "it": "volere aspettare",
           "syllabe": ""
         },
         {
@@ -3231,9 +3231,9 @@
           ],
           "en": "come watch",
           "imageUrl": "/images/p_p_new_l7_4.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ven a mirar",
+          "de": "komm schauen",
+          "it": "vieni a guardare",
           "syllabe": ""
         },
         {
@@ -3247,9 +3247,9 @@
           ],
           "en": "Why wait?",
           "imageUrl": "/images/p_p_new_l7_5.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿por qué esperar?",
+          "de": "Warum warten?",
+          "it": "perché aspettare?",
           "syllabe": ""
         },
         {
@@ -3263,21 +3263,21 @@
           ],
           "en": "where are you going?",
           "imageUrl": "/images/p_p_where_go.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿a dónde vas?",
+          "de": "Wohin gehst du?",
+          "it": "dove vai?",
           "syllabe": ""
         }
       ],
       "titleEn": "Useful verbs",
       "descriptionEn": "Everyday actions",
       "imageUrl": "/images/default-lesson.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Observación y espera",
+      "titleDe": "Beobachtung und Warten",
+      "titleIt": "Osservazione e attesa",
+      "descriptionEs": "Acciones cotidianas",
+      "descriptionDe": "Alltägliche Handlungen",
+      "descriptionIt": "Azioni quotidiane"
     },
     {
       "id": "bilan-unit-3",
@@ -3308,9 +3308,9 @@
           "phonetic": "súue",
           "en": "buy",
           "imageUrl": "/images/w_w_sue.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "comprar",
+          "de": "kaufen",
+          "it": "comprare",
           "syllabe": ""
         },
         {
@@ -3320,9 +3320,9 @@
           "phonetic": "khǎai",
           "en": "sell",
           "imageUrl": "/images/w_w_khai_sell.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "vender",
+          "de": "verkaufen",
+          "it": "vendere",
           "syllabe": ""
         },
         {
@@ -3332,9 +3332,9 @@
           "phonetic": "ngoen",
           "en": "money",
           "imageUrl": "/images/w_w_ngern.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "dinero",
+          "de": "Geld",
+          "it": "denaro",
           "syllabe": ""
         },
         {
@@ -3344,9 +3344,9 @@
           "phonetic": "bàat",
           "en": "baht (currency)",
           "imageUrl": "/images/w_w_baht.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "baht (moneda)",
+          "de": "Baht (Währung)",
+          "it": "baht (valuta)",
           "syllabe": ""
         },
         {
@@ -3356,9 +3356,9 @@
           "phonetic": "thâo rai",
           "en": "How much",
           "imageUrl": "/images/w_w_thao_rai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "cuánto",
+          "de": "wie viel",
+          "it": "quanto",
           "syllabe": ""
         }
       ],
@@ -3375,9 +3375,9 @@
           ],
           "en": "do you have water?",
           "imageUrl": "/images/p_p_have_water.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿tiene agua?",
+          "de": "Haben Sie Wasser?",
+          "it": "ha dell'acqua?",
           "syllabe": ""
         },
         {
@@ -3391,9 +3391,9 @@
           ],
           "en": "I come (man)",
           "imageUrl": "/images/p_p_come_here_m.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ya voy (hombre)",
+          "de": "Ich komme (Mann)",
+          "it": "arrivo (uomo)",
           "syllabe": ""
         },
         {
@@ -3407,9 +3407,9 @@
           ],
           "en": "how much does it cost? (man)",
           "imageUrl": "/images/p_p_how_much.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿cuánto cuesta? (hombre)",
+          "de": "Wie viel kostet das? (Mann)",
+          "it": "quanto costa? (uomo)",
           "syllabe": ""
         },
         {
@@ -3423,9 +3423,9 @@
           ],
           "en": "how much does it cost? (woman)",
           "imageUrl": "/images/p_p_how_much_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿cuánto cuesta? (mujer)",
+          "de": "Wie viel kostet das? (Frau)",
+          "it": "quanto costa? (donna)",
           "syllabe": ""
         },
         {
@@ -3439,9 +3439,9 @@
           ],
           "en": "how much do you sell it for?",
           "imageUrl": "/images/p_p_new_l8_1.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿a cuánto lo vendes?",
+          "de": "Für wie viel verkaufst du es?",
+          "it": "a quanto lo vendi?",
           "syllabe": ""
         },
         {
@@ -3456,9 +3456,9 @@
           ],
           "en": "do you have money?",
           "imageUrl": "/images/p_p_new_l8_3.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿tienes dinero?",
+          "de": "Hast du Geld?",
+          "it": "hai dei soldi?",
           "syllabe": ""
         },
         {
@@ -3472,21 +3472,21 @@
           ],
           "en": "buy water",
           "imageUrl": "/images/p_p_buy_water.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "comprar agua",
+          "de": "Wasser kaufen",
+          "it": "comprare dell'acqua",
           "syllabe": ""
         }
       ],
       "titleEn": "Getting Around and First Purchases",
       "descriptionEn": "Getting around town to make purchases",
       "imageUrl": "/images/l_nouveau_011.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Desplazamientos y Primeras Compras",
+      "titleDe": "Fortbewegung und erste Einkäufe",
+      "titleIt": "Spostamenti e Primi Acquisti",
+      "descriptionEs": "Desplazarse por la ciudad para hacer compras",
+      "descriptionDe": "Sich in der Stadt fortbewegen, um Einkäufe zu tätigen",
+      "descriptionIt": "Spostarsi in città per fare acquisti"
     },
     {
       "id": "lesson-8",
