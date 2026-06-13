@@ -1818,9 +1818,9 @@
           "en": "delicious",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_aroi.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "delicioso",
+          "de": "lecker",
+          "it": "delizioso",
           "syllabe": ""
         },
         {
@@ -1831,9 +1831,9 @@
           "en": "very / a lot",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_mak.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "muy / mucho",
+          "de": "sehr / viel",
+          "it": "molto / tanto",
           "syllabe": ""
         },
         {
@@ -1844,9 +1844,9 @@
           "en": "spicy",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phet.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "picante",
+          "de": "scharf",
+          "it": "piccante",
           "syllabe": ""
         },
         {
@@ -1857,9 +1857,9 @@
           "en": "sweet",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_waan.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "dulce",
+          "de": "süß",
+          "it": "dolce",
           "syllabe": ""
         },
         {
@@ -1870,9 +1870,9 @@
           "en": "salty",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khem.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "salado",
+          "de": "salzig",
+          "it": "salato",
           "syllabe": ""
         }
       ],
@@ -1889,9 +1889,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_very_delicious.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "muy delicioso",
+          "de": "sehr lecker",
+          "it": "molto delizioso",
           "syllabe": ""
         },
         {
@@ -1906,9 +1906,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_spicy.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no picante",
+          "de": "nicht scharf",
+          "it": "non piccante",
           "syllabe": ""
         },
         {
@@ -1924,9 +1924,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_spicy_m.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "es muy picante (hombre)",
+          "de": "es ist sehr scharf (Mann)",
+          "it": "è molto piccante (uomo)",
           "syllabe": ""
         },
         {
@@ -1942,9 +1942,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_delicious_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "muy delicioso (mujer)",
+          "de": "sehr lecker (Frau)",
+          "it": "molto delizioso (donna)",
           "syllabe": ""
         },
         {
@@ -1959,9 +1959,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_pork_delicious.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "el cerdo está delicioso",
+          "de": "das Schweinefleisch ist lecker",
+          "it": "il maiale è delizioso",
           "syllabe": ""
         },
         {
@@ -1976,9 +1976,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_spicy_chicken.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "pollo picante",
+          "de": "scharfes Hähnchen",
+          "it": "pollo piccante",
           "syllabe": ""
         },
         {
@@ -1993,9 +1993,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_sweet.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no dulce",
+          "de": "nicht süß",
+          "it": "non dolce",
           "syllabe": ""
         },
         {
@@ -2010,21 +2010,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_salty_meat.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "carne salada",
+          "de": "salziges Fleisch",
+          "it": "carne salata",
           "syllabe": ""
         }
       ],
       "titleEn": "Food 3: Flavors and Appreciation",
       "descriptionEn": "Express your tastes and appreciate food",
       "imageUrl": "/images/l_nouveau_006.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Alimentación 3: Sabores y Apreciación",
+      "titleDe": "Essen 3: Geschmacksrichtungen und Wertschätzung",
+      "titleIt": "Alimentazione 3: Sapori e Apprezzamento",
+      "descriptionEs": "Expresar sus gustos y apreciar la comida",
+      "descriptionDe": "Drücken Sie Ihren Geschmack aus und genießen Sie das Essen",
+      "descriptionIt": "Esprimere i propri gusti e apprezzare il cibo"
     },
     {
       "id": "lesson-5",
@@ -2039,9 +2039,9 @@
           "en": "sorry / excuse me",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_kho_thot.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "lo siento / disculpe",
+          "de": "Entschuldigung / tut mir leid",
+          "it": "scusa / mi dispiace",
           "syllabe": ""
         },
         {
@@ -2052,9 +2052,9 @@
           "en": "please (formal)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_ka_ru_na.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "por favor (formal)",
+          "de": "bitte (formal)",
+          "it": "per favore (formale)",
           "syllabe": ""
         },
         {
@@ -2065,9 +2065,9 @@
           "en": "to help",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_chuai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ayudar",
+          "de": "helfen",
+          "it": "aiutare",
           "syllabe": ""
         },
         {
@@ -2078,9 +2078,9 @@
           "en": "a bit (to soften a request)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_noi.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "un poco (para suavizar una petición)",
+          "de": "ein bisschen (um eine Bitte höflicher zu machen)",
+          "it": "un po' (per attenuare una richiesta)",
           "syllabe": ""
         },
         {
@@ -2091,9 +2091,9 @@
           "en": "can / able to",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_daai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "poder / posible",
+          "de": "können / möglich",
+          "it": "potere / possibile",
           "syllabe": ""
         }
       ],
@@ -2110,9 +2110,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_sorry_m.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "lo siento / disculpe (hombre)",
+          "de": "Entschuldigung (Mann)",
+          "it": "scusa / mi dispiace (uomo)",
           "syllabe": ""
         },
         {
@@ -2127,9 +2127,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_sorry_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "lo siento / disculpe (mujer)",
+          "de": "Entschuldigung (Frau)",
+          "it": "scusa / mi dispiace (donna)",
           "syllabe": ""
         },
         {
@@ -2144,9 +2144,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_help_a_bit.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ayúdeme por favor",
+          "de": "helfen Sie mir bitte",
+          "it": "aiutami, per favore",
           "syllabe": ""
         },
         {
@@ -2162,9 +2162,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_please_help.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "por favor, ayúdeme",
+          "de": "bitte helfen Sie mir",
+          "it": "per favore, mi aiuti",
           "syllabe": ""
         },
         {
@@ -2180,21 +2180,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_cannot_help.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no puedo ayudar",
+          "de": "ich kann nicht helfen",
+          "it": "non posso aiutare",
           "syllabe": ""
         }
       ],
       "titleEn": "Basics 3: Politeness and questions",
       "descriptionEn": "Polite expressions and basic questions",
       "imageUrl": "/images/default-lesson.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Interacciones 1: Cortesía y Disculpas",
+      "titleDe": "Interaktionen 1: Höflichkeit und Entschuldigungen",
+      "titleIt": "Interazioni 1: Cortesia e Scuse",
+      "descriptionEs": "Fórmulas de cortesía y preguntas básicas",
+      "descriptionDe": "Höflichkeitsformeln und grundlegende Fragen",
+      "descriptionIt": "Formule di cortesia e domande di base"
     },
     {
       "id": "bilan-unit-2",
@@ -2226,9 +2226,9 @@
           "en": "to understand",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khao_jai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "entender / comprender",
+          "de": "verstehen",
+          "it": "capire / comprendere",
           "syllabe": ""
         },
         {
@@ -2239,9 +2239,9 @@
           "en": "to speak",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phut.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hablar",
+          "de": "sprechen",
+          "it": "parlare",
           "syllabe": ""
         },
         {
@@ -2252,9 +2252,9 @@
           "en": "quite / really (often used with negation for 'not quite')",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khoi.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "bastante / realmente (a menudo usado con negación para 'no muy')",
+          "de": "ziemlich / wirklich (oft mit Verneinung für 'nicht besonders' verwendet)",
+          "it": "abbastanza / veramente (spesso usato con la negazione per 'non tanto')",
           "syllabe": ""
         },
         {
@@ -2265,9 +2265,9 @@
           "en": "slow / slowly",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_cha_lent.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "lento / lentamente",
+          "de": "langsam",
+          "it": "lento / lentamente",
           "syllabe": ""
         },
         {
@@ -2278,9 +2278,9 @@
           "en": "again / more",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_eek.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "otra vez / de nuevo",
+          "de": "nochmal / wieder",
+          "it": "ancora / di nuovo",
           "syllabe": ""
         }
       ],
@@ -2297,9 +2297,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_understand_q.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿Entiende? / ¿Entiendes?",
+          "de": "Verstehen Sie? / Verstehst du?",
+          "it": "Capisce? / Capisci?",
           "syllabe": ""
         },
         {
@@ -2315,9 +2315,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_understand_well.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "No entiendo muy bien.",
+          "de": "Ich verstehe nicht so gut.",
+          "it": "Non capisco molto bene.",
           "syllabe": ""
         },
         {
@@ -2332,9 +2332,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_speak_what.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿Qué dices? / ¿Qué está diciendo?",
+          "de": "Was sagst du? / Was sagen Sie?",
+          "it": "Cosa dici? / Cosa sta dicendo?",
           "syllabe": ""
         },
         {
@@ -2351,9 +2351,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_speak_slowly.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "Por favor, hable un poco más lento.",
+          "de": "Bitte sprechen Sie etwas langsamer.",
+          "it": "Per favore, parli un po' più lentamente.",
           "syllabe": ""
         },
         {
@@ -2371,21 +2371,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_speak_again.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿Puede repetirlo una vez más?",
+          "de": "Könnten Sie das bitte noch einmal sagen?",
+          "it": "Può ripetere ancora una volta?",
           "syllabe": ""
         }
       ],
       "titleEn": "Interactions 2: Comprehension",
       "descriptionEn": "Check understanding and ask for clarification",
       "imageUrl": "/images/l_nouveau_007.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Interacciones 2: Comprensión",
+      "titleDe": "Interaktionen 2: Verständnis",
+      "titleIt": "Interazioni 2: Comprensione",
+      "descriptionEs": "Verificar la comprensión y pedir aclaraciones",
+      "descriptionDe": "Das Verständnis überprüfen und um Klärung bitten",
+      "descriptionIt": "Verificare la comprensione e chiedere di chiarire"
     },
     {
       "id": "l_nouveau_008",
@@ -2400,9 +2400,9 @@
           "en": "here",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_thi_ni.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "aquí",
+          "de": "hier",
+          "it": "qui",
           "syllabe": ""
         },
         {
@@ -2413,9 +2413,9 @@
           "en": "in",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_nai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "en / dentro de",
+          "de": "in",
+          "it": "in / dentro",
           "syllabe": ""
         },
         {
@@ -2426,9 +2426,9 @@
           "en": "where",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_thi_nai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "dónde",
+          "de": "wo",
+          "it": "dove",
           "syllabe": ""
         },
         {
@@ -2439,9 +2439,9 @@
           "en": "there",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_thi_nan.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "allí / allá",
+          "de": "dort / da drüben",
+          "it": "là / laggiù",
           "syllabe": ""
         },
         {
@@ -2452,9 +2452,9 @@
           "en": "on",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_bon.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "sobre / en",
+          "de": "auf",
+          "it": "su / sopra",
           "syllabe": ""
         }
       ],
@@ -2470,9 +2470,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_where_is_it.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿dónde está? / ¿dónde es?",
+          "de": "wo ist es?",
+          "it": "dov'è?",
           "syllabe": ""
         },
         {
@@ -2487,9 +2487,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_speak_where.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿hablar dónde?",
+          "de": "wo sprechen?",
+          "it": "parlare dove?",
           "syllabe": ""
         },
         {
@@ -2504,9 +2504,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_in_bag.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "en la bolsa / en el bolso",
+          "de": "in der Tasche",
+          "it": "nella borsa",
           "syllabe": ""
         },
         {
@@ -2521,9 +2521,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_on_table.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "sobre la mesa",
+          "de": "auf dem Tisch",
+          "it": "sul tavolo",
           "syllabe": ""
         },
         {
@@ -2538,21 +2538,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_eat_here.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "comer aquí",
+          "de": "hier essen",
+          "it": "mangiare qui",
           "syllabe": ""
         }
       ],
       "titleEn": "Space 1: Basic Location",
       "descriptionEn": "Locate objects in space",
       "imageUrl": "/images/l_nouveau_008.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Espacio 1: Localización Básica",
+      "titleDe": "Raum 1: Grundlegende Lokalisierung",
+      "titleIt": "Spazio 1: Localizzazione di Base",
+      "descriptionEs": "Situar objetos en el espacio",
+      "descriptionDe": "Objekte im Raum lokalisieren",
+      "descriptionIt": "Situare gli oggetti nello spazio"
     },
     {
       "id": "lesson-6",
@@ -2567,9 +2567,9 @@
           "en": "mother",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_mae.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "madre",
+          "de": "Mutter",
+          "it": "madre",
           "syllabe": ""
         },
         {
@@ -2580,9 +2580,9 @@
           "en": "father",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_pho.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "padre",
+          "de": "Vater",
+          "it": "padre",
           "syllabe": ""
         },
         {
@@ -2593,9 +2593,9 @@
           "en": "big brother/big sister",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phi.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hermano mayor / hermana mayor",
+          "de": "älterer Bruder / ältere Schwester",
+          "it": "fratello maggiore / sorella maggiore",
           "syllabe": ""
         },
         {
@@ -2606,9 +2606,9 @@
           "en": "little brother/little sister",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_nong.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hermano menor / hermana menor",
+          "de": "jüngerer Bruder / jüngere Schwester",
+          "it": "fratello minore / sorella minore",
           "syllabe": ""
         },
         {
@@ -2619,9 +2619,9 @@
           "en": "of/belonging to",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khong_of.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "de (pertenencia)",
+          "de": "von (Besitz)",
+          "it": "di (appartenenza)",
           "syllabe": ""
         }
       ],
@@ -2640,9 +2640,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_dad_fine.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿cómo está papá?",
+          "de": "wie geht es Papa?",
+          "it": "come sta papà?",
           "syllabe": ""
         },
         {
@@ -2659,9 +2659,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_two_older_siblings.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hay dos hermanos mayores",
+          "de": "es gibt zwei ältere Geschwister",
+          "it": "ci sono due fratelli maggiori",
           "syllabe": ""
         },
         {
@@ -2677,9 +2677,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_mom_name.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿cómo se llama mamá?",
+          "de": "wie heißt Mama?",
+          "it": "come si chiama mamma?",
           "syllabe": ""
         },
         {
@@ -2695,9 +2695,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_my_younger_sibling.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "mi hermano menor / mi hermana menor",
+          "de": "mein jüngerer Bruder / meine jüngere Schwester",
+          "it": "mio fratello minore / mia sorella minore",
           "syllabe": ""
         },
         {
@@ -2715,21 +2715,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_dad_has_three_younger_siblings.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "papá tiene tres hermanos menores",
+          "de": "Papa hat drei jüngere Geschwister",
+          "it": "papà ha tre fratelli o sorelle minori",
           "syllabe": ""
         }
       ],
       "titleEn": "Subjects and Family",
       "descriptionEn": "Talk about others",
       "imageUrl": "/images/family.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Entorno 1: La Familia Cercana",
+      "titleDe": "Umfeld 1: Die Kernfamilie",
+      "titleIt": "Famiglia 1: I Parenti Stretti",
+      "descriptionEs": "Hablar de los demás",
+      "descriptionDe": "Über andere sprechen",
+      "descriptionIt": "Parlare degli altri"
     },
     {
       "id": "l_nouveau_009",
@@ -2744,9 +2744,9 @@
           "en": "he / she",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khao_pron.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "él / ella",
+          "de": "er / sie",
+          "it": "lui / lei",
           "syllabe": ""
         },
         {
@@ -2757,9 +2757,9 @@
           "en": "we",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_rao.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "nosotros",
+          "de": "wir",
+          "it": "noi",
           "syllabe": ""
         },
         {
@@ -2770,9 +2770,9 @@
           "en": "go",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_pai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ir",
+          "de": "gehen",
+          "it": "andare",
           "syllabe": ""
         },
         {
@@ -2783,9 +2783,9 @@
           "en": "come",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_maa.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "venir",
+          "de": "kommen",
+          "it": "venire",
           "syllabe": ""
         },
         {
@@ -2796,9 +2796,9 @@
           "en": "it",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_man.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "él / ella (animal, objeto)",
+          "de": "es (Tier, Objekt)",
+          "it": "esso / essa (animale, oggetto)",
           "syllabe": ""
         }
       ],
@@ -2816,9 +2816,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_he_name.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿cómo se llama él?",
+          "de": "wie heißt er?",
+          "it": "come si chiama?",
           "syllabe": ""
         },
         {
@@ -2834,9 +2834,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_we_are_good.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "nosotros estamos bien",
+          "de": "uns geht es gut",
+          "it": "noi stiamo bene",
           "syllabe": ""
         },
         {
@@ -2852,9 +2852,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_where_is_dad.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿adónde va papá?",
+          "de": "wohin geht Papa?",
+          "it": "dove va papà?",
           "syllabe": ""
         },
         {
@@ -2870,9 +2870,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_he_comes_here.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "él viene aquí",
+          "de": "er kommt hierher",
+          "it": "lui viene qui",
           "syllabe": ""
         },
         {
@@ -2888,21 +2888,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_it_eats_chicken.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "eso come pollo",
+          "de": "es frisst Hähnchen",
+          "it": "mangia del pollo",
           "syllabe": ""
         }
       ],
       "titleEn": "Space 2: Getting Around and Pronouns",
       "descriptionEn": "Talk about getting around and use pronouns",
       "imageUrl": "/images/l_nouveau_009.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Espacio 2: Desplazamientos y Pronombres",
+      "titleDe": "Raum 2: Fortbewegung und Pronomen",
+      "titleIt": "Spazio 2: Spostamenti e Pronomi",
+      "descriptionEs": "Hablar de sus desplazamientos y usar los pronombres",
+      "descriptionDe": "Über Fortbewegung sprechen und Pronomen verwenden",
+      "descriptionIt": "Parlare dei propri spostamenti e usare i pronomi"
     },
     {
       "id": "l_nouveau_010",
@@ -2916,9 +2916,9 @@
           "phonetic": "khruu",
           "en": "teacher",
           "imageUrl": "/images/w_w_khru.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "profesor / maestro",
+          "de": "Lehrer",
+          "it": "professore / maestro",
           "syllabe": ""
         },
         {
@@ -2928,9 +2928,9 @@
           "phonetic": "jai dii",
           "en": "kind",
           "imageUrl": "/images/w_w_jai_dee.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "amable / bondadoso",
+          "de": "gütig / nett",
+          "it": "gentile / buono",
           "syllabe": ""
         },
         {
@@ -2940,9 +2940,9 @@
           "fr": "cœur",
           "phonetic": "jai",
           "imageUrl": "/images/w_w_jai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "corazón",
+          "de": "Herz",
+          "it": "cuore",
           "syllabe": ""
         },
         {
@@ -2952,9 +2952,9 @@
           "phonetic": "tham",
           "en": "TO DO",
           "imageUrl": "/images/w_w_tham.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hacer",
+          "de": "tun / machen",
+          "it": "fare",
           "syllabe": ""
         },
         {
@@ -2964,9 +2964,9 @@
           "phonetic": "yàak",
           "en": "to want",
           "imageUrl": "/images/w_w_yak.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "querer",
+          "de": "wollen",
+          "it": "volere",
           "syllabe": ""
         }
       ],
@@ -2983,9 +2983,9 @@
           ],
           "en": "what's your friend's name?",
           "imageUrl": "/images/p_p_new_l6_1.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿cómo se llama tu amigo?",
+          "de": "wie heißt dein Freund?",
+          "it": "come si chiama il tuo amico?",
           "syllabe": ""
         },
         {
@@ -3000,9 +3000,9 @@
           ],
           "en": "the child eats rice",
           "imageUrl": "/images/p_p_new_l6_2.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "el niño come arroz",
+          "de": "das Kind isst Reis",
+          "it": "il bambino mangia del riso",
           "syllabe": ""
         },
         {
@@ -3016,9 +3016,9 @@
           ],
           "en": "the teacher is good",
           "imageUrl": "/images/p_p_new_l6_3.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "el profesor es amable",
+          "de": "der Lehrer ist nett",
+          "it": "il maestro è gentile",
           "syllabe": ""
         },
         {
@@ -3034,9 +3034,9 @@
           ],
           "en": "is your friend well?",
           "imageUrl": "/images/p_p_new_l6_4.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿tu amigo está bien?",
+          "de": "geht es deinem Freund gut?",
+          "it": "sta bene il tuo amico?",
           "syllabe": ""
         },
         {
@@ -3051,9 +3051,9 @@
           ],
           "en": "the child's mother",
           "imageUrl": "/images/p_p_new_l6_5.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "la madre del niño",
+          "de": "die Mutter des Kindes",
+          "it": "la madre del bambino",
           "syllabe": ""
         },
         {
@@ -3067,9 +3067,9 @@
           ],
           "en": "what are you doing ?",
           "imageUrl": "/images/p_p_what_are_you_doing.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿qué haces? / ¿qué está haciendo?",
+          "de": "was machst du? / was tun Sie?",
+          "it": "cosa fai? / cosa sta facendo?",
           "syllabe": ""
         },
         {
@@ -3084,21 +3084,21 @@
           ],
           "en": "I want to go (woman)",
           "imageUrl": "/images/p_p_want_to_go_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "quiero ir (mujer)",
+          "de": "ich will gehen (Frau)",
+          "it": "voglio andare (donna)",
           "syllabe": ""
         }
       ],
       "titleEn": "Surroundings and Basic Actions",
       "descriptionEn": "Describe your environment and common actions",
       "imageUrl": "/images/l_nouveau_010.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Entorno y Actions Básicas",
+      "titleDe": "Umfeld und Grundlegende Handlungen",
+      "titleIt": "Ambiente e Azioni di Base",
+      "descriptionEs": "Describir su entorno y sus acciones comunes",
+      "descriptionDe": "Beschreiben Sie Ihre Umgebung und alltägliche Handlungen",
+      "descriptionIt": "Descrivere il proprio ambiente e le azioni comuni"
     },
     {
       "id": "lesson-7",
