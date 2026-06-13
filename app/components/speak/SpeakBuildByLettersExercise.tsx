@@ -200,9 +200,28 @@ export function SpeakBuildByLettersExercise({
                const maxL = Math.max(spokenText.length, optName.length);
                let similarity = Math.max(0, Math.round(((maxL - dist) / maxL) * 100));
 
+               // Fallback: Dictation engines often spell rare letters phonetically.
+               const DICTATION_ALIASES: Record<string, string[]> = {
+                  'ณ': ['นอเนน', 'เนน', 'นอเณร'],
+                  'ญ': ['ยอหยิง', 'ยอหญิง', 'หยิง'],
+                  'ฒ': ['ทอผู้เฒ่า', 'ทอพูเทา', 'พูเทา', 'ผู้เฒ่า'],
+                  'ฬ': ['ลอจุลา', 'จุลา'],
+                  'ฆ': ['คอระคัง', 'ระคัง'],
+                  'ฌ': ['ชอเชอ', 'เชอ'],
+                  'ฎ': ['ดอชะดา', 'ชะดา'],
+                  'ฏ': ['ตอปะตัก', 'ปะตัก'],
+                  'ฐ': ['ถอสันทาน', 'สันทาน'],
+                  'ฑ': ['ทอมนโท', 'มนโท'],
+                  'ธ': ['ทอทง', 'ทง']
+               };
+
                // Instant match if the speech API correctly recognized and returned the Thai character itself!
                if (spokenText.includes(opt.char)) {
                   similarity = 100;
+               } else if (DICTATION_ALIASES[opt.char]) {
+                  if (DICTATION_ALIASES[opt.char].some(alias => spokenText.includes(alias))) {
+                     similarity = 100;
+                  }
                }
 
                if (similarity > highestSim) {
