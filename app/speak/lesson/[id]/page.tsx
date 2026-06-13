@@ -31,6 +31,7 @@ export default async function SpeakLessonPage({
 
   return (
     <SpeakLessonClient 
+      key={level}
       lessonId={resolvedParams.id} 
       level={level} 
       vocabulary={exerciseVocabulary} 
