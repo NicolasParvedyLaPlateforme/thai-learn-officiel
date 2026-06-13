@@ -35,7 +35,7 @@ const getLetterData = (char: string): AlphabetItem | undefined => {
 // Get the spoken name of a character (exampleWord, e.g. "สระ อะ")
 const getLetterSpokenName = (char: string): string => {
    const data = getLetterData(char);
-   if (data) return normalizeThai(data.exampleWord);
+   if (data) return data.exampleWord;
    return char;
 };
 
@@ -165,7 +165,7 @@ export function SpeakBuildByLettersExercise({
          else {
             const spokenText = normalizeThai(transcript);
             const expectedChar = targetChars[step];
-            const expectedName = getLetterSpokenName(expectedChar);
+            const expectedName = normalizeThai(getLetterSpokenName(expectedChar));
             
             // Check against options
             let matchedOptionIndex = -1;
@@ -175,7 +175,7 @@ export function SpeakBuildByLettersExercise({
                const opt = currentOptions[i];
                if (opt.isWrong) continue; // Skip already failed options
                
-               const optName = getLetterSpokenName(opt.char);
+               const optName = normalizeThai(getLetterSpokenName(opt.char));
                const distance = levenshtein.get(spokenText, optName);
                const maxLen = Math.max(spokenText.length, optName.length);
                const similarity = maxLen === 0 ? 100 : ((maxLen - distance) / maxLen) * 100;
@@ -199,8 +199,7 @@ export function SpeakBuildByLettersExercise({
                   setTimeout(() => {
                      if (step + 1 >= targetChars.length) {
                         // Finished phrase
-                        const penaltyMistakes = mistakes + Math.floor(hintCount / 5) * 3;
-                        onCompletePhrase(lockedPhraseId, penaltyMistakes);
+                        onCompletePhrase(lockedPhraseId, mistakes);
                      } else {
                         setStep(step + 1);
                      }
@@ -275,9 +274,6 @@ export function SpeakBuildByLettersExercise({
                <h2 className="text-xl sm:text-2xl font-bold text-slate-700 text-center">
                   {getTranslation('auto.speak_to_select', language)}
                </h2>
-               <p className="text-slate-500 text-center max-w-md">
-                  {getTranslation('auto.speak_phrase_instruction', language) || "Prononcez la phrase que vous souhaitez travailler"}
-               </p>
                
                <div className="flex flex-col gap-3 w-full max-w-md">
                   {availablePhrases.map((phrase, idx) => (
@@ -296,13 +292,7 @@ export function SpeakBuildByLettersExercise({
 
          {/* Phase 2: Building */}
          {lockedPhraseId && (
-            <div className="flex flex-col gap-8 w-full">
-               <div className="flex justify-between items-center">
-                  <h2 className="text-xl sm:text-2xl font-bold text-slate-700">
-                     {getTranslation('auto.speak_letter_name', language) || "Prononcez le nom de la lettre"}
-                  </h2>
-               </div>
-
+            <div className="flex flex-col gap-8 w-full mt-4">
                {/* Selected Area (VirtualKeyboard style) */}
                <div className={`min-h-[100px] border-y-2 border-slate-200 py-4 flex flex-col gap-2`}>
                   <div className="flex gap-3 justify-center items-center">
@@ -378,7 +368,25 @@ export function SpeakBuildByLettersExercise({
 
          {/* Microphone Button at the bottom */}
          {(status !== 'success' || !lockedPhraseId) && (!lockedPhraseId || step < targetChars.length) && (
-            <div className="flex flex-col items-center mt-12 mb-8">
+            <div className="flex flex-col items-center mt-auto pt-12 pb-8">
+               <div className="mb-6 min-h-[3rem] text-center px-4 w-full max-w-md">
+                  {status === 'listening' ? (
+                     <p className="text-lg text-slate-600 font-medium">
+                        {spokenHistory || getTranslation('auto.listening', language)}
+                     </p>
+                  ) : status === 'timeup' ? (
+                     <p className="text-rose-500 font-medium">{getTranslation('auto.no_audio_detected', language)}</p>
+                  ) : status === 'evaluating' ? (
+                     <p className="text-orange-500 font-medium animate-pulse">{getTranslation('auto.checking', language)}</p>
+                  ) : (
+                     <p className="text-slate-500 font-medium text-lg">
+                        {lockedPhraseId 
+                           ? getTranslation('auto.speak_letter_name', language) || "Prononcez le nom de la lettre"
+                           : getTranslation('auto.speak_phrase_instruction', language) || "Prononcez la phrase que vous souhaitez travailler"}
+                     </p>
+                  )}
+               </div>
+
                <button
                   onClick={toggleMic}
                   className={`
@@ -393,24 +401,6 @@ export function SpeakBuildByLettersExercise({
                      <Mic size={40} className="text-white" strokeWidth={2.5} />
                   )}
                </button>
-               
-               <div className="mt-6 min-h-[3rem] text-center px-4 w-full max-w-md">
-                  {status === 'listening' ? (
-                     <p className="text-lg text-slate-600 font-medium">
-                        {spokenHistory || getTranslation('auto.listening', language)}
-                     </p>
-                  ) : status === 'timeup' ? (
-                     <p className="text-rose-500 font-medium">{getTranslation('auto.no_audio_detected', language)}</p>
-                  ) : status === 'evaluating' ? (
-                     <p className="text-orange-500 font-medium animate-pulse">{getTranslation('auto.checking', language)}</p>
-                  ) : (
-                     <p className="text-slate-400 font-medium">
-                        {lockedPhraseId 
-                           ? getTranslation('auto.speak_letter_name', language) || "Prononcez le nom de la lettre"
-                           : getTranslation('auto.speak_phrase_instruction', language) || "Prononcez la phrase de votre choix"}
-                     </p>
-                  )}
-               </div>
             </div>
          )}
       </div>
