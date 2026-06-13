@@ -197,7 +197,7 @@ export function SpeakBuildByLettersExercise({
 
                // Fallback: Dictation engines often spell rare letters phonetically.
                const DICTATION_ALIASES: Record<string, string[]> = {
-                  'ณ': ['นอเนน', 'เนน', 'นอเณร'],
+                  'ณ': ['นอเนน', 'เนน', 'นอเณร', 'โนน', 'โนนี่', 'โดเนอะ', 'โนเน'],
                   'ญ': ['ยอหยิง', 'ยอหญิง', 'หยิง'],
                   'ฒ': ['ทอผู้เฒ่า', 'ทอพูเทา', 'พูเทา', 'ผู้เฒ่า'],
                   'ฬ': ['ลอจุลา', 'จุลา'],
