@@ -35,7 +35,7 @@ const getLetterData = (char: string): AlphabetItem | undefined => {
 // Get the spoken name of a character (exampleWord, e.g. "สระ อะ")
 const getLetterSpokenName = (char: string): string => {
    const data = getLetterData(char);
-   if (data) return data.exampleWord;
+   if (data) return data.exampleWord.replace(/\s+/g, '');
    return char;
 };
 
@@ -67,6 +67,7 @@ export function SpeakBuildByLettersExercise({
    const [currentOptions, setCurrentOptions] = useState<{ char: string, isWrong: boolean }[]>([]);
    const [mistakes, setMistakes] = useState(0);
    const [hintCount, setHintCount] = useState(0);
+   const [hintRomanization, setHintRomanization] = useState<string | null>(null);
 
    const autoStartNextRef = useRef(false);
    const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -98,6 +99,7 @@ export function SpeakBuildByLettersExercise({
             setStep(0);
             setMistakes(0);
             setHintCount(0);
+            setHintRomanization(null);
          }
       }
    }, [lockedPhraseId, phrases]);
@@ -132,6 +134,7 @@ export function SpeakBuildByLettersExercise({
          setCurrentOptions(options);
          setStatus('idle');
          setSpokenHistory("");
+         setHintRomanization(null);
          resetTranscript();
       }
    }, [lockedPhraseId, targetChars, step]);
@@ -336,20 +339,31 @@ export function SpeakBuildByLettersExercise({
                         )}
                      </div>
                      {step < targetChars.length && (
-                        <button 
-                           className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
-                           onClick={() => {
-                              setHintCount(h => h + 1);
-                              playTTS(getLetterSpokenName(targetChars[step]));
-                              if ((hintCount + 1) % 5 === 0 && onLoseStar) {
-                                 onLoseStar();
-                              }
-                           }}
-                           title="Indice (Son)"
-                        >
-                           <Volume2 size={24} strokeWidth={2.5} />
-                           <span className="font-bold text-lg leading-none">A</span>
-                        </button>
+                        <div className="flex flex-col items-center gap-2">
+                           <button 
+                              className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
+                              onClick={() => {
+                                 setHintCount(h => h + 1);
+                                 playTTS(getLetterSpokenName(targetChars[step]));
+                                 
+                                 const data = getLetterData(targetChars[step]);
+                                 if (data) setHintRomanization(data.pronunciation);
+
+                                 if ((hintCount + 1) % 5 === 0 && onLoseStar) {
+                                    onLoseStar();
+                                 }
+                              }}
+                              title="Indice (Son)"
+                           >
+                              <Volume2 size={24} strokeWidth={2.5} />
+                              <span className="font-bold text-lg leading-none">A</span>
+                           </button>
+                           {hintRomanization && (
+                              <span className="text-indigo-600 font-medium text-sm animate-fade-in bg-indigo-50 px-2 py-1 rounded-md">
+                                 {hintRomanization}
+                              </span>
+                           )}
+                        </div>
                      )}
                   </div>
                </div>

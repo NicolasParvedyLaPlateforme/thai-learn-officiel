@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../../../lib/store';
 import { Word, Phrase } from '../../../types';
-import { ArrowLeft, Loader2, X, Star, Crown } from 'lucide-react';
+import { ArrowLeft, Loader2, X, Star, Crown, BookOpen } from 'lucide-react';
 import { SpeakingExercise } from '../../../components/SpeakingExercise';
 import { SpeakConversationExercise, DialogueLine } from '../../../components/speak/SpeakConversationExercise';
 import { SpeakAnswerMeExercise } from '../../../components/speak/SpeakAnswerMeExercise';
@@ -43,6 +43,7 @@ export default function SpeakLessonClient({
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [earnedXp, setEarnedXp] = useState(0);
+  const [showResumePrompt, setShowResumePrompt] = useState(false);
   
   // Level 1 specific states
   const [exercises, setExercises] = useState(vocabulary);
@@ -109,10 +110,8 @@ export default function SpeakLessonClient({
       setLevel4Phrases(phrases);
       
       const savedState = inProgressLessons[storageKey];
-      if (savedState) {
-         setCompletedLevel4PhraseIds(savedState.completedPhraseIds || []);
-         setCurrentIndex(savedState.currentIndex || 0);
-         setTotalScorePercentage(savedState.mistakes || 0);
+      if (savedState && savedState.completedPhraseIds && savedState.completedPhraseIds.length > 0) {
+         setShowResumePrompt(true);
       }
     }
     setMounted(true);
@@ -216,6 +215,41 @@ export default function SpeakLessonClient({
     router.push('/speak');
   };
 
+  const handleResumeChoice = (resume: boolean) => {
+    if (resume) {
+      const savedState = inProgressLessons[storageKey];
+      if (savedState) {
+        if (isLevel2 || isLevel3) {
+          setCurrentIndex(savedState.currentIndex || 0);
+          setTotalScorePercentage(savedState.mistakes || 0);
+          if (isLevel3 && savedState.exercises && savedState.exercises.length > 0) {
+            setAnswerMeData(savedState.exercises);
+          }
+        } else if (isLevel4 || isLevel5) {
+          setCompletedLevel4PhraseIds(savedState.completedPhraseIds || []);
+          setCurrentIndex(savedState.currentIndex || 0);
+          setTotalScorePercentage(savedState.mistakes || 0);
+        }
+      }
+    } else {
+      saveInProgressLesson(storageKey, null);
+      if (isLevel2) {
+         setCurrentIndex(0);
+         setTotalScorePercentage(0);
+      } else if (isLevel3) {
+         const answerData = (speakAnswerMe as any).exercises[lessonId] || [];
+         setAnswerMeData(answerData);
+         setCurrentIndex(0);
+         setTotalScorePercentage(0);
+      } else if (isLevel4 || isLevel5) {
+         setCompletedLevel4PhraseIds([]);
+         setCurrentIndex(0);
+         setTotalScorePercentage(0);
+      }
+    }
+    setShowResumePrompt(false);
+  };
+
   if (!mounted || (isLevel2 && dialogue.length === 0) || (isLevel3 && answerMeData.length === 0) || ((isLevel4 || isLevel5) && level4Phrases.length === 0)) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
@@ -226,6 +260,36 @@ export default function SpeakLessonClient({
 
   const currentLength = isLevel4 || isLevel5 ? Math.min(5, level4Phrases.length) : isLevel3 ? answerMeData.length : isLevel2 ? dialogue.length : exercises.length;
   const progressPercent = isLevel4 || isLevel5 ? (completedLevel4PhraseIds.length / currentLength) * 100 : (currentLength > 0 ? (currentIndex / currentLength) * 100 : 0);
+
+  if (showResumePrompt) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center p-8 max-w-md mx-auto w-full text-center">
+        <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mb-6 shadow-sm border-4 border-white">
+          <BookOpen size={36} className="text-indigo-600" />
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800 mb-4 tracking-tight">
+          {getTranslation('auto.resume_lesson', language) || "Reprendre la leçon ?"}
+        </h2>
+        <p className="text-slate-500 mb-10 text-base sm:text-lg max-w-[280px] mx-auto leading-relaxed font-medium">
+          {getTranslation('auto.you_have_an_unfinished_lesso', language) || "Vous avez une leçon en cours. Voulez-vous reprendre là où vous vous étiez arrêté ?"}
+        </p>
+        <div className="flex flex-col gap-3 w-full">
+          <button
+            onClick={() => handleResumeChoice(true)}
+            className="w-full py-4 rounded-xl font-bold text-[17px] text-white bg-indigo-500 hover:bg-indigo-600 active:translate-y-1 shadow-md transition-all flex items-center justify-center"
+          >
+            {getTranslation('auto.resume', language) || "Reprendre"}
+          </button>
+          <button
+            onClick={() => handleResumeChoice(false)}
+            className="w-full py-4 rounded-xl font-bold text-[17px] text-slate-500 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 transition-colors flex items-center justify-center"
+          >
+            {getTranslation('auto.start_over', language) || "Recommencer"}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (isFinished) {
     return (
