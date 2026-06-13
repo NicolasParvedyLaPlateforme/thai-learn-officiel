@@ -79,6 +79,8 @@ export function SpeakBuildByLettersExercise({
    const [mistakes, setMistakes] = useState(0);
    const [hintCount, setHintCount] = useState(0);
    const [hintRomanization, setHintRomanization] = useState<string | null>(null);
+   const [successPhraseId, setSuccessPhraseId] = useState<string | null>(null);
+   const [successChar, setSuccessChar] = useState<string | null>(null);
 
    const autoStartNextRef = useRef(false);
    const listeningTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -164,13 +166,16 @@ export function SpeakBuildByLettersExercise({
                const maxLen = Math.max(spokenText.length, targetText.length);
                const similarity = maxLen === 0 ? 100 : ((maxLen - distance) / maxLen) * 100;
                
-               if (similarity >= requiredAccuracy || targetText.includes(spokenText)) {
+               if (similarity >= requiredAccuracy) {
                   stopMic();
                   setStatus('success');
+                  setSuccessPhraseId(phrase.id);
                   playTTS(phrase.th);
                   setTimeout(() => {
                      setLockedPhraseId(phrase.id);
-                  }, 1500);
+                     setSuccessPhraseId(null);
+                     resetTranscript();
+                  }, 1000);
                   return;
                }
             }
@@ -179,7 +184,6 @@ export function SpeakBuildByLettersExercise({
          else {
             const spokenText = normalizeThai(transcript);
             const expectedChar = targetChars[step];
-            const expectedName = normalizeThai(getLetterSpokenName(expectedChar));
             
             // Check against options
             let matchedOptionIndex = -1;
@@ -216,7 +220,9 @@ export function SpeakBuildByLettersExercise({
                if (matchedChar === expectedChar) {
                   // Correct
                   setStatus('success');
+                  setSuccessChar(matchedChar);
                   setTimeout(() => {
+                     setSuccessChar(null);
                      if (step + 1 >= targetChars.length) {
                         // Finished phrase
                         onCompletePhrase(lockedPhraseId, mistakes);
@@ -311,16 +317,23 @@ export function SpeakBuildByLettersExercise({
                </h2>
                
                <div className="flex flex-col gap-3 w-full max-w-md">
-                  {availablePhrases.map((phrase, idx) => (
-                     <div 
-                        key={idx} 
-                        className="bg-white border-2 border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-orange-300 transition-colors"
-                        onClick={() => playTTS(phrase.th)}
-                     >
-                        <span className="text-2xl font-thai text-slate-700 mb-1">{phrase.th}</span>
-                        <span className="text-slate-500 text-sm">{phrase.phonetic}</span>
-                     </div>
-                  ))}
+                  {availablePhrases.map((phrase, idx) => {
+                     const isSuccess = successPhraseId === phrase.id;
+                     return (
+                        <motion.div 
+                           key={idx} 
+                           animate={isSuccess ? { scale: [1, 1.05, 1] } : {}}
+                           transition={{ duration: 0.4 }}
+                           className={`rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition-colors ${
+                              isSuccess ? 'bg-green-50 border-2 border-green-500 shadow-sm shadow-green-100' : 'bg-white border-2 border-slate-200 hover:border-orange-300'
+                           }`}
+                           onClick={() => playTTS(phrase.th)}
+                        >
+                           <span className="text-2xl font-thai text-slate-700 mb-1">{phrase.th}</span>
+                           <span className="text-slate-500 text-sm">{phrase.phonetic}</span>
+                        </motion.div>
+                     );
+                  })}
                </div>
             </div>
          )}
@@ -390,21 +403,27 @@ export function SpeakBuildByLettersExercise({
                   <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto w-full">
                      {currentOptions.map((opt, idx) => {
                         let displayStr = formatCombiningChar(opt.char);
+                        const isSuccess = successChar === opt.char;
                         
                         return (
-                           <button
+                           <motion.button
                               key={`key-${idx}`}
+                              animate={isSuccess ? { scale: [1, 1.15, 1], rotate: [0, -5, 5, 0] } : {}}
+                              transition={{ duration: 0.5, type: 'spring' }}
                               onClick={() => playTTS(getLetterTTSName(opt.char))}
                               className={`
                                  rounded-xl font-medium font-thai select-none transition-all
                                  text-4xl sm:text-5xl flex items-center justify-center h-20 sm:h-24
-                                 ${opt.isWrong 
-                                    ? 'bg-slate-100 border-2 border-slate-200 text-slate-300 pointer-events-none' 
-                                    : 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2'}
+                                 ${isSuccess 
+                                    ? 'bg-green-500 border-2 border-green-600 border-b-4 text-white shadow-lg shadow-green-200 pointer-events-none' 
+                                    : opt.isWrong 
+                                       ? 'bg-slate-100 border-2 border-slate-200 text-slate-300 pointer-events-none' 
+                                       : 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2'
+                                 }
                               `}
                            >
                               <span className="leading-none pt-1">{displayStr}</span>
-                           </button>
+                           </motion.button>
                         );
                      })}
                   </div>
