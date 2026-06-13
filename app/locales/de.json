@@ -1,4 +1,9 @@
 {
+  "auto.speak_to_select": "Sprechen zum Auswählen",
+  "auto.speak_phrase_instruction": "Sprechen Sie den Satz, den Sie üben möchten",
+  "auto.speak_letter_name": "Sprechen Sie den Buchstabennamen",
+  "auto.choose_first_word": "Sprechen Sie das erste Wort",
+  "auto.waiting_selection": "Warten auf Auswahl...",
   "sidebar.path": "Pfad",
   "sidebar.alphabet": "Alphabet",
   "sidebar.dialogs": "Dialoge",

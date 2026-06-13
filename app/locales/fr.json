@@ -1,4 +1,9 @@
 {
+  "auto.speak_to_select": "Lisez pour choisir",
+  "auto.speak_phrase_instruction": "Prononcez la phrase que vous souhaitez travailler",
+  "auto.speak_letter_name": "Prononcez le nom de la lettre",
+  "auto.choose_first_word": "Prononcez le premier mot",
+  "auto.waiting_selection": "En attente de sélection...",
   "sidebar.path": "Parcours",
   "sidebar.alphabet": "Alphabet",
   "sidebar.dialogs": "Dialogues",

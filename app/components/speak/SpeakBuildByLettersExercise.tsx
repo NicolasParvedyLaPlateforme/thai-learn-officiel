@@ -377,7 +377,7 @@ export function SpeakBuildByLettersExercise({
          )}
 
          {/* Microphone Button at the bottom */}
-         {(status !== 'success' || !lockedPhraseId) && step < targetChars.length && (
+         {(status !== 'success' || !lockedPhraseId) && (!lockedPhraseId || step < targetChars.length) && (
             <div className="flex flex-col items-center mt-12 mb-8">
                <button
                   onClick={toggleMic}
