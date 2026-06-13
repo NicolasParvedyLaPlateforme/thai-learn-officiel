@@ -77,6 +77,7 @@ export function SpeakBuildByLettersExercise({
    const [step, setStep] = useState(0); // Current character index
    const [currentOptions, setCurrentOptions] = useState<{ char: string, isWrong: boolean }[]>([]);
    const [mistakes, setMistakes] = useState(0);
+   const [letterMistakes, setLetterMistakes] = useState(0);
    const [hintCount, setHintCount] = useState(0);
    const [hintRomanization, setHintRomanization] = useState<string | null>(null);
    const [successPhraseId, setSuccessPhraseId] = useState<string | null>(null);
@@ -112,6 +113,7 @@ export function SpeakBuildByLettersExercise({
             setTargetChars(characters);
             setStep(0);
             setMistakes(0);
+            setLetterMistakes(0);
             setHintCount(0);
             setHintRomanization(null);
          }
@@ -274,6 +276,7 @@ export function SpeakBuildByLettersExercise({
                   setSuccessChar(matchedChar);
                   setTimeout(() => {
                      setSuccessChar(null);
+                     setLetterMistakes(0);
                      if (step + 1 >= targetChars.length) {
                         // Finished phrase
                         onCompletePhrase(lockedPhraseId, mistakes);
@@ -283,13 +286,33 @@ export function SpeakBuildByLettersExercise({
                   }, 1000);
                } else {
                   // Wrong
+                  const newLetterMistakes = letterMistakes + 1;
+                  setLetterMistakes(newLetterMistakes);
                   setMistakes(m => m + 1);
                   setCurrentOptions(prev => prev.map((o, idx) => idx === matchedOptionIndex ? { ...o, isWrong: true } : o));
-                  setTimeout(() => {
-                     setStatus('idle');
-                     setSpokenHistory("");
-                     resetTranscript();
-                  }, 1000);
+                  
+                  if (newLetterMistakes >= 3) {
+                     setTimeout(() => {
+                        setStatus('success');
+                        setSuccessScore(100);
+                        setSuccessChar(expectedChar);
+                        setTimeout(() => {
+                           setSuccessChar(null);
+                           setLetterMistakes(0);
+                           if (step + 1 >= targetChars.length) {
+                              onCompletePhrase(lockedPhraseId, mistakes + 1);
+                           } else {
+                              setStep(step + 1);
+                           }
+                        }, 1000);
+                     }, 1000);
+                  } else {
+                     setTimeout(() => {
+                        setStatus('idle');
+                        setSpokenHistory("");
+                        resetTranscript();
+                     }, 1000);
+                  }
                }
             }
          }
