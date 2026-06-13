@@ -181,19 +181,14 @@ export function SpeakBuildByLettersExercise({
                   return;
                }
             }
-         } 
-         // Phase 2: Letter matching
-         else {
+         } else {
+            // Phase 2: Letter matching
             const spokenText = normalizeThai(transcript);
             const expectedChar = targetChars[step];
             
-            // Check against options
-            let matchedOptionIndex = -1;
-            let highestSim = 0;
-
-            for (let i = 0; i < currentOptions.length; i++) {
-               const opt = currentOptions[i];
-               if (opt.isWrong) continue; // Skip already failed options
+            // Calculate similarity for ALL options
+            const similarities = currentOptions.map(opt => {
+               if (opt.isWrong) return 0;
                
                const optName = normalizeThai(getLetterSpokenName(opt.char));
                const dist = levenshtein.get(spokenText, optName);
@@ -223,12 +218,29 @@ export function SpeakBuildByLettersExercise({
                      similarity = 100;
                   }
                }
+               
+               return similarity;
+            });
 
-               if (similarity > highestSim) {
-                  highestSim = similarity;
-                  matchedOptionIndex = i;
-                  
-                  if (similarity === 100) break; // Perfect match found, stop looking
+            // Find the expected option's index and similarity
+            const expectedIndex = currentOptions.findIndex(o => o.char === expectedChar);
+            const expectedSim = expectedIndex >= 0 ? similarities[expectedIndex] : 0;
+
+            let matchedOptionIndex = -1;
+            let highestSim = 0;
+
+            // Leniency rule: If the expected char scores at least 70%, we assume the user intended to say it.
+            // This fixes dictation engines frequently confusing long/short vowels (e.g. สระอา vs สระอะ) in isolation.
+            if (expectedSim >= 70) {
+               matchedOptionIndex = expectedIndex;
+               highestSim = expectedSim;
+            } else {
+               // Otherwise, just pick the highest scoring option
+               for (let i = 0; i < similarities.length; i++) {
+                  if (similarities[i] > highestSim) {
+                     highestSim = similarities[i];
+                     matchedOptionIndex = i;
+                  }
                }
             }
 
