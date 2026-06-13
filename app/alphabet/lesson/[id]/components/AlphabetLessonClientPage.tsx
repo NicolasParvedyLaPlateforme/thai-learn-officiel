@@ -8,7 +8,7 @@ import { useProgressStore } from '../../../../lib/store';
 import { getAlphabetLessons, AlphabetExercise, AlphabetLessonDef, formatCombiningChar } from '../../../../lib/alphabet-utils';
 import { AlphabetItem } from '../../../../lib/alphabet-data';
 import { getAlphabetExercisesServer } from '../../../../actions/course';
-import { X, Check, Star, Volume2, HelpCircle, Info } from 'lucide-react';
+import { X, Check, Star, Volume2, HelpCircle, Info, RotateCcw } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from '../../../../lib/tts';
 import { m as motion , AnimatePresence } from "motion/react";
 import { ColoredPhonetic } from '../../../../components/ColoredPhonetic';
@@ -280,6 +280,13 @@ function AlphabetLessonContent() {
               {getTranslation('auto.next_level', language)}
             </button>
           )}
+          <button
+            onClick={() => window.location.reload()}
+            className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
+          >
+            <RotateCcw size={20} />
+            {getTranslation('auto.retry', language)}
+          </button>
           <button 
             onClick={() => router.push(`/alphabet#lesson-${lesson?.id}`)}
             className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
