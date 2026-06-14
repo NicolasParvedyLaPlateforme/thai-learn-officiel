@@ -4124,9 +4124,9 @@
           "phonetic": "phrûng",
           "en": "tomorrow (basic)",
           "imageUrl": "/images/w_w_phrung.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "mañana (base)",
+          "de": "morgen (Basis)",
+          "it": "domani (base)",
           "syllabe": ""
         },
         {
@@ -4136,9 +4136,9 @@
           "phonetic": "mûea",
           "en": "when (past)",
           "imageUrl": "/images/w_w_muea.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "cuando (pasado)",
+          "de": "als / wann (Vergangenheit)",
+          "it": "quando (passato)",
           "syllabe": ""
         },
         {
@@ -4148,9 +4148,9 @@
           "phonetic": "wee-laa",
           "en": "time / hour",
           "imageUrl": "/images/w_w_wela.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "tiempo / hora",
+          "de": "Zeit / Uhrzeit",
+          "it": "tempo / ora",
           "syllabe": ""
         },
         {
@@ -4160,9 +4160,9 @@
           "fr": "hier (court / familier)",
           "phonetic": "waan",
           "imageUrl": "/images/w_w_wan_yesterday.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ayer (forma corta)",
+          "de": "gestern (Kurzform)",
+          "it": "ieri (forma corta)",
           "syllabe": ""
         },
         {
@@ -4172,9 +4172,9 @@
           "fr": "demain",
           "phonetic": "phrûng-níi",
           "imageUrl": "/images/w_w_phrungnii.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "mañana",
+          "de": "morgen",
+          "it": "domani",
           "syllabe": ""
         },
         {
@@ -4184,9 +4184,9 @@
           "fr": "ce / cette",
           "phonetic": "níi",
           "imageUrl": "/images/w_w_nii_this.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "este / esta",
+          "de": "dieser / diese / dieses",
+          "it": "questo / questa",
           "syllabe": ""
         },
         {
@@ -4196,9 +4196,9 @@
           "en": "today",
           "phonetic": "wan-níi",
           "imageUrl": "/images/w_w_wan_nii.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hoy",
+          "de": "heute",
+          "it": "oggi",
           "syllabe": ""
         }
       ],
@@ -4213,9 +4213,9 @@
           ],
           "en": "Today",
           "imageUrl": "/images/p_p_today.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "Hoy",
+          "de": "Heute",
+          "it": "Oggi",
           "syllabe": ""
         },
         {
@@ -4228,9 +4228,9 @@
           ],
           "en": "tomorrow",
           "imageUrl": "/images/p_p_tomorrow.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "mañana",
+          "de": "morgen",
+          "it": "domani",
           "syllabe": ""
         },
         {
@@ -4245,9 +4245,9 @@
           ],
           "en": "yesterday",
           "imageUrl": "/images/p_p_yesterday.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ayer",
+          "de": "gestern",
+          "it": "ieri",
           "syllabe": ""
         },
         {
@@ -4261,9 +4261,9 @@
           ],
           "en": "five days",
           "imageUrl": "/images/p_p_five_days.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "cinco días",
+          "de": "fünf Tage",
+          "it": "cinque giorni",
           "syllabe": ""
         },
         {
@@ -4277,9 +4277,9 @@
           ],
           "en": "what time is it? (formal)",
           "imageUrl": "/images/p_p_what_time_is_it.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿qué hora es? (formal)",
+          "de": "Wie viel Uhr ist es? (formal)",
+          "it": "che ora è? (formale)",
           "syllabe": ""
         },
         {
@@ -4293,9 +4293,9 @@
           ],
           "en": "go tomorrow",
           "imageUrl": "/images/p_p_go_tomorrow.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ir mañana",
+          "de": "morgen gehen",
+          "it": "andare domani",
           "syllabe": ""
         },
         {
@@ -4311,21 +4311,21 @@
           ],
           "en": "yesterday was good",
           "imageUrl": "/images/p_p_yesterday_good.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ayer estuvo bien / ayer fue un buen día",
+          "de": "gestern war es gut",
+          "it": "ieri è andata bene / ieri era bello",
           "syllabe": ""
         }
       ],
       "titleEn": "Time & days",
       "descriptionEn": "Today, tomorrow, yesterday...",
       "imageUrl": "/images/time.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Tiempo y días",
+      "titleDe": "Zeit & Tage",
+      "titleIt": "Tempo e giorni",
+      "descriptionEs": "Hoy, mañana, ayer...",
+      "descriptionDe": "Heute, morgen, gestern...",
+      "descriptionIt": "Oggi, domani, ieri..."
     },
     {
       "id": "l_nouveau_012",
@@ -4340,9 +4340,9 @@
           "en": "fire / electricity",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_fai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "fuego / electricidad",
+          "de": "Feuer / Elektrizität",
+          "it": "fuoco / elettricità",
           "syllabe": ""
         },
         {
@@ -4353,9 +4353,9 @@
           "en": "ride / drive (motorcycle/bicycle)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khi.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "conducir / montar (moto/bici)",
+          "de": "fahren / reiten (Motorrad/Fahrrad)",
+          "it": "guidare / cavalcare (moto/bici)",
           "syllabe": ""
         },
         {
@@ -4366,9 +4366,9 @@
           "en": "look for",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_ha.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "buscar",
+          "de": "suchen",
+          "it": "cercare",
           "syllabe": ""
         },
         {
@@ -4379,9 +4379,9 @@
           "en": "rest first",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phak_kon.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "descansar primero",
+          "de": "ausruhen zuerst / sich zuerst ausruhen",
+          "it": "riposarsi prima",
           "syllabe": ""
         },
         {
@@ -4392,9 +4392,9 @@
           "en": "smile",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_yim.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "sonreír",
+          "de": "lächeln",
+          "it": "sorridere",
           "syllabe": ""
         }
       ],
@@ -4411,9 +4411,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_khi_rot.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "conducir / montar un vehículo",
+          "de": "ein Fahrzeug fahren",
+          "it": "guidare / montare un veicolo",
           "syllabe": ""
         },
         {
@@ -4428,9 +4428,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_ha_arai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿qué estás buscando?",
+          "de": "Was suchst du?",
+          "it": "cosa stai cercando?",
           "syllabe": ""
         },
         {
@@ -4445,9 +4445,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_phak_kon_mai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿quieres descansar primero?",
+          "de": "Möchtest du dich zuerst ausruhen?",
+          "it": "vuoi riposarti prima?",
           "syllabe": ""
         },
         {
@@ -4462,9 +4462,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_khao_yim.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "él / ella sonríe",
+          "de": "er / sie lächelt",
+          "it": "lui / lei sorride",
           "syllabe": ""
         },
         {
@@ -4480,21 +4480,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_dek_ha_mae.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "el niño busca a su madre",
+          "de": "das Kind sucht seine Mutter",
+          "it": "il bambino cerca sua madre",
           "syllabe": ""
         }
       ],
       "titleEn": "Feelings and Ongoing Actions",
       "descriptionEn": "Express emotions and what you are currently doing",
       "imageUrl": "/images/l_nouveau_012.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Estados de ánimo y acciones",
+      "titleDe": "Gemütszustände & Handlungen",
+      "titleIt": "Stati d'animo e azioni",
+      "descriptionEs": "Expresar emociones y lo que se está haciendo",
+      "descriptionDe": "Gefühle ausdrücken und was man gerade tut",
+      "descriptionIt": "Esprimere emozioni e ciò che si sta facendo"
     },
     {
       "id": "bilan-unit-4",
@@ -4526,9 +4526,9 @@
           "en": "left",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_sai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "izquierda",
+          "de": "links",
+          "it": "sinistra",
           "syllabe": ""
         },
         {
@@ -4539,9 +4539,9 @@
           "en": "right",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khwa.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "derecha",
+          "de": "rechts",
+          "it": "destra",
           "syllabe": ""
         },
         {
@@ -4552,9 +4552,9 @@
           "en": "straight / direct",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_trong.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "recto / directo",
+          "de": "geradeaus / direkt",
+          "it": "dritto / diretto",
           "syllabe": ""
         },
         {
@@ -4565,9 +4565,9 @@
           "en": "turn",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_liao.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "girar / torcer",
+          "de": "abbiegen",
+          "it": "girare / svoltare",
           "syllabe": ""
         },
         {
@@ -4578,9 +4578,9 @@
           "en": "to return / to turn back",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_glap.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "volver / dar la vuelta",
+          "de": "zurückkehren / umdrehen",
+          "it": "tornare / fare inversione",
           "syllabe": ""
         }
       ],
@@ -4597,9 +4597,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_turn_left.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "gire a la izquierda",
+          "de": "biegen Sie links ab",
+          "it": "giri a sinistra",
           "syllabe": ""
         },
         {
@@ -4614,9 +4614,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_turn_right.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "gire a la derecha",
+          "de": "biegen Sie rechts ab",
+          "it": "giri a destra",
           "syllabe": ""
         },
         {
@@ -4631,9 +4631,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_straight.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "vaya recto",
+          "de": "gehen Sie geradeaus",
+          "it": "vada dritto",
           "syllabe": ""
         },
         {
@@ -4648,9 +4648,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_left.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ir a la izquierda",
+          "de": "nach links gehen",
+          "it": "andare a sinistra",
           "syllabe": ""
         },
         {
@@ -4665,9 +4665,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_right.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ir a la derecha",
+          "de": "nach rechts gehen",
+          "it": "andare a destra",
           "syllabe": ""
         },
         {
@@ -4683,9 +4683,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_straight_kha.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "vaya recto (dicho por una mujer)",
+          "de": "gehen Sie geradeaus (Frau)",
+          "it": "vada dritto (detto da una donna)",
           "syllabe": ""
         },
         {
@@ -4700,9 +4700,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_u_turn.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hacer un cambio de sentido / dar la vuelta",
+          "de": "wenden / eine Kehrtwende machen",
+          "it": "fare un'inversione a U",
           "syllabe": ""
         },
         {
@@ -4718,21 +4718,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_turn_left_here.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "gire a la izquierda aquí",
+          "de": "biegen Sie hier links ab",
+          "it": "giri a sinistra qui",
           "syllabe": ""
         }
       ],
       "titleEn": "Directions",
       "descriptionEn": "Left, right, straight",
       "imageUrl": "/images/default-lesson.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Direcciones",
+      "titleDe": "Wegbeschreibungen",
+      "titleIt": "Direzioni",
+      "descriptionEs": "Izquierda, derecha, recto",
+      "descriptionDe": "Links, rechts, geradeaus",
+      "descriptionIt": "Sinistra, destra, dritto"
     },
     {
       "id": "lesson-14",
@@ -4747,9 +4747,9 @@
           "en": "yes / correct",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_chai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "sí / exacto",
+          "de": "ja / richtig",
+          "it": "sì / esatto",
           "syllabe": ""
         },
         {
@@ -4760,9 +4760,9 @@
           "en": "no / it's not",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_mai_chai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no / no es",
+          "de": "nein / es ist nicht",
+          "it": "no / non è",
           "syllabe": ""
         },
         {
@@ -4773,9 +4773,9 @@
           "en": "a little bit",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_nit_noi.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "un poco / un poquito",
+          "de": "ein bisschen / ein klein wenig",
+          "it": "un po' / un pochino",
           "syllabe": ""
         },
         {
@@ -4786,9 +4786,9 @@
           "en": "sure / certain",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_nae_jai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "seguro / cierto",
+          "de": "sicher",
+          "it": "sicuro / certo",
           "syllabe": ""
         },
         {
@@ -4799,9 +4799,9 @@
           "en": "maybe / perhaps",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_aat_ja.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "tal vez / quizás",
+          "de": "vielleicht",
+          "it": "forse / magari",
           "syllabe": ""
         }
       ],
@@ -4818,9 +4818,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_yes.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "sí (dicho por un homme)",
+          "de": "ja (Mann)",
+          "it": "sì (detto da un uomo)",
           "syllabe": ""
         },
         {
@@ -4835,9 +4835,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_yes_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "sí (dicho por una mujer)",
+          "de": "ja (Frau)",
+          "it": "sì (detto da una donna)",
           "syllabe": ""
         },
         {
@@ -4852,9 +4852,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_no_m.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no (dicho por un hombre)",
+          "de": "nein (Mann)",
+          "it": "no (detto da un uomo)",
           "syllabe": ""
         },
         {
@@ -4869,9 +4869,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_no_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no (dicho por una mujer)",
+          "de": "nein (Frau)",
+          "it": "no (detto da una donna)",
           "syllabe": ""
         },
         {
@@ -4887,9 +4887,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_speak_thai_little.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "hablo un poco (de tailandés)",
+          "de": "Ich spreche ein bisschen (Thailändisch)",
+          "it": "parlo un po' (di thailandese)",
           "syllabe": ""
         },
         {
@@ -4905,9 +4905,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_sure_m.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no estoy seguro (hombre)",
+          "de": "nicht sicher (Mann)",
+          "it": "non sono sicuro (uomo)",
           "syllabe": ""
         },
         {
@@ -4923,9 +4923,9 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_sure_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no estoy segura (mujer)",
+          "de": "nicht sicher (Frau)",
+          "it": "non sono sicura (donna)",
           "syllabe": ""
         },
         {
@@ -4940,21 +4940,21 @@
           ],
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_maybe_yes.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "tal vez sí / quizás sí",
+          "de": "vielleicht ja",
+          "it": "forse sì / magari sì",
           "syllabe": ""
         }
       ],
       "titleEn": "Conversation Basics",
       "descriptionEn": "Yes, no, maybe, please",
       "imageUrl": "/images/default-lesson.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Básicos de la conversación",
+      "titleDe": "Grundlagen der Konversation",
+      "titleIt": "Basi della conversazione",
+      "descriptionEs": "Sí, no, tal vez, por favor",
+      "descriptionDe": "Ja, nein, vielleicht, bitte",
+      "descriptionIt": "Sì, no, forse, per favore"
     },
     {
       "id": "lesson-15",
