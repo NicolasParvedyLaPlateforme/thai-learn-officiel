@@ -546,6 +546,15 @@ export const useProgressStore = create<ProgressState>()(
            key = lessonId;
            isFirstTime = !completedToday.includes(key);
            xp = isFirstTime ? 50 : 20;
+        } else if (lessonId.startsWith('speak_')) {
+           key = `${lessonId}_level-${levelIndex}`;
+           isFirstTime = !completedToday.includes(key);
+           if (levelIndex === 0) xp = isFirstTime ? 50 : 15;
+           else if (levelIndex === 1) xp = isFirstTime ? 100 : 30;
+           else if (levelIndex === 2) xp = isFirstTime ? 100 : 30;
+           else if (levelIndex === 3) xp = isFirstTime ? 150 : 45;
+           else if (levelIndex === 4) xp = isFirstTime ? 300 : 90;
+           else xp = isFirstTime ? 50 : 15;
         } else if (levelIndex === 10) {
            key = `learn_${lessonId}_level-10`;
            isFirstTime = !completedToday.includes(key);

@@ -79,7 +79,7 @@ export default function SpeakLessonModal({
   }
 
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
-  const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, !!isReviewOrBilan);
+  const { xp: expectedXp, isFirstTime } = getExpectedXp(`speak_${selectedLesson.lesson.id}`, modalLevel, !!isReviewOrBilan);
 
   // Mastery Logic
   const isUnlockedMastery = currentProgress >= maxLevelPerLesson;
@@ -189,7 +189,7 @@ export default function SpeakLessonModal({
                   <Star size={16} className="fill-amber-500 text-amber-600" />
                   {isFirstTime ? `+${expectedXp} XP` : (
                     <>
-                      <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                      <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : expectedXp === 15 ? 50 : expectedXp === 25 ? 50 : expectedXp === 30 ? 100 : expectedXp === 45 ? 150 : expectedXp === 90 ? 300 : 200}</span>
                       <span>+{expectedXp} XP</span>
                     </>
                   )}

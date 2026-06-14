@@ -269,7 +269,8 @@ export function DesktopSidebarRight({
 
                 {(() => {
                   const { getExpectedXp } = useProgressStore.getState();
-                  const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'));
+                  const lessonIdForXp = suggestionType === 'speak' ? `speak_${selectedLesson.lesson.id}` : selectedLesson.lesson.id;
+                  const { xp: expectedXp, isFirstTime } = getExpectedXp(lessonIdForXp, modalLevel, selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'));
                   
                   return (
                     <div className="flex items-center justify-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full flex-wrap">
@@ -281,7 +282,7 @@ export function DesktopSidebarRight({
                         <Star size={16} className="fill-amber-500 text-amber-600" />
                         {isFirstTime ? `+${expectedXp} XP` : (
                           <>
-                            <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                            <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : expectedXp === 15 ? 50 : expectedXp === 25 ? 50 : expectedXp === 30 ? 100 : expectedXp === 45 ? 150 : expectedXp === 90 ? 300 : 200}</span>
                             <span>+{expectedXp} XP</span>
                           </>
                         )}
