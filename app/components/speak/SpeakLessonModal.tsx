@@ -270,27 +270,6 @@ export default function SpeakLessonModal({
           </div>
 
           <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-            {selectedLesson.isCompleted && (
-              <div className="flex gap-3">
-                <Link
-                  href={`/writing?lessonId=${selectedLesson.lesson.id}`}
-                  className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer"
-                >
-                  <Pencil size={16} className="mr-2" />
-                  {getTranslation('auto.writing', language)}
-                </Link>
-                <button
-                  onClick={() => {
-                    resetLessonLevel(selectedLesson.lesson.id);
-                    setModalLevel(0);
-                  }}
-                  className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
-                >
-                  <RotateCcw size={16} className="mr-2" />
-                  {getTranslation('auto.reset', language)}
-                </button>
-              </div>
-            )}
             <div className="flex items-center gap-3 w-full mt-1">
               {isBrave ? (
                 <button

@@ -396,7 +396,7 @@ export function DesktopSidebarRight({
 
             {/* Sticky Actions Footer */}
             <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-              {selectedLesson.isCompleted && (
+              {selectedLesson.isCompleted && suggestionType !== 'speak' && (
                 <div className="flex gap-3 mb-1">
                   {suggestionType !== 'alphabet' && (
                     <Link
