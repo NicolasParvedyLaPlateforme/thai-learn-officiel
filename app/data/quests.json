@@ -134,5 +134,51 @@
       "titleEs": "Ganar 300 XP (Alfabeto)",
       "titleIt": "Guadagna 300 XP (Alfabeto)"
     }
+  ],
+  "speak": [
+    {
+      "id": "s_quest_lesson_1",
+      "type": "lessons",
+      "target": 1,
+      "rewardXp": 200,
+      "titleEn": "Complete 1 Speak Lesson",
+      "titleFr": "Terminer 1 leçon d'oral",
+      "titleDe": "1 Sprech-Lektion abschließen",
+      "titleEs": "Completar 1 lección de habla",
+      "titleIt": "Completa 1 lezione orale"
+    },
+    {
+      "id": "s_quest_lesson_3",
+      "type": "lessons",
+      "target": 3,
+      "rewardXp": 500,
+      "titleEn": "Complete 3 Speak Lessons",
+      "titleFr": "Terminer 3 leçons d'oral",
+      "titleDe": "3 Sprech-Lektionen abschließen",
+      "titleEs": "Completar 3 lecciones de habla",
+      "titleIt": "Completa 3 lezioni orali"
+    },
+    {
+      "id": "s_quest_xp_50",
+      "type": "xp",
+      "target": 500,
+      "rewardXp": 1500,
+      "titleEn": "Earn 500 XP in Speak",
+      "titleFr": "Gagner 500 XP (Oral)",
+      "titleDe": "500 XP verdienen (Sprechen)",
+      "titleEs": "Ganar 500 XP (Habla)",
+      "titleIt": "Guadagna 500 XP (Orale)"
+    },
+    {
+      "id": "s_quest_perfect_1",
+      "type": "perfect_lesson",
+      "target": 1,
+      "rewardXp": 250,
+      "titleEn": "Get 3 stars on a Speak level",
+      "titleFr": "Obtenir 3 étoiles à un niveau (Oral)",
+      "titleDe": "3 Sterne in einem Sprech-Level erhalten",
+      "titleEs": "Conseguir 3 estrellas en un nivel (Habla)",
+      "titleIt": "Ottieni 3 stelle in un livello (Orale)"
+    }
   ]
 }

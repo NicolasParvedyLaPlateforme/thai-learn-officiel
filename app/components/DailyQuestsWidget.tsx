@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useProgressStore, DailyQuest } from '../lib/store';
 import { Target, CheckCircle2, Star } from 'lucide-react';
 
-export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' | 'alphabet' }) {
+export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' | 'alphabet' | 'speak' }) {
   const { dailyQuests, language, questsDate } = useProgressStore();
   const [mounted, setMounted] = useState(false);
 

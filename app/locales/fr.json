@@ -1,9 +1,15 @@
 {
+  "auto.speak_to_select": "Lisez pour choisir",
+  "auto.speak_phrase_instruction": "Prononcez la phrase que vous souhaitez travailler",
+  "auto.speak_letter_name": "Prononcez le nom de la lettre",
+  "auto.choose_first_word": "Prononcez le premier mot pour commencer :",
+  "auto.waiting_selection": "En attente de sélection...",
   "sidebar.path": "Parcours",
   "sidebar.alphabet": "Alphabet",
   "sidebar.dialogs": "Dialogues",
   "sidebar.detective": "Détective",
   "sidebar.practice": "Pratique",
+  "sidebar.speaking": "Parler",
   "sidebar.suggested": "Suggéré",
   "sidebar.level.beginner": "Débutant",
   "sidebar.level.intermediate": "Intermédiaire",
@@ -13,6 +19,9 @@
   "sidebar.support": "Soutien & Communauté",
   "sidebar.login": "Se connecter",
   "sidebar.logout": "Se déconnecter",
+  "sidebar.vocabulary": "Vocabulaire",
+  "sidebar.category.learn": "Apprendre",
+  "sidebar.category.immersion": "Immersion",
   "nav.learn": "Parcours",
   "nav.alphabet": "Alphabet",
   "nav.dialogs": "Dialogues",
@@ -382,5 +391,10 @@
   "landing.ctaTitle": "Apprenez le thaï dès maintenant.",
   "landing.ctaDesc": "Rejoignez-nous et commencez l'Unité 1. Mettez-vous directement dans le bain, aucune inscription requise pour commencer !",
   "landing.ctaBtn": "C'est parti !",
-  "landing.footer": "© 2026 ThaiLearn. Apprendre le thaï n'a jamais été aussi facile."
+  "landing.footer": "© 2026 ThaiLearn. Apprendre le thaï n'a jamais été aussi facile.",
+  "auto.skip": "Passer",
+  "auto.level_completed": "Niveau {level} terminé !",
+  "auto.unavailable_on_brave": "Indisponible sur Brave",
+  "auto.pronunciation_success_50": "PRONONCIATION (RÉUSSITE 50%) :",
+  "auto.conversation_success_50": "CONVERSATION (RÉUSSITE 50%) :"
 }

@@ -5,7 +5,7 @@ import { getLightweightLessons } from '../actions/course';
 
 export type SuggestedLesson = {
   id: string;
-  type: 'learn' | 'alphabet';
+  type: 'learn' | 'alphabet' | 'speak';
 };
 
 export function useGlobalSuggestedLesson(providedLearnLessons?: any[]): SuggestedLesson | null {

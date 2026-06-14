@@ -1,0 +1,206 @@
+{
+  "dialogues": {
+    "speak-1": [
+      {
+        "speaker": "Tom",
+        "phraseId": "p_hello_m"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_hello_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_how_are_you"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_i_am_fine"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_and_you"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_i_am_fine"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_name_ask"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_name_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_name_m"
+      }
+    ],
+    "speak-2": [
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_hello_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_hello_m"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_new_l4_7"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_eat_rice"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_new_l4_6"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_not_spicy"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_want_water"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_glass_of_water"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_very_delicious"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_bill_please_eng"
+      }
+    ],
+    "speak-3": [
+      {
+        "speaker": "Tom",
+        "phraseId": "p_ro_taeksi"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_hello_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_go_airport"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_how_much_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_sorry_m"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_help_a_bit"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_go_left"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_go_right"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_thanks_m"
+      }
+    ],
+    "speak-4": [
+      {
+        "speaker": "Tom",
+        "phraseId": "p_go_market"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_hello_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_new_l8_1"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_price_how_much"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_discount"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_cannot_reduce"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_buy_water"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_where_hotel"
+      },
+      {
+        "speaker": "Marchand",
+        "phraseId": "p_hotel_good"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_enter_hotel"
+      }
+    ],
+    "speak-5": [
+      {
+        "speaker": "Tom",
+        "phraseId": "p_hello_m"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_hello_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_understand_q"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_not_understand_well"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_speak_slowly"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_sorry_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_please_help"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_thanks_f"
+      },
+      {
+        "speaker": "Tom",
+        "phraseId": "p_how_are_you"
+      },
+      {
+        "speaker": "Kanya",
+        "phraseId": "p_fine_f"
+      }
+    ]
+  }
+}

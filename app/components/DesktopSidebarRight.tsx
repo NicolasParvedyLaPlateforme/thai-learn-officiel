@@ -40,7 +40,7 @@ interface DesktopSidebarRightProps {
   setModalLevel?: (level: number) => void;
   lessonStars?: Record<string, number[]>;
   resetLessonLevel?: (lessonId: string) => void;
-  questsCategory?: 'learn' | 'alphabet';
+  questsCategory?: 'learn' | 'alphabet' | 'speak';
   showUnitsList?: boolean;
   setShowUnitsList?: (show: boolean) => void;
   reviewStats?: Record<string, Record<number, { bestTime?: number, maxPercentage?: number }>>;
@@ -74,6 +74,16 @@ export function DesktopSidebarRight({
 
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const levelsScrollRef = useRef<HTMLDivElement>(null);
+
+  const [isBrave, setIsBrave] = useState(false);
+  React.useEffect(() => {
+    const checkBrave = async () => {
+      if ((navigator as any).brave && await (navigator as any).brave.isBrave()) {
+        setIsBrave(true);
+      }
+    };
+    checkBrave();
+  }, []);
 
   const renderContent = () => {
     if (selectedLesson && setModalLevel && lessonStars && resetLessonLevel && onCloseLesson) {
@@ -195,7 +205,7 @@ export function DesktopSidebarRight({
                         <span className={`text-[9px] font-black tracking-widest uppercase
                           ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
                         `}>
-                          {isCurrent ? (getTranslation('auto.in_progress', language)) : `NIV. ${levelIndex + 1}`}
+                          {isCurrent ? (getTranslation('auto.in_progress', language)) : `${getTranslation('auto.lvl', language)} ${levelIndex + 1}`}
                         </span>
                       </button>
                     );
@@ -203,7 +213,7 @@ export function DesktopSidebarRight({
                 </div>
 
                 {/* Mastery Level Button */}
-                {selectedLesson && (() => {
+                {selectedLesson && suggestionType !== 'speak' && (() => {
                   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
                   const isUnlocked = currentProgress >= 10;
                   const isSelected = modalLevel === 10;
@@ -259,7 +269,8 @@ export function DesktopSidebarRight({
 
                 {(() => {
                   const { getExpectedXp } = useProgressStore.getState();
-                  const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'));
+                  const lessonIdForXp = suggestionType === 'speak' ? `speak_${selectedLesson.lesson.id}` : selectedLesson.lesson.id;
+                  const { xp: expectedXp, isFirstTime } = getExpectedXp(lessonIdForXp, modalLevel, selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'));
                   
                   return (
                     <div className="flex items-center justify-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full flex-wrap">
@@ -271,7 +282,7 @@ export function DesktopSidebarRight({
                         <Star size={16} className="fill-amber-500 text-amber-600" />
                         {isFirstTime ? `+${expectedXp} XP` : (
                           <>
-                            <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                            <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : expectedXp === 15 ? 50 : expectedXp === 25 ? 50 : expectedXp === 30 ? 100 : expectedXp === 45 ? 150 : expectedXp === 90 ? 300 : 200}</span>
                             <span>+{expectedXp} XP</span>
                           </>
                         )}
@@ -290,10 +301,12 @@ export function DesktopSidebarRight({
                           : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
                         : suggestionType === 'alphabet'
                           ? (`${getTranslation('auto.letters', language)} (${selectedLesson.lesson.items?.length}) :`)
-                          : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
+                          : suggestionType === 'speak'
+                            ? (modalLevel === 1 ? getTranslation('auto.conversation_success_50', language) : getTranslation('auto.pronunciation_success_50', language))
+                            : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
                       }
                     </h4>
-                    {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
+                    {!selectedLesson.lesson.isReview && modalLevel !== 10 && suggestionType !== 'speak' && (
                       <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
                     )}
                   </div>
@@ -354,6 +367,15 @@ export function DesktopSidebarRight({
                             <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({i.romanization})</span>
                           </button>
                         ))
+                      ) : suggestionType === 'speak' ? (
+                        <div className="flex flex-col gap-2 w-full">
+                          {selectedLesson.lesson.phrases?.map((p: any) => (
+                            <button onClick={() => playThaiTTS(p.th)} key={p.id} className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-3 flex flex-col items-start gap-1 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95 group`}>
+                              <span className={`${selectedLesson.unitText} group-hover:text-white text-[15px] transition-colors font-bold text-left`}>{p.th}</span>
+                              <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors text-left">{getLocalizedField(p, '', language)}</span>
+                            </button>
+                          ))}
+                        </div>
                       ) : (
                         selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').map((w: any) => (
                           <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
@@ -375,7 +397,7 @@ export function DesktopSidebarRight({
 
             {/* Sticky Actions Footer */}
             <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-              {selectedLesson.isCompleted && (
+              {selectedLesson.isCompleted && suggestionType !== 'speak' && (
                 <div className="flex gap-3 mb-1">
                   {suggestionType !== 'alphabet' && (
                     <Link
@@ -398,12 +420,21 @@ export function DesktopSidebarRight({
                   </button>
                 </div>
               )}
-              <Link
-                href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
-              >
-                {getTranslation('auto.start_lesson', language)}
-              </Link>
+              {isBrave && suggestionType === 'speak' ? (
+                <button
+                  disabled
+                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
+                >
+                  {getTranslation('auto.unavailable_on_brave', language)}
+                </button>
+              ) : (
+                <Link
+                  href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                >
+                  {getTranslation('auto.start_lesson', language)}
+                </Link>
+              )}
             </div>
           </div>
         </motion.div>

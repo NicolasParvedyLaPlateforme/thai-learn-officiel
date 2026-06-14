@@ -1,0 +1,325 @@
+{
+  "exercises": {
+    "speak-1": [
+      {
+        "promptId": "p_how_are_you",
+        "options": [
+          "p_i_am_fine",
+          "p_hello_m",
+          "p_thanks_m",
+          "p_name_ask"
+        ],
+        "correctOptions": [
+          "p_i_am_fine"
+        ]
+      },
+      {
+        "promptId": "p_hello_m",
+        "options": [
+          "p_hello_m",
+          "p_hello_f",
+          "p_thanks_f",
+          "p_name_m"
+        ],
+        "correctOptions": [
+          "p_hello_m",
+          "p_hello_f"
+        ]
+      },
+      {
+        "promptId": "p_name_ask",
+        "options": [
+          "p_name_m",
+          "p_how_are_you",
+          "p_thanks_m",
+          "p_i_am_fine"
+        ],
+        "correctOptions": [
+          "p_name_m",
+          "p_name_f"
+        ]
+      },
+      {
+        "promptId": "p_hello_f",
+        "options": [
+          "p_hello_f",
+          "p_how_are_you",
+          "p_hello_m",
+          "p_name_f"
+        ],
+        "correctOptions": [
+          "p_hello_m",
+          "p_hello_f"
+        ]
+      },
+      {
+        "promptId": "p_and_you",
+        "options": [
+          "p_i_am_fine",
+          "p_thanks_m",
+          "p_hello_m",
+          "p_name_ask"
+        ],
+        "correctOptions": [
+          "p_i_am_fine",
+          "p_also_well_m",
+          "p_also_well_f"
+        ]
+      }
+    ],
+    "speak-2": [
+      {
+        "promptId": "p_new_l4_7",
+        "options": [
+          "p_eat_rice",
+          "p_bill_please_eng",
+          "p_go_market",
+          "p_name_ask"
+        ],
+        "correctOptions": [
+          "p_eat_rice",
+          "p_new_l4_6"
+        ]
+      },
+      {
+        "promptId": "p_want_water",
+        "options": [
+          "p_glass_of_water",
+          "p_very_delicious",
+          "p_bill_please_eng",
+          "p_not_spicy"
+        ],
+        "correctOptions": [
+          "p_glass_of_water"
+        ]
+      },
+      {
+        "promptId": "p_very_delicious",
+        "options": [
+          "p_thanks_m",
+          "p_spicy_m",
+          "p_bill_please_eng",
+          "p_not_spicy"
+        ],
+        "correctOptions": [
+          "p_thanks_m"
+        ]
+      },
+      {
+        "promptId": "p_not_spicy",
+        "options": [
+          "p_spicy_m",
+          "p_new_l4_6",
+          "p_eat_rice",
+          "p_glass_of_water"
+        ],
+        "correctOptions": [
+          "p_new_l4_6"
+        ]
+      },
+      {
+        "promptId": "p_eat_rice",
+        "options": [
+          "p_very_delicious",
+          "p_not_spicy",
+          "p_glass_of_water",
+          "p_bill_please_eng"
+        ],
+        "correctOptions": [
+          "p_very_delicious"
+        ]
+      }
+    ],
+    "speak-3": [
+      {
+        "promptId": "p_go_airport",
+        "options": [
+          "p_how_much",
+          "p_sorry_m",
+          "p_buy_ticket",
+          "p_go_market"
+        ],
+        "correctOptions": [
+          "p_how_much",
+          "p_how_much_f"
+        ]
+      },
+      {
+        "promptId": "p_how_much_f",
+        "options": [
+          "p_buy_ticket",
+          "p_go_left",
+          "p_sorry_m",
+          "p_hello_m"
+        ],
+        "correctOptions": [
+          "p_buy_ticket"
+        ]
+      },
+      {
+        "promptId": "p_sorry_m",
+        "options": [
+          "p_thanks_m",
+          "p_go_right",
+          "p_help_a_bit",
+          "p_nang_taeksi"
+        ],
+        "correctOptions": [
+          "p_help_a_bit"
+        ]
+      },
+      {
+        "promptId": "p_ro_taeksi",
+        "options": [
+          "p_nang_taeksi",
+          "p_go_airport",
+          "p_buy_ticket",
+          "p_how_much"
+        ],
+        "correctOptions": [
+          "p_nang_taeksi"
+        ]
+      },
+      {
+        "promptId": "p_help_a_bit",
+        "options": [
+          "p_go_left",
+          "p_go_right",
+          "p_go_airport",
+          "p_sorry_m"
+        ],
+        "correctOptions": [
+          "p_go_left",
+          "p_go_right"
+        ]
+      }
+    ],
+    "speak-4": [
+      {
+        "promptId": "p_new_l8_1",
+        "options": [
+          "p_price_how_much",
+          "p_hotel_good",
+          "p_buy_water",
+          "p_go_left"
+        ],
+        "correctOptions": [
+          "p_price_how_much"
+        ]
+      },
+      {
+        "promptId": "p_discount",
+        "options": [
+          "p_cannot_reduce",
+          "p_buy_water",
+          "p_hotel_good",
+          "p_go_market"
+        ],
+        "correctOptions": [
+          "p_cannot_reduce"
+        ]
+      },
+      {
+        "promptId": "p_where_hotel",
+        "options": [
+          "p_hotel_good",
+          "p_enter_hotel",
+          "p_market_far_mai",
+          "p_go_market"
+        ],
+        "correctOptions": [
+          "p_hotel_good",
+          "p_enter_hotel"
+        ]
+      },
+      {
+        "promptId": "p_market_far_mai",
+        "options": [
+          "p_go_market",
+          "p_buy_water",
+          "p_hotel_good",
+          "p_enter_hotel"
+        ],
+        "correctOptions": [
+          "p_go_market"
+        ]
+      },
+      {
+        "promptId": "p_go_market",
+        "options": [
+          "p_new_l8_1",
+          "p_discount",
+          "p_where_hotel",
+          "p_buy_water"
+        ],
+        "correctOptions": [
+          "p_new_l8_1"
+        ]
+      }
+    ],
+    "speak-5": [
+      {
+        "promptId": "p_understand_q",
+        "options": [
+          "p_not_understand_well",
+          "p_sorry_f",
+          "p_thanks_f",
+          "p_please_help"
+        ],
+        "correctOptions": [
+          "p_not_understand_well"
+        ]
+      },
+      {
+        "promptId": "p_not_understand_well",
+        "options": [
+          "p_speak_slowly",
+          "p_thanks_f",
+          "p_how_are_you",
+          "p_sorry_f"
+        ],
+        "correctOptions": [
+          "p_speak_slowly"
+        ]
+      },
+      {
+        "promptId": "p_please_help",
+        "options": [
+          "p_thanks_m",
+          "p_thanks_f",
+          "p_sorry_f",
+          "p_understand_q"
+        ],
+        "correctOptions": [
+          "p_thanks_m",
+          "p_thanks_f"
+        ]
+      },
+      {
+        "promptId": "p_sorry_f",
+        "options": [
+          "p_please_help",
+          "p_speak_slowly",
+          "p_not_understand_well",
+          "p_fine_f"
+        ],
+        "correctOptions": [
+          "p_please_help"
+        ]
+      },
+      {
+        "promptId": "p_how_are_you",
+        "options": [
+          "p_fine_f",
+          "p_fine_m",
+          "p_sorry_f",
+          "p_speak_slowly"
+        ],
+        "correctOptions": [
+          "p_fine_f",
+          "p_fine_m"
+        ]
+      }
+    ]
+  }
+}

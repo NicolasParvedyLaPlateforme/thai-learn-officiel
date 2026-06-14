@@ -55,17 +55,26 @@ Les fichiers JSON suivants situés dans `app/data/` sont formellement interdits 
 
 ### 2. Multilinguisme & Traduction (⚠️ TRÈS IMPORTANT 🌍)
 L'application est entièrement multilingue via le système de locales.
-- **Règle d'or :** Si j'ajoute un bouton, un texte, une infobulle ou tout élément d'interface utilisateur, **je DOIS systématiquement le traduire** dans les fichiers JSON du dossier `app/locales/` (`fr.json`, `en.json`, `de.json`, `it.json`, etc.).
-- **Aucun texte en dur :** Ne JAMAIS laisser de texte en dur (ex: `<div>Bonjour</div>`) dans un composant. Je dois utiliser le hook `useTranslation` :
+- **Règle d'or :** Si j'ajoute un bouton, un texte, une infobulle ou tout élément d'interface utilisateur, **je DOIS systématiquement le traduire** dans les fichiers JSON du dossier `app/locales/` (`fr.json`, `en.json`, `de.json`, `es.json`, `it.json`). Penser impérativement à mettre à jour **tous** ces fichiers.
+- **Aucun texte en dur ou condition "bricolée" :** Ne JAMAIS laisser de texte en dur (ex: `<div>Bonjour</div>`) et ne JAMAIS utiliser de conditions simplistes de type `language === 'en' ? 'Yes' : 'Oui'` pour court-circuiter le système.
+- **Pour l'UI statique** : Je dois utiliser le hook `useTranslation` ou la fonction `getTranslation` :
   ```tsx
-  import { useTranslation } from '../hooks/useTranslation';
-  const { t } = useTranslation();
+  import { useTranslation, getTranslation } from '../hooks/useTranslation';
   // ...
-  <div>{t('section.key')}</div>
+  <div>{getTranslation('section.key', language)}</div>
   ```
-- Si je mets à jour un composant qui contient encore du texte en dur, je **dois** le refactoriser pour utiliser les fichiers de traduction.
+- **Pour les données d'objets (dynamique)** : Si un objet contient des champs `title`, `titleEn`, etc., je dois utiliser `getLocalizedField` :
+  ```tsx
+  import { getLocalizedField } from '../hooks/useTranslation';
+  // ...
+  <div>{getLocalizedField(item, 'title', language)}</div>
+  ```
 
-### 3. Respect du périmètre des consignes 🎯
+### 3. Réutilisation des composants et Cohérence UI (DRY ♻️)
+- Avant de créer un composant complexe de A à Z (ex: bouton de micro interactif, modale de succès/erreur, pied de page de validation), je dois **systématiquement** vérifier comment cela a été implémenté dans les autres modules existants (ex: `/learn`, `/alphabet`).
+- L'objectif est de calquer ou réutiliser le code, l'animation et les mêmes variables CSS (couleurs, ombres) pour garantir une expérience utilisateur **100% cohérente** à travers l'application. Ne pas réinventer la roue !
+
+### 4. Respect du périmètre des consignes 🎯
 - Ne **JAMAIS** ajouter de fonctionnalités non sollicitées par le développeur (moi).
 - Ne **JAMAIS** supprimer de fonctionnalités sans avoir posé la question et obtenu l'accord de l'utilisateur.
 - Si une idée d'amélioration pertinente me vient à l'esprit, je dois la *proposer* d'abord.
@@ -104,3 +113,4 @@ Pour comprendre la structure des leçons et exercices, il faut se référer à `
 - **[05/06/2026] NextAuth sur Vercel** : Toujours importer `authOptions` depuis `app/lib/auth.ts` et non depuis la route API pour éviter des erreurs de build.
 - **[06/06/2026] SyncProgress et Zustand** : Lors de l'ajout de variables journalières dans `store.ts` (comme `completedToday` ou `dailyQuests`), il faut impérativement s'assurer qu'elles sont incluses dans le payload de synchronisation vers la BDD dans `SyncProgress.tsx`, sinon ces variables resteront strictement locales à l'appareil et provoqueront des désynchronisations de progression ou d'XP journalier entre mobile et ordinateur.
 - **[09/06/2026] Résilience Hors-ligne (Leçons & Images)** : Pour garantir qu'un utilisateur puisse finir sa leçon même en perdant le réseau (ex: dans le tramway) : (1) Ne pas utiliser `next/dynamic` pour les sous-composants d'exercices. (2) Pré-charger en arrière-plan toutes les images et sons dès l'affichage du premier exercice via un `useEffect` (en utilisant `new Image().src` et un simple `fetch(url)` pour l'audio). (3) Utiliser la propriété `unoptimized={true}` sur les balises `<Image>` de Next.js (notamment dans `IconImage.tsx`) pour les petites icônes. Sinon, le cache de l'image brute téléchargée en arrière-plan ne correspondra pas à l'URL `/_next/image?...` générée par Next.js, rendant l'image inaccessible hors ligne. L'optimisation Next.js reste active pour les gros décors (ex: `/detective`).
+- **[12/06/2026] Cohérence UI & Traduction stricte** : Toujours vérifier si un composant UI équivalent existe déjà (ex: bouton micro, pied de page d'erreur/succès, modale) avant de l'implémenter de zéro. De plus, bannir les conditions "bricolées" de type `language === 'en'`. Utiliser systématiquement `getTranslation` (UI statique) et `getLocalizedField` (données), tout en pensant à mettre à jour **tous** les fichiers du dossier `locales/` lors de la création d'une nouvelle clé.

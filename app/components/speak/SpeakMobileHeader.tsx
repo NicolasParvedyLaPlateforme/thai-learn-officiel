@@ -4,7 +4,7 @@ import PWAInstallButton from '../../components/PWAInstallButton';
 import { getTranslation } from '../../hooks/useTranslation';
 import { useProgressStore } from '../../lib/store';
 
-interface LearnMobileHeaderProps {
+interface SpeakMobileHeaderProps {
   showHeader: boolean;
   mounted: boolean;
   language: string;
@@ -12,15 +12,15 @@ interface LearnMobileHeaderProps {
   setIsMobileMenuOpen: (open: boolean) => void;
 }
 
-export default function LearnMobileHeader({
+export default function SpeakMobileHeader({
   showHeader,
   mounted,
   language,
   setIsUnitsModalOpen,
   setIsMobileMenuOpen
-}: LearnMobileHeaderProps) {
+}: SpeakMobileHeaderProps) {
   return (
-    <header className={`bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[calc(3.75rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] md:hidden sticky top-0 transition-transform duration-300 ${showHeader ? 'translate-y-0' : '-translate-y-full'}`}>
+    <header className={`bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[3.75rem] md:hidden sticky top-0 transition-transform duration-300 ${showHeader ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="flex items-center justify-between w-full h-full px-4 md:px-8 gap-2 sm:gap-6">
         <div className="flex items-center gap-2">
           <button

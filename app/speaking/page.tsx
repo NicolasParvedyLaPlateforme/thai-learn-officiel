@@ -84,8 +84,13 @@ export default function SpeakingPage() {
           vocabulary={vocabulary} 
           dictionary={dictionary} 
           currentIndex={currentIndex}
-          onIndexChange={setCurrentIndex}
-          onComplete={() => router.push('/practice')} 
+          onNext={(isSuccess) => {
+            if (currentIndex + 1 < vocabulary.length) {
+              setCurrentIndex(currentIndex + 1);
+            } else {
+              router.push('/practice');
+            }
+          }} 
         />
       </main>
     </div>

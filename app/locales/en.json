@@ -1,9 +1,15 @@
 {
+  "auto.speak_to_select": "Speak to select",
+  "auto.speak_phrase_instruction": "Pronounce the phrase you wish to practice",
+  "auto.speak_letter_name": "Pronounce the letter name",
+  "auto.choose_first_word": "Pronounce the first word to start:",
+  "auto.waiting_selection": "Waiting for selection...",
   "sidebar.path": "Path",
   "sidebar.alphabet": "Alphabet",
   "sidebar.dialogs": "Dialogs",
   "sidebar.detective": "Detective",
   "sidebar.practice": "Practice",
+  "sidebar.speaking": "Speaking",
   "sidebar.suggested": "Suggested",
   "sidebar.level.beginner": "Beginner",
   "sidebar.level.intermediate": "Intermediate",
@@ -13,6 +19,9 @@
   "sidebar.support": "Support & Community",
   "sidebar.login": "Login",
   "sidebar.logout": "Logout",
+  "sidebar.vocabulary": "Vocabulary",
+  "sidebar.category.learn": "Learn",
+  "sidebar.category.immersion": "Immersion",
   "nav.learn": "Path",
   "nav.alphabet": "Alphabet",
   "nav.dialogs": "Dialogs",
@@ -382,5 +391,10 @@
   "landing.ctaTitle": "Learn Thai right now.",
   "landing.ctaDesc": "Join us and start Unit 1. Jump right in, no registration required to begin!",
   "landing.ctaBtn": "Let's go!",
-  "landing.footer": "© 2026 ThaiLearn. Learning Thai has never been easier."
+  "landing.footer": "© 2026 ThaiLearn. Learning Thai has never been easier.",
+  "auto.skip": "Skip",
+  "auto.level_completed": "Level {level} completed!",
+  "auto.unavailable_on_brave": "Unavailable on Brave",
+  "auto.pronunciation_success_50": "PRONUNCIATION (50% SUCCESS):",
+  "auto.conversation_success_50": "CONVERSATION (50% SUCCESS):"
 }

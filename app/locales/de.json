@@ -1,9 +1,15 @@
 {
+  "auto.speak_to_select": "Sprechen zum Auswählen",
+  "auto.speak_phrase_instruction": "Sprechen Sie den Satz, den Sie üben möchten",
+  "auto.speak_letter_name": "Sprechen Sie den Buchstabennamen",
+  "auto.choose_first_word": "Sprich das erste Wort, um zu beginnen:",
+  "auto.waiting_selection": "Warten auf Auswahl...",
   "sidebar.path": "Pfad",
   "sidebar.alphabet": "Alphabet",
   "sidebar.dialogs": "Dialoge",
   "sidebar.detective": "Detektiv",
   "sidebar.practice": "Üben",
+  "sidebar.speaking": "Sprechen",
   "sidebar.suggested": "Empfohlen",
   "sidebar.level.beginner": "Anfänger",
   "sidebar.level.intermediate": "Mittelstufe",
@@ -13,6 +19,9 @@
   "sidebar.support": "Support & Community",
   "sidebar.login": "Anmelden",
   "sidebar.logout": "Abmelden",
+  "sidebar.vocabulary": "Vokabular",
+  "sidebar.category.learn": "Lernen",
+  "sidebar.category.immersion": "Immersion",
   "nav.learn": "Pfad",
   "nav.alphabet": "Alphabet",
   "nav.dialogs": "Dialoge",
@@ -382,5 +391,10 @@
   "landing.ctaTitle": "Lerne jetzt Thailändisch.",
   "landing.ctaDesc": "Mach mit und beginne mit Lektion 1. Steig direkt ein, keine Registrierung erforderlich!",
   "landing.ctaBtn": "Los geht's!",
-  "landing.footer": "© 2026 ThaiLearn. Thailändisch lernen war noch nie so einfach."
+  "landing.footer": "© 2026 ThaiLearn. Thailändisch lernen war noch nie so einfach.",
+  "auto.skip": "Überspringen",
+  "auto.level_completed": "Level {level} abgeschlossen!",
+  "auto.unavailable_on_brave": "Nicht auf Brave verfügbar",
+  "auto.pronunciation_success_50": "AUSSPRACHE (ERFOLG 50%):",
+  "auto.conversation_success_50": "KONVERSATION (ERFOLG 50%):"
 }

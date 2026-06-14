@@ -141,15 +141,13 @@ export default function ResultScreen({
             {getTranslation('auto.next_level', language)}
           </button>
         )}
-        {currentLevel === 10 && (
-          <button
-            onClick={() => window.location.reload()}
-            className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
-          >
-            <RotateCcw size={20} />
-            {getTranslation('auto.retry', language)}
-          </button>
-        )}
+        <button
+          onClick={() => window.location.reload()}
+          className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
+        >
+          <RotateCcw size={20} />
+          {getTranslation('auto.retry', language)}
+        </button>
         <button
           onClick={() => router.push(`/learn#lesson-${lesson.id}`)}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"

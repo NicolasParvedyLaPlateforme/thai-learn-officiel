@@ -11,6 +11,7 @@ export interface InProgressLessonState {
   mistakes: number;
   timeLeft: number | null;
   initialTime: number | null;
+  completedPhraseIds?: string[];
   lastUpdated: number;
 }
 
@@ -56,6 +57,7 @@ export interface DailyQuest {
 export interface QuestsState {
   learn: DailyQuest[];
   alphabet: DailyQuest[];
+  speak: DailyQuest[];
 }
 
 const generateNewQuestsForCategory = (categoryConfig: any[]): DailyQuest[] => {
@@ -81,6 +83,7 @@ const generateNewQuests = (): QuestsState => {
   return {
     learn: generateNewQuestsForCategory(questsConfig.learn),
     alphabet: generateNewQuestsForCategory(questsConfig.alphabet),
+    speak: generateNewQuestsForCategory(questsConfig.speak),
   };
 };
 
@@ -177,9 +180,13 @@ interface ProgressState {
   lastActiveUnitIndex: number;
   setLastActiveUnitIndex: (index: number) => void;
   lastPlayedLessonId: string | null;
-  lastPlayedLessonType: 'learn' | 'alphabet' | null;
-  setLastPlayedLesson: (id: string, type: 'learn' | 'alphabet') => void;
+  lastPlayedLessonType: 'learn' | 'alphabet' | 'speak' | null;
+  setLastPlayedLesson: (id: string, type: 'learn' | 'alphabet' | 'speak') => void;
   lessonStars: Record<string, number[]>; // Maps lessonId to array of stars for each level
+  speakCompletedLessons: string[];
+  speakLessonLevels: Record<string, number>;
+  speakLessonStars: Record<string, number[]>;
+  completeSpeakLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number) => void;
   hiddenInstructions: string[];
   hideInstruction: (key: string) => void;
   unhideInstruction: (key: string) => void;
@@ -202,7 +209,7 @@ interface ProgressState {
   dailyQuests: QuestsState | null;
   questsDate: string | null;
   recordActivity: () => void;
-  progressQuest: (category: 'learn' | 'alphabet', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => void;
+  progressQuest: (category: 'learn' | 'alphabet' | 'speak', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => void;
   checkAndGenerateQuests: () => void;
   
   reviewStats: Record<string, Record<number, { bestTime?: number, maxPercentage?: number }>>;
@@ -238,6 +245,9 @@ export const useProgressStore = create<ProgressState>()(
       unlockedLessons: [],
       lessonLevels: {},
       lessonStars: {},
+      speakCompletedLessons: [],
+      speakLessonLevels: {},
+      speakLessonStars: {},
       xp: 0,
       goldCoins: 0,
       lastConversionMonth: null,
@@ -412,6 +422,12 @@ export const useProgressStore = create<ProgressState>()(
           updates.dailyQuests = generateNewQuests();
           updates.questsDate = today;
           updates.completedToday = []; // Reset completed today
+        } else if (state.dailyQuests && !state.dailyQuests.speak) {
+          // Migration: if user already has quests for today but no speak quests
+          updates.dailyQuests = {
+            ...state.dailyQuests,
+            speak: generateNewQuestsForCategory(questsConfig.speak)
+          };
         }
         
         return Object.keys(updates).length > 0 ? updates : {};
@@ -530,6 +546,15 @@ export const useProgressStore = create<ProgressState>()(
            key = lessonId;
            isFirstTime = !completedToday.includes(key);
            xp = isFirstTime ? 50 : 20;
+        } else if (lessonId.startsWith('speak_')) {
+           key = `${lessonId}_level-${levelIndex}`;
+           isFirstTime = !completedToday.includes(key);
+           if (levelIndex === 0) xp = isFirstTime ? 50 : 15;
+           else if (levelIndex === 1) xp = isFirstTime ? 100 : 30;
+           else if (levelIndex === 2) xp = isFirstTime ? 100 : 30;
+           else if (levelIndex === 3) xp = isFirstTime ? 150 : 45;
+           else if (levelIndex === 4) xp = isFirstTime ? 300 : 90;
+           else xp = isFirstTime ? 50 : 15;
         } else if (levelIndex === 10) {
            key = `learn_${lessonId}_level-10`;
            isFirstTime = !completedToday.includes(key);
@@ -611,6 +636,62 @@ export const useProgressStore = create<ProgressState>()(
         }
         get().triggerForceSync();
       },
+      completeSpeakLesson: (lessonId, fallbackXp, playedLevel, earnedStars = 3) => {
+        const state = get();
+        const currentLevel = state.speakLessonLevels[lessonId] || 0;
+        const actualPlayedLevel = playedLevel !== undefined ? playedLevel : currentLevel;
+        
+        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(`speak_${lessonId}`, actualPlayedLevel, false);
+        let finalXp = calculatedXp || fallbackXp;
+        if (actualPlayedLevel === 1 && fallbackXp !== undefined) {
+           finalXp = fallbackXp;
+        }
+
+        set((state) => {
+          let newLevel = currentLevel;
+          if (playedLevel !== undefined) {
+            if (playedLevel === currentLevel) {
+               newLevel = Math.min(currentLevel + 1, 10);
+            }
+          } else {
+             newLevel = Math.min(currentLevel + 1, 10);
+          }
+          
+          const currentStars = state.speakLessonStars[lessonId] ? [...state.speakLessonStars[lessonId]] : Array(10).fill(0);
+          if (playedLevel !== undefined && playedLevel >= 0 && playedLevel < 10) {
+             currentStars[playedLevel] = Math.max(currentStars[playedLevel], earnedStars);
+          }
+
+          const newCompletedToday = state.completedToday || [];
+          const updatedCompletedToday = isFirstTime ? [...newCompletedToday, key] : newCompletedToday;
+
+          return {
+            speakCompletedLessons: state.speakCompletedLessons.includes(lessonId) 
+              ? state.speakCompletedLessons 
+              : [...state.speakCompletedLessons, lessonId],
+            completedToday: updatedCompletedToday,
+            speakLessonLevels: {
+              ...state.speakLessonLevels,
+              [lessonId]: newLevel
+            },
+            speakLessonStars: {
+              ...state.speakLessonStars,
+              [lessonId]: currentStars
+            },
+            xp: state.xp + finalXp,
+            lastPlayedLessonId: lessonId,
+            lastPlayedLessonType: 'speak'
+          };
+        });
+        
+        get().recordActivity();
+        get().progressQuest('speak', 'lessons', 1);
+        get().progressQuest('speak', 'xp', finalXp);
+        if (earnedStars >= 3) {
+          get().progressQuest('speak', 'perfect_lesson', 1);
+        }
+        get().triggerForceSync();
+      },
       addXp: (amount) => {
         set((state) => ({ xp: state.xp + amount }));
         get().recordActivity();
@@ -646,6 +727,9 @@ export const useProgressStore = create<ProgressState>()(
         unlockedLessons: [], 
         lessonLevels: {}, 
         lessonStars: {}, 
+        speakCompletedLessons: [], 
+        speakLessonLevels: {}, 
+        speakLessonStars: {}, 
         xp: 0, 
         goldCoins: 0,
         currentStreak: 0,

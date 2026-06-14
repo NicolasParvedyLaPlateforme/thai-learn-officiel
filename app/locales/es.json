@@ -1,9 +1,15 @@
 {
+  "auto.speak_to_select": "Hablar para seleccionar",
+  "auto.speak_phrase_instruction": "Pronuncia la frase que deseas practicar",
+  "auto.speak_letter_name": "Pronuncia el nombre de la letra",
+  "auto.choose_first_word": "Pronuncia la primera palabra para comenzar:",
+  "auto.waiting_selection": "Esperando selección...",
   "sidebar.path": "Ruta",
   "sidebar.alphabet": "Alfabeto",
   "sidebar.dialogs": "Diálogos",
   "sidebar.detective": "Detective",
   "sidebar.practice": "Práctica",
+  "sidebar.speaking": "Hablar",
   "sidebar.suggested": "Sugerido",
   "sidebar.level.beginner": "Principiante",
   "sidebar.level.intermediate": "Intermedio",
@@ -13,6 +19,9 @@
   "sidebar.support": "Soporte y Comunidad",
   "sidebar.login": "Iniciar sesión",
   "sidebar.logout": "Cerrar sesión",
+  "sidebar.vocabulary": "Vocabulario",
+  "sidebar.category.learn": "Aprender",
+  "sidebar.category.immersion": "Inmersión",
   "nav.learn": "Ruta",
   "nav.alphabet": "Alfabeto",
   "nav.dialogs": "Diálogos",
@@ -380,5 +389,10 @@
   "landing.ctaTitle": "Aprende tailandés ahora mismo.",
   "landing.ctaDesc": "Únete a nosotros y comienza la Unidad 1. ¡Sumérgete directamente, sin necesidad de registrarse!",
   "landing.ctaBtn": "¡Vamos!",
-  "landing.footer": "© 2026 ThaiLearn. Aprender tailandés nunca ha sido tan fácil."
+  "landing.footer": "© 2026 ThaiLearn. Aprender tailandés nunca ha sido tan fácil.",
+  "auto.skip": "Omitir",
+  "auto.level_completed": "¡Nivel {level} completado!",
+  "auto.unavailable_on_brave": "No disponible en Brave",
+  "auto.pronunciation_success_50": "PRONUNCIACIÓN (ÉXITO 50%):",
+  "auto.conversation_success_50": "CONVERSACIÓN (ÉXITO 50%):"
 }
