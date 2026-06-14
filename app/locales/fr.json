@@ -396,5 +396,11 @@
   "auto.level_completed": "Niveau {level} terminé !",
   "auto.unavailable_on_brave": "Indisponible sur Brave",
   "auto.pronunciation_success_50": "PRONONCIATION (RÉUSSITE 50%) :",
-  "auto.conversation_success_50": "CONVERSATION (RÉUSSITE 50%) :"
+  "auto.conversation_success_50": "CONVERSATION (RÉUSSITE 50%) :",
+  "instruction.word_match": "Sélectionnez la bonne traduction",
+  "instruction.pair_matching": "Reliez les paires correspondantes",
+  "instruction.sentence_builder": "Traduisez cette phrase",
+  "instruction.writing": "Traduisez cette phrase",
+  "instruction.writing_blind": "Écrivez en thaï",
+  "instruction.free_typing": "Tapez la bonne traduction"
 }

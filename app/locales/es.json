@@ -394,5 +394,11 @@
   "auto.level_completed": "¡Nivel {level} completado!",
   "auto.unavailable_on_brave": "No disponible en Brave",
   "auto.pronunciation_success_50": "PRONUNCIACIÓN (ÉXITO 50%):",
-  "auto.conversation_success_50": "CONVERSACIÓN (ÉXITO 50%):"
+  "auto.conversation_success_50": "CONVERSACIÓN (ÉXITO 50%):",
+  "instruction.word_match": "Selecciona la traducción correcta",
+  "instruction.pair_matching": "Une las parejas",
+  "instruction.sentence_builder": "Traduce esta frase",
+  "instruction.writing": "Traduce esta frase",
+  "instruction.writing_blind": "Escribe en tailandés",
+  "instruction.free_typing": "Escribe la traducción correcta"
 }

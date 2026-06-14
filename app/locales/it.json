@@ -396,5 +396,11 @@
   "auto.level_completed": "Livello {level} completato!",
   "auto.unavailable_on_brave": "Non disponibile su Brave",
   "auto.pronunciation_success_50": "PRONUNCIA (SUCCESSO 50%):",
-  "auto.conversation_success_50": "CONVERSAZIONE (SUCCESSO 50%):"
+  "auto.conversation_success_50": "CONVERSAZIONE (SUCCESSO 50%):",
+  "instruction.word_match": "Seleziona la traduzione corretta",
+  "instruction.pair_matching": "Abbina le coppie",
+  "instruction.sentence_builder": "Traduci questa frase",
+  "instruction.writing": "Traduci questa frase",
+  "instruction.writing_blind": "Scrivi in thailandese",
+  "instruction.free_typing": "Digita la traduzione corretta"
 }
