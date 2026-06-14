@@ -3500,9 +3500,9 @@
           "phonetic": "phaeng",
           "en": "expensive",
           "imageUrl": "/images/w_w_phaeng.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "caro",
+          "de": "teuer",
+          "it": "caro",
           "syllabe": ""
         },
         {
@@ -3512,9 +3512,9 @@
           "phonetic": "lót",
           "en": "reduce",
           "imageUrl": "/images/w_w_lot.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "reducir",
+          "de": "reduzieren",
+          "it": "ridurre",
           "syllabe": ""
         },
         {
@@ -3524,9 +3524,9 @@
           "phonetic": "dâai",
           "en": "can",
           "imageUrl": "/images/w_w_dai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "poder",
+          "de": "können",
+          "it": "potere",
           "syllabe": ""
         },
         {
@@ -3536,9 +3536,9 @@
           "phonetic": "thùuk",
           "en": "cheap",
           "imageUrl": "/images/w_w_thuk.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "barato",
+          "de": "billig",
+          "it": "economico",
           "syllabe": ""
         },
         {
@@ -3548,9 +3548,9 @@
           "en": "in the process of",
           "phonetic": "kam-lang",
           "imageUrl": "/images/w_w_gamlang.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "en proceso de",
+          "de": "dabei sein zu",
+          "it": "stare per",
           "syllabe": ""
         }
       ],
@@ -3566,9 +3566,9 @@
           ],
           "en": "very expensive",
           "imageUrl": "/images/p_p_very_expensive.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "muy caro",
+          "de": "sehr teuer",
+          "it": "molto caro",
           "syllabe": ""
         },
         {
@@ -3583,9 +3583,9 @@
           ],
           "en": "can you lower the price?",
           "imageUrl": "/images/p_p_discount.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿puede bajar el precio?",
+          "de": "Können Sie den Preis senken?",
+          "it": "può abbassare il prezzo?",
           "syllabe": ""
         },
         {
@@ -3599,9 +3599,9 @@
           ],
           "en": "nine baht",
           "imageUrl": "/images/p_p_nine_baht.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "nueve bahts",
+          "de": "neun Baht",
+          "it": "nove baht",
           "syllabe": ""
         },
         {
@@ -3615,9 +3615,9 @@
           ],
           "en": "buy three",
           "imageUrl": "/images/p_p_buy_three.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "comprar tres",
+          "de": "drei kaufen",
+          "it": "comprare tre",
           "syllabe": ""
         },
         {
@@ -3632,9 +3632,9 @@
           ],
           "en": "I can't lower the price",
           "imageUrl": "/images/p_p_cannot_reduce.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no puedo bajar el precio",
+          "de": "Ich kann den Preis nicht senken",
+          "it": "non posso abbassare il prezzo",
           "syllabe": ""
         },
         {
@@ -3648,9 +3648,9 @@
           ],
           "en": "very cheap",
           "imageUrl": "/images/p_p_new_l8_2.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "muy barato",
+          "de": "sehr billig",
+          "it": "molto economico",
           "syllabe": ""
         },
         {
@@ -3664,21 +3664,21 @@
           ],
           "en": "sell cheap",
           "imageUrl": "/images/p_p_new_l8_4.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "vender barato",
+          "de": "billig verkaufen",
+          "it": "vendere a buon mercato",
           "syllabe": ""
         }
       ],
       "titleEn": "At the market (Buy)",
       "descriptionEn": "Negotiate and buy",
       "imageUrl": "/images/default-lesson.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Negociación en el mercado",
+      "titleDe": "Verhandeln auf dem Markt",
+      "titleIt": "Negoziazione al mercato",
+      "descriptionEs": "Negociar y comprar",
+      "descriptionDe": "Verhandeln und kaufen",
+      "descriptionIt": "Negoziare e acquistare"
     },
     {
       "id": "lesson-9",
@@ -3692,9 +3692,9 @@
           "phonetic": "hǐw",
           "en": "to be hungry",
           "imageUrl": "/images/w_w_hiw.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "tener hambre",
+          "de": "Hunger haben",
+          "it": "avere fame",
           "syllabe": ""
         },
         {
@@ -3704,9 +3704,9 @@
           "phonetic": "nùeay",
           "en": "fatigue",
           "imageUrl": "/images/w_w_nueay.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "cansado",
+          "de": "müde",
+          "it": "stanco",
           "syllabe": ""
         },
         {
@@ -3716,9 +3716,9 @@
           "phonetic": "dii jai",
           "en": "glad / pleased",
           "imageUrl": "/images/w_w_dee_jai.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "contento / encantado",
+          "de": "froh / erfreut",
+          "it": "contento / felice",
           "syllabe": ""
         },
         {
@@ -3728,9 +3728,9 @@
           "phonetic": "chɔ̂ɔp",
           "en": "to like",
           "imageUrl": "/images/w_w_chop.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "gustar / gustar mucho",
+          "de": "mögen / lieben",
+          "it": "piacere / adorare",
           "syllabe": ""
         },
         {
@@ -3740,9 +3740,9 @@
           "phonetic": "kròot",
           "en": "angry",
           "imageUrl": "/images/w_w_krot.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "enojado / enfadado",
+          "de": "wütend / verärgert",
+          "it": "arrabbiato",
           "syllabe": ""
         },
         {
@@ -3752,9 +3752,9 @@
           "phonetic": "ngûang",
           "en": "sleepy",
           "imageUrl": "/images/w_w_nguang.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "tener sueño",
+          "de": "schläfrig sein",
+          "it": "avere sonno",
           "syllabe": ""
         },
         {
@@ -3764,9 +3764,9 @@
           "phonetic": "sâo",
           "en": "sad",
           "imageUrl": "/images/w_w_sao.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "triste",
+          "de": "traurig",
+          "it": "triste",
           "syllabe": ""
         }
       ],
@@ -3782,9 +3782,9 @@
           ],
           "en": "I'm very hungry",
           "imageUrl": "/images/p_p_hungry.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "tengo mucha hambre",
+          "de": "Ich habe großen Hunger",
+          "it": "ho molta fame",
           "syllabe": ""
         },
         {
@@ -3798,9 +3798,9 @@
           ],
           "en": "do you like it?",
           "imageUrl": "/images/p_p_like_q.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿te gusta?",
+          "de": "Gefällt es dir?",
+          "it": "ti piace?",
           "syllabe": ""
         },
         {
@@ -3814,9 +3814,9 @@
           ],
           "en": "I am very tired",
           "imageUrl": "/images/p_p_very_tired.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "estoy muy cansado",
+          "de": "Ich bin sehr müde",
+          "it": "sono molto stanco",
           "syllabe": ""
         },
         {
@@ -3830,9 +3830,9 @@
           ],
           "en": "I am happy (man)",
           "imageUrl": "/images/p_p_happy_m.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "estoy feliz (hombre)",
+          "de": "Ich bin glücklich (Mann)",
+          "it": "sono felice (uomo)",
           "syllabe": ""
         },
         {
@@ -3846,9 +3846,9 @@
           ],
           "en": "I am happy (woman)",
           "imageUrl": "/images/p_p_happy_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "estoy feliz (mujer)",
+          "de": "Ich bin glücklich (Frau)",
+          "it": "sono felice (donna)",
           "syllabe": ""
         },
         {
@@ -3862,9 +3862,9 @@
           ],
           "en": "I don't like",
           "imageUrl": "/images/p_p_not_like.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "no me gusta",
+          "de": "Ich mag das nicht",
+          "it": "non mi piace",
           "syllabe": ""
         },
         {
@@ -3878,21 +3878,21 @@
           ],
           "en": "I like (man)",
           "imageUrl": "/images/p_p_i_like_it.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "me gusta (hombre)",
+          "de": "Ich mag das (Mann)",
+          "it": "mi piace (uomo)",
           "syllabe": ""
         }
       ],
       "titleEn": "States and Feelings",
       "descriptionEn": "Express your mental and physical state",
       "imageUrl": "/images/time.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Estados y Sentimientos",
+      "titleDe": "Zustände und Gefühle",
+      "titleIt": "Stati e Sentimenti",
+      "descriptionEs": "Expresar su estado mental y físico",
+      "descriptionDe": "Den mentalen und körperlichen Zustand ausdrücken",
+      "descriptionIt": "Esprimere il proprio stato mentale e fisico"
     },
     {
       "id": "lesson-11",
@@ -3906,9 +3906,9 @@
           "phonetic": "rót",
           "en": "car / vehicle",
           "imageUrl": "/images/w_w_rot.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "coche / vehículo",
+          "de": "Auto / Fahrzeug",
+          "it": "auto / veicolo",
           "syllabe": ""
         },
         {
@@ -3919,9 +3919,9 @@
           "en": "station",
           "imageUrl": "/images/w_w_sathannee.svg",
           "allowIdenticalTranslation": true,
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "estación",
+          "de": "Station",
+          "it": "stazione",
           "syllabe": ""
         },
         {
@@ -3931,9 +3931,9 @@
           "phonetic": "sà-nǎam-bin",
           "en": "airport",
           "imageUrl": "/images/w_w_sanambin.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "aeropuerto",
+          "de": "Flughafen",
+          "it": "aeroporto",
           "syllabe": ""
         },
         {
@@ -3943,9 +3943,9 @@
           "phonetic": "khàp",
           "en": "to drive (car/truck)",
           "imageUrl": "/images/w_w_khap.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "conducir (coche/camión)",
+          "de": "fahren / fahren (Auto/Lkw)",
+          "it": "guidare (auto/camion)",
           "syllabe": ""
         },
         {
@@ -3955,9 +3955,9 @@
           "phonetic": "yùu",
           "en": "to be (located) / to stay",
           "imageUrl": "/images/w_w_yuu.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "estar (situado) / quedarse",
+          "de": "sein (befindlich) / bleiben",
+          "it": "essere (situato) / restare",
           "syllabe": ""
         },
         {
@@ -3968,9 +3968,9 @@
           "phonetic": "rót-fai",
           "imageUrl": "/images/w_w_rot_fai.svg",
           "allowIdenticalTranslation": true,
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "tren",
+          "de": "Zug",
+          "it": "treno",
           "syllabe": ""
         },
         {
@@ -3980,9 +3980,9 @@
           "en": "that",
           "phonetic": "nán",
           "imageUrl": "/images/w_w_nan.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ese / esa",
+          "de": "dieser / diese / dieses (da)",
+          "it": "quello / quella",
           "syllabe": ""
         }
       ],
@@ -3998,9 +3998,9 @@
           ],
           "en": "train station (train station)",
           "imageUrl": "/images/p_p_train_station.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "estación de tren",
+          "de": "Bahnhof",
+          "it": "stazione ferroviaria",
           "syllabe": ""
         },
         {
@@ -4014,9 +4014,9 @@
           ],
           "en": "go to the airport",
           "imageUrl": "/images/p_p_go_airport.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "ir al aeropuerto",
+          "de": "zum Flughafen gehen",
+          "it": "andare all'aeroporto",
           "syllabe": ""
         },
         {
@@ -4030,9 +4030,9 @@
           ],
           "en": "drive a car",
           "imageUrl": "/images/p_p_ride_car.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "conducir un coche",
+          "de": "ein Auto fahren",
+          "it": "guidare un'auto",
           "syllabe": ""
         },
         {
@@ -4046,9 +4046,9 @@
           ],
           "en": "the train is good",
           "imageUrl": "/images/p_p_train_good.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "el tren está bien",
+          "de": "der Zug ist gut",
+          "it": "il treno va bene",
           "syllabe": ""
         },
         {
@@ -4063,9 +4063,9 @@
           ],
           "en": "where is the station?",
           "imageUrl": "/images/p_p_where_station.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "¿dónde está la estación?",
+          "de": "Wo ist die Station?",
+          "it": "dov'è la stazione?",
           "syllabe": ""
         },
         {
@@ -4080,9 +4080,9 @@
           ],
           "en": "ten baht money",
           "imageUrl": "/images/p_p_new_l8_5.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "diez bahts (de dinero)",
+          "de": "zehn Baht (Geld)",
+          "it": "dieci baht",
           "syllabe": ""
         },
         {
@@ -4096,21 +4096,21 @@
           ],
           "en": "I like (woman)",
           "imageUrl": "/images/p_p_i_like_it_f.svg",
-          "es": "",
-          "de": "",
-          "it": "",
+          "es": "me gusta (mujer)",
+          "de": "Ich mag das (Frau)",
+          "it": "mi piace (donna)",
           "syllabe": ""
         }
       ],
       "titleEn": "Transportation",
       "descriptionEn": "Getting around town",
       "imageUrl": "/images/travel.svg",
-      "titleEs": "",
-      "titleDe": "",
-      "titleIt": "",
-      "descriptionEs": "",
-      "descriptionDe": "",
-      "descriptionIt": ""
+      "titleEs": "Transportes y Lugares",
+      "titleDe": "Transport und Orte",
+      "titleIt": "Trasporti e Luoghi",
+      "descriptionEs": "Desplazarse por la ciudad",
+      "descriptionDe": "Sich in der Stadt fortbewegen",
+      "descriptionIt": "Spostarsi in città"
     },
     {
       "id": "lesson-12",
