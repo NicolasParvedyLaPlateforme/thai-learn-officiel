@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins, Mic } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins, Mic, ChevronUp, Pencil, RotateCcw, GraduationCap } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
 import { useSession, signOut } from 'next-auth/react';
-import { useTranslation } from '../hooks/useTranslation';
+import { useTranslation, getTranslation } from '../hooks/useTranslation';
 
 export default function DesktopSidebarLeft() {
   const pathname = usePathname();
@@ -41,6 +41,16 @@ export default function DesktopSidebarLeft() {
 
   // Decide whether to show navigation
   const isVisible = (isLearnActive || isAlphabetActive || isConversationsActive || isSpeakActive || isReviewActive || isPairsActive || pathname === '/writing' || isPracticeActive || isDetectiveActive) && !isExerciseRunning;
+
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
+    learn: true,
+    immersion: true,
+    practice: true,
+  });
+
+  const toggleCategory = (key: string) => {
+    setOpenCategories(prev => ({ ...prev, [key]: !prev[key] }));
+  };
 
   if (!isVisible || !mounted) return null;
 
@@ -85,13 +95,78 @@ export default function DesktopSidebarLeft() {
           </button>
         </div>
 
-        <div className="flex flex-col gap-2 flex-1 w-full">
-          <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={24} />} label={t('sidebar.path')} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} />
-          <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={24} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} />
-          <NavItem href="/conversations" icon={<MessageCircle size={24} />} label={t('sidebar.dialogs')} active={isConversationsActive} />
-          <NavItem href="/speak" icon={<Mic size={24} />} label={t('sidebar.speaking') || 'Parler'} active={isSpeakActive} />
-          <NavItem href="/detective" icon={<Search size={24} />} label={t('sidebar.detective')} active={isDetectiveActive} />
-          <NavItem href="/practice" icon={<Brain size={24} />} label={t('sidebar.practice')} active={isPracticeActive} />
+        <div className="flex flex-col gap-2 flex-1 w-full overflow-y-auto hide-scrollbar pb-4">
+          <NavCategory 
+            title={language === 'en' ? 'Learn' : 'Apprendre'} 
+            icon={<GraduationCap size={24} />} 
+            isOpen={openCategories.learn} 
+            onToggle={() => toggleCategory('learn')}
+            isActive={isLearnActive || isAlphabetActive || isSpeakActive}
+          >
+            <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={20} />} label={t('sidebar.vocabulary') || 'Vocabulaire'} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} isSubItem />
+            <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={20} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} isSubItem />
+            <NavItem href={getHrefWithHash('/speak', 'speak')} icon={<Mic size={20} />} label={t('sidebar.speaking') || 'Parler'} active={isSpeakActive} isSubItem />
+          </NavCategory>
+
+          <NavCategory 
+            title={language === 'en' ? 'Immersion' : 'Immersion'} 
+            icon={<MessageCircle size={24} />} 
+            isOpen={openCategories.immersion} 
+            onToggle={() => toggleCategory('immersion')}
+            isActive={isConversationsActive || isDetectiveActive}
+          >
+            <NavItem href="/conversations" icon={<MessageCircle size={20} />} label={t('sidebar.dialogs')} active={isConversationsActive} isSubItem />
+            <NavItem href="/detective" icon={<Search size={20} />} label={t('sidebar.detective')} active={isDetectiveActive} isSubItem />
+          </NavCategory>
+
+          <NavCategory 
+            title={t('sidebar.practice') || 'Pratique'} 
+            icon={<Brain size={24} />} 
+            isOpen={openCategories.practice} 
+            onToggle={() => toggleCategory('practice')}
+            isActive={isPracticeActive || isPairsActive || isReviewActive || pathname === '/writing'}
+          >
+            <NavItem 
+              href="/practice?action=review" 
+              onClick={(e) => {
+                if (pathname === '/practice') {
+                   e.preventDefault();
+                   window.dispatchEvent(new Event('openReviewModal'));
+                }
+              }}
+              icon={<RotateCcw size={20} />} 
+              label={getTranslation('auto.review_9', language) || 'Rappel'} 
+              active={isPracticeActive && !pathname.includes('writing') && !pathname.includes('speaking')} 
+              isSubItem 
+            />
+            <NavItem href="/review-pairs" icon={<BookOpen size={20} />} label={getTranslation('auto.pairs', language) || 'Paires'} active={isPairsActive} isSubItem />
+            <NavItem 
+              href="/practice?action=writing" 
+              onClick={(e) => {
+                if (pathname === '/practice') {
+                   e.preventDefault();
+                   window.dispatchEvent(new Event('openWritingModal'));
+                }
+              }}
+              icon={<Pencil size={20} />} 
+              label={getTranslation('auto.writing', language) || 'Écriture'} 
+              active={pathname === '/writing' || (isPracticeActive && typeof window !== 'undefined' && window.location.search.includes('writing'))} 
+              isSubItem 
+            />
+            <NavItem 
+              href="/practice?action=speaking" 
+              onClick={(e) => {
+                if (pathname === '/practice') {
+                   e.preventDefault();
+                   window.dispatchEvent(new Event('openSpeakingModal'));
+                }
+              }}
+              icon={<Mic size={20} />} 
+              label={getTranslation('auto.speaking', language) || 'Parler'} 
+              active={isPracticeActive && typeof window !== 'undefined' && window.location.search.includes('speaking')} 
+              isSubItem 
+            />
+          </NavCategory>
         </div>
 
         {/* User Summary / Level */}
@@ -187,20 +262,50 @@ export default function DesktopSidebarLeft() {
   );
 }
 
-function NavItem({ href, icon, label, active, hasSuggestion }: { href: string, icon: React.ReactNode, label: string, active: boolean, hasSuggestion?: boolean }) {
+function NavCategory({ title, icon, isOpen, onToggle, isActive, children }: any) {
+  return (
+    <div className="flex flex-col w-full mb-1">
+      <button 
+        onClick={onToggle}
+        className={`flex items-center rounded-xl transition-all h-10 overflow-hidden w-12 mx-auto justify-center group-hover:w-full group-hover:justify-start group-hover:px-4 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-4 hover:bg-emerald-50 cursor-pointer ${isActive ? 'text-emerald-600' : 'text-slate-400'}`}
+      >
+        <div className="shrink-0 flex items-center justify-center w-6 h-6 transition-transform duration-300 relative">
+          {icon}
+        </div>
+        <div className="flex items-center justify-between flex-1 transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto whitespace-nowrap">
+          <span className="font-bold text-xs tracking-wider uppercase">
+            {title}
+          </span>
+          <ChevronUp size={16} className={`transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`} />
+        </div>
+      </button>
+      
+      <div className={`flex flex-col gap-1 overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[1000px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function NavItem({ href, icon, label, active, hasSuggestion, isSubItem, onClick }: { href: string, icon: React.ReactNode, label: string, active: boolean, hasSuggestion?: boolean, isSubItem?: boolean, onClick?: (e: any) => void }) {
   const { t } = useTranslation();
   return (
     <Link 
       href={href} 
-      className={`flex items-center rounded-xl transition-all h-12 overflow-hidden w-12 mx-auto justify-center group-hover:w-full group-hover:justify-start group-hover:px-4 group-hover:gap-4 xl:gap-4 xl:w-full xl:justify-start xl:px-4 ${active ? 'bg-emerald-100 text-emerald-800 font-bold' : 'text-slate-600 font-medium hover:bg-emerald-50 hover:text-emerald-700'}`}
+      onClick={onClick}
+      className={`flex items-center rounded-xl transition-all overflow-hidden mx-auto justify-center 
+        ${isSubItem 
+          ? 'h-10 w-10 group-hover:w-full group-hover:justify-start group-hover:px-4 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-4 group-hover:pl-10 xl:pl-10' 
+          : 'h-12 w-12 group-hover:w-full group-hover:justify-start group-hover:px-4 group-hover:gap-4 xl:gap-4 xl:w-full xl:justify-start xl:px-4'} 
+        ${active ? 'bg-emerald-100 text-emerald-800 font-bold' : 'text-slate-600 font-medium hover:bg-emerald-50 hover:text-emerald-700'}`}
     >
-      <div className={`shrink-0 flex items-center justify-center w-6 h-6 transition-transform duration-300 relative ${active ? 'scale-110 group-hover:scale-100 xl:scale-100' : ''}`}>
+      <div className={`shrink-0 flex items-center justify-center transition-transform duration-300 relative ${isSubItem ? 'w-5 h-5' : 'w-6 h-6'} ${active ? 'scale-110 group-hover:scale-100 xl:scale-100' : ''}`}>
         {icon}
         {hasSuggestion && (
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 border-2 border-white rounded-full"></span>
         )}
       </div>
-      <span className="whitespace-nowrap flex-1 transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center justify-between">
+      <span className={`transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto whitespace-nowrap ${isSubItem ? 'text-sm' : ''}`}>
         {label}
         {hasSuggestion && (
            <span className="bg-amber-400 text-amber-900 text-[10px] font-black uppercase px-2 py-0.5 rounded-full ml-2">
