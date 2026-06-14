@@ -4,8 +4,14 @@
         "categoryId": "travail",
         "title": "Bureau",
         "titleEn": "Office",
+        "titleEs": "Oficina",
+        "titleIt": "Ufficio",
+        "titleDe": "Büro",
         "description": "Retrouvez les objets cachés dans ce bureau traditionnel thaïlandais.",
         "descriptionEn": "Find the hidden objects in this traditional Thai office.",
+        "descriptionEs": "Encuentra los objetos ocultos en esta oficina tradicional tailandesa.",
+        "descriptionIt": "Trova gli oggetti nascosti in questo ufficio tradizionale tailandese.",
+        "descriptionDe": "Finde die versteckten Objekte in diesem traditionellen thailändischen Büro.",
         "imageUrl": "/images/detective/niveau1.jpg",
         "objects": [
             {
@@ -69,8 +75,14 @@
         "categoryId": "vie-quotidienne",
         "title": "Supermarché",
         "titleEn": "Supermarket",
+        "titleEs": "Supermercado",
+        "titleIt": "Supermercato",
+        "titleDe": "Supermarkt",
         "description": "Trouvez les ustensiles et ingrédients cachés dans ce supermarché thaïlandais.",
         "descriptionEn": "Find the hidden utensils and ingredients in this Thai supermarket.",
+        "descriptionEs": "Encuentra los utensilios e ingredientes ocultos en este supermercado tailandés.",
+        "descriptionIt": "Trova gli utensili e gli ingredienti nascosti in questo supermercato tailandese.",
+        "descriptionDe": "Finde die versteckten Utensilien und Zutaten in diesem thailändischen Supermarkt.",
         "imageUrl": "/images/detective/niveau2.webp",
         "objects": [
             {
@@ -224,8 +236,14 @@
         "categoryId": "loisir",
         "title": "Restaurant",
         "titleEn": "Restaurant",
+        "titleEs": "Restaurante",
+        "titleIt": "Ristorante",
+        "titleDe": "Restaurant",
         "description": "Trouvez les ustensiles et ingrédients cachés dans ce restaurant thaïlandais.",
         "descriptionEn": "Find the hidden utensils and ingredients in this Thai restaurant.",
+        "descriptionEs": "Encuentra los utensilios e ingredientes ocultos en este restaurante tailandés.",
+        "descriptionIt": "Trova gli utensili e gli ingredienti nascosti in questo ristorante tailandese.",
+        "descriptionDe": "Finde die versteckten Utensilien und Zutaten in diesem thailändischen Restaurant.",
         "imageUrl": "/images/detective/niveau3-restaurant.jpg",
         "objects": [
             {
