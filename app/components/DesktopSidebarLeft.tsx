@@ -97,7 +97,7 @@ export default function DesktopSidebarLeft() {
 
         <div className="flex flex-col gap-2 flex-1 w-full overflow-y-auto hide-scrollbar pb-4">
           <NavCategory 
-            title={language === 'en' ? 'Learn' : 'Apprendre'} 
+            title={t('sidebar.category.learn') || 'Apprendre'} 
             icon={<GraduationCap size={24} />} 
             isOpen={openCategories.learn} 
             onToggle={() => toggleCategory('learn')}
@@ -109,7 +109,7 @@ export default function DesktopSidebarLeft() {
           </NavCategory>
 
           <NavCategory 
-            title={language === 'en' ? 'Immersion' : 'Immersion'} 
+            title={t('sidebar.category.immersion') || 'Immersion'} 
             icon={<MessageCircle size={24} />} 
             isOpen={openCategories.immersion} 
             onToggle={() => toggleCategory('immersion')}
