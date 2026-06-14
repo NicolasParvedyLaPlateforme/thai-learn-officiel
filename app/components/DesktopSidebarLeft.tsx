@@ -58,7 +58,7 @@ export default function DesktopSidebarLeft() {
   const userLevel = Math.floor(completedLessons.length / 5) + 1;
   const levelTitle = userLevel < 5 ? t('sidebar.level.beginner') : userLevel < 10 ? t('sidebar.level.intermediate') : t('sidebar.level.advanced');
 
-  const getHrefWithHash = (basePath: string, type: 'learn' | 'alphabet') => {
+  const getHrefWithHash = (basePath: string, type: 'learn' | 'alphabet' | 'speak') => {
     return globalSuggested?.type === type ? `${basePath}#${globalSuggested.id}` : basePath;
   };
 
