@@ -20,8 +20,11 @@
                 "y": 69.39,
                 "radius": 10.43,
                 "th": "โน้ตบุ๊ก",
-                "fr": "คอมพิวเตอร์พกพา",
-                "en": "Laptop"
+                "fr": "Ordinateur portable",
+                "en": "Laptop",
+                "es": "Portátil",
+                "it": "Portatile",
+                "de": "Laptop"
             },
             {
                 "id": "0oxioqb1d",
@@ -30,7 +33,10 @@
                 "radius": 9.37,
                 "th": "เสื้อหม้อห้อม",
                 "fr": "Mohom",
-                "en": "Mo Hom"
+                "en": "Mo Hom",
+                "es": "Mo Hom",
+                "it": "Mo Hom",
+                "de": "Mo Hom"
             },
             {
                 "id": "91nvp8tad",
@@ -39,7 +45,10 @@
                 "radius": 5.23,
                 "th": "พระพุทธรูป",
                 "fr": "Statue de Bouddha",
-                "en": "Statue of Bouddha"
+                "en": "Statue of Bouddha",
+                "es": "Estatua de Buda",
+                "it": "Statua di Buddha",
+                "de": "Buddhastatue"
             },
             {
                 "id": "tbieurgp6",
@@ -48,7 +57,10 @@
                 "radius": 13.22,
                 "th": "หน้าต่าง",
                 "fr": "Fenêtre",
-                "en": "Window"
+                "en": "Window",
+                "es": "Ventana",
+                "it": "Finestra",
+                "de": "Fenster"
             },
             {
                 "id": "7lw6pbhcj",
@@ -57,7 +69,10 @@
                 "radius": 6.11,
                 "th": "กล้องถ่ายรูป",
                 "fr": "Appareil à photo",
-                "en": "Camera"
+                "en": "Camera",
+                "es": "Cámara",
+                "it": "Macchina fotografica",
+                "de": "Kamera"
             },
             {
                 "id": "3nlabdd94",
@@ -66,7 +81,10 @@
                 "radius": 5.59,
                 "th": "เครื่องพิมพ์ดีด",
                 "fr": "Machine à écrire",
-                "en": "Typewriter"
+                "en": "Typewriter",
+                "es": "Máquina de escribir",
+                "it": "Macchina da scrivere",
+                "de": "Schreibmaschine"
             }
         ]
     },
@@ -92,7 +110,10 @@
                 "radius": 6.53,
                 "th": "กล้วย",
                 "fr": "Bananes",
-                "en": "Bananas"
+                "en": "Bananas",
+                "es": "Plátanos",
+                "it": "Banane",
+                "de": "Bananen"
             },
             {
                 "id": "wwdloxjz1",
@@ -101,7 +122,10 @@
                 "radius": 7.87,
                 "th": "แอปเปิ้ล",
                 "fr": "Pommes",
-                "en": "Apples"
+                "en": "Apples",
+                "es": "Manzanas",
+                "it": "Mele",
+                "de": "Äpfel"
             },
             {
                 "id": "rsf7l3zsi",
@@ -110,7 +134,10 @@
                 "radius": 2.83,
                 "th": "มะนาว",
                 "fr": "Citron",
-                "en": "Lemons / Limes"
+                "en": "Lemons / Limes",
+                "es": "Limones / Limas",
+                "it": "Limoni / Lime",
+                "de": "Zitronen / Limetten"
             },
             {
                 "id": "7lc8x3u1y",
@@ -119,7 +146,10 @@
                 "radius": 2.29,
                 "th": "ส้ม",
                 "fr": "Orange",
-                "en": "Orange"
+                "en": "Orange",
+                "es": "Naranja",
+                "it": "Arancia",
+                "de": "Orange"
             },
             {
                 "id": "md8coved3",
@@ -128,7 +158,10 @@
                 "radius": 2.22,
                 "th": "อะโวคาโด",
                 "fr": "Avocat",
-                "en": "Avocado"
+                "en": "Avocado",
+                "es": "Aguacate",
+                "it": "Avocado",
+                "de": "Avocado"
             },
             {
                 "id": "df8ck7hx6",
@@ -137,7 +170,10 @@
                 "radius": 3.35,
                 "th": "มะเขือเทศ",
                 "fr": "Tomates",
-                "en": "Tomatoes"
+                "en": "Tomatoes",
+                "es": "Tomates",
+                "it": "Pomodori",
+                "de": "Tomaten"
             },
             {
                 "id": "ullc9b1wg",
@@ -146,7 +182,10 @@
                 "radius": 3.68,
                 "th": "ซูคินี",
                 "fr": "Courgettes",
-                "en": "Zucchinis"
+                "en": "Zucchinis",
+                "es": "Calabacines",
+                "it": "Zucchine",
+                "de": "Zucchini"
             },
             {
                 "id": "l4tdqw9nl",
@@ -155,7 +194,10 @@
                 "radius": 3.54,
                 "th": "พริกหวาน",
                 "fr": "Poivron",
-                "en": "Bell peppers"
+                "en": "Bell peppers",
+                "es": "Pimientos",
+                "it": "Peperoni",
+                "de": "Paprika"
             },
             {
                 "id": "19x2h9idn",
@@ -164,7 +206,10 @@
                 "radius": 6.19,
                 "th": "แครอท",
                 "fr": "Carottes",
-                "en": "Carrots"
+                "en": "Carrots",
+                "es": "Zanahorias",
+                "it": "Carote",
+                "de": "Karotten"
             },
             {
                 "id": "fxv9108o6",
@@ -173,7 +218,10 @@
                 "radius": 5.59,
                 "th": "แตงกวา",
                 "fr": "Concombre",
-                "en": "Cucumber"
+                "en": "Cucumber",
+                "es": "Pepino",
+                "it": "Cetriolo",
+                "de": "Gurke"
             },
             {
                 "id": "dwtafliec",
@@ -182,7 +230,10 @@
                 "radius": 4.88,
                 "th": "ผักกาดหอม",
                 "fr": "Salade",
-                "en": "Salad"
+                "en": "Salad",
+                "es": "Lechuga",
+                "it": "Lattuga",
+                "de": "Salat"
             },
             {
                 "id": "cnrqa3qi1",
@@ -191,7 +242,10 @@
                 "radius": 6.41,
                 "th": "เครื่องชั่ง",
                 "fr": "Balance",
-                "en": "Scale"
+                "en": "Scale",
+                "es": "Balanza",
+                "it": "Bilancia",
+                "de": "Waage"
             },
             {
                 "id": "dna808ida",
@@ -200,7 +254,10 @@
                 "radius": 5.93,
                 "th": "ถุงพลาสติก",
                 "fr": "Sac en plastique",
-                "en": "Plastic bag"
+                "en": "Plastic bag",
+                "es": "Bolsa de plástico",
+                "it": "Sacchetto di plastica",
+                "de": "Plastiktüte"
             },
             {
                 "id": "eh4sfhanw",
@@ -209,7 +266,10 @@
                 "radius": 3.62,
                 "th": "ป้ายราคา",
                 "fr": "Etiquette de prix",
-                "en": "Price tag"
+                "en": "Price tag",
+                "es": "Etiqueta de precio",
+                "it": "Etichetta del prezzo",
+                "de": "Preisschild"
             },
             {
                 "id": "lxddnkjfk",
@@ -218,7 +278,10 @@
                 "radius": 11.47,
                 "th": "รถเข็น / ตะกร้า",
                 "fr": "Cadie / Panier",
-                "en": "Shopping cart / Basket"
+                "en": "Shopping cart / Basket",
+                "es": "Carrito / Cesta",
+                "it": "Carrello / Cestino",
+                "de": "Einkaufswagen / Korb"
             },
             {
                 "id": "rsne5y0ay",
@@ -227,7 +290,10 @@
                 "radius": 6.47,
                 "th": "เจลแอลกอฮอล์",
                 "fr": "Gel hydroalcoolique",
-                "en": "Hand sanitizer"
+                "en": "Hand sanitizer",
+                "es": "Gel desinfectante",
+                "it": "Gel igienizzante",
+                "de": "Händedesinfektionsmittel"
             }
         ]
     },
@@ -253,7 +319,10 @@
                 "radius": 7.62,
                 "th": "พนักงานเสิร์ฟ",
                 "fr": "Serveur / Serveuse",
-                "en": "Waiter / Waitress"
+                "en": "Waiter / Waitress",
+                "es": "Camarero / Camarera",
+                "it": "Cameriere / Cameriera",
+                "de": "Kellner / Kellnerin"
             },
             {
                 "id": "gew5sybwu",
@@ -262,7 +331,10 @@
                 "radius": 8.71,
                 "th": "เมนู",
                 "fr": "Menu",
-                "en": "Menu"
+                "en": "Menu",
+                "es": "Menú",
+                "it": "Menù",
+                "de": "Speisekarte"
             },
             {
                 "id": "tdwp5f23q",
@@ -271,7 +343,10 @@
                 "radius": 2.84,
                 "th": "เช็คบิล / เก็บตังค์",
                 "fr": "Addition / La note",
-                "en": "Bill / Check"
+                "en": "Bill / Check",
+                "es": "La cuenta",
+                "it": "Il conto",
+                "de": "Die Rechnung"
             },
             {
                 "id": "p1g9xl9nb",
@@ -280,7 +355,10 @@
                 "radius": 3.21,
                 "th": "ช้อน",
                 "fr": "Cuillère",
-                "en": "Spoon"
+                "en": "Spoon",
+                "es": "Cuchara",
+                "it": "Cucchiaio",
+                "de": "Löffel"
             },
             {
                 "id": "voqonj6j4",
@@ -289,7 +367,10 @@
                 "radius": 6,
                 "th": "ส้อม",
                 "fr": "Fourchette",
-                "en": "Fork"
+                "en": "Fork",
+                "es": "Tenedor",
+                "it": "Forchetta",
+                "de": "Gabel"
             },
             {
                 "id": "fdh8hjcgx",
@@ -298,7 +379,10 @@
                 "radius": 4.51,
                 "th": "ตะเกียบ",
                 "fr": "Baguettes",
-                "en": "Chopsticks"
+                "en": "Chopsticks",
+                "es": "Palillos",
+                "it": "Bacchette",
+                "de": "Essstäbchen"
             },
             {
                 "id": "yi6yo3auy",
@@ -307,7 +391,10 @@
                 "radius": 3.93,
                 "th": "แก้วน้ำ",
                 "fr": "Verre",
-                "en": "Glass"
+                "en": "Glass",
+                "es": "Vaso",
+                "it": "Bicchiere",
+                "de": "Glas"
             },
             {
                 "id": "95fgkkmzp",
@@ -316,7 +403,10 @@
                 "radius": 4.56,
                 "th": "น้ำเปล่า",
                 "fr": "Eau potable",
-                "en": "Drinking water"
+                "en": "Drinking water",
+                "es": "Agua potable",
+                "it": "Acqua potabile",
+                "de": "Trinkwasser"
             },
             {
                 "id": "g44kx9oer",
@@ -325,7 +415,10 @@
                 "radius": 5.33,
                 "th": "ข้าวเหนียวมะม่วง",
                 "fr": "Riz gluant à la mangue",
-                "en": "Mango sticky rice"
+                "en": "Mango sticky rice",
+                "es": "Arroz glutinoso con mango",
+                "it": "Riso glutinoso al mango",
+                "de": "Mango-Klebreis"
             }
         ]
     }
