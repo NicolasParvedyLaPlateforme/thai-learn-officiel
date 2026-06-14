@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import IconImage from '../components/IconImage';
@@ -15,7 +15,7 @@ import { DetectiveLevel } from '../types';
 import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
 import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
 
-const CATEGORIES: Record<string, { en: string, fr: string, emoji: string, imageUrl?: string, description?: { en: string, fr: string } }> = DETECTIVE_CATEGORIES;
+const CATEGORIES: Record<string, any> = DETECTIVE_CATEGORIES;
 
 export default function DetectivePage() {
   const [mounted, setMounted] = useState(false);
@@ -82,7 +82,7 @@ export default function DetectivePage() {
                  </div>
               )}
               <h1 className="text-xl font-extrabold text-slate-800 tracking-tight md:hidden">
-                 {mobileView === 'categories_list' ? (getTranslation('auto.detective', language)) : (selectedCategory ? (language === 'en' ? selectedCategory.en : selectedCategory.fr) : '')}
+                 {mobileView === 'categories_list' ? (getTranslation('auto.detective', language)) : (selectedCategory ? getLocalizedField(selectedCategory, '', language) : '')}
               </h1>
             </div>
             
@@ -177,11 +177,11 @@ export default function DetectivePage() {
                        <div className="flex flex-col gap-1 w-full flex-1">
                          <h2 className="text-lg font-extrabold text-slate-800 flex items-center gap-2">
                            {!cat.imageUrl && <span className="text-2xl">{cat.emoji}</span>}
-                           {language === 'en' ? cat.en : cat.fr}
+                           {getLocalizedField(cat, '', language)}
                          </h2>
                          {cat.description && (
                             <p className="text-sm text-slate-500 mt-1 line-clamp-2">
-                              {language === 'en' ? cat.description.en : cat.description.fr}
+                              {getLocalizedField(cat.description, '', language)}
                             </p>
                          )}
                          <div className="mt-auto pt-4 flex items-center text-emerald-600 font-bold text-sm">
@@ -205,7 +205,7 @@ export default function DetectivePage() {
                               {getTranslation('auto.categories', language)}
                           </button>
                           <ChevronRight size={16} />
-                          <span className="text-slate-700">{language === 'en' ? selectedCategory.en : selectedCategory.fr}</span>
+                          <span className="text-slate-700">{getLocalizedField(selectedCategory, '', language)}</span>
                      </div>
 
                      {/* Mobile Header Hero Layout */}
@@ -225,10 +225,10 @@ export default function DetectivePage() {
                               <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-2">
                                   {selectedCategory.imageUrl && <div className="text-3xl drop-shadow-md mb-1">{selectedCategory.emoji}</div>}
                                   <h1 className={`text-2xl font-extrabold leading-tight ${selectedCategory.imageUrl ? 'text-white' : 'text-slate-800'}`}>
-                                       {language === 'en' ? selectedCategory.en : selectedCategory.fr}
+                                       {getLocalizedField(selectedCategory, '', language)}
                                   </h1>
                                   <p className={`text-sm leading-relaxed line-clamp-3 ${selectedCategory.imageUrl ? 'text-slate-200' : 'text-slate-600'}`}>
-                                       {language === 'en' && selectedCategory.description ? selectedCategory.description.en : selectedCategory.description?.fr}
+                                       {selectedCategory.description ? getLocalizedField(selectedCategory.description, '', language) : ''}
                                   </p>
                               </div>
                          </div>
@@ -244,10 +244,10 @@ export default function DetectivePage() {
                           )}
                           <div className="flex-1 flex flex-col w-full">
                               <h1 className="text-3xl font-extrabold text-slate-900 mb-3">
-                                   {language === 'en' ? selectedCategory.en : selectedCategory.fr}
+                                   {getLocalizedField(selectedCategory, '', language)}
                               </h1>
                               <p className="text-slate-500 text-base leading-relaxed mb-6 line-clamp-3">
-                                   {language === 'en' && selectedCategory.description ? selectedCategory.description.en : selectedCategory.description?.fr}
+                                   {selectedCategory.description ? getLocalizedField(selectedCategory.description, '', language) : ''}
                               </p>
                           </div>
                      </div>
@@ -298,10 +298,10 @@ export default function DetectivePage() {
                                          <div className="flex-1 min-w-0 pr-2 py-1 md:py-2 flex flex-col h-full justify-center">
                                             <div className="mb-auto">
                                                 <h3 className={`font-extrabold text-base md:text-lg text-slate-800 truncate`}>
-                                                     {index + 1}. {language === 'en' ? level.titleEn : level.title}
+                                                     {index + 1}. {getLocalizedField(level, 'title', language)}
                                                 </h3>
                                                 <p className={`hidden md:block text-sm text-slate-500 truncate mt-1`}>
-                                                     {language === 'en' ? level.descriptionEn : level.description}
+                                                     {getLocalizedField(level, 'description', language)}
                                                 </p>
                                             </div>
 
@@ -348,7 +348,7 @@ export default function DetectivePage() {
                      <ArrowLeft size={20} />
                    </button>
                    <h2 className="text-lg font-extrabold text-slate-800 truncate">
-                      {language === 'en' ? selectedLevel.titleEn : selectedLevel.title}
+                      {getLocalizedField(selectedLevel, 'title', language)}
                    </h2>
                 </div>
 
@@ -371,10 +371,10 @@ export default function DetectivePage() {
 
                    {/* Title & Desc */}
                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3 leading-tight">
-                       {language === 'en' ? selectedLevel.titleEn : selectedLevel.title}
+                       {getLocalizedField(selectedLevel, 'title', language)}
                    </h2>
                    <p className="text-slate-500 text-sm md:text-base mb-6 leading-relaxed">
-                       {language === 'en' ? selectedLevel.descriptionEn : selectedLevel.description}
+                       {getLocalizedField(selectedLevel, 'description', language)}
                    </p>
 
                    {/* Stats row */}

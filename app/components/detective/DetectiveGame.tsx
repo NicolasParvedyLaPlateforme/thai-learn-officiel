@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { DetectiveLevel, DetectiveObject } from '../../types';
@@ -549,7 +549,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
               ) : (
                 isTranslationRevealed || currentMistakes >= 2 ? (
                   <span className="text-[10px] lg:text-lg font-bold text-emerald-600 animate-in fade-in slide-in-from-bottom-1 px-2 lg:px-3 py-0 lg:py-0.5 bg-emerald-100/50 rounded-full">
-                    {language === 'en' ? currentObj.en : currentObj.fr}
+                    {getLocalizedField(currentObj, '', language)}
                   </span>
                 ) : (
                   <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-[#e0d6b8] hover:bg-[#d4c8a9] text-[#5c4a3d] rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
