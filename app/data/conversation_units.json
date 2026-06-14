@@ -1,15 +1,42 @@
 {
-  "unit-1": { 
-    "en": "Basics & Greetings", 
-    "fr": "Bases & Salutations", 
+  "unit-1": {
+    "en": "Basics & Greetings",
+    "fr": "Bases & Salutations",
+    "es": "Conceptos básicos y saludos",
+    "it": "Basi e saluti",
+    "de": "Grundlagen & Begrüßungen",
     "emoji": "👋",
     "imageUrl": "/tom-et-sa-bossole.webp",
     "description": {
       "en": "Follow Tom's adventures in Thailand. He discovers a mysterious compass that will lead him on a grand journey.",
-      "fr": "Suivez les aventures de Tom en Thaïlande. Il découvre une boussole mystérieuse qui le mènera dans un grand voyage."
+      "fr": "Suivez les aventures de Tom en Thaïlande. Il découvre une boussole mystérieuse qui le mènera dans un grand voyage.",
+      "es": "Sigue las aventuras de Tom en Tailandia. Descubre una brújula misteriosa que lo llevará a un gran viaje.",
+      "it": "Segui le avventure di Tom in Thailandia. Scopre una bussola misteriosa che lo condurrà in un grande viaggio.",
+      "de": "Folge Toms Abenteuern in Thailand. Er entdeckt einen mysteriösen Kompass, der ihn auf eine große Reise führen wird."
     }
   },
-  "unit-2": { "en": "Numbers & Quantities", "fr": "Nombres et Quantités", "emoji": "🔢" },
-  "unit-3": { "en": "Food & Restaurant", "fr": "Nourriture & Restaurant", "emoji": "🍜" },
-  "unit-4": { "en": "Getting to know people", "fr": "Faire connaissance", "emoji": "🤝" }
+  "unit-2": {
+    "en": "Numbers & Quantities",
+    "fr": "Nombres et Quantités",
+    "es": "Números y cantidades",
+    "it": "Numeri e quantità",
+    "de": "Zahlen & Mengen",
+    "emoji": "🔢"
+  },
+  "unit-3": {
+    "en": "Food & Restaurant",
+    "fr": "Nourriture & Restaurant",
+    "es": "Comida y restaurantes",
+    "it": "Cibo e ristoranti",
+    "de": "Essen & Restaurant",
+    "emoji": "🍜"
+  },
+  "unit-4": {
+    "en": "Getting to know people",
+    "fr": "Faire connaissance",
+    "es": "Conocer gente",
+    "it": "Conoscere persone",
+    "de": "Leute kennenlernen",
+    "emoji": "🤝"
+  }
 }

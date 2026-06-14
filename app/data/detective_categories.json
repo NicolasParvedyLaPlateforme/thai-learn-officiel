@@ -2,31 +2,49 @@
   "travail": {
     "en": "Work",
     "fr": "Travail",
+    "es": "Trabajo",
+    "it": "Lavoro",
+    "de": "Arbeit",
     "emoji": "💼",
     "imageUrl": "/images/detective/niveau1.jpg",
     "description": {
       "en": "Vocabulary related to the workplace.",
-      "fr": "Vocabulaire lié au monde du travail."
+      "fr": "Vocabulaire lié au monde du travail.",
+      "es": "Vocabulario relacionado con el entorno laboral.",
+      "it": "Vocabolario relativo al mondo del lavoro.",
+      "de": "Vokabeln rund um die Arbeitswelt."
     }
   },
   "vie-quotidienne": {
     "en": "Daily Life",
     "fr": "Vie de tous les jours",
+    "es": "Vida cotidiana",
+    "it": "Vita quotidiana",
+    "de": "Alltag",
     "emoji": "🛒",
     "imageUrl": "/images/detective/niveau2.webp",
     "description": {
       "en": "Vocabulary for everyday situations.",
-      "fr": "Vocabulaire pour les situations de tous les jours."
+      "fr": "Vocabulaire pour les situations de tous les jours.",
+      "es": "Vocabulario para situaciones cotidianas.",
+      "it": "Vocabolario per le situazioni di tutti i giorni.",
+      "de": "Vokabeln für alltägliche Situationen."
     }
   },
   "loisir": {
     "en": "Leisure",
     "fr": "Loisir",
+    "es": "Ocio",
+    "it": "Tempo libero",
+    "de": "Freizeit",
     "emoji": "🍽️",
     "imageUrl": "/images/detective/niveau3-restaurant.jpg",
     "description": {
       "en": "Vocabulary for going out and having fun.",
-      "fr": "Vocabulaire pour les sorties et divertissements."
+      "fr": "Vocabulaire pour les sorties et divertissements.",
+      "es": "Vocabulario para salir y divertirse.",
+      "it": "Vocabolario per uscire e divertirsi.",
+      "de": "Vokabeln zum Ausgehen und Spaß haben."
     }
   }
 }

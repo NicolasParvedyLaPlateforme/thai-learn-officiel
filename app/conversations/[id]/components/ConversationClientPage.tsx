@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../../../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../../../hooks/useTranslation';
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import IconImage from '../../../components/IconImage';
@@ -222,11 +222,11 @@ function ConversationContent() {
           const shuffledDistractors = shuffleArray(distractors).slice(0, 2);
           
           const options = [
-            { id: 0, text: target.th, translation: language === 'en' ? target.en : target.fr, phonetic: target.phonetic, correct: true },
+            { id: 0, text: target.th, translation: getLocalizedField(target, '', language), phonetic: target.phonetic, correct: true },
             ...shuffledDistractors.map((d, i) => ({
               id: i + 1,
               text: d.th,
-              translation: language === 'en' ? d.en : d.fr,
+              translation: getLocalizedField(d, '', language),
               phonetic: d.phonetic,
               correct: false
             }))
@@ -540,7 +540,7 @@ function ConversationContent() {
       <main className="max-w-xl mx-auto px-4 mt-24 flex flex-col gap-6">
         <div className="text-center mb-4 transition-all duration-300">
             <h1 className="text-2xl font-black text-slate-800">
-                {language === 'en' && conversation.titleEn ? conversation.titleEn : conversation.title}
+                {getLocalizedField(conversation, 'title', language)}
             </h1>
         </div>
 
@@ -669,7 +669,7 @@ function ConversationContent() {
                         )}
                         {showRomanization && <span className="text-sm font-bold text-orange-500">{dialog.phonetic}</span>}
                         <span className="text-sm font-medium text-slate-500">
-                          {language === 'en' ? dialog.en : dialog.fr}
+                          {getLocalizedField(dialog, '', language)}
                         </span>
                       </div>
                     )}
@@ -724,7 +724,7 @@ function ConversationContent() {
                        className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[3] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         {!hintsUsed[3] && <Type size={16} />} 
-                        {hintsUsed[3] ? <span>{language === 'en' ? hintWord.en : hintWord.fr}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
+                        {hintsUsed[3] ? <span>{getLocalizedField(hintWord, '', language)}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
                      </button>
                      
                      <button

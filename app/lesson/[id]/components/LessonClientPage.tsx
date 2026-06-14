@@ -52,29 +52,8 @@ const getInstructionKey = (ex: Exercise | undefined) => {
 };
 
 const getInstructionText = (key: string | null, lang: string) => {
-  if (key === "word-match")
-    return lang === "en"
-      ? "Select the correct translation"
-      : "Sélectionnez la bonne traduction";
-  if (key === "pair-matching")
-    return lang === "en"
-      ? "Match the pairs"
-      : "Reliez les paires correspondantes";
-  if (key === "sentence-builder")
-    return lang === "en"
-      ? "Translate this sentence"
-      : "Traduisez cette phrase";
-  if (key === "writing")
-    return lang === "en"
-      ? "Translate this sentence"
-      : "Traduisez cette phrase";
-  if (key === "writing-blind")
-    return lang === "en" ? "Write in Thai" : "Écrivez en thaï";
-  if (key === "free-typing")
-    return lang === "en"
-      ? "Type the correct translation"
-      : "Tapez la bonne traduction";
-  return null;
+  if (!key) return null;
+  return getTranslation(`instruction.${key.replace("-", "_")}`, lang);
 };
 
 function LessonPageContent({ lesson }: { lesson: any }) {

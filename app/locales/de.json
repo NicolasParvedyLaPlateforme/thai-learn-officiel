@@ -1,4 +1,7 @@
 {
+  "auto.level": "Level",
+  "auto.complete_level_1": "Level 1 abschließen",
+  "auto.complete_level_2": "Level 2 abschließen",
   "auto.speak_to_select": "Sprechen zum Auswählen",
   "auto.speak_phrase_instruction": "Sprechen Sie den Satz, den Sie üben möchten",
   "auto.speak_letter_name": "Sprechen Sie den Buchstabennamen",
@@ -396,5 +399,11 @@
   "auto.level_completed": "Level {level} abgeschlossen!",
   "auto.unavailable_on_brave": "Nicht auf Brave verfügbar",
   "auto.pronunciation_success_50": "AUSSPRACHE (ERFOLG 50%):",
-  "auto.conversation_success_50": "KONVERSATION (ERFOLG 50%):"
+  "auto.conversation_success_50": "KONVERSATION (ERFOLG 50%):",
+  "instruction.word_match": "Wähle die richtige Übersetzung",
+  "instruction.pair_matching": "Ordne die Paare zu",
+  "instruction.sentence_builder": "Übersetze diesen Satz",
+  "instruction.writing": "Übersetze diesen Satz",
+  "instruction.writing_blind": "Schreibe auf Thai",
+  "instruction.free_typing": "Tippe die richtige Übersetzung"
 }
