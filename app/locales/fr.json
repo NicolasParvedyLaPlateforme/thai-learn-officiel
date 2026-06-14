@@ -1,4 +1,7 @@
 {
+  "auto.level": "Niveau",
+  "auto.complete_level_1": "Terminer le Niveau 1",
+  "auto.complete_level_2": "Terminer le Niveau 2",
   "auto.speak_to_select": "Lisez pour choisir",
   "auto.speak_phrase_instruction": "Prononcez la phrase que vous souhaitez travailler",
   "auto.speak_letter_name": "Prononcez le nom de la lettre",

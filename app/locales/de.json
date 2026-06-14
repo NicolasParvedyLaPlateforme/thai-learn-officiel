@@ -1,4 +1,7 @@
 {
+  "auto.level": "Level",
+  "auto.complete_level_1": "Level 1 abschließen",
+  "auto.complete_level_2": "Level 2 abschließen",
   "auto.speak_to_select": "Sprechen zum Auswählen",
   "auto.speak_phrase_instruction": "Sprechen Sie den Satz, den Sie üben möchten",
   "auto.speak_letter_name": "Sprechen Sie den Buchstabennamen",

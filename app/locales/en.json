@@ -1,4 +1,7 @@
 {
+  "auto.level": "Level",
+  "auto.complete_level_1": "Complete Level 1",
+  "auto.complete_level_2": "Complete Level 2",
   "auto.speak_to_select": "Speak to select",
   "auto.speak_phrase_instruction": "Pronounce the phrase you wish to practice",
   "auto.speak_letter_name": "Pronounce the letter name",

@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from '../hooks/useTranslation';
+import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import IconImage from '../components/IconImage';
@@ -16,7 +16,7 @@ import { getRequiredLessonsForConv, RequiredVocabLesson } from '../lib/vocabular
 import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
 import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
 
-const UNITS: Record<string, { en: string, fr: string, emoji: string, imageUrl?: string, description?: { en: string, fr: string } }> = CONVERSATION_UNITS;
+const UNITS: Record<string, any> = CONVERSATION_UNITS;
 
 interface Conversation {
   id: string;
@@ -124,7 +124,7 @@ export default function ConversationsPage() {
                  </div>
               )}
               <h1 className="text-xl font-extrabold text-slate-800 tracking-tight md:hidden">
-                 {mobileView === 'stories_list' ? 'ThaiLearn' : (selectedStory ? (language === 'en' ? selectedStory.en : selectedStory.fr) : '')}
+                 {mobileView === 'stories_list' ? 'ThaiLearn' : (selectedStory ? getLocalizedField(selectedStory, '', language) : '')}
               </h1>
             </div>
             
@@ -219,11 +219,11 @@ export default function ConversationsPage() {
                        <div className="flex flex-col gap-1 w-full flex-1">
                          <h2 className="text-lg font-extrabold text-slate-800 flex items-center gap-2">
                            {!unit.imageUrl && <span className="text-2xl">{unit.emoji}</span>}
-                           {language === 'en' ? unit.en : unit.fr}
+                           {getLocalizedField(unit, '', language)}
                          </h2>
                          {unit.description && (
                             <p className="text-sm text-slate-500 mt-1 line-clamp-2">
-                              {language === 'en' ? unit.description.en : unit.description.fr}
+                              {getLocalizedField(unit.description, '', language)}
                             </p>
                          )}
                          <div className="mt-auto pt-4 flex items-center text-emerald-600 font-bold text-sm">
@@ -247,7 +247,7 @@ export default function ConversationsPage() {
                               {getTranslation('auto.stories', language)}
                           </button>
                           <ChevronRight size={16} />
-                          <span className="text-slate-700">{language === 'en' ? selectedStory.en : selectedStory.fr}</span>
+                          <span className="text-slate-700">{getLocalizedField(selectedStory, '', language)}</span>
                      </div>
 
                      {/* Mobile Header Hero Layout */}
@@ -267,10 +267,10 @@ export default function ConversationsPage() {
                               <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-2">
                                   {selectedStory.imageUrl && <div className="text-3xl drop-shadow-md mb-1">{selectedStory.emoji}</div>}
                                   <h1 className={`text-2xl font-extrabold leading-tight ${selectedStory.imageUrl ? 'text-white' : 'text-slate-800'}`}>
-                                       {language === 'en' ? selectedStory.en : selectedStory.fr}
+                                       {getLocalizedField(selectedStory, '', language)}
                                   </h1>
                                   <p className={`text-sm leading-relaxed line-clamp-3 ${selectedStory.imageUrl ? 'text-slate-200' : 'text-slate-600'}`}>
-                                       {language === 'en' && selectedStory.description ? selectedStory.description.en : selectedStory.description?.fr}
+                                       {selectedStory.description ? getLocalizedField(selectedStory.description, '', language) : ''}
                                   </p>
                               </div>
                          </div>
@@ -297,10 +297,10 @@ export default function ConversationsPage() {
                           )}
                           <div className="flex-1 flex flex-col w-full min-h-[9rem]">
                               <h1 className="text-3xl font-extrabold text-slate-900 mb-3">
-                                   {language === 'en' ? selectedStory.en : selectedStory.fr}
+                                   {getLocalizedField(selectedStory, '', language)}
                               </h1>
                               <p className="text-slate-500 text-base leading-relaxed mb-6 line-clamp-3">
-                                   {language === 'en' && selectedStory.description ? selectedStory.description.en : selectedStory.description?.fr}
+                                   {selectedStory.description ? getLocalizedField(selectedStory.description, '', language) : ''}
                               </p>
                               
                               <div className="mt-auto w-full">
@@ -402,10 +402,10 @@ export default function ConversationsPage() {
                                          <div className="flex-1 min-w-0 pr-2 py-1 md:py-2 flex flex-col h-full justify-center">
                                             <div className="mb-auto">
                                                 <h3 className={`font-extrabold text-base md:text-lg text-slate-800 ${(isStoryLocked) && !isSelected ? 'opacity-60' : ''} truncate`}>
-                                                     {index + 1}. {language === 'en' && conv.titleEn ? conv.titleEn : conv.title}
+                                                     {index + 1}. {getLocalizedField(conv, 'title', language)}
                                                 </h3>
                                                 <p className={`hidden md:block text-sm text-slate-500 truncate mt-1 ${(isStoryLocked) && !isSelected ? 'opacity-60' : ''}`}>
-                                                     {conv.dialogs[0] ? (language === 'en' ? conv.dialogs[0].en : conv.dialogs[0].fr) : ''}
+                                                     {conv.dialogs[0] ? getLocalizedField(conv.dialogs[0], '', language) : ''}
                                                 </p>
                                             </div>
 
@@ -464,7 +464,7 @@ export default function ConversationsPage() {
                      <ArrowLeft size={20} />
                    </button>
                    <h2 className="text-lg font-extrabold text-slate-800 truncate">
-                      {language === 'en' && selectedConv.titleEn ? selectedConv.titleEn : selectedConv.title}
+                      {getLocalizedField(selectedConv, 'title', language)}
                    </h2>
                 </div>
 
@@ -495,12 +495,12 @@ export default function ConversationsPage() {
 
                    {/* Title & Desc */}
                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3 leading-tight">
-                       {language === 'en' && selectedConv.titleEn ? selectedConv.titleEn : selectedConv.title}
+                       {getLocalizedField(selectedConv, 'title', language)}
                    </h2>
                    <p className="text-slate-500 text-sm md:text-base mb-6 leading-relaxed">
-                       {language === 'en' 
-                          ? `Learn to communicate in scenarios like "${selectedConv.dialogs[0]?.en}". Practice listening, reading, and interacting.` 
-                          : `Découvrez comment communiquer dans des situations comme "${selectedConv.dialogs[0]?.fr}". Pratiquez l'écoute, la lecture et l'interaction.` }
+                       {language === 'fr' 
+                          ? `Découvrez comment communiquer dans des situations comme "${getLocalizedField(selectedConv.dialogs[0] || {}, '', language)}". Pratiquez l'écoute, la lecture et l'interaction.`
+                          : `Learn to communicate in scenarios like "${getLocalizedField(selectedConv.dialogs[0] || {}, '', language)}". Practice listening, reading, and interacting.` }
                    </p>
 
                    {/* Stats row */}
@@ -563,7 +563,7 @@ export default function ConversationsPage() {
                                           VOCAB
                                        </div>
                                        <h4 className="font-extrabold text-[#20304a] text-lg md:text-xl leading-tight mb-5 pr-12">
-                                           {language === 'en' ? req.lessonTitleEn : req.lessonTitle}
+                                           {getLocalizedField(req, 'lessonTitle', language)}
                                        </h4>
                                        
                                        <div className="text-[11px] font-extrabold text-[#869ab8] uppercase tracking-[0.12em] mb-4">
@@ -574,7 +574,7 @@ export default function ConversationsPage() {
                                           {req.matchedWords.slice(0, 8).map((mw, i) => (
                                               <span key={i} className="text-[13px] text-[#4b5563] bg-white border-2 border-[#e2e8f0]/60 px-3.5 py-1.5 rounded-[12px] flex items-center gap-1.5 flex-wrap font-medium">
                                                  <span className="font-bold text-[#20304a] text-sm">{mw.th}</span> 
-                                                 <span className="text-[#869ab8]">({language === 'en' ? mw.en : mw.fr})</span>
+                                                 <span className="text-[#869ab8]">({getLocalizedField(mw, '', language)})</span>
                                               </span>
                                           ))}
                                           {req.matchedWords.length > 8 && <span className="text-sm font-bold text-[#869ab8] px-2 py-1.5">...</span>}
@@ -628,7 +628,7 @@ export default function ConversationsPage() {
                                             <div className="flex-1">
                                                 <div className="flex items-center justify-between mb-0.5">
                                                    <div className="text-[10px] uppercase tracking-wider font-extrabold text-slate-400">
-                                                       Niveau 1
+                                                       {getTranslation('auto.level', language)} 1
                                                    </div>
                                                    {!isLevel1Locked && (
                                                         <div className="flex gap-0.5 pr-2">
@@ -658,7 +658,7 @@ export default function ConversationsPage() {
                                             <div className="flex-1">
                                                 <div className="flex items-center justify-between mb-0.5">
                                                    <div className="text-[10px] uppercase tracking-wider font-extrabold text-slate-400">
-                                                       Niveau 2
+                                                       {getTranslation('auto.level', language)} 2
                                                    </div>
                                                    {!isLevel2Locked && (
                                                         <div className="flex gap-0.5 pr-2">
@@ -673,7 +673,7 @@ export default function ConversationsPage() {
                                                 <div className={`font-extrabold text-base transition-colors ${isLevel2Locked ? 'text-slate-600' : 'text-slate-800 group-hover:text-purple-700'}`}>
                                                     {getTranslation('auto.fill_in_the_word', language)}
                                                 </div>
-                                                {isLevel2Locked && <div className="text-xs font-medium text-slate-500 mt-0.5">Terminer le Niveau 1</div>}
+                                                {isLevel2Locked && <div className="text-xs font-medium text-slate-500 mt-0.5">{getTranslation('auto.complete_level_1', language)}</div>}
                                             </div>
                                             {!isLevel2Locked && <ChevronRight className="text-purple-300 shrink-0" />}
                                          </Link>
@@ -689,7 +689,7 @@ export default function ConversationsPage() {
                                             <div className="flex-1">
                                                 <div className="flex items-center justify-between mb-0.5">
                                                    <div className="text-[10px] uppercase tracking-wider font-extrabold text-slate-400">
-                                                       Niveau 3
+                                                       {getTranslation('auto.level', language)} 3
                                                    </div>
                                                    {!isLevel3Locked && (
                                                         <div className="flex gap-0.5 pr-2">
@@ -704,7 +704,7 @@ export default function ConversationsPage() {
                                                 <div className={`font-extrabold text-base transition-colors ${isLevel3Locked ? 'text-slate-600' : 'text-slate-800 group-hover:text-blue-700'}`}>
                                                     {getTranslation('auto.choose_the_phrase', language)}
                                                 </div>
-                                                {isLevel3Locked && <div className="text-xs font-medium text-slate-500 mt-0.5">Terminer le Niveau 2</div>}
+                                                {isLevel3Locked && <div className="text-xs font-medium text-slate-500 mt-0.5">{getTranslation('auto.complete_level_2', language)}</div>}
                                             </div>
                                             {!isLevel3Locked && <ChevronRight className="text-blue-300 shrink-0" />}
                                          </Link>
