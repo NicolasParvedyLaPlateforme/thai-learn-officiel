@@ -208,7 +208,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       exercisesGeneratedFor.id !== lesson.id ||
       exercisesGeneratedFor.level !== currentLevel
     ) {
-      const savedStateKey = `${lesson.id}_${currentLevel}`;
+      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
       const savedState = inProgressLessons[savedStateKey];
 
       if (savedState && savedState.exercises && savedState.exercises.length > 0) {
@@ -391,7 +391,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   useEffect(() => {
     if (!lesson) return;
     if (isFinished) {
-      const savedStateKey = `${lesson.id}_${currentLevel}`;
+      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
       saveInProgressLesson(savedStateKey, null);
     }
   }, [isFinished, lesson?.id, currentLevel, saveInProgressLesson]);
@@ -635,6 +635,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         initialTime={initialTime}
         currentIndex={currentIndex}
         earnedXp={earnedXp}
+        isPart={isPart}
+        partIndex={partIndex}
+        totalParts={totalParts}
       />
     );
   }

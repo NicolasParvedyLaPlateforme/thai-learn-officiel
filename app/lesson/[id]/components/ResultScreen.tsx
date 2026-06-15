@@ -15,8 +15,10 @@ interface ResultScreenProps {
   failedDueToTime?: boolean;
   timeLeft?: number | null;
   initialTime?: number | null;
-  currentIndex?: number;
   earnedXp?: number;
+  isPart?: boolean;
+  partIndex?: number | null;
+  totalParts?: number | null;
 }
 
 export default function ResultScreen({
@@ -31,6 +33,9 @@ export default function ResultScreen({
   initialTime,
   currentIndex,
   earnedXp,
+  isPart,
+  partIndex,
+  totalParts,
 }: ResultScreenProps) {
   const router = useRouter();
   const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
@@ -103,9 +108,13 @@ export default function ResultScreen({
       <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
         {currentLevel === 10 
           ? (getTranslation('auto.mastery_level_completed', language))
-          : (language === "en"
-              ? `Level ${currentLevel + 1} completed!`
-              : `Niveau ${currentLevel + 1} terminé !`)}
+          : isPart && partIndex !== null && totalParts !== null && partIndex < totalParts - 1
+            ? (language === "en" 
+                ? `Part ${partIndex + 1}/${totalParts} completed!` 
+                : `Partie ${partIndex + 1}/${totalParts} terminée !`)
+            : (language === "en"
+                ? `Level ${currentLevel + 1} completed!`
+                : `Niveau ${currentLevel + 1} terminé !`)}
       </h1>
       
       {(lesson.isReview || currentLevel === 10) && timeTakenSec !== null ? (
@@ -131,7 +140,16 @@ export default function ResultScreen({
             {getTranslation('auto.next_unit', language)}
           </button>
         )}
-        {currentLevel + 1 < 10 && (
+        {isPart && partIndex !== null && totalParts !== null && partIndex < totalParts - 1 ? (
+          <button
+            onClick={() =>
+              router.push(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`)
+            }
+            className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
+          >
+            {language === "en" ? "Next Part" : "Partie suivante"}
+          </button>
+        ) : currentLevel + 1 < 10 && (
           <button
             onClick={() =>
               router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}`)

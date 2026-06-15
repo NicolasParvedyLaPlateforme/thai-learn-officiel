@@ -1048,9 +1048,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
           imageUrl: w.imageUrl
        });
     });
-    wrPool = shuffle(wrPool);
-    while (wrPool.length < 10 && wrPool.length > 0) wrPool = [...wrPool, ...shuffle(wrPool)];
-    finalExercises = wrPool.slice(0, 10);
+    finalExercises = shuffle(wrPool);
   } else if (level === 8) {
     // Level 9: Blind writing phrases
     let wrPool: Exercise[] = [];
@@ -1070,8 +1068,6 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
           imageUrl: p.imageUrl
        });
     });
-    wrPool = shuffle(wrPool);
-    while (wrPool.length < 10 && wrPool.length > 0) wrPool = [...wrPool, ...shuffle(wrPool)];
     if (wrPool.length === 0) { // Fallback if no phrases
        validLessonWords.forEach(w => {
          const { characters, groups } = getWritingClustersAndGroups(w.th.replace(/\s+/g, ''));
@@ -1089,10 +1085,8 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
             imageUrl: w.imageUrl
          });
        });
-       wrPool = shuffle(wrPool);
-       while (wrPool.length < 10 && wrPool.length > 0) wrPool = [...wrPool, ...shuffle(wrPool)];
     }
-    finalExercises = wrPool.slice(0, 10);
+    finalExercises = shuffle(wrPool);
   } else if (level === 9) {
     // Level 10: Only free typing test
     let ftPool: Exercise[] = [];
