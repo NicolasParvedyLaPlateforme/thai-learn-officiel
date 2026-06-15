@@ -317,10 +317,19 @@ function generateMisspelledWords(word: Word, count: number): {id: string, th: st
   return res;
 }
 
-export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: number = 0, language: string = 'fr'): Exercise[] {
+export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: number = 0, language: string = 'fr', partIndex: number | null = null, totalParts: number | null = null): Exercise[] {
   let exercises: Exercise[] = [];
   const globalWords = allLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
-  const validLessonWords = lesson.words.filter(w => w.id !== 'w_dots');
+  let validLessonWords = lesson.words.filter(w => w.id !== 'w_dots');
+  let lessonPhrases = lesson.phrases || [];
+
+  if (partIndex !== null && totalParts !== null && totalParts > 1) {
+    const wordsChunkSize = Math.ceil(validLessonWords.length / totalParts);
+    validLessonWords = validLessonWords.slice(partIndex * wordsChunkSize, (partIndex + 1) * wordsChunkSize);
+    
+    const phrasesChunkSize = Math.ceil(lessonPhrases.length / totalParts);
+    lessonPhrases = lessonPhrases.slice(partIndex * phrasesChunkSize, (partIndex + 1) * phrasesChunkSize);
+  }
 
   if (lesson.isReview) {
     const currentIdx = allLessons.findIndex(l => l.id === lesson.id);
@@ -332,10 +341,17 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
       }
     }
     const unitLessons = allLessons.slice(unitStartIdx, currentIdx);
-    const unitWords = unitLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
-    const unitPhrases = unitLessons.flatMap(l => l.phrases);
+    let unitWords = unitLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
+    let unitPhrases = unitLessons.flatMap(l => l.phrases);
     const allPhrases = allLessons.flatMap(l => l.phrases);
     const globalWordsPool = allLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
+
+    if (partIndex !== null && totalParts !== null && totalParts > 1) {
+       const uWordsChunk = Math.ceil(unitWords.length / totalParts);
+       unitWords = unitWords.slice(partIndex * uWordsChunk, (partIndex + 1) * uWordsChunk);
+       const uPhrasesChunk = Math.ceil(unitPhrases.length / totalParts);
+       unitPhrases = unitPhrases.slice(partIndex * uPhrasesChunk, (partIndex + 1) * uPhrasesChunk);
+    }
     
     let reviewExercises: Exercise[] = [];
     
@@ -597,7 +613,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     });
   });
 
-  lesson.phrases.forEach(phrase => {
+  lessonPhrases.forEach(phrase => {
     const phraseWords = phrase.components.map(id => globalWords.find(w => w.id === id)).filter(Boolean) as Word[];
     const numDistractors = level >= 3 ? 1 : 0;
     const distractors = shuffle(globalWords.filter(w => !phrase.components.includes(w.id))).slice(0, numDistractors);
@@ -951,7 +967,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     // 3. New: Translate this phrase (Word Match style with full phrases)
     let phraseMatchPool: Exercise[] = [];
     const allPhrases = allLessons.flatMap(l => l.phrases);
-    lesson.phrases.forEach(phrase => {
+    lessonPhrases.forEach(phrase => {
        // Find a similar phrase
        const similar = allPhrases.filter(p => p.id !== phrase.id && p.components.some(c => phrase.components.includes(c)));
        const distractorPhrase = similar.length > 0 ? shuffle(similar)[0] : (shuffle(allPhrases.filter(p => p.id !== phrase.id))[0] || phrase);
@@ -989,7 +1005,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     // Level 6 (index 5): Pair-matching audio-only
     // Level 7 (index 6): Pair-matching script-only
     let pmExercises: Exercise[] = [];
-    const allItemsRaw = [...validLessonWords, ...lesson.phrases];
+    const allItemsRaw = [...validLessonWords, ...lessonPhrases];
     const allGlobalItemsRaw = [...globalWords, ...allLessons.flatMap(l => l.phrases)];
     const allItemsForPairsRaw = allItemsRaw.length >= 4 ? allItemsRaw : allGlobalItemsRaw;
     const allItemsForPairs = Array.from(new Map(allItemsForPairsRaw.map(w => [w.id, w])).values());
@@ -1038,7 +1054,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
   } else if (level === 8) {
     // Level 9: Blind writing phrases
     let wrPool: Exercise[] = [];
-    lesson.phrases.forEach(p => {
+    lessonPhrases.forEach(p => {
        const { characters, groups } = getWritingClustersAndGroups(p.th.replace(/\s+/g, ''));
        wrPool.push({
           id: `wr-blind-phrase-${p.id}-${Date.now()}-${Math.random()}`,
@@ -1096,7 +1112,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Then add phrases
     let ftPhrases: Exercise[] = [];
-    lesson.phrases.forEach(p => {
+    lessonPhrases.forEach(p => {
       ftPhrases.push({
         id: `ft-phrase-${p.id}-${Date.now()}-${Math.random()}`,
         type: 'free-typing',
@@ -1144,7 +1160,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Then add phrases
     let ftPhrases: Exercise[] = [];
-    lesson.phrases.forEach(p => {
+    lessonPhrases.forEach(p => {
       ftPhrases.push({
         id: `ft-phrase-${p.id}-${Date.now()}-${Math.random()}`,
         type: 'free-typing',
@@ -1214,7 +1230,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
         });
       }
     } else if (level === 1 && !lesson.isReview && ex.type === 'sentence-builder') {
-      const phrase = lesson.phrases.find(p => p.th === ex.answer);
+      const phrase = lessonPhrases.find(p => p.th === ex.answer);
       if (phrase && !introducedIds.has(phrase.id)) {
         introducedIds.add(phrase.id);
         exercisesWithIntros.push({

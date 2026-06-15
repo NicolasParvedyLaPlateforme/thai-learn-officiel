@@ -336,31 +336,34 @@ export default function LearnLessonModal({
             )}
             <div className="flex items-center gap-2 w-full mt-1 relative">
               {showSlices ? (
-                <div className="flex-1 flex overflow-hidden rounded-xl shadow-md h-[56px] xl:h-[60px] md:h-[52px]">
-                  {Array.from({ length: totalParts }).map((_, i) => {
-                    const isPartCompleted = completedParts.includes(i);
-                    const isNextToPlay = !isLevelFullyCompleted && i === completedParts.length;
-                    const canPlay = isLevelFullyCompleted || i <= completedParts.length;
-                    
-                    let sliceColor = 'bg-slate-200 text-slate-400';
-                    if (isPartCompleted) {
-                      sliceColor = selectedLesson.unitColor;
-                    } else if (isNextToPlay) {
-                      sliceColor = `${selectedLesson.unitColor} opacity-90`;
-                    } else if (canPlay) {
-                      sliceColor = 'bg-slate-300 text-slate-500';
-                    }
+                <div className="flex-1 relative h-[56px] xl:h-[60px] md:h-[52px]">
+                  <div className="absolute inset-0 flex gap-1">
+                    {Array.from({ length: totalParts }).map((_, i) => {
+                      const isPartCompleted = completedParts.includes(i);
+                      const isNextToPlay = !isLevelFullyCompleted && i === completedParts.length;
+                      const canPlay = isLevelFullyCompleted || i <= completedParts.length;
+                      
+                      let sliceColor = 'bg-slate-200';
+                      if (isPartCompleted) {
+                        sliceColor = selectedLesson.unitColor;
+                      } else if (isNextToPlay) {
+                        sliceColor = `${selectedLesson.unitColor} opacity-90`;
+                      } else if (canPlay) {
+                        sliceColor = 'bg-slate-300';
+                      }
 
-                    return (
-                      <Link
-                        key={i}
-                        href={canPlay ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${i}&totalParts=${totalParts}` : '#'}
-                        className={`flex-1 flex items-center justify-center font-bold text-[15px] border-r border-white/30 last:border-r-0 transition-all ${sliceColor} ${canPlay ? 'hover:opacity-80 active:opacity-70 cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-                      >
-                        {getTranslation('auto.start_lesson', language)}
-                      </Link>
-                    );
-                  })}
+                      return (
+                        <Link
+                          key={i}
+                          href={canPlay ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${i}&totalParts=${totalParts}` : '#'}
+                          className={`flex-1 rounded-sm first:rounded-l-xl last:rounded-r-xl transition-all ${sliceColor} ${canPlay ? 'hover:opacity-80 active:opacity-70 cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                        />
+                      );
+                    })}
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center font-bold text-[17px] text-white pointer-events-none drop-shadow-sm">
+                    {getTranslation('auto.start_lesson', language)}
+                  </div>
                 </div>
               ) : (
                 <Link
@@ -374,7 +377,7 @@ export default function LearnLessonModal({
               {isLevelFullyCompleted && totalParts > 1 && (
                 <button 
                   onClick={() => setPlayFullLevel(!playFullLevel)}
-                  className={`shrink-0 w-[56px] xl:w-[60px] md:w-[52px] h-[56px] xl:h-[60px] md:h-[52px] rounded-xl flex items-center justify-center border-2 border-slate-200 shadow-sm transition-all hover:bg-slate-50 active:scale-95 text-slate-500`}
+                  className={`absolute -top-10 right-0 flex items-center justify-center transition-all hover:opacity-70 active:scale-95 text-slate-500`}
                   title="Toggle mode"
                 >
                   {playFullLevel ? <Circle size={24} /> : <PieChart size={24} />}

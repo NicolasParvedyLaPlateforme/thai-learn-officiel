@@ -59,10 +59,10 @@ export async function getLessonData(lessonId: string) {
   return data.lessons.find(l => l.id === lessonId);
 }
 
-export async function getExercisesServer(lessonId: string, currentLevel: number, language: string) {
+export async function getExercisesServer(lessonId: string, currentLevel: number, language: string, partIndex: number | null = null, totalParts: number | null = null) {
   const lesson = data.lessons.find(l => l.id === lessonId);
   if (!lesson) return [];
-  return generateExercises(lesson, data.lessons, currentLevel, language);
+  return generateExercises(lesson, data.lessons, currentLevel, language, partIndex, totalParts);
 }
 
 export async function getEndlessReviewServer(completedLessons: string[], language: string, options: any) {
