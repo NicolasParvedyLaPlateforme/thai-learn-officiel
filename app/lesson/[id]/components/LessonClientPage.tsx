@@ -62,6 +62,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const searchParams = useSearchParams();
   const {
     completeLesson,
+    completeLessonPart,
     lessonLevels,
     language,
     completedLessons,
@@ -78,6 +79,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   } = useProgressStore(
     useShallow((state) => ({
       completeLesson: state.completeLesson,
+      completeLessonPart: state.completeLessonPart,
       lessonLevels: state.lessonLevels,
       language: state.language,
       completedLessons: state.completedLessons,
@@ -107,6 +109,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       ? Math.max(0, parseInt(requestedLevelStr, 10) - 1)
       : Math.min(savedLevel, Math.max(0, parseInt(requestedLevelStr, 10) - 1))
     : savedLevel;
+
+  const partStr = searchParams.get("part");
+  const totalPartsStr = searchParams.get("totalParts");
+  const partIndex = partStr ? parseInt(partStr, 10) : null;
+  const totalParts = totalPartsStr ? parseInt(totalPartsStr, 10) : null;
+  const isPart = partIndex !== null && totalParts !== null && totalParts > 1;
 
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -211,7 +219,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
       preloadThaiVoices();
       getExercisesServer(lesson.id, currentLevel, language).then(generated => {
-        setExercises(generated);
+        let finalExercises = generated;
+        if (isPart && partIndex !== null && totalParts !== null) {
+          const chunkSize = Math.ceil(generated.length / totalParts);
+          finalExercises = generated.slice(partIndex * chunkSize, (partIndex + 1) * chunkSize);
+        }
+        setExercises(finalExercises);
         setCurrentIndex(0);
         setIsFinished(false);
         setIsChecking(false);
@@ -314,7 +327,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
     preloadThaiVoices();
     getExercisesServer(lesson.id, currentLevel, language).then(generated => {
-      setExercises(generated);
+      let finalExercises = generated;
+      if (isPart && partIndex !== null && totalParts !== null) {
+        const chunkSize = Math.ceil(generated.length / totalParts);
+        finalExercises = generated.slice(partIndex * chunkSize, (partIndex + 1) * chunkSize);
+      }
+      setExercises(finalExercises);
       setCurrentIndex(0);
       setIsFinished(false);
       setIsChecking(false);
@@ -341,10 +359,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (!lesson) return;
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
       const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8));
       setEarnedXp(expected.xp);
       setIsFinished(true);
-      completeLesson(lesson.id, 0, currentLevel, 3, isBilan);
+      if (isPart && partIndex !== null && totalParts !== null) {
+         completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, 3, isBilan);
+      } else {
+         completeLesson(lesson.id, 0, currentLevel, 3, isBilan);
+      }
       triggerConfetti();
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
@@ -426,10 +448,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setSelectedAnswer(null);
         } else {
           const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-          const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+          const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8));
           setEarnedXp(expected.xp);
           setIsFinished(true);
-          completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
+          if (isPart && partIndex !== null && totalParts !== null) {
+             completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStars, isBilan);
+          } else {
+             completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
+          }
           if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
             saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
           }
@@ -453,10 +479,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           } else {
             // Finished
             const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
+            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8));
             setEarnedXp(expected.xp);
             setIsFinished(true);
-            completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
+            if (isPart && partIndex !== null && totalParts !== null) {
+               completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStars, isBilan);
+            } else {
+               completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
+            }
             if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
               saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
             }

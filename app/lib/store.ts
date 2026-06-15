@@ -151,6 +151,7 @@ interface ProgressState {
   completedToday: string[];
   unlockedLessons: string[];
   lessonLevels: Record<string, number>;
+  lessonPartsCompleted: Record<string, number[]>;
   xp: number;
   goldCoins: number;
   lastConversionMonth: string | null;
@@ -162,8 +163,9 @@ interface ProgressState {
   setHasHydrated: (state: boolean) => void;
   setLanguage: (lang: AppLanguage) => void;
   autoDetectLanguage: () => void;
-  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean) => { xp: number, isFirstTime: boolean, key: string };
+  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean) => { xp: number, isFirstTime: boolean, key: string };
   completeLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number, isBilan?: boolean) => void;
+  completeLessonPart: (lessonId: string, fallbackXp: number, playedLevel: number, partIndex: number, totalParts: number, earnedStars?: number, isBilan?: boolean) => void;
   addXp: (amount: number) => void;
   unlockLessonManual: (lessonId: string) => void;
   resetProgress: () => void;
@@ -244,6 +246,7 @@ export const useProgressStore = create<ProgressState>()(
       conversationStars: {},
       unlockedLessons: [],
       lessonLevels: {},
+      lessonPartsCompleted: {},
       lessonStars: {},
       speakCompletedLessons: [],
       speakLessonLevels: {},
@@ -535,7 +538,7 @@ export const useProgressStore = create<ProgressState>()(
           }
         }
       },
-      getExpectedXp: (lessonId, levelIndex, isBilan) => {
+      getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart = false, isFullLongLevel = false) => {
         const state = get();
         const completedToday = state.completedToday || [];
         let isFirstTime = false;
@@ -548,13 +551,20 @@ export const useProgressStore = create<ProgressState>()(
            xp = isFirstTime ? 50 : 20;
         } else if (lessonId.startsWith('speak_')) {
            key = `${lessonId}_level-${levelIndex}`;
+           if (isPart) key += `_part`;
            isFirstTime = !completedToday.includes(key);
-           if (levelIndex === 0) xp = isFirstTime ? 50 : 15;
-           else if (levelIndex === 1) xp = isFirstTime ? 100 : 30;
-           else if (levelIndex === 2) xp = isFirstTime ? 100 : 30;
-           else if (levelIndex === 3) xp = isFirstTime ? 150 : 45;
-           else if (levelIndex === 4) xp = isFirstTime ? 300 : 90;
-           else xp = isFirstTime ? 50 : 15;
+           if (isFullLongLevel) {
+              xp = isFirstTime ? 500 : 100;
+           } else if (isPart) {
+              xp = isFirstTime ? 50 : 10;
+           } else {
+              if (levelIndex === 0) xp = isFirstTime ? 50 : 15;
+              else if (levelIndex === 1) xp = isFirstTime ? 100 : 30;
+              else if (levelIndex === 2) xp = isFirstTime ? 100 : 30;
+              else if (levelIndex === 3) xp = isFirstTime ? 150 : 45;
+              else if (levelIndex === 4) xp = isFirstTime ? 300 : 90;
+              else xp = isFirstTime ? 50 : 15;
+           }
         } else if (levelIndex === 10) {
            key = `learn_${lessonId}_level-10`;
            isFirstTime = !completedToday.includes(key);
@@ -566,8 +576,15 @@ export const useProgressStore = create<ProgressState>()(
         } else {
            const type = (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) ? 'alphabet' : 'learn';
            key = `${type}_${lessonId}_level-${levelIndex}`;
+           if (isPart) key += `_part`;
            isFirstTime = !completedToday.includes(key);
-           xp = isFirstTime ? 20 : 5;
+           if (isFullLongLevel) {
+              xp = isFirstTime ? 500 : 100;
+           } else if (isPart) {
+              xp = isFirstTime ? 50 : 10;
+           } else {
+              xp = isFirstTime ? 20 : 5;
+           }
         }
 
         return { xp, isFirstTime, key };
@@ -577,7 +594,17 @@ export const useProgressStore = create<ProgressState>()(
         const currentLevel = state.lessonLevels[lessonId] || 0;
         const actualPlayedLevel = playedLevel !== undefined ? playedLevel : currentLevel;
         
-        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, actualPlayedLevel, isBilan);
+        // Check if we are doing a full long level that was supposed to be parts
+        let isFullLongLevel = false;
+        if (typeof window !== 'undefined') {
+          // A bit hacky but avoids circular dependency if we can dynamically check
+          // The component passes this via expectedXp anyway if it was full.
+          // For safety, we just rely on getExpectedXp directly if we can't easily check.
+          // Wait, we can check levelIndex: 7 or 8.
+          if (actualPlayedLevel === 7 || actualPlayedLevel === 8) isFullLongLevel = true;
+        }
+
+        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, actualPlayedLevel, isBilan, false, isFullLongLevel);
         const finalXp = lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp);
 
         set((state) => {
@@ -603,6 +630,9 @@ export const useProgressStore = create<ProgressState>()(
           const newCompletedToday = state.completedToday || [];
           const updatedCompletedToday = isFirstTime ? [...newCompletedToday, key] : newCompletedToday;
 
+          // Also mark all parts as completed if we finished the full level
+          const partsKey = `${lessonId}_level-${actualPlayedLevel}`;
+          
           return {
             completedLessons: state.completedLessons.includes(lessonId) 
               ? state.completedLessons 
@@ -611,6 +641,10 @@ export const useProgressStore = create<ProgressState>()(
             lessonLevels: {
               ...state.lessonLevels,
               [lessonId]: newLevel
+            },
+            lessonPartsCompleted: {
+              ...state.lessonPartsCompleted,
+              [partsKey]: [0, 1, 2, 3, 4] // Just put enough to cover any split
             },
             lessonStars: {
               ...state.lessonStars,
@@ -635,6 +669,62 @@ export const useProgressStore = create<ProgressState>()(
           get().progressQuest(type, 'perfect_lesson', 1);
         }
         get().triggerForceSync();
+      },
+      completeLessonPart: (lessonId, fallbackXp, playedLevel, partIndex, totalParts, earnedStars = 3, isBilan = false) => {
+        const state = get();
+        const partsKey = `${lessonId}_level-${playedLevel}`;
+        const currentCompletedParts = state.lessonPartsCompleted[partsKey] || [];
+        
+        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, playedLevel, isBilan, true, false);
+        const finalXp = calculatedXp || fallbackXp;
+
+        set((state) => {
+          let type: 'learn' | 'alphabet' = 'learn';
+          if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
+            type = 'alphabet';
+          }
+
+          const newCompletedToday = state.completedToday || [];
+          // we use a specific key for this part today
+          const partTodayKey = `${key}_${partIndex}`;
+          const isPartFirstTimeToday = !newCompletedToday.includes(partTodayKey);
+          const updatedCompletedToday = isPartFirstTimeToday ? [...newCompletedToday, partTodayKey] : newCompletedToday;
+
+          const newCompletedParts = [...currentCompletedParts];
+          if (!newCompletedParts.includes(partIndex)) {
+             newCompletedParts.push(partIndex);
+          }
+
+          return {
+            completedToday: updatedCompletedToday,
+            lessonPartsCompleted: {
+              ...state.lessonPartsCompleted,
+              [partsKey]: newCompletedParts
+            },
+            xp: state.xp + finalXp,
+            lastPlayedLessonId: lessonId,
+            lastPlayedLessonType: type
+          };
+        });
+        
+        get().recordActivity();
+        
+        let type: 'learn' | 'alphabet' = 'learn';
+        if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
+          type = 'alphabet';
+        }
+
+        get().progressQuest(type, 'xp', finalXp);
+        get().triggerForceSync();
+
+        // Check if all parts are now completed
+        const updatedState = get();
+        const updatedCompletedParts = updatedState.lessonPartsCompleted[partsKey] || [];
+        if (updatedCompletedParts.length >= totalParts) {
+           // Si toutes les parts sont finies, on valide le niveau complet !
+           // On appelle completeLesson avec 0 XP car les XP ont déjà été donnés partie par partie
+           updatedState.completeLesson(lessonId, 0, playedLevel, earnedStars, isBilan);
+        }
       },
       completeSpeakLesson: (lessonId, fallbackXp, playedLevel, earnedStars = 3) => {
         const state = get();
@@ -726,6 +816,7 @@ export const useProgressStore = create<ProgressState>()(
         conversationStars: {},
         unlockedLessons: [], 
         lessonLevels: {}, 
+        lessonPartsCompleted: {},
         lessonStars: {}, 
         speakCompletedLessons: [], 
         speakLessonLevels: {}, 

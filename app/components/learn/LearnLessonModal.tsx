@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Drawer } from 'vaul';
-import { BookOpen, Star, Lock, Crown, Clock, Pencil, RotateCcw } from 'lucide-react';
+import { BookOpen, Star, Lock, Crown, Clock, Pencil, RotateCcw, PieChart, Circle } from 'lucide-react';
 import Link from 'next/link';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import { playThaiTTS } from '../../lib/tts';
 import IconImage from '../../components/IconImage';
+import { useProgressStore } from '../../lib/store';
+import { getLevelSplit } from '../../lib/levelSplits';
 
 interface LearnLessonModalProps {
   isOpen: boolean;
@@ -34,6 +36,8 @@ export default function LearnLessonModal({
   getExpectedXp
 }: LearnLessonModalProps) {
   const [selectedLesson, setSelectedLesson] = useState(selectedLessonProp);
+  const [playFullLevel, setPlayFullLevel] = useState(false);
+  const lessonPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
   
   useEffect(() => {
     if (selectedLessonProp) {
@@ -75,6 +79,12 @@ export default function LearnLessonModal({
   const starsArrayMastery = lessonStars[selectedLesson.lesson.id] || Array(11).fill(0);
   const earnedStarsMastery = starsArrayMastery[10] || 0;
   const isCompletedMastery = isUnlockedMastery && earnedStarsMastery > 0;
+
+  const totalParts = getLevelSplit(modalLevel);
+  const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
+  const completedParts = lessonPartsCompleted[partsKey] || [];
+  const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
+  const showSlices = totalParts > 1 && (!playFullLevel || !isLevelFullyCompleted);
 
   return (
     <Drawer.Root open={isOpen} onOpenChange={onOpenChange}>
@@ -324,13 +334,52 @@ export default function LearnLessonModal({
                 </button>
               </div>
             )}
-            <div className="flex items-center gap-3 w-full mt-1">
-              <Link
-                href={`/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
-              >
-                {getTranslation('auto.start_lesson', language)}
-              </Link>
+            <div className="flex items-center gap-2 w-full mt-1 relative">
+              {showSlices ? (
+                <div className="flex-1 flex overflow-hidden rounded-xl shadow-md h-[56px] xl:h-[60px] md:h-[52px]">
+                  {Array.from({ length: totalParts }).map((_, i) => {
+                    const isPartCompleted = completedParts.includes(i);
+                    const isNextToPlay = !isLevelFullyCompleted && i === completedParts.length;
+                    const canPlay = isLevelFullyCompleted || i <= completedParts.length;
+                    
+                    let sliceColor = 'bg-slate-200 text-slate-400';
+                    if (isPartCompleted) {
+                      sliceColor = selectedLesson.unitColor;
+                    } else if (isNextToPlay) {
+                      sliceColor = `${selectedLesson.unitColor} opacity-90`;
+                    } else if (canPlay) {
+                      sliceColor = 'bg-slate-300 text-slate-500';
+                    }
+
+                    return (
+                      <Link
+                        key={i}
+                        href={canPlay ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${i}&totalParts=${totalParts}` : '#'}
+                        className={`flex-1 flex items-center justify-center font-bold text-[15px] border-r border-white/30 last:border-r-0 transition-all ${sliceColor} ${canPlay ? 'hover:opacity-80 active:opacity-70 cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                      >
+                        {getTranslation('auto.start_lesson', language)}
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : (
+                <Link
+                  href={`/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                  className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                >
+                  {getTranslation('auto.start_lesson', language)}
+                </Link>
+              )}
+              
+              {isLevelFullyCompleted && totalParts > 1 && (
+                <button 
+                  onClick={() => setPlayFullLevel(!playFullLevel)}
+                  className={`shrink-0 w-[56px] xl:w-[60px] md:w-[52px] h-[56px] xl:h-[60px] md:h-[52px] rounded-xl flex items-center justify-center border-2 border-slate-200 shadow-sm transition-all hover:bg-slate-50 active:scale-95 text-slate-500`}
+                  title="Toggle mode"
+                >
+                  {playFullLevel ? <Circle size={24} /> : <PieChart size={24} />}
+                </button>
+              )}
             </div>
           </div>
         </Drawer.Content>

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Play, PlayCircle, Star, Target, CheckCircle2, Lock, Clock, GraduationCap, Medal, Pencil, RotateCcw, BookOpen, X, Users, ChevronLeft, Flag, Crown } from 'lucide-react';
+import { Play, PlayCircle, Star, Target, CheckCircle2, Lock, Clock, GraduationCap, Medal, Pencil, RotateCcw, BookOpen, X, Users, ChevronLeft, Flag, Crown, PieChart, Circle } from 'lucide-react';
 import Link from 'next/link';
 import IconImage from './IconImage';
 import { playThaiTTS } from '../lib/tts';
@@ -10,6 +10,7 @@ import { ConversationObjectiveWidget } from './ConversationObjectiveWidget';
 import { LeaderboardWidget } from './LeaderboardWidget';
 import { useProgressStore } from '../lib/store';
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
+import { getLevelSplit } from '../lib/levelSplits';
 
 interface Unit {
   id: string;
@@ -72,6 +73,9 @@ export function DesktopSidebarRight({
   const showUnitsList = externalShowUnitsList !== undefined ? externalShowUnitsList : internalShowUnitsList;
   const setShowUnitsList = externalSetShowUnitsList || setInternalShowUnitsList;
 
+  const [playFullLevel, setPlayFullLevel] = useState(false);
+  const lessonPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
+
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const levelsScrollRef = useRef<HTMLDivElement>(null);
 
@@ -106,6 +110,13 @@ export function DesktopSidebarRight({
         if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
         else estimatedMins = Math.max(1, estimatedMins);
       }
+
+      const totalParts = suggestionType === 'learn' ? getLevelSplit(modalLevel) : 1;
+      const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
+      const completedParts = lessonPartsCompleted[partsKey] || [];
+      const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
+      const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
+      const showSlices = totalParts > 1 && (!playFullLevel || !isLevelFullyCompleted);
 
       return (
         <motion.div
@@ -428,12 +439,59 @@ export function DesktopSidebarRight({
                   {getTranslation('auto.unavailable_on_brave', language)}
                 </button>
               ) : (
-                <Link
-                  href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
-                >
-                  {getTranslation('auto.start_lesson', language)}
-                </Link>
+                <div className="flex items-center gap-2 w-full mt-1 relative">
+                  {showSlices ? (
+                    <div className="flex-1 flex overflow-hidden rounded-xl shadow-md h-[56px] xl:h-[60px] md:h-[52px]">
+                      {Array.from({ length: totalParts }).map((_, i) => {
+                        const isPartCompleted = completedParts.includes(i);
+                        const isNextToPlay = !isLevelFullyCompleted && i === completedParts.length;
+                        const canPlay = isLevelFullyCompleted || i <= completedParts.length;
+                        
+                        let sliceColor = 'bg-slate-200 text-slate-400';
+                        if (isPartCompleted) {
+                          sliceColor = selectedLesson.unitColor;
+                        } else if (isNextToPlay) {
+                          sliceColor = `${selectedLesson.unitColor} opacity-90`;
+                        } else if (canPlay) {
+                          sliceColor = 'bg-slate-300 text-slate-500';
+                        }
+
+                        const href = suggestionType === 'alphabet' 
+                          ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` 
+                          : suggestionType === 'speak' 
+                            ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` 
+                            : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${i}&totalParts=${totalParts}`;
+
+                        return (
+                          <Link
+                            key={i}
+                            href={canPlay ? href : '#'}
+                            className={`flex-1 flex items-center justify-center font-bold text-[15px] border-r border-white/30 last:border-r-0 transition-all ${sliceColor} ${canPlay ? 'hover:opacity-80 active:opacity-70 cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                          >
+                            {getTranslation('auto.start_lesson', language)}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <Link
+                      href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                      className={`flex-1 py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                    >
+                      {getTranslation('auto.start_lesson', language)}
+                    </Link>
+                  )}
+                  
+                  {isLevelFullyCompleted && totalParts > 1 && (
+                    <button 
+                      onClick={() => setPlayFullLevel(!playFullLevel)}
+                      className={`shrink-0 w-[56px] xl:w-[60px] md:w-[52px] h-[56px] xl:h-[60px] md:h-[52px] rounded-xl flex items-center justify-center border-2 border-slate-200 shadow-sm transition-all hover:bg-slate-50 active:scale-95 text-slate-500`}
+                      title="Toggle mode"
+                    >
+                      {playFullLevel ? <Circle size={24} /> : <PieChart size={24} />}
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           </div>
