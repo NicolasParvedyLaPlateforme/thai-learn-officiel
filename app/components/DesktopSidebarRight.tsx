@@ -116,7 +116,7 @@ export function DesktopSidebarRight({
       const completedParts = lessonPartsCompleted[partsKey] || [];
       const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
       const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
-      const showSlices = totalParts > 1 && (!playFullLevel || !isLevelFullyCompleted);
+      const showSlices = totalParts > 1 && isLevelFullyCompleted && !playFullLevel;
 
       return (
         <motion.div
@@ -175,26 +175,53 @@ export function DesktopSidebarRight({
                     const isSelected = modalLevel === levelIndex;
                     const isCurrent = levelIndex === currentProgress;
 
+                    const partsTotal = suggestionType === 'learn' ? getLevelSplit(levelIndex) : 1;
+                    const partsKey = `${selectedLesson.lesson.id}_level-${levelIndex}`;
+                    const completedSlices = lessonPartsCompleted[partsKey]?.length || 0;
+
+                    let circleStyle = {};
+                    if (partsTotal > 1) {
+                      const angle = 360 / partsTotal;
+                      let stops = [];
+                      for (let i = 0; i < partsTotal; i++) {
+                        // yellow-200 / slate-100
+                        const color = i < completedSlices ? '#fef08a' : '#f1f5f9';
+                        stops.push(`${color} ${i * angle}deg ${(i + 1) * angle}deg`);
+                      }
+                      circleStyle = { background: `conic-gradient(${stops.join(', ')})` };
+                    }
+
                     return (
                       <button
                         key={levelIndex}
                         onClick={() => {
-                          if (isAccessible) {
+                          if (isAccessible && suggestionType === 'learn') {
                             setModalLevel(levelIndex);
                           }
                         }}
-                        className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
+                        className={`flex flex-col items-center gap-2 transition-transform ${suggestionType === 'learn' ? 'hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 cursor-pointer' : 'cursor-default'} disabled:cursor-not-allowed disabled:opacity-80`}
                         disabled={!isAccessible}
                       >
-                        <div className={`
-                          w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border-b-2 border-[#cbcbcb]
-                          ${isSelected ? 'scale-110 ring-[2px] ring-offset-[3px] ring-yellow-500 shadow-lg relative z-10' : ''}
-                          ${isCompleted ? 'bg-[oklch(0.96_0.06_88.64)] border border-amber-500 shadow-sm text-amber-900 ' :
-                            isCurrent ? `bg-white border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` :
-                              'bg-slate-50 border border-slate-200 text-slate-300'
-                          }
+                        <div 
+                          style={circleStyle}
+                          className={`
+                          w-11 h-11 xl:w-[3.25rem] xl:h-[3.25rem] rounded-full flex items-center justify-center transition-all duration-300 border-b-2 border-[#cbcbcb] overflow-hidden relative
+                          ${isSelected ? 'scale-110 ring-[2px] ring-offset-[3px] ring-yellow-500 shadow-lg z-10' : ''}
+                          ${isCompleted ? `${partsTotal > 1 ? '' : 'bg-[oklch(0.96_0.06_88.64)]'} border border-amber-500 shadow-sm text-amber-900 ` :
+                              isCurrent ? `${partsTotal > 1 ? '' : 'bg-white'} border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` :
+                                `${partsTotal > 1 ? '' : 'bg-slate-50'} border border-slate-200 text-slate-300`
+                            }
                         `}>
-                          {isCompleted ? (
+                          {partsTotal > 1 && (
+                            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
+                              {Array.from({length: partsTotal}).map((_, i) => {
+                                const angle = (i * 360) / partsTotal;
+                                return <line key={i} x1="50" y1="50" x2="50" y2="-10" stroke="white" strokeWidth="4" transform={`rotate(${angle} 50 50)`} />
+                              })}
+                            </svg>
+                          )}
+                          <div className="z-10 flex items-center justify-center pointer-events-none">
+                            {isCompleted ? (
                             <div className="flex flex-col items-center gap-[1px]">
                               <div className="flex gap-[1px]">
                                 {Array.from({ length: 3 }).map((_, i) => (
@@ -212,6 +239,7 @@ export function DesktopSidebarRight({
                           ) : (
                             <Lock size={16} className="stroke-[2.5]" />
                           )}
+                          </div>
                         </div>
                         <span className={`text-[9px] font-black tracking-widest uppercase
                           ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
@@ -448,13 +476,11 @@ export function DesktopSidebarRight({
                           const isNextToPlay = !isLevelFullyCompleted && i === completedParts.length;
                           const canPlay = isLevelFullyCompleted || i <= completedParts.length;
                           
-                          let sliceColor = 'bg-slate-200';
-                          if (isPartCompleted) {
-                            sliceColor = selectedLesson.unitColor;
-                          } else if (isNextToPlay) {
+                          let sliceColor = selectedLesson.unitColor;
+                          if (!isPartCompleted && !isNextToPlay) {
+                            sliceColor = `${selectedLesson.unitColor} opacity-50`;
+                          } else if (!isPartCompleted && isNextToPlay) {
                             sliceColor = `${selectedLesson.unitColor} opacity-90`;
-                          } else if (canPlay) {
-                            sliceColor = 'bg-slate-300';
                           }
 
                           const href = suggestionType === 'alphabet' 
@@ -478,7 +504,7 @@ export function DesktopSidebarRight({
                     </div>
                   ) : (
                     <Link
-                      href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                      href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : totalParts > 1 ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${completedParts.length >= totalParts ? 0 : completedParts.length}&totalParts=${totalParts}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
                       className={`flex-1 py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
                     >
                       {getTranslation('auto.start_lesson', language)}
