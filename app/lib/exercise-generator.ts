@@ -324,11 +324,16 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
   let lessonPhrases = lesson.phrases || [];
 
   if (partIndex !== null && totalParts !== null && totalParts > 1) {
-    const wordsChunkSize = Math.ceil(validLessonWords.length / totalParts);
-    validLessonWords = validLessonWords.slice(partIndex * wordsChunkSize, (partIndex + 1) * wordsChunkSize);
+    const getChunk = <T>(arr: T[], pIndex: number, tParts: number): T[] => {
+      const baseSize = Math.floor(arr.length / tParts);
+      const remainder = arr.length % tParts;
+      const start = pIndex * baseSize + Math.min(pIndex, remainder);
+      const length = baseSize + (pIndex < remainder ? 1 : 0);
+      return arr.slice(start, start + length);
+    };
     
-    const phrasesChunkSize = Math.ceil(lessonPhrases.length / totalParts);
-    lessonPhrases = lessonPhrases.slice(partIndex * phrasesChunkSize, (partIndex + 1) * phrasesChunkSize);
+    validLessonWords = getChunk(validLessonWords, partIndex, totalParts);
+    lessonPhrases = getChunk(lessonPhrases, partIndex, totalParts);
   }
 
   if (lesson.isReview) {
@@ -347,10 +352,15 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     const globalWordsPool = allLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
 
     if (partIndex !== null && totalParts !== null && totalParts > 1) {
-       const uWordsChunk = Math.ceil(unitWords.length / totalParts);
-       unitWords = unitWords.slice(partIndex * uWordsChunk, (partIndex + 1) * uWordsChunk);
-       const uPhrasesChunk = Math.ceil(unitPhrases.length / totalParts);
-       unitPhrases = unitPhrases.slice(partIndex * uPhrasesChunk, (partIndex + 1) * uPhrasesChunk);
+       const getChunk = <T>(arr: T[], pIndex: number, tParts: number): T[] => {
+         const baseSize = Math.floor(arr.length / tParts);
+         const remainder = arr.length % tParts;
+         const start = pIndex * baseSize + Math.min(pIndex, remainder);
+         const length = baseSize + (pIndex < remainder ? 1 : 0);
+         return arr.slice(start, start + length);
+       };
+       unitWords = getChunk(unitWords, partIndex, totalParts);
+       unitPhrases = getChunk(unitPhrases, partIndex, totalParts);
     }
     
     let reviewExercises: Exercise[] = [];

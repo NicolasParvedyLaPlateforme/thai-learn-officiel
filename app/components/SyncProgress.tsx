@@ -20,7 +20,40 @@ export default function SyncProgress() {
         const result = await getProgress();
         if (result.success && result.data) {
           const localState = useProgressStore.getState();
-          const dbState = result.data as any;
+          let dbState = result.data as any;
+          
+          const migrationKey = 'migration_level_8_9_reset_v3';
+          if (!window.localStorage.getItem(migrationKey)) {
+             let migrated = false;
+             if (dbState.lessonLevels) {
+               Object.keys(dbState.lessonLevels).forEach(lessonId => {
+                 if (dbState.lessonLevels[lessonId] > 7) {
+                   dbState.lessonLevels[lessonId] = 7;
+                   migrated = true;
+                 }
+               });
+             }
+             if (dbState.lessonPartsCompleted) {
+               Object.keys(dbState.lessonPartsCompleted).forEach(key => {
+                 if (key.endsWith('_level-7') || key.endsWith('_level-8')) {
+                   delete dbState.lessonPartsCompleted[key];
+                   migrated = true;
+                 }
+               });
+             }
+             if (dbState.inProgressLessons) {
+               Object.keys(dbState.inProgressLessons).forEach(key => {
+                 if (key.includes('_7') || key.includes('_8')) {
+                   delete dbState.inProgressLessons[key];
+                   migrated = true;
+                 }
+               });
+             }
+             window.localStorage.setItem(migrationKey, 'true');
+             if (migrated) {
+                saveProgress(dbState);
+             }
+          }
           
           const isDbEmpty = dbState.xp === 0 && (!dbState.completedLessons || dbState.completedLessons.length === 0);
           const hasLocalProgress = localState.xp > 0 || localState.completedLessons.length > 0;

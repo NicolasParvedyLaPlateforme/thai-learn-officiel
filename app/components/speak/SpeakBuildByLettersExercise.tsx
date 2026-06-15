@@ -67,7 +67,7 @@ export function SpeakBuildByLettersExercise({
    const [status, setStatus] = useState<'idle' | 'listening' | 'evaluating' | 'success' | 'timeup'>('idle');
    const [spokenHistory, setSpokenHistory] = useState("");
    const [micAttempts, setMicAttempts] = useState(0);
-   
+
    // Phase 1: Selection
    const [lockedPhraseId, setLockedPhraseId] = useState<string | null>(null);
    const [availablePhrases, setAvailablePhrases] = useState<Phrase[]>([]);
@@ -77,7 +77,6 @@ export function SpeakBuildByLettersExercise({
    const [step, setStep] = useState(0); // Current character index
    const [currentOptions, setCurrentOptions] = useState<{ char: string, isWrong: boolean }[]>([]);
    const [mistakes, setMistakes] = useState(0);
-   const [letterMistakes, setLetterMistakes] = useState(0);
    const [hintCount, setHintCount] = useState(0);
    const [hintRomanization, setHintRomanization] = useState<string | null>(null);
    const [successPhraseId, setSuccessPhraseId] = useState<string | null>(null);
@@ -113,7 +112,6 @@ export function SpeakBuildByLettersExercise({
             setTargetChars(characters);
             setStep(0);
             setMistakes(0);
-            setLetterMistakes(0);
             setHintCount(0);
             setHintRomanization(null);
          }
@@ -124,7 +122,7 @@ export function SpeakBuildByLettersExercise({
    useEffect(() => {
       if (lockedPhraseId && targetChars.length > 0 && step < targetChars.length) {
          const expectedChar = targetChars[step];
-         
+
          const isConsonant = (charStr: string) => {
             const code = charStr.charCodeAt(0);
             return code >= 0x0E01 && code <= 0x0E2E;
@@ -139,14 +137,14 @@ export function SpeakBuildByLettersExercise({
             const bSame = isConsonant(b.letter) === expectedIsConsonant ? 1 : 0;
             return bSame - aSame;
          });
-         
+
          distractors = shuffle(distractors.slice(0, 15)).slice(0, 2); // Random 2 from top 15
 
          const options = shuffle([
             { char: expectedChar, isWrong: false },
             ...distractors.map(d => ({ char: d.letter, isWrong: false }))
          ]);
-         
+
          setCurrentOptions(options);
          setStatus('idle');
          setSpokenHistory("");
@@ -168,11 +166,10 @@ export function SpeakBuildByLettersExercise({
                const distance = levenshtein.get(spokenText, targetText);
                const maxLen = Math.max(spokenText.length, targetText.length);
                const similarity = maxLen === 0 ? 100 : ((maxLen - distance) / maxLen) * 100;
-               
+
                if (similarity >= requiredAccuracy) {
                   stopMic();
                   setStatus('success');
-                  new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
                   setSuccessScore(similarity);
                   setSuccessPhraseId(phrase.id);
                   playTTS(phrase.th);
@@ -188,11 +185,11 @@ export function SpeakBuildByLettersExercise({
             // Phase 2: Letter matching
             const spokenText = normalizeThai(transcript);
             const expectedChar = targetChars[step];
-            
+
             // Calculate similarity for ALL options
             const similarities = currentOptions.map(opt => {
                if (opt.isWrong) return 0;
-               
+
                const optName = normalizeThai(getLetterSpokenName(opt.char));
                const dist = levenshtein.get(spokenText, optName);
                const maxL = Math.max(spokenText.length, optName.length);
@@ -236,7 +233,7 @@ export function SpeakBuildByLettersExercise({
                      similarity = 100;
                   }
                }
-               
+
                return similarity;
             });
 
@@ -265,18 +262,16 @@ export function SpeakBuildByLettersExercise({
             if (highestSim >= requiredAccuracy) {
                stopMic();
                setStatus('evaluating');
-               
+
                const matchedChar = currentOptions[matchedOptionIndex].char;
-               
+
                if (matchedChar === expectedChar) {
                   // Correct
                   setStatus('success');
-                  new Audio('/sound/sonone/right.mp3').play().catch(e => console.log('Audio error:', e));
                   setSuccessScore(highestSim);
                   setSuccessChar(matchedChar);
                   setTimeout(() => {
                      setSuccessChar(null);
-                     setLetterMistakes(0);
                      if (step + 1 >= targetChars.length) {
                         // Finished phrase
                         onCompletePhrase(lockedPhraseId, mistakes);
@@ -286,33 +281,13 @@ export function SpeakBuildByLettersExercise({
                   }, 1000);
                } else {
                   // Wrong
-                  const newLetterMistakes = letterMistakes + 1;
-                  setLetterMistakes(newLetterMistakes);
                   setMistakes(m => m + 1);
                   setCurrentOptions(prev => prev.map((o, idx) => idx === matchedOptionIndex ? { ...o, isWrong: true } : o));
-                  
-                  if (newLetterMistakes >= 3) {
-                     setTimeout(() => {
-                        setStatus('success');
-                        setSuccessScore(100);
-                        setSuccessChar(expectedChar);
-                        setTimeout(() => {
-                           setSuccessChar(null);
-                           setLetterMistakes(0);
-                           if (step + 1 >= targetChars.length) {
-                              onCompletePhrase(lockedPhraseId, mistakes + 1);
-                           } else {
-                              setStep(step + 1);
-                           }
-                        }, 1000);
-                     }, 1000);
-                  } else {
-                     setTimeout(() => {
-                        setStatus('idle');
-                        setSpokenHistory("");
-                        resetTranscript();
-                     }, 1000);
-                  }
+                  setTimeout(() => {
+                     setStatus('idle');
+                     setSpokenHistory("");
+                     resetTranscript();
+                  }, 1000);
                }
             }
          }
@@ -389,7 +364,7 @@ export function SpeakBuildByLettersExercise({
                <h2 className="text-xl sm:text-2xl font-bold text-slate-700 text-center">
                   {getTranslation('auto.speak_to_select', language)}
                </h2>
-               
+
                <div className="flex flex-col gap-3 w-full max-w-md">
                   {availablePhrases.map((phrase, idx) => {
                      const isSuccess = successPhraseId === phrase.id;
@@ -399,8 +374,8 @@ export function SpeakBuildByLettersExercise({
                         else colorClass = "text-emerald-700 border-2 border-emerald-300 bg-emerald-50 shadow-sm shadow-emerald-100";
                      }
                      return (
-                        <motion.div 
-                           key={idx} 
+                        <motion.div
+                           key={idx}
                            animate={isSuccess ? { scale: [1, 1.05, 1], y: [0, -5, 5, 0] } : {}}
                            transition={{ duration: 0.5, type: 'spring', stiffness: 300, damping: 10 }}
                            className={`rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition-colors ${colorClass}`}
@@ -452,12 +427,12 @@ export function SpeakBuildByLettersExercise({
                      </div>
                      {step < targetChars.length && (
                         <div className="flex flex-col items-center gap-2">
-                           <button 
+                           <button
                               className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
                               onClick={() => {
                                  setHintCount(h => h + 1);
                                  playTTS(getLetterTTSName(targetChars[step]));
-                                 
+
                                  const data = getLetterData(targetChars[step]);
                                  if (data) setHintRomanization(data.pronunciation);
 
@@ -486,16 +461,16 @@ export function SpeakBuildByLettersExercise({
                      {currentOptions.map((opt, idx) => {
                         let displayStr = formatCombiningChar(opt.char);
                         const isSuccess = successChar === opt.char;
-                        
-                        let colorClass = opt.isWrong 
-                           ? 'bg-slate-100 border-2 border-slate-200 text-slate-300 pointer-events-none' 
+
+                        let colorClass = opt.isWrong
+                           ? 'bg-slate-100 border-2 border-slate-200 text-slate-300 pointer-events-none'
                            : 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2';
-                           
+
                         if (isSuccess) {
                            if (successScore < 100) colorClass = "text-amber-700 border-amber-300 bg-amber-50 border-2 border-b-4 pointer-events-none shadow-sm";
                            else colorClass = "text-emerald-700 border-emerald-300 bg-emerald-50 border-2 border-b-4 pointer-events-none shadow-sm";
                         }
-                        
+
                         return (
                            <motion.button
                               key={`key-${idx}`}
@@ -534,7 +509,7 @@ export function SpeakBuildByLettersExercise({
                      <p className="text-orange-500 font-medium animate-pulse">{getTranslation('auto.checking', language)}</p>
                   ) : (
                      <p className="text-slate-500 font-medium text-lg">
-                        {lockedPhraseId 
+                        {lockedPhraseId
                            ? getTranslation('auto.speak_letter_name', language) || "Prononcez le nom de la lettre"
                            : getTranslation('auto.speak_phrase_instruction', language) || "Prononcez la phrase que vous souhaitez travailler"}
                      </p>

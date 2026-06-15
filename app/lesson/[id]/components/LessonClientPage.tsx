@@ -218,12 +218,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       }
 
       preloadThaiVoices();
-      getExercisesServer(lesson.id, currentLevel, language).then(generated => {
+      getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
         let finalExercises = generated;
-        if (isPart && partIndex !== null && totalParts !== null) {
-          const chunkSize = Math.ceil(generated.length / totalParts);
-          finalExercises = generated.slice(partIndex * chunkSize, (partIndex + 1) * chunkSize);
-        }
         setExercises(finalExercises);
         setCurrentIndex(0);
         setIsFinished(false);
@@ -326,12 +322,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     setShowResumePrompt(false);
 
     preloadThaiVoices();
-    getExercisesServer(lesson.id, currentLevel, language).then(generated => {
+    getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
       let finalExercises = generated;
-      if (isPart && partIndex !== null && totalParts !== null) {
-        const chunkSize = Math.ceil(generated.length / totalParts);
-        finalExercises = generated.slice(partIndex * chunkSize, (partIndex + 1) * chunkSize);
-      }
       setExercises(finalExercises);
       setCurrentIndex(0);
       setIsFinished(false);

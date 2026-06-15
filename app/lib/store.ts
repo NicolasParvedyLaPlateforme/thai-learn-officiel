@@ -858,7 +858,7 @@ export const useProgressStore = create<ProgressState>()(
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
         if (state && typeof window !== 'undefined') {
-          const migrationKey = 'migration_level_8_9_reset';
+          const migrationKey = 'migration_level_8_9_reset_v3';
           if (!window.localStorage.getItem(migrationKey)) {
              let migrated = false;
              const newLessonLevels = { ...state.lessonLevels };
