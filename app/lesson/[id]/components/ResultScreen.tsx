@@ -19,6 +19,7 @@ interface ResultScreenProps {
   isPart?: boolean;
   partIndex?: number | null;
   totalParts?: number | null;
+  currentIndex?: number;
 }
 
 export default function ResultScreen({
@@ -108,7 +109,7 @@ export default function ResultScreen({
       <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
         {currentLevel === 10 
           ? (getTranslation('auto.mastery_level_completed', language))
-          : isPart && partIndex !== null && totalParts !== null && partIndex < totalParts - 1
+          : isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1
             ? (language === "en" 
                 ? `Part ${partIndex + 1}/${totalParts} completed!` 
                 : `Partie ${partIndex + 1}/${totalParts} terminée !`)
@@ -140,7 +141,7 @@ export default function ResultScreen({
             {getTranslation('auto.next_unit', language)}
           </button>
         )}
-        {isPart && partIndex !== null && totalParts !== null && partIndex < totalParts - 1 ? (
+        {isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1 ? (
           <button
             onClick={() =>
               router.push(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`)
