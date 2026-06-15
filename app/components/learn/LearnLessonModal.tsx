@@ -393,8 +393,8 @@ export default function LearnLessonModal({
                 </div>
               ) : (
                 <Link
-                  href={totalParts > 1 
-                    ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${completedParts.length >= totalParts ? 0 : completedParts.length}&totalParts=${totalParts}` 
+                  href={(totalParts > 1 && completedParts.length < totalParts)
+                    ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${completedParts.length}&totalParts=${totalParts}` 
                     : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
                   className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
                 >
