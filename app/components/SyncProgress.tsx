@@ -22,13 +22,18 @@ export default function SyncProgress() {
           const localState = useProgressStore.getState();
           let dbState = result.data as any;
           
-          const migrationKey = 'migration_level_8_9_reset_v3';
+          const migrationKey = 'migration_level_8_9_reset_v5';
           if (!window.localStorage.getItem(migrationKey)) {
              let migrated = false;
              if (dbState.lessonLevels) {
                Object.keys(dbState.lessonLevels).forEach(lessonId => {
                  if (dbState.lessonLevels[lessonId] > 7) {
                    dbState.lessonLevels[lessonId] = 7;
+                   migrated = true;
+                 }
+                 if (dbState.lessonStars && dbState.lessonStars[lessonId]) {
+                   dbState.lessonStars[lessonId][7] = 0;
+                   dbState.lessonStars[lessonId][8] = 0;
                    migrated = true;
                  }
                });

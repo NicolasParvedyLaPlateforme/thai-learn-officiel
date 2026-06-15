@@ -858,16 +858,23 @@ export const useProgressStore = create<ProgressState>()(
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
         if (state && typeof window !== 'undefined') {
-          const migrationKey = 'migration_level_8_9_reset_v3';
+          const migrationKey = 'migration_level_8_9_reset_v5';
           if (!window.localStorage.getItem(migrationKey)) {
              let migrated = false;
              const newLessonLevels = { ...state.lessonLevels };
              const newLessonPartsCompleted = { ...state.lessonPartsCompleted };
              const newInProgress = { ...state.inProgressLessons };
+             const newLessonStars = { ...state.lessonStars };
              
              Object.keys(newLessonLevels).forEach(lessonId => {
                if (newLessonLevels[lessonId] > 7) {
-                 newLessonLevels[lessonId] = 7;
+                 newLessonLevels[lessonId] = 7; // Put them exactly AT Level 8
+                 migrated = true;
+               }
+               // Also clear stars for levels 7 and 8 (visual levels 8 and 9)
+               if (newLessonStars[lessonId]) {
+                 newLessonStars[lessonId][7] = 0;
+                 newLessonStars[lessonId][8] = 0;
                  migrated = true;
                }
              });
@@ -890,7 +897,8 @@ export const useProgressStore = create<ProgressState>()(
                useProgressStore.setState({
                  lessonLevels: newLessonLevels,
                  lessonPartsCompleted: newLessonPartsCompleted,
-                 inProgressLessons: newInProgress
+                 inProgressLessons: newInProgress,
+                 lessonStars: newLessonStars
                });
              }
              window.localStorage.setItem(migrationKey, 'true');
