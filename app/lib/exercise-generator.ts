@@ -366,8 +366,12 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     let reviewExercises: Exercise[] = [];
     
     if (level === 9) {
-        // Niveau 10 : 10 phrases de free-typing uniquement
-        const itemsForFT = shuffle([...unitPhrases, ...unitWords]).slice(0, 10);
+        // Niveau 10 : 10 phrases de free-typing uniquement (scaled by parts)
+        let limit = 10;
+        if (totalParts !== null && totalParts > 1) {
+            limit = Math.max(1, Math.ceil(10 / totalParts));
+        }
+        const itemsForFT = shuffle([...unitPhrases, ...unitWords]).slice(0, limit);
         itemsForFT.forEach(item => {
             reviewExercises.push({
                 id: `rev-ft-${item.id}-${Math.random()}`,
@@ -384,9 +388,17 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
         return reviewExercises;
     }
 
+    // Limit scaling for review exercises based on totalParts
+    let limit5 = 5;
+    let limit3 = 3;
+    if (totalParts !== null && totalParts > 1) {
+        limit5 = Math.max(1, Math.ceil(5 / totalParts));
+        limit3 = Math.max(1, Math.ceil(3 / totalParts));
+    }
+
     // Niveau 1 (level >= 0): 5 word-match
     if (level >= 0 && level <= 8) {
-        const wordsForWM = shuffle(unitWords).slice(0, 5);
+        const wordsForWM = shuffle(unitWords).slice(0, limit5);
         wordsForWM.forEach(word => {
             const rand = Math.random();
             let type: 'distractors' | 'misspelled' = rand < 0.5 ? 'distractors' : 'misspelled';
@@ -424,7 +436,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 2 (level >= 1): 5 fill-in-the-blank
     if (level >= 1 && level <= 8) {
-        const phrasesForFIB = shuffle(unitPhrases).filter(p => p.components.length > 1).slice(0, 5);
+        const phrasesForFIB = shuffle(unitPhrases).filter(p => p.components.length > 1).slice(0, limit5);
         phrasesForFIB.forEach(phrase => {
            const validIndices = phrase.components.map((c, i) => c !== 'w_dots' ? i : -1).filter(i => i !== -1);
            if (validIndices.length > 0) {
@@ -463,7 +475,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 3 (level >= 2): 5 sentence-builder
     if (level >= 2 && level <= 8) {
-        const phrasesForSB = shuffle(unitPhrases).slice(0, 5);
+        const phrasesForSB = shuffle(unitPhrases).slice(0, limit5);
         phrasesForSB.forEach(phrase => {
             const phraseWords = phrase.components.map(id => globalWordsPool.find(w => w.id === id)).filter(Boolean) as Word[];
             const distractors = shuffle(globalWordsPool.filter(w => !phrase.components.includes(w.id))).slice(0, 1);
@@ -483,7 +495,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 4 (level >= 3): 5 phrase translation (word-match style)
     if (level >= 3 && level <= 8) {
-        const phrasesForTransl = shuffle(unitPhrases).slice(0, 5);
+        const phrasesForTransl = shuffle(unitPhrases).slice(0, limit5);
         phrasesForTransl.forEach(phrase => {
            const similar = allPhrases.filter(p => p.id !== phrase.id && p.components.some(c => phrase.components.includes(c)));
            const distractorPhrase = similar.length > 0 ? shuffle(similar)[0] : (shuffle(allPhrases.filter(p => p.id !== phrase.id))[0] || phrase);
@@ -509,7 +521,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 5 (level >= 4): 3 pair-matching (normal)
     if (level >= 4 && level <= 8) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < limit3; i++) {
             const pairs = shuffle(allItemsForPairs).slice(0, 4);
             reviewExercises.push({
                 id: `rev-pair-normal-${Math.random()}`,
@@ -526,7 +538,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 6 (level >= 5): 3 pair-matching (audio-only)
     if (level >= 5 && level <= 8) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < limit3; i++) {
             const pairs = shuffle(allItemsForPairs).slice(0, 4);
             reviewExercises.push({
                 id: `rev-pair-audio-${Math.random()}`,
@@ -543,7 +555,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 7 (level >= 6): 3 pair-matching (script-only)
     if (level >= 6 && level <= 8) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < limit3; i++) {
             const pairs = shuffle(allItemsForPairs).slice(0, 4);
             reviewExercises.push({
                 id: `rev-pair-script-${Math.random()}`,
@@ -560,7 +572,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 8 (level >= 7): 3 writing words
     if (level >= 7 && level <= 8) {
-        const wordsForWr = shuffle(unitWords).slice(0, 3);
+        const wordsForWr = shuffle(unitWords).slice(0, limit3);
         wordsForWr.forEach(w => {
            const { characters, groups } = getWritingClustersAndGroups(w.th.replace(/\s+/g, ''));
            reviewExercises.push({
@@ -582,7 +594,7 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
 
     // Niveau 9 (level >= 8): 3 writing phrases
     if (level >= 8 && level <= 8) {
-        const phrasesForWr = shuffle(unitPhrases).slice(0, 3);
+        const phrasesForWr = shuffle(unitPhrases).slice(0, limit3);
         phrasesForWr.forEach(p => {
            const { characters, groups } = getWritingClustersAndGroups(p.th.replace(/\s+/g, ''));
            reviewExercises.push({
@@ -997,16 +1009,21 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
        });
     });
 
-    // Combine them and ensure at least 15 exercises
+    let limit = 15;
+    if (totalParts !== null && totalParts > 1) {
+        limit = Math.max(1, Math.ceil(15 / totalParts));
+    }
+
+    // Combine them and ensure at least limit exercises
     let mixedPool = shuffle([...fillInBlankPool, ...sbPool, ...phraseMatchPool]);
-    while (mixedPool.length < 15 && mixedPool.length > 0) {
+    while (mixedPool.length < limit && mixedPool.length > 0) {
       mixedPool = [...mixedPool, ...shuffle(mixedPool)];
     }
     
     // Fallback if no phrase exercises can be generated
     if (mixedPool.length === 0) mixedPool = [...wmExercises];
     
-    finalExercises = mixedPool.slice(0, 15).map((ex, i) => ({
+    finalExercises = mixedPool.slice(0, limit).map((ex, i) => ({
       ...ex,
       forceHideRomanization: i >= Math.floor(mixedPool.length / 2) // Hide romanization for half of them
     }));
@@ -1024,7 +1041,12 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     if (level === 5) pairMatchMode = 'audio-only';
     if (level === 6) pairMatchMode = 'script-only';
 
-    for (let i = 0; i < 5; i++) {
+    let limit = 5;
+    if (totalParts !== null && totalParts > 1) {
+        limit = Math.max(1, Math.ceil(5 / totalParts));
+    }
+
+    for (let i = 0; i < limit; i++) {
       const selectedPairs = shuffle(allItemsForPairs).slice(0, 4);
       pmExercises.push({
         id: `pm-${Date.now()}-${Math.random()}`,
@@ -1132,9 +1154,13 @@ export function generateExercises(lesson: Lesson, allLessons: Lesson[], level: n
     ftPhrases = shuffle(ftPhrases);
     
     let combinedPool = [...ftPool, ...ftPhrases];
-    while (combinedPool.length < 10 && combinedPool.length > 0) combinedPool = [...combinedPool, ...shuffle(combinedPool)];
+    let limit = 10;
+    if (totalParts !== null && totalParts > 1) {
+        limit = Math.max(1, Math.ceil(10 / totalParts));
+    }
+    while (combinedPool.length < limit && combinedPool.length > 0) combinedPool = [...combinedPool, ...shuffle(combinedPool)];
     
-    return combinedPool.slice(0, 10).map(ex => ({
+    return combinedPool.slice(0, limit).map(ex => ({
       ...ex,
       forceHideRomanization: true
     }));
