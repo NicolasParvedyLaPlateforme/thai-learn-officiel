@@ -825,16 +825,26 @@ export const useProgressStore = create<ProgressState>()(
         lastMergedEmail: null,
         inProgressLessons: {}
       }),
-      resetLessonLevel: (lessonId) => set((state) => ({
-        lessonLevels: {
-          ...state.lessonLevels,
-          [lessonId]: 0
-        },
-        lessonStars: {
-          ...state.lessonStars,
-          [lessonId]: Array(10).fill(0)
-        }
-      })),
+      resetLessonLevel: (lessonId) => set((state) => {
+        const newLessonPartsCompleted = { ...state.lessonPartsCompleted };
+        Object.keys(newLessonPartsCompleted).forEach(key => {
+          if (key.startsWith(`${lessonId}_level-`)) {
+            delete newLessonPartsCompleted[key];
+          }
+        });
+        
+        return {
+          lessonLevels: {
+            ...state.lessonLevels,
+            [lessonId]: 0
+          },
+          lessonStars: {
+            ...state.lessonStars,
+            [lessonId]: Array(10).fill(0)
+          },
+          lessonPartsCompleted: newLessonPartsCompleted
+        };
+      }),
       markAlphabetSeen: (letter) => set((state) => ({
         seenAlphabets: state.seenAlphabets.includes(letter) 
           ? state.seenAlphabets 
