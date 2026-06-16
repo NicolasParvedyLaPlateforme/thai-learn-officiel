@@ -210,6 +210,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       exercisesGeneratedFor.level !== currentLevel ||
       exercisesGeneratedFor.partIndex !== partIndex
     ) {
+      setIsFinished(false);
+      setExercises([]);
+      setShowExerciseUI(false);
+
       const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
       const savedState = inProgressLessons[savedStateKey];
 
@@ -322,6 +326,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
     saveInProgressLesson(savedStateKey, null);
     setShowResumePrompt(false);
+
+    setIsFinished(false);
+    setExercises([]);
+    setShowExerciseUI(false);
 
     preloadThaiVoices();
     getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
