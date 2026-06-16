@@ -496,8 +496,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             triggerConfetti();
           }
         } else {
-          // If wrong, we re-add the exercise to the end!
-          setExercises([...exercises, currentExercise]);
+          // If wrong, we re-add the exercise to the end with a new ID to force remount
+          setExercises([...exercises, { ...currentExercise, id: `${currentExercise.id}-retry-${Date.now()}` }]);
           setCurrentIndex(currentIndex + 1);
           setIsChecking(false);
           setIsCorrect(null);
