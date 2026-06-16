@@ -19,7 +19,7 @@ interface LearnLessonModalProps {
   lessonStars: Record<string, number[]>;
   resetLessonLevel: (lessonId: string) => void;
   reviewStats: Record<string, Record<number, any>>;
-  getExpectedXp: (lessonId: string, level: number, isReview: boolean) => { xp: number, isFirstTime: boolean };
+  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean, partIndex?: number | null) => { xp: number, isFirstTime: boolean, key: string };
 }
 
 export default function LearnLessonModal({
