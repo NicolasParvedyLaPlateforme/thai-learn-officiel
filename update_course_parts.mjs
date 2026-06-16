@@ -5,16 +5,16 @@ const data = JSON.parse(fs.readFileSync(path, 'utf-8'));
 
 data.lessons.forEach(lesson => {
   lesson.part = {
-    "niveau-1": "1",
-    "niveau-2": "1",
-    "niveau-3": "1",
-    "niveau-4": "1",
-    "niveau-5": "1",
-    "niveau-6": "1",
-    "niveau-7": "1",
-    "niveau-8": "3",
+    "niveau-1": "3",
+    "niveau-2": "3",
+    "niveau-3": "3",
+    "niveau-4": "3",
+    "niveau-5": "3",
+    "niveau-6": "3",
+    "niveau-7": "3",
+    "niveau-8": "2",
     "niveau-9": "3",
-    "niveau-10": "1"
+    "niveau-10": "5"
   };
 });
 

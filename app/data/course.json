@@ -206,7 +206,7 @@
         "niveau-5": "3",
         "niveau-6": "3",
         "niveau-7": "3",
-        "niveau-8": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
         "niveau-10": "5"
       }
@@ -382,16 +382,16 @@
       "descriptionDe": "Lerne grundlegende Pronomen und dich vorzustellen",
       "descriptionIt": "Impara i pronomi di base e a presentarti",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -578,16 +578,16 @@
       "descriptionDe": "Lerne, Fragen über die andere Person zu stellen",
       "descriptionIt": "Impara a fare domande sull'altra persona",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
         "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -784,16 +784,16 @@
       "descriptionDe": "Lerne von 1 bis 10 zu zählen",
       "descriptionIt": "Impara a contare da 1 a 10",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -964,16 +964,16 @@
       "descriptionDe": "Lerne von 6 bis 10 zu zählen",
       "descriptionIt": "Impara a contare da 6 a 10",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -1144,16 +1144,16 @@
       "descriptionDe": "Zeit und Häufigkeit von Aktionen ausdrücken",
       "descriptionIt": "Esprimere il tempo e la frequenza delle azioni",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -1173,16 +1173,16 @@
       "descriptionDe": "Erste Herausforderung! Teste deine Thai-Grundlagen: Begrüßungen, Vorstellung, Zahlen von 0 bis 10 und erste Zeitbegriffe.",
       "descriptionIt": "Prima sfida! Valuta le tue basi di thailandese: saluti, presentazione, numeri da 0 a 10 e prime nozioni di tempo.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -1361,16 +1361,16 @@
       "descriptionDe": "Zahlen verwenden, um Personen zu zählen",
       "descriptionIt": "Usare i numeri per contare le persone",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -1551,16 +1551,16 @@
       "descriptionDe": "Klassifikatoren für Gegenstände verwenden",
       "descriptionIt": "Usare i classificatori per gli oggetti",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -1743,16 +1743,16 @@
       "descriptionDe": "Im Restaurant essen",
       "descriptionIt": "Mangiare al ristorante",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -1925,16 +1925,16 @@
       "descriptionDe": "Das Vokabular für Fleisch und Eier lernen",
       "descriptionIt": "Imparare il vocabolario delle carni e delle uova",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -2158,16 +2158,16 @@
       "descriptionDe": "Drücken Sie Ihren Geschmack aus und genießen Sie das Essen",
       "descriptionIt": "Esprimere i propri gusti e apprezzare il cibo",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -2340,16 +2340,16 @@
       "descriptionDe": "Höflichkeitsformeln und grundlegende Fragen",
       "descriptionIt": "Formule di cortesia e domande di base",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -2369,16 +2369,16 @@
       "descriptionDe": "",
       "descriptionIt": "",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -2555,16 +2555,16 @@
       "descriptionDe": "Das Verständnis überprüfen und um Klärung bitten",
       "descriptionIt": "Verificare la comprensione e chiedere di chiarire",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -2734,16 +2734,16 @@
       "descriptionDe": "Objekte im Raum lokalisieren",
       "descriptionIt": "Situare gli oggetti nello spazio",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -2923,16 +2923,16 @@
       "descriptionDe": "Über andere sprechen",
       "descriptionIt": "Parlare degli altri",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -3108,16 +3108,16 @@
       "descriptionDe": "Über Fortbewegung sprechen und Pronomen verwenden",
       "descriptionIt": "Parlare dei propri spostamenti e usare i pronomi",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -3316,16 +3316,16 @@
       "descriptionDe": "Beschreiben Sie Ihre Umgebung und alltägliche Handlungen",
       "descriptionIt": "Descrivere il proprio ambiente e le azioni comuni",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -3507,16 +3507,16 @@
       "descriptionDe": "Alltägliche Handlungen",
       "descriptionIt": "Azioni quotidiane",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -3536,16 +3536,16 @@
       "descriptionDe": "",
       "descriptionIt": "",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -3740,16 +3740,16 @@
       "descriptionDe": "Sich in der Stadt fortbewegen, um Einkäufe zu tätigen",
       "descriptionIt": "Spostarsi in città per fare acquisti",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -3944,16 +3944,16 @@
       "descriptionDe": "Verhandeln und kaufen",
       "descriptionIt": "Negoziare e acquistare",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -4170,16 +4170,16 @@
       "descriptionDe": "Den mentalen und körperlichen Zustand ausdrücken",
       "descriptionIt": "Esprimere il proprio stato mentale e fisico",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -4400,16 +4400,16 @@
       "descriptionDe": "Sich in der Stadt fortbewegen",
       "descriptionIt": "Spostarsi in città",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -4627,16 +4627,16 @@
       "descriptionDe": "Heute, morgen, gestern...",
       "descriptionIt": "Oggi, domani, ieri...",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -4808,16 +4808,16 @@
       "descriptionDe": "Gefühle ausdrücken und was man gerade tut",
       "descriptionIt": "Esprimere emozioni e ciò che si sta facendo",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -4837,16 +4837,16 @@
       "descriptionDe": "",
       "descriptionIt": "",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -5070,16 +5070,16 @@
       "descriptionDe": "Links, rechts, geradeaus",
       "descriptionIt": "Sinistra, destra, dritto",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -5304,16 +5304,16 @@
       "descriptionDe": "Ja, nein, vielleicht, bitte",
       "descriptionIt": "Sì, no, forse, per favore",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -5494,16 +5494,16 @@
       "descriptionDe": "Ich habe Schmerzen, Medikamente",
       "descriptionIt": "Sto soffrendo, medicina",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -5674,16 +5674,16 @@
       "descriptionDe": "Groß, klein, heiß, kalt",
       "descriptionIt": "Grande, piccolo, caldo, freddo",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -5864,16 +5864,16 @@
       "descriptionDe": "Rot, Blau, Weiß, Schwarz...",
       "descriptionIt": "Rosso, blu, bianco, nero...",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -6046,16 +6046,16 @@
       "descriptionDe": "Schlafzimmer, Schlaf, Wasser",
       "descriptionIt": "Camera da letto, sonno, acqua",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -6075,16 +6075,16 @@
       "descriptionDe": "Verirren Sie sich nicht! Testen Sie Ihr Wissen über Richtungen, Farben, den Körper im Krankenhaus und die Beschreibung Ihrer Umgebung.",
       "descriptionIt": "Non perdere la strada! Metti alla prova la tua conoscenza delle direzioni, dei colori, del corpo in ospedale e della descrizione del tuo ambiente.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -6295,16 +6295,16 @@
       "descriptionDe": "Huhn, Schweinefleisch, Fisch",
       "descriptionIt": "Pollo, maiale, pesce",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -6514,16 +6514,16 @@
       "descriptionDe": "Kaffee, Tee, Getränk",
       "descriptionIt": "Caffè, tè, bevanda",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -6672,16 +6672,16 @@
       "descriptionDe": "Süß, salzig, würzig",
       "descriptionIt": "Dolce, salato, piccante",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -6857,16 +6857,16 @@
       "descriptionDe": "Hunger, die Rechnung",
       "descriptionIt": "La fame, il conto",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -7039,16 +7039,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -7199,16 +7199,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -7398,16 +7398,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -7427,16 +7427,16 @@
       "descriptionDe": "Werden Sie zum Feinschmecker! Wiederholen Sie Menüs, Obst, Gemüse und wichtige Vokabeln für die Bestellung in Restaurants.",
       "descriptionIt": "Diventa un buongustaio! Rivedi menu, frutta, verdura e il vocabolario essenziale per ordinare al ristorante.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -7618,16 +7618,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -7803,16 +7803,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -7985,16 +7985,16 @@
       "descriptionDe": "Beobachten, zuhören, gehen",
       "descriptionIt": "Guarda, ascolta, cammina",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -8165,16 +8165,16 @@
       "descriptionDe": "Arbeiten, schlafen, spielen",
       "descriptionIt": "Lavora, dormi, gioca",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -8340,16 +8340,16 @@
       "descriptionDe": "Lernen, lesen, schreiben",
       "descriptionIt": "Impara, leggi, scrivi",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -8522,16 +8522,16 @@
       "descriptionDe": "Verkaufen, geben, Geld",
       "descriptionIt": "Vendi, dai, soldi",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -8551,16 +8551,16 @@
       "descriptionDe": "Werden Sie aktiv! Bewerten Sie Ihre Beherrschung von Bewegungsverben, Kochvokabular, Lernen und Transaktionen.",
       "descriptionIt": "Agisci! Valuta la tua padronanza dei verbi di movimento, del vocabolario di cucina, dell'apprendimento e delle transazioni.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -8766,16 +8766,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -8949,16 +8949,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -9120,16 +9120,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -9304,16 +9304,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -9487,16 +9487,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -9649,16 +9649,16 @@
       "descriptionDe": "Morgen, Abend, Nacht",
       "descriptionIt": "Mattina, sera, notte",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -9830,16 +9830,16 @@
       "descriptionDe": "Regen, Sonne",
       "descriptionIt": "Pioggia, sole",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -9859,16 +9859,16 @@
       "descriptionDe": "Rund ums Haus: Festigen Sie Ihre Grundlagen zu täglichen Aufgaben, grundlegender Kommunikation, Tageszeiten und dem Wetter.",
       "descriptionIt": "In casa: consolida le tue basi sulle attività quotidiane, sulla comunicazione di base, sugli orari della giornata e sul tempo.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -9994,16 +9994,16 @@
       "descriptionDe": "Heiß, kalt, Luft",
       "descriptionIt": "Caldo, freddo, aria",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -10175,16 +10175,16 @@
       "descriptionDe": "Wann ?",
       "descriptionIt": "Quando ?",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -10355,16 +10355,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -10541,16 +10541,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -10736,16 +10736,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -10938,16 +10938,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -11138,16 +11138,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -11167,16 +11167,16 @@
       "descriptionDe": "Wie ist das Wetter? Bestätigen Sie Ihr Wissen über komplexe Wetterbedingungen, genaue Uhrzeiten, Jahreszeiten und die Darstellung von Zeitdauern.",
       "descriptionIt": "Che tempo fa? Convalida la tua conoscenza del tempo complesso, dell'ora esatta, delle stagioni e dell'espressione delle durate.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -11384,16 +11384,16 @@
       "descriptionDe": "Hotel, Schule",
       "descriptionIt": "Albergo, scuola",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -11566,16 +11566,16 @@
       "descriptionDe": "Markt, Straße",
       "descriptionIt": "Mercato, strada",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -11747,16 +11747,16 @@
       "descriptionDe": "Bus, Boot",
       "descriptionIt": "Autobus, barca",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -11964,16 +11964,16 @@
       "descriptionDe": "Flugzeug, flieg",
       "descriptionIt": "Aereo, vola",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -12124,16 +12124,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -12294,16 +12294,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -12323,16 +12323,16 @@
       "descriptionDe": "Entdecken Sie die Stadt! Überprüfen Sie städtische Standorte, öffentliche Verkehrsmittel, offizielle Gebäude und Himmelsrichtungen.",
       "descriptionIt": "Esplora la città! Esamina le posizioni urbane, i trasporti pubblici, gli edifici ufficiali e i punti cardinali.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -12487,16 +12487,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -12737,16 +12737,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -12923,16 +12923,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -13105,16 +13105,16 @@
       "descriptionDe": "Hemd, Hose",
       "descriptionIt": "Camicia, pantaloni",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -13308,16 +13308,16 @@
       "descriptionDe": "Grün, Gelb, Rosa",
       "descriptionIt": "Verde, giallo, rosa",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -13507,16 +13507,16 @@
       "descriptionDe": "Neu, alt",
       "descriptionIt": "Nuovo, vecchio",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -13695,16 +13695,16 @@
       "descriptionDe": "Billig, teuer",
       "descriptionIt": "Economico, costoso",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -13724,16 +13724,16 @@
       "descriptionDe": "Packen Sie Ihre Koffer! Bewerten Sie Ihre Fähigkeiten in Bezug auf Zugreisen, Kleidung, Sekundärfarben und Ladenausstattung.",
       "descriptionIt": "Fai le valigie! Valuta le tue competenze sui viaggi in treno, sull'abbigliamento, sui colori secondari e sugli allestimenti in negozio.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -13910,16 +13910,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -14093,16 +14093,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -14273,16 +14273,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -14456,16 +14456,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -14638,16 +14638,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -14826,16 +14826,16 @@
       "descriptionDe": "Kinder, Brüder",
       "descriptionIt": "Figli, fratelli",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -14972,16 +14972,16 @@
       "descriptionDe": "Auge, Mund, Hand",
       "descriptionIt": "Occhio, bocca, mano",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -15001,16 +15001,16 @@
       "descriptionDe": "Shopping-Session! Machen Sie eine Bestandsaufnahme von Zubehör, Maßen, Materialien, aber auch Teilen des menschlichen Körpers und Ihrer Lieben.",
       "descriptionIt": "Sessione di acquisti! Fai il punto su accessori, misure, materiali, ma anche parti del corpo umano e dei tuoi cari.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -15182,16 +15182,16 @@
       "descriptionDe": "Groß, klein, groß",
       "descriptionIt": "Grande, piccolo, grande",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -15316,16 +15316,16 @@
       "descriptionDe": "Nett, lustig",
       "descriptionIt": "Gentile, divertente",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -15475,16 +15475,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -15663,16 +15663,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -15805,16 +15805,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -15987,16 +15987,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -16168,16 +16168,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -16197,16 +16197,16 @@
       "descriptionDe": "Beschreiben Sie die Menschen um Sie herum: Überprüfen Sie Ihren Wortschatz in Bezug auf Aussehen, Charaktereigenschaften, Großfamilie und Intelligenz.",
       "descriptionIt": "Descrivi chi ti circonda: convalida il tuo vocabolario sull'aspetto fisico, i tratti caratteriali, la famiglia allargata e l'intelligenza.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -16395,16 +16395,16 @@
       "descriptionDe": "Krank, Medizin",
       "descriptionIt": "Malato, medicina",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -16594,16 +16594,16 @@
       "descriptionDe": "Fieber, müde",
       "descriptionIt": "Febbre, stanchezza",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -16779,16 +16779,16 @@
       "descriptionDe": "Traurig, verängstigt, wütend",
       "descriptionIt": "Triste, spaventato, arrabbiato",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -16960,16 +16960,16 @@
       "descriptionDe": "Denken Sie, wissen Sie",
       "descriptionIt": "Pensa, conosci",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -17145,16 +17145,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -17328,16 +17328,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -17512,16 +17512,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -17541,16 +17541,16 @@
       "descriptionDe": "Passen Sie auf sich auf: Überprüfen Sie medizinisches Vokabular, Symptome, Schmerzen und den Ausdruck Ihrer Emotionen und körperlichen Gefühle.",
       "descriptionIt": "Prenditi cura di te stesso: rivedi il vocabolario medico, i sintomi, il dolore e l'espressione delle tue emozioni e sensazioni fisiche.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -17727,16 +17727,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -17967,16 +17967,16 @@
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
       "descriptionIt": "Più vocabolario per questa unità.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -18151,16 +18151,16 @@
       "descriptionDe": "Immer, oft",
       "descriptionIt": "Sempre, spesso",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -18334,16 +18334,16 @@
       "descriptionDe": "Nie, manchmal",
       "descriptionIt": "Mai, a volte",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -18522,16 +18522,16 @@
       "descriptionDe": "Warum, wer",
       "descriptionIt": "Perché, chi",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -18722,16 +18722,16 @@
       "descriptionDe": "Vielleicht, mit",
       "descriptionIt": "Forse, con",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -18751,16 +18751,16 @@
       "descriptionDe": "Drücken Sie sich präzise aus! Beherrschen Sie Mimik, Fragewörter, emotionale Nuancen und Ihre Gewohnheiten.",
       "descriptionIt": "Esprimi te stesso con precisione! Padroneggia le espressioni facciali, le parole interrogative, le sfumature emotive e le tue abitudini.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -18949,16 +18949,16 @@
       "descriptionDe": "Zählen Sie über 10 hinaus",
       "descriptionIt": "Conta oltre 10",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -19230,16 +19230,16 @@
       "descriptionDe": "Montag bis Sonntag",
       "descriptionIt": "dal lunedì alla domenica",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -19390,16 +19390,16 @@
       "descriptionDe": "Stellen Sie sich vor (Fortsetzung)",
       "descriptionIt": "Presentati (continua)",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -19574,16 +19574,16 @@
       "descriptionDe": "Hotel, Markt, Taxis",
       "descriptionIt": "Hotel, mercato, taxi",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -19775,16 +19775,16 @@
       "descriptionDe": "Noch einmal die Rechnung",
       "descriptionIt": "Il conto, ancora una volta",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     },
     {
@@ -19804,16 +19804,16 @@
       "descriptionDe": "Der letzte Test! Bestätigen Sie Ihr A1-Niveau mit dieser umfassenden globalen Revision, die große Zahlen, Nationalitäten und das tägliche Leben berücksichtigt.",
       "descriptionIt": "La prova finale! Convalida il tuo livello A1 con questa importante revisione globale che include grandi numeri, nazionalità e vita quotidiana.",
       "part": {
-        "niveau-1": "1",
-        "niveau-2": "1",
-        "niveau-3": "1",
-        "niveau-4": "1",
-        "niveau-5": "1",
-        "niveau-6": "1",
-        "niveau-7": "1",
-        "niveau-8": "3",
+        "niveau-1": "3",
+        "niveau-2": "3",
+        "niveau-3": "3",
+        "niveau-4": "3",
+        "niveau-5": "3",
+        "niveau-6": "3",
+        "niveau-7": "3",
+        "niveau-8": "2",
         "niveau-9": "3",
-        "niveau-10": "1"
+        "niveau-10": "5"
       }
     }
   ]
