@@ -4,6 +4,7 @@ import { Check, Star, Clock, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Lesson } from "../../../types";
 import { useProgressStore } from "../../../lib/store";
+import { getLevelSplit } from '../../../lib/levelSplits';
 
 interface ResultScreenProps {
   lesson: Lesson;
@@ -152,9 +153,14 @@ export default function ResultScreen({
           </button>
         ) : currentLevel + 1 < 10 && (
           <button
-            onClick={() =>
-              router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}`)
-            }
+            onClick={() => {
+              const nextTotalParts = getLevelSplit(currentLevel + 1);
+              if (nextTotalParts > 1) {
+                router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`);
+              } else {
+                router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}`);
+              }
+            }}
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {getTranslation('auto.next_level', language)}

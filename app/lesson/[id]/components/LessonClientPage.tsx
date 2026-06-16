@@ -301,7 +301,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   }, [exercises]);
 
   const handleResume = () => {
-    const savedStateKey = `${lesson.id}_${currentLevel}`;
+    const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
     const savedState = inProgressLessons[savedStateKey];
     if (savedState) {
       setExercises(savedState.exercises);

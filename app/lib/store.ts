@@ -276,22 +276,14 @@ export const useProgressStore = create<ProgressState>()(
       setLastMergedEmail: (email) => set({ lastMergedEmail: email }),
       saveInProgressLesson: (key, stateData) => set((state) => {
         const now = Date.now();
-        const newInProgress = { ...state.inProgressLessons };
-        
-        // Nettoyage des vieilles leçons (> 48h)
-        for (const k in newInProgress) {
-          if (now - newInProgress[k].lastUpdated > 48 * 60 * 60 * 1000) {
-            delete newInProgress[k];
-          }
-        }
 
         if (stateData === null) {
+          const newInProgress = { ...state.inProgressLessons };
           delete newInProgress[key];
           return { inProgressLessons: newInProgress };
         }
         return {
           inProgressLessons: {
-            ...newInProgress,
             [key]: { ...stateData, lastUpdated: now }
           }
         };
