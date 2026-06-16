@@ -154,7 +154,7 @@ export default function ResultScreen({
         ) : currentLevel + 1 < 10 && (
           <button
             onClick={() => {
-              const nextTotalParts = getLevelSplit(currentLevel + 1);
+              const nextTotalParts = getLevelSplit(currentLevel + 1, lesson);
               if (nextTotalParts > 1) {
                 router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`);
               } else {

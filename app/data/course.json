@@ -197,7 +197,19 @@
       "titleIt": "Basi 1: Saluti",
       "descriptionEs": "Aprende a decir hola y gracias",
       "descriptionDe": "Lerne Hallo und Danke zu sagen",
-      "descriptionIt": "Impara a dire ciao e grazie"
+      "descriptionIt": "Impara a dire ciao e grazie",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-2",
@@ -368,7 +380,19 @@
       "titleIt": "Basi 2: Presentati",
       "descriptionEs": "Aprende los pronombres básicos y a presentarte",
       "descriptionDe": "Lerne grundlegende Pronomen und dich vorzustellen",
-      "descriptionIt": "Impara i pronomi di base e a presentarti"
+      "descriptionIt": "Impara i pronomi di base e a presentarti",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_001",
@@ -552,7 +576,19 @@
       "titleIt": "Presentarsi: E tu?",
       "descriptionEs": "Aprende a hacer preguntas sobre la otra persona",
       "descriptionDe": "Lerne, Fragen über die andere Person zu stellen",
-      "descriptionIt": "Impara a fare domande sull'altra persona"
+      "descriptionIt": "Impara a fare domande sull'altra persona",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "2",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-3",
@@ -746,7 +782,19 @@
       "titleIt": "I Numeri: da 0 a 5",
       "descriptionEs": "Aprende a contar del 1 al 10",
       "descriptionDe": "Lerne von 1 bis 10 zu zählen",
-      "descriptionIt": "Impara a contare da 1 a 10"
+      "descriptionIt": "Impara a contare da 1 a 10",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_002",
@@ -914,7 +962,19 @@
       "titleIt": "I Numeri: da 6 a 10",
       "descriptionEs": "Aprende a contar del 6 al 10",
       "descriptionDe": "Lerne von 6 bis 10 zu zählen",
-      "descriptionIt": "Impara a contare da 6 a 10"
+      "descriptionIt": "Impara a contare da 6 a 10",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_003",
@@ -1082,7 +1142,19 @@
       "titleIt": "Durata e frequenza",
       "descriptionEs": "Expresar el tiempo y la frecuencia de las acciones",
       "descriptionDe": "Zeit und Häufigkeit von Aktionen ausdrücken",
-      "descriptionIt": "Esprimere il tempo e la frequenza delle azioni"
+      "descriptionIt": "Esprimere il tempo e la frequenza delle azioni",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-1",
@@ -1099,7 +1171,19 @@
       "titleIt": "Valutazione Unità 1",
       "descriptionEs": "¡Primer desafío! Evalúa tus conocimientos básicos de tailandés: saludos, presentación, números del 0 al 10 y primeras nociones del tiempo.",
       "descriptionDe": "Erste Herausforderung! Teste deine Thai-Grundlagen: Begrüßungen, Vorstellung, Zahlen von 0 bis 10 und erste Zeitbegriffe.",
-      "descriptionIt": "Prima sfida! Valuta le tue basi di thailandese: saluti, presentazione, numeri da 0 a 10 e prime nozioni di tempo."
+      "descriptionIt": "Prima sfida! Valuta le tue basi di thailandese: saluti, presentazione, numeri da 0 a 10 e prime nozioni di tempo.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-3-quantities",
@@ -1275,7 +1359,19 @@
       "titleIt": "Quantità: Persone",
       "descriptionEs": "Usar los números para contar personas",
       "descriptionDe": "Zahlen verwenden, um Personen zu zählen",
-      "descriptionIt": "Usare i numeri per contare le persone"
+      "descriptionIt": "Usare i numeri per contare le persone",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_004",
@@ -1453,7 +1549,19 @@
       "titleIt": "Quantità: Oggetti",
       "descriptionEs": "Utilizar los clasificadores para los objetos",
       "descriptionDe": "Klassifikatoren für Gegenstände verwenden",
-      "descriptionIt": "Usare i classificatori per gli oggetti"
+      "descriptionIt": "Usare i classificatori per gli oggetti",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-4",
@@ -1633,7 +1741,19 @@
       "titleIt": "Alimentazione 1: Mangiare e Bere",
       "descriptionEs": "Comer en el restaurante",
       "descriptionDe": "Im Restaurant essen",
-      "descriptionIt": "Mangiare al ristorante"
+      "descriptionIt": "Mangiare al ristorante",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_005",
@@ -1803,7 +1923,19 @@
       "titleIt": "Alimentazione 2: Carni e Uova",
       "descriptionEs": "Aprender el vocabulario de las carnes y los huevos",
       "descriptionDe": "Das Vokabular für Fleisch und Eier lernen",
-      "descriptionIt": "Imparare il vocabolario delle carni e delle uova"
+      "descriptionIt": "Imparare il vocabolario delle carni e delle uova",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_006",
@@ -2024,7 +2156,19 @@
       "titleIt": "Alimentazione 3: Sapori e Apprezzamento",
       "descriptionEs": "Expresar sus gustos y apreciar la comida",
       "descriptionDe": "Drücken Sie Ihren Geschmack aus und genießen Sie das Essen",
-      "descriptionIt": "Esprimere i propri gusti e apprezzare il cibo"
+      "descriptionIt": "Esprimere i propri gusti e apprezzare il cibo",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-5",
@@ -2194,7 +2338,19 @@
       "titleIt": "Interazioni 1: Cortesia e Scuse",
       "descriptionEs": "Fórmulas de cortesía y preguntas básicas",
       "descriptionDe": "Höflichkeitsformeln und grundlegende Fragen",
-      "descriptionIt": "Formule di cortesia e domande di base"
+      "descriptionIt": "Formule di cortesia e domande di base",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-2",
@@ -2211,7 +2367,19 @@
       "titleIt": "",
       "descriptionEs": "",
       "descriptionDe": "",
-      "descriptionIt": ""
+      "descriptionIt": "",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_007",
@@ -2385,7 +2553,19 @@
       "titleIt": "Interazioni 2: Comprensione",
       "descriptionEs": "Verificar la comprensión y pedir aclaraciones",
       "descriptionDe": "Das Verständnis überprüfen und um Klärung bitten",
-      "descriptionIt": "Verificare la comprensione e chiedere di chiarire"
+      "descriptionIt": "Verificare la comprensione e chiedere di chiarire",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_008",
@@ -2552,7 +2732,19 @@
       "titleIt": "Spazio 1: Localizzazione di Base",
       "descriptionEs": "Situar objetos en el espacio",
       "descriptionDe": "Objekte im Raum lokalisieren",
-      "descriptionIt": "Situare gli oggetti nello spazio"
+      "descriptionIt": "Situare gli oggetti nello spazio",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-6",
@@ -2729,7 +2921,19 @@
       "titleIt": "Famiglia 1: I Parenti Stretti",
       "descriptionEs": "Hablar de los demás",
       "descriptionDe": "Über andere sprechen",
-      "descriptionIt": "Parlare degli altri"
+      "descriptionIt": "Parlare degli altri",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_009",
@@ -2902,7 +3106,19 @@
       "titleIt": "Spazio 2: Spostamenti e Pronomi",
       "descriptionEs": "Hablar de sus desplazamientos y usar los pronombres",
       "descriptionDe": "Über Fortbewegung sprechen und Pronomen verwenden",
-      "descriptionIt": "Parlare dei propri spostamenti e usare i pronomi"
+      "descriptionIt": "Parlare dei propri spostamenti e usare i pronomi",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_010",
@@ -3098,7 +3314,19 @@
       "titleIt": "Ambiente e Azioni di Base",
       "descriptionEs": "Describir su entorno y sus acciones comunes",
       "descriptionDe": "Beschreiben Sie Ihre Umgebung und alltägliche Handlungen",
-      "descriptionIt": "Descrivere il proprio ambiente e le azioni comuni"
+      "descriptionIt": "Descrivere il proprio ambiente e le azioni comuni",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-7",
@@ -3277,7 +3505,19 @@
       "titleIt": "Osservazione e attesa",
       "descriptionEs": "Acciones cotidianas",
       "descriptionDe": "Alltägliche Handlungen",
-      "descriptionIt": "Azioni quotidiane"
+      "descriptionIt": "Azioni quotidiane",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-3",
@@ -3294,7 +3534,19 @@
       "titleIt": "",
       "descriptionEs": "",
       "descriptionDe": "",
-      "descriptionIt": ""
+      "descriptionIt": "",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_011",
@@ -3486,7 +3738,19 @@
       "titleIt": "Spostamenti e Primi Acquisti",
       "descriptionEs": "Desplazarse por la ciudad para hacer compras",
       "descriptionDe": "Sich in der Stadt fortbewegen, um Einkäufe zu tätigen",
-      "descriptionIt": "Spostarsi in città per fare acquisti"
+      "descriptionIt": "Spostarsi in città per fare acquisti",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-8",
@@ -3678,7 +3942,19 @@
       "titleIt": "Negoziazione al mercato",
       "descriptionEs": "Negociar y comprar",
       "descriptionDe": "Verhandeln und kaufen",
-      "descriptionIt": "Negoziare e acquistare"
+      "descriptionIt": "Negoziare e acquistare",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-9",
@@ -3892,7 +4168,19 @@
       "titleIt": "Stati e Sentimenti",
       "descriptionEs": "Expresar su estado mental y físico",
       "descriptionDe": "Den mentalen und körperlichen Zustand ausdrücken",
-      "descriptionIt": "Esprimere il proprio stato mentale e fisico"
+      "descriptionIt": "Esprimere il proprio stato mentale e fisico",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-11",
@@ -4110,7 +4398,19 @@
       "titleIt": "Trasporti e Luoghi",
       "descriptionEs": "Desplazarse por la ciudad",
       "descriptionDe": "Sich in der Stadt fortbewegen",
-      "descriptionIt": "Spostarsi in città"
+      "descriptionIt": "Spostarsi in città",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-12",
@@ -4325,7 +4625,19 @@
       "titleIt": "Tempo e giorni",
       "descriptionEs": "Hoy, mañana, ayer...",
       "descriptionDe": "Heute, morgen, gestern...",
-      "descriptionIt": "Oggi, domani, ieri..."
+      "descriptionIt": "Oggi, domani, ieri...",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "l_nouveau_012",
@@ -4494,7 +4806,19 @@
       "titleIt": "Stati d'animo e azioni",
       "descriptionEs": "Expresar emociones y lo que se está haciendo",
       "descriptionDe": "Gefühle ausdrücken und was man gerade tut",
-      "descriptionIt": "Esprimere emozioni e ciò che si sta facendo"
+      "descriptionIt": "Esprimere emozioni e ciò che si sta facendo",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-4",
@@ -4511,7 +4835,19 @@
       "titleIt": "",
       "descriptionEs": "",
       "descriptionDe": "",
-      "descriptionIt": ""
+      "descriptionIt": "",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-13",
@@ -4732,7 +5068,19 @@
       "titleIt": "Direzioni",
       "descriptionEs": "Izquierda, derecha, recto",
       "descriptionDe": "Links, rechts, geradeaus",
-      "descriptionIt": "Sinistra, destra, dritto"
+      "descriptionIt": "Sinistra, destra, dritto",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-14",
@@ -4954,7 +5302,19 @@
       "titleIt": "Basi della conversazione",
       "descriptionEs": "Sí, no, tal vez, por favor",
       "descriptionDe": "Ja, nein, vielleicht, bitte",
-      "descriptionIt": "Sì, no, forse, per favore"
+      "descriptionIt": "Sì, no, forse, per favore",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-15",
@@ -5132,7 +5492,19 @@
       "titleIt": "Salute: In ospedale",
       "descriptionEs": "Estoy sufriendo, medicina.",
       "descriptionDe": "Ich habe Schmerzen, Medikamente",
-      "descriptionIt": "Sto soffrendo, medicina"
+      "descriptionIt": "Sto soffrendo, medicina",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-16",
@@ -5300,7 +5672,19 @@
       "titleIt": "Descrizione: Dimensioni e Stati",
       "descriptionEs": "Grande, pequeño, caliente, frío",
       "descriptionDe": "Groß, klein, heiß, kalt",
-      "descriptionIt": "Grande, piccolo, caldo, freddo"
+      "descriptionIt": "Grande, piccolo, caldo, freddo",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-17",
@@ -5478,7 +5862,19 @@
       "titleIt": "Descrizione: Colori",
       "descriptionEs": "Rojo, azul, blanco, negro...",
       "descriptionDe": "Rot, Blau, Weiß, Schwarz...",
-      "descriptionIt": "Rosso, blu, bianco, nero..."
+      "descriptionIt": "Rosso, blu, bianco, nero...",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-18",
@@ -5648,7 +6044,19 @@
       "titleIt": "Luoghi: Casa e Sonno",
       "descriptionEs": "Dormitorio, dormir, agua.",
       "descriptionDe": "Schlafzimmer, Schlaf, Wasser",
-      "descriptionIt": "Camera da letto, sonno, acqua"
+      "descriptionIt": "Camera da letto, sonno, acqua",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-5",
@@ -5665,7 +6073,19 @@
       "titleIt": "Unità 5 Valutazione",
       "descriptionEs": "¡No te pierdas! Pon a prueba tus conocimientos sobre direcciones, colores, el cuerpo en el hospital y la descripción de tu entorno.",
       "descriptionDe": "Verirren Sie sich nicht! Testen Sie Ihr Wissen über Richtungen, Farben, den Körper im Krankenhaus und die Beschreibung Ihrer Umgebung.",
-      "descriptionIt": "Non perdere la strada! Metti alla prova la tua conoscenza delle direzioni, dei colori, del corpo in ospedale e della descrizione del tuo ambiente."
+      "descriptionIt": "Non perdere la strada! Metti alla prova la tua conoscenza delle direzioni, dei colori, del corpo in ospedale e della descrizione del tuo ambiente.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-20",
@@ -5873,7 +6293,19 @@
       "titleIt": "Nel Menu 1: Pesce e Carne",
       "descriptionEs": "Pollo, cerdo, pescado",
       "descriptionDe": "Huhn, Schweinefleisch, Fisch",
-      "descriptionIt": "Pollo, maiale, pesce"
+      "descriptionIt": "Pollo, maiale, pesce",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-21",
@@ -6080,7 +6512,19 @@
       "titleIt": "Nel menu 2: bevande",
       "descriptionEs": "Café, té, bebida.",
       "descriptionDe": "Kaffee, Tee, Getränk",
-      "descriptionIt": "Caffè, tè, bevanda"
+      "descriptionIt": "Caffè, tè, bevanda",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-22",
@@ -6226,7 +6670,19 @@
       "titleIt": "Nel Menu 3: Sapori e Zuppe",
       "descriptionEs": "Dulce, salado, picante",
       "descriptionDe": "Süß, salzig, würzig",
-      "descriptionIt": "Dolce, salato, piccante"
+      "descriptionIt": "Dolce, salato, piccante",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-23",
@@ -6399,7 +6855,19 @@
       "titleIt": "Nel menu 4: Servizio",
       "descriptionEs": "El hambre, la factura",
       "descriptionDe": "Hunger, die Rechnung",
-      "descriptionIt": "La fame, il conto"
+      "descriptionIt": "La fame, il conto",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-24-a1",
@@ -6569,7 +7037,19 @@
       "titleIt": "Alimento 1: Frutta",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-24-a2",
@@ -6717,7 +7197,19 @@
       "titleIt": "Alimento 2: Verdure",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-24-a3",
@@ -6904,7 +7396,19 @@
       "titleIt": "A Tavola: Utensili",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-6",
@@ -6921,7 +7425,19 @@
       "titleIt": "Unità 6 Valutazione",
       "descriptionEs": "¡Conviértete en un gourmet! Repasa menús, frutas, verduras y vocabulario esencial para realizar pedidos en restaurantes.",
       "descriptionDe": "Werden Sie zum Feinschmecker! Wiederholen Sie Menüs, Obst, Gemüse und wichtige Vokabeln für die Bestellung in Restaurants.",
-      "descriptionIt": "Diventa un buongustaio! Rivedi menu, frutta, verdura e il vocabolario essenziale per ordinare al ristorante."
+      "descriptionIt": "Diventa un buongustaio! Rivedi menu, frutta, verdura e il vocabolario essenziale per ordinare al ristorante.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-24-a4",
@@ -7100,7 +7616,19 @@
       "titleIt": "In cucina: cucinare",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-24-a5",
@@ -7273,7 +7801,19 @@
       "titleIt": "Al Tavolo 3: Dessert e Complementi",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-25",
@@ -7443,7 +7983,19 @@
       "titleIt": "Verbi d'azione 1: Sensi e movimenti",
       "descriptionEs": "Mira, escucha, camina.",
       "descriptionDe": "Beobachten, zuhören, gehen",
-      "descriptionIt": "Guarda, ascolta, cammina"
+      "descriptionIt": "Guarda, ascolta, cammina",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-26",
@@ -7611,7 +8163,19 @@
       "titleIt": "Verbi d'azione 2: Lavoro e tempo libero",
       "descriptionEs": "Trabajar, dormir, jugar.",
       "descriptionDe": "Arbeiten, schlafen, spielen",
-      "descriptionIt": "Lavora, dormi, gioca"
+      "descriptionIt": "Lavora, dormi, gioca",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-27",
@@ -7774,7 +8338,19 @@
       "titleIt": "Apprendimento: lettura e scrittura",
       "descriptionEs": "Aprender, leer, escribir",
       "descriptionDe": "Lernen, lesen, schreiben",
-      "descriptionIt": "Impara, leggi, scrivi"
+      "descriptionIt": "Impara, leggi, scrivi",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-28",
@@ -7944,7 +8520,19 @@
       "titleIt": "Commercio: vendite e transazioni",
       "descriptionEs": "Vender, dar, dinero.",
       "descriptionDe": "Verkaufen, geben, Geld",
-      "descriptionIt": "Vendi, dai, soldi"
+      "descriptionIt": "Vendi, dai, soldi",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-7",
@@ -7961,7 +8549,19 @@
       "titleIt": "Unità 7 Valutazione",
       "descriptionEs": "¡Tomar medidas! Evalúa tu dominio de los verbos de movimiento, el vocabulario de cocina, el aprendizaje y las transacciones.",
       "descriptionDe": "Werden Sie aktiv! Bewerten Sie Ihre Beherrschung von Bewegungsverben, Kochvokabular, Lernen und Transaktionen.",
-      "descriptionIt": "Agisci! Valuta la tua padronanza dei verbi di movimento, del vocabolario di cucina, dell'apprendimento e delle transazioni."
+      "descriptionIt": "Agisci! Valuta la tua padronanza dei verbi di movimento, del vocabolario di cucina, dell'apprendimento e delle transazioni.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-29-a1",
@@ -8164,7 +8764,19 @@
       "titleIt": "Movimenti: Velocità e Stop",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-29-a2",
@@ -8335,7 +8947,19 @@
       "titleIt": "Comunicazione: domande e risposte",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-29-a3",
@@ -8494,7 +9118,19 @@
       "titleIt": "Quotidiano: faccende domestiche",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-29-a4",
@@ -8666,7 +9302,19 @@
       "titleIt": "Casa: Porte e Finestre",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-29-a5",
@@ -8837,7 +9485,19 @@
       "titleIt": "Azioni: Transizioni e Stati",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-30",
@@ -8987,7 +9647,19 @@
       "titleIt": "Orario 1: orari della giornata",
       "descriptionEs": "Mañana, Tarde, Noche",
       "descriptionDe": "Morgen, Abend, Nacht",
-      "descriptionIt": "Mattina, sera, notte"
+      "descriptionIt": "Mattina, sera, notte",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-31",
@@ -9156,7 +9828,19 @@
       "titleIt": "Meteo 1: sole e pioggia",
       "descriptionEs": "lluvia, sol",
       "descriptionDe": "Regen, Sonne",
-      "descriptionIt": "Pioggia, sole"
+      "descriptionIt": "Pioggia, sole",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-8",
@@ -9173,7 +9857,19 @@
       "titleIt": "Unità 8 Valutazione",
       "descriptionEs": "En la casa: Consolida tus bases en las tareas diarias, la comunicación básica, las horas del día y el clima.",
       "descriptionDe": "Rund ums Haus: Festigen Sie Ihre Grundlagen zu täglichen Aufgaben, grundlegender Kommunikation, Tageszeiten und dem Wetter.",
-      "descriptionIt": "In casa: consolida le tue basi sulle attività quotidiane, sulla comunicazione di base, sugli orari della giornata e sul tempo."
+      "descriptionIt": "In casa: consolida le tue basi sulle attività quotidiane, sulla comunicazione di base, sugli orari della giornata e sul tempo.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-32",
@@ -9296,7 +9992,19 @@
       "titleIt": "Temperature",
       "descriptionEs": "Aire caliente, frio",
       "descriptionDe": "Heiß, kalt, Luft",
-      "descriptionIt": "Caldo, freddo, aria"
+      "descriptionIt": "Caldo, freddo, aria",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-33",
@@ -9465,7 +10173,19 @@
       "titleIt": "Tempo 2: Tempo",
       "descriptionEs": "Cuando ?",
       "descriptionDe": "Wann ?",
-      "descriptionIt": "Quando ?"
+      "descriptionIt": "Quando ?",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-34-a1",
@@ -9633,7 +10353,19 @@
       "titleIt": "Meteo 2: Vento e Tempeste",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-34-a2",
@@ -9807,7 +10539,19 @@
       "titleIt": "Meteo 3: Le stagioni",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-34-a3",
@@ -9990,7 +10734,19 @@
       "titleIt": "Tempo 3: Giorni e Passato",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-34-a4",
@@ -10180,7 +10936,19 @@
       "titleIt": "Tempo 4: Pomeriggio e Attesa",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-34-a5",
@@ -10368,7 +11136,19 @@
       "titleIt": "Tempo 5: le durate esatte",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-9",
@@ -10385,7 +11165,19 @@
       "titleIt": "Unità 9 Valutazione",
       "descriptionEs": "¿Como está el clima? Valide sus conocimientos sobre el clima complejo, la hora exacta, las estaciones y la expresión de duraciones.",
       "descriptionDe": "Wie ist das Wetter? Bestätigen Sie Ihr Wissen über komplexe Wetterbedingungen, genaue Uhrzeiten, Jahreszeiten und die Darstellung von Zeitdauern.",
-      "descriptionIt": "Che tempo fa? Convalida la tua conoscenza del tempo complesso, dell'ora esatta, delle stagioni e dell'espressione delle durate."
+      "descriptionIt": "Che tempo fa? Convalida la tua conoscenza del tempo complesso, dell'ora esatta, delle stagioni e dell'espressione delle durate.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-35",
@@ -10590,7 +11382,19 @@
       "titleIt": "Luoghi urbani 1: Scuola, Hotel e Mercato",
       "descriptionEs": "hotel, escuela",
       "descriptionDe": "Hotel, Schule",
-      "descriptionIt": "Albergo, scuola"
+      "descriptionIt": "Albergo, scuola",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-36",
@@ -10760,7 +11564,19 @@
       "titleIt": "Luoghi urbani 2: strade e parchi",
       "descriptionEs": "mercado, calle",
       "descriptionDe": "Markt, Straße",
-      "descriptionIt": "Mercato, strada"
+      "descriptionIt": "Mercato, strada",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-37",
@@ -10929,7 +11745,19 @@
       "titleIt": "Trasporti 1: Autobus e Barche",
       "descriptionEs": "autobús, barco",
       "descriptionDe": "Bus, Boot",
-      "descriptionIt": "Autobus, barca"
+      "descriptionIt": "Autobus, barca",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-38",
@@ -11134,7 +11962,19 @@
       "titleIt": "Trasporti 2: Aviazione",
       "descriptionEs": "Avion, volar",
       "descriptionDe": "Flugzeug, flieg",
-      "descriptionIt": "Aereo, vola"
+      "descriptionIt": "Aereo, vola",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-39-a1",
@@ -11282,7 +12122,19 @@
       "titleIt": "Edifici pubblici",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-39-a2",
@@ -11440,7 +12292,19 @@
       "titleIt": "Punti cardinali",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-10",
@@ -11457,7 +12321,19 @@
       "titleIt": "Unità 10 Valutazione",
       "descriptionEs": "¡Explora la ciudad! Revisar ubicaciones urbanas, transporte público, edificios oficiales y puntos cardinales.",
       "descriptionDe": "Entdecken Sie die Stadt! Überprüfen Sie städtische Standorte, öffentliche Verkehrsmittel, offizielle Gebäude und Himmelsrichtungen.",
-      "descriptionIt": "Esplora la città! Esamina le posizioni urbane, i trasporti pubblici, gli edifici ufficiali e i punti cardinali."
+      "descriptionIt": "Esplora la città! Esamina le posizioni urbane, i trasporti pubblici, gli edifici ufficiali e i punti cardinali.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-39-a3",
@@ -11609,7 +12485,19 @@
       "titleIt": "La Stazione e i Biglietti",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-39-a4",
@@ -11847,7 +12735,19 @@
       "titleIt": "Veicoli terrestri",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-39-a5",
@@ -12021,7 +12921,19 @@
       "titleIt": "Guida sul percorso",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-40",
@@ -12191,7 +13103,19 @@
       "titleIt": "Abbigliamento 1: pantaloni e scarpe",
       "descriptionEs": "camisa, pantalones",
       "descriptionDe": "Hemd, Hose",
-      "descriptionIt": "Camicia, pantaloni"
+      "descriptionIt": "Camicia, pantaloni",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-41",
@@ -12382,7 +13306,19 @@
       "titleIt": "Abbigliamento 2: Colori secondari",
       "descriptionEs": "Verde, amarillo, rosa",
       "descriptionDe": "Grün, Gelb, Rosa",
-      "descriptionIt": "Verde, giallo, rosa"
+      "descriptionIt": "Verde, giallo, rosa",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-42",
@@ -12569,7 +13505,19 @@
       "titleIt": "Descrizione 1: Lo stato degli oggetti",
       "descriptionEs": "nuevo, viejo",
       "descriptionDe": "Neu, alt",
-      "descriptionIt": "Nuovo, vecchio"
+      "descriptionIt": "Nuovo, vecchio",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-43",
@@ -12745,7 +13693,19 @@
       "titleIt": "Acquisti 1: Prezzi e Prove",
       "descriptionEs": "Barato, caro",
       "descriptionDe": "Billig, teuer",
-      "descriptionIt": "Economico, costoso"
+      "descriptionIt": "Economico, costoso",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-11",
@@ -12762,7 +13722,19 @@
       "titleIt": "Unità 11 Valutazione",
       "descriptionEs": "¡Haz las maletas! Evalúe sus habilidades en viajes en tren, ropa, colores secundarios y accesorios en las tiendas.",
       "descriptionDe": "Packen Sie Ihre Koffer! Bewerten Sie Ihre Fähigkeiten in Bezug auf Zugreisen, Kleidung, Sekundärfarben und Ladenausstattung.",
-      "descriptionIt": "Fai le valigie! Valuta le tue competenze sui viaggi in treno, sull'abbigliamento, sui colori secondari e sugli allestimenti in negozio."
+      "descriptionIt": "Fai le valigie! Valuta le tue competenze sui viaggi in treno, sull'abbigliamento, sui colori secondari e sugli allestimenti in negozio.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-44-a1",
@@ -12936,7 +13908,19 @@
       "titleIt": "Accessori 1: Cappelli e Borse",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-44-a2",
@@ -13107,7 +14091,19 @@
       "titleIt": "Abbigliamento 3: Gonne e calzini",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-44-a3",
@@ -13275,7 +14271,19 @@
       "titleIt": "Descrizione 2: Lunghezze",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-44-a4",
@@ -13446,7 +14454,19 @@
       "titleIt": "Descrizione 3: Pesi e Misure",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-44-a5",
@@ -13616,7 +14636,19 @@
       "titleIt": "Accessori 2: Materiali e Gioielli",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-45",
@@ -13792,7 +14824,19 @@
       "titleIt": "Famiglia 1: figli e amici",
       "descriptionEs": "niños, hermanos",
       "descriptionDe": "Kinder, Brüder",
-      "descriptionIt": "Figli, fratelli"
+      "descriptionIt": "Figli, fratelli",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-46",
@@ -13926,7 +14970,19 @@
       "titleIt": "Il corpo umano",
       "descriptionEs": "Ojo, boca, mano",
       "descriptionDe": "Auge, Mund, Hand",
-      "descriptionIt": "Occhio, bocca, mano"
+      "descriptionIt": "Occhio, bocca, mano",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-12",
@@ -13943,7 +14999,19 @@
       "titleIt": "Unità 12 Valutazione",
       "descriptionEs": "¡Sesión de compras! Haga un balance de accesorios, medidas, materiales, pero también de partes del cuerpo humano y de sus seres queridos.",
       "descriptionDe": "Shopping-Session! Machen Sie eine Bestandsaufnahme von Zubehör, Maßen, Materialien, aber auch Teilen des menschlichen Körpers und Ihrer Lieben.",
-      "descriptionIt": "Sessione di acquisti! Fai il punto su accessori, misure, materiali, ma anche parti del corpo umano e dei tuoi cari."
+      "descriptionIt": "Sessione di acquisti! Fai il punto su accessori, misure, materiali, ma anche parti del corpo umano e dei tuoi cari.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-47",
@@ -14112,7 +15180,19 @@
       "titleIt": "Aspetto 1: Dimensioni e forme",
       "descriptionEs": "Grande, pequeño, grande",
       "descriptionDe": "Groß, klein, groß",
-      "descriptionIt": "Grande, piccolo, grande"
+      "descriptionIt": "Grande, piccolo, grande",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-48",
@@ -14234,7 +15314,19 @@
       "titleIt": "Carattere e studi",
       "descriptionEs": "Amable, divertido",
       "descriptionDe": "Nett, lustig",
-      "descriptionIt": "Gentile, divertente"
+      "descriptionIt": "Gentile, divertente",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-49-a1",
@@ -14381,7 +15473,19 @@
       "titleIt": "Famiglia 2: Gli Anziani",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-49-a2",
@@ -14557,7 +15661,19 @@
       "titleIt": "Famiglia 3: Genitorialità",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-49-a3",
@@ -14687,7 +15803,19 @@
       "titleIt": "Identità e bellezza",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-49-a4",
@@ -14857,7 +15985,19 @@
       "titleIt": "Aspetto 2: Sfumature",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-49-a5",
@@ -15026,7 +16166,19 @@
       "titleIt": "Qualità e intelligenza",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-13",
@@ -15043,7 +16195,19 @@
       "titleIt": "Unità 13 Valutazione",
       "descriptionEs": "Describe a quienes te rodean: valida tu vocabulario sobre apariencia física, rasgos de carácter, familia extensa e inteligencia.",
       "descriptionDe": "Beschreiben Sie die Menschen um Sie herum: Überprüfen Sie Ihren Wortschatz in Bezug auf Aussehen, Charaktereigenschaften, Großfamilie und Intelligenz.",
-      "descriptionIt": "Descrivi chi ti circonda: convalida il tuo vocabolario sull'aspetto fisico, i tratti caratteriali, la famiglia allargata e l'intelligenza."
+      "descriptionIt": "Descrivi chi ti circonda: convalida il tuo vocabolario sull'aspetto fisico, i tratti caratteriali, la famiglia allargata e l'intelligenza.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-50",
@@ -15229,7 +16393,19 @@
       "titleIt": "Salute 1: Farmaci e Febbre",
       "descriptionEs": "enfermo, medicina",
       "descriptionDe": "Krank, Medizin",
-      "descriptionIt": "Malato, medicina"
+      "descriptionIt": "Malato, medicina",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-51",
@@ -15416,7 +16592,19 @@
       "titleIt": "Salute 2: Tosse e Visita Medica",
       "descriptionEs": "fiebre, cansancio",
       "descriptionDe": "Fieber, müde",
-      "descriptionIt": "Febbre, stanchezza"
+      "descriptionIt": "Febbre, stanchezza",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-52",
@@ -15589,7 +16777,19 @@
       "titleIt": "Salute 3: Paure e preoccupazioni",
       "descriptionEs": "Triste, asustado, enojado",
       "descriptionDe": "Traurig, verängstigt, wütend",
-      "descriptionIt": "Triste, spaventato, arrabbiato"
+      "descriptionIt": "Triste, spaventato, arrabbiato",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-53",
@@ -15758,7 +16958,19 @@
       "titleIt": "Salute 4: Dolore e comprensione",
       "descriptionEs": "pensar, saber",
       "descriptionDe": "Denken Sie, wissen Sie",
-      "descriptionIt": "Pensa, conosci"
+      "descriptionIt": "Pensa, conosci",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-54-a1",
@@ -15931,7 +17143,19 @@
       "titleIt": "Emozioni 1: Tristezza e Certezza",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-54-a2",
@@ -16102,7 +17326,19 @@
       "titleIt": "Emozioni 2: gioia e rabbia",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-54-a3",
@@ -16274,7 +17510,19 @@
       "titleIt": "Stati 1: Fame e stanchezza",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-14",
@@ -16291,7 +17539,19 @@
       "titleIt": "Unità 14 Valutazione",
       "descriptionEs": "Cuídate: repasa el vocabulario médico, los síntomas, el dolor y la expresión de tus emociones y sentimientos físicos.",
       "descriptionDe": "Passen Sie auf sich auf: Überprüfen Sie medizinisches Vokabular, Symptome, Schmerzen und den Ausdruck Ihrer Emotionen und körperlichen Gefühle.",
-      "descriptionIt": "Prenditi cura di te stesso: rivedi il vocabolario medico, i sintomi, il dolore e l'espressione delle tue emozioni e sensazioni fisiche."
+      "descriptionIt": "Prenditi cura di te stesso: rivedi il vocabolario medico, i sintomi, il dolore e l'espressione delle tue emozioni e sensazioni fisiche.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-54-a4",
@@ -16465,7 +17725,19 @@
       "titleIt": "Stati 2: Espressioni facciali",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-54-a5",
@@ -16693,7 +17965,19 @@
       "titleIt": "Revisioni: Salute e Stati",
       "descriptionEs": "Más vocabulario para esta unidad.",
       "descriptionDe": "Mehr Vokabular für diese Einheit.",
-      "descriptionIt": "Più vocabolario per questa unità."
+      "descriptionIt": "Più vocabolario per questa unità.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-55",
@@ -16865,7 +18149,19 @@
       "titleIt": "Frequenza e abitudini",
       "descriptionEs": "Siempre, a menudo",
       "descriptionDe": "Immer, oft",
-      "descriptionIt": "Sempre, spesso"
+      "descriptionIt": "Sempre, spesso",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-56",
@@ -17036,7 +18332,19 @@
       "titleIt": "Interroga parole e azioni",
       "descriptionEs": "Nunca, a veces",
       "descriptionDe": "Nie, manchmal",
-      "descriptionIt": "Mai, a volte"
+      "descriptionIt": "Mai, a volte",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-57",
@@ -17212,7 +18520,19 @@
       "titleIt": "Sfumature e sentimenti",
       "descriptionEs": "¿Por qué, quién?",
       "descriptionDe": "Warum, wer",
-      "descriptionIt": "Perché, chi"
+      "descriptionIt": "Perché, chi",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-58",
@@ -17400,7 +18720,19 @@
       "titleIt": "Utili e descrizioni",
       "descriptionEs": "Quizás, con",
       "descriptionDe": "Vielleicht, mit",
-      "descriptionIt": "Forse, con"
+      "descriptionIt": "Forse, con",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "bilan-unit-15",
@@ -17417,7 +18749,19 @@
       "titleIt": "Unità 15 Valutazione",
       "descriptionEs": "¡Exprésate con precisión! Domina las expresiones faciales, las palabras interrogativas, los matices emocionales y tus hábitos.",
       "descriptionDe": "Drücken Sie sich präzise aus! Beherrschen Sie Mimik, Fragewörter, emotionale Nuancen und Ihre Gewohnheiten.",
-      "descriptionIt": "Esprimi te stesso con precisione! Padroneggia le espressioni facciali, le parole interrogative, le sfumature emotive e le tue abitudini."
+      "descriptionIt": "Esprimi te stesso con precisione! Padroneggia le espressioni facciali, le parole interrogative, le sfumature emotive e le tue abitudini.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-59",
@@ -17603,7 +18947,19 @@
       "titleIt": "Numeri: da 11 a 10.000",
       "descriptionEs": "contar más allá de 10",
       "descriptionDe": "Zählen Sie über 10 hinaus",
-      "descriptionIt": "Conta oltre 10"
+      "descriptionIt": "Conta oltre 10",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-60",
@@ -17872,7 +19228,19 @@
       "titleIt": "Giorni della settimana",
       "descriptionEs": "lunes a domingo",
       "descriptionDe": "Montag bis Sonntag",
-      "descriptionIt": "dal lunedì alla domenica"
+      "descriptionIt": "dal lunedì alla domenica",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-61",
@@ -18020,7 +19388,19 @@
       "titleIt": "Nazionalità e Età",
       "descriptionEs": "Preséntate (continuación)",
       "descriptionDe": "Stellen Sie sich vor (Fortsetzung)",
-      "descriptionIt": "Presentati (continua)"
+      "descriptionIt": "Presentati (continua)",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-62",
@@ -18192,7 +19572,19 @@
       "titleIt": "Indicazioni e quotidiano",
       "descriptionEs": "Hotel, mercado, taxis.",
       "descriptionDe": "Hotel, Markt, Taxis",
-      "descriptionIt": "Hotel, mercato, taxi"
+      "descriptionIt": "Hotel, mercato, taxi",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-63",
@@ -18381,7 +19773,19 @@
       "titleIt": "Al Ristorante: Continua",
       "descriptionEs": "La cuenta, una vez más",
       "descriptionDe": "Noch einmal die Rechnung",
-      "descriptionIt": "Il conto, ancora una volta"
+      "descriptionIt": "Il conto, ancora una volta",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     },
     {
       "id": "lesson-64-bilan-final",
@@ -18398,7 +19802,19 @@
       "titleIt": "La valutazione generale A1",
       "descriptionEs": "¡La prueba final! Valida tu nivel A1 con esta importante revisión global que incluye grandes números, nacionalidades y la vida diaria.",
       "descriptionDe": "Der letzte Test! Bestätigen Sie Ihr A1-Niveau mit dieser umfassenden globalen Revision, die große Zahlen, Nationalitäten und das tägliche Leben berücksichtigt.",
-      "descriptionIt": "La prova finale! Convalida il tuo livello A1 con questa importante revisione globale che include grandi numeri, nazionalità e vita quotidiana."
+      "descriptionIt": "La prova finale! Convalida il tuo livello A1 con questa importante revisione globale che include grandi numeri, nazionalità e vita quotidiana.",
+      "part": {
+        "niveau-1": "1",
+        "niveau-2": "1",
+        "niveau-3": "1",
+        "niveau-4": "1",
+        "niveau-5": "1",
+        "niveau-6": "1",
+        "niveau-7": "1",
+        "niveau-8": "3",
+        "niveau-9": "3",
+        "niveau-10": "1"
+      }
     }
   ]
 }

@@ -111,7 +111,7 @@ export function DesktopSidebarRight({
         else estimatedMins = Math.max(1, estimatedMins);
       }
 
-      const totalParts = suggestionType === 'learn' ? getLevelSplit(modalLevel) : 1;
+      const totalParts = suggestionType === 'learn' ? getLevelSplit(modalLevel, selectedLesson.lesson) : 1;
       const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
       const completedParts = lessonPartsCompleted[partsKey] || [];
       const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
@@ -175,7 +175,7 @@ export function DesktopSidebarRight({
                     const isSelected = modalLevel === levelIndex;
                     const isCurrent = levelIndex === currentProgress;
 
-                    const partsTotal = suggestionType === 'learn' ? getLevelSplit(levelIndex) : 1;
+                    const partsTotal = suggestionType === 'learn' ? getLevelSplit(levelIndex, selectedLesson.lesson) : 1;
                     const partsKey = `${selectedLesson.lesson.id}_level-${levelIndex}`;
                     const completedSlices = lessonPartsCompleted[partsKey]?.length || 0;
 

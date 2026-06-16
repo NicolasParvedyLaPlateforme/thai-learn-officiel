@@ -80,7 +80,7 @@ export default function LearnLessonModal({
   const earnedStarsMastery = starsArrayMastery[10] || 0;
   const isCompletedMastery = isUnlockedMastery && earnedStarsMastery > 0;
 
-  const totalParts = getLevelSplit(modalLevel);
+  const totalParts = getLevelSplit(modalLevel, selectedLesson.lesson);
   const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
   const completedParts = lessonPartsCompleted[partsKey] || [];
   const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
@@ -127,7 +127,7 @@ export default function LearnLessonModal({
                   const isSelected = modalLevel === levelIndex;
                   const isCurrent = levelIndex === currentProgress;
 
-                  const partsTotal = getLevelSplit(levelIndex);
+                  const partsTotal = getLevelSplit(levelIndex, selectedLesson.lesson);
                   const partsKey = `${selectedLesson.lesson.id}_level-${levelIndex}`;
                   const completedSlices = lessonPartsCompleted[partsKey]?.length || 0;
 

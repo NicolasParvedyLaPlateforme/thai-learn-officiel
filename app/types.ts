@@ -41,6 +41,7 @@ export interface Lesson {
   words: Word[];
   phrases: Phrase[];
   isReview?: boolean;
+  part?: Record<string, string | number>;
 }
 
 export interface CourseData {
