@@ -45,6 +45,10 @@ export default function LearnLessonModal({
     }
   }, [selectedLessonProp]);
 
+  useEffect(() => {
+    setPlayFullLevel(false);
+  }, [modalLevel]);
+
   if (!selectedLesson) return null;
 
   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;

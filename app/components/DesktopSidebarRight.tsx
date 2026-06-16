@@ -76,6 +76,10 @@ export function DesktopSidebarRight({
   const [playFullLevel, setPlayFullLevel] = useState(false);
   const lessonPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
 
+  React.useEffect(() => {
+    setPlayFullLevel(false);
+  }, [modalLevel]);
+
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const levelsScrollRef = useRef<HTMLDivElement>(null);
 

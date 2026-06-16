@@ -7,6 +7,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from "../../../lib/store";
 import { getExercisesServer, getLessonData } from "../../../actions/course";
 import { Exercise, Lesson, Word } from "../../../types";
+import { getLevelSplit } from "../../../lib/levelSplits";
 import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
 import { playThaiTTS, preloadThaiVoices, preloadThaiAudio } from "../../../lib/tts";
 import { m as motion, AnimatePresence } from "motion/react";
@@ -63,6 +64,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const {
     completeLesson,
     completeLessonPart,
+    lessonPartsCompleted,
     lessonLevels,
     language,
     completedLessons,
@@ -93,6 +95,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       hideInstruction: state.hideInstruction,
       unhideInstruction: state.unhideInstruction,
       saveReviewStat: state.saveReviewStat,
+      lessonPartsCompleted: state.lessonPartsCompleted,
     }))
   );
 
@@ -202,6 +205,22 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (!lesson) {
       router.push("/learn");
       return;
+    }
+
+    // Security check for parts
+    const actualTotalParts = getLevelSplit(currentLevel, lesson);
+    const partsKey = `${lesson.id}_level-${currentLevel}`;
+    const completedParts = lessonPartsCompleted[partsKey] || [];
+    
+    if (!isDev && !lesson.isReview && actualTotalParts > 1) {
+      const isLevelFullyCompleted = savedLevel > currentLevel || completedParts.length >= actualTotalParts;
+      if (!isLevelFullyCompleted) {
+        const expectedPart = completedParts.length;
+        if (!isPart || partIndex !== expectedPart || totalParts !== actualTotalParts) {
+          router.replace(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${expectedPart}&totalParts=${actualTotalParts}`);
+          return;
+        }
+      }
     }
 
     if (
