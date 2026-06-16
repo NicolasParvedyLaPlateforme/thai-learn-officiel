@@ -70,8 +70,24 @@ export default function LearnLessonModal({
     else estimatedMins = Math.max(1, estimatedMins);
   }
 
+  const totalParts = getLevelSplit(modalLevel, selectedLesson.lesson);
+  const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
+  const completedParts = lessonPartsCompleted[partsKey] || [];
+  const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
+  const showSlices = totalParts > 1 && isLevelFullyCompleted && !playFullLevel;
+  
+  const isPlayingPart = totalParts > 1 && !playFullLevel && completedParts.length < totalParts;
+  const partIndexToPlay = isPlayingPart ? completedParts.length : null;
+
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
-  const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, !!isReviewOrBilan);
+  const { xp: expectedXp, isFirstTime } = getExpectedXp(
+    selectedLesson.lesson.id, 
+    modalLevel, 
+    !!isReviewOrBilan,
+    isPlayingPart,
+    !isPlayingPart && (modalLevel === 7 || modalLevel === 8),
+    partIndexToPlay
+  );
 
   // Mastery Logic
   const isUnlockedMastery = currentProgress >= 10;
@@ -79,12 +95,6 @@ export default function LearnLessonModal({
   const starsArrayMastery = lessonStars[selectedLesson.lesson.id] || Array(11).fill(0);
   const earnedStarsMastery = starsArrayMastery[10] || 0;
   const isCompletedMastery = isUnlockedMastery && earnedStarsMastery > 0;
-
-  const totalParts = getLevelSplit(modalLevel, selectedLesson.lesson);
-  const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
-  const completedParts = lessonPartsCompleted[partsKey] || [];
-  const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
-  const showSlices = totalParts > 1 && isLevelFullyCompleted && !playFullLevel;
 
   return (
     <Drawer.Root open={isOpen} onOpenChange={onOpenChange}>
@@ -257,7 +267,11 @@ export default function LearnLessonModal({
                   <Star size={16} className="fill-amber-500 text-amber-600" />
                   {isFirstTime ? `+${expectedXp} XP` : (
                     <>
-                      <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                      <span className="line-through text-amber-400/60 mr-1 opacity-80">+{
+                        isPlayingPart 
+                          ? (modalLevel <= 6 ? 10 : modalLevel === 7 ? 20 : modalLevel === 8 ? 30 : 50)
+                          : (modalLevel <= 6 ? 30 : modalLevel === 7 ? 50 : modalLevel === 8 ? 100 : modalLevel === 9 ? 300 : 1000)
+                      }</span>
                       <span>+{expectedXp} XP</span>
                     </>
                   )}
