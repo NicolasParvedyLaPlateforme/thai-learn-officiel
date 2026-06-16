@@ -859,6 +859,10 @@ export const useProgressStore = create<ProgressState>()(
           }
         });
         
+        const newCompletedToday = (state.completedToday || []).filter(key => {
+           return !key.includes(`${lessonId}_level-`);
+        });
+
         return {
           lessonLevels: {
             ...state.lessonLevels,
@@ -868,7 +872,8 @@ export const useProgressStore = create<ProgressState>()(
             ...state.lessonStars,
             [lessonId]: Array(10).fill(0)
           },
-          lessonPartsCompleted: newLessonPartsCompleted
+          lessonPartsCompleted: newLessonPartsCompleted,
+          completedToday: newCompletedToday
         };
       }),
       markAlphabetSeen: (letter) => set((state) => ({

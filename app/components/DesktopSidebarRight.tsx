@@ -310,8 +310,8 @@ export function DesktopSidebarRight({
                   const { getExpectedXp } = useProgressStore.getState();
                   const lessonIdForXp = suggestionType === 'speak' ? `speak_${selectedLesson.lesson.id}` : selectedLesson.lesson.id;
                   
-                  const isPlayingPart = totalParts > 1 && !playFullLevel && completedParts.length < totalParts;
-                  const partIndexToPlay = isPlayingPart ? completedParts.length : null;
+                  const isPlayingPart = totalParts > 1 && !playFullLevel;
+                  const partIndexToPlay = (isPlayingPart && completedParts.length < totalParts) ? completedParts.length : 0;
 
                   const { xp: expectedXp, isFirstTime } = getExpectedXp(
                     lessonIdForXp, 

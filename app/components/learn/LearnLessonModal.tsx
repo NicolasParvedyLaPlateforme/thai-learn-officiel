@@ -76,8 +76,8 @@ export default function LearnLessonModal({
   const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
   const showSlices = totalParts > 1 && isLevelFullyCompleted && !playFullLevel;
   
-  const isPlayingPart = totalParts > 1 && !playFullLevel && completedParts.length < totalParts;
-  const partIndexToPlay = isPlayingPart ? completedParts.length : null;
+  const isPlayingPart = totalParts > 1 && !playFullLevel;
+  const partIndexToPlay = (isPlayingPart && completedParts.length < totalParts) ? completedParts.length : 0;
 
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
   const { xp: expectedXp, isFirstTime } = getExpectedXp(
