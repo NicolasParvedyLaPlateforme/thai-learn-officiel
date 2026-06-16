@@ -163,7 +163,7 @@ interface ProgressState {
   setHasHydrated: (state: boolean) => void;
   setLanguage: (lang: AppLanguage) => void;
   autoDetectLanguage: () => void;
-  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean) => { xp: number, isFirstTime: boolean, key: string };
+  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean, partIndex?: number | null) => { xp: number, isFirstTime: boolean, key: string };
   completeLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number, isBilan?: boolean) => void;
   completeLessonPart: (lessonId: string, fallbackXp: number, playedLevel: number, partIndex: number, totalParts: number, earnedStars?: number, isBilan?: boolean) => void;
   addXp: (amount: number) => void;
@@ -530,7 +530,7 @@ export const useProgressStore = create<ProgressState>()(
           }
         }
       },
-      getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart = false, isFullLongLevel = false) => {
+      getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart = false, isFullLongLevel = false, partIndex: number | null = null) => {
         const state = get();
         const completedToday = state.completedToday || [];
         let isFirstTime = false;
@@ -543,7 +543,13 @@ export const useProgressStore = create<ProgressState>()(
            xp = isFirstTime ? 50 : 20;
         } else if (lessonId.startsWith('speak_')) {
            key = `${lessonId}_level-${levelIndex}`;
-           if (isPart) key += `_part`;
+           if (isPart) {
+              if (partIndex !== null && partIndex !== undefined) {
+                 key += `_part_${partIndex}`;
+              } else {
+                 key += `_part`;
+              }
+           }
            isFirstTime = !completedToday.includes(key);
            if (isFullLongLevel) {
               xp = isFirstTime ? 500 : 100;
@@ -560,7 +566,7 @@ export const useProgressStore = create<ProgressState>()(
         } else if (levelIndex === 10) {
            key = `learn_${lessonId}_level-10`;
            isFirstTime = !completedToday.includes(key);
-           xp = isFirstTime ? 200 : 50;
+           xp = isFirstTime ? 1000 : 200;
         } else if (isBilan) {
            key = `learn_${lessonId}_level-${levelIndex}`;
            isFirstTime = !completedToday.includes(key);
@@ -568,14 +574,34 @@ export const useProgressStore = create<ProgressState>()(
         } else {
            const type = (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) ? 'alphabet' : 'learn';
            key = `${type}_${lessonId}_level-${levelIndex}`;
-           if (isPart) key += `_part`;
+           if (isPart) {
+              if (partIndex !== null && partIndex !== undefined) {
+                 key += `_part_${partIndex}`;
+              } else {
+                 key += `_part`;
+              }
+           }
            isFirstTime = !completedToday.includes(key);
-           if (isFullLongLevel) {
-              xp = isFirstTime ? 500 : 100;
-           } else if (isPart) {
-              xp = isFirstTime ? 50 : 10;
+           if (type === 'learn') {
+              if (isPart) {
+                 if (levelIndex <= 6) xp = isFirstTime ? 10 : 5;
+                 else if (levelIndex === 7) xp = isFirstTime ? 20 : 5;
+                 else if (levelIndex === 8) xp = isFirstTime ? 30 : 5;
+                 else if (levelIndex === 9) xp = isFirstTime ? 50 : 5;
+                 else xp = isFirstTime ? 10 : 5;
+              } else {
+                 if (levelIndex <= 6) xp = isFirstTime ? 30 : 5;
+                 else if (levelIndex === 7) xp = isFirstTime ? 50 : 5;
+                 else if (levelIndex === 8) xp = isFirstTime ? 100 : 25;
+                 else if (levelIndex === 9) xp = isFirstTime ? 300 : 50;
+                 else xp = isFirstTime ? 30 : 5;
+              }
            } else {
-              xp = isFirstTime ? 20 : 5;
+              if (isPart) {
+                 xp = isFirstTime ? 10 : 5;
+              } else {
+                 xp = isFirstTime ? 30 : 5;
+              }
            }
         }
 
@@ -667,7 +693,7 @@ export const useProgressStore = create<ProgressState>()(
         const partsKey = `${lessonId}_level-${playedLevel}`;
         const currentCompletedParts = state.lessonPartsCompleted[partsKey] || [];
         
-        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, playedLevel, isBilan, true, false);
+        const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, playedLevel, isBilan, true, false, partIndex);
         const finalXp = calculatedXp || fallbackXp;
 
         set((state) => {
@@ -677,8 +703,8 @@ export const useProgressStore = create<ProgressState>()(
           }
 
           const newCompletedToday = state.completedToday || [];
-          // we use a specific key for this part today
-          const partTodayKey = `${key}_${partIndex}`;
+          // we use the key directly which now includes partIndex
+          const partTodayKey = key;
           const isPartFirstTimeToday = !newCompletedToday.includes(partTodayKey);
           const updatedCompletedToday = isPartFirstTimeToday ? [...newCompletedToday, partTodayKey] : newCompletedToday;
 

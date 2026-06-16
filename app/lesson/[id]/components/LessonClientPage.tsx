@@ -362,7 +362,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (!lesson) return;
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
       const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8));
+      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
       setEarnedXp(expected.xp);
       setIsFinished(true);
       if (isPart && partIndex !== null && totalParts !== null) {
@@ -451,7 +451,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setSelectedAnswer(null);
         } else {
           const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-          const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8));
+          const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
           setEarnedXp(expected.xp);
           setIsFinished(true);
           if (isPart && partIndex !== null && totalParts !== null) {
@@ -482,7 +482,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           } else {
             // Finished
             const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8));
+            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
             setEarnedXp(expected.xp);
             setIsFinished(true);
             if (isPart && partIndex !== null && totalParts !== null) {
