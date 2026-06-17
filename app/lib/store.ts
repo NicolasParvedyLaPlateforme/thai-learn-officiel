@@ -532,7 +532,8 @@ export const useProgressStore = create<ProgressState>()(
       },
       getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart = false, isFullLongLevel = false, partIndex: number | null = null) => {
         const state = get();
-        const completedToday = state.completedToday || [];
+        const today = getLocalDateString();
+        const completedToday = state.questsDate === today ? (state.completedToday || []) : [];
         let isFirstTime = false;
         let xp = 0;
         let key = '';
@@ -543,14 +544,17 @@ export const useProgressStore = create<ProgressState>()(
            xp = isFirstTime ? 50 : 20;
         } else if (lessonId.startsWith('speak_')) {
            key = `${lessonId}_level-${levelIndex}`;
+           const fullKey = key;
            if (isPart) {
               if (partIndex !== null && partIndex !== undefined) {
                  key += `_part_${partIndex}`;
               } else {
                  key += `_part`;
               }
+              isFirstTime = !completedToday.includes(key) && !completedToday.includes(fullKey);
+           } else {
+              isFirstTime = !completedToday.includes(key);
            }
-           isFirstTime = !completedToday.includes(key);
            if (isFullLongLevel) {
               xp = isFirstTime ? 500 : 100;
            } else if (isPart) {
@@ -574,14 +578,17 @@ export const useProgressStore = create<ProgressState>()(
         } else {
            const type = (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) ? 'alphabet' : 'learn';
            key = `${type}_${lessonId}_level-${levelIndex}`;
+           const fullKey = key;
            if (isPart) {
               if (partIndex !== null && partIndex !== undefined) {
                  key += `_part_${partIndex}`;
               } else {
                  key += `_part`;
               }
+              isFirstTime = !completedToday.includes(key) && !completedToday.includes(fullKey);
+           } else {
+              isFirstTime = !completedToday.includes(key);
            }
-           isFirstTime = !completedToday.includes(key);
            if (type === 'learn') {
               if (isPart) {
                  if (levelIndex <= 6) xp = isFirstTime ? 10 : 5;

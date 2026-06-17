@@ -132,6 +132,7 @@ export default function SyncProgress() {
               questsDate: localState.questsDate || dbState.questsDate,
               reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
               inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
+              lessonPartsCompleted: { ...(dbState.lessonPartsCompleted || {}), ...(localState.lessonPartsCompleted || {}) },
               lastMergedEmail: userEmail,
             };
 
@@ -189,6 +190,7 @@ export default function SyncProgress() {
               questsDate: localState.questsDate || dbState.questsDate,
               reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
               inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
+              lessonPartsCompleted: { ...(dbState.lessonPartsCompleted || {}), ...(localState.lessonPartsCompleted || {}) },
               lastMergedEmail: userEmail,
             };
 
@@ -236,6 +238,8 @@ export default function SyncProgress() {
         dailyQuests: state.dailyQuests,
         questsDate: state.questsDate,
         completedToday: state.completedToday,
+        inProgressLessons: state.inProgressLessons,
+        lessonPartsCompleted: state.lessonPartsCompleted,
       };
 
       const timestamp = Date.now();
@@ -274,7 +278,9 @@ export default function SyncProgress() {
     store.reviewStats,
     store.dailyQuests,
     store.questsDate,
-    store.completedToday
+    store.completedToday,
+    store.inProgressLessons,
+    store.lessonPartsCompleted
   ]);
 
   return null;
