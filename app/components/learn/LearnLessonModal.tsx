@@ -7,6 +7,7 @@ import { playThaiTTS } from '../../lib/tts';
 import IconImage from '../../components/IconImage';
 import { useProgressStore } from '../../lib/store';
 import { getLevelSplit } from '../../lib/levelSplits';
+import { LessonPathMap } from '../../components/LessonPathMap';
 
 interface LearnLessonModalProps {
   isOpen: boolean;
@@ -37,6 +38,7 @@ export default function LearnLessonModal({
 }: LearnLessonModalProps) {
   const [selectedLesson, setSelectedLesson] = useState(selectedLessonProp);
   const [playFullLevel, setPlayFullLevel] = useState(false);
+  const [manualPartIndex, setManualPartIndex] = useState<number | null>(null);
   const lessonPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
   
   useEffect(() => {
@@ -47,6 +49,7 @@ export default function LearnLessonModal({
 
   useEffect(() => {
     setPlayFullLevel(false);
+    setManualPartIndex(null);
   }, [modalLevel]);
 
   if (!selectedLesson) return null;
@@ -81,7 +84,8 @@ export default function LearnLessonModal({
   const showSlices = totalParts > 1 && isLevelFullyCompleted && !playFullLevel;
   
   const isPlayingPart = totalParts > 1 && !playFullLevel;
-  const partIndexToPlay = (isPlayingPart && completedParts.length < totalParts) ? completedParts.length : 0;
+  const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
+  const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
 
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
   const { xp: expectedXp, isFirstTime } = getExpectedXp(
@@ -90,7 +94,7 @@ export default function LearnLessonModal({
     !!isReviewOrBilan,
     isPlayingPart,
     !isPlayingPart && (modalLevel === 7 || modalLevel === 8),
-    partIndexToPlay
+    selectedPartIndex >= 0 ? selectedPartIndex : 0
   );
 
   // Mastery Logic
@@ -131,191 +135,137 @@ export default function LearnLessonModal({
                 {getLocalizedField(selectedLesson.lesson, 'description', language)}
               </p>
 
-              <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full mb-6 max-w-[16rem] mx-auto">
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((levelIndex) => {
-                  const starsArray = lessonStars[selectedLesson.lesson.id] || Array(10).fill(0);
-                  const earnedStars = starsArray[levelIndex] || 0;
-
-                  const isAccessible = levelIndex <= currentProgress;
-                  const isCompleted = levelIndex < currentProgress;
-                  const isSelected = modalLevel === levelIndex;
-                  const isCurrent = levelIndex === currentProgress;
-
-                  const partsTotal = getLevelSplit(levelIndex, selectedLesson.lesson);
-                  const partsKey = `${selectedLesson.lesson.id}_level-${levelIndex}`;
-                  const completedSlices = lessonPartsCompleted[partsKey]?.length || 0;
-
-                  let circleStyle = {};
-                  if (partsTotal > 1) {
-                    const angle = 360 / partsTotal;
-                    let stops = [];
-                    for (let i = 0; i < partsTotal; i++) {
-                      // yellow-200 / slate-100
-                      const color = i < completedSlices ? '#fef08a' : '#f1f5f9';
-                      stops.push(`${color} ${i * angle}deg ${(i + 1) * angle}deg`);
-                    }
-                    circleStyle = { background: `conic-gradient(${stops.join(', ')})` };
-                  }
-
-                  return (
-                    <button
-                      key={levelIndex}
-                      onClick={() => {
-                        if (isAccessible) {
-                          setModalLevel(levelIndex);
-                        }
-                      }}
-                      className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
-                      disabled={!isAccessible}
-                    >
-                      <div 
-                        style={circleStyle}
-                        className={`
-                        w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border-b-2 border-[#cbcbcb] overflow-hidden relative
-                        ${isSelected ? 'scale-110 ring-[2px] ring-offset-[3px] ring-yellow-500 shadow-lg z-10' : ''}
-                        ${isCompleted ? `${partsTotal > 1 ? '' : 'bg-[oklch(0.96_0.06_88.64)]'} border border-amber-500 shadow-sm text-amber-900 ` :
-                            isCurrent ? `${partsTotal > 1 ? '' : 'bg-white'} border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` :
-                              `${partsTotal > 1 ? '' : 'bg-slate-50'} border border-slate-200 text-slate-300`
-                          }
-                      `}>
-                        {partsTotal > 1 && (
-                          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
-                            {Array.from({length: partsTotal}).map((_, i) => {
-                              const angle = (i * 360) / partsTotal;
-                              return <line key={i} x1="50" y1="50" x2="50" y2="-10" stroke="white" strokeWidth="4" transform={`rotate(${angle} 50 50)`} />
-                            })}
-                          </svg>
-                        )}
-                        <div className="z-10 flex items-center justify-center pointer-events-none">
-                          {isCompleted ? (
-                          <div className="flex flex-col items-center gap-[1px]">
-                            <div className="flex gap-[1px]">
-                              {Array.from({ length: 3 }).map((_, i) => (
-                                <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-amber-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                              ))}
-                            </div>
-                            <div className="flex gap-[1px]">
-                              {Array.from({ length: 2 }).map((_, i) => (
-                                <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-amber-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                              ))}
-                            </div>
-                          </div>
-                        ) : isCurrent ? (
-                          <span className="font-extrabold text-lg">{levelIndex + 1}</span>
-                        ) : (
-                          <Lock size={16} className="stroke-[2.5]" />
-                        )}
-                        </div>
-                      </div>
-                      <span className={`text-[9px] font-black tracking-widest uppercase
-                          ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
-                        `}>
-                        {isCurrent ? (getTranslation('auto.in_progress', language)) : `NIV. ${levelIndex + 1}`}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="flex flex-col items-center gap-2 mb-6 mt-2">
-                <button
-                  onClick={() => {
-                    if (isUnlockedMastery) setModalLevel(10);
-                  }}
-                  className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
-                  disabled={!isUnlockedMastery}
-                >
-                  <div className={`
-                      w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
-                      ${isSelectedMastery ? `scale-110 ring-[4px] ring-offset-[3px] shadow-lg relative z-10 ring-amber-400/50` : ''}
-                      ${isUnlockedMastery
-                      ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-2 border-amber-600 shadow-md text-white'
-                      : 'bg-slate-50 border border-slate-200 text-slate-300'
-                    }
-                    `}>
-                    {isUnlockedMastery ? (
-                      isCompletedMastery ? (
-                        <div className="flex flex-col items-center gap-[1px]">
-                          <div className="flex gap-[1px]">
-                            {Array.from({ length: 3 }).map((_, i) => (
-                              <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStarsMastery ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
-                            ))}
-                          </div>
-                          <div className="flex gap-[1px]">
-                            {Array.from({ length: 2 }).map((_, i) => (
-                              <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStarsMastery ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
-                            ))}
-                          </div>
-                        </div>
-                      ) : (
-                        <Crown size={24} className="fill-current stroke-[2]" />
-                      )
-                    ) : (
-                      <Lock size={20} className="stroke-[2.5]" />
-                    )}
-                  </div>
-                  <span className={`text-[10px] font-black tracking-widest uppercase ${isUnlockedMastery ? 'text-amber-500' : 'text-slate-300'}`}>
-                    {getTranslation('auto.mastery', language)}
-                  </span>
-                </button>
+              <div className="w-full mb-6 relative">
+                <LessonPathMap
+                  maxLevel={10}
+                  currentProgress={currentProgress}
+                  modalLevel={modalLevel}
+                  setModalLevel={setModalLevel}
+                  earnedStarsArray={lessonStars[selectedLesson.lesson.id] || []}
+                  unitColor={selectedLesson.unitColor}
+                  unitBorder={selectedLesson.unitBorder}
+                  unitText={selectedLesson.unitText}
+                  language={language}
+                />
               </div>
             </div>
 
             <div className="px-7 pt-2 flex flex-col">
-              <div className="flex flex-col items-center gap-3 mb-8 border-b border-slate-100 pb-8 w-full">
-                <div className="flex items-center justify-center gap-3 w-full flex-wrap mb-2">
-                  <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
-                    <Clock size={16} className="text-slate-500" />
-                    {estimatedMins} min
-                  </div>
-                  {!isPlayingPart && (
-                    <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
-                      <Star size={16} className="fill-amber-500 text-amber-600" />
-                      {isFirstTime ? `+${expectedXp} XP` : (
-                        <>
-                          <span className="line-through text-amber-400/60 mr-1 opacity-80">+{
-                            modalLevel <= 6 ? 30 : modalLevel === 7 ? 50 : modalLevel === 8 ? 100 : modalLevel === 9 ? 300 : 1000
-                          }</span>
-                          <span>+{expectedXp} XP</span>
-                        </>
-                      )}
+              <div className="flex flex-col items-center mb-8 border-b border-slate-100 pb-8 w-full">
+                {totalParts > 1 && (
+                  <div className="flex flex-col items-center w-full mb-8">
+                    <h4 className="text-[11px] font-black uppercase text-slate-500 tracking-widest mb-6 text-center">
+                      CHOISISSEZ UNE PARTIE
+                    </h4>
+
+                    <div className="relative w-48 h-48 mb-6">
+                      <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-xl overflow-visible">
+                        {Array.from({ length: totalParts }).map((_, i) => {
+                          const isPartCompleted = completedParts.includes(i);
+                          const isSelected = selectedPartIndex === i;
+                          const angle = 360 / totalParts;
+                          const startAngle = i * angle - 90;
+                          const endAngle = (i + 1) * angle - 90;
+                          
+                          const x1 = 50 + 48 * Math.cos(Math.PI * startAngle / 180);
+                          const y1 = 50 + 48 * Math.sin(Math.PI * startAngle / 180);
+                          const x2 = 50 + 48 * Math.cos(Math.PI * endAngle / 180);
+                          const y2 = 50 + 48 * Math.sin(Math.PI * endAngle / 180);
+                          const largeArc = angle > 180 ? 1 : 0;
+                          
+                          const pathData = `M 50 50 L ${x1} ${y1} A 48 48 0 ${largeArc} 1 ${x2} ${y2} Z`;
+                          
+                          const midAngle = startAngle + angle / 2;
+                          const textR = 30;
+                          const tx = 50 + textR * Math.cos(Math.PI * midAngle / 180);
+                          const ty = 50 + textR * Math.sin(Math.PI * midAngle / 180);
+
+                          const baseColorClass = "fill-slate-100 text-slate-100";
+                          const colorClass = isSelected ? `${selectedLesson.unitText} fill-current` : baseColorClass;
+                          const isAccessible = isLevelFullyCompleted || i <= completedParts.length;
+
+                          return (
+                            <g 
+                              key={i} 
+                              onClick={() => { if(isAccessible) { setPlayFullLevel(false); setManualPartIndex(i); } }}
+                              className={`${isAccessible ? 'cursor-pointer hover:opacity-90' : 'opacity-50 cursor-not-allowed'} transition-opacity`}
+                              style={isSelected ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
+                            >
+                              <path d={pathData} className={`${colorClass} stroke-white stroke-[3]`} />
+                              <text x={tx} y={ty} textAnchor="middle" dominantBaseline="central" className={`text-[8px] font-black ${isSelected ? 'fill-white' : (isPartCompleted ? 'fill-white' : 'fill-slate-400')}`}>
+                                P{i + 1}
+                              </text>
+                            </g>
+                          );
+                        })}
+                        
+                        <circle cx="50" cy="50" r="18" className={`${playFullLevel ? `${selectedLesson.unitText} fill-current ring-2 ${selectedLesson.unitColor.replace('bg-', 'ring-')}` : 'fill-white'} stroke-white stroke-[3] ${isLevelFullyCompleted ? 'cursor-pointer' : 'cursor-not-allowed opacity-80'} transition-colors`} 
+                          onClick={() => { if(isLevelFullyCompleted) setPlayFullLevel(true); }}
+                        />
+                        <text x="50" y="50" textAnchor="middle" dominantBaseline="central" className={`text-[6.5px] font-black ${playFullLevel ? 'fill-white' : (isLevelFullyCompleted ? 'fill-slate-800' : 'fill-slate-400')} pointer-events-none`}>
+                          ENTIER
+                        </text>
+                      </svg>
                     </div>
-                  )}
-                </div>
 
-                {isPlayingPart && (
-                  <div className="w-full flex flex-col gap-2 max-w-sm mx-auto">
-                    {Array.from({ length: totalParts }).map((_, i) => {
-                      const isPartCompleted = completedParts.includes(i);
-                      const { xp: partXp, isFirstTime: isPartFirstTime } = getExpectedXp(
-                        selectedLesson.lesson.id, 
-                        modalLevel, 
-                        !!isReviewOrBilan,
-                        true,
-                        false,
-                        i
-                      );
-                      const basePartXp = modalLevel <= 6 ? 10 : modalLevel === 7 ? 20 : modalLevel === 8 ? 30 : 50;
-
-                      return (
-                        <div key={i} className={`flex items-center justify-between px-4 py-3 rounded-xl border transition-colors ${isPartCompleted ? 'bg-slate-50 border-slate-200' : 'bg-amber-50 border-amber-200'}`}>
-                          <span className={`text-sm font-bold ${isPartCompleted ? 'text-slate-500' : 'text-amber-800'}`}>
-                            Partie {i + 1}
-                          </span>
-                          <div className={`flex items-center gap-1.5 text-sm font-bold ${isPartCompleted ? 'text-slate-400' : 'text-amber-700'}`}>
-                            <Star size={14} className={isPartCompleted ? 'fill-slate-300 text-slate-400' : 'fill-amber-500 text-amber-600'} />
-                            {isPartFirstTime ? `+${partXp} XP` : (
-                              <>
-                                <span className="line-through opacity-60 mr-1">+{basePartXp}</span>
-                                <span>+{partXp} XP</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
+                    <button
+                      onClick={() => { if(isLevelFullyCompleted) setPlayFullLevel(true); }}
+                      disabled={!isLevelFullyCompleted}
+                      className={`px-6 py-2.5 rounded-full font-bold text-sm border-2 transition-all flex items-center gap-2 mb-6
+                        ${playFullLevel ? `${selectedLesson.unitColor} border-transparent text-white shadow-lg` : 
+                          isLevelFullyCompleted ? 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300 cursor-pointer' : 
+                          'bg-transparent border-slate-100 text-slate-600 opacity-50 cursor-not-allowed'}
+                      `}
+                    >
+                      <div className={`w-3 h-3 rounded-full ${playFullLevel ? 'bg-white' : 'bg-slate-300'}`}></div>
+                      Niveau entier
+                    </button>
+                    
+                    <div className="flex items-center justify-center gap-2 mb-2 flex-wrap">
+                      {Array.from({ length: totalParts }).map((_, i) => {
+                         const isSelected = selectedPartIndex === i;
+                         return (
+                           <button 
+                             key={i} 
+                             onClick={() => {
+                               if (isLevelFullyCompleted || i <= completedParts.length) {
+                                 setPlayFullLevel(false);
+                                 setManualPartIndex(i);
+                               }
+                             }}
+                             className={`px-3 py-1 rounded-full text-[11px] font-black tracking-wide cursor-pointer transition-colors
+                             ${isSelected ? `${selectedLesson.unitColor} text-white` : 
+                               (isLevelFullyCompleted || i <= completedParts.length) ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-slate-50 text-slate-300 cursor-not-allowed'}
+                           `}>
+                             Partie {i + 1}
+                           </button>
+                         )
+                      })}
+                    </div>
                   </div>
                 )}
+
+                <h4 className="text-[12px] font-black uppercase text-slate-400 tracking-widest mb-6 text-center">
+                  {playFullLevel ? "NIVEAU ENTIER" : totalParts > 1 ? `PARTIE ${selectedPartIndex + 1}` : "DÉTAILS"}
+                </h4>
+                
+                <div className="flex items-center justify-center gap-4 w-full">
+                  <div className="flex flex-col items-center justify-center py-4 bg-slate-50 border border-slate-100 rounded-2xl flex-1">
+                    <BookOpen size={20} className="text-slate-400 mb-2" />
+                    <span className="text-xl font-black text-slate-700">{playFullLevel ? stepsCount : Math.ceil(stepsCount/totalParts)}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1">étapes</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center py-4 bg-amber-50 border border-amber-100 rounded-2xl flex-1">
+                    <Star size={20} className="text-amber-500 mb-2" />
+                    <span className="text-xl font-black text-amber-600">+{expectedXp}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-amber-500/70 font-bold mt-1">XP</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center py-4 bg-blue-50 border border-blue-100 rounded-2xl flex-1">
+                    <Clock size={20} className="text-blue-500 mb-2" />
+                    <span className="text-xl font-black text-slate-700">{playFullLevel ? estimatedMins : Math.max(1, Math.ceil(estimatedMins/totalParts))}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1">min</span>
+                  </div>
+                </div>
               </div>
 
               <div className="mb-4">
@@ -417,54 +367,14 @@ export default function LearnLessonModal({
               </div>
             )}
             <div className="flex items-center gap-2 w-full mt-1 relative">
-              {showSlices ? (
-                <div className="flex-1 relative h-[56px] xl:h-[60px] md:h-[52px]">
-                  <div className="absolute inset-0 flex gap-1">
-                    {Array.from({ length: totalParts }).map((_, i) => {
-                      const isPartCompleted = completedParts.includes(i);
-                      const isNextToPlay = i === completedParts.length;
-                      const canPlay = i <= completedParts.length;
-                      
-                      let sliceColor = selectedLesson.unitColor;
-                      if (!isPartCompleted && !isNextToPlay) {
-                        sliceColor = `${selectedLesson.unitColor} opacity-50`;
-                      } else if (!isPartCompleted && isNextToPlay) {
-                        sliceColor = `${selectedLesson.unitColor} opacity-90`;
-                      }
-
-                      return (
-                        <Link
-                          key={i}
-                          href={canPlay ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${i}&totalParts=${totalParts}` : '#'}
-                          className={`flex-1 rounded-sm first:rounded-l-xl last:rounded-r-xl transition-all ${sliceColor} ${canPlay ? 'hover:opacity-80 active:opacity-70 cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-                        />
-                      );
-                    })}
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center font-bold text-[17px] text-white pointer-events-none drop-shadow-sm">
-                    {getTranslation('auto.start_lesson', language)}
-                  </div>
-                </div>
-              ) : (
-                <Link
-                  href={(totalParts > 1 && !playFullLevel)
-                    ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${partIndexToPlay}&totalParts=${totalParts}` 
-                    : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                  className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
-                >
-                  {getTranslation('auto.start_lesson', language)}
-                </Link>
-              )}
-              
-              {isLevelFullyCompleted && totalParts > 1 && (
-                <button 
-                  onClick={() => setPlayFullLevel(!playFullLevel)}
-                  className={`absolute -top-10 right-0 flex items-center justify-center transition-all hover:opacity-70 active:scale-95 text-slate-500`}
-                  title="Toggle mode"
-                >
-                  {playFullLevel ? <Circle size={24} /> : <PieChart size={24} />}
-                </button>
-              )}
+              <Link
+                href={(totalParts > 1 && !playFullLevel)
+                  ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${selectedPartIndex}&totalParts=${totalParts}` 
+                  : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+              >
+                {getTranslation('auto.start_lesson', language)}
+              </Link>
             </div>
           </div>
         </Drawer.Content>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import { playThaiTTS } from '../../lib/tts';
 import IconImage from '../../components/IconImage';
+import { LessonPathMap } from '../../components/LessonPathMap';
 
 interface SpeakLessonModalProps {
   isOpen: boolean;
@@ -119,65 +120,20 @@ export default function SpeakLessonModal({
                 {getLocalizedField(selectedLesson.lesson, 'description', language)}
               </p>
 
-              <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full mb-6 max-w-[16rem] mx-auto">
-                {Array.from({ length: maxLevelPerLesson }).map((_, levelIndex) => {
-                  const starsArray = lessonStars[selectedLesson.lesson.id] || [0];
-                  const earnedStars = starsArray[levelIndex] || 0;
-
-                  const isAccessible = levelIndex <= currentProgress;
-                  const isCompleted = levelIndex < currentProgress;
-                  const isSelected = modalLevel === levelIndex;
-                  const isCurrent = levelIndex === currentProgress;
-
-                  return (
-                    <button
-                      key={levelIndex}
-                      onClick={() => {
-                        if (isAccessible) {
-                          setModalLevel(levelIndex);
-                        }
-                      }}
-                      className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
-                      disabled={!isAccessible}
-                    >
-                      <div className={`
-                      w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border-b-2 border-[#cbcbcb]
-                      ${isSelected ? 'scale-110 ring-[2px] ring-offset-[3px] ring-yellow-500 shadow-lg relative z-10' : ''}
-                      ${isCompleted ? 'bg-[oklch(0.96_0.06_88.64)] border border-amber-500 shadow-sm text-amber-900 ' :
-                          isCurrent ? `bg-white border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` :
-                            'bg-slate-50 border border-slate-200 text-slate-300'
-                        }
-                    `}>
-                        {isCompleted ? (
-                          <div className="flex flex-col items-center gap-[1px]">
-                            <div className="flex gap-[1px]">
-                              {Array.from({ length: 3 }).map((_, i) => (
-                                <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-amber-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                              ))}
-                            </div>
-                            <div className="flex gap-[1px]">
-                              {Array.from({ length: 2 }).map((_, i) => (
-                                <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-amber-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                              ))}
-                            </div>
-                          </div>
-                        ) : isCurrent ? (
-                          <span className="font-extrabold text-lg">{levelIndex + 1}</span>
-                        ) : (
-                          <Lock size={16} className="stroke-[2.5]" />
-                        )}
-                      </div>
-                      <span className={`text-[9px] font-black tracking-widest uppercase
-                          ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
-                        `}>
-                        {isCurrent ? (getTranslation('auto.in_progress', language)) : `${getTranslation('auto.lvl', language)} ${levelIndex + 1}`}
-                      </span>
-                    </button>
-                  );
-                })}
+              <div className="w-full mb-6 relative">
+                <LessonPathMap
+                  maxLevel={maxLevelPerLesson}
+                  currentProgress={currentProgress}
+                  modalLevel={modalLevel}
+                  setModalLevel={setModalLevel}
+                  earnedStarsArray={lessonStars[selectedLesson.lesson.id] || []}
+                  unitColor={selectedLesson.unitColor}
+                  unitBorder={selectedLesson.unitBorder}
+                  unitText={selectedLesson.unitText}
+                  language={language}
+                />
               </div>
-
-              </div>
+            </div>
 
             <div className="px-7 pt-2 flex flex-col">
               <div className="flex items-center justify-center gap-3 mb-8 border-b border-slate-100 pb-8 w-full flex-wrap">

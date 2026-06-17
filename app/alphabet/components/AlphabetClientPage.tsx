@@ -12,6 +12,7 @@ import { playThaiTTS } from '../../lib/tts';
 import { Drawer } from 'vaul';
 import { CheckCircle, BookOpen, Star, Play, Crown, RotateCcw, Pencil, Lock, ChevronLeft, ChevronRight, Clock, Target, Users, Flame, User, Coins, Menu, Globe, X, Sparkles, Volume2 } from 'lucide-react';
 import IconImage from '../../components/IconImage';
+import { LessonPathMap } from '../../components/LessonPathMap';
 
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
 import { DesktopSidebarRight } from '../../components/DesktopSidebarRight';
@@ -810,64 +811,19 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                           Alphabet
                         </p>
 
-                        {/* Levels Grid */}
-                        <div className="grid grid-cols-4 gap-y-4 gap-x-3 w-full mb-6 max-w-[14rem] mx-auto">
-                          {[0, 1, 2, 3].map((levelIndex) => {
-                            const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
-                            const starsArray = lessonStars[selectedLesson.lesson.id] || Array(10).fill(0);
-                            const earnedStars = starsArray[levelIndex] || 0;
-                            
-                            const isAccessible = levelIndex <= currentProgress;
-                            const isCompleted = levelIndex < currentProgress;
-                            const isSelected = modalLevel === levelIndex;
-                            const isCurrent = levelIndex === currentProgress;
-                            
-                            return (
-                              <button
-                                key={levelIndex}
-                                onClick={() => {
-                                  if (isAccessible) {
-                                    setModalLevel(levelIndex);
-                                  }
-                                }}
-                                className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
-                                disabled={!isAccessible}
-                              >
-                                <div className={`
-                                  w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
-                                  ${isSelected ? `ring-4 ring-offset-2 ${selectedLesson.unitBorder.replace('border-', 'ring-')}/20` : ''}
-                                  ${isCompleted ? 'bg-[oklch(0.96_0.06_88.64)] border border-amber-500 shadow-sm text-amber-900' : 
-                                    isCurrent ? `bg-white border-[3px] ${selectedLesson.unitBorder} shadow-sm ${selectedLesson.unitText}` : 
-                                    'bg-slate-50 border border-slate-200 text-slate-300'
-                                  }
-                                `}>
-                                  {isCompleted ? (
-                                    <div className="flex flex-col items-center gap-[1px]">
-                                      <div className="flex gap-[1px]">
-                                        {Array.from({ length: 3 }).map((_, i) => (
-                                          <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                                        ))}
-                                      </div>
-                                      <div className="flex gap-[1px]">
-                                        {Array.from({ length: 2 }).map((_, i) => (
-                                          <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ) : isCurrent ? (
-                                    <span className="font-extrabold text-lg">{levelIndex + 1}</span>
-                                  ) : (
-                                    <Lock size={16} className="stroke-[2.5]" />
-                                  )}
-                                </div>
-                                <span className={`text-[9px] font-black tracking-widest uppercase
-                                  ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
-                                `}>
-                                  {isCurrent ? (getTranslation('auto.in_progress', language)) : `NIV. ${levelIndex + 1}`}
-                                </span>
-                              </button>
-                            );
-                          })}
+                        {/* Levels Map */}
+                        <div className="w-full mb-6 relative">
+                          <LessonPathMap
+                            maxLevel={3}
+                            currentProgress={lessonLevels[selectedLesson.lesson.id] || 0}
+                            modalLevel={modalLevel}
+                            setModalLevel={setModalLevel}
+                            earnedStarsArray={lessonStars[selectedLesson.lesson.id] || []}
+                            unitColor={selectedLesson.unitColor}
+                            unitBorder={selectedLesson.unitBorder}
+                            unitText={selectedLesson.unitText}
+                            language={language}
+                          />
                         </div>
                       </div>
 
