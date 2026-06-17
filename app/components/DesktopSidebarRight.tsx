@@ -327,24 +327,60 @@ export function DesktopSidebarRight({
                   );
                   
                   return (
-                    <div className="flex items-center justify-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full flex-wrap">
-                      <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
-                        <Clock size={16} className="text-slate-500" />
-                        {estimatedMins} min
-                      </div>
-                      <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
-                        <Star size={16} className="fill-amber-500 text-amber-600" />
-                        {isFirstTime ? `+${expectedXp} XP` : (
-                          <>
-                            <span className="line-through text-amber-400/60 mr-1 opacity-80">+{
-                              isPlayingPart 
-                                ? (modalLevel <= 6 ? 10 : modalLevel === 7 ? 20 : modalLevel === 8 ? 30 : 50)
-                                : (modalLevel <= 6 ? 30 : modalLevel === 7 ? 50 : modalLevel === 8 ? 100 : modalLevel === 9 ? 300 : 1000)
-                            }</span>
-                            <span>+{expectedXp} XP</span>
-                          </>
+                    <div className="flex flex-col items-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full">
+                      <div className="flex items-center justify-center gap-3 w-full flex-wrap mb-2">
+                        <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
+                          <Clock size={16} className="text-slate-500" />
+                          {estimatedMins} min
+                        </div>
+                        {!isPlayingPart && (
+                          <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
+                            <Star size={16} className="fill-amber-500 text-amber-600" />
+                            {isFirstTime ? `+${expectedXp} XP` : (
+                              <>
+                                <span className="line-through text-amber-400/60 mr-1 opacity-80">+{
+                                  modalLevel <= 6 ? 30 : modalLevel === 7 ? 50 : modalLevel === 8 ? 100 : modalLevel === 9 ? 300 : 1000
+                                }</span>
+                                <span>+{expectedXp} XP</span>
+                              </>
+                            )}
+                          </div>
                         )}
                       </div>
+
+                      {isPlayingPart && (
+                        <div className="w-full flex flex-col gap-2 max-w-sm mx-auto">
+                          {Array.from({ length: totalParts }).map((_, i) => {
+                            const isPartCompleted = completedParts.includes(i);
+                            const { xp: partXp, isFirstTime: isPartFirstTime } = getExpectedXp(
+                              lessonIdForXp, 
+                              modalLevel, 
+                              selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'),
+                              true,
+                              false,
+                              i
+                            );
+                            const basePartXp = modalLevel <= 6 ? 10 : modalLevel === 7 ? 20 : modalLevel === 8 ? 30 : 50;
+
+                            return (
+                              <div key={i} className={`flex items-center justify-between px-4 py-3 rounded-xl border transition-colors ${isPartCompleted ? 'bg-slate-50 border-slate-200' : 'bg-amber-50 border-amber-200'}`}>
+                                <span className={`text-sm font-bold ${isPartCompleted ? 'text-slate-500' : 'text-amber-800'}`}>
+                                  Partie {i + 1}
+                                </span>
+                                <div className={`flex items-center gap-1.5 text-sm font-bold ${isPartCompleted ? 'text-slate-400' : 'text-amber-700'}`}>
+                                  <Star size={14} className={isPartCompleted ? 'fill-slate-300 text-slate-400' : 'fill-amber-500 text-amber-600'} />
+                                  {isPartFirstTime ? `+${partXp} XP` : (
+                                    <>
+                                      <span className="line-through opacity-60 mr-1">+{basePartXp}</span>
+                                      <span>+{partXp} XP</span>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   );
                 })()}
