@@ -1,5 +1,6 @@
 import { m as motion } from "motion/react";
 import { ChevronLeft, Star, Clock, CheckCircle, Lock } from 'lucide-react';
+import IconImage from './IconImage';
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import { getLevelSplit } from '../lib/levelSplits';
 
@@ -41,6 +42,14 @@ export function DesktopLessonLevelsView({
     >
       {/* Header */}
       <div className={`p-8 md:p-10 ${unitColor} border-b-[6px] ${unitBorder} rounded-3xl text-white shadow-xl relative overflow-hidden`}>
+        {lesson.imageUrl && (
+          <>
+            <div className="absolute inset-0 w-full h-full opacity-60">
+              <IconImage src={lesson.imageUrl} alt="" fill className="object-cover" />
+            </div>
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+          </>
+        )}
         <div className="relative z-10 flex flex-col items-start gap-4">
           <button 
             onClick={onBack}

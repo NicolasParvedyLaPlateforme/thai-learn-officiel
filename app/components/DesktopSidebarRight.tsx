@@ -79,6 +79,7 @@ export function DesktopSidebarRight({
 
   React.useEffect(() => {
     setPlayFullLevel(false);
+    setManualPartIndex(null);
   }, [modalLevel]);
 
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
