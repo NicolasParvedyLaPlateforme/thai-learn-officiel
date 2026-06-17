@@ -102,7 +102,10 @@ export function DesktopLessonLevelsView({
           return (
             <button
               key={levelIndex}
-              onClick={() => isAccessible && setModalLevel(levelIndex)}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (isAccessible) setModalLevel(levelIndex);
+              }}
               disabled={!isAccessible}
               className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all ${
                 isSelected 
