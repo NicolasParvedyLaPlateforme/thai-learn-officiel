@@ -22,6 +22,7 @@ const MobileHeaderMenu = dynamic(() => import('../components/MobileHeaderMenu').
 import LearnMobileHeader from './learn/LearnMobileHeader';
 import LearnMobileTimeline from './learn/LearnMobileTimeline';
 import LearnDesktopTimeline from './learn/LearnDesktopTimeline';
+import { DesktopLessonLevelsView } from './DesktopLessonLevelsView';
 
 const LearnLessonModal = dynamic(() => import('./learn/LearnLessonModal'), { ssr: false });
 const LearnUnitsModal = dynamic(() => import('./learn/LearnUnitsModal'), { ssr: false });
@@ -82,7 +83,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
   const [isUnitsModalOpen, setIsUnitsModalOpen] = useState(false);
   const [showDesktopUnitsList, setShowDesktopUnitsList] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<{ lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string } | null>(null);
-  const [modalLevel, setModalLevel] = useState(0);
+  const [modalLevel, setModalLevel] = useState<number | null>(null);
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
   const [lockedReviewModalOpen, setLockedReviewModalOpen] = useState(false);
 
@@ -335,6 +336,30 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
               {(() => {
                 const unit = UNITS[activeUnitIndex];
                 const unitLessons = data.lessons.slice(unit.startIndex, unit.endIndex);
+                if (selectedLesson) {
+                   return (
+                     <DesktopLessonLevelsView
+                       lessonData={selectedLesson}
+                       unitTitle={unit ? (unit.title || unit.titleEn) : undefined}
+                       modalLevel={modalLevel}
+                       setModalLevel={(lvl) => {
+                         setModalLevel(lvl);
+                         if (lvl !== null) {
+                           localStorage.setItem(`last_level_${selectedLesson.lesson.id}`, lvl.toString());
+                         }
+                       }}
+                       onBack={() => {
+                         setSelectedLesson(null);
+                         setShowDesktopUnitsList(false);
+                       }}
+                       language={language}
+                       lessonLevels={lessonLevels}
+                       lessonStars={lessonStars}
+                       maxLevelPerLesson={10}
+                       suggestionType="learn"
+                     />
+                   );
+                }
                 return (
                   <LearnDesktopTimeline 
                     unit={unit}
@@ -386,8 +411,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
           isOpen={!!selectedLesson}
           onOpenChange={(open) => !open && setSelectedLesson(null)}
           selectedLesson={selectedLesson}
-          modalLevel={modalLevel}
-          setModalLevel={setModalLevel}
+          modalLevel={modalLevel ?? 0}
+          setModalLevel={(lvl) => setModalLevel(lvl)}
           language={language}
           lessonLevels={lessonLevels}
           lessonStars={lessonStars}

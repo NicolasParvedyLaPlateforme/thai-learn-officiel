@@ -16,6 +16,7 @@ import IconImage from '../../components/IconImage';
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
 import { DesktopSidebarRight } from '../../components/DesktopSidebarRight';
 import { MobileHeaderMenu } from '../../components/MobileHeaderMenu';
+import { DesktopLessonLevelsView } from '../../components/DesktopLessonLevelsView';
 import PWAInstallButton from '../../components/PWAInstallButton';
 import { DailyQuestsWidget } from '../../components/DailyQuestsWidget';
 import { ConversationObjectiveWidget } from '../../components/ConversationObjectiveWidget';
@@ -39,7 +40,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   const levelsScrollRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
   const [selectedLesson, setSelectedLesson] = useState<{lesson: AlphabetLessonDef, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string} | null>(null);
-  const [modalLevel, setModalLevel] = useState(0);
+  const [modalLevel, setModalLevel] = useState<number | null>(null);
   const [cols, setCols] = useState(5);
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
@@ -555,6 +556,31 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
               const completedInUnit = mounted ? unitLessons.filter(l => completedLessons.includes(l.id)).length : 0;
               const progressPercent = mounted && unitLessons.length > 0 ? (completedInUnit / unitLessons.length) * 100 : 0;
               
+              if (selectedLesson) {
+                 return (
+                   <DesktopLessonLevelsView
+                     lessonData={selectedLesson}
+                     unitTitle={mounted ? getLocalizedField(unit, 'title', language) : unit.title}
+                     modalLevel={modalLevel}
+                     setModalLevel={(lvl) => {
+                       setModalLevel(lvl);
+                       if (lvl !== null && selectedLesson?.lesson?.id) {
+                         localStorage.setItem(`last_level_${selectedLesson.lesson.id}`, lvl.toString());
+                       }
+                     }}
+                     onBack={() => {
+                       setSelectedLesson(null);
+                       setShowDesktopUnitsList(false);
+                     }}
+                     language={language}
+                     lessonLevels={lessonLevels}
+                     lessonStars={lessonStars}
+                     maxLevelPerLesson={4}
+                     suggestionType="alphabet"
+                   />
+                 );
+              }
+
               return (
                 <div key={`desktop-unit-${unit.id}`} className="flex flex-col gap-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
                   {/* Unit Hero Card */}
@@ -622,7 +648,8 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
-                                setModalLevel(Math.min(level, 3));
+                                const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                                setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                                 setShowDesktopUnitsList(false);
                               }}
                             >
@@ -656,7 +683,8 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedLesson({lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass});
-                                setModalLevel(Math.min(level, 3));
+                                const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                                setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                                 setShowDesktopUnitsList(false);
                               }}
                             >
@@ -851,7 +879,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                         let estimatedSecs = stepsCount * secsPerStep;
                         let estimatedMins = Math.max(1, Math.ceil(estimatedSecs / 60));
                         
-                        const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel, false);
+                        const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel ?? 0, false);
                         
                         return (
                           <div className="px-7 pt-2 flex flex-col">
@@ -907,7 +935,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                   <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
                       <div className="flex items-center gap-3 w-full">
                         <Link
-                          href={`/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
+                          href={`/alphabet/lesson/${selectedLesson.lesson.id}?level=${(modalLevel ?? 0) + 1}`}
                           className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
                         >
                           {getTranslation('auto.start_lesson', language)}

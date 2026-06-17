@@ -37,8 +37,8 @@ interface DesktopSidebarRightProps {
   // Modal props
   selectedLesson?: { lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string } | null;
   onCloseLesson?: () => void;
-  modalLevel?: number;
-  setModalLevel?: (level: number) => void;
+  modalLevel?: number | null;
+  setModalLevel?: (level: number | null) => void;
   lessonStars?: Record<string, number[]>;
   resetLessonLevel?: (lessonId: string) => void;
   questsCategory?: 'learn' | 'alphabet' | 'speak';
@@ -95,6 +95,25 @@ export function DesktopSidebarRight({
 
   const renderContent = () => {
     if (selectedLesson && setModalLevel && lessonStars && resetLessonLevel && onCloseLesson) {
+      if (modalLevel === null) {
+        return (
+          <motion.div
+            key="empty-lesson-view"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="w-full h-full flex flex-col items-center justify-center p-8 text-center text-slate-500 bg-slate-50/50"
+          >
+            <BookOpen size={64} className="mb-6 text-slate-300 drop-shadow-sm" />
+            <h3 className="text-xl font-bold text-slate-800 mb-3 tracking-tight">Choisissez un niveau</h3>
+            <p className="text-sm font-medium leading-relaxed">
+              Sélectionnez un niveau dans la liste pour voir son contenu, choisir une partie et commencer.
+            </p>
+          </motion.div>
+        );
+      }
+
       const wordCount = selectedLesson.lesson.words?.length || 0;
       const stepsCount = 10 + wordCount + (selectedLesson.lesson.phrases?.length || 0);
       let secsPerStep = 5;
@@ -119,8 +138,24 @@ export function DesktopSidebarRight({
       const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
       const completedParts = lessonPartsCompleted[partsKey] || [];
       const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
+      
       const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
-      const showSlices = totalParts > 1 && isLevelFullyCompleted && !playFullLevel;
+      const showSlices = totalParts > 1 && !playFullLevel;
+
+      const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
+      const selectedPartIndex = playFullLevel ? -1 : nextUncompletedPart;
+
+      const { getExpectedXp } = useProgressStore.getState();
+      const lessonIdForXp = suggestionType === 'speak' ? `speak_${selectedLesson.lesson.id}` : selectedLesson.lesson.id;
+      
+      const { xp: expectedXp, isFirstTime } = getExpectedXp(
+        lessonIdForXp, 
+        modalLevel, 
+        selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'),
+        showSlices,
+        !showSlices && (modalLevel === 7 || modalLevel === 8),
+        selectedPartIndex >= 0 ? selectedPartIndex : 0
+      );
 
       return (
         <motion.div
@@ -131,452 +166,180 @@ export function DesktopSidebarRight({
           transition={{ duration: 0.2, ease: "easeOut" }}
           className="w-full h-full flex flex-col relative"
         >
-          <div className="w-full h-full flex flex-col relative overflow-hidden">
-            {/* Removed Close Button */}
+          <div className="w-full h-full flex flex-col relative overflow-hidden bg-[#1c1c1e] text-white">
+            <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar">
+              
+              <div className="p-6 border-b border-slate-800">
+                <h3 className="text-[11px] font-black uppercase text-slate-400 tracking-widest mb-1">
+                  {suggestionType === 'alphabet' && (selectedLesson.lesson.type === 'consonant' || selectedLesson.lesson.type === 'vowel')
+                    ? `${getTranslation(selectedLesson.lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)}`
+                    : getLocalizedField(selectedLesson.lesson, 'title', language)}
+                </h3>
+                <h2 className="text-2xl font-extrabold text-white mb-2">
+                  {modalLevel === 10 ? getTranslation('auto.mastery', language) : `${getTranslation('auto.lvl', language)} ${modalLevel + 1}`}
+                </h2>
+                <p className="text-slate-400 text-sm font-medium">
+                  {getLocalizedField(selectedLesson.lesson, 'description', language)}
+                </p>
+              </div>
 
-            {/* Scrollable Content */}
-            <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar p-3">
-              {/* Image Header */}
-              <div className="w-full shrink-0 z-0">
-                <div className={`w-full h-[180px] relative border-b border-slate-100 flex items-center justify-center ${suggestionType === 'alphabet' ? selectedLesson.unitColor : (!selectedLesson.lesson.imageUrl ? 'bg-amber-50' : '')} overflow-hidden`}>
-                  {suggestionType === 'alphabet' ? (
-                    <>
-                      <div className="text-6xl text-white font-thai tracking-widest drop-shadow-sm font-bold flex items-center justify-center h-full pt-2">
-                        {selectedLesson.lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
-                      </div>
-                      <div className={`absolute -bottom-10 -right-10 opacity-20 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
-                        <BookOpen size={160} />
-                      </div>
-                    </>
-                  ) : selectedLesson.lesson.imageUrl ? (
-                    <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
-                  ) : (
-                    <BookOpen size={48} className="text-slate-200" />
-                  )}
+              {totalParts > 1 && (
+                <div className="p-6 pb-2 flex flex-col items-center">
+                  <h4 className="text-[11px] font-black uppercase text-slate-500 tracking-widest mb-6 self-start">
+                    CHOISISSEZ UNE PARTIE
+                  </h4>
+
+                  <div className="relative w-48 h-48 mb-6">
+                    <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-xl overflow-visible">
+                      {Array.from({ length: totalParts }).map((_, i) => {
+                        const isPartCompleted = completedParts.includes(i);
+                        const isSelected = selectedPartIndex === i;
+                        const angle = 360 / totalParts;
+                        const startAngle = i * angle - 90;
+                        const endAngle = (i + 1) * angle - 90;
+                        
+                        const x1 = 50 + 48 * Math.cos(Math.PI * startAngle / 180);
+                        const y1 = 50 + 48 * Math.sin(Math.PI * startAngle / 180);
+                        const x2 = 50 + 48 * Math.cos(Math.PI * endAngle / 180);
+                        const y2 = 50 + 48 * Math.sin(Math.PI * endAngle / 180);
+                        const largeArc = angle > 180 ? 1 : 0;
+                        
+                        const pathData = `M 50 50 L ${x1} ${y1} A 48 48 0 ${largeArc} 1 ${x2} ${y2} Z`;
+                        
+                        const midAngle = startAngle + angle / 2;
+                        const textR = 30;
+                        const tx = 50 + textR * Math.cos(Math.PI * midAngle / 180);
+                        const ty = 50 + textR * Math.sin(Math.PI * midAngle / 180);
+
+                        // If not selected but fully completed, use a green slice, otherwise orange, otherwise gray
+                        const baseColorClass = isPartCompleted ? "fill-emerald-500" : "fill-slate-200";
+                        const colorClass = isSelected ? "fill-emerald-500" : baseColorClass;
+                        
+                        // User can click parts up to nextUncompletedPart
+                        const isAccessible = isLevelFullyCompleted || i <= completedParts.length;
+
+                        return (
+                          <g 
+                            key={i} 
+                            onClick={() => { if(isAccessible) { setPlayFullLevel(false); } }}
+                            className={`${isAccessible ? 'cursor-pointer hover:opacity-90' : 'opacity-50 cursor-not-allowed'} transition-opacity`}
+                            style={isSelected ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
+                          >
+                            <path d={pathData} className={`${colorClass} stroke-[#1c1c1e] stroke-[3]`} />
+                            <text x={tx} y={ty} textAnchor="middle" dominantBaseline="central" className={`text-[8px] font-black ${isSelected ? 'fill-white' : (isPartCompleted ? 'fill-white' : 'fill-slate-400')}`}>
+                              P{i + 1}
+                            </text>
+                          </g>
+                        );
+                      })}
+                      
+                      <circle cx="50" cy="50" r="18" className={`${playFullLevel ? 'fill-slate-800 ring-2 ring-emerald-500' : 'fill-[#101012]'} stroke-[#1c1c1e] stroke-[3] cursor-pointer transition-colors`} 
+                        onClick={() => { if(isLevelFullyCompleted) setPlayFullLevel(true); }}
+                      />
+                      <text x="50" y="50" textAnchor="middle" dominantBaseline="central" className="text-[6.5px] font-black fill-white pointer-events-none">
+                        ENTIER
+                      </text>
+                    </svg>
+                  </div>
+
+                  <button
+                    onClick={() => { if(isLevelFullyCompleted) setPlayFullLevel(true); }}
+                    disabled={!isLevelFullyCompleted}
+                    className={`px-6 py-2.5 rounded-full font-bold text-sm border-2 transition-all flex items-center gap-2 mb-6
+                      ${playFullLevel ? 'bg-slate-800 border-white text-white shadow-lg' : 
+                        isLevelFullyCompleted ? 'bg-transparent border-slate-700 text-slate-300 hover:bg-slate-800 hover:border-slate-500 cursor-pointer' : 
+                        'bg-transparent border-slate-800 text-slate-600 opacity-50 cursor-not-allowed'}
+                    `}
+                  >
+                    <div className={`w-3 h-3 rounded-full ${playFullLevel ? 'bg-white' : 'bg-slate-600'}`}></div>
+                    Niveau entier
+                  </button>
+                  
+                  <div className="flex items-center gap-2 mb-2">
+                    {Array.from({ length: totalParts }).map((_, i) => {
+                       const isSelected = selectedPartIndex === i;
+                       return (
+                         <div key={i} className={`px-3 py-1 rounded-full text-[11px] font-black tracking-wide
+                           ${isSelected ? (completedParts.includes(i) ? 'bg-emerald-500 text-white' : 'bg-emerald-500 text-white') : 'bg-slate-800 text-slate-500'}
+                         `}>
+                           Partie {i + 1}
+                         </div>
+                       )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Stats Section */}
+              <div className="p-6 border-b border-slate-800 flex flex-col items-center">
+                <h4 className="text-[12px] font-black uppercase text-white tracking-widest mb-6 text-center">
+                  {playFullLevel ? "NIVEAU ENTIER" : totalParts > 1 ? `PARTIE ${selectedPartIndex + 1}` : "DÉTAILS"}
+                </h4>
+                
+                <div className="flex items-center justify-center gap-4 w-full">
+                  <div className="flex flex-col items-center justify-center py-4 bg-slate-800/50 rounded-2xl flex-1">
+                    <BookOpen size={20} className="text-slate-400 mb-2" />
+                    <span className="text-xl font-black text-white">{playFullLevel ? stepsCount : Math.ceil(stepsCount/totalParts)}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mt-1">étapes</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center py-4 bg-slate-800/50 rounded-2xl flex-1">
+                    <Star size={20} className="text-slate-400 mb-2" />
+                    <span className="text-xl font-black text-white">+{expectedXp}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mt-1">XP</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center py-4 bg-slate-800/50 rounded-2xl flex-1">
+                    <Clock size={20} className="text-blue-400 mb-2" />
+                    <span className="text-xl font-black text-white">{playFullLevel ? estimatedMins : Math.max(1, Math.ceil(estimatedMins/totalParts))}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mt-1">min</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="p-6 pt-5 pb-5 flex flex-col">
-                <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
-                  {suggestionType === 'alphabet' && (selectedLesson.lesson.type === 'consonant' || selectedLesson.lesson.type === 'vowel')
-                    ? `${getTranslation(selectedLesson.lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${selectedLesson.lesson.id.split('-').pop()}`
-                    : getLocalizedField(selectedLesson.lesson, 'title', language)}
-                </h3>
-
-                <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
-                  {getLocalizedField(selectedLesson.lesson, 'description', language)}
-                </p>
-
-                {/* Levels Grid */}
-                <div className="grid grid-cols-5 gap-y-4 gap-x-2 w-full mb-6 max-w-[17rem] mx-auto">
-                  {Array.from({ length: maxLevelPerLesson }).map((_, levelIndex) => {
-                    const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
-                    const starsArray = lessonStars[selectedLesson.lesson.id] || Array(maxLevelPerLesson).fill(0);
-                    const earnedStars = starsArray[levelIndex] || 0;
-
-                    const isAccessible = levelIndex <= currentProgress;
-                    const isCompleted = levelIndex < currentProgress;
-                    const isSelected = modalLevel === levelIndex;
-                    const isCurrent = levelIndex === currentProgress;
-
-                    const partsTotal = suggestionType === 'learn' ? getLevelSplit(levelIndex, selectedLesson.lesson) : 1;
-                    const partsKey = `${selectedLesson.lesson.id}_level-${levelIndex}`;
-                    const completedSlices = lessonPartsCompleted[partsKey]?.length || 0;
-
-                    let circleStyle = {};
-                    if (partsTotal > 1) {
-                      const angle = 360 / partsTotal;
-                      let stops = [];
-                      for (let i = 0; i < partsTotal; i++) {
-                        // yellow-200 / slate-100
-                        const color = i < completedSlices ? '#fef08a' : '#f1f5f9';
-                        stops.push(`${color} ${i * angle}deg ${(i + 1) * angle}deg`);
-                      }
-                      circleStyle = { background: `conic-gradient(${stops.join(', ')})` };
-                    }
-
-                    return (
-                      <button
-                        key={levelIndex}
-                        onClick={() => {
-                          if (isAccessible && suggestionType === 'learn') {
-                            setModalLevel(levelIndex);
-                          }
-                        }}
-                        className={`flex flex-col items-center gap-2 transition-transform ${suggestionType === 'learn' ? 'hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 cursor-pointer' : 'cursor-default'} disabled:cursor-not-allowed disabled:opacity-80`}
-                        disabled={!isAccessible}
-                      >
-                        <div 
-                          style={circleStyle}
-                          className={`
-                          w-11 h-11 xl:w-[3.25rem] xl:h-[3.25rem] rounded-full flex items-center justify-center transition-all duration-300 border-b-2 border-[#cbcbcb] overflow-hidden relative
-                          ${isSelected ? 'scale-110 ring-[2px] ring-offset-[3px] ring-yellow-500 shadow-lg z-10' : ''}
-                          ${isCompleted ? `${partsTotal > 1 ? '' : 'bg-[oklch(0.96_0.06_88.64)]'} border border-amber-500 shadow-sm text-amber-900 ` :
-                              isCurrent ? `${partsTotal > 1 ? '' : 'bg-white'} border-[3px] shadow-sm ${selectedLesson.unitBorder} ${selectedLesson.unitText}` :
-                                `${partsTotal > 1 ? '' : 'bg-slate-50'} border border-slate-200 text-slate-300`
-                            }
-                        `}>
-                          {partsTotal > 1 && (
-                            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
-                              {Array.from({length: partsTotal}).map((_, i) => {
-                                const angle = (i * 360) / partsTotal;
-                                return <line key={i} x1="50" y1="50" x2="50" y2="-10" stroke="white" strokeWidth="4" transform={`rotate(${angle} 50 50)`} />
-                              })}
-                            </svg>
-                          )}
-                          <div className="z-10 flex items-center justify-center pointer-events-none">
-                            {isCompleted ? (
-                            <div className="flex flex-col items-center gap-[1px]">
-                              <div className="flex gap-[1px]">
-                                {Array.from({ length: 3 }).map((_, i) => (
-                                  <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                                ))}
-                              </div>
-                              <div className="flex gap-[1px]">
-                                {Array.from({ length: 2 }).map((_, i) => (
-                                  <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-brown-600 drop-shadow-sm" : "fill-amber-500/50 stroke-amber-500/50"}`} size={11} />
-                                ))}
-                              </div>
-                            </div>
-                          ) : isCurrent ? (
-                            <span className="font-extrabold text-lg">{levelIndex + 1}</span>
-                          ) : (
-                            <Lock size={16} className="stroke-[2.5]" />
-                          )}
-                          </div>
-                        </div>
-                        <span className={`text-[9px] font-black tracking-widest uppercase
-                          ${isCurrent ? selectedLesson.unitText : isCompleted ? 'text-amber-500' : 'text-slate-300'}
-                        `}>
-                          {isCurrent ? (getTranslation('auto.in_progress', language)) : `${getTranslation('auto.lvl', language)} ${levelIndex + 1}`}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Mastery Level Button */}
-                {selectedLesson && suggestionType !== 'speak' && (() => {
-                  const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
-                  const isUnlocked = currentProgress >= 10;
-                  const isSelected = modalLevel === 10;
-                  const starsArray = lessonStars[selectedLesson.lesson.id] || Array(11).fill(0);
-                  const earnedStars = starsArray[10] || 0;
-                  const isCompleted = isUnlocked && earnedStars > 0;
-
-                  return (
-                    <div className="flex flex-col items-center gap-2 mb-6 mt-2">
-                      <button
-                        onClick={() => {
-                          if (isUnlocked) setModalLevel(10);
-                        }}
-                        className={`flex flex-col items-center gap-2 transition-transform hover:scale-105 active:scale-95 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed cursor-pointer disabled:opacity-80`}
-                        disabled={!isUnlocked}
-                      >
-                        <div className={`
-                          w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 mx-auto
-                          ${isSelected ? `scale-110 ring-[4px] ring-offset-[3px] shadow-lg relative z-10 ring-amber-400/50` : ''}
-                          ${isUnlocked
-                            ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-2 border-amber-600 shadow-md text-white'
-                            : 'bg-slate-50 border border-slate-200 text-slate-300'
-                          }
-                        `}>
-                          {isUnlocked ? (
-                            isCompleted ? (
-                              <div className="flex flex-col items-center gap-[1px]">
-                                <div className="flex gap-[1px]">
-                                  {Array.from({ length: 3 }).map((_, i) => (
-                                    <Star key={`top-${i}`} className={`stroke-[1.5] ${i < earnedStars ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
-                                  ))}
-                                </div>
-                                <div className="flex gap-[1px]">
-                                  {Array.from({ length: 2 }).map((_, i) => (
-                                    <Star key={`bottom-${i}`} className={`stroke-[1.5] ${i + 3 < earnedStars ? "fill-yellow-300 stroke-amber-700 drop-shadow-sm" : "fill-white/30 stroke-white/30"}`} size={12} />
-                                  ))}
-                                </div>
-                              </div>
-                            ) : (
-                              <Crown size={24} className="fill-current stroke-[2]" />
-                            )
-                          ) : (
-                            <Lock size={20} className="stroke-[2.5]" />
-                          )}
-                        </div>
-                        <span className={`text-[10px] font-black tracking-widest uppercase ${isUnlocked ? 'text-amber-500' : 'text-slate-300'}`}>
-                          {getTranslation('auto.mastery', language)}
-                        </span>
-                      </button>
-                    </div>
-                  );
-                })()}
-
-                {(() => {
-                  const { getExpectedXp } = useProgressStore.getState();
-                  const lessonIdForXp = suggestionType === 'speak' ? `speak_${selectedLesson.lesson.id}` : selectedLesson.lesson.id;
-                  
-                  const isPlayingPart = totalParts > 1 && !playFullLevel;
-                  const partIndexToPlay = (isPlayingPart && completedParts.length < totalParts) ? completedParts.length : 0;
-
-                  const { xp: expectedXp, isFirstTime } = getExpectedXp(
-                    lessonIdForXp, 
-                    modalLevel, 
-                    selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'),
-                    isPlayingPart,
-                    !isPlayingPart && (modalLevel === 7 || modalLevel === 8),
-                    partIndexToPlay
-                  );
-                  
-                  return (
-                    <div className="flex flex-col items-center gap-3 mb-6 border-b border-slate-100 pb-6 w-full">
-                      <div className="flex items-center justify-center gap-3 w-full flex-wrap mb-2">
-                        <div className="flex items-center gap-2 px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-600 text-sm font-semibold whitespace-nowrap shadow-sm bg-white">
-                          <Clock size={16} className="text-slate-500" />
-                          {estimatedMins} min
-                        </div>
-                        {!isPlayingPart && (
-                          <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
-                            <Star size={16} className="fill-amber-500 text-amber-600" />
-                            {isFirstTime ? `+${expectedXp} XP` : (
-                              <>
-                                <span className="line-through text-amber-400/60 mr-1 opacity-80">+{
-                                  modalLevel <= 6 ? 30 : modalLevel === 7 ? 50 : modalLevel === 8 ? 100 : modalLevel === 9 ? 300 : 1000
-                                }</span>
-                                <span>+{expectedXp} XP</span>
-                              </>
-                            )}
-                          </div>
-                        )}
-                      </div>
-
-                      {isPlayingPart && (
-                        <div className="w-full flex flex-col gap-2 max-w-sm mx-auto">
-                          {Array.from({ length: totalParts }).map((_, i) => {
-                            const isPartCompleted = completedParts.includes(i);
-                            const { xp: partXp, isFirstTime: isPartFirstTime } = getExpectedXp(
-                              lessonIdForXp, 
-                              modalLevel, 
-                              selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan'),
-                              true,
-                              false,
-                              i
-                            );
-                            const basePartXp = modalLevel <= 6 ? 10 : modalLevel === 7 ? 20 : modalLevel === 8 ? 30 : 50;
-
-                            return (
-                              <div key={i} className={`flex items-center justify-between px-4 py-3 rounded-xl border transition-colors ${isPartCompleted ? 'bg-slate-50 border-slate-200' : 'bg-amber-50 border-amber-200'}`}>
-                                <span className={`text-sm font-bold ${isPartCompleted ? 'text-slate-500' : 'text-amber-800'}`}>
-                                  Partie {i + 1}
-                                </span>
-                                <div className={`flex items-center gap-1.5 text-sm font-bold ${isPartCompleted ? 'text-slate-400' : 'text-amber-700'}`}>
-                                  <Star size={14} className={isPartCompleted ? 'fill-slate-300 text-slate-400' : 'fill-amber-500 text-amber-600'} />
-                                  {isPartFirstTime ? `+${partXp} XP` : (
-                                    <>
-                                      <span className="line-through opacity-60 mr-1">+{basePartXp}</span>
-                                      <span>+{partXp} XP</span>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })()}
-
-                {/* Vocab/Letters preview or Bilan Stats */}
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                      {selectedLesson.lesson.isReview || modalLevel === 10
-                        ? (modalLevel === 10
-                          ? (getTranslation('auto.stats_mastery', language))
-                          : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
-                        : suggestionType === 'alphabet'
-                          ? (`${getTranslation('auto.letters', language)} (${selectedLesson.lesson.items?.length}) :`)
-                          : suggestionType === 'speak'
-                            ? (modalLevel === 1 ? getTranslation('auto.conversation_success_50', language) : getTranslation('auto.pronunciation_success_50', language))
-                            : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
-                      }
-                    </h4>
-                    {!selectedLesson.lesson.isReview && modalLevel !== 10 && suggestionType !== 'speak' && (
-                      <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
-                    )}
-                  </div>
-
-                  {selectedLesson.lesson.isReview || modalLevel === 10 ? (
-                    <div className="flex flex-col gap-3">
-                      {(() => {
-                        const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
-                        if (stats?.bestTime !== undefined && stats.bestTime !== null) {
-                          const m = Math.floor(stats.bestTime / 60);
-                          const s = stats.bestTime % 60;
-                          return (
-                            <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-200 shadow-sm">
-                              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                                <Clock size={20} className="stroke-[2.5]" />
-                              </div>
-                              <div className="flex flex-col">
-                                <span className="text-emerald-800 font-bold text-[15px]">
-                                  {getTranslation('auto.best_time', language)}
-                                </span>
-                                <span className="text-emerald-600 font-medium text-sm">
-                                  {m}min {s}s
-                                </span>
-                              </div>
-                            </div>
-                          );
-                        } else if (stats?.maxPercentage !== undefined && stats.maxPercentage !== null) {
-                          return (
-                            <div className="flex items-center gap-3 p-4 bg-rose-50 rounded-xl border border-rose-200 shadow-sm">
-                              <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
-                              </div>
-                              <div className="flex flex-col">
-                                <span className="text-rose-800 font-bold text-[15px]">
-                                  {getTranslation('auto.best_survival', language)}
-                                </span>
-                                <span className="text-rose-600 font-medium text-sm">
-                                  {stats.maxPercentage}%
-                                </span>
-                              </div>
-                            </div>
-                          );
-                        } else {
-                          return (
-                            <div className="flex items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200 text-slate-400 text-sm font-medium">
-                              {getTranslation('auto.not_completed_yet', language)}
-                            </div>
-                          );
-                        }
-                      })()}
-                    </div>
-                  ) : (
-                    <div className="flex flex-wrap gap-2.5 pb-2">
-                      {suggestionType === 'alphabet' ? (
+              {/* Content Preview */}
+              <div className="p-6">
+                <h4 className="text-[11px] font-black uppercase text-slate-500 tracking-widest mb-4">
+                  CONTENU
+                </h4>
+                <div className="flex flex-wrap gap-x-4 gap-y-3">
+                  {suggestionType === 'alphabet' ? (
                         selectedLesson.lesson.items?.slice(0, 10).map((i: any) => (
-                          <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
-                            <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] font-thai transition-colors`}>{formatCombiningChar(i.letter)}</span>
-                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({i.romanization})</span>
-                          </button>
+                          <span key={i.letter} className={`text-white text-lg font-thai font-bold`}>{formatCombiningChar(i.letter)}</span>
                         ))
                       ) : suggestionType === 'speak' ? (
-                        <div className="flex flex-col gap-2 w-full">
-                          {selectedLesson.lesson.phrases?.map((p: any) => (
-                            <button onClick={() => playThaiTTS(p.th)} key={p.id} className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-3 flex flex-col items-start gap-1 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95 group`}>
-                              <span className={`${selectedLesson.unitText} group-hover:text-white text-[15px] transition-colors font-bold text-left`}>{p.th}</span>
-                              <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors text-left">{getLocalizedField(p, '', language)}</span>
-                            </button>
-                          ))}
-                        </div>
-                      ) : (
-                        selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').map((w: any) => (
-                          <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm hover:${selectedLesson.unitBorder} ${selectedLesson.unitHover} transition-colors cursor-pointer active:scale-95`}>
-                            <span className={`${selectedLesson.unitText} group-hover:text-white text-[17px] transition-colors`}>{w.th}</span>
-                            <span className="text-slate-500 group-hover:text-white/90 text-[13px] font-medium transition-colors">({getLocalizedField(w, '', language)})</span>
-                          </button>
+                        selectedLesson.lesson.phrases?.slice(0, 5).map((p: any) => (
+                          <span key={p.id} className={`text-white text-sm font-bold`}>{p.th}</span>
                         ))
-                      )}
-                      {suggestionType === 'alphabet' && selectedLesson.lesson.items && selectedLesson.lesson.items.length > 10 && (
-                        <div className="shrink-0 border border-dashed border-slate-300 text-slate-400 rounded-[2rem] px-4 py-2 flex items-center justify-center font-medium text-[13px]">
-                          +{selectedLesson.lesson.items.length - 10} {getTranslation('auto.others', language)}
-                        </div>
-                      )}
-                    </div>
+                      ) : (
+                        selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').slice(0, 12).map((w: any) => (
+                          <span key={w.id} className={`text-white text-lg font-bold font-thai`}>{w.th}</span>
+                        ))
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Sticky Actions Footer */}
-            <div className="shrink-0 p-6 pt-4 bg-white/95 backdrop-blur z-10 flex flex-col gap-3 pb-6 border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.02)]">
-              {selectedLesson.isCompleted && suggestionType !== 'speak' && (
-                <div className="flex gap-3 mb-1">
-                  {suggestionType !== 'alphabet' && (
-                    <Link
-                      href={`/writing?lessonId=${selectedLesson.lesson.id}`}
-                      className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors"
-                    >
-                      <Pencil size={16} className="mr-2" />
-                      {getTranslation('auto.writing', language)}
-                    </Link>
-                  )}
-                  <button
-                    onClick={() => {
-                      resetLessonLevel(selectedLesson.lesson.id);
-                      setModalLevel(0);
-                    }}
-                    className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
-                  >
-                    <RotateCcw size={16} className="mr-2" />
-                    {getTranslation('auto.reset', language)}
-                  </button>
-                </div>
-              )}
-              {isBrave && suggestionType === 'speak' ? (
-                <button
-                  disabled
-                  className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
-                >
-                  {getTranslation('auto.unavailable_on_brave', language)}
-                </button>
-              ) : (
-                <div className="flex items-center gap-2 w-full mt-1 relative">
-                  {showSlices ? (
-                    <div className="flex-1 relative h-[56px] xl:h-[60px] md:h-[52px]">
-                      <div className="absolute inset-0 flex gap-1">
-                        {Array.from({ length: totalParts }).map((_, i) => {
-                          const isPartCompleted = completedParts.includes(i);
-                          const isNextToPlay = !isLevelFullyCompleted && i === completedParts.length;
-                          const canPlay = isLevelFullyCompleted || i <= completedParts.length;
-                          
-                          let sliceColor = selectedLesson.unitColor;
-                          if (!isPartCompleted && !isNextToPlay) {
-                            sliceColor = `${selectedLesson.unitColor} opacity-50`;
-                          } else if (!isPartCompleted && isNextToPlay) {
-                            sliceColor = `${selectedLesson.unitColor} opacity-90`;
-                          }
+            <div className="shrink-0 p-6 pt-4 bg-[#1c1c1e] border-t border-slate-800 z-10 flex flex-col gap-3">
+              <div className="flex items-center gap-2 w-full mt-1 relative">
+                {(() => {
+                  const href = suggestionType === 'alphabet' 
+                          ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` 
+                          : suggestionType === 'speak' 
+                            ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` 
+                            : (totalParts > 1 && !playFullLevel) 
+                              ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${selectedPartIndex}&totalParts=${totalParts}` 
+                              : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`;
 
-                          const href = suggestionType === 'alphabet' 
-                            ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` 
-                            : suggestionType === 'speak' 
-                              ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` 
-                              : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${i}&totalParts=${totalParts}`;
-
-                          return (
-                            <Link
-                              key={i}
-                              href={canPlay ? href : '#'}
-                              className={`flex-1 rounded-sm first:rounded-l-xl last:rounded-r-xl transition-all ${sliceColor} ${canPlay ? 'hover:opacity-80 active:opacity-70 cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
-                            />
-                          );
-                        })}
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center font-bold text-[17px] text-white pointer-events-none drop-shadow-sm">
-                        {getTranslation('auto.start_lesson', language)}
-                      </div>
-                    </div>
-                  ) : (
+                  return (
                     <Link
-                      href={suggestionType === 'alphabet' ? `/alphabet/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : suggestionType === 'speak' ? `/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}` : (totalParts > 1 && completedParts.length < totalParts && !playFullLevel) ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${completedParts.length}&totalParts=${totalParts}` : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-                      className={`flex-1 py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                      href={href}
+                      className={`flex-1 py-4 rounded-xl font-bold text-[17px] text-white shadow-lg flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
                     >
+                      <Play size={20} className="mr-2 fill-current" />
                       {getTranslation('auto.start_lesson', language)}
                     </Link>
-                  )}
-                  
-                  {isLevelFullyCompleted && totalParts > 1 && (
-                    <button 
-                      onClick={() => setPlayFullLevel(!playFullLevel)}
-                      className={`absolute -top-10 right-0 flex items-center justify-center transition-all hover:opacity-70 active:scale-95 text-slate-500`}
-                      title="Toggle mode"
-                    >
-                      {playFullLevel ? <Circle size={24} /> : <PieChart size={24} />}
-                    </button>
-                  )}
-                </div>
-              )}
+                  )
+                })()}
+              </div>
             </div>
           </div>
         </motion.div>

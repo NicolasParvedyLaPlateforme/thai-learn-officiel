@@ -15,7 +15,7 @@ interface LearnDesktopTimelineProps {
   handleUnitSelect: (index: number) => void;
   setShowDesktopUnitsList: (open: boolean) => void;
   setSelectedLesson: (data: any) => void;
-  setModalLevel: (level: number) => void;
+  setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
 }
 
@@ -121,7 +121,8 @@ export default function LearnDesktopTimeline({
                     return;
                   }
                   setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(Math.min(level, 9));
+                  const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                  setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                   setShowDesktopUnitsList(false);
                 }}
               >
@@ -147,7 +148,8 @@ export default function LearnDesktopTimeline({
                     return;
                   }
                   setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(Math.min(level, 9));
+                  const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                  setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                   setShowDesktopUnitsList(false);
                 }}
               >
