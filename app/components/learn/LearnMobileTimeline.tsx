@@ -17,7 +17,7 @@ interface LearnMobileTimelineProps {
   setIsUnitsModalOpen: (open: boolean) => void;
   setIsQuestsModalOpen: (open: boolean) => void;
   setSelectedLesson: (data: any) => void;
-  setModalLevel: (level: number) => void;
+  setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
 }
 
@@ -181,7 +181,7 @@ export default function LearnMobileTimeline({
                       return;
                     }
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(Math.min(level, 9));
+                    setModalLevel(null);
                   }}
                 >
                   <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
@@ -213,7 +213,7 @@ export default function LearnMobileTimeline({
                       return;
                     }
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(Math.min(level, 9));
+                    setModalLevel(null);
                   }}
                 >
                   {isMaxLevel ? (

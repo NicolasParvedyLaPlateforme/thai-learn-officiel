@@ -116,39 +116,6 @@ export default function LearnLessonModal({
           </div>
           
           <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar pt-6">
-            <div className="w-full shrink-0 z-0">
-              <div className={`w-full h-[120px] bg-amber-50 flex items-center justify-center relative overflow-hidden`}>
-                {selectedLesson.lesson.imageUrl ? (
-                  <IconImage src={selectedLesson.lesson.imageUrl} alt="" fill className="object-cover" />
-                ) : (
-                  <BookOpen size={48} className="text-slate-200" />
-                )}
-              </div>
-            </div>
-
-            <div className="p-6 pt-5 pb-2 text-center flex flex-col items-center">
-              <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
-                {getLocalizedField(selectedLesson.lesson, 'title', language)}
-              </h3>
-
-              <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
-                {getLocalizedField(selectedLesson.lesson, 'description', language)}
-              </p>
-
-              <div className="w-full mb-6 relative">
-                <LessonPathMap
-                  maxLevel={10}
-                  currentProgress={currentProgress}
-                  modalLevel={modalLevel}
-                  setModalLevel={setModalLevel}
-                  earnedStarsArray={lessonStars[selectedLesson.lesson.id] || []}
-                  unitColor={selectedLesson.unitColor}
-                  unitBorder={selectedLesson.unitBorder}
-                  unitText={selectedLesson.unitText}
-                  language={language}
-                />
-              </div>
-            </div>
 
             <div className="px-7 pt-2 flex flex-col">
               <div className="flex flex-col items-center mb-8 border-b border-slate-100 pb-8 w-full">

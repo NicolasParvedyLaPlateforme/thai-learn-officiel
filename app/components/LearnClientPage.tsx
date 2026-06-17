@@ -215,6 +215,34 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       ) : (() => {
         const unit = UNITS[activeUnitIndex];
         const unitLessons = data.lessons.slice(unit.startIndex, unit.endIndex);
+        
+        if (selectedLesson) {
+          return (
+            <div className="md:hidden flex flex-col w-full px-4 mt-2 pb-32">
+              <DesktopLessonLevelsView
+                lessonData={selectedLesson}
+                unitTitle={unit ? (unit.title || unit.titleEn) : undefined}
+                modalLevel={modalLevel}
+                setModalLevel={(lvl) => {
+                  setModalLevel(lvl);
+                  if (lvl !== null) {
+                    localStorage.setItem(`last_level_${selectedLesson.lesson.id}`, lvl.toString());
+                  }
+                }}
+                onBack={() => {
+                  setSelectedLesson(null);
+                  setModalLevel(null);
+                }}
+                language={language}
+                lessonLevels={lessonLevels}
+                lessonStars={lessonStars}
+                maxLevelPerLesson={10}
+                suggestionType="learn"
+              />
+            </div>
+          );
+        }
+
         return (
           <LearnMobileTimeline 
             unit={unit}
@@ -408,8 +436,10 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       {/* Selected Lesson Modal */}
       {mounted && windowWidth < 1280 && (
         <LearnLessonModal 
-          isOpen={!!selectedLesson}
-          onOpenChange={(open) => !open && setSelectedLesson(null)}
+          isOpen={!!selectedLesson && modalLevel !== null}
+          onOpenChange={(open) => {
+            if (!open) setModalLevel(null);
+          }}
           selectedLesson={selectedLesson}
           modalLevel={modalLevel ?? 0}
           setModalLevel={(lvl) => setModalLevel(lvl)}
