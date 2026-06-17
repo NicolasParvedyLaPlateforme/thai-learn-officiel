@@ -213,8 +213,8 @@ export function DesktopSidebarRight({
                         const ty = 50 + textR * Math.sin(Math.PI * midAngle / 180);
 
                         // If not selected but fully completed, use a green slice, otherwise orange, otherwise gray
-                        const baseColorClass = isPartCompleted ? "fill-emerald-500" : "fill-slate-100";
-                        const colorClass = isSelected ? "fill-emerald-500" : baseColorClass;
+                        const baseColorClass = "fill-slate-100 text-slate-100";
+                        const colorClass = isSelected ? `${selectedLesson.unitText} fill-current` : baseColorClass;
                         
                         // User can click parts up to nextUncompletedPart
                         const isAccessible = isLevelFullyCompleted || i <= completedParts.length;
@@ -234,10 +234,10 @@ export function DesktopSidebarRight({
                         );
                       })}
                       
-                      <circle cx="50" cy="50" r="18" className={`${playFullLevel ? 'fill-slate-800 ring-2 ring-emerald-500' : 'fill-white'} stroke-white stroke-[3] cursor-pointer transition-colors`} 
+                      <circle cx="50" cy="50" r="18" className={`${playFullLevel ? `${selectedLesson.unitText} fill-current ring-2 ${selectedLesson.unitColor.replace('bg-', 'ring-')}` : 'fill-white'} stroke-white stroke-[3] ${isLevelFullyCompleted ? 'cursor-pointer' : 'cursor-not-allowed opacity-80'} transition-colors`} 
                         onClick={() => { if(isLevelFullyCompleted) setPlayFullLevel(true); }}
                       />
-                      <text x="50" y="50" textAnchor="middle" dominantBaseline="central" className={`text-[6.5px] font-black ${playFullLevel ? 'fill-white' : 'fill-slate-800'} pointer-events-none`}>
+                      <text x="50" y="50" textAnchor="middle" dominantBaseline="central" className={`text-[6.5px] font-black ${playFullLevel ? 'fill-white' : (isLevelFullyCompleted ? 'fill-slate-800' : 'fill-slate-400')} pointer-events-none`}>
                         ENTIER
                       </text>
                     </svg>
@@ -247,7 +247,7 @@ export function DesktopSidebarRight({
                     onClick={() => { if(isLevelFullyCompleted) setPlayFullLevel(true); }}
                     disabled={!isLevelFullyCompleted}
                     className={`px-6 py-2.5 rounded-full font-bold text-sm border-2 transition-all flex items-center gap-2 mb-6
-                      ${playFullLevel ? 'bg-slate-800 border-white text-white shadow-lg' : 
+                      ${playFullLevel ? `${selectedLesson.unitColor} border-transparent text-white shadow-lg` : 
                         isLevelFullyCompleted ? 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300 cursor-pointer' : 
                         'bg-transparent border-slate-100 text-slate-600 opacity-50 cursor-not-allowed'}
                     `}
@@ -269,7 +269,7 @@ export function DesktopSidebarRight({
                              }
                            }}
                            className={`px-3 py-1 rounded-full text-[11px] font-black tracking-wide cursor-pointer transition-colors
-                           ${isSelected ? 'bg-emerald-500 text-white' : 
+                           ${isSelected ? `${selectedLesson.unitColor} text-white` : 
                              (isLevelFullyCompleted || i <= completedParts.length) ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-slate-50 text-slate-300 cursor-not-allowed'}
                          `}>
                            Partie {i + 1}
@@ -305,30 +305,10 @@ export function DesktopSidebarRight({
                 </div>
               </div>
 
-              {/* Content Preview */}
-              <div className="p-6">
-                <h4 className="text-[11px] font-black uppercase text-slate-500 tracking-widest mb-4">
-                  CONTENU
-                </h4>
-                <div className="flex flex-wrap gap-x-4 gap-y-3">
-                  {suggestionType === 'alphabet' ? (
-                        selectedLesson.lesson.items?.slice(0, 10).map((i: any) => (
-                          <span key={i.letter} className={`text-slate-700 text-lg font-thai font-bold`}>{formatCombiningChar(i.letter)}</span>
-                        ))
-                      ) : suggestionType === 'speak' ? (
-                        selectedLesson.lesson.phrases?.slice(0, 5).map((p: any) => (
-                          <span key={p.id} className={`text-slate-700 text-sm font-bold`}>{p.th}</span>
-                        ))
-                      ) : (
-                        selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').slice(0, 12).map((w: any) => (
-                          <span key={w.id} className={`text-slate-700 text-lg font-bold font-thai`}>{w.th}</span>
-                        ))
-                  )}
-                </div>
-              </div>
+              
             </div>
 
-            <div className="shrink-0 p-6 pt-4 bg-[#1c1c1e] border-t border-slate-100 z-10 flex flex-col gap-3">
+            <div className="shrink-0 p-6 pt-4 bg-white border-t border-slate-100 z-10 flex flex-col gap-3">
               <div className="flex items-center gap-2 w-full mt-1 relative">
                 {(() => {
                   const href = suggestionType === 'alphabet' 
