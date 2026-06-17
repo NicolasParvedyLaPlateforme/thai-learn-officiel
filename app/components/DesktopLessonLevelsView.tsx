@@ -40,6 +40,14 @@ export function DesktopLessonLevelsView({
       exit={{ opacity: 0, y: 20 }}
       className="flex flex-col gap-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300"
     >
+      {/* Mobile Fixed Back Button */}
+      <button 
+        onClick={onBack}
+        className="md:hidden fixed left-2 top-1/2 -translate-y-1/2 z-50 p-3 bg-white text-slate-800 rounded-full shadow-2xl border-2 border-slate-200 active:scale-90 transition-transform opacity-90 hover:opacity-100"
+      >
+        <ChevronLeft size={24} className="stroke-[3]" />
+      </button>
+
       {/* Header */}
       <div className={`p-8 md:p-10 ${unitColor} border-b-[6px] ${unitBorder} rounded-3xl text-white shadow-xl relative overflow-hidden`}>
         {lesson.imageUrl && (

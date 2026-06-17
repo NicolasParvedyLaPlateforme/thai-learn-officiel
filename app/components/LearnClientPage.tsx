@@ -159,6 +159,27 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
         setTimeout(() => {
           try {
             const baseId = hash.substring(1).replace('lesson-', '');
+            
+            // Auto open the map for this lesson
+            const foundLesson = data.lessons.find(l => l.id === baseId);
+            if (foundLesson) {
+              const isCompleted = completedLessons.includes(baseId);
+              const unitIndex = UNITS.findIndex(u => data.lessons.findIndex(l => l.id === baseId) >= u.startIndex && data.lessons.findIndex(l => l.id === baseId) < u.endIndex);
+              
+              if (unitIndex !== -1) {
+                const unit = UNITS[unitIndex];
+                setSelectedLesson({
+                  lesson: foundLesson,
+                  isCompleted,
+                  unitColor: unit.colorClass,
+                  unitBorder: unit.borderClass,
+                  unitText: unit.textClass,
+                  unitHover: unit.hoverClass
+                });
+                setActiveUnitIndex(unitIndex);
+              }
+            }
+
             const isDesktop = window.innerWidth >= 768;
             const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
 
@@ -177,7 +198,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
         }, 100);
       }
     }
-  }, [mounted]);
+  }, [mounted, data.lessons, completedLessons, UNITS]);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">

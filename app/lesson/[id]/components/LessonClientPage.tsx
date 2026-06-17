@@ -203,7 +203,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (!_hasHydrated) return;
 
     if (!lesson) {
-      router.push("/learn");
+      router.push(`/learn#lesson-${lesson.id}`);
       return;
     }
 
