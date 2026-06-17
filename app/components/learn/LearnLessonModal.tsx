@@ -422,8 +422,8 @@ export default function LearnLessonModal({
                   <div className="absolute inset-0 flex gap-1">
                     {Array.from({ length: totalParts }).map((_, i) => {
                       const isPartCompleted = completedParts.includes(i);
-                      const isNextToPlay = !isLevelFullyCompleted && i === completedParts.length;
-                      const canPlay = isLevelFullyCompleted || i <= completedParts.length;
+                      const isNextToPlay = i === completedParts.length;
+                      const canPlay = i <= completedParts.length;
                       
                       let sliceColor = selectedLesson.unitColor;
                       if (!isPartCompleted && !isNextToPlay) {

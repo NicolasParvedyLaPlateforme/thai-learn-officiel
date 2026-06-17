@@ -213,13 +213,11 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     const completedParts = lessonPartsCompleted[partsKey] || [];
     
     if (!isDev && !lesson.isReview && actualTotalParts > 1) {
-      const isLevelFullyCompleted = savedLevel > currentLevel || completedParts.length >= actualTotalParts;
-      if (!isLevelFullyCompleted) {
-        const expectedPart = completedParts.length;
-        if (partIndex !== null && partIndex > expectedPart) {
-          router.replace(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${expectedPart}&totalParts=${actualTotalParts}`);
-          return;
-        }
+      const expectedPart = completedParts.length;
+      if (partIndex !== null && partIndex > expectedPart) {
+        console.warn("Security redirect triggered:", { partIndex, expectedPart, totalParts, actualTotalParts });
+        router.replace(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${expectedPart}&totalParts=${actualTotalParts}`);
+        return;
       }
     }
 
