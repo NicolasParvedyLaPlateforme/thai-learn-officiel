@@ -45,7 +45,7 @@ export function DesktopLessonLevelsView({
         {lesson.imageUrl && (
           <>
             <div className="absolute inset-0 w-full h-full opacity-60">
-              <IconImage src={lesson.imageUrl} alt="" fill className="object-cover" />
+              <IconImage src={lesson.imageUrl} alt="" fill className="object-cover" priority unoptimized />
             </div>
             <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
           </>
@@ -72,7 +72,7 @@ export function DesktopLessonLevelsView({
                 : getLocalizedField(lesson, 'title', language)}
             </h2>
             <p className="text-white/90 font-medium text-lg drop-shadow">
-              {getTranslation('auto.level_selection_subtitle', language) || 'Sélectionnez un niveau pour voir ses détails et choisir votre partie.'}
+              {getLocalizedField(lesson, 'description', language) || 'Sélectionnez un niveau pour voir ses détails et choisir votre partie.'}
             </p>
           </div>
         </div>

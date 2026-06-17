@@ -216,7 +216,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       const isLevelFullyCompleted = savedLevel > currentLevel || completedParts.length >= actualTotalParts;
       if (!isLevelFullyCompleted) {
         const expectedPart = completedParts.length;
-        if (!isPart || partIndex > expectedPart || totalParts !== actualTotalParts) {
+        if (partIndex !== null && partIndex > expectedPart) {
           router.replace(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${expectedPart}&totalParts=${actualTotalParts}`);
           return;
         }
