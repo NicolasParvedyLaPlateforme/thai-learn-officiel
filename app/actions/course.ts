@@ -44,6 +44,7 @@ export async function getLightweightLessons() {
     isReview: l.isReview,
     imageUrl: (l as any).imageUrl,
     words: l.words || [],
+    phrases: l.phrases || [],
     part: l.part
   }));
 }

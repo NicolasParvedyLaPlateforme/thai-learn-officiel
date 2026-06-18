@@ -19,6 +19,8 @@ interface LearnDesktopTimelineProps {
   setLockedReviewModalOpen: (open: boolean) => void;
 }
 
+import { LessonCard } from './LessonCard';
+
 export default function LearnDesktopTimeline({
   unit,
   unitLessons,
@@ -88,8 +90,8 @@ export default function LearnDesktopTimeline({
         )}
       </div>
 
-      <div className="flex flex-col relative w-full pl-6 md:pl-10 mt-4 pb-32">
-        <div className="absolute left-[calc(3.5rem-5px)] md:left-[calc(5rem-5px)] top-[5rem] bottom-[8rem] w-[10px] bg-slate-200 rounded-full z-0"></div>
+      <div className="flex flex-col relative w-full mt-10 pb-32">
+        <div className={`absolute left-1/2 -translate-x-1/2 top-0 bottom-[8rem] w-[10px] ${unit.colorClass} rounded-full z-0 opacity-80`}></div>
 
         {unitLessons.map((lesson, idx) => {
           const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
@@ -99,34 +101,58 @@ export default function LearnDesktopTimeline({
             isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
           }
 
-          const showLineToNext = idx < unitLessons.length - 1;
-          const lineToNextColor = level > 0 ? unit.colorClass : "bg-slate-200";
           const isMaxLevel = level >= 10;
+          const isLeft = idx % 2 === 0;
 
           return (
             <motion.div
               id={`desktop-lesson-${lesson.id}`}
               key={`desktop-node-${lesson.id}`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
-              className="relative flex items-center w-full z-10 gap-6 md:gap-8 min-h-[8.5rem] py-3 group"
+              className={`relative w-full flex ${isLeft ? 'justify-start' : 'justify-end'} z-10 mb-16 group`}
             >
-              <div
-                className={`relative shrink-0 py-6 cursor-pointer hover:brightness-95 hover:scale-105 active:scale-95 transition-all z-10`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (isReviewLocked) {
-                    setLockedReviewModalOpen(true);
-                    return;
-                  }
-                  setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  const saved = localStorage.getItem(`last_level_${lesson.id}`);
-                  setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                  setShowDesktopUnitsList(false);
-                }}
-              >
-                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-[2rem] flex items-center justify-center border-b-[6px] relative z-20 transition-transform overflow-hidden bg-white ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass : isReviewLocked ? 'bg-slate-100 text-slate-300 border-slate-200 border-2 active:border-b-2 active:translate-y-1' : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}>
+              <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
+                <div className="w-full max-w-[360px]">
+                  <LessonCard 
+                    lesson={lesson}
+                    level={level}
+                    unit={unit}
+                    language={language}
+                    isReviewLocked={isReviewLocked}
+                    suggestedLessonId={suggestedLessonId}
+                    onClick={() => {
+                      if (isReviewLocked) {
+                        setLockedReviewModalOpen(true);
+                        return;
+                      }
+                      setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                      const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                      setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                      setShowDesktopUnitsList(false);
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Center icon */}
+              <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-20">
+                <div
+                  className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden bg-white shadow-md hover:scale-105 active:scale-95 cursor-pointer
+                    ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' : isReviewLocked ? 'bg-slate-100 text-slate-300 border-white' : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white' : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (isReviewLocked) {
+                      setLockedReviewModalOpen(true);
+                      return;
+                    }
+                    setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                    const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                    setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                    setShowDesktopUnitsList(false);
+                  }}
+                >
                   {(lesson as any).imageUrl ? (
                     <>
                       <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''} ${isReviewLocked ? 'opacity-30 grayscale' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
@@ -137,72 +163,20 @@ export default function LearnDesktopTimeline({
                     isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : isReviewLocked ? <Lock size={32} className="fill-slate-200 text-slate-400 stroke-[2]" /> : lesson.isReview ? <Star size={32} className="fill-current stroke-current" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
                   )}
                 </div>
-              </div>
-
-              <div
-                className={`flex-1 rounded-[1.5rem] border-2 p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all group border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative z-10 ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : isReviewLocked ? 'bg-slate-50 border-slate-200' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (isReviewLocked) {
-                    setLockedReviewModalOpen(true);
-                    return;
-                  }
-                  setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  const saved = localStorage.getItem(`last_level_${lesson.id}`);
-                  setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                  setShowDesktopUnitsList(false);
-                }}
-              >
-                {isMaxLevel ? (
-                  <div className="absolute -top-3.5 left-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                    <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
-                  </div>
-                ) : suggestedLessonId === lesson.id && (
-                  <div className="absolute -top-3.5 left-6 bg-amber-400 text-amber-900 text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                    <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
+                {/* Status indicator on the edge of the circle (like in mockup, a small green check mark) */}
+                {isMaxLevel && (
+                  <div className={`absolute -right-2 top-0 ${unit.colorClass} text-white rounded-full p-0.5 border-2 border-white`}>
+                    <CheckCircle size={14} className="fill-white stroke-current" />
                   </div>
                 )}
-                <div className="flex flex-col items-start text-left flex-1 md:pr-4">
-                  <h4 className="font-extrabold text-xl text-slate-800">
-                    {getLocalizedField(lesson, 'title', language)}
-                  </h4>
-                  <span className={`text-sm font-bold mt-1 tracking-wide text-slate-500`}>
-                    {getLocalizedField(lesson, 'description', language)}
-                  </span>
-                </div>
-
-                <div className="w-full md:w-48 shrink-0 mt-4 md:mt-0 flex flex-col justify-center">
-                  {level === 0 ? (
-                    suggestedLessonId === lesson.id ? (
-                      <div className="text-sm font-bold text-slate-400 text-left md:text-right">
-                        {getTranslation('auto.start_learning', language)}
-                      </div>
-                    ) : null
-                  ) : (
-                    <>
-                      <div className="flex justify-between text-xs font-bold text-slate-400 mb-1 px-1">
-                        <span>{getTranslation('auto.mastery_6', language)}</span>
-                        <span className={unit.textClass}>{level}/10</span>
-                      </div>
-                      <div className="flex justify-between gap-[2px] w-full">
-                        {Array.from({ length: 10 }).map((_, i) => (
-                          <div key={i} className={`h-3 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? unit.colorClass : 'bg-slate-100'}`}></div>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
               </div>
 
-              {showLineToNext && (
-                <div className={`absolute top-1/2 left-[calc(2rem-5px)] md:left-[calc(2.5rem-5px)] w-[10px] h-[calc(100%+4rem)] ${lineToNextColor} z-0`}></div>
-              )}
             </motion.div>
           )
         })}
 
         {activeUnitIndex < totalUnits - 1 && (
-          <div className="mt-12 z-10 w-full pl-0 md:pl-[6rem] relative flex justify-start">
+          <div className="mt-12 z-10 w-full relative flex justify-center">
             <button
               onClick={() => handleUnitSelect(activeUnitIndex + 1)}
               className="px-8 py-4 rounded-2xl bg-amber-50 text-amber-500 hover:bg-amber-100 hover:text-amber-600 font-extrabold shadow-sm transition-all text-center border-2 border-amber-200 border-b-4 active:border-b-2 active:translate-y-1 text-lg w-full max-w-[280px]"

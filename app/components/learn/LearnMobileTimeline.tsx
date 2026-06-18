@@ -21,6 +21,8 @@ interface LearnMobileTimelineProps {
   setLockedReviewModalOpen: (open: boolean) => void;
 }
 
+import { LessonCard } from './LessonCard';
+
 export default function LearnMobileTimeline({
   unit,
   unitLessons,
@@ -149,7 +151,7 @@ export default function LearnMobileTimeline({
         )}
 
         <div className="flex flex-col relative w-full items-center mt-8 pb-20">
-          <div className="absolute left-1/2 top-0 bottom-0 w-3 -translate-x-1/2 bg-slate-200 rounded-full z-0"></div>
+          <div className={`absolute left-1/2 top-0 bottom-[4rem] w-3 -translate-x-1/2 ${unit.colorClass} rounded-full z-0 opacity-80`}></div>
 
           {unitLessons.map((lesson, idx) => {
             const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
@@ -160,8 +162,6 @@ export default function LearnMobileTimeline({
             }
 
             const isMaxLevel = level >= 10;
-            const showLineToNext = idx < unitLessons.length - 1;
-            const lineToNextColor = level > 0 ? unit.colorClass : "bg-slate-200";
 
             return (
               <motion.div
@@ -184,13 +184,13 @@ export default function LearnMobileTimeline({
                     setModalLevel(null);
                   }}
                 >
-                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
+                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-[6px] relative z-10 shadow-sm overflow-hidden bg-white
                       ${isMaxLevel
-                      ? unit.colorClass + ' text-white ' + unit.borderClass
+                      ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]'
                       : isReviewLocked
-                        ? 'bg-slate-100 text-slate-300 border-slate-200 border-2 active:border-b-2 active:translate-y-1'
-                        : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1
-                          : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}
+                        ? 'bg-slate-100 text-slate-300 border-white'
+                        : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
+                          : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
                   >
                     {lesson.imageUrl ? (
                       <>
@@ -202,62 +202,32 @@ export default function LearnMobileTimeline({
                       isMaxLevel ? <CheckCircle size={40} className="stroke-[3]" /> : isReviewLocked ? <Lock size={40} className="fill-slate-200 text-slate-400 stroke-[2.5]" /> : level > 0 ? <CheckCircle size={40} className="stroke-current stroke-[2.5]" /> : lesson.isReview ? <Star size={40} className="fill-current stroke-current" /> : <Play size={40} className="ml-1 fill-current stroke-[2]" />
                     )}
                   </div>
-                </div>
-
-                <div
-                  className={`w-full max-w-[280px] sm:max-w-[320px] rounded-[1.5rem] p-5 flex flex-col items-center text-center transition-all z-10 border-2 border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : isReviewLocked ? 'bg-slate-50 border-slate-200' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isReviewLocked) {
-                      setLockedReviewModalOpen(true);
-                      return;
-                    }
-                    setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(null);
-                  }}
-                >
-                  {isMaxLevel ? (
-                    <div className="absolute -top-3.5 left-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                      <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
-                    </div>
-                  ) : suggestedLessonId === lesson.id && (
-                    <div className="absolute -top-3.5 left-6 bg-amber-400 text-amber-900 text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                      <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
+                  {/* Small check edge mark */}
+                  {isMaxLevel && (
+                    <div className={`absolute -right-1 top-0 sm:top-1 ${unit.colorClass} text-white rounded-full p-0.5 border-2 border-white z-20`}>
+                      <CheckCircle size={14} className="fill-white stroke-current" />
                     </div>
                   )}
-                  <h4 className={`font-extrabold text-xl text-slate-800`}>
-                    {mounted ? getLocalizedField(lesson, 'title', language) : lesson.title}
-                  </h4>
-                  <span className={`text-sm font-bold mt-1 tracking-wide text-slate-500`}>
-                    {mounted ? getLocalizedField(lesson, 'description', language) : lesson.description}
-                  </span>
-
-                  <div className="w-full mt-4">
-                    {level === 0 ? (
-                      suggestedLessonId === lesson.id ? (
-                        <div className="text-sm font-bold text-slate-400 mt-2 py-1">
-                          {getTranslation('auto.start_learning', language)}
-                        </div>
-                      ) : null
-                    ) : (
-                      <>
-                        <div className="flex justify-between text-xs font-bold text-slate-400 mb-1 px-1">
-                          <span>{getTranslation('auto.mastery_4', language)}</span>
-                          <span className={unit.textClass}>{level}/10</span>
-                        </div>
-                        <div className="flex justify-between gap-[2px] w-full">
-                          {Array.from({ length: 10 }).map((_, i) => (
-                            <div key={i} className={`h-2.5 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? unit.colorClass : 'bg-slate-100'}`}></div>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
                 </div>
 
-                {showLineToNext && (
-                  <div className={`absolute top-[4.5rem] left-1/2 -translate-x-1/2 w-3 h-[calc(100%+2rem)] sm:h-[calc(100%+3rem)] ${lineToNextColor} z-0`}></div>
-                )}
+                <div className="w-full max-w-[340px] z-10 px-2 sm:px-0">
+                  <LessonCard 
+                    lesson={lesson}
+                    level={level}
+                    unit={unit}
+                    language={language}
+                    isReviewLocked={isReviewLocked}
+                    suggestedLessonId={suggestedLessonId}
+                    onClick={() => {
+                      if (isReviewLocked) {
+                        setLockedReviewModalOpen(true);
+                        return;
+                      }
+                      setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                      setModalLevel(null);
+                    }}
+                  />
+                </div>
               </motion.div>
             )
           })}
