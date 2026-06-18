@@ -123,14 +123,14 @@ export function LessonPathMap({
              : 'text-slate-200';
 
         return (
-          <div key={levelIndex} className="relative w-full h-[240px] flex items-center justify-center">
+          <div key={levelIndex} className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center">
             {/* Connection Line to the node below */}
             {levelIndex > 0 && (
               <>
                 {/* Desktop SVG */}
-                <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[240px] overflow-visible z-0 pointer-events-none">
+                <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[320px] overflow-visible z-0 pointer-events-none">
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${(200 + getOffset(levelIndex) + getOffset(levelIndex - 1)) / 2} 0, ${(200 + getOffset(levelIndex) + getOffset(levelIndex - 1)) / 2} 240, ${100 + getOffset(levelIndex - 1)} 240`}
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 160, ${100 + getOffset(levelIndex - 1)} 160, ${100 + getOffset(levelIndex - 1)} 320`}
                     fill="none"
                     stroke="currentColor"
                     className={strokeClass}
@@ -139,7 +139,7 @@ export function LessonPathMap({
                   />
                   {/* Inner track for depth */}
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${(200 + getOffset(levelIndex) + getOffset(levelIndex - 1)) / 2} 0, ${(200 + getOffset(levelIndex) + getOffset(levelIndex - 1)) / 2} 240, ${100 + getOffset(levelIndex - 1)} 240`}
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 160, ${100 + getOffset(levelIndex - 1)} 160, ${100 + getOffset(levelIndex - 1)} 320`}
                     fill="none"
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="8"
@@ -187,11 +187,11 @@ export function LessonPathMap({
               {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
                 <>
                   {/* Desktop Image (pointing INWARDS to avoid overflow) */}
-                  <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out 
-                    ${modalLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-                    ${getOffset(levelIndex) < 0 ? 'left-full ml-12' : 'right-full mr-12'}
-                    ${modalLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
-                    ${modalLevel !== levelIndex && getOffset(levelIndex) > 0 ? 'translate-x-8' : ''}
+                  <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-72 xl:w-80 z-0 transition-all duration-500 ease-out 
+                    ${activeMobileLevel === levelIndex && isAccessible ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
+                    ${getOffset(levelIndex) < 0 ? 'left-full ml-20' : 'right-full mr-20'}
+                    ${activeMobileLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
+                    ${activeMobileLevel !== levelIndex && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
                   `}>
                     <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl" />
                   </div>
