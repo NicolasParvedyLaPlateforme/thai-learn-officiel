@@ -219,7 +219,7 @@ export default function SpeakLessonClient({
   };
 
   const handleQuitEarly = () => {
-    router.push('/speak');
+    router.push('/speak#lesson-' + lessonId);
   };
 
   const handleResumeChoice = (resume: boolean) => {

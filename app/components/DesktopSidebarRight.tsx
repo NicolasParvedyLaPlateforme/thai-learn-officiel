@@ -101,9 +101,9 @@ export function DesktopSidebarRight({
         return (
           <motion.div
             key="empty-lesson-view"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="w-full h-full flex flex-col items-center justify-center p-8 text-center text-slate-500 bg-slate-50/50"
           >

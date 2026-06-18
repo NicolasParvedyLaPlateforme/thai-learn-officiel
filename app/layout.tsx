@@ -41,7 +41,7 @@ import MotionProvider from './components/MotionProvider';
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${inter.variable} ${sarabun.variable}`}>
-       <body className="font-sans antialiased text-slate-900 bg-slate-50 min-h-screen flex" suppressHydrationWarning>
+       <body className="font-sans antialiased text-slate-900 bg-slate-50 min-h-screen flex overflow-x-clip" suppressHydrationWarning>
          <MotionProvider>
            <AuthProvider>
              <SyncProgress />

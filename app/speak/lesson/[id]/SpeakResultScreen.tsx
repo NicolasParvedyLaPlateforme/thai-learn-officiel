@@ -75,7 +75,7 @@ export default function SpeakResultScreen({
           {getTranslation('auto.retry', language)}
         </button>
         <button
-          onClick={() => router.push(`/speak`)}
+          onClick={() => router.push(`/speak#lesson-${lessonId}`)}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
         >
           {getTranslation('auto.back', language)}
