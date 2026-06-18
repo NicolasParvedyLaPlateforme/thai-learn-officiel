@@ -87,14 +87,6 @@ export function DesktopLessonLevelsView({
       exit={{ opacity: 0, y: 20 }}
       className="flex flex-col gap-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300"
     >
-      {/* Mobile Fixed Back Button (hidden when sticky banner is visible) */}
-      <button 
-        onClick={onBack}
-        className={`md:hidden fixed left-2 top-1/2 -translate-y-1/2 z-50 p-3 bg-white text-slate-800 rounded-full shadow-2xl border-2 border-slate-200 active:scale-90 transition-transform ${showStickyBanner ? 'opacity-0 pointer-events-none' : 'opacity-90 hover:opacity-100'}`}
-      >
-        <ChevronLeft size={24} className="stroke-[3]" />
-      </button>
-
       {/* Sticky Mini Banner */}
       <div className={`sticky top-[72px] md:top-8 z-50 w-full py-3 px-4 ${unitColor} rounded-2xl shadow-xl border-b-[4px] ${unitBorder} flex items-center justify-between text-white backdrop-blur-md bg-opacity-95 transition-all duration-300 ${showStickyBanner ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
         <div className="flex items-center gap-3 w-full">
