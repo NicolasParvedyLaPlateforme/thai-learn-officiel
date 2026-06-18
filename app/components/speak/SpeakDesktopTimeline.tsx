@@ -1,5 +1,5 @@
 import { m as motion } from "motion/react";
-import { BookOpen, Star, CheckCircle, Lock, Play } from 'lucide-react';
+import { BookOpen, Star, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
 
@@ -146,6 +146,11 @@ export default function SpeakDesktopTimeline({
 
               {/* Center icon */}
               <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-20">
+                {isMaxLevel && (
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                    <Crown size={28} className="text-amber-400 fill-amber-400" />
+                  </div>
+                )}
                 <div
                   className={`w-20 h-20 rounded-full flex items-center justify-center border-b-[6px] transition-transform overflow-hidden bg-white shadow-md cursor-pointer hover:scale-105 active:scale-95
                     ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass 

@@ -1,5 +1,5 @@
 import { m as motion } from "motion/react";
-import { BookOpen, Star, CheckCircle, Lock } from 'lucide-react';
+import { BookOpen, Star, CheckCircle, Lock, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
 import { useState } from 'react';
@@ -129,6 +129,11 @@ export default function AlphabetDesktopTimeline({
 
               {/* Center icon */}
               <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-20">
+                {isMaxLevel && (
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                    <Crown size={28} className="text-amber-400 fill-amber-400" />
+                  </div>
+                )}
                 <div
                   className={`relative w-20 h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden shadow-md cursor-pointer hover:scale-105 active:scale-95 text-2xl font-thai
                     ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' 
@@ -152,12 +157,7 @@ export default function AlphabetDesktopTimeline({
                       </div>
                     )}
                 </div>
-                {/* Small check edge mark */}
-                {isMaxLevel && (
-                  <div className={`absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 ${unit.colorClass} text-white rounded-full p-0.5 border-2 border-white z-20`}>
-                    <CheckCircle size={14} className="fill-white stroke-current" />
-                  </div>
-                )}
+
               </div>
 
               {/* Side Image */}

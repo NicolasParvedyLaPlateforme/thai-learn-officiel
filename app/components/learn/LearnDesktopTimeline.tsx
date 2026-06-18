@@ -1,5 +1,5 @@
 import { m as motion } from "motion/react";
-import { BookOpen, Star, CheckCircle, Lock, Play } from 'lucide-react';
+import { BookOpen, Star, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
 import { useState } from 'react';
@@ -143,6 +143,11 @@ export default function LearnDesktopTimeline({
 
               {/* Center icon */}
               <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-20">
+                {isMaxLevel && (
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                    <Crown size={28} className="text-amber-400 fill-amber-400" />
+                  </div>
+                )}
                 <div
                   className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden bg-white shadow-md hover:scale-105 active:scale-95 cursor-pointer
                     ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' : isReviewLocked ? 'bg-slate-100 text-slate-300 border-white' : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white' : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
@@ -168,12 +173,7 @@ export default function LearnDesktopTimeline({
                     isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : isReviewLocked ? <Lock size={32} className="fill-slate-200 text-slate-400 stroke-[2]" /> : lesson.isReview ? <Star size={32} className="fill-current stroke-current" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
                   )}
                 </div>
-                {/* Status indicator on the edge of the circle (like in mockup, a small green check mark) */}
-                {isMaxLevel && (
-                  <div className={`absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 ${unit.colorClass} text-white rounded-full p-0.5 border-2 border-white z-20`}>
-                    <CheckCircle size={14} className="fill-white stroke-current" />
-                  </div>
-                )}
+
               </div>
 
               {/* Side Image */}

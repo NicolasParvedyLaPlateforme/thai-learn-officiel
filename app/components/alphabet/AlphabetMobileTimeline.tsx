@@ -1,5 +1,5 @@
 import { m as motion } from "motion/react";
-import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play } from 'lucide-react';
+import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
 import { AlphabetLessonCard } from './AlphabetLessonCard';
@@ -180,6 +180,11 @@ export default function AlphabetMobileTimeline({
                     setModalLevel(Math.min(level, maxLevelPerLesson - 1));
                   }}
                 >
+                  {isMaxLevel && (
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                      <Crown size={28} className="text-amber-400 fill-amber-400" />
+                    </div>
+                  )}
                   <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-[6px] relative z-10 shadow-sm overflow-hidden text-3xl font-thai
                       ${isMaxLevel
                       ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]'
@@ -195,12 +200,7 @@ export default function AlphabetMobileTimeline({
                       </div>
                     )}
                   </div>
-                  {/* Small check edge mark */}
-                  {isMaxLevel && (
-                    <div className={`absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 ${unit.colorClass} text-white rounded-full p-0.5 border-2 border-white z-20`}>
-                      <CheckCircle size={14} className="fill-white stroke-current" />
-                    </div>
-                  )}
+
                   {(!isMaxLevel && level > 0) && (
                     <div className={`absolute -right-1 top-0 sm:top-1 ${unit.colorClass} text-white rounded-full p-1 border-2 border-white z-20 w-6 h-6 flex items-center justify-center`}>
                       <span className="text-[10px] font-bold">{level}/4</span>

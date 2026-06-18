@@ -1,5 +1,5 @@
 import { m as motion } from "motion/react";
-import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play } from 'lucide-react';
+import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
 import { SpeakLessonCard } from './SpeakLessonCard';
@@ -186,9 +186,14 @@ export default function SpeakMobileTimeline({
                       return;
                     }
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
+                    setModalLevel(null);
                   }}
                 >
+                  {isMaxLevel && (
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                      <Crown size={28} className="text-amber-400 fill-amber-400" />
+                    </div>
+                  )}
                   <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
                       ${isMaxLevel
                       ? unit.colorClass + ' text-white ' + unit.borderClass
