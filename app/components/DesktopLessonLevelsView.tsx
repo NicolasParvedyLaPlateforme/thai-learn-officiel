@@ -4,6 +4,7 @@ import IconImage from './IconImage';
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import { getLevelSplit } from '../lib/levelSplits';
 import { LessonPathMap } from './LessonPathMap';
+import { useProgressStore } from '../lib/store';
 interface DesktopLessonLevelsViewProps {
   lessonData: { lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string };
   unitTitle?: string;
@@ -32,6 +33,7 @@ export function DesktopLessonLevelsView({
   const { lesson, unitColor, unitBorder, unitText } = lessonData;
   const currentProgress = lessonLevels[lesson.id] || 0;
   const starsArray = lessonStars[lesson.id] || Array(maxLevelPerLesson + 1).fill(0);
+  const lessonPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
 
   return (
     <motion.div
@@ -97,6 +99,9 @@ export function DesktopLessonLevelsView({
           unitBorder={unitBorder}
           unitText={unitText}
           language={language}
+          lessonId={lesson.id}
+          lesson={lesson}
+          lessonPartsCompleted={lessonPartsCompleted}
         />
       </div>
     </motion.div>
