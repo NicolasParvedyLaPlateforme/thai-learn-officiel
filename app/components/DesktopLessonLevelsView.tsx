@@ -155,6 +155,7 @@ export function DesktopLessonLevelsView({
           lessonPartsCompleted={lessonPartsCompleted}
           suggestionType={suggestionType}
           onReady={() => setIsReady(true)}
+          onBack={onBack}
         />
       </div>
     </motion.div>

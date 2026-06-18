@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Star, Lock, Crown, Flag } from 'lucide-react';
+import { Star, Lock, Crown, Flag, ChevronLeft } from 'lucide-react';
 import { getTranslation } from '../hooks/useTranslation';
 import { getLevelSplit } from '../lib/levelSplits';
 
@@ -18,6 +18,7 @@ interface LessonPathMapProps {
   lessonPartsCompleted?: Record<string, number[]>;
   suggestionType?: string;
   onReady?: () => void;
+  onBack?: () => void;
 }
 
 export function LessonPathMap({
@@ -34,7 +35,8 @@ export function LessonPathMap({
   lesson,
   lessonPartsCompleted,
   suggestionType,
-  onReady
+  onReady,
+  onBack
 }: LessonPathMapProps) {
   const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
 
@@ -121,8 +123,8 @@ export function LessonPathMap({
       <div className="hidden lg:block absolute -left-16 xl:-left-24 top-0 bottom-0 z-50 pointer-events-none">
         <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center py-4 pointer-events-auto">
           {/* Ligne centrale */}
-          <div className="absolute top-4 bottom-4 w-[4px] bg-slate-200 rounded-full left-1/2 -translate-x-1/2 z-0" />
-          
+          <div className={`absolute top-4 ${onBack ? 'bottom-[5.5rem]' : 'bottom-4'} w-[4px] bg-slate-200 rounded-full left-1/2 -translate-x-1/2 z-0`} />
+
           {nodes.map((levelIndex) => {
             const isMastery = levelIndex === maxLevel;
             const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
@@ -160,6 +162,21 @@ export function LessonPathMap({
               </button>
             );
           })}
+
+          {onBack && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onBack();
+              }}
+              className={`relative z-10 w-10 h-10 rounded-[12px] flex items-center justify-center mt-6 transition-all duration-300 hover:scale-110 shadow-md ${unitColor} text-white group`}
+            >
+              <ChevronLeft size={22} strokeWidth={3} className="mr-0.5" />
+              <div className="absolute left-full ml-4 px-3 py-1.5 bg-slate-800 text-white text-xs font-bold rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
+                {getTranslation('auto.back', language)}
+              </div>
+            </button>
+          )}
         </div>
       </div>
 
