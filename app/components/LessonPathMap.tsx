@@ -192,10 +192,10 @@ export function LessonPathMap({
                 <>
                   {/* Desktop Image (pointing INWARDS to avoid overflow) */}
                   <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-72 xl:w-80 z-0 transition-all duration-500 ease-out 
-                    ${(activeMobileLevel === levelIndex || modalLevel === levelIndex) && isAccessible ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
+                    ${activeMobileLevel === levelIndex && isAccessible ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
                     ${getOffset(levelIndex) < 0 ? 'left-full ml-32' : 'right-full mr-32'}
-                    ${(activeMobileLevel !== levelIndex && modalLevel !== levelIndex) && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
-                    ${(activeMobileLevel !== levelIndex && modalLevel !== levelIndex) && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
+                    ${activeMobileLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
+                    ${activeMobileLevel !== levelIndex && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
                   `}>
                     <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl rounded-3xl" />
                   </div>
