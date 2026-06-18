@@ -243,25 +243,31 @@ export function LessonPathMap({
                 <>
                   {/* Desktop Image (pointing INWARDS to avoid overflow) */}
                   <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-72 xl:w-80 z-0 transition-all duration-500 ease-out 
-                    ${activeMobileLevel === levelIndex && isAccessible ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
+                    ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
                     ${getOffset(levelIndex) < 0 ? 'left-full ml-32' : 'right-full mr-32'}
                     ${activeMobileLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
                     ${activeMobileLevel !== levelIndex && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
                   `}>
-                    <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl rounded-3xl" />
+                    <img 
+                      src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} 
+                      alt="Objectif du niveau" 
+                      className={`w-full h-auto drop-shadow-2xl rounded-3xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`} 
+                    />
                   </div>
 
                   {/* Mobile Image */}
-                  {isAccessible && (
-                    <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-44 z-0 transition-all duration-500 ease-out 
-                      ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-                      ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-6' : 'right-full mr-6'}
-                      ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-4' : ''}
-                      ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-4' : ''}
-                    `}>
-                      <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-xl" />
-                    </div>
-                  )}
+                  <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-44 z-0 transition-all duration-500 ease-out 
+                    ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
+                    ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-6' : 'right-full mr-6'}
+                    ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-4' : ''}
+                    ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-4' : ''}
+                  `}>
+                    <img 
+                      src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} 
+                      alt="Objectif du niveau" 
+                      className={`w-full h-auto drop-shadow-xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`} 
+                    />
+                  </div>
                 </>
               )}
 
