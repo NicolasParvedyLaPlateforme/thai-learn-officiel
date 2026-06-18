@@ -183,13 +183,13 @@ export default function LearnDesktopTimeline({
                       initial={false}
                       animate={{ 
                          opacity: activeCenteredLessonId === lesson.id ? 0.9 : 0, 
-                         x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? 40 : -40),
+                         x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? -40 : 40),
                          scale: activeCenteredLessonId === lesson.id ? 1 : 0.9
                       }}
                       transition={{ duration: 0.5, ease: "easeOut" }}
                       className="w-56 h-56 md:w-64 md:h-64 relative rounded-[2rem] overflow-hidden shadow-xl border-4 border-white pointer-events-none"
                    >
-                      <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 150px, 250px" />
+                      <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
                    </motion.div>
                 </div>
               )}
