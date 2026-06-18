@@ -191,7 +191,7 @@ export default function LearnMobileTimeline({
                       <Crown size={22} className="text-amber-400 fill-amber-400" />
                     </div>
                   )}
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden bg-white
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden
                       ${isMaxLevel
                       ? unit.colorClass + ' text-white border-white shadow-[0_0_15px_rgba(16,185,129,0.3)]'
                       : isReviewLocked

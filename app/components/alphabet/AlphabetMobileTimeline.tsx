@@ -185,7 +185,7 @@ export default function AlphabetMobileTimeline({
                       <Crown size={22} className="text-amber-400 fill-amber-400" />
                     </div>
                   )}
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden bg-white
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden
                       ${isMaxLevel
                       ? unit.colorClass + ' text-white border-white shadow-[0_0_15px_rgba(16,185,129,0.3)]'
                       : level >= 3 ? unit.shades.l3 + ' border-white' : level >= 2 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
@@ -219,7 +219,7 @@ export default function AlphabetMobileTimeline({
                 </div>
 
                 {showLineToNext && (
-                  <div className={`absolute top-5 sm:top-6 left-[1.75rem] sm:left-[2.5rem] -translate-x-1/2 w-2 h-[calc(100%+1.5rem)] sm:h-[calc(100%+2rem)] ${lineToNextColor} z-0 opacity-80`}></div>
+                  <div className={`absolute top-5 sm:top-6 left-[1.25rem] sm:left-[1.5rem] -translate-x-1/2 w-2 h-[calc(100%+1.5rem)] sm:h-[calc(100%+2rem)] ${lineToNextColor} z-0 opacity-80`}></div>
                 )}
               </motion.div>
             )
