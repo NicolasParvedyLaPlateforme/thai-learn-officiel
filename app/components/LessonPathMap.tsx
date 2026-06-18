@@ -107,6 +107,52 @@ export function LessonPathMap({
 
   return (
     <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh] overflow-x-hidden">
+      {/* Vertical Navigation Bar (Desktop Only) */}
+      <div className="hidden lg:block absolute left-4 xl:left-8 top-0 bottom-0 z-50 pointer-events-none">
+        <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center py-4 pointer-events-auto">
+          {/* Ligne centrale */}
+          <div className="absolute top-4 bottom-4 w-[4px] bg-slate-200 rounded-full left-1/2 -translate-x-1/2 z-0" />
+          
+          {nodes.map((levelIndex) => {
+            const isMastery = levelIndex === maxLevel;
+            const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
+            const isCompleted = isMastery ? earnedStarsMastery > 0 : levelIndex < currentProgress;
+            const isActive = (activeMobileLevel === levelIndex) || (activeMobileLevel === null && levelIndex === currentProgress);
+
+            return (
+              <button
+                key={`nav-${levelIndex}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (isAccessible) {
+                    const targetNode = nodeRefs.current[levelIndex];
+                    if (targetNode) {
+                      targetNode.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    }
+                  }
+                }}
+                disabled={!isAccessible}
+                className={`
+                  relative z-10 w-8 h-8 rounded-full flex items-center justify-center my-1.5 transition-all duration-300 group
+                  ${!isAccessible ? 'opacity-50 cursor-not-allowed bg-slate-200 border-2 border-slate-300 text-slate-400' 
+                    : isActive ? `${unitColor} ring-[3px] ring-offset-2 ${unitColor.replace('bg-', 'ring-')} text-white scale-[1.25] shadow-md` 
+                    : isCompleted ? `${unitColor} border-2 border-white shadow-sm text-white hover:scale-110`
+                    : `bg-white border-[3px] ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110`
+                  }
+                `}
+              >
+                {isMastery ? <Crown size={14} className="fill-current" /> : <span className={`text-[11px] font-black`}>{levelIndex + 1}</span>}
+                
+                {/* Tooltip on hover */}
+                <div className="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
+                  {isMastery ? getTranslation('auto.mastery', language) : `Niv. ${levelIndex + 1}`}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {nodes.map((levelIndex) => {
         const isMastery = levelIndex === maxLevel;
         const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
