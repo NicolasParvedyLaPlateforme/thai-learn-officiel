@@ -376,7 +376,6 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
         <div
           className="hidden md:flex flex-row w-full items-start relative min-h-screen"
           onClick={() => {
-            setSelectedLesson(null);
             setShowDesktopUnitsList(false);
           }}
         >
