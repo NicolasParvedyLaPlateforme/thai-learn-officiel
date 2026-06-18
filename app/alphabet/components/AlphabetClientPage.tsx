@@ -123,33 +123,66 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
     return () => window.removeEventListener('resize', updateCols);
   }, []);
 
+  const [isProcessingHash, setIsProcessingHash] = useState(true);
+
   useEffect(() => {
     if (mounted) {
       const hash = window.location.hash;
-      if (hash) {
-        setTimeout(() => {
-          try {
-             // Differentiate mobile and desktop elements
-            const baseId = hash.substring(1).replace('lesson-', ''); // just the ID
-            const isDesktop = window.innerWidth >= 768; // md breakpoint
+      if (hash && hash.startsWith('#lesson-')) {
+        try {
+          const baseId = hash.substring(1).replace('lesson-', '');
+          
+          const allLessons = [...consonants, ...vowels];
+          const foundLesson = allLessons.find(l => l.id === baseId);
+          
+          if (foundLesson) {
+            const isCompleted = completedLessons.includes(baseId);
+            const unitIndex = UNITS.findIndex(u => u.lessons.some(l => l.id === baseId));
+            
+            if (unitIndex !== -1) {
+              const unit = UNITS[unitIndex];
+              setSelectedLesson({
+                lesson: foundLesson,
+                isCompleted,
+                unitColor: unit.colorClass,
+                unitBorder: unit.borderClass,
+                unitText: unit.textClass,
+                unitHover: unit.hoverClass
+              });
+              setActiveUnitIndex(unitIndex);
+              
+              const lastLvl = localStorage.getItem(`last_level_${baseId}`);
+              if (lastLvl !== null) {
+                setModalLevel(parseInt(lastLvl, 10));
+              }
+            }
+          }
+
+          setTimeout(() => {
+            const isDesktop = window.innerWidth >= 768;
             const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
             
             let el = document.querySelector(targetId);
             if (!el) {
-               el = document.querySelector(hash); // Fallback
+               el = document.querySelector(hash);
             }
 
             if (el) {
               const y = el.getBoundingClientRect().top + window.scrollY - 100;
               window.scrollTo({ top: y, behavior: 'smooth' });
             }
-          } catch (e) {
-            console.error(e);
-          }
-        }, 100);
+          }, 50);
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setIsProcessingHash(false);
+        }
+      } else {
+        setIsProcessingHash(false);
       }
     }
-  }, [mounted]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted, completedLessons]);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
@@ -207,7 +240,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       />
 
       {/* Main Content (Mobile Only) */}
-      {!mounted ? (
+      {!mounted || isProcessingHash ? (
         <div className="md:hidden flex flex-col items-center w-full px-4 mt-2">
           {/* Hero Card Mobile */}
           <div className="w-full h-[180px] bg-slate-200 rounded-2xl animate-pulse mb-6" />
@@ -478,7 +511,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       )}
 
       {/* Main Content (Desktop Only) */}
-      {!mounted ? (
+      {!mounted || isProcessingHash ? (
         <div className="hidden md:flex flex-row w-full items-start relative min-h-screen">
           <div className="flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12">
             <div className="flex flex-col gap-10 w-full max-w-4xl">

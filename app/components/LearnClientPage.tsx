@@ -224,7 +224,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
         setIsProcessingHash(false);
       }
     }
-  }, [mounted, data.lessons, completedLessons, UNITS]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted, data.lessons, completedLessons]);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
