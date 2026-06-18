@@ -171,7 +171,7 @@ export function LessonPathMap({
                 {isMastery ? (
                    <Crown size={44} className="fill-current stroke-[2] drop-shadow-sm" />
                 ) : isCompleted ? (
-                   <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-sm"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                   <span className="font-black text-4xl drop-shadow-sm text-white">{levelIndex + 1}</span>
                 ) : isCurrent ? (
                    <span className={`font-black text-4xl drop-shadow-sm ${unitText}`}>{levelIndex + 1}</span>
                 ) : (
