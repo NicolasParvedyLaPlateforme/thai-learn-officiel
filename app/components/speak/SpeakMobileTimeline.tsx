@@ -194,7 +194,7 @@ export default function SpeakMobileTimeline({
                       <Crown size={28} className="text-amber-400 fill-amber-400" />
                     </div>
                   )}
-                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-b-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
+                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
                       ${isMaxLevel
                       ? unit.colorClass + ' text-white ' + unit.borderClass
                       : isReviewLocked

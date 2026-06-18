@@ -152,7 +152,7 @@ export default function SpeakDesktopTimeline({
                   </div>
                 )}
                 <div
-                  className={`w-20 h-20 rounded-full flex items-center justify-center border-b-[6px] transition-transform overflow-hidden bg-white shadow-md cursor-pointer hover:scale-105 active:scale-95
+                  className={`relative w-20 h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden bg-white shadow-md cursor-pointer hover:scale-105 active:scale-95
                     ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass 
                     : isReviewLocked ? 'bg-slate-100 text-slate-300 border-slate-200 border-2 active:border-b-2 active:translate-y-1' 
                     : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 
