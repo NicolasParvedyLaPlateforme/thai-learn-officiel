@@ -5,6 +5,8 @@ import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import { getLevelSplit } from '../lib/levelSplits';
 import { LessonPathMap } from './LessonPathMap';
 import { useProgressStore } from '../lib/store';
+import { useState, useEffect, useRef } from 'react';
+
 interface DesktopLessonLevelsViewProps {
   lessonData: { lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string };
   unitTitle?: string;
@@ -35,6 +37,28 @@ export function DesktopLessonLevelsView({
   const starsArray = lessonStars[lesson.id] || Array(maxLevelPerLesson + 1).fill(0);
   const lessonPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsScrolled(!entry.isIntersecting);
+      },
+      { rootMargin: '-100px 0px 0px 0px', threshold: 0 }
+    );
+
+    if (headerRef.current) {
+      observer.observe(headerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const lessonTitle = suggestionType === 'alphabet' && (lesson.type === 'consonant' || lesson.type === 'vowel')
+    ? `${getTranslation(lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${lesson.id.split('-').pop()}`
+    : getLocalizedField(lesson, 'title', language);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -42,22 +66,37 @@ export function DesktopLessonLevelsView({
       exit={{ opacity: 0, y: 20 }}
       className="flex flex-col gap-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300"
     >
-      {/* Mobile Fixed Back Button */}
+      {/* Mobile Fixed Back Button (hidden when sticky banner is visible) */}
       <button 
         onClick={onBack}
-        className="md:hidden fixed left-2 top-1/2 -translate-y-1/2 z-50 p-3 bg-white text-slate-800 rounded-full shadow-2xl border-2 border-slate-200 active:scale-90 transition-transform opacity-90 hover:opacity-100"
+        className={`md:hidden fixed left-2 top-1/2 -translate-y-1/2 z-50 p-3 bg-white text-slate-800 rounded-full shadow-2xl border-2 border-slate-200 active:scale-90 transition-transform ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-90 hover:opacity-100'}`}
       >
         <ChevronLeft size={24} className="stroke-[3]" />
       </button>
 
+      {/* Sticky Mini Banner */}
+      <div className={`sticky top-[72px] md:top-8 z-50 w-full py-3 px-4 ${unitColor} rounded-2xl shadow-xl border-b-[4px] ${unitBorder} flex items-center justify-between text-white backdrop-blur-md bg-opacity-95 transition-all duration-300 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+        <div className="flex items-center gap-3 w-full">
+          <button 
+            onClick={onBack}
+            className="flex items-center justify-center p-2 bg-black/20 hover:bg-black/30 rounded-xl transition-colors shrink-0"
+          >
+            <ChevronLeft size={20} className="stroke-[3]" />
+          </button>
+          <span className="font-extrabold text-base md:text-lg truncate drop-shadow-sm flex-1">
+            {lessonTitle}
+          </span>
+        </div>
+      </div>
+
       {/* Header */}
-      <div className={`p-8 md:p-10 ${unitColor} border-b-[6px] ${unitBorder} rounded-3xl text-white shadow-xl relative overflow-hidden`}>
+      <div ref={headerRef} className={`p-8 md:p-10 ${unitColor} border-b-[6px] ${unitBorder} rounded-3xl text-white shadow-xl relative overflow-hidden -mt-20 md:-mt-24`}>
         {lesson.imageUrl && (
           <>
             <div className="absolute inset-0 w-full h-full opacity-60">
-              <IconImage src={lesson.imageUrl} alt="" fill className="object-cover" priority unoptimized />
+              <IconImage src={lesson.imageUrl} alt="" fill className="object-cover" priority />
             </div>
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+            <div className="absolute inset-0 bg-black/40"></div>
           </>
         )}
         <div className="relative z-10 flex flex-col items-start gap-4">
@@ -77,9 +116,7 @@ export function DesktopLessonLevelsView({
           
           <div className="flex flex-col">
             <h2 className="text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md tracking-tight mb-2">
-              {suggestionType === 'alphabet' && (lesson.type === 'consonant' || lesson.type === 'vowel')
-                ? `${getTranslation(lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${lesson.id.split('-').pop()}`
-                : getLocalizedField(lesson, 'title', language)}
+              {lessonTitle}
             </h2>
             <p className="text-white/90 font-medium text-lg drop-shadow">
               {getLocalizedField(lesson, 'description', language) || 'Sélectionnez un niveau pour voir ses détails et choisir votre partie.'}
