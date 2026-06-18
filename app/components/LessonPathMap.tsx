@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Star, Lock, Crown, Flag } from 'lucide-react';
 import { getTranslation } from '../hooks/useTranslation';
 import { getLevelSplit } from '../lib/levelSplits';
@@ -37,12 +37,31 @@ export function LessonPathMap({
   const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
 
   const getOffset = (index: number) => {
-    // Winding path pattern
+    // Winding path pattern desktop
     const pattern = [0, 45, 65, 45, 0, -45, -65, -45, 0, 45, 0];
     return pattern[index] || 0;
   };
 
+  const getMobileOffset = (index: number) => {
+    // Zigzag pattern mobile to leave space for images
+    return index % 2 === 0 ? -70 : 70;
+  };
+
+  const getImageNameForLevel = (index: number) => {
+    switch (index) {
+      case 0: return 'find-the-good-traduction-removebg-preview.png';
+      case 1: return 'complete-the-sentence.png';
+      case 2: return 'build-your-sentence-removebg.png';
+      case 3: return 'build-your-sentence-removebg.png';
+      case 4: return 'niveau-5-nobg.png';
+      case 5: return 'level-6-nobg.png';
+      default: return null;
+    }
+  };
+
   const currentLevelRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(null);
 
   useEffect(() => {
     if (currentLevelRef.current) {
@@ -52,6 +71,33 @@ export function LessonPathMap({
       }, 300);
     }
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute('data-level-index'));
+            if (!isNaN(idx)) {
+              setActiveMobileLevel(idx);
+            }
+          }
+        });
+      },
+      { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+    );
+
+    const validRefs = nodeRefs.current.filter(Boolean);
+    validRefs.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      validRefs.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, [nodes.length]);
 
   const isUnlockedMastery = currentProgress >= maxLevel;
   const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
@@ -81,90 +127,88 @@ export function LessonPathMap({
           <div key={levelIndex} className="relative w-full h-[150px] flex items-center justify-center">
             {/* Connection Line to the node below */}
             {levelIndex > 0 && (
-              <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[150px] overflow-visible z-0 pointer-events-none">
-                <path
-                  d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 75, ${100 + getOffset(levelIndex - 1)} 75, ${100 + getOffset(levelIndex - 1)} 150`}
-                  fill="none"
-                  stroke="currentColor"
-                  className={strokeClass}
-                  strokeWidth="22"
-                  strokeLinecap="round"
-                />
-                {/* Inner track for depth */}
-                <path
-                  d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 75, ${100 + getOffset(levelIndex - 1)} 75, ${100 + getOffset(levelIndex - 1)} 150`}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.2)"
-                  strokeWidth="8"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <>
+                {/* Desktop SVG */}
+                <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[150px] overflow-visible z-0 pointer-events-none">
+                  <path
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 75, ${100 + getOffset(levelIndex - 1)} 75, ${100 + getOffset(levelIndex - 1)} 150`}
+                    fill="none"
+                    stroke="currentColor"
+                    className={strokeClass}
+                    strokeWidth="22"
+                    strokeLinecap="round"
+                  />
+                  {/* Inner track for depth */}
+                  <path
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 75, ${100 + getOffset(levelIndex - 1)} 75, ${100 + getOffset(levelIndex - 1)} 150`}
+                    fill="none"
+                    stroke="rgba(255,255,255,0.2)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                {/* Mobile SVG */}
+                <svg className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[150px] overflow-visible z-0 pointer-events-none">
+                  <path
+                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 75, ${100 + getMobileOffset(levelIndex - 1)} 75, ${100 + getMobileOffset(levelIndex - 1)} 150`}
+                    fill="none"
+                    stroke="currentColor"
+                    className={strokeClass}
+                    strokeWidth="22"
+                    strokeLinecap="round"
+                  />
+                  {/* Inner track for depth */}
+                  <path
+                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 75, ${100 + getMobileOffset(levelIndex - 1)} 75, ${100 + getMobileOffset(levelIndex - 1)} 150`}
+                    fill="none"
+                    stroke="rgba(255,255,255,0.2)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </>
             )}
 
             {/* Node */}
             <div 
-              className="relative z-10 flex flex-col items-center justify-center"
-              style={{ transform: `translateX(${getOffset(levelIndex)}px)` }}
-              ref={isCurrent ? currentLevelRef : null}
+              className="relative z-10 flex flex-col items-center justify-center transition-transform [transform:translateX(var(--offset-mobile))] lg:[transform:translateX(var(--offset-desktop))]"
+              style={{ 
+                '--offset-mobile': `${getMobileOffset(levelIndex)}px`,
+                '--offset-desktop': `${getOffset(levelIndex)}px`
+              } as React.CSSProperties}
+              ref={(el) => {
+                nodeRefs.current[levelIndex] = el;
+                if (isCurrent && currentLevelRef) {
+                  (currentLevelRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+                }
+              }}
+              data-level-index={levelIndex}
             >
-              {levelIndex === 0 && suggestionType === 'learn' && (
-                <div className={`hidden lg:block absolute right-full mr-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
-                  <img 
-                    src="/images/image-learn-niveau/find-the-good-traduction-removebg-preview.png" 
-                    alt="Objectif du niveau" 
-                    className="w-full h-auto drop-shadow-2xl" 
-                  />
-                </div>
-              )}
+              {/* Objective Images */}
+              {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
+                <>
+                  {/* Desktop Image */}
+                  <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out 
+                    ${modalLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
+                    ${getOffset(levelIndex) <= 0 ? 'right-full mr-12' : 'left-full ml-12'}
+                    ${modalLevel !== levelIndex && getOffset(levelIndex) <= 0 ? 'translate-x-8' : ''}
+                    ${modalLevel !== levelIndex && getOffset(levelIndex) > 0 ? '-translate-x-8' : ''}
+                  `}>
+                    <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl" />
+                  </div>
 
-              {levelIndex === 1 && suggestionType === 'learn' && (
-                <div className={`hidden lg:block absolute left-full ml-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 1 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
-                  <img 
-                    src="/images/image-learn-niveau/complete-the-sentence.png" 
-                    alt="Objectif du niveau" 
-                    className="w-full h-auto drop-shadow-2xl" 
-                  />
-                </div>
-              )}
-
-              {levelIndex === 2 && suggestionType === 'learn' && (
-                <div className={`hidden lg:block absolute left-full ml-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 2 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
-                  <img 
-                    src="/images/image-learn-niveau/build-your-sentence-removebg.png" 
-                    alt="Objectif du niveau" 
-                    className="w-full h-auto drop-shadow-2xl" 
-                  />
-                </div>
-              )}
-
-              {levelIndex === 3 && suggestionType === 'learn' && (
-                <div className={`hidden lg:block absolute left-full ml-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 3 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
-                  <img 
-                    src="/images/image-learn-niveau/build-your-sentence-removebg.png" 
-                    alt="Objectif du niveau" 
-                    className="w-full h-auto drop-shadow-2xl" 
-                  />
-                </div>
-              )}
-
-              {levelIndex === 4 && suggestionType === 'learn' && (
-                <div className={`hidden lg:block absolute right-full mr-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 4 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
-                  <img 
-                    src="/images/image-learn-niveau/niveau-5-nobg.png" 
-                    alt="Objectif du niveau" 
-                    className="w-full h-auto drop-shadow-2xl" 
-                  />
-                </div>
-              )}
-
-              {levelIndex === 5 && suggestionType === 'learn' && (
-                <div className={`hidden lg:block absolute right-full mr-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 5 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
-                  <img 
-                    src="/images/image-learn-niveau/level-6-nobg.png" 
-                    alt="Objectif du niveau" 
-                    className="w-full h-auto drop-shadow-2xl" 
-                  />
-                </div>
+                  {/* Mobile Image */}
+                  {isAccessible && (
+                    <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-44 z-0 transition-all duration-500 ease-out 
+                      ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
+                      ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-6' : 'right-full mr-6'}
+                      ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-4' : ''}
+                      ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-4' : ''}
+                    `}>
+                      <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-xl" />
+                    </div>
+                  )}
+                </>
               )}
 
               {isCurrent && isSelected && (
@@ -198,12 +242,18 @@ export function LessonPathMap({
 
               {/* Steps Indicator */}
               {(!isMastery && isAccessible && totalSteps > 0) && (
-                <div 
-                  className={`absolute top-1/2 -translate-y-1/2 ${labelSide === 'right' ? 'left-[calc(100%+16px)]' : 'right-[calc(100%+16px)]'} flex items-center justify-center bg-white px-3 py-2 rounded-2xl shadow-md border-2 border-slate-100 gap-2 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-20 whitespace-nowrap`}
-                >
-                  <Flag size={16} className={unitColor.replace('bg-', 'text-')} />
-                  <span className="text-sm font-black text-slate-700">{completedSteps}/{totalSteps}</span>
-                </div>
+                <>
+                  {/* Desktop Step Indicator */}
+                  <div className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 ${getOffset(levelIndex) < 0 ? 'left-[calc(100%+16px)]' : getOffset(levelIndex) > 0 ? 'right-[calc(100%+16px)]' : (levelIndex % 2 === 0 ? 'left-[calc(100%+16px)]' : 'right-[calc(100%+16px)]')} items-center justify-center bg-white px-3 py-2 rounded-2xl shadow-md border-2 border-slate-100 gap-2 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-20 whitespace-nowrap`}>
+                    <Flag size={16} className={unitColor.replace('bg-', 'text-')} />
+                    <span className="text-sm font-black text-slate-700">{completedSteps}/{totalSteps}</span>
+                  </div>
+                  {/* Mobile Step Indicator */}
+                  <div className={`flex lg:hidden absolute -bottom-4 left-1/2 -translate-x-1/2 items-center justify-center bg-white px-2.5 py-1 rounded-xl shadow-md border-2 border-slate-100 gap-1.5 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-30 whitespace-nowrap`}>
+                    <Flag size={14} className={unitColor.replace('bg-', 'text-')} />
+                    <span className="text-[11px] font-black text-slate-700">{completedSteps}/{totalSteps}</span>
+                  </div>
+                </>
               )}
 
               <button
