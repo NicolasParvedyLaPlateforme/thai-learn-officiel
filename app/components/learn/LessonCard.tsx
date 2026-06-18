@@ -118,7 +118,7 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
       </div>
 
       <button 
-        className={`w-full py-3 mt-2 rounded-xl font-extrabold text-white transition-all active:scale-95 ${unit.bgClass || unit.colorClass}`}
+        className={`w-full py-3 mt-2 rounded-xl font-extrabold text-white transition-all active:scale-95 cursor-pointer ${unit.bgClass || unit.colorClass}`}
         onClick={(e) => {
            e.stopPropagation();
            onClick();
