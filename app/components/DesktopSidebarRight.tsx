@@ -242,6 +242,39 @@ export function DesktopSidebarRight({
                         ENTIER
                       </text>
                     </svg>
+
+                    {(() => {
+                      let tx = 50;
+                      let ty = 50;
+                      let translateY = "-18px";
+                      
+                      if (!isLevelFullyCompleted) {
+                        const nextPart = completedParts.length;
+                        const angle = 360 / totalParts;
+                        const startAngle = nextPart * angle - 90;
+                        const midAngle = startAngle + angle / 2;
+                        const textR = 30;
+                        tx = 50 + textR * Math.cos(Math.PI * midAngle / 180);
+                        ty = 50 + textR * Math.sin(Math.PI * midAngle / 180);
+                        translateY = "-8px";
+                      }
+
+                      return (
+                        <div 
+                          className="absolute z-20 flex flex-col items-center animate-bounce pointer-events-none drop-shadow-md"
+                          style={{
+                            left: `${tx}%`,
+                            top: `${ty}%`,
+                            transform: `translate(-50%, -100%) translateY(${translateY})`
+                          }}
+                        >
+                          <div className="bg-[#10B981] text-white font-black text-[9px] uppercase px-2 py-0.5 rounded-md tracking-wider whitespace-nowrap">
+                            La Suite
+                          </div>
+                          <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#10B981] -mt-[1px]"></div>
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   <button
