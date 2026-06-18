@@ -14,15 +14,110 @@ interface AlphabetLessonCardProps {
   suggestedLessonId: string | null;
   onClick: () => void;
   maxLevelPerLesson?: number;
+  isMobileLayout?: boolean;
 }
 
-export function AlphabetLessonCard({ lesson, level, unit, language, isReviewLocked, suggestedLessonId, onClick, maxLevelPerLesson = 4 }: AlphabetLessonCardProps) {
+export function AlphabetLessonCard({ lesson, level, unit, language, isReviewLocked, suggestedLessonId, onClick, maxLevelPerLesson = 4, isMobileLayout = false }: AlphabetLessonCardProps) {
   const [isPressed, setIsPressed] = useState(false);
   
   const isMaxLevel = level >= maxLevelPerLesson;
   const isSuggested = suggestedLessonId === lesson.id;
   
   const buttonText = level === 0 ? getTranslation('auto.start_learning', language) || "Commencer" : getTranslation('auto.access_levels', language) || "Accéder aux niveaux";
+
+  if (isMobileLayout) {
+    return (
+      <div 
+        className={`relative w-full bg-white rounded-2xl sm:rounded-[1.5rem] border-2 p-4 flex flex-col gap-3 shadow-sm transition-all group cursor-pointer
+          ${isPressed ? 'translate-y-[4px] border-b-2' : 'border-b-[5px] sm:border-b-[6px]'}
+          ${isMaxLevel ? 'border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.1)]' : isReviewLocked ? 'bg-slate-50 border-slate-200' : isSuggested ? 'border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.3)]' : 'border-slate-200 hover:border-slate-300'}
+        `}
+        onPointerDown={() => setIsPressed(true)}
+        onPointerUp={() => setIsPressed(false)}
+        onPointerLeave={() => setIsPressed(false)}
+        onPointerCancel={() => setIsPressed(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+      >
+        {/* Badges */}
+        {isMaxLevel ? (
+          <div className="absolute -top-3.5 right-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm z-10">
+            <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
+          </div>
+        ) : isSuggested ? (
+          <div className="absolute -top-3.5 right-6 bg-amber-400 text-amber-900 text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm z-10">
+            <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
+          </div>
+        ) : null}
+
+        {/* Header: Title and Description */}
+        <div className="flex flex-col items-start text-left w-full mt-1">
+          <h4 className="font-extrabold text-lg sm:text-xl text-slate-800 leading-tight">
+            {getLocalizedField(lesson, 'title', language)}
+          </h4>
+          <span className={`text-xs font-bold mt-0.5 tracking-wide text-slate-500`}>
+            {lesson.items.map(i => formatCombiningChar(i.letter)).join(' • ')}
+          </span>
+        </div>
+
+        {/* Middle: Image Left, Letters Right */}
+        <div className="flex flex-row gap-3 w-full items-stretch mt-1">
+          {/* Left: Letters (instead of image) */}
+          <div className="w-[84px] h-[84px] sm:w-[96px] sm:h-[96px] rounded-xl overflow-hidden shrink-0 relative bg-slate-100 border border-slate-200 flex items-center justify-center text-3xl font-thai text-slate-600">
+            <div className="flex flex-wrap items-center justify-center p-2 leading-none gap-1">
+               {lesson.items.map((i: any) => formatCombiningChar(i.letter)).join('')}
+            </div>
+            {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[1px]"><Star size={32} className="text-white fill-white/50" /></div>}
+          </div>
+          
+          {/* Right: Letters List */}
+          <div className="flex-1 min-w-0 bg-slate-50 rounded-xl p-1.5 border border-slate-100 flex flex-col cursor-default" onClick={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()}>
+            <div className="flex bg-slate-200/50 p-[3px] rounded-lg w-full mb-1 justify-center">
+                <span className="text-[10px] font-bold text-slate-500 py-1">{getTranslation('auto.letters', language) || "Lettres"}</span>
+            </div>
+            <div className="flex flex-col gap-1 overflow-y-auto min-h-[50px] max-h-[64px] px-1 no-scrollbar">
+                {lesson.items.slice(0, 3).map((p: any, i: number) => (
+                  <div key={i} className="flex items-center justify-between text-[10px] border-b border-slate-200/50 last:border-0 pb-0.5 last:pb-0 gap-1">
+                      <span className="font-thai text-sm font-bold text-slate-700">{formatCombiningChar(p.letter)}</span>
+                      <div className="flex flex-col text-right min-w-0">
+                         <span className="font-bold text-slate-700 truncate">{p.pronunciation}</span>
+                         <span className="text-slate-500 text-[9px] truncate">{getLocalizedField(p, 'exampleTranslation', language)}</span>
+                      </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom: Progress Bar & Button */}
+        <div className="flex items-center justify-between w-full mt-1 gap-3">
+          <div className="flex-1 flex flex-col gap-1.5 min-w-0">
+            <div className="flex justify-between text-[9px] uppercase font-black tracking-wider text-slate-400">
+              <span>{getTranslation('auto.mastery_6', language) || "Maîtrise"}</span>
+              <span className={unit.textClass}>{level}/{maxLevelPerLesson}</span>
+            </div>
+            <div className="flex justify-between gap-[2px] w-full">
+              {Array.from({ length: maxLevelPerLesson }).map((_, i) => (
+                <div key={i} className={`h-1.5 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? unit.colorClass : 'bg-slate-100'}`}></div>
+              ))}
+            </div>
+          </div>
+          
+          <button 
+            className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-extrabold text-xs sm:text-sm text-white transition-all active:scale-95 shrink-0 ${unit.bgClass || unit.colorClass} ${isReviewLocked ? 'opacity-50 pointer-events-none' : ''}`}
+            onClick={(e) => {
+                e.stopPropagation();
+                onClick();
+            }}
+          >
+            {level === 0 ? (getTranslation('auto.start_learning', language) || "Commencer") : (getTranslation('auto.access_levels', language) || "Accéder")}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 

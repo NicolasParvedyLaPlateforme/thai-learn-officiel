@@ -153,8 +153,8 @@ export default function SpeakMobileTimeline({
           </div>
         )}
 
-        <div className="flex flex-col relative w-full items-center mt-8 pb-20">
-          <div className="absolute left-1/2 top-0 bottom-0 w-3 -translate-x-1/2 bg-slate-200 rounded-full z-0"></div>
+        <div className="flex flex-col relative w-full mt-8 pb-20 pl-2 pr-2 sm:pl-4 sm:pr-4">
+          <div className="absolute left-[1.75rem] sm:left-[2.5rem] top-0 bottom-[4rem] w-2 -translate-x-1/2 bg-slate-200 rounded-full z-0 opacity-80"></div>
 
           {unitLessons.map((lesson, idx) => {
             const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
@@ -175,10 +175,10 @@ export default function SpeakMobileTimeline({
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
-                className="relative flex flex-col items-center w-full scroll-mt-24 z-10 mb-8 sm:mb-12 group"
+                className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
               >
                 <div
-                  className={`relative shrink-0 mb-4 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
+                  className={`relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
                   onClick={(e) => {
                     e.stopPropagation();
                     if (isReviewLocked) {
@@ -190,31 +190,23 @@ export default function SpeakMobileTimeline({
                   }}
                 >
                   {isMaxLevel && (
-                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
-                      <Crown size={28} className="text-amber-400 fill-amber-400" />
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                      <Crown size={22} className="text-amber-400 fill-amber-400" />
                     </div>
                   )}
-                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-[6px] relative z-10 text-4xl sm:text-5xl font-thai shadow-sm overflow-hidden
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden bg-white
                       ${isMaxLevel
-                      ? unit.colorClass + ' text-white ' + unit.borderClass
+                      ? unit.colorClass + ' text-white border-white shadow-[0_0_15px_rgba(16,185,129,0.3)]'
                       : isReviewLocked
-                        ? 'bg-slate-100 text-slate-300 border-slate-200 border-2 active:border-b-2 active:translate-y-1'
-                        : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1
-                          : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}`}
+                        ? 'bg-slate-100 text-slate-300 border-white'
+                        : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
+                          : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
                   >
-                    {lesson.imageUrl ? (
-                      <>
-                        <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''} ${isReviewLocked ? 'opacity-30 grayscale' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
-                        {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={40} className="stroke-[3] text-white" /></div>}
-                        {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10"><Lock size={40} className="text-slate-500 stroke-[2.5]" /></div>}
-                      </>
-                    ) : (
-                      isMaxLevel ? <CheckCircle size={40} className="stroke-[3]" /> : isReviewLocked ? <Lock size={40} className="fill-slate-200 text-slate-400 stroke-[2.5]" /> : level > 0 ? <CheckCircle size={40} className="stroke-current stroke-[2.5]" /> : lesson.isReview ? <Star size={40} className="fill-current stroke-current" /> : <Play size={40} className="ml-1 fill-current stroke-[2]" />
-                    )}
+                    {isMaxLevel ? <CheckCircle size={22} className="stroke-[3]" /> : isReviewLocked ? <Lock size={18} className="fill-slate-200 text-slate-400 stroke-[2.5]" /> : level > 0 ? <CheckCircle size={22} className="stroke-current stroke-[2.5]" /> : lesson.isReview ? <Star size={20} className="fill-current stroke-current" /> : <Play size={22} className="ml-0.5 fill-current stroke-[2]" />}
                   </div>
                 </div>
 
-                <div className="w-full max-w-[340px] z-10 px-2 sm:px-0">
+                <div className="flex-1 min-w-0 z-10">
                   <SpeakLessonCard 
                     lesson={lesson}
                     level={level}
@@ -223,6 +215,7 @@ export default function SpeakMobileTimeline({
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     maxLevelPerLesson={maxLevelPerLesson}
+                    isMobileLayout={true}
                     onClick={() => {
                       if (isReviewLocked) {
                         setLockedReviewModalOpen(true);
@@ -235,7 +228,7 @@ export default function SpeakMobileTimeline({
                 </div>
 
                 {showLineToNext && (
-                  <div className={`absolute top-[4.5rem] left-1/2 -translate-x-1/2 w-3 h-[calc(100%+2rem)] sm:h-[calc(100%+3rem)] ${lineToNextColor} z-0`}></div>
+                  <div className={`absolute top-5 sm:top-6 left-[1.75rem] sm:left-[2.5rem] -translate-x-1/2 w-2 h-[calc(100%+1.5rem)] sm:h-[calc(100%+2rem)] ${lineToNextColor} z-0 opacity-80`}></div>
                 )}
               </motion.div>
             )

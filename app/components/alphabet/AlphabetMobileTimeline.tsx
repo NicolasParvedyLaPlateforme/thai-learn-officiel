@@ -152,8 +152,8 @@ export default function AlphabetMobileTimeline({
           </div>
         )}
 
-        <div className="flex flex-col relative w-full items-center mt-8 pb-20">
-          <div className={`absolute left-1/2 top-0 bottom-[4rem] w-3 -translate-x-1/2 ${unit.colorClass} rounded-full z-0 opacity-80`}></div>
+        <div className="flex flex-col relative w-full mt-8 pb-20 pl-2 pr-2 sm:pl-4 sm:pr-4">
+          <div className={`absolute left-[1.75rem] sm:left-[2.5rem] top-0 bottom-[4rem] w-2 -translate-x-1/2 ${unit.colorClass} rounded-full z-0 opacity-80`}></div>
 
           {unitLessons.map((lesson, idx) => {
             const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
@@ -170,10 +170,10 @@ export default function AlphabetMobileTimeline({
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
-                className="relative flex flex-col items-center w-full scroll-mt-24 z-10 mb-8 sm:mb-12 group"
+                className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
               >
                 <div
-                  className={`relative shrink-0 mb-4 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
+                  className={`relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
                   onClick={(e) => {
                     e.stopPropagation();
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
@@ -181,34 +181,27 @@ export default function AlphabetMobileTimeline({
                   }}
                 >
                   {isMaxLevel && (
-                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
-                      <Crown size={28} className="text-amber-400 fill-amber-400" />
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                      <Crown size={22} className="text-amber-400 fill-amber-400" />
                     </div>
                   )}
-                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-[6px] relative z-10 shadow-sm overflow-hidden text-3xl font-thai
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden bg-white
                       ${isMaxLevel
-                      ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+                      ? unit.colorClass + ' text-white border-white shadow-[0_0_15px_rgba(16,185,129,0.3)]'
                       : level >= 3 ? unit.shades.l3 + ' border-white' : level >= 2 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
-                        : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
+                          : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
                   >
-                    <div className={`flex items-center justify-center ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
-                       {lesson.items.map((i: any) => formatCombiningChar(i.letter)).join('')}
-                    </div>
-                    {isMaxLevel && (
-                      <div className="absolute inset-0 z-20 flex items-center justify-center">
-                        <CheckCircle size={36} className="stroke-[3] text-white" />
-                      </div>
-                    )}
+                    {isMaxLevel ? <CheckCircle size={22} className="stroke-[3]" /> : level > 0 ? <CheckCircle size={22} className="stroke-current stroke-[2.5]" /> : <Play size={22} className="ml-0.5 fill-current stroke-[2]" />}
                   </div>
 
                   {(!isMaxLevel && level > 0) && (
-                    <div className={`absolute -right-1 top-0 sm:top-1 ${unit.colorClass} text-white rounded-full p-1 border-2 border-white z-20 w-6 h-6 flex items-center justify-center`}>
-                      <span className="text-[10px] font-bold">{level}/4</span>
+                    <div className={`absolute -right-1 -top-1 sm:top-0 ${unit.colorClass} text-white rounded-full p-0.5 border border-white z-20 w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center`}>
+                      <span className="text-[8px] sm:text-[9px] font-bold">{level}/4</span>
                     </div>
                   )}
                 </div>
 
-                <div className="w-full max-w-[340px] z-10 px-2 sm:px-0">
+                <div className="flex-1 min-w-0 z-10">
                   <AlphabetLessonCard 
                     lesson={lesson}
                     level={level}
@@ -217,6 +210,7 @@ export default function AlphabetMobileTimeline({
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     maxLevelPerLesson={maxLevelPerLesson}
+                    isMobileLayout={true}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
                       setModalLevel(Math.min(level, maxLevelPerLesson - 1));
@@ -225,7 +219,7 @@ export default function AlphabetMobileTimeline({
                 </div>
 
                 {showLineToNext && (
-                  <div className={`absolute top-[4.5rem] left-1/2 -translate-x-1/2 w-3 h-[calc(100%+2rem)] sm:h-[calc(100%+3rem)] ${lineToNextColor} z-0`}></div>
+                  <div className={`absolute top-5 sm:top-6 left-[1.75rem] sm:left-[2.5rem] -translate-x-1/2 w-2 h-[calc(100%+1.5rem)] sm:h-[calc(100%+2rem)] ${lineToNextColor} z-0 opacity-80`}></div>
                 )}
               </motion.div>
             )
