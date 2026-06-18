@@ -152,6 +152,7 @@ export function DesktopLessonLevelsView({
           lessonId={lesson.id}
           lesson={lesson}
           lessonPartsCompleted={lessonPartsCompleted}
+          suggestionType={suggestionType}
         />
       </div>
     </motion.div>

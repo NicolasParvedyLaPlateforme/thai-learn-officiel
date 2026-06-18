@@ -16,6 +16,7 @@ interface LessonPathMapProps {
   lessonId?: string;
   lesson?: any;
   lessonPartsCompleted?: Record<string, number[]>;
+  suggestionType?: string;
 }
 
 export function LessonPathMap({
@@ -30,7 +31,8 @@ export function LessonPathMap({
   language,
   lessonId,
   lesson,
-  lessonPartsCompleted
+  lessonPartsCompleted,
+  suggestionType
 }: LessonPathMapProps) {
   const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
 
@@ -105,7 +107,7 @@ export function LessonPathMap({
               style={{ transform: `translateX(${getOffset(levelIndex)}px)` }}
               ref={isCurrent ? currentLevelRef : null}
             >
-              {levelIndex === 0 && (
+              {levelIndex === 0 && suggestionType === 'learn' && (
                 <div className={`hidden lg:block absolute right-full mr-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
                   <img 
                     src="/images/image-learn-niveau/find-the-good-traduction-removebg-preview.png" 
@@ -115,7 +117,7 @@ export function LessonPathMap({
                 </div>
               )}
 
-              {levelIndex === 1 && (
+              {levelIndex === 1 && suggestionType === 'learn' && (
                 <div className={`hidden lg:block absolute left-full ml-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 1 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
                   <img 
                     src="/images/image-learn-niveau/complete-the-sentence.png" 
@@ -125,7 +127,7 @@ export function LessonPathMap({
                 </div>
               )}
 
-              {levelIndex === 2 && (
+              {levelIndex === 2 && suggestionType === 'learn' && (
                 <div className={`hidden lg:block absolute left-full ml-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 2 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
                   <img 
                     src="/images/image-learn-niveau/build-your-sentence-removebg.png" 
@@ -135,7 +137,7 @@ export function LessonPathMap({
                 </div>
               )}
 
-              {levelIndex === 3 && (
+              {levelIndex === 3 && suggestionType === 'learn' && (
                 <div className={`hidden lg:block absolute left-full ml-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 3 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
                   <img 
                     src="/images/image-learn-niveau/build-your-sentence-removebg.png" 
