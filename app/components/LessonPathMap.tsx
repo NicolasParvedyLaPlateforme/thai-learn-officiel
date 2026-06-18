@@ -37,9 +37,8 @@ export function LessonPathMap({
   const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
 
   const getOffset = (index: number) => {
-    // Winding path pattern desktop
-    const pattern = [0, 45, 65, 45, 0, -45, -65, -45, 0, 45, 0];
-    return pattern[index] || 0;
+    // Desktop alternating pattern for wide sweeping curves
+    return index % 2 === 0 ? -120 : 120;
   };
 
   const getMobileOffset = (index: number) => {
@@ -131,7 +130,7 @@ export function LessonPathMap({
                 {/* Desktop SVG */}
                 <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[240px] overflow-visible z-0 pointer-events-none">
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 120, ${100 + getOffset(levelIndex - 1)} 120, ${100 + getOffset(levelIndex - 1)} 240`}
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex) * 1.5} 80, ${100 + getOffset(levelIndex - 1) * 1.5} 160, ${100 + getOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="currentColor"
                     className={strokeClass}
@@ -140,7 +139,7 @@ export function LessonPathMap({
                   />
                   {/* Inner track for depth */}
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 120, ${100 + getOffset(levelIndex - 1)} 120, ${100 + getOffset(levelIndex - 1)} 240`}
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex) * 1.5} 80, ${100 + getOffset(levelIndex - 1) * 1.5} 160, ${100 + getOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="8"
@@ -150,7 +149,7 @@ export function LessonPathMap({
                 {/* Mobile SVG */}
                 <svg className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[240px] overflow-visible z-0 pointer-events-none">
                   <path
-                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 120, ${100 + getMobileOffset(levelIndex - 1)} 120, ${100 + getMobileOffset(levelIndex - 1)} 240`}
+                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex) * 1.5} 80, ${100 + getMobileOffset(levelIndex - 1) * 1.5} 160, ${100 + getMobileOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="currentColor"
                     className={strokeClass}
@@ -159,7 +158,7 @@ export function LessonPathMap({
                   />
                   {/* Inner track for depth */}
                   <path
-                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 120, ${100 + getMobileOffset(levelIndex - 1)} 120, ${100 + getMobileOffset(levelIndex - 1)} 240`}
+                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex) * 1.5} 80, ${100 + getMobileOffset(levelIndex - 1) * 1.5} 160, ${100 + getMobileOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="8"
@@ -187,12 +186,12 @@ export function LessonPathMap({
               {/* Objective Images */}
               {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
                 <>
-                  {/* Desktop Image */}
+                  {/* Desktop Image (pointing INWARDS to avoid overflow) */}
                   <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out 
                     ${modalLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-                    ${getOffset(levelIndex) <= 0 ? 'right-full mr-12' : 'left-full ml-12'}
-                    ${modalLevel !== levelIndex && getOffset(levelIndex) <= 0 ? 'translate-x-8' : ''}
-                    ${modalLevel !== levelIndex && getOffset(levelIndex) > 0 ? '-translate-x-8' : ''}
+                    ${getOffset(levelIndex) < 0 ? 'left-full ml-12' : 'right-full mr-12'}
+                    ${modalLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
+                    ${modalLevel !== levelIndex && getOffset(levelIndex) > 0 ? 'translate-x-8' : ''}
                   `}>
                     <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl" />
                   </div>
