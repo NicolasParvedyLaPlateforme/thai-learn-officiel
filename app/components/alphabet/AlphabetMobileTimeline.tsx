@@ -2,8 +2,10 @@ import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
+import { AlphabetLessonCard } from './AlphabetLessonCard';
+import { formatCombiningChar } from '../../lib/alphabet-utils';
 
-interface LearnMobileTimelineProps {
+interface AlphabetMobileTimelineProps {
   unit: any;
   unitLessons: any[];
   activeUnitIndex: number;
@@ -11,19 +13,17 @@ interface LearnMobileTimelineProps {
   language: string;
   lessonLevels: Record<string, number>;
   suggestedLessonId: string | null;
-  learnQuests: any[];
+  alphabetQuests: any[];
   mounted: boolean;
   handleUnitSelect: (index: number) => void;
   setIsUnitsModalOpen: (open: boolean) => void;
   setIsQuestsModalOpen: (open: boolean) => void;
   setSelectedLesson: (data: any) => void;
-  setModalLevel: (level: number | null) => void;
-  setLockedReviewModalOpen: (open: boolean) => void;
+  setModalLevel: (level: number) => void;
+  maxLevelPerLesson?: number;
 }
 
-import { LessonCard } from './LessonCard';
-
-export default function LearnMobileTimeline({
+export default function AlphabetMobileTimeline({
   unit,
   unitLessons,
   activeUnitIndex,
@@ -31,17 +31,19 @@ export default function LearnMobileTimeline({
   language,
   lessonLevels,
   suggestedLessonId,
-  learnQuests,
+  alphabetQuests,
   mounted,
   handleUnitSelect,
   setIsUnitsModalOpen,
   setIsQuestsModalOpen,
   setSelectedLesson,
   setModalLevel,
-  setLockedReviewModalOpen
-}: LearnMobileTimelineProps) {
-  const maxLevelsInUnit = unitLessons.length * 10;
-  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc, l) => acc + (lessonLevels[l.id] || 0), 0) : 0;
+  maxLevelPerLesson = 4
+}: AlphabetMobileTimelineProps) {
+  const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
+  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => {
+    return acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson);
+  }, 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
   return (
@@ -88,7 +90,7 @@ export default function LearnMobileTimeline({
             <div className="w-full">
               <div className="flex flex-col">
                 <div className="flex justify-between text-xs font-bold text-white mb-1 px-1 drop-shadow-sm uppercase tracking-wide">
-                  <span>{getTranslation('auto.mastery_3', language)}</span>
+                  <span>{getTranslation('auto.mastery_13', language)}</span>
                   <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
                 </div>
                 <div className={`w-full ${unit.imageUrl ? 'bg-black/20 backdrop-blur-sm' : 'bg-black/15'} rounded-full h-2 overflow-hidden mb-1 shadow-inner`}>
@@ -98,7 +100,7 @@ export default function LearnMobileTimeline({
                   ></div>
                 </div>
                 <div className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold text-[10px] px-1 drop-shadow-sm`}>
-                  {getTranslation('auto.10_levels_lesson_mastery', language)}
+                  {getTranslation('auto.4_levels_per_letter_total_mast', language)}
                 </div>
               </div>
             </div>
@@ -128,9 +130,9 @@ export default function LearnMobileTimeline({
                 <span className="text-xs font-semibold text-slate-400">
                   {getTranslation('auto.daily_quest', language)}
                 </span>
-                {learnQuests.filter(q => !q.completed).length > 0 ? (
+                {alphabetQuests.filter(q => !q.completed).length > 0 ? (
                   <span className="text-sm font-bold text-slate-700 truncate">
-                    {getLocalizedField(learnQuests.filter(q => !q.completed)[0], 'title', language)}
+                    {getLocalizedField(alphabetQuests.filter(q => !q.completed)[0], 'title', language)}
                   </span>
                 ) : (
                   <span className="text-sm font-bold text-emerald-600 truncate">
@@ -139,10 +141,10 @@ export default function LearnMobileTimeline({
                 )}
               </div>
             </div>
-            {learnQuests.filter(q => !q.completed).length > 0 && (
+            {alphabetQuests.filter(q => !q.completed).length > 0 && (
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
-                  {learnQuests.filter(q => !q.completed)[0].progress} / {learnQuests.filter(q => !q.completed)[0].target}
+                  {alphabetQuests.filter(q => !q.completed)[0].progress} / {alphabetQuests.filter(q => !q.completed)[0].target}
                 </span>
                 <ChevronRight size={18} className="text-slate-300 shrink-0" />
               </div>
@@ -156,12 +158,10 @@ export default function LearnMobileTimeline({
           {unitLessons.map((lesson, idx) => {
             const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
             let isReviewLocked = false;
-            if (lesson.isReview && mounted) {
-              const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview);
-              isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
-            }
-
-            const isMaxLevel = level >= 10;
+            
+            const isMaxLevel = level >= maxLevelPerLesson;
+            const showLineToNext = idx < unitLessons.length - 1;
+            const lineToNextColor = level > 0 ? unit.colorClass : "bg-slate-200";
 
             return (
               <motion.div
@@ -176,30 +176,23 @@ export default function LearnMobileTimeline({
                   className={`relative shrink-0 mb-4 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (isReviewLocked) {
-                      setLockedReviewModalOpen(true);
-                      return;
-                    }
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(null);
+                    setModalLevel(Math.min(level, maxLevelPerLesson - 1));
                   }}
                 >
-                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-[6px] relative z-10 shadow-sm overflow-hidden bg-white
+                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center border-[6px] relative z-10 shadow-sm overflow-hidden text-3xl font-thai
                       ${isMaxLevel
                       ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]'
-                      : isReviewLocked
-                        ? 'bg-slate-100 text-slate-300 border-white'
-                        : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
-                          : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
+                      : level >= 3 ? unit.shades.l3 + ' border-white' : level >= 2 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
+                        : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
                   >
-                    {lesson.imageUrl ? (
-                      <>
-                        <IconImage src={lesson.imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''} ${isReviewLocked ? 'opacity-30 grayscale' : ''}`} sizes="(max-width: 640px) 5rem, 6rem" />
-                        {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={40} className="stroke-[3] text-white" /></div>}
-                        {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10"><Lock size={40} className="text-slate-500 stroke-[2.5]" /></div>}
-                      </>
-                    ) : (
-                      isMaxLevel ? <CheckCircle size={40} className="stroke-[3]" /> : isReviewLocked ? <Lock size={40} className="fill-slate-200 text-slate-400 stroke-[2.5]" /> : level > 0 ? <CheckCircle size={40} className="stroke-current stroke-[2.5]" /> : lesson.isReview ? <Star size={40} className="fill-current stroke-current" /> : <Play size={40} className="ml-1 fill-current stroke-[2]" />
+                    <div className={`flex items-center justify-center tracking-widest ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
+                       {lesson.items.map((i: any) => formatCombiningChar(i.letter)).join('')}
+                    </div>
+                    {isMaxLevel && (
+                      <div className="absolute inset-0 z-20 flex items-center justify-center">
+                        <CheckCircle size={36} className="stroke-[3] text-white" />
+                      </div>
                     )}
                   </div>
                   {/* Small check edge mark */}
@@ -208,26 +201,32 @@ export default function LearnMobileTimeline({
                       <CheckCircle size={14} className="fill-white stroke-current" />
                     </div>
                   )}
+                  {(!isMaxLevel && level > 0) && (
+                    <div className={`absolute -right-1 top-0 sm:top-1 ${unit.colorClass} text-white rounded-full p-1 border-2 border-white z-20 w-6 h-6 flex items-center justify-center`}>
+                      <span className="text-[10px] font-bold">{level}/4</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="w-full max-w-[340px] z-10 px-2 sm:px-0">
-                  <LessonCard 
+                  <AlphabetLessonCard 
                     lesson={lesson}
                     level={level}
                     unit={unit}
                     language={language}
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
+                    maxLevelPerLesson={maxLevelPerLesson}
                     onClick={() => {
-                      if (isReviewLocked) {
-                        setLockedReviewModalOpen(true);
-                        return;
-                      }
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      setModalLevel(null);
+                      setModalLevel(Math.min(level, maxLevelPerLesson - 1));
                     }}
                   />
                 </div>
+
+                {showLineToNext && (
+                  <div className={`absolute top-[4.5rem] left-1/2 -translate-x-1/2 w-3 h-[calc(100%+2rem)] sm:h-[calc(100%+3rem)] ${lineToNextColor} z-0`}></div>
+                )}
               </motion.div>
             )
           })}

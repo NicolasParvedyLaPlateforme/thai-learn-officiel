@@ -170,7 +170,7 @@ export default function LearnDesktopTimeline({
                 </div>
                 {/* Status indicator on the edge of the circle (like in mockup, a small green check mark) */}
                 {isMaxLevel && (
-                  <div className={`absolute -right-2 top-0 ${unit.colorClass} text-white rounded-full p-0.5 border-2 border-white`}>
+                  <div className={`absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 ${unit.colorClass} text-white rounded-full p-0.5 border-2 border-white z-20`}>
                     <CheckCircle size={14} className="fill-white stroke-current" />
                   </div>
                 )}

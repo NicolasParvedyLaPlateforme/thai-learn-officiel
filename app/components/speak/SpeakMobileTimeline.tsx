@@ -2,6 +2,7 @@ import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
+import { SpeakLessonCard } from './SpeakLessonCard';
 
 interface SpeakMobileTimelineProps {
   unit: any;
@@ -208,55 +209,24 @@ export default function SpeakMobileTimeline({
                   </div>
                 </div>
 
-                <div
-                  className={`w-full max-w-[280px] sm:max-w-[320px] rounded-[1.5rem] p-5 flex flex-col items-center text-center transition-all z-10 border-2 border-b-[6px] cursor-pointer active:translate-y-[4px] active:border-b-2 shadow-sm relative ${isMaxLevel ? 'bg-emerald-50 border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : isReviewLocked ? 'bg-slate-50 border-slate-200' : suggestedLessonId === lesson.id ? 'bg-white border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.5)]' : 'bg-white border-slate-200 hover:border-slate-300'}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isReviewLocked) {
-                      setLockedReviewModalOpen(true);
-                      return;
-                    }
-                    setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
-                  }}
-                >
-                  {isMaxLevel ? (
-                    <div className="absolute -top-3.5 left-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                      <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
-                    </div>
-                  ) : suggestedLessonId === lesson.id && (
-                    <div className="absolute -top-3.5 left-6 bg-amber-400 text-amber-900 text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm">
-                      <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
-                    </div>
-                  )}
-                  <h4 className={`font-extrabold text-xl text-slate-800`}>
-                    {mounted ? getLocalizedField(lesson, 'title', language) : lesson.title}
-                  </h4>
-                  <span className={`text-sm font-bold mt-1 tracking-wide text-slate-500`}>
-                    {mounted ? getLocalizedField(lesson, 'description', language) : lesson.description}
-                  </span>
-
-                  <div className="w-full mt-4">
-                    {level === 0 ? (
-                      suggestedLessonId === lesson.id ? (
-                        <div className="text-sm font-bold text-slate-400 mt-2 py-1">
-                          {getTranslation('auto.start_learning', language)}
-                        </div>
-                      ) : null
-                    ) : (
-                      <div className="flex flex-col w-full px-2 gap-1.5 opacity-90 mt-1 z-10">
-                        <div className="flex justify-between text-xs font-bold text-slate-400 mb-1 px-1">
-                          <span>{getTranslation('auto.mastery_4', language)}</span>
-                          <span className={unit.textClass}>{level}/{maxLevelPerLesson || 10}</span>
-                        </div>
-                        <div className="flex justify-between gap-[2px] w-full">
-                          {Array.from({ length: maxLevelPerLesson || 10 }).map((_, i) => (
-                            <div key={i} className={`h-2.5 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? unit.colorClass : 'bg-slate-100'}`}></div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                <div className="w-full max-w-[340px] z-10 px-2 sm:px-0">
+                  <SpeakLessonCard 
+                    lesson={lesson}
+                    level={level}
+                    unit={unit}
+                    language={language}
+                    isReviewLocked={isReviewLocked}
+                    suggestedLessonId={suggestedLessonId}
+                    maxLevelPerLesson={maxLevelPerLesson}
+                    onClick={() => {
+                      if (isReviewLocked) {
+                        setLockedReviewModalOpen(true);
+                        return;
+                      }
+                      setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                      setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
+                    }}
+                  />
                 </div>
 
                 {showLineToNext && (
