@@ -19,7 +19,7 @@ interface AlphabetMobileTimelineProps {
   setIsUnitsModalOpen: (open: boolean) => void;
   setIsQuestsModalOpen: (open: boolean) => void;
   setSelectedLesson: (data: any) => void;
-  setModalLevel: (level: number) => void;
+  setModalLevel: (level: number | null) => void;
   maxLevelPerLesson?: number;
 }
 
@@ -191,7 +191,7 @@ export default function AlphabetMobileTimeline({
                       : level >= 3 ? unit.shades.l3 + ' border-white' : level >= 2 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
                         : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
                   >
-                    <div className={`flex items-center justify-center tracking-widest ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
+                    <div className={`flex items-center justify-center ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
                        {lesson.items.map((i: any) => formatCombiningChar(i.letter)).join('')}
                     </div>
                     {isMaxLevel && (

@@ -18,7 +18,7 @@ interface SpeakMobileTimelineProps {
   setIsUnitsModalOpen: (open: boolean) => void;
   setIsQuestsModalOpen: (open: boolean) => void;
   setSelectedLesson: (data: any) => void;
-  setModalLevel: (level: number) => void;
+  setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
   maxLevelPerLesson?: number;
 }

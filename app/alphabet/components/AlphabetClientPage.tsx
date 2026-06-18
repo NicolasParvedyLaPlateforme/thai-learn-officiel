@@ -257,9 +257,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
             ))}
           </div>
         </div>
-      ) : (
-        <main className="max-w-2xl mx-auto px-4 mt-2 flex flex-col gap-8 md:hidden">
-          {(() => {
+      ) : (() => {
           const unit = UNITS[activeUnitIndex];
           const unitLessons = unit.lessons;
           const completedInUnit = mounted ? unitLessons.filter(l => completedLessons.includes(l.id)).length : 0;
@@ -309,8 +307,6 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
              />
           );
         })()}
-      </main>
-      )}
 
       {/* Main Content (Desktop Only) */}
       {!mounted || isProcessingHash ? (

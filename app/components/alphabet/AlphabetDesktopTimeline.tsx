@@ -148,7 +148,7 @@ export default function AlphabetDesktopTimeline({
                     setShowDesktopUnitsList(false);
                   }}
                 >
-                    <div className={`flex items-center justify-center tracking-widest ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
+                    <div className={`flex items-center justify-center ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
                       {lesson.items.map((i: any) => formatCombiningChar(i.letter)).join('')}
                     </div>
                     {isMaxLevel && (
