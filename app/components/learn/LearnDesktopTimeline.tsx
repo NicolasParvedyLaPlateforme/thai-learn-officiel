@@ -2,6 +2,7 @@ import { m as motion } from "motion/react";
 import { BookOpen, Star, CheckCircle, Lock, Play } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
+import { useState } from 'react';
 
 interface LearnDesktopTimelineProps {
   unit: any;
@@ -39,6 +40,8 @@ export default function LearnDesktopTimeline({
   const maxLevelsInUnit = unitLessons.length * 10;
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc, l) => acc + (lessonLevels[l.id] || 0), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
+  
+  const [activeCenteredLessonId, setActiveCenteredLessonId] = useState<string | null>(unitLessons.length > 0 ? unitLessons[0].id : null);
 
   return (
     <div key={`desktop-unit-${unit.id}`} className="flex flex-col gap-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
@@ -112,6 +115,8 @@ export default function LearnDesktopTimeline({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
               className={`relative w-full flex ${isLeft ? 'justify-start' : 'justify-end'} z-10 mb-16 group`}
+              onViewportEnter={() => setActiveCenteredLessonId(lesson.id)}
+              viewport={{ margin: "-35% 0px -35% 0px" }}
             >
               <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
                 <div className="w-full max-w-[360px]">
@@ -170,6 +175,24 @@ export default function LearnDesktopTimeline({
                   </div>
                 )}
               </div>
+
+              {/* Side Image */}
+              {(lesson as any).imageUrl && (
+                <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-10 xl:pl-20' : 'left-0 justify-end pr-10 xl:pr-20'} z-0`}>
+                   <motion.div
+                      initial={false}
+                      animate={{ 
+                         opacity: activeCenteredLessonId === lesson.id ? 0.9 : 0, 
+                         x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? 40 : -40),
+                         scale: activeCenteredLessonId === lesson.id ? 1 : 0.9
+                      }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className="w-56 h-56 md:w-64 md:h-64 relative rounded-[2rem] overflow-hidden shadow-xl border-4 border-white pointer-events-none"
+                   >
+                      <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 150px, 250px" />
+                   </motion.div>
+                </div>
+              )}
 
             </motion.div>
           )
