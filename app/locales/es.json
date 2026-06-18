@@ -403,5 +403,10 @@
   "instruction.sentence_builder": "Traduce esta frase",
   "instruction.writing": "Traduce esta frase",
   "instruction.writing_blind": "Escribe en tailandés",
-  "instruction.free_typing": "Escribe la traducción correcta"
+  "instruction.free_typing": "Escribe la traducción correcta",
+  "auto.words": "Palabras",
+  "auto.phrases": "Frases",
+  "auto.access_levels": "Acceder a niveles",
+  "auto.unlock_levels_for_words": "Desbloquea más niveles para ver las palabras.",
+  "auto.unlock_levels_for_phrases": "Desbloquea más niveles para ver las frases."
 }

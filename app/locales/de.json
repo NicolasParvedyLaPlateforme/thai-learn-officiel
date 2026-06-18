@@ -405,5 +405,10 @@
   "instruction.sentence_builder": "Übersetze diesen Satz",
   "instruction.writing": "Übersetze diesen Satz",
   "instruction.writing_blind": "Schreibe auf Thai",
-  "instruction.free_typing": "Tippe die richtige Übersetzung"
+  "instruction.free_typing": "Tippe die richtige Übersetzung",
+  "auto.words": "Wörter",
+  "auto.phrases": "Sätze",
+  "auto.access_levels": "Level aufrufen",
+  "auto.unlock_levels_for_words": "Schalte weitere Level frei, um Wörter zu sehen.",
+  "auto.unlock_levels_for_phrases": "Schalte weitere Level frei, um Sätze zu sehen."
 }

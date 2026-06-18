@@ -405,5 +405,10 @@
   "instruction.sentence_builder": "Translate this sentence",
   "instruction.writing": "Translate this sentence",
   "instruction.writing_blind": "Write in Thai",
-  "instruction.free_typing": "Type the correct translation"
+  "instruction.free_typing": "Type the correct translation",
+  "auto.words": "Words",
+  "auto.phrases": "Phrases",
+  "auto.access_levels": "Access Levels",
+  "auto.unlock_levels_for_words": "Unlock more levels to see the words.",
+  "auto.unlock_levels_for_phrases": "Unlock more levels to see the phrases."
 }

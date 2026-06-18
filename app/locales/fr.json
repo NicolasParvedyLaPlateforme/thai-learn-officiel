@@ -405,5 +405,10 @@
   "instruction.sentence_builder": "Traduisez cette phrase",
   "instruction.writing": "Traduisez cette phrase",
   "instruction.writing_blind": "Écrivez en thaï",
-  "instruction.free_typing": "Tapez la bonne traduction"
+  "instruction.free_typing": "Tapez la bonne traduction",
+  "auto.words": "Mots",
+  "auto.phrases": "Phrases",
+  "auto.access_levels": "Accéder aux niveaux",
+  "auto.unlock_levels_for_words": "Débloquez plus de niveaux pour voir les mots.",
+  "auto.unlock_levels_for_phrases": "Débloquez plus de niveaux pour voir les phrases."
 }

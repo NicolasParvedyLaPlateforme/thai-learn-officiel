@@ -70,7 +70,7 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
         </div>
       </div>
 
-      <div className="w-full bg-slate-50 rounded-2xl p-2 border border-slate-100 mt-2 flex flex-col gap-3" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full bg-slate-50 rounded-2xl p-2 border border-slate-100 mt-2 flex flex-col gap-3 cursor-default" onClick={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()}>
          {/* Toggle */}
          <div className="flex bg-slate-200/50 p-1 rounded-xl w-full">
             <button 
@@ -91,7 +91,7 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
          <div className="flex flex-col gap-2 px-2 pb-2 min-h-[80px]">
            {showBlockedMessage ? (
               <div className="flex items-center justify-center h-full text-center text-sm font-medium text-slate-400 italic px-4 py-6">
-                Débloquez plus de niveaux pour voir {activeTab === 'words' ? 'les mots' : 'les phrases'}.
+                {activeTab === 'words' ? getTranslation('auto.unlock_levels_for_words', language) || "Débloquez plus de niveaux pour voir les mots." : getTranslation('auto.unlock_levels_for_phrases', language) || "Débloquez plus de niveaux pour voir les phrases."}
               </div>
            ) : activeTab === 'words' ? (
               lesson.words?.slice(0, 5).map((w: any, i: number) => (

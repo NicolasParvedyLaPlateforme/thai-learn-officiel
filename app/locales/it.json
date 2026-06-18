@@ -405,5 +405,10 @@
   "instruction.sentence_builder": "Traduci questa frase",
   "instruction.writing": "Traduci questa frase",
   "instruction.writing_blind": "Scrivi in thailandese",
-  "instruction.free_typing": "Digita la traduzione corretta"
+  "instruction.free_typing": "Digita la traduzione corretta",
+  "auto.words": "Parole",
+  "auto.phrases": "Frasi",
+  "auto.access_levels": "Accedi ai livelli",
+  "auto.unlock_levels_for_words": "Sblocca altri livelli per vedere le parole.",
+  "auto.unlock_levels_for_phrases": "Sblocca altri livelli per vedere le frasi."
 }
