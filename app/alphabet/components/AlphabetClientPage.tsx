@@ -230,6 +230,30 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
           const completedInUnit = mounted ? unitLessons.filter(l => completedLessons.includes(l.id)).length : 0;
           const progressPercent = mounted && unitLessons.length > 0 ? (completedInUnit / unitLessons.length) * 100 : 0;
           
+          if (selectedLesson) {
+            return (
+              <div className="md:hidden flex flex-col w-full pb-32">
+                <DesktopLessonLevelsView
+                  lessonData={selectedLesson}
+                  unitTitle={unit ? (getLocalizedField(unit, 'title', language) || unit.title) : undefined}
+                  modalLevel={modalLevel}
+                  setModalLevel={(lvl) => {
+                    setModalLevel(lvl);
+                  }}
+                  onBack={() => {
+                    setSelectedLesson(null);
+                    setModalLevel(null);
+                  }}
+                  language={language}
+                  lessonLevels={lessonLevels}
+                  lessonStars={lessonStars}
+                  maxLevelPerLesson={4}
+                  suggestionType="alphabet"
+                />
+              </div>
+            );
+          }
+
           return (
             <motion.div 
               key={unit.id} 
@@ -778,7 +802,9 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
 
       {/* Selected Lesson Modal */}
       {mounted && windowWidth < 1280 && createPortal(
-        <Drawer.Root open={!!selectedLesson} onOpenChange={(open) => !open && setSelectedLesson(null)}>
+        <Drawer.Root open={!!selectedLesson && modalLevel !== null} onOpenChange={(open) => {
+          if (!open) setModalLevel(null);
+        }}>
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm xl:hidden" />
             <Drawer.Content className="xl:hidden bg-white flex flex-col rounded-t-[24px] fixed bottom-0 left-0 right-0 z-[100] max-h-[95vh] outline-none">
@@ -810,21 +836,6 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                         <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
                           Alphabet
                         </p>
-
-                        {/* Levels Map */}
-                        <div className="w-full mb-6 relative">
-                          <LessonPathMap
-                            maxLevel={3}
-                            currentProgress={lessonLevels[selectedLesson.lesson.id] || 0}
-                            modalLevel={modalLevel}
-                            setModalLevel={setModalLevel}
-                            earnedStarsArray={lessonStars[selectedLesson.lesson.id] || []}
-                            unitColor={selectedLesson.unitColor}
-                            unitBorder={selectedLesson.unitBorder}
-                            unitText={selectedLesson.unitText}
-                            language={language}
-                          />
-                        </div>
                       </div>
 
                       {(() => {

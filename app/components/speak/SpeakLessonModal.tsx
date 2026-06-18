@@ -119,20 +119,6 @@ export default function SpeakLessonModal({
               <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
                 {getLocalizedField(selectedLesson.lesson, 'description', language)}
               </p>
-
-              <div className="w-full mb-6 relative">
-                <LessonPathMap
-                  maxLevel={maxLevelPerLesson}
-                  currentProgress={currentProgress}
-                  modalLevel={modalLevel}
-                  setModalLevel={setModalLevel}
-                  earnedStarsArray={lessonStars[selectedLesson.lesson.id] || []}
-                  unitColor={selectedLesson.unitColor}
-                  unitBorder={selectedLesson.unitBorder}
-                  unitText={selectedLesson.unitText}
-                  language={language}
-                />
-              </div>
             </div>
 
             <div className="px-7 pt-2 flex flex-col">
