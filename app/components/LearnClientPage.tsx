@@ -172,35 +172,36 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
     if (mounted) {
       const hash = window.location.hash;
       if (hash && hash.startsWith('#lesson-')) {
-        setTimeout(() => {
-          try {
-            const baseId = hash.substring(1).replace('lesson-', '');
+        try {
+          const baseId = hash.substring(1).replace('lesson-', '');
+          
+          // Auto open the map for this lesson
+          const foundLesson = data.lessons.find(l => l.id === baseId);
+          if (foundLesson) {
+            const isCompleted = completedLessons.includes(baseId);
+            const unitIndex = UNITS.findIndex(u => data.lessons.findIndex(l => l.id === baseId) >= u.startIndex && data.lessons.findIndex(l => l.id === baseId) < u.endIndex);
             
-            // Auto open the map for this lesson
-            const foundLesson = data.lessons.find(l => l.id === baseId);
-            if (foundLesson) {
-              const isCompleted = completedLessons.includes(baseId);
-              const unitIndex = UNITS.findIndex(u => data.lessons.findIndex(l => l.id === baseId) >= u.startIndex && data.lessons.findIndex(l => l.id === baseId) < u.endIndex);
+            if (unitIndex !== -1) {
+              const unit = UNITS[unitIndex];
+              setSelectedLesson({
+                lesson: foundLesson,
+                isCompleted,
+                unitColor: unit.colorClass,
+                unitBorder: unit.borderClass,
+                unitText: unit.textClass,
+                unitHover: unit.hoverClass
+              });
+              setActiveUnitIndex(unitIndex);
               
-              if (unitIndex !== -1) {
-                const unit = UNITS[unitIndex];
-                setSelectedLesson({
-                  lesson: foundLesson,
-                  isCompleted,
-                  unitColor: unit.colorClass,
-                  unitBorder: unit.borderClass,
-                  unitText: unit.textClass,
-                  unitHover: unit.hoverClass
-                });
-                setActiveUnitIndex(unitIndex);
-                
-                const lastLvl = localStorage.getItem(`last_level_${baseId}`);
-                if (lastLvl !== null) {
-                  setModalLevel(parseInt(lastLvl, 10));
-                }
+              const lastLvl = localStorage.getItem(`last_level_${baseId}`);
+              if (lastLvl !== null) {
+                setModalLevel(parseInt(lastLvl, 10));
               }
             }
+          }
 
+          // We need a tiny timeout here ONLY for scrolling to the element, if it's rendered in the DOM
+          setTimeout(() => {
             const isDesktop = window.innerWidth >= 768;
             const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
 
@@ -213,12 +214,12 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
               const y = el.getBoundingClientRect().top + window.scrollY - 100;
               window.scrollTo({ top: y, behavior: 'smooth' });
             }
-          } catch (e) {
-            console.error(e);
-          } finally {
-            setIsProcessingHash(false);
-          }
-        }, 100);
+          }, 50);
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setIsProcessingHash(false);
+        }
       } else {
         setIsProcessingHash(false);
       }
