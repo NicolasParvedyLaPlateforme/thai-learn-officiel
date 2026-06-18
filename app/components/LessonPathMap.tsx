@@ -124,14 +124,14 @@ export function LessonPathMap({
              : 'text-slate-200';
 
         return (
-          <div key={levelIndex} className="relative w-full h-[150px] flex items-center justify-center">
+          <div key={levelIndex} className="relative w-full h-[240px] flex items-center justify-center">
             {/* Connection Line to the node below */}
             {levelIndex > 0 && (
               <>
                 {/* Desktop SVG */}
-                <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[150px] overflow-visible z-0 pointer-events-none">
+                <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[240px] overflow-visible z-0 pointer-events-none">
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 75, ${100 + getOffset(levelIndex - 1)} 75, ${100 + getOffset(levelIndex - 1)} 150`}
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 120, ${100 + getOffset(levelIndex - 1)} 120, ${100 + getOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="currentColor"
                     className={strokeClass}
@@ -140,7 +140,7 @@ export function LessonPathMap({
                   />
                   {/* Inner track for depth */}
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 75, ${100 + getOffset(levelIndex - 1)} 75, ${100 + getOffset(levelIndex - 1)} 150`}
+                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 120, ${100 + getOffset(levelIndex - 1)} 120, ${100 + getOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="8"
@@ -148,9 +148,9 @@ export function LessonPathMap({
                   />
                 </svg>
                 {/* Mobile SVG */}
-                <svg className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[150px] overflow-visible z-0 pointer-events-none">
+                <svg className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[240px] overflow-visible z-0 pointer-events-none">
                   <path
-                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 75, ${100 + getMobileOffset(levelIndex - 1)} 75, ${100 + getMobileOffset(levelIndex - 1)} 150`}
+                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 120, ${100 + getMobileOffset(levelIndex - 1)} 120, ${100 + getMobileOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="currentColor"
                     className={strokeClass}
@@ -159,7 +159,7 @@ export function LessonPathMap({
                   />
                   {/* Inner track for depth */}
                   <path
-                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 75, ${100 + getMobileOffset(levelIndex - 1)} 75, ${100 + getMobileOffset(levelIndex - 1)} 150`}
+                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 120, ${100 + getMobileOffset(levelIndex - 1)} 120, ${100 + getMobileOffset(levelIndex - 1)} 240`}
                     fill="none"
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="8"
