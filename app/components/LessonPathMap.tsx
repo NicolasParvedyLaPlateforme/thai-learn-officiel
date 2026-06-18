@@ -65,13 +65,18 @@ export function LessonPathMap({
   const currentLevelRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     if (currentLevelRef.current) {
       // Small delay to ensure modal/drawer is fully open before scrolling
       setTimeout(() => {
-        currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
+        // Fade in after jumping to the right position
+        setTimeout(() => setIsReady(true), 50);
       }, 300);
+    } else {
+      setIsReady(true);
     }
   }, []);
 
@@ -106,7 +111,7 @@ export function LessonPathMap({
   const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh]">
+    <div className={`flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh] transition-opacity duration-1000 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}>
       {/* Vertical Navigation Bar (Desktop Only) */}
       <div className="hidden lg:block absolute -left-16 xl:-left-24 top-0 bottom-0 z-50 pointer-events-none">
         <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center py-4 pointer-events-auto">
