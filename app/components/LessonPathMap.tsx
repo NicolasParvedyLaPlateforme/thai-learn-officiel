@@ -87,7 +87,7 @@ export function LessonPathMap({
           }
         });
       },
-      { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+      { rootMargin: '-30% 0px -30% 0px', threshold: 0 }
     );
 
     const validRefs = nodeRefs.current.filter(Boolean);
@@ -106,7 +106,7 @@ export function LessonPathMap({
   const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[40vh] overflow-x-hidden">
+    <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh] overflow-x-hidden">
       {nodes.map((levelIndex) => {
         const isMastery = levelIndex === maxLevel;
         const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
