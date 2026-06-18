@@ -82,7 +82,21 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
   const [isUnitsModalOpen, setIsUnitsModalOpen] = useState(false);
   const [showDesktopUnitsList, setShowDesktopUnitsList] = useState(false);
-  const [selectedLesson, setSelectedLesson] = useState<{ lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string } | null>(null);
+  const [selectedLesson, _setSelectedLesson] = useState<{ lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string } | null>(null);
+  const scrollPositionRef = useRef<number>(0);
+
+  const setSelectedLesson = (lessonData: any) => {
+    if (lessonData !== null && selectedLesson === null) {
+      scrollPositionRef.current = window.scrollY;
+      _setSelectedLesson(lessonData);
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0);
+    } else if (lessonData === null && selectedLesson !== null) {
+      _setSelectedLesson(null);
+      setTimeout(() => window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' }), 0);
+    } else {
+      _setSelectedLesson(lessonData);
+    }
+  };
   const [modalLevel, setModalLevel] = useState<number | null>(null);
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
   const [lockedReviewModalOpen, setLockedReviewModalOpen] = useState(false);
