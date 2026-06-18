@@ -38,6 +38,8 @@ export function DesktopLessonLevelsView({
   const lessonPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrollingUp, setIsScrollingUp] = useState(true);
+  const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,9 +57,28 @@ export function DesktopLessonLevelsView({
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY <= 0) {
+        setIsScrollingUp(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setIsScrollingUp(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        setIsScrollingUp(true);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const lessonTitle = suggestionType === 'alphabet' && (lesson.type === 'consonant' || lesson.type === 'vowel')
     ? `${getTranslation(lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${lesson.id.split('-').pop()}`
     : getLocalizedField(lesson, 'title', language);
+
+  const showStickyBanner = isScrolled && isScrollingUp;
 
   return (
     <motion.div
@@ -69,13 +90,13 @@ export function DesktopLessonLevelsView({
       {/* Mobile Fixed Back Button (hidden when sticky banner is visible) */}
       <button 
         onClick={onBack}
-        className={`md:hidden fixed left-2 top-1/2 -translate-y-1/2 z-50 p-3 bg-white text-slate-800 rounded-full shadow-2xl border-2 border-slate-200 active:scale-90 transition-transform ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-90 hover:opacity-100'}`}
+        className={`md:hidden fixed left-2 top-1/2 -translate-y-1/2 z-50 p-3 bg-white text-slate-800 rounded-full shadow-2xl border-2 border-slate-200 active:scale-90 transition-transform ${showStickyBanner ? 'opacity-0 pointer-events-none' : 'opacity-90 hover:opacity-100'}`}
       >
         <ChevronLeft size={24} className="stroke-[3]" />
       </button>
 
       {/* Sticky Mini Banner */}
-      <div className={`sticky top-[72px] md:top-8 z-50 w-full py-3 px-4 ${unitColor} rounded-2xl shadow-xl border-b-[4px] ${unitBorder} flex items-center justify-between text-white backdrop-blur-md bg-opacity-95 transition-all duration-300 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+      <div className={`sticky top-[72px] md:top-8 z-50 w-full py-3 px-4 ${unitColor} rounded-2xl shadow-xl border-b-[4px] ${unitBorder} flex items-center justify-between text-white backdrop-blur-md bg-opacity-95 transition-all duration-300 ${showStickyBanner ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
         <div className="flex items-center gap-3 w-full">
           <button 
             onClick={onBack}
