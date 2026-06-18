@@ -54,6 +54,10 @@ export function LessonPathMap({
       case 3: return 'build-your-sentence-removebg.png';
       case 4: return 'niveau-5-nobg.png';
       case 5: return 'level-6-nobg.png';
+      case 6: return 'level-7-nobg.png';
+      case 7: return 'level-8-nobg.png';
+      case 8: return 'level-9-nobg.png';
+      case 9: return 'level-10-nobg.png';
       default: return null;
     }
   };
@@ -189,11 +193,11 @@ export function LessonPathMap({
                   {/* Desktop Image (pointing INWARDS to avoid overflow) */}
                   <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-72 xl:w-80 z-0 transition-all duration-500 ease-out 
                     ${(activeMobileLevel === levelIndex || modalLevel === levelIndex) && isAccessible ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-                    ${getOffset(levelIndex) < 0 ? 'left-full ml-20' : 'right-full mr-20'}
+                    ${getOffset(levelIndex) < 0 ? 'left-full ml-32' : 'right-full mr-32'}
                     ${(activeMobileLevel !== levelIndex && modalLevel !== levelIndex) && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
                     ${(activeMobileLevel !== levelIndex && modalLevel !== levelIndex) && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
                   `}>
-                    <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl" />
+                    <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl rounded-3xl" />
                   </div>
 
                   {/* Mobile Image */}
