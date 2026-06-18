@@ -42,11 +42,23 @@ export default function DesktopSidebarLeft() {
   // Decide whether to show navigation
   const isVisible = (isLearnActive || isAlphabetActive || isConversationsActive || isSpeakActive || isReviewActive || isPairsActive || pathname === '/writing' || isPracticeActive || isDetectiveActive) && !isExerciseRunning;
 
+  const isLearnCategoryActive = isLearnActive || isAlphabetActive || isSpeakActive;
+  const isImmersionCategoryActive = isConversationsActive || isDetectiveActive;
+  const isPracticeCategoryActive = isPracticeActive || isPairsActive || isReviewActive || pathname === '/writing';
+
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
-    learn: true,
-    immersion: true,
-    practice: true,
+    learn: isLearnCategoryActive,
+    immersion: isImmersionCategoryActive,
+    practice: isPracticeCategoryActive,
   });
+
+  useEffect(() => {
+    setOpenCategories({
+      learn: isLearnCategoryActive,
+      immersion: isImmersionCategoryActive,
+      practice: isPracticeCategoryActive,
+    });
+  }, [pathname, isLearnCategoryActive, isImmersionCategoryActive, isPracticeCategoryActive]);
 
   const toggleCategory = (key: string) => {
     setOpenCategories(prev => ({ ...prev, [key]: !prev[key] }));
