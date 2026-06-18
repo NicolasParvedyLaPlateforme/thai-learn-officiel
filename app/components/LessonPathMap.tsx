@@ -102,7 +102,7 @@ export function LessonPathMap({
   const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative py-8 overflow-x-hidden">
+    <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[40vh] overflow-x-hidden">
       {nodes.map((levelIndex) => {
         const isMastery = levelIndex === maxLevel;
         const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
@@ -188,10 +188,10 @@ export function LessonPathMap({
                 <>
                   {/* Desktop Image (pointing INWARDS to avoid overflow) */}
                   <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-72 xl:w-80 z-0 transition-all duration-500 ease-out 
-                    ${activeMobileLevel === levelIndex && isAccessible ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
+                    ${(activeMobileLevel === levelIndex || modalLevel === levelIndex) && isAccessible ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
                     ${getOffset(levelIndex) < 0 ? 'left-full ml-20' : 'right-full mr-20'}
-                    ${activeMobileLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
-                    ${activeMobileLevel !== levelIndex && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
+                    ${(activeMobileLevel !== levelIndex && modalLevel !== levelIndex) && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
+                    ${(activeMobileLevel !== levelIndex && modalLevel !== levelIndex) && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
                   `}>
                     <img src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} alt="Objectif du niveau" className="w-full h-auto drop-shadow-2xl" />
                   </div>
@@ -260,6 +260,7 @@ export function LessonPathMap({
                   e.stopPropagation();
                   if (isAccessible) {
                     setModalLevel(levelIndex);
+                    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
                   }
                 }}
                 disabled={!isAccessible}
