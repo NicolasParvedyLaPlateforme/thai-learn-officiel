@@ -177,32 +177,50 @@ export default function LearnLessonModal({
                       {(() => {
                         let tx = 50;
                         let ty = 50;
-                        let translateY = "-18px";
+                        let midAngle = -90; // Default for ENTIER
                         
                         if (!isLevelFullyCompleted) {
                           const nextPart = completedParts.length;
                           const angle = 360 / totalParts;
                           const startAngle = nextPart * angle - 90;
-                          const midAngle = startAngle + angle / 2;
-                          const textR = 30;
-                          tx = 50 + textR * Math.cos(Math.PI * midAngle / 180);
-                          ty = 50 + textR * Math.sin(Math.PI * midAngle / 180);
-                          translateY = "-8px";
+                          midAngle = startAngle + angle / 2;
+                          const tooltipR = 64; // Distance from center (outside the pie)
+                          tx = 50 + tooltipR * Math.cos(Math.PI * midAngle / 180);
+                          ty = 50 + tooltipR * Math.sin(Math.PI * midAngle / 180);
+                        } else {
+                          const tooltipR = 26; // Above the center circle
+                          tx = 50 + tooltipR * Math.cos(Math.PI * midAngle / 180);
+                          ty = 50 + tooltipR * Math.sin(Math.PI * midAngle / 180);
                         }
+
+                        const theta = (midAngle + 180) * Math.PI / 180;
+                        const cx = Math.cos(theta);
+                        const cy = Math.sin(theta);
+                        const scale = Math.min(28 / Math.max(Math.abs(cx), 0.001), 10 / Math.max(Math.abs(cy), 0.001));
+                        const ptrX = cx * (scale + 2);
+                        const ptrY = cy * (scale + 2);
 
                         return (
                           <div 
-                            className="absolute z-20 flex flex-col items-center animate-bounce pointer-events-none drop-shadow-md"
+                            className="absolute z-20 pointer-events-none drop-shadow-md"
                             style={{
                               left: `${tx}%`,
-                              top: `${ty}%`,
-                              transform: `translate(-50%, -100%) translateY(${translateY})`
+                              top: `${ty}%`
                             }}
                           >
-                            <div className="bg-[#10B981] text-white font-black text-[9px] uppercase px-2 py-0.5 rounded-md tracking-wider whitespace-nowrap">
-                              La Suite
+                            <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -50%)' }}>
+                              <div className="animate-bounce flex items-center justify-center relative">
+                                <div 
+                                  className="absolute w-2.5 h-2.5 bg-[#10B981] rounded-[1px]"
+                                  style={{
+                                    transform: `translate(${ptrX}px, ${ptrY}px) rotate(45deg)`
+                                  }}
+                                />
+                                <div className="relative z-10 bg-[#10B981] text-white font-black text-[9px] uppercase px-2.5 py-1 rounded-md tracking-wider whitespace-nowrap shadow-sm">
+                                  La Suite
+                                </div>
+                              </div>
                             </div>
-                            <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#10B981] -mt-[1px]"></div>
                           </div>
                         );
                       })()}
