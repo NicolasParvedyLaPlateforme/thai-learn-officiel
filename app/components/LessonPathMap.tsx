@@ -115,6 +115,16 @@ export function LessonPathMap({
                 </div>
               )}
 
+              {levelIndex === 1 && (
+                <div className={`hidden lg:block absolute left-full ml-12 top-1/2 -translate-y-1/2 w-56 xl:w-64 z-0 transition-all duration-500 ease-out ${modalLevel === 1 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
+                  <img 
+                    src="/images/image-learn-niveau/complete-the-sentence.png" 
+                    alt="Objectif du niveau" 
+                    className="w-full h-auto drop-shadow-2xl" 
+                  />
+                </div>
+              )}
+
               {isCurrent && isSelected && (
                 <div className={`absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-xl font-bold text-xs text-white ${unitColor} whitespace-nowrap shadow-md animate-bounce z-40`}>
                   {getTranslation('auto.in_progress', language)}
