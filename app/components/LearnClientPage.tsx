@@ -166,10 +166,12 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
     }
   }, [mounted, activeUnitIndex]);
 
+  const [isProcessingHash, setIsProcessingHash] = useState(true);
+
   useEffect(() => {
     if (mounted) {
       const hash = window.location.hash;
-      if (hash) {
+      if (hash && hash.startsWith('#lesson-')) {
         setTimeout(() => {
           try {
             const baseId = hash.substring(1).replace('lesson-', '');
@@ -191,6 +193,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                   unitHover: unit.hoverClass
                 });
                 setActiveUnitIndex(unitIndex);
+                
+                const lastLvl = localStorage.getItem(`last_level_${baseId}`);
+                if (lastLvl !== null) {
+                  setModalLevel(parseInt(lastLvl, 10));
+                }
               }
             }
 
@@ -208,8 +215,12 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
             }
           } catch (e) {
             console.error(e);
+          } finally {
+            setIsProcessingHash(false);
           }
         }, 100);
+      } else {
+        setIsProcessingHash(false);
       }
     }
   }, [mounted, data.lessons, completedLessons, UNITS]);
@@ -232,7 +243,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       />
 
       {/* Main Content (Mobile Only) */}
-      {!mounted ? (
+      {!mounted || isProcessingHash ? (
         <div className="md:hidden flex flex-col items-center w-full px-4 mt-2">
           {/* Hero Card Mobile */}
           <div className="w-full h-[180px] bg-slate-200 rounded-2xl animate-pulse mb-6" />
@@ -299,12 +310,13 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
         );
       })()}
 
-      {/* Main Content (Desktop Only) */}
-      {!mounted ? (
-        <div className="hidden md:flex flex-row w-full items-start relative min-h-screen">
-          <div className="flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12">
-            <div className="flex flex-col gap-10 w-full max-w-4xl">
-               <div className="flex flex-col gap-8 w-full">
+      {/* Desktop Main Content */}
+      <div className="hidden md:block">
+        {!mounted || isProcessingHash ? (
+          <div className="flex flex-row w-full items-start relative min-h-screen">
+            <div className="flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12">
+              <div className="flex flex-col gap-10 w-full max-w-4xl">
+                 <div className="flex flex-col gap-8 w-full">
                   {/* Header hero */}
                   <div className="p-8 md:p-10 bg-slate-200 border-b-[6px] border-slate-300 rounded-3xl h-[300px] w-full flex flex-col justify-between overflow-hidden relative">
                      <div className="relative z-10">
@@ -466,6 +478,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
           />
         </div>
       )}
+      </div>
 
       {/* Selected Lesson Modal */}
       {mounted && windowWidth < 1280 && (

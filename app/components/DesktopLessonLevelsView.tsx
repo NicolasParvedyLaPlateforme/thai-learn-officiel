@@ -39,6 +39,7 @@ export function DesktopLessonLevelsView({
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isScrollingUp, setIsScrollingUp] = useState(true);
+  const [isReady, setIsReady] = useState(false);
   const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLDivElement>(null);
 
@@ -83,9 +84,9 @@ export function DesktopLessonLevelsView({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={{ opacity: isReady ? 1 : 0, y: isReady ? 0 : 20 }}
       exit={{ opacity: 0, y: 20 }}
-      className="flex flex-col gap-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300"
+      className={`flex flex-col gap-6 w-full transition-opacity duration-700 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}
     >
       {/* Sticky Mini Banner */}
       <div className={`sticky top-[72px] md:top-8 z-50 w-full py-3 px-4 ${unitColor} rounded-2xl shadow-xl border-b-[4px] ${unitBorder} flex items-center justify-between text-white backdrop-blur-md bg-opacity-95 transition-all duration-300 ${showStickyBanner ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
@@ -153,6 +154,7 @@ export function DesktopLessonLevelsView({
           lesson={lesson}
           lessonPartsCompleted={lessonPartsCompleted}
           suggestionType={suggestionType}
+          onReady={() => setIsReady(true)}
         />
       </div>
     </motion.div>

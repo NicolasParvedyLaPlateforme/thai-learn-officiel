@@ -17,6 +17,7 @@ interface LessonPathMapProps {
   lesson?: any;
   lessonPartsCompleted?: Record<string, number[]>;
   suggestionType?: string;
+  onReady?: () => void;
 }
 
 export function LessonPathMap({
@@ -32,7 +33,8 @@ export function LessonPathMap({
   lessonId,
   lesson,
   lessonPartsCompleted,
-  suggestionType
+  suggestionType,
+  onReady
 }: LessonPathMapProps) {
   const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
 
@@ -69,14 +71,17 @@ export function LessonPathMap({
 
   useEffect(() => {
     if (currentLevelRef.current) {
-      // Small delay to ensure modal/drawer is fully open before scrolling
       setTimeout(() => {
         currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
         // Fade in after jumping to the right position
-        setTimeout(() => setIsReady(true), 50);
-      }, 300);
+        setTimeout(() => {
+          setIsReady(true);
+          onReady?.();
+        }, 50);
+      }, 10);
     } else {
       setIsReady(true);
+      onReady?.();
     }
   }, []);
 
@@ -111,7 +116,7 @@ export function LessonPathMap({
   const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
 
   return (
-    <div className={`flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh] transition-opacity duration-1000 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}>
+    <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh]">
       {/* Vertical Navigation Bar (Desktop Only) */}
       <div className="hidden lg:block absolute -left-16 xl:-left-24 top-0 bottom-0 z-50 pointer-events-none">
         <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center py-4 pointer-events-auto">
@@ -232,7 +237,8 @@ export function LessonPathMap({
               } as React.CSSProperties}
               ref={(el) => {
                 nodeRefs.current[levelIndex] = el;
-                if (isCurrent && currentLevelRef) {
+                const shouldScrollTo = modalLevel !== null ? isSelected : isCurrent;
+                if (shouldScrollTo && currentLevelRef) {
                   (currentLevelRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
                 }
               }}
