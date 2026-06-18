@@ -138,7 +138,7 @@ export function DesktopLessonLevelsView({
         </div>
       </div>
 
-      <div className="w-full">
+      <div className="w-full relative">
         <LessonPathMap
           maxLevel={maxLevelPerLesson}
           currentProgress={currentProgress}
