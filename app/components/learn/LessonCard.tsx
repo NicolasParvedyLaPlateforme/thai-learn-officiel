@@ -16,6 +16,7 @@ interface LessonCardProps {
 
 export function LessonCard({ lesson, level, unit, language, isReviewLocked, suggestedLessonId, onClick }: LessonCardProps) {
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
+  const [isPressed, setIsPressed] = useState(false);
   
   const isMaxLevel = level >= 10;
   const isSuggested = suggestedLessonId === lesson.id;
@@ -30,9 +31,14 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
 
   return (
     <div 
-      className={`relative w-full bg-white rounded-[1.5rem] border-2 p-5 flex flex-col gap-4 shadow-sm transition-all group border-b-[6px] active:translate-y-[4px] active:border-b-2 cursor-pointer
+      className={`relative w-full bg-white rounded-[1.5rem] border-2 p-5 flex flex-col gap-4 shadow-sm transition-all group cursor-pointer
+        ${isPressed ? 'translate-y-[4px] border-b-2' : 'border-b-[6px]'}
         ${isMaxLevel ? 'border-emerald-200 shadow-[0_0_15px_rgba(16,185,129,0.1)]' : isReviewLocked ? 'bg-slate-50 border-slate-200' : isSuggested ? 'border-amber-300 shadow-[0_0_15px_rgba(252,211,77,0.3)]' : 'border-slate-200 hover:border-slate-300'}
       `}
+      onPointerDown={() => setIsPressed(true)}
+      onPointerUp={() => setIsPressed(false)}
+      onPointerLeave={() => setIsPressed(false)}
+      onPointerCancel={() => setIsPressed(false)}
       onClick={(e) => {
         e.stopPropagation();
         onClick();
