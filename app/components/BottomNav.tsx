@@ -77,7 +77,7 @@ export default function BottomNav() {
 
   return (
     <>
-      <nav ref={navRef} className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center h-[72px] px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.1)]">
+      <nav id="bottom-nav" ref={navRef} className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center h-[72px] px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.1)] transition-all duration-300">
         
         {/* POPOVERS */}
         <AnimatePresence>

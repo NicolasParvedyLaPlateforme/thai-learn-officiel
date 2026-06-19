@@ -56,9 +56,21 @@ export function DesktopLessonLevelsView({
     updateSnap();
     window.addEventListener('resize', updateSnap);
 
+    const nav = document.getElementById('bottom-nav');
+    if (nav && window.innerWidth < 1024) {
+      nav.style.transform = 'translateY(100%)';
+      nav.style.opacity = '0';
+      nav.style.pointerEvents = 'none';
+    }
+
     return () => {
       window.removeEventListener('resize', updateSnap);
       document.documentElement.style.scrollSnapType = '';
+      if (nav) {
+        nav.style.transform = 'translateY(0)';
+        nav.style.opacity = '1';
+        nav.style.pointerEvents = 'auto';
+      }
     };
   }, []);
 
