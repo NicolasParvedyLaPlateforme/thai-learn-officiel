@@ -26,7 +26,7 @@ export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSele
           {getTranslation('auto.go_to_next_unit', language) || "Aller à l'unité suivante"}
         </span>
         <h3 className="text-2xl sm:text-[32px] font-extrabold text-slate-800 leading-tight">
-          {getTranslation('auto.unit', language) || "Unité"} {nextUnitIndex + 1} : {getLocalizedField(nextUnit, 'title', language)}
+          {getLocalizedField(nextUnit, 'title', language)}
         </h3>
         <p className="text-slate-500 text-sm sm:text-base font-medium">
           {getLocalizedField(nextUnit, 'description', language)}
