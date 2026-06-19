@@ -92,7 +92,8 @@ export function LessonPathMap({
   const currentLevelRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(null);
+  const targetLevel = initialScrollLevel !== undefined ? initialScrollLevel : currentProgress;
+  const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(targetLevel);
   const [isReady, setIsReady] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const isClickScrolling = useRef(false);
@@ -107,14 +108,21 @@ export function LessonPathMap({
     if (activeMobileLevel !== null && carouselRef.current) {
       if (isClickScrolling.current) return; // Prevent interrupting the page's smooth scroll
 
-      const button = carouselRef.current.querySelector(`[data-nav-level="${activeMobileLevel}"]`) as HTMLElement;
-      if (button) {
-        const container = carouselRef.current;
-        const containerRect = container.getBoundingClientRect();
-        const buttonRect = button.getBoundingClientRect();
-        const scrollLeft = container.scrollLeft + (buttonRect.left - containerRect.left) - (containerRect.width / 2) + (buttonRect.width / 2);
-        container.scrollTo({ left: scrollLeft, behavior: 'auto' });
-      }
+      const doScroll = () => {
+        const button = carouselRef.current?.querySelector(`[data-nav-level="${activeMobileLevel}"]`) as HTMLElement;
+        if (button && carouselRef.current) {
+          const container = carouselRef.current;
+          const containerRect = container.getBoundingClientRect();
+          const buttonRect = button.getBoundingClientRect();
+          const scrollLeft = container.scrollLeft + (buttonRect.left - containerRect.left) - (containerRect.width / 2) + (buttonRect.width / 2);
+          container.scrollTo({ left: scrollLeft, behavior: 'auto' });
+        }
+      };
+
+      // Run immediately, and also slightly deferred for initial mount when layout might shift
+      doScroll();
+      const t = setTimeout(doScroll, 150);
+      return () => clearTimeout(t);
     }
   }, [activeMobileLevel]);
 

@@ -309,6 +309,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
             setSelectedLesson={setSelectedLesson}
             setModalLevel={setModalLevel}
             setLockedReviewModalOpen={setLockedReviewModalOpen}
+            nextUnit={activeUnitIndex < UNITS.length - 1 ? UNITS[activeUnitIndex + 1] : undefined}
           />
         );
       })()}
@@ -452,6 +453,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
                     setSelectedLesson={setSelectedLesson}
                     setModalLevel={setModalLevel}
                     setLockedReviewModalOpen={setLockedReviewModalOpen}
+                    nextUnit={activeUnitIndex < UNITS.length - 1 ? UNITS[activeUnitIndex + 1] : undefined}
                   />
                 );
               })()}

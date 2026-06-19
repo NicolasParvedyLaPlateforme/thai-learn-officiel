@@ -321,6 +321,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                 setSelectedLesson={setSelectedLesson}
                 setModalLevel={setModalLevel}
                 maxLevelPerLesson={4}
+                nextUnit={activeUnitIndex < UNITS.length - 1 ? UNITS[activeUnitIndex + 1] : undefined}
              />
           );
         })()}
@@ -468,6 +469,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                     setSelectedLesson={setSelectedLesson}
                     setModalLevel={setModalLevel}
                     maxLevelPerLesson={4}
+                    nextUnit={activeUnitIndex < UNITS.length - 1 ? UNITS[activeUnitIndex + 1] : undefined}
                  />
               );
             })()}

@@ -21,6 +21,7 @@ interface SpeakMobileTimelineProps {
   setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
   maxLevelPerLesson?: number;
+  nextUnit?: any;
 }
 
 export default function SpeakMobileTimeline({
@@ -39,7 +40,8 @@ export default function SpeakMobileTimeline({
   setSelectedLesson,
   setModalLevel,
   setLockedReviewModalOpen,
-  maxLevelPerLesson
+  maxLevelPerLesson,
+  nextUnit
 }: SpeakMobileTimelineProps) {
   const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 10);
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => {
@@ -237,15 +239,33 @@ export default function SpeakMobileTimeline({
             )
           })}
 
-          {activeUnitIndex < totalUnits - 1 && (
-            <div className="mt-8 z-10 w-full px-4 relative flex justify-center">
-              <button
-                onClick={() => handleUnitSelect(activeUnitIndex + 1)}
-                className="px-8 py-4 rounded-2xl bg-amber-50 text-amber-500 border-b-4 border-amber-200 hover:bg-amber-100 hover:border-amber-300 hover:text-amber-600 font-extrabold shadow-sm transition-all text-center active:border-b-0 active:translate-y-1 w-full max-w-[280px] sm:max-w-[320px]"
-              >
-                {mounted && getTranslation('auto.next_unit', language)}
-              </button>
-            </div>
+          {nextUnit && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-12 sm:mb-16 group gap-3 sm:gap-4 cursor-pointer"
+              onClick={() => handleUnitSelect(activeUnitIndex + 1)}
+            >
+              <div className="relative shrink-0 z-10 group-hover:scale-105 group-active:scale-95 transition-all">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] border-[#FAFAFA] relative z-10 shadow-sm overflow-hidden ${nextUnit.colorClass || 'bg-rose-500'} text-white`}>
+                  <BookOpen size={20} className="fill-current stroke-[2]" />
+                </div>
+              </div>
+
+              <div className="flex-1 min-w-0 z-10">
+                <div className="bg-white rounded-[1.5rem] border-2 border-slate-100 border-b-[4px] p-4 sm:p-5 shadow-sm group-active:border-b-2 group-active:translate-y-[2px] transition-all group-hover:border-slate-200 flex flex-col justify-center">
+                  <div className="flex items-center gap-3 mb-1">
+                    <span className={`text-[10px] sm:text-xs font-black uppercase tracking-wider ${nextUnit.textClass || 'text-slate-500'}`}>
+                      {mounted && getTranslation('auto.next_unit', language)}
+                    </span>
+                  </div>
+                  <h3 className="text-sm sm:text-base font-extrabold text-slate-700 leading-tight truncate">
+                    {mounted ? getLocalizedField(nextUnit, 'title', language) : nextUnit.title}
+                  </h3>
+                </div>
+              </div>
+            </motion.div>
           )}
         </div>
       </motion.div>

@@ -308,6 +308,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             setModalLevel={setModalLevel}
             setLockedReviewModalOpen={setLockedReviewModalOpen}
             maxLevelPerLesson={5}
+            nextUnit={activeUnitIndex < UNITS.length - 1 ? UNITS[activeUnitIndex + 1] : undefined}
           />
         );
       })()}
@@ -451,6 +452,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
                     setModalLevel={setModalLevel}
                     setLockedReviewModalOpen={setLockedReviewModalOpen}
                     maxLevelPerLesson={5}
+                    nextUnit={activeUnitIndex < UNITS.length - 1 ? UNITS[activeUnitIndex + 1] : undefined}
                   />
                 );
               })()}
