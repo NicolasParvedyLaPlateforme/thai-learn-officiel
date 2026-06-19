@@ -162,8 +162,8 @@ export function LessonPathMap({
 
   return (
     <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh]">
-      {/* Floating Back Button (for mobile primarily, but visible on both) */}
-      <div className="fixed bottom-6 lg:bottom-10 left-6 lg:left-10 z-[100]">
+      {/* Floating Back Button (for desktop primarily, mobile has its own in the horizontal nav) */}
+      <div className="hidden lg:block fixed bottom-6 lg:bottom-10 left-6 lg:left-10 z-[100]">
         {onBack && (
           <button
             onClick={(e) => {
