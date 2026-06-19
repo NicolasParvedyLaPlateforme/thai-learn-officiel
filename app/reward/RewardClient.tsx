@@ -46,34 +46,17 @@ export default function RewardClient() {
         // Fallback if no gift available during opening
         router.push(nextUrl || '/learn');
       }
-    }, 1500);
+    }, 600);
   };
 
   const triggerConfetti = () => {
-    const duration = 3000;
-    const end = Date.now() + duration;
-
-    const frame = () => {
-      confetti({
-        particleCount: 5,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: ['#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#8b5cf6']
-      });
-      confetti({
-        particleCount: 5,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: ['#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#8b5cf6']
-      });
-
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
-    };
-    frame();
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#8b5cf6'],
+      disableForReducedMotion: true
+    });
   };
 
   return (
@@ -93,12 +76,12 @@ export default function RewardClient() {
           {step !== 'opened' ? (
             <motion.div
               key="gift"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.5, opacity: 0 }}
               animate={step === 'opening' ? {
-                scale: [1, 1.1, 0.9, 1.15, 0.95, 1.2, 1],
+                scale: [1, 1.1, 0.9, 1.15, 0.95, 1.1, 1],
                 rotate: [0, -10, 10, -15, 15, -5, 0],
-              } : { scale: 1, opacity: 1, y: [0, -10, 0] }}
-              transition={step === 'opening' ? { duration: 1.5, ease: "easeInOut" } : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              } : { scale: 1, opacity: 1, y: 0 }}
+              transition={step === 'opening' ? { duration: 0.6, ease: "easeInOut" } : { type: "spring", bounce: 0.5, duration: 0.8 }}
               exit={{ scale: 0, opacity: 0 }}
               onClick={handleOpen}
               className="cursor-pointer relative group"
