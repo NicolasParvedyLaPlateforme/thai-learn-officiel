@@ -360,9 +360,9 @@ export function LessonPathMap({
                   {/* Mobile Image */}
                   <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-40 z-0 transition-all duration-500 ease-out 
                     ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-                    ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-4' : 'right-full mr-4'}
-                    ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-4' : ''}
-                    ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-4' : ''}
+                    ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-12' : 'right-full mr-12'}
+                    ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-12' : ''}
+                    ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-12' : ''}
                   `}>
                     <img 
                       src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} 
