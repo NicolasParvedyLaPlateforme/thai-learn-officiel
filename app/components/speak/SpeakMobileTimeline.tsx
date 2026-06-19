@@ -70,7 +70,7 @@ export default function SpeakMobileTimeline({
       >
         <div
           onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-          className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} rounded-2xl text-white shadow-md relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform`}
+          className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} -mx-4 -mt-2 text-white shadow-md relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform`}
         >
           {unit.imageUrl && (
             <>
