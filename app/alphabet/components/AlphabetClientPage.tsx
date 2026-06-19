@@ -56,7 +56,26 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   }, []);
   const levelsScrollRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ isDragging: false, startX: 0, scrollLeft: 0 });
-  const [selectedLesson, setSelectedLesson] = useState<{lesson: AlphabetLessonDef, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string} | null>(null);
+  const [selectedLesson, _setSelectedLesson] = useState<{lesson: AlphabetLessonDef, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string} | null>(null);
+  const scrollPositionRef = useRef<number>(0);
+
+  const setSelectedLesson = (lessonData: any) => {
+    if (lessonData !== null && selectedLesson === null) {
+      scrollPositionRef.current = window.scrollY;
+      _setSelectedLesson(lessonData);
+      window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0);
+    } else if (lessonData === null && selectedLesson !== null) {
+      _setSelectedLesson(null);
+      window.history.replaceState(null, '', window.location.pathname);
+      setTimeout(() => window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' }), 0);
+    } else {
+      _setSelectedLesson(lessonData);
+      if (lessonData) {
+        window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
+      }
+    }
+  };
   const [modalLevel, setModalLevel] = useState<number | null>(null);
   const [cols, setCols] = useState(5);
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
@@ -187,49 +206,51 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       
       {/* Header */}
       {/* Mobile Top Header */}
-      <header className={`bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[3.75rem] md:hidden sticky top-0 transition-transform duration-300 ${showHeader && !selectedLesson ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="flex items-center justify-between w-full h-full px-4 md:px-8 gap-2 sm:gap-6">
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => setIsUnitsModalOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors md:hidden"
-            >
-              <BookOpen size={18} className="text-emerald-600" />
-              <span className="font-extrabold text-slate-700 text-sm">{getTranslation('auto.units', language)}</span>
-            </button>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            {mounted && <PWAInstallButton />}
-            {mounted && (
+      {!selectedLesson && (
+        <header className={`bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[3.75rem] md:hidden sticky top-0 transition-transform duration-300 ${showHeader ? 'translate-y-0' : '-translate-y-full'}`}>
+          <div className="flex items-center justify-between w-full h-full px-4 md:px-8 gap-2 sm:gap-6">
+            <div className="flex items-center gap-2">
               <button 
-                 onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
-                 className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase md:hidden"
+                onClick={() => setIsUnitsModalOpen(true)}
+                className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors md:hidden"
               >
-                 {language}
+                <BookOpen size={18} className="text-emerald-600" />
+                <span className="font-extrabold text-slate-700 text-sm">{getTranslation('auto.units', language)}</span>
               </button>
-            )}
+            </div>
             
-            {mounted && (
-              <div className="flex items-center gap-2 relative">
-                <Link
-                  href="/profile"
-                  className="flex items-center justify-center p-2 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+            <div className="flex items-center gap-2">
+              {mounted && <PWAInstallButton />}
+              {mounted && (
+                <button 
+                   onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
+                   className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase md:hidden"
                 >
-                  <User size={18} />
-                </Link>
-
-                <button
-                  onClick={() => setIsMobileMenuOpen(true)}
-                  className="flex items-center justify-center p-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors"
-                >
-                  <Menu size={20} />
+                   {language}
                 </button>
-              </div>
-            )}
+              )}
+              
+              {mounted && (
+                <div className="flex items-center gap-2 relative">
+                  <Link
+                    href="/profile"
+                    className="flex items-center justify-center p-2 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
+                  >
+                    <User size={18} />
+                  </Link>
+
+                  <button
+                    onClick={() => setIsMobileMenuOpen(true)}
+                    className="flex items-center justify-center p-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors"
+                  >
+                    <Menu size={20} />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       <MobileHeaderMenu 
         isOpen={isMobileMenuOpen} 

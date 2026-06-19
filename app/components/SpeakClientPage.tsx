@@ -82,7 +82,26 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
   const [isQuestsModalOpen, setIsQuestsModalOpen] = useState(false);
   const [isUnitsModalOpen, setIsUnitsModalOpen] = useState(false);
   const [showDesktopUnitsList, setShowDesktopUnitsList] = useState(false);
-  const [selectedLesson, setSelectedLesson] = useState<{ lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string } | null>(null);
+  const [selectedLesson, _setSelectedLesson] = useState<{ lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string } | null>(null);
+  const scrollPositionRef = useRef<number>(0);
+
+  const setSelectedLesson = (lessonData: any) => {
+    if (lessonData !== null && selectedLesson === null) {
+      scrollPositionRef.current = window.scrollY;
+      _setSelectedLesson(lessonData);
+      window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0);
+    } else if (lessonData === null && selectedLesson !== null) {
+      _setSelectedLesson(null);
+      window.history.replaceState(null, '', window.location.pathname);
+      setTimeout(() => window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' }), 0);
+    } else {
+      _setSelectedLesson(lessonData);
+      if (lessonData) {
+        window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
+      }
+    }
+  };
   const [modalLevel, setModalLevel] = useState<number | null>(null);
   const [activeUnitIndex, setActiveUnitIndex] = useState(0);
   const [lockedReviewModalOpen, setLockedReviewModalOpen] = useState(false);
@@ -209,13 +228,15 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
 
-      <SpeakMobileHeader 
-        showHeader={showHeader && !selectedLesson}
-        mounted={mounted}
-        language={language}
-        setIsUnitsModalOpen={setIsUnitsModalOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-      />
+      {!selectedLesson && (
+        <SpeakMobileHeader 
+          showHeader={showHeader}
+          mounted={mounted}
+          language={language}
+          setIsUnitsModalOpen={setIsUnitsModalOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+        />
+      )}
       
       <MobileHeaderMenu 
         isOpen={isMobileMenuOpen} 
