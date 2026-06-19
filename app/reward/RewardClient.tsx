@@ -77,10 +77,10 @@ export default function RewardClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-indigo-100 flex flex-col items-center justify-center relative overflow-hidden font-sans">
-      {/* Background soft glowing orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-40 animate-[pulse_4s_ease-in-out_infinite]"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-amber-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-[pulse_5s_ease-in-out_infinite_reverse]"></div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-amber-50 flex flex-col items-center justify-center relative overflow-hidden font-sans">
+      {/* Background soft glowing orbs (calmer, less psychedelic) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-indigo-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-pulse transition-all duration-1000"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-amber-100 rounded-full mix-blend-multiply filter blur-[120px] opacity-40"></div>
 
       <div className="z-10 flex flex-col items-center justify-center w-full max-w-md p-6">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-12 text-center drop-shadow-sm">

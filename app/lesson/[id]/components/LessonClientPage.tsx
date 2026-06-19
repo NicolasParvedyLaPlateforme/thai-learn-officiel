@@ -106,12 +106,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   // We got lesson from props!
   const savedLevel = lesson ? lessonLevels[lesson.id] || 0 : 0;
 
-  // Use requested level if provided, otherwise the saved level
+  // Use requested level if provided, otherwise the saved level, but lock it to the generated level if already playing
   const currentLevel = requestedLevelStr
     ? isDev
       ? Math.max(0, parseInt(requestedLevelStr, 10) - 1)
       : Math.min(savedLevel, Math.max(0, parseInt(requestedLevelStr, 10) - 1))
-    : savedLevel;
+    : (exercisesGeneratedFor?.level !== undefined ? exercisesGeneratedFor.level : savedLevel);
 
   const partStr = searchParams.get("part");
   const totalPartsStr = searchParams.get("totalParts");

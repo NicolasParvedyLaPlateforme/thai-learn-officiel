@@ -79,14 +79,14 @@ export default function ResultScreen({
         
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           <button
-            onClick={() => handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}`, true)}
+            onClick={() => handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}`, language === "en" ? "Retry" : "Refaire")}
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
             {getTranslation('auto.retry', language)}
           </button>
           <button
-            onClick={() => handleNavigate(`/learn#lesson-${lesson.id}`)}
+            onClick={() => handleNavigate(`/learn#lesson-${lesson.id}`, language === "en" ? "Back" : "Accueil")}
             className="px-8 py-3 flex-1 rounded-xl bg-slate-200 border-b-4 border-slate-300 text-slate-500 font-bold text-lg shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {getTranslation('auto.back', language)}

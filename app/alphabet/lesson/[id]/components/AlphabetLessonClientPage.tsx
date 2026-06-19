@@ -52,7 +52,7 @@ function AlphabetLessonContent() {
   const lesson = allLessons.find(l => l.id === lessonId);
   const savedLevel = lesson ? (lessonLevels[lesson.id] || 0) : 0;
 
-  const currentLevel = requestedLevelStr ? (isDev ? Math.max(0, parseInt(requestedLevelStr, 10) - 1) : Math.min(savedLevel, Math.max(0, parseInt(requestedLevelStr, 10) - 1))) : savedLevel;
+  const currentLevel = requestedLevelStr ? (isDev ? Math.max(0, parseInt(requestedLevelStr, 10) - 1) : Math.min(savedLevel, Math.max(0, parseInt(requestedLevelStr, 10) - 1))) : (exercisesGeneratedFor?.level !== undefined ? exercisesGeneratedFor.level : savedLevel);
 
   const [exercises, setExercises] = useState<AlphabetExercise[]>([]);
 
