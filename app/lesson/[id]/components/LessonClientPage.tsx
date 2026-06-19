@@ -200,6 +200,39 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   }, [instructionKeyTop, hiddenInstructions, showHelpModal]);
 
   useEffect(() => {
+    if (isFinished && !failedDueToTime && !lesson?.isReview) {
+      const isLevelComplete = !isPart || (isPart && partIndex === totalParts - 1);
+      if (
+        !isDev &&
+        isLevelComplete &&
+        (!lessonLevels[lessonId] || lessonLevels[lessonId] < currentLevel + 1)
+      ) {
+        updateLessonLevel(lessonId, currentLevel + 1);
+      }
+
+      // Automatically earn 1 star per completion, max 5
+      const currentStars = lessonStars[lessonId]?.[currentLevel] || 0;
+      if (!isDev && currentStars < 5) {
+        updateLessonStars(lessonId, currentLevel, currentStars + 1);
+      }
+    }
+  }, [
+    isFinished,
+    failedDueToTime,
+    lessonId,
+    currentLevel,
+    isDev,
+    lesson?.isReview,
+    lessonLevels,
+    updateLessonLevel,
+    lessonStars,
+    updateLessonStars,
+    isPart,
+    partIndex,
+    totalParts
+  ]);
+
+  useEffect(() => {
     if (!_hasHydrated) return;
 
     if (!lesson) {

@@ -13,6 +13,7 @@ export default function RewardClient() {
   const router = useRouter();
   const category = (searchParams?.get('category') || 'learn') as 'learn' | 'alphabet' | 'speak';
   const nextUrl = searchParams?.get('nextUrl');
+  const nextLabel = searchParams?.get('nextLabel');
   const replayUrl = searchParams?.get('replayUrl');
   
   const { language, claimGift, unopenedGifts } = useProgressStore();
@@ -171,8 +172,7 @@ export default function RewardClient() {
                     onClick={() => router.push(nextUrl)}
                     className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-bold text-lg shadow-[0_6px_0_rgb(5,150,105)] active:translate-y-1 active:shadow-[0_0px_0_rgb(5,150,105)] transition-all flex items-center justify-center gap-2"
                   >
-                    <span>{language === 'en' ? 'Continue' : 'Continuer'}</span>
-                    <ChevronRight size={24} />
+                    <span className="uppercase tracking-widest">{nextLabel || (language === 'en' ? 'Continue' : 'Continuer')}</span>
                   </button>
                 )}
                 
@@ -183,16 +183,15 @@ export default function RewardClient() {
                       className="flex-1 py-4 bg-white hover:bg-slate-50 text-slate-600 rounded-2xl border-2 border-slate-200 font-bold transition-colors flex items-center justify-center gap-2 shadow-sm"
                     >
                       <RotateCcw size={20} />
-                      <span>{language === 'en' ? 'Retry' : 'Refaire'}</span>
+                      <span className="uppercase tracking-widest">{language === 'en' ? 'Retry' : 'Refaire'}</span>
                     </button>
                   )}
                   
                   <button 
-                    onClick={() => router.push(category === 'speak' ? '/speaking' : category === 'alphabet' ? '/alphabet' : '/learn')}
+                    onClick={() => router.push(`/${category === 'learn' ? 'learn' : category}`)}
                     className="flex-1 py-4 bg-white hover:bg-slate-50 text-slate-600 rounded-2xl border-2 border-slate-200 font-bold transition-colors flex items-center justify-center gap-2 shadow-sm"
                   >
-                    <Home size={20} />
-                    <span>{language === 'en' ? 'Home' : 'Accueil'}</span>
+                    <span className="uppercase tracking-widest">{language === 'en' ? 'Back' : 'Accueil'}</span>
                   </button>
                 </div>
               </motion.div>
