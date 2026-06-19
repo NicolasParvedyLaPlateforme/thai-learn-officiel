@@ -104,35 +104,36 @@ export function DesktopLessonLevelsView({
       </div>
 
       {/* Header */}
-      <div ref={headerRef} className={`p-8 md:p-10 ${unitColor} border-b-[6px] ${unitBorder} rounded-3xl text-white shadow-xl relative overflow-hidden -mt-20 md:-mt-24`}>
-        {lesson.imageUrl && (
-          <>
-            <div className="absolute inset-0 w-full h-full opacity-60">
-              <IconImage src={lesson.imageUrl} alt="" fill className="object-cover" priority />
-            </div>
-            <div className="absolute inset-0 bg-black/40"></div>
-          </>
+      <div ref={headerRef} className={`p-0 ${unitColor} border-b-[6px] ${unitBorder} rounded-[2rem] shadow-xl relative overflow-hidden -mt-20 md:-mt-24 min-h-[240px] md:min-h-[280px] flex items-center`}>
+        {lesson.imageUrl ? (
+          <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+            <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />
+          </div>
+        ) : (
+          <div className="absolute inset-0 w-full h-full z-0 bg-black/10 pointer-events-none"></div>
         )}
-        <div className="relative z-10 flex flex-col items-start gap-4">
+        
+        {/* Glassmorphism Card */}
+        <div className="relative z-10 p-6 md:p-8 mx-4 my-6 md:mx-10 md:my-10 max-w-xl w-full sm:w-auto bg-white/20 backdrop-blur-md border border-white/40 rounded-3xl shadow-lg flex flex-col items-start gap-4">
           <button 
             onClick={onBack}
-            className="flex items-center gap-2 px-4 py-2 bg-black/20 hover:bg-black/30 text-white rounded-xl font-bold transition-colors shadow-sm backdrop-blur-sm"
+            className="flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-800 rounded-xl font-extrabold transition-all shadow-md active:scale-95"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={20} className="stroke-[3]" />
             {getTranslation('auto.back', language)}
           </button>
           
-          {unitTitle && (
-            <h3 className="text-white/80 font-black uppercase tracking-widest text-sm drop-shadow-sm">
-              {unitTitle}
-            </h3>
-          )}
-          
-          <div className="flex flex-col">
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-white drop-shadow-md tracking-tight mb-2">
+          <div className="flex flex-col gap-1 w-full">
+            {unitTitle && (
+              <h3 className="text-white font-extrabold uppercase tracking-widest text-sm drop-shadow-md">
+                {unitTitle}
+              </h3>
+            )}
+            
+            <h2 className="text-3xl lg:text-4xl font-black text-white drop-shadow-lg tracking-tight leading-tight">
               {lessonTitle}
             </h2>
-            <p className="text-white/90 font-medium text-lg drop-shadow">
+            <p className="text-white font-bold text-lg drop-shadow-md leading-snug mt-1">
               {getLocalizedField(lesson, 'description', language) || 'Sélectionnez un niveau pour voir ses détails et choisir votre partie.'}
             </p>
           </div>
