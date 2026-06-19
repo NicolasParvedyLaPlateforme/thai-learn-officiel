@@ -3,6 +3,7 @@ import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } 
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../../components/IconImage';
 import { SpeakLessonCard } from './SpeakLessonCard';
+import { NextUnitCard } from '../NextUnitCard';
 
 interface SpeakMobileTimelineProps {
   unit: any;
@@ -158,8 +159,9 @@ export default function SpeakMobileTimeline({
           </div>
         )}
 
-        <div className="flex flex-col relative w-full mt-8 pb-20 pl-2 pr-2 sm:pl-4 sm:pr-4">
-          <div className="absolute left-[1.75rem] sm:left-[2.5rem] top-0 bottom-[4rem] w-2 -translate-x-1/2 bg-slate-200 rounded-full z-0 opacity-80"></div>
+        <div className="flex flex-col w-full mt-8 pl-2 pr-2 sm:pl-4 sm:pr-4">
+          <div className="flex flex-col relative w-full pb-8">
+            <div className="absolute left-[1.75rem] sm:left-[2.5rem] top-0 bottom-0 w-2 -translate-x-1/2 bg-slate-200 rounded-full z-0 opacity-80"></div>
 
           {unitLessons.map((lesson, idx) => {
             const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
@@ -238,34 +240,18 @@ export default function SpeakMobileTimeline({
               </motion.div>
             )
           })}
+          </div>
 
           {nextUnit && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-12 sm:mb-16 group gap-3 sm:gap-4 cursor-pointer"
-              onClick={() => handleUnitSelect(activeUnitIndex + 1)}
-            >
-              <div className="relative shrink-0 z-10 group-hover:scale-105 group-active:scale-95 transition-all">
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] border-[#FAFAFA] relative z-10 shadow-sm overflow-hidden ${nextUnit.colorClass || 'bg-rose-500'} text-white`}>
-                  <BookOpen size={20} className="fill-current stroke-[2]" />
-                </div>
-              </div>
-
-              <div className="flex-1 min-w-0 z-10">
-                <div className="bg-white rounded-[1.5rem] border-2 border-slate-100 border-b-[4px] p-4 sm:p-5 shadow-sm group-active:border-b-2 group-active:translate-y-[2px] transition-all group-hover:border-slate-200 flex flex-col justify-center">
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className={`text-[10px] sm:text-xs font-black uppercase tracking-wider ${nextUnit.textClass || 'text-slate-500'}`}>
-                      {mounted && getTranslation('auto.next_unit', language)}
-                    </span>
-                  </div>
-                  <h3 className="text-sm sm:text-base font-extrabold text-slate-700 leading-tight truncate">
-                    {mounted ? getLocalizedField(nextUnit, 'title', language) : nextUnit.title}
-                  </h3>
-                </div>
-              </div>
-            </motion.div>
+            <div className="w-full">
+              <NextUnitCard
+                nextUnit={nextUnit}
+                nextUnitIndex={activeUnitIndex + 1}
+                language={language}
+                handleUnitSelect={handleUnitSelect}
+                isMobile={true}
+              />
+            </div>
           )}
         </div>
       </motion.div>
