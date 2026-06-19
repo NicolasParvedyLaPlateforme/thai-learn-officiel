@@ -106,6 +106,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   // We got lesson from props!
   const savedLevel = lesson ? lessonLevels[lesson.id] || 0 : 0;
 
+  const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{
+    id: string;
+    level: number;
+    partIndex?: number | null;
+  } | null>(null);
+
   // Use requested level if provided, otherwise the saved level, but lock it to the generated level if already playing
   const currentLevel = requestedLevelStr
     ? isDev
@@ -142,11 +148,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const earnedStars = Math.max(0, 5 - mistakes);
 
-  const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{
-    id: string;
-    level: number;
-    partIndex?: number | null;
-  } | null>(null);
+
 
   const [isClient, setIsClient] = useState(false);
   const [showExerciseUI, setShowExerciseUI] = useState(false);
@@ -199,38 +201,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     }
   }, [instructionKeyTop, hiddenInstructions, showHelpModal]);
 
-  useEffect(() => {
-    if (isFinished && !failedDueToTime && !lesson?.isReview) {
-      const isLevelComplete = !isPart || (isPart && partIndex === totalParts - 1);
-      if (
-        !isDev &&
-        isLevelComplete &&
-        (!lessonLevels[lessonId] || lessonLevels[lessonId] < currentLevel + 1)
-      ) {
-        updateLessonLevel(lessonId, currentLevel + 1);
-      }
 
-      // Automatically earn 1 star per completion, max 5
-      const currentStars = lessonStars[lessonId]?.[currentLevel] || 0;
-      if (!isDev && currentStars < 5) {
-        updateLessonStars(lessonId, currentLevel, currentStars + 1);
-      }
-    }
-  }, [
-    isFinished,
-    failedDueToTime,
-    lessonId,
-    currentLevel,
-    isDev,
-    lesson?.isReview,
-    lessonLevels,
-    updateLessonLevel,
-    lessonStars,
-    updateLessonStars,
-    isPart,
-    partIndex,
-    totalParts
-  ]);
 
   useEffect(() => {
     if (!_hasHydrated) return;

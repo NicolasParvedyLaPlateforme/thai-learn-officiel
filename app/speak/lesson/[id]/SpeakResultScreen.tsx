@@ -2,8 +2,8 @@ import { getTranslation } from '../../../hooks/useTranslation';
 import { m as motion, AnimatePresence } from "framer-motion";
 import { Check, Star, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useProgressStore } from "../../lib/store";
-import { DailyQuestsWidget } from "../../components/DailyQuestsWidget";
+import { useProgressStore } from "../../../lib/store";
+import { DailyQuestsWidget } from "../../../components/DailyQuestsWidget";
 
 interface SpeakResultScreenProps {
   lessonId: string;

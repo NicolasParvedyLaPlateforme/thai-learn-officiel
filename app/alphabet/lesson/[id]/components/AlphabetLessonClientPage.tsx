@@ -52,6 +52,8 @@ function AlphabetLessonContent() {
   const lesson = allLessons.find(l => l.id === lessonId);
   const savedLevel = lesson ? (lessonLevels[lesson.id] || 0) : 0;
 
+  const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{ id: string, level: number } | null>(null);
+
   const currentLevel = requestedLevelStr ? (isDev ? Math.max(0, parseInt(requestedLevelStr, 10) - 1) : Math.min(savedLevel, Math.max(0, parseInt(requestedLevelStr, 10) - 1))) : (exercisesGeneratedFor?.level !== undefined ? exercisesGeneratedFor.level : savedLevel);
 
   const [exercises, setExercises] = useState<AlphabetExercise[]>([]);
@@ -64,8 +66,6 @@ function AlphabetLessonContent() {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [showHint, setShowHint] = useState(false);
-
-  const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{ id: string, level: number } | null>(null);
 
   const [showExerciseUI, setShowExerciseUI] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -234,6 +234,7 @@ function AlphabetLessonContent() {
     const isLastConsonant = lesson && consonants.length > 0 && lesson.id === consonants[consonants.length - 1].id;
     const isLastVowel = lesson && vowels.length > 0 && lesson.id === vowels[vowels.length - 1].id;
     const isEndOfUnit = isLastConsonant || isLastVowel;
+    const nextUnitIndex = isLastConsonant ? 1 : -1;
     
     const { unopenedGifts } = useProgressStore.getState();
 
