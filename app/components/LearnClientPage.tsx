@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import { useProgressStore } from '../lib/store';
 import BASE_UNITS from '../data/units.json';
 import { useGlobalSuggestedLesson } from '../lib/useGlobalSuggestedLesson';
@@ -128,15 +128,6 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
   }, [lastScrollY]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-      autoDetectLanguage();
-      useProgressStore.getState().checkAndGenerateQuests();
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [autoDetectLanguage]);
-
-  useEffect(() => {
     if (!mounted) return;
     if (lastActiveUnitIndex !== undefined && lastActiveUnitIndex >= 0 && lastActiveUnitIndex < UNITS.length) {
       setActiveUnitIndex(lastActiveUnitIndex);
@@ -168,67 +159,67 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
 
   const [isProcessingHash, setIsProcessingHash] = useState(true);
 
-  useEffect(() => {
-    if (mounted) {
-      const hash = window.location.hash;
-      if (hash && hash.startsWith('#lesson-')) {
-        try {
-          const baseId = hash.substring(1).replace('lesson-', '');
-          
-          // Auto open the map for this lesson
-          const foundLesson = data.lessons.find(l => l.id === baseId);
-          if (foundLesson) {
-            const isCompleted = completedLessons.includes(baseId);
-            const unitIndex = UNITS.findIndex(u => data.lessons.findIndex(l => l.id === baseId) >= u.startIndex && data.lessons.findIndex(l => l.id === baseId) < u.endIndex);
-            
-            if (unitIndex !== -1) {
-              const unit = UNITS[unitIndex];
-              const lastLvlStr = localStorage.getItem(`last_level_${baseId}`);
-              const parsedLastLvl = lastLvlStr !== null ? parseInt(lastLvlStr, 10) : undefined;
+  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-              setSelectedLesson({
-                lesson: foundLesson,
-                isCompleted,
-                unitColor: unit.colorClass,
-                unitBorder: unit.borderClass,
-                unitText: unit.textClass,
-                unitHover: unit.hoverClass,
-                initialScrollLevel: parsedLastLvl
-              });
-              setActiveUnitIndex(unitIndex);
-              
-              if (parsedLastLvl !== undefined && window.innerWidth >= 1280) {
-                setModalLevel(parsedLastLvl);
-              }
+  useIsomorphicLayoutEffect(() => {
+    let hashProcessed = false;
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#lesson-')) {
+      try {
+        const baseId = hash.substring(1).replace('lesson-', '');
+        
+        const foundLesson = data.lessons.find(l => l.id === baseId);
+        if (foundLesson) {
+          const isCompleted = completedLessons.includes(baseId);
+          const unitIndex = UNITS.findIndex(u => data.lessons.findIndex(l => l.id === baseId) >= u.startIndex && data.lessons.findIndex(l => l.id === baseId) < u.endIndex);
+          
+          if (unitIndex !== -1) {
+            const unit = UNITS[unitIndex];
+            const lastLvlStr = localStorage.getItem(`last_level_${baseId}`);
+            const parsedLastLvl = lastLvlStr !== null ? parseInt(lastLvlStr, 10) : undefined;
+
+            setSelectedLesson({
+              lesson: foundLesson,
+              isCompleted,
+              unitColor: unit.colorClass,
+              unitBorder: unit.borderClass,
+              unitText: unit.textClass,
+              unitHover: unit.hoverClass,
+              initialScrollLevel: parsedLastLvl
+            });
+            setActiveUnitIndex(unitIndex);
+            
+            if (parsedLastLvl !== undefined && window.innerWidth >= 1280) {
+              setModalLevel(parsedLastLvl);
             }
           }
-
-          // We need a tiny timeout here ONLY for scrolling to the element, if it's rendered in the DOM
-          setTimeout(() => {
-            const isDesktop = window.innerWidth >= 768;
-            const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
-
-            let el = document.querySelector(targetId);
-            if (!el) {
-              el = document.querySelector(hash);
-            }
-
-            if (el) {
-              const y = el.getBoundingClientRect().top + window.scrollY - 100;
-              window.scrollTo({ top: y, behavior: 'smooth' });
-            }
-          }, 50);
-        } catch (e) {
-          console.error(e);
-        } finally {
-          setIsProcessingHash(false);
         }
-      } else {
-        setIsProcessingHash(false);
+
+        setTimeout(() => {
+          const isDesktop = window.innerWidth >= 768;
+          const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
+
+          let el = document.querySelector(targetId);
+          if (!el) {
+            el = document.querySelector(hash);
+          }
+
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 50);
+        hashProcessed = true;
+      } catch (e) {
+        console.error(e);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted, data.lessons, completedLessons]);
+    
+    setIsProcessingHash(false);
+    setMounted(true);
+    autoDetectLanguage();
+    useProgressStore.getState().checkAndGenerateQuests();
+  }, [autoDetectLanguage, data.lessons, completedLessons, UNITS]);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">

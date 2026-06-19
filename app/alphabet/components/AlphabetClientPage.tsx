@@ -1,7 +1,7 @@
 'use client';
 
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import { AnimatePresence, m as motion } from 'motion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -32,6 +32,20 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
   const { completedLessons, unlockedLessons, lessonLevels, lessonStars, xp, goldCoins, currentStreak, dailyQuests, resetLessonLevel, unlockLessonManual, language, setLanguage, autoDetectLanguage, getExpectedXp } = useProgressStore();
   const alphabetQuests = dailyQuests?.alphabet || [];
   const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const updateCols = () => {
+      if (window.innerWidth >= 1024) setCols(5);
+      else if (window.innerWidth >= 768) setCols(4);
+      else if (window.innerWidth >= 640) setCols(3);
+      else setCols(2);
+    };
+    
+    updateCols();
+    window.addEventListener('resize', updateCols);
+    return () => window.removeEventListener('resize', updateCols);
+  }, []);
+
+  const [isProcessingHash, setIsProcessingHash] = useState(true);
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
@@ -97,11 +111,9 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  useEffect(() => {
-     
-    setMounted(true);
-    autoDetectLanguage();
-    
+  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
+  useIsomorphicLayoutEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const unitParam = params.get('unit');
@@ -110,83 +122,65 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
         window.history.replaceState({}, '', '/alphabet');
       }
     }
-  }, [autoDetectLanguage]);
 
-  useEffect(() => {
-    const updateCols = () => {
-      if (window.innerWidth >= 1024) setCols(5);
-      else if (window.innerWidth >= 768) setCols(4);
-      else if (window.innerWidth >= 640) setCols(3);
-      else setCols(2);
-    };
-    
-    updateCols();
-    window.addEventListener('resize', updateCols);
-    return () => window.removeEventListener('resize', updateCols);
-  }, []);
-
-  const [isProcessingHash, setIsProcessingHash] = useState(true);
-
-  useEffect(() => {
-    if (mounted) {
-      const hash = window.location.hash;
-      if (hash && hash.startsWith('#lesson-')) {
-        try {
-          const baseId = hash.substring(1).replace('lesson-', '');
+    let hashProcessed = false;
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#lesson-')) {
+      try {
+        const baseId = hash.substring(1).replace('lesson-', '');
+        
+        const allLessons = [...consonants, ...vowels];
+        const foundLesson = allLessons.find(l => l.id === baseId);
+        
+        if (foundLesson) {
+          const isCompleted = completedLessons.includes(baseId);
+          const unitIndex = UNITS.findIndex(u => u.lessons.some(l => l.id === baseId));
           
-          const allLessons = [...consonants, ...vowels];
-          const foundLesson = allLessons.find(l => l.id === baseId);
-          
-          if (foundLesson) {
-            const isCompleted = completedLessons.includes(baseId);
-            const unitIndex = UNITS.findIndex(u => u.lessons.some(l => l.id === baseId));
+          if (unitIndex !== -1) {
+            const unit = UNITS[unitIndex];
+            setSelectedLesson({
+              lesson: foundLesson,
+              isCompleted,
+              unitColor: unit.colorClass,
+              unitBorder: unit.borderClass,
+              unitText: unit.textClass,
+              unitHover: unit.hoverClass
+            });
+            setActiveUnitIndex(unitIndex);
             
-            if (unitIndex !== -1) {
-              const unit = UNITS[unitIndex];
-              setSelectedLesson({
-                lesson: foundLesson,
-                isCompleted,
-                unitColor: unit.colorClass,
-                unitBorder: unit.borderClass,
-                unitText: unit.textClass,
-                unitHover: unit.hoverClass
-              });
-              setActiveUnitIndex(unitIndex);
-              
-              const lastLvl = localStorage.getItem(`last_level_${baseId}`);
-              if (lastLvl !== null) {
-                if (window.innerWidth >= 1280) {
-                  setModalLevel(parseInt(lastLvl, 10));
-                }
+            const lastLvl = localStorage.getItem(`last_level_${baseId}`);
+            if (lastLvl !== null) {
+              if (window.innerWidth >= 1280) {
+                setModalLevel(parseInt(lastLvl, 10));
               }
             }
           }
-
-          setTimeout(() => {
-            const isDesktop = window.innerWidth >= 768;
-            const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
-            
-            let el = document.querySelector(targetId);
-            if (!el) {
-               el = document.querySelector(hash);
-            }
-
-            if (el) {
-              const y = el.getBoundingClientRect().top + window.scrollY - 100;
-              window.scrollTo({ top: y, behavior: 'smooth' });
-            }
-          }, 50);
-        } catch (e) {
-          console.error(e);
-        } finally {
-          setIsProcessingHash(false);
         }
-      } else {
-        setIsProcessingHash(false);
+
+        setTimeout(() => {
+          const isDesktop = window.innerWidth >= 768;
+          const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
+          
+          let el = document.querySelector(targetId);
+          if (!el) {
+             el = document.querySelector(hash);
+          }
+
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 50);
+        hashProcessed = true;
+      } catch (e) {
+        console.error(e);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted, completedLessons]);
+    
+    setIsProcessingHash(false);
+    setMounted(true);
+    autoDetectLanguage();
+  }, [autoDetectLanguage, completedLessons, consonants, vowels, UNITS]);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
