@@ -95,6 +95,8 @@ export function LessonPathMap({
   const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const isClickScrolling = useRef(false);
+  const scrollEndTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setMenuVisible(true), 100);
@@ -106,8 +108,10 @@ export function LessonPathMap({
       const button = carouselRef.current.querySelector(`[data-nav-level="${activeMobileLevel}"]`) as HTMLElement;
       if (button) {
         const container = carouselRef.current;
-        const scrollLeft = button.offsetLeft - container.offsetLeft - (container.clientWidth / 2) + (button.clientWidth / 2);
-        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        const containerRect = container.getBoundingClientRect();
+        const buttonRect = button.getBoundingClientRect();
+        const scrollLeft = container.scrollLeft + (buttonRect.left - containerRect.left) - (containerRect.width / 2) + (buttonRect.width / 2);
+        container.scrollTo({ left: scrollLeft, behavior: 'auto' });
       }
     }
   }, [activeMobileLevel]);
@@ -129,40 +133,49 @@ export function LessonPathMap({
   }, []);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let ticking = false;
     const handleScroll = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        const centerY = window.innerHeight / 2;
-        let closestIndex: number | null = null;
-        let minDistance = Infinity;
+      if (isClickScrolling.current) {
+        if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
+        scrollEndTimer.current = setTimeout(() => {
+          isClickScrolling.current = false;
+        }, 150);
+        return;
+      }
 
-        nodeRefs.current.forEach((node, index) => {
-          if (node) {
-            const rect = node.getBoundingClientRect();
-            const nodeCenterY = rect.top + rect.height / 2;
-            const distance = Math.abs(nodeCenterY - centerY);
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestIndex = index;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const centerY = window.innerHeight / 2;
+          let closestIndex: number | null = null;
+          let minDistance = Infinity;
+
+          nodeRefs.current.forEach((node, index) => {
+            if (node) {
+              const rect = node.getBoundingClientRect();
+              const nodeCenter = rect.top + rect.height / 2;
+              const distance = Math.abs(centerY - nodeCenter);
+
+              if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = index;
+              }
             }
-          }
-        });
+          });
 
-        if (closestIndex !== null && minDistance < window.innerHeight / 2) {
-          setActiveMobileLevel(closestIndex);
-        }
-      }, 50);
+          if (closestIndex !== null && minDistance < window.innerHeight / 2) {
+            setActiveMobileLevel((prev) => prev !== closestIndex ? closestIndex : prev);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Execute once to set initial active level based on current scroll
+    // Initial check
     setTimeout(handleScroll, 100);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timeout);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const isUnlockedMastery = currentProgress >= maxLevel;
@@ -213,7 +226,7 @@ export function LessonPathMap({
 
            <div 
              ref={carouselRef}
-             className="flex-1 overflow-x-auto flex items-center gap-3 px-2 h-full snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+             className="flex-1 overflow-x-auto flex items-center gap-3 px-2 h-full snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
            >
               {[...nodes].reverse().map((levelIndex) => {
                 const isMastery = levelIndex === maxLevel;
@@ -227,6 +240,12 @@ export function LessonPathMap({
                     onClick={(e) => {
                       e.stopPropagation();
                       if (isAccessible) {
+                        isClickScrolling.current = true;
+                        if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
+                        scrollEndTimer.current = setTimeout(() => {
+                          isClickScrolling.current = false;
+                        }, 500);
+
                         setActiveMobileLevel(levelIndex);
                         const targetNode = nodeRefs.current[levelIndex];
                         if (targetNode) {
