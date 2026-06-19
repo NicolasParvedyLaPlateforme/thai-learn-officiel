@@ -17,6 +17,7 @@ interface LessonPathMapProps {
   lesson?: any;
   lessonPartsCompleted?: Record<string, number[]>;
   suggestionType?: string;
+  initialScrollLevel?: number;
   onReady?: () => void;
   onBack?: () => void;
 }
@@ -35,10 +36,14 @@ export function LessonPathMap({
   lesson,
   lessonPartsCompleted,
   suggestionType,
+  initialScrollLevel,
   onReady,
   onBack
 }: LessonPathMapProps) {
   const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
+
+  const effectiveCurrent = currentProgress > maxLevel ? maxLevel : currentProgress;
+  const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : effectiveCurrent;
 
   const getOffset = (index: number) => {
     // Desktop alternating pattern for wide sweeping curves
@@ -347,7 +352,7 @@ export function LessonPathMap({
               } as React.CSSProperties}
               ref={(el) => {
                 nodeRefs.current[levelIndex] = el;
-                const shouldScrollTo = modalLevel !== null ? isSelected : isCurrent;
+                const shouldScrollTo = modalLevel !== null ? isSelected : levelIndex === targetScrollLevel;
                 if (shouldScrollTo && currentLevelRef) {
                   (currentLevelRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
                 }
@@ -387,7 +392,7 @@ export function LessonPathMap({
                 </>
               )}
 
-              {isCurrent && isSelected && (
+              {isCurrent && (
                 <div className={`absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-xl font-bold text-xs text-white ${unitColor} whitespace-nowrap shadow-md animate-bounce z-40`}>
                   {getTranslation('auto.in_progress', language)}
                   <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 ${unitColor}`} />

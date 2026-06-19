@@ -8,7 +8,7 @@ import { useProgressStore } from '../lib/store';
 import { useState, useEffect, useRef } from 'react';
 
 interface DesktopLessonLevelsViewProps {
-  lessonData: { lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string };
+  lessonData: { lesson: any, isCompleted: boolean, unitColor: string, unitBorder: string, unitText: string, unitHover: string, initialScrollLevel?: number };
   unitTitle?: string;
   modalLevel: number | null;
   setModalLevel: (level: number) => void;
@@ -137,6 +137,7 @@ export function DesktopLessonLevelsView({
           lesson={lesson}
           lessonPartsCompleted={lessonPartsCompleted}
           suggestionType={suggestionType}
+          initialScrollLevel={lessonData.initialScrollLevel}
           onReady={() => setIsReady(true)}
           onBack={onBack}
         />
