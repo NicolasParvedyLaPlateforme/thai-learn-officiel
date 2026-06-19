@@ -85,8 +85,8 @@ export function DesktopLessonLevelsView({
       exit={{ opacity: 0, y: 20 }}
       className={`flex flex-col gap-6 w-full transition-opacity duration-700 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}
     >
-      {/* Header */}
-      <div className={`snap-start scroll-mt-[100px] p-0 ${unitColor} border-b-[6px] ${unitBorder} rounded-[2rem] shadow-xl relative overflow-hidden min-h-[240px] md:min-h-[280px] flex items-center`}>
+      {/* Desktop Header */}
+      <div className={`hidden md:flex snap-start scroll-mt-[100px] p-0 ${unitColor} border-b-[6px] ${unitBorder} rounded-[2rem] shadow-xl relative overflow-hidden min-h-[280px] items-center`}>
         {lesson.imageUrl ? (
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
             <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />
@@ -118,6 +118,26 @@ export function DesktopLessonLevelsView({
             <p className={`${titleTextColor} opacity-80 text-sm md:text-lg leading-snug mt-0.5 md:mt-1`}>
               {getLocalizedField(lesson, 'description', language) || 'Sélectionnez un niveau pour voir ses détails et choisir partie.'}
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Immersive Header */}
+      <div className="flex md:hidden flex-col w-[calc(100%+2rem)] -mx-4 -mt-2 relative">
+        <div className={`w-full h-[220px] ${unitColor} relative overflow-hidden rounded-b-3xl shadow-sm`}>
+          {lesson.imageUrl ? (
+            <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />
+          ) : (
+            <div className="absolute inset-0 w-full h-full z-0 bg-black/10 pointer-events-none"></div>
+          )}
+        </div>
+        
+        {/* Sticky Title Box */}
+        <div className="sticky top-4 z-50 px-6 -mt-8 flex justify-center w-full pointer-events-none">
+          <div className="bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[1.25rem] py-3 px-6 max-w-[90%] pointer-events-auto">
+            <h2 className={`text-lg font-extrabold ${titleTextColor} text-center leading-tight`}>
+              {lessonTitle}
+            </h2>
           </div>
         </div>
       </div>

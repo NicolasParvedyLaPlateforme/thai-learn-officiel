@@ -233,7 +233,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
 
       <LearnMobileHeader 
-        showHeader={showHeader}
+        showHeader={showHeader && !selectedLesson}
         mounted={mounted}
         language={language}
         setIsUnitsModalOpen={setIsUnitsModalOpen}
