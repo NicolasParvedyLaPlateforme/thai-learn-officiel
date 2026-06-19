@@ -400,22 +400,24 @@ export function DesktopSidebarRight({
         >
           <button
             onClick={() => setShowUnitsList(true)}
-            className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-2xl transition-colors group cursor-pointer"
+            className="w-full flex items-center justify-between p-5 bg-white hover:bg-slate-50 border-2 border-slate-100 rounded-[24px] shadow-sm transition-all group cursor-pointer"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                <BookOpen size={20} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shadow-inner">
+                <BookOpen size={24} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="font-bold text-slate-800 tracking-tight">
+                <span className="font-extrabold text-[17px] text-slate-800 tracking-tight">
                   {getTranslation('auto.course_units', language)}
                 </span>
-                <span className="text-xs text-slate-500 font-medium">
+                <span className="text-[13px] text-slate-400 font-medium mt-0.5">
                   {getTranslation('auto.change_or_view_units', language)}
                 </span>
               </div>
             </div>
-            <ChevronLeft size={20} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-1" />
+            <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-slate-200 border border-slate-100 group-hover:border-slate-300 flex items-center justify-center transition-all">
+              <ChevronLeft size={18} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-0.5" />
+            </div>
           </button>
 
           <div className="w-full flex flex-col gap-6">
