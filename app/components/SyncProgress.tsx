@@ -121,7 +121,7 @@ export default function SyncProgress() {
               unlockedLessons: Array.from(new Set([...(dbState.unlockedLessons || []), ...(localState.unlockedLessons || [])])),
               completedToday: dbState.questsDate === localState.questsDate 
                 ? Array.from(new Set([...(dbState.completedToday || []), ...(localState.completedToday || [])]))
-                : (localState.questsDate > (dbState.questsDate || "") ? localState.completedToday : dbState.completedToday),
+                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.completedToday : dbState.completedToday),
               seenAlphabets: Array.from(new Set([...(dbState.seenAlphabets || []), ...(localState.seenAlphabets || [])])),
               lessonLevels: mergedLessonLevels,
               lessonStars: mergedLessonStars,
@@ -132,8 +132,8 @@ export default function SyncProgress() {
               conversationStars: mergedConversationStars,
               dailyQuests: dbState.questsDate === localState.questsDate 
                 ? (localState.dailyQuests || dbState.dailyQuests)
-                : (localState.questsDate > (dbState.questsDate || "") ? localState.dailyQuests : dbState.dailyQuests),
-              questsDate: localState.questsDate > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
+                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.dailyQuests : dbState.dailyQuests),
+              questsDate: (localState.questsDate || "") > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
               reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
               inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
               lessonPartsCompleted: { ...(dbState.lessonPartsCompleted || {}), ...(localState.lessonPartsCompleted || {}) },
@@ -183,7 +183,7 @@ export default function SyncProgress() {
               unlockedLessons: Array.from(new Set([...(dbState.unlockedLessons || []), ...(localState.unlockedLessons || [])])),
               completedToday: dbState.questsDate === localState.questsDate 
                 ? Array.from(new Set([...(dbState.completedToday || []), ...(localState.completedToday || [])]))
-                : (localState.questsDate > (dbState.questsDate || "") ? localState.completedToday : dbState.completedToday),
+                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.completedToday : dbState.completedToday),
               seenAlphabets: Array.from(new Set([...(dbState.seenAlphabets || []), ...(localState.seenAlphabets || [])])),
               lessonLevels: mergedLessonLevels,
               lessonStars: mergedLessonStars,
@@ -194,8 +194,8 @@ export default function SyncProgress() {
               conversationStars: { ...(dbState.conversationStars || {}), ...(localState.conversationStars || {}) },
               dailyQuests: dbState.questsDate === localState.questsDate 
                 ? (localState.dailyQuests || dbState.dailyQuests)
-                : (localState.questsDate > (dbState.questsDate || "") ? localState.dailyQuests : dbState.dailyQuests),
-              questsDate: localState.questsDate > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
+                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.dailyQuests : dbState.dailyQuests),
+              questsDate: (localState.questsDate || "") > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
               reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
               inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
               lessonPartsCompleted: { ...(dbState.lessonPartsCompleted || {}), ...(localState.lessonPartsCompleted || {}) },
