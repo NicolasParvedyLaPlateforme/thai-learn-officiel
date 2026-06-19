@@ -59,11 +59,17 @@ export default function LearnUnitsModal({
                   }`}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
-                      isActive ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'
-                    }`}>
-                      <BookOpen size={24} />
-                    </div>
+                    {u.imageUrl ? (
+                      <div className={`w-14 h-14 rounded-[14px] overflow-hidden relative shrink-0 border-2 ${isActive ? 'border-emerald-500 shadow-sm' : 'border-slate-200'}`}>
+                        <img src={u.imageUrl} alt={getLocalizedField(u, 'title', language)} className={`object-cover w-full h-full ${isActive ? '' : 'opacity-80 grayscale-[30%]'}`} />
+                      </div>
+                    ) : (
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
+                        isActive ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'
+                      }`}>
+                        <BookOpen size={24} />
+                      </div>
+                    )}
                     <div className="flex flex-col">
                       <span className={`font-black uppercase text-sm ${isActive ? 'text-emerald-600' : 'text-slate-400'}`}>
                         {getTranslation('auto.unit', language)} {i + 1}

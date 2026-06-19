@@ -21,6 +21,7 @@ interface Unit {
   startIndex?: number;
   endIndex?: number;
   lessons?: any[];
+  imageUrl?: string;
 }
 
 interface DesktopSidebarRightProps {
@@ -477,13 +478,19 @@ export function DesktopSidebarRight({
                     {hasSuggestion && (
                       <span className="absolute top-3 right-3 w-3 h-3 bg-amber-400 border-2 border-white rounded-full z-10"></span>
                     )}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-[16px] text-white ${u.colorClass} shadow-sm shrink-0`}>
-                        {i + 1}
-                      </div>
-                      <div className="flex flex-col min-w-0 pr-2">
-                        <h3 className="font-bold text-[15px] text-slate-800 truncate leading-tight mb-0.5">{getLocalizedField(u, 'title', language)}</h3>
-                        <span className={`text-[13px] font-semibold ${u.textClass} tracking-tight`}>{status}</span>
+                    <div className="flex items-center gap-4 mb-4">
+                      {u.imageUrl ? (
+                        <div className={`w-16 h-16 rounded-2xl overflow-hidden relative shadow-sm shrink-0 border-[3px] ${u.colorClass.replace('bg-', 'border-')}`}>
+                          <img src={u.imageUrl} alt={getLocalizedField(u, 'title', language)} className="object-cover w-full h-full" />
+                        </div>
+                      ) : (
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-black text-[20px] text-white ${u.colorClass} shadow-sm shrink-0`}>
+                          {i + 1}
+                        </div>
+                      )}
+                      <div className="flex flex-col min-w-0 pr-2 py-1">
+                        <h3 className="font-extrabold text-[16px] text-slate-800 leading-tight mb-1 whitespace-normal break-words">{getLocalizedField(u, 'title', language)}</h3>
+                        <span className={`text-[13px] font-black uppercase tracking-wider ${u.textClass}`}>{status}</span>
                       </div>
                     </div>
 
@@ -506,12 +513,18 @@ export function DesktopSidebarRight({
                   {hasSuggestion && (
                     <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-amber-400 rounded-full z-10"></span>
                   )}
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-[15px] bg-white text-slate-400 group-hover/btn:bg-white group-hover/btn:text-slate-500 shrink-0 mr-3 transition-colors shadow-sm">
-                    {i + 1}
-                  </div>
+                  {u.imageUrl ? (
+                    <div className="w-14 h-14 rounded-[14px] overflow-hidden relative shadow-sm shrink-0 mr-4 border-2 border-slate-200 group-hover/btn:border-slate-300 transition-colors bg-white">
+                      <img src={u.imageUrl} alt={getLocalizedField(u, 'title', language)} className="object-cover w-full h-full opacity-80 group-hover/btn:opacity-100 transition-opacity grayscale-[30%] group-hover/btn:grayscale-0" />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-[16px] bg-white text-slate-400 group-hover/btn:bg-slate-50 group-hover/btn:text-slate-600 shrink-0 mr-4 transition-colors shadow-sm border border-slate-200 group-hover/btn:border-slate-300">
+                      {i + 1}
+                    </div>
+                  )}
 
                   <div className="flex flex-col justify-center min-w-0 overflow-hidden pr-2">
-                    <h3 className="font-bold text-[14px] truncate text-slate-400 group-hover/btn:text-slate-500 transition-colors">{getLocalizedField(u, 'title', language)}</h3>
+                    <h3 className="font-bold text-[15px] leading-snug text-slate-500 group-hover/btn:text-slate-700 transition-colors whitespace-normal break-words">{getLocalizedField(u, 'title', language)}</h3>
                   </div>
                 </button>
               )
