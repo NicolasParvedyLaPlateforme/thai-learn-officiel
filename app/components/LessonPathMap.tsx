@@ -71,15 +71,13 @@ export function LessonPathMap({
     const startX = 100 + (isMobile ? getMobileOffset(index) : getOffset(index));
     const endX = 100 + (isMobile ? getMobileOffset(index - 1) : getOffset(index - 1));
     
-    // Strict S-curve matching the drawing: no outward bulge.
     const c1x = startX;
     const c2x = endX;
     
-    // Cross the Y control points to force the path to drop vertically from the node,
-    // make a quick horizontal sweep in the middle (where there are no images),
-    // and then drop vertically into the next node.
-    const c1y = height * 0.8;
-    const c2y = height * 0.2;
+    // Mobile: Cross Y handles for vertical drop & horizontal sweep
+    // Desktop: Center Y handles for a smooth, wide diagonal sweep
+    const c1y = isMobile ? height * 0.8 : height * 0.5;
+    const c2y = isMobile ? height * 0.2 : height * 0.5;
 
     return `M ${startX} 0 C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${height}`;
   };
