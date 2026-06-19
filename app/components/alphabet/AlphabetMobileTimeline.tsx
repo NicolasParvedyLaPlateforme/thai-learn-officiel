@@ -69,37 +69,40 @@ export default function AlphabetMobileTimeline({
       >
         <div
           onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-          className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} -mx-4 -mt-2 text-white shadow-md relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform`}
+          className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} -mx-4 -mt-2 text-white shadow-md relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[140px] flex items-center`}
         >
           {unit.imageUrl && (
-            <>
-              <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-50 mix-blend-overlay" priority />
-              <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 z-0`}></div>
-            </>
+            <div 
+              className="absolute top-0 right-0 bottom-0 w-[60%] sm:w-[50%] z-0 pointer-events-none"
+              style={{ WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 35%)', maskImage: 'linear-gradient(to right, transparent 0%, black 35%)' }}
+            >
+              <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-80" priority />
+            </div>
           )}
-          <div className="relative z-10 w-full flex flex-col items-start text-left">
+          
+          <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
             <div className="flex justify-between items-start w-full mb-1">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-white drop-shadow-md uppercase tracking-tight break-words pr-2">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-white uppercase tracking-tight break-words pr-2">
                 {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
               </h2>
             </div>
-            <p className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} mb-4 font-medium text-sm sm:text-base leading-snug drop-shadow`}>
+            <p className={`${unit.lightTextClass || 'text-white/90'} mb-4 font-medium text-sm sm:text-base leading-snug`}>
               {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
             </p>
 
             <div className="w-full">
               <div className="flex flex-col">
-                <div className="flex justify-between text-xs font-bold text-white mb-1 px-1 drop-shadow-sm uppercase tracking-wide">
+                <div className="flex justify-between text-xs font-bold text-white mb-1 px-1 uppercase tracking-wide">
                   <span>{getTranslation('auto.mastery_13', language)}</span>
                   <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
                 </div>
-                <div className={`w-full ${unit.imageUrl ? 'bg-black/20 backdrop-blur-sm' : 'bg-black/15'} rounded-full h-2 overflow-hidden mb-1 shadow-inner`}>
+                <div className={`w-full bg-black/15 rounded-full h-2 overflow-hidden mb-1 shadow-inner`}>
                   <div
-                    className={`bg-white h-full rounded-full transition-all duration-1000 ${unit.imageUrl && 'shadow-[0_0_10px_rgba(255,255,255,0.7)]'}`}
+                    className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
                     style={{ width: `${progressPercent}%` }}
                   ></div>
                 </div>
-                <div className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold text-[10px] px-1 drop-shadow-sm`}>
+                <div className={`${unit.lightTextClass || 'text-white/80'} font-bold text-[10px] px-1`}>
                   {getTranslation('auto.4_levels_per_letter_total_mast', language)}
                 </div>
               </div>
