@@ -185,48 +185,61 @@ export default function DesktopSidebarLeft() {
         {/* User Summary / Level */}
         <div className="mt-auto shrink-0 border-t border-emerald-200/60 pt-6 overflow-hidden flex flex-col items-center gap-3 px-0 group-hover:px-2 xl:px-2 transition-all">
           
-          <div className="flex gap-2 w-full justify-center group-hover:justify-start xl:justify-start transition-all">
-            <div className="bg-amber-100 text-amber-600 font-bold rounded-xl shadow-sm h-10 flex-1 flex items-center justify-center whitespace-nowrap px-0 group-hover:px-2 xl:px-2 overflow-hidden border border-amber-200 relative group/stat">
-              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-sm">
-                <Star size={16} fill="currentColor" />
-                {xp}
+          <div className="flex gap-1 w-full justify-center transition-all bg-transparent p-1">
+            {/* XP */}
+            <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-amber-50 text-amber-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="XP">
+              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
+                <Star size={18} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
+                <span>{xp >= 10000 ? (xp / 1000).toFixed(1) + 'k' : xp}</span>
               </span>
               <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                 <Star size={20} fill="currentColor" />
+                 <Star size={22} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
               </div>
             </div>
 
-            <div className="bg-yellow-100 text-yellow-600 font-bold rounded-xl shadow-sm h-10 flex-1 flex items-center justify-center whitespace-nowrap px-0 group-hover:px-2 xl:px-2 overflow-hidden border border-yellow-200 relative group/stat">
-              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-sm">
-                <Coins size={16} fill="currentColor" />
-                {goldCoins || 0}
+            <div className="w-[2px] h-5 bg-slate-200/60 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
+
+            {/* Coins */}
+            <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-yellow-50 text-yellow-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Pièces">
+              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
+                <Coins size={18} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
+                <span>{goldCoins >= 10000 ? (goldCoins / 1000).toFixed(1) + 'k' : (goldCoins || 0)}</span>
               </span>
               <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                 <Coins size={20} fill="currentColor" />
+                 <Coins size={22} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
               </div>
             </div>
+
+            <div className="w-[2px] h-5 bg-slate-200/60 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
             
-            <div className="bg-orange-100 text-orange-500 font-bold rounded-xl shadow-sm h-10 flex-1 flex items-center justify-center whitespace-nowrap px-0 group-hover:px-2 xl:px-2 overflow-hidden border border-orange-200 relative group/stat">
-              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-sm">
-                <Flame size={16} fill="currentColor" className={`${currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 opacity-50'}`} />
-                <span className={`${currentStreak > 0 ? '' : 'text-slate-400 opacity-50'}`}>{currentStreak}</span>
+            {/* Streak */}
+            <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-orange-50 text-orange-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Série">
+              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
+                <Flame size={18} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
+                <span className={`${currentStreak > 0 ? '' : 'text-slate-400'}`}>{currentStreak}</span>
               </span>
               <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                 <Flame size={20} fill="currentColor" className={`${currentStreak > 0 ? 'text-orange-500' : 'text-slate-400 opacity-50'}`} />
+                 <Flame size={22} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
               </div>
             </div>
           </div>
 
+          {/* Language Button */}
           <button 
             onClick={() => setShowLanguageModal(true)}
-            className="mt-2 w-full h-10 flex items-center justify-center rounded-xl font-bold border-2 border-slate-200 bg-white text-slate-500 hover:bg-slate-100 transition-colors shadow-sm overflow-hidden px-0 group-hover:px-3 xl:px-3"
+            className="w-full h-[3rem] mt-1 flex items-center justify-center rounded-[1.25rem] font-extrabold bg-white hover:bg-slate-50 text-slate-600 transition-all shadow-sm overflow-hidden px-0 group-hover:px-4 xl:px-4 relative group/lang"
             title={t('sidebar.language')}
           >
-            <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto mr-0 group-hover:mr-2 xl:mr-2 text-sm whitespace-nowrap">
-              {t('sidebar.language')}
+            <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center justify-center gap-3 text-sm whitespace-nowrap w-full">
+              <div className="w-7 h-7 rounded-full border-2 border-slate-100 flex items-center justify-center bg-white text-slate-500 text-[10px] uppercase font-black tracking-tighter">
+                {language.substring(0,2)}
+              </div>
+              <span className="uppercase tracking-widest text-[13px]">{t('sidebar.language')}</span>
             </span>
-            <div className="flex items-center justify-center shrink-0 w-6 h-6 bg-slate-200 text-slate-700 rounded text-xs uppercase">
-              {language}
+            <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
+              <div className="w-8 h-8 rounded-full border-2 border-slate-100 flex items-center justify-center bg-white text-slate-500 text-xs uppercase font-black tracking-tighter">
+                {language.substring(0,2)}
+              </div>
             </div>
           </button>
 
