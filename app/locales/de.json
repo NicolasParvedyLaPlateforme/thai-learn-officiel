@@ -411,14 +411,14 @@
   "auto.access_levels": "Level aufrufen",
   "auto.unlock_levels_for_words": "Schalte weitere Level frei, um Wörter zu sehen.",
   "auto.unlock_levels_for_phrases": "Schalte weitere Level frei, um Sätze zu sehen.",
-  "levelTitle.1": "Wähle die richtige Antwort",
-  "levelTitle.2": "Vervollständige den Satz",
-  "levelTitle.3": "Erstelle den Satz",
-  "levelTitle.4": "Alles mischen",
+  "levelTitle.1": "Finde die richtige Antwort",
+  "levelTitle.2": "Finde das fehlende Wort",
+  "levelTitle.3": "Setze den Satz zusammen",
+  "levelTitle.4": "Der große Mix!",
   "levelTitle.5": "Verbinde die Wörter",
   "levelTitle.6": "Hören und verbinden",
-  "levelTitle.7": "Wörter ohne Ton verbinden",
-  "levelTitle.8": "Schreibe die Wörter",
-  "levelTitle.9": "Schreibe die Sätze",
-  "levelTitle.10": "Aus dem Gedächtnis schreiben"
+  "levelTitle.7": "Visuelle Zuordnung",
+  "levelTitle.8": "Schreibe das richtige Wort",
+  "levelTitle.9": "Bilde deine Sätze",
+  "levelTitle.10": "Die Gedächtnis-Herausforderung!"
 }
