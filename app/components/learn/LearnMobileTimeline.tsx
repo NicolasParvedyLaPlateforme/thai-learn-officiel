@@ -17,6 +17,7 @@ interface LearnMobileTimelineProps {
   setIsUnitsModalOpen: (open: boolean) => void;
   setIsQuestsModalOpen: (open: boolean) => void;
   setSelectedLesson: (data: any) => void;
+  setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
   nextUnit?: any;
 }

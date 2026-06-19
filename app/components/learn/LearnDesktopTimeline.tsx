@@ -17,6 +17,7 @@ interface LearnDesktopTimelineProps {
   setShowDesktopUnitsList: (open: boolean) => void;
   setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
+  setSelectedLesson: (data: any) => void;
   nextUnit?: any;
 }
 
