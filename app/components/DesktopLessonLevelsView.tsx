@@ -49,23 +49,17 @@ export function DesktopLessonLevelsView({
   useEffect(() => {
     mountedInstances++;
     document.body.classList.add('hide-desktop-sidebar');
-
-    const nav = document.getElementById('bottom-nav');
-    if (nav && window.innerWidth < 1024) {
-      nav.style.transform = 'translateY(100%)';
-      nav.style.opacity = '0';
-      nav.style.pointerEvents = 'none';
+    
+    // Hide bottom nav via body class to avoid mounting race conditions
+    if (window.innerWidth < 1024) {
+      document.body.classList.add('hide-bottom-nav');
     }
 
     return () => {
       mountedInstances--;
       if (mountedInstances === 0) {
         document.body.classList.remove('hide-desktop-sidebar');
-      }
-      if (nav) {
-        nav.style.transform = 'translateY(0)';
-        nav.style.opacity = '1';
-        nav.style.pointerEvents = 'auto';
+        document.body.classList.remove('hide-bottom-nav');
       }
     };
   }, []);

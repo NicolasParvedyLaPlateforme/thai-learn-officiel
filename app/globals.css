@@ -101,3 +101,9 @@ body.hide-desktop-sidebar #desktop-sidebar-nav,
 body.hide-desktop-sidebar #desktop-sidebar-spacer {
   display: none !important;
 }
+
+body.hide-bottom-nav #bottom-nav {
+  transform: translateY(100%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
