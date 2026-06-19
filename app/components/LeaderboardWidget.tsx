@@ -32,7 +32,7 @@ export function LeaderboardWidget() {
 
   if (loading) {
     return (
-      <div className="w-full bg-white rounded-2xl border-2 border-slate-100 p-4 shadow-sm flex flex-col gap-3">
+      <div className="w-full bg-white rounded-2xl border border-slate-100 md:border-2 p-4 shadow-sm flex flex-col gap-3">
         <div className="animate-pulse flex space-x-4">
           <div className="flex-1 space-y-4 py-1">
             <div className="h-4 bg-slate-200 rounded w-3/4"></div>
@@ -49,7 +49,7 @@ export function LeaderboardWidget() {
   if (users.length === 0) return null;
 
   return (
-    <div className="w-full bg-white rounded-[24px] border-2 border-slate-100 p-5 shadow-sm flex flex-col gap-4 relative overflow-hidden group">
+    <div className="w-full bg-white rounded-2xl md:rounded-[24px] border border-slate-100 md:border-2 p-4 md:p-5 shadow-sm flex flex-col gap-3 md:gap-4 relative group">
       {/* Fond décoratif très subtil */}
       <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-amber-50 rounded-full opacity-60 pointer-events-none"></div>
 
@@ -68,7 +68,7 @@ export function LeaderboardWidget() {
         {users.map((user, index) => {
           let medalStyles = "";
           let icon = null;
-          
+
           if (index === 0) {
             medalStyles = "bg-gradient-to-br from-yellow-300 to-yellow-500 text-white shadow-[0_2px_8px_rgba(234,179,8,0.4)] border border-yellow-200/50";
             icon = <Crown size={14} className="stroke-[3]" />;
@@ -102,7 +102,7 @@ export function LeaderboardWidget() {
         })}
       </div>
 
-      <Link 
+      <Link
         href="/leaderboard"
         className="mt-2 w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-[14px] text-indigo-600 bg-indigo-50 hover:bg-indigo-100 transition-colors relative z-10"
       >

@@ -12,7 +12,7 @@ export function ConversationObjectiveWidget() {
   if (!objective) return null;
 
   return (
-    <div className="w-full bg-white rounded-[24px] border-2 border-slate-100 p-5 shadow-sm flex flex-col gap-4 relative overflow-hidden group">
+    <div className="w-full bg-white rounded-2xl md:rounded-[24px] border border-slate-100 md:border-2 p-4 md:p-5 shadow-sm flex flex-col gap-3 md:gap-4 relative group">
       {/* Fond avec un motif très léger (points) */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
 
@@ -27,7 +27,7 @@ export function ConversationObjectiveWidget() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-[20px] p-4 border border-slate-100/80 shadow-[0_4px_12px_rgba(0,0,0,0.02)] relative z-10 overflow-hidden">
+      <div className="w-full flex flex-col bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-[16px] md:rounded-[20px] p-3 md:p-4 border border-slate-100/80 shadow-[0_4px_12px_rgba(0,0,0,0.02)] relative z-10 overflow-hidden">
         {/* Cercles de décoration en arrière-plan du bloc */}
         <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-100/40 rounded-full blur-xl pointer-events-none"></div>
         <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-purple-100/40 rounded-full blur-xl pointer-events-none"></div>
@@ -36,16 +36,16 @@ export function ConversationObjectiveWidget() {
           <div className="flex flex-col gap-1.5 pr-2 w-full">
             <div className="flex items-center gap-2">
               <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${objective.type === 'vocab' ? 'bg-indigo-100 text-indigo-600' : 'bg-emerald-100 text-emerald-600'}`}>
-                {objective.type === 'vocab' 
+                {objective.type === 'vocab'
                   ? (getTranslation('auto.missing_vocabulary', language))
                   : (getTranslation('auto.continue_the_story', language))}
               </span>
             </div>
-            
+
             <span className="text-[15px] font-extrabold text-slate-800 leading-tight mt-1">
-               {language === 'en' ? (objective.conversationTitleEn || objective.conversationTitle) : objective.conversationTitle}
+              {language === 'en' ? (objective.conversationTitleEn || objective.conversationTitle) : objective.conversationTitle}
             </span>
-            
+
             <span className="text-[13px] text-slate-500 font-medium">
               {objective.type === 'vocab' ? (
                 <>
@@ -54,8 +54,8 @@ export function ConversationObjectiveWidget() {
                 </>
               ) : (
                 <>
-                  {language === 'en' 
-                    ? `Complete ${objective.levelToComplete === 0 ? 'Base conversation' : `Level ${objective.levelToComplete}`}` 
+                  {language === 'en'
+                    ? `Complete ${objective.levelToComplete === 0 ? 'Base conversation' : `Level ${objective.levelToComplete}`}`
                     : `Terminer ${objective.levelToComplete === 0 ? 'Conversation de base' : `Niveau ${objective.levelToComplete}`}`}
                 </>
               )}
@@ -63,19 +63,19 @@ export function ConversationObjectiveWidget() {
           </div>
         </div>
 
-        <Link 
+        <Link
           href={
-            objective.type === 'vocab' 
-              ? `/lesson/${objective.lessonId}?level=1` 
+            objective.type === 'vocab'
+              ? `/lesson/${objective.lessonId}?level=1`
               : `/conversations/${objective.conversationId}${objective.levelToComplete > 0 ? `?level=${objective.levelToComplete}` : ''}`
           }
-          className={`mt-5 w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-[15px] text-white shadow-md transition-all active:scale-[0.98] relative overflow-hidden group/btn
+          className={`mt-4 md:mt-5 w-full flex items-center justify-center gap-2 py-2.5 md:py-3 rounded-xl font-bold text-[14px] md:text-[15px] text-white shadow-md transition-all active:scale-[0.98] relative overflow-hidden group/btn
              ${objective.type === 'vocab' ? 'bg-indigo-500 hover:bg-indigo-600 shadow-indigo-200' : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-200'}
           `}
         >
           {/* Effet de brillance au hover */}
           <div className="absolute inset-0 -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-          
+
           {objective.type === 'vocab' ? <BookOpen size={18} /> : <Play size={18} className="fill-current" />}
           <span className="relative z-10">{getTranslation('auto.go_to_objective', language)}</span>
         </Link>

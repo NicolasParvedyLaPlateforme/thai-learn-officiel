@@ -675,7 +675,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
               <X size={20} />
             </button>
 
-            <div className="p-6 pb-12 overflow-y-auto flex flex-col gap-6">
+            <div className="p-4 md:p-6 pb-12 overflow-y-auto flex flex-col gap-4 md:gap-6">
                <DailyQuestsWidget category="alphabet" />
                <ConversationObjectiveWidget />
             </div>
