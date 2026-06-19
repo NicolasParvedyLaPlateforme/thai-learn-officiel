@@ -162,6 +162,21 @@ export function LessonPathMap({
 
   return (
     <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh]">
+      {/* Floating Back Button (for mobile primarily, but visible on both) */}
+      <div className="fixed bottom-6 lg:bottom-10 left-6 lg:left-10 z-[100]">
+        {onBack && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onBack();
+            }}
+            className={`w-12 h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 ${unitColor} text-white`}
+          >
+            <ChevronLeft size={28} />
+          </button>
+        )}
+      </div>
+
       {/* Vertical Navigation Bar (Desktop Only) */}
       <div className="hidden lg:block absolute -left-16 xl:-left-24 top-0 bottom-0 z-50 pointer-events-none">
         <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center py-4 pointer-events-auto">

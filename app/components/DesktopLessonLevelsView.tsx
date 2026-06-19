@@ -63,6 +63,11 @@ export function DesktopLessonLevelsView({
       nav.style.pointerEvents = 'none';
     }
 
+    const sidebarSpacer = document.getElementById('desktop-sidebar-spacer');
+    const sidebarNav = document.getElementById('desktop-sidebar-nav');
+    if (sidebarSpacer) sidebarSpacer.style.display = 'none';
+    if (sidebarNav) sidebarNav.style.display = 'none';
+
     return () => {
       window.removeEventListener('resize', updateSnap);
       document.documentElement.style.scrollSnapType = '';
@@ -71,6 +76,8 @@ export function DesktopLessonLevelsView({
         nav.style.opacity = '1';
         nav.style.pointerEvents = 'auto';
       }
+      if (sidebarSpacer) sidebarSpacer.style.display = '';
+      if (sidebarNav) sidebarNav.style.display = '';
     };
   }, []);
 
@@ -85,46 +92,9 @@ export function DesktopLessonLevelsView({
       exit={{ opacity: 0, y: 20 }}
       className={`flex flex-col gap-6 w-full transition-opacity duration-700 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}
     >
-      {/* Desktop Header */}
-      <div className={`hidden md:flex snap-start scroll-mt-[100px] p-0 ${unitColor} border-b-[6px] ${unitBorder} rounded-[2rem] shadow-xl relative overflow-hidden min-h-[280px] items-center`}>
-        {lesson.imageUrl ? (
-          <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-            <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />
-          </div>
-        ) : (
-          <div className="absolute inset-0 w-full h-full z-0 bg-black/10 pointer-events-none"></div>
-        )}
-        
-        {/* Glassmorphism Card */}
-        <div className="relative z-10 p-5 md:p-8 mx-4 md:mx-10 my-4 md:my-10 max-w-xl w-[calc(100%-2rem)] sm:w-auto bg-white/85 md:bg-white/70 backdrop-blur-xl border border-white/60 rounded-[1.5rem] md:rounded-3xl shadow-xl flex flex-col items-start gap-3 md:gap-4">
-          <button 
-            onClick={onBack}
-            className={`flex items-center gap-1.5 md:gap-2 px-4 py-2 md:px-5 md:py-2.5 ${unitColor} hover:opacity-90 text-white rounded-xl font-bold md:font-extrabold transition-all shadow-md active:scale-95 text-sm md:text-base`}
-          >
-            <ChevronLeft size={18} className="stroke-[3] md:w-5 md:h-5" />
-            {getTranslation('auto.back', language)}
-          </button>
-          
-          <div className="flex flex-col gap-0.5 md:gap-1 w-full">
-            {unitTitle && (
-              <h3 className={`${unitLabelColor} font-bold uppercase tracking-widest text-xs md:text-sm`}>
-                {unitTitle}
-              </h3>
-            )}
-            
-            <h2 className={`text-2xl md:text-3xl lg:text-4xl font-medium ${titleTextColor} tracking-tight leading-tight`}>
-              {lessonTitle}
-            </h2>
-            <p className={`${titleTextColor} opacity-80 text-sm md:text-lg leading-snug mt-0.5 md:mt-1`}>
-              {getLocalizedField(lesson, 'description', language) || 'Sélectionnez un niveau pour voir ses détails et choisir partie.'}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Immersive Header Banner */}
-      <div className="flex md:hidden w-[calc(100%+2rem)] -mx-4 -mt-2 relative">
-        <div className={`w-full h-[220px] ${unitColor} relative overflow-hidden rounded-b-3xl shadow-sm`}>
+      {/* Immersive Header Banner */}
+      <div className="flex w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] lg:w-[calc(100%+4rem)] -mx-4 md:-mx-6 lg:-mx-8 -mt-2 md:-mt-8 relative">
+        <div className={`w-full h-[220px] md:h-[280px] ${unitColor} relative overflow-hidden rounded-b-3xl md:rounded-b-[2.5rem] shadow-sm`}>
           {lesson.imageUrl ? (
             <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />
           ) : (
@@ -133,10 +103,10 @@ export function DesktopLessonLevelsView({
         </div>
       </div>
         
-      {/* Sticky Title Box (Mobile) */}
-      <div className="sticky top-4 z-50 px-6 -mt-14 flex md:hidden justify-center w-full pointer-events-none">
+      {/* Sticky Title Box */}
+      <div className="sticky top-4 z-50 px-6 -mt-14 md:-mt-16 flex justify-center w-full pointer-events-none">
         <div className="bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[1.25rem] py-3 px-6 max-w-[90%] pointer-events-auto">
-          <h2 className={`text-lg font-extrabold ${titleTextColor} text-center leading-tight`}>
+          <h2 className={`text-lg md:text-xl font-extrabold ${titleTextColor} text-center leading-tight`}>
             {lessonTitle}
           </h2>
         </div>

@@ -77,9 +77,10 @@ export default function DesktopSidebarLeft() {
   return (
     <>
       {/* Spacer for desktop layout so content doesn't get hidden behind absolute sidebar depending on setup we want */}
-      <div className={`hidden md:block shrink-0 transition-all duration-300 ease-in-out ${isMobileLandscape ? 'w-0' : 'w-20 xl:w-64'}`}></div>
+      <div id="desktop-sidebar-spacer" className={`hidden md:block shrink-0 transition-all duration-300 ease-in-out ${isMobileLandscape ? 'w-0' : 'w-20 xl:w-64'}`}></div>
 
       <nav 
+        id="desktop-sidebar-nav"
         className={`hidden md:flex fixed top-0 left-0 h-screen bg-[#F0FDF4] border-r border-emerald-100 flex-col py-6 transition-all duration-300 ease-in-out z-[70] shadow-sm ${
           isMobileLandscape 
             ? (isMobileSidebarOpen ? 'w-64 px-4 translate-x-0' : 'w-64 px-4 -translate-x-full')
