@@ -45,17 +45,6 @@ export function DesktopLessonLevelsView({
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const updateSnap = () => {
-      if (window.innerWidth < 1024) {
-        document.documentElement.style.scrollSnapType = 'y mandatory';
-      } else {
-        document.documentElement.style.scrollSnapType = 'none';
-      }
-    };
-
-    updateSnap();
-    window.addEventListener('resize', updateSnap);
-
     const nav = document.getElementById('bottom-nav');
     if (nav && window.innerWidth < 1024) {
       nav.style.transform = 'translateY(100%)';
@@ -69,8 +58,6 @@ export function DesktopLessonLevelsView({
     if (sidebarNav) sidebarNav.style.display = 'none';
 
     return () => {
-      window.removeEventListener('resize', updateSnap);
-      document.documentElement.style.scrollSnapType = '';
       if (nav) {
         nav.style.transform = 'translateY(0)';
         nav.style.opacity = '1';

@@ -265,7 +265,7 @@ export function LessonPathMap({
              : 'text-slate-200';
 
         return (
-          <div key={levelIndex} className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center snap-center">
+          <div key={levelIndex} className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center">
             {/* Connection Line to the node below */}
             {levelIndex > 0 && (
               <>
