@@ -96,3 +96,8 @@
     transform: translateX(100%);
   }
 }
+
+body.hide-desktop-sidebar #desktop-sidebar-nav,
+body.hide-desktop-sidebar #desktop-sidebar-spacer {
+  display: none !important;
+}

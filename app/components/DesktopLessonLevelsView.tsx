@@ -20,6 +20,8 @@ interface DesktopLessonLevelsViewProps {
   suggestionType: string;
 }
 
+let mountedInstances = 0;
+
 export function DesktopLessonLevelsView({
   lessonData,
   unitTitle,
@@ -45,6 +47,9 @@ export function DesktopLessonLevelsView({
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    mountedInstances++;
+    document.body.classList.add('hide-desktop-sidebar');
+
     const nav = document.getElementById('bottom-nav');
     if (nav && window.innerWidth < 1024) {
       nav.style.transform = 'translateY(100%)';
@@ -52,19 +57,16 @@ export function DesktopLessonLevelsView({
       nav.style.pointerEvents = 'none';
     }
 
-    const sidebarSpacer = document.getElementById('desktop-sidebar-spacer');
-    const sidebarNav = document.getElementById('desktop-sidebar-nav');
-    if (sidebarSpacer) sidebarSpacer.style.display = 'none';
-    if (sidebarNav) sidebarNav.style.display = 'none';
-
     return () => {
+      mountedInstances--;
+      if (mountedInstances === 0) {
+        document.body.classList.remove('hide-desktop-sidebar');
+      }
       if (nav) {
         nav.style.transform = 'translateY(0)';
         nav.style.opacity = '1';
         nav.style.pointerEvents = 'auto';
       }
-      if (sidebarSpacer) sidebarSpacer.style.display = '';
-      if (sidebarNav) sidebarNav.style.display = '';
     };
   }, []);
 
