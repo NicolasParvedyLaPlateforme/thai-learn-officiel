@@ -53,7 +53,7 @@ export function DesktopLessonLevelsView({
       ([entry]) => {
         setIsScrolled(!entry.isIntersecting);
       },
-      { rootMargin: '-100px 0px 0px 0px', threshold: 0 }
+      { rootMargin: '0px 0px 0px 0px', threshold: 0 }
     );
 
     if (headerRef.current) {
@@ -119,27 +119,27 @@ export function DesktopLessonLevelsView({
         )}
         
         {/* Glassmorphism Card */}
-        <div className="relative z-10 p-6 md:p-8 mx-4 my-6 md:mx-10 md:my-10 max-w-xl w-full sm:w-auto bg-white/70 backdrop-blur-lg border border-white/60 rounded-3xl shadow-xl flex flex-col items-start gap-4">
+        <div className="relative z-10 p-5 md:p-8 mx-4 md:mx-10 my-4 md:my-10 max-w-xl w-[calc(100%-2rem)] sm:w-auto bg-white/85 md:bg-white/70 backdrop-blur-xl border border-white/60 rounded-[1.5rem] md:rounded-3xl shadow-xl flex flex-col items-start gap-3 md:gap-4">
           <button 
             onClick={onBack}
-            className={`flex items-center gap-2 px-5 py-2.5 ${unitColor} hover:opacity-90 text-white rounded-xl font-extrabold transition-all shadow-md active:scale-95`}
+            className={`flex items-center gap-1.5 md:gap-2 px-4 py-2 md:px-5 md:py-2.5 ${unitColor} hover:opacity-90 text-white rounded-xl font-bold md:font-extrabold transition-all shadow-md active:scale-95 text-sm md:text-base`}
           >
-            <ChevronLeft size={20} className="stroke-[3]" />
+            <ChevronLeft size={18} className="stroke-[3] md:w-5 md:h-5" />
             {getTranslation('auto.back', language)}
           </button>
           
-          <div className="flex flex-col gap-1 w-full">
+          <div className="flex flex-col gap-0.5 md:gap-1 w-full">
             {unitTitle && (
-              <h3 className={`${unitLabelColor} font-bold uppercase tracking-widest text-sm`}>
+              <h3 className={`${unitLabelColor} font-bold uppercase tracking-widest text-xs md:text-sm`}>
                 {unitTitle}
               </h3>
             )}
             
-            <h2 className={`text-3xl lg:text-4xl font-medium ${titleTextColor} tracking-tight leading-tight`}>
+            <h2 className={`text-2xl md:text-3xl lg:text-4xl font-medium ${titleTextColor} tracking-tight leading-tight`}>
               {lessonTitle}
             </h2>
-            <p className={`${titleTextColor} opacity-80 text-lg leading-snug mt-1`}>
-              {getLocalizedField(lesson, 'description', language) || 'Sélectionnez un niveau pour voir ses détails et choisir votre partie.'}
+            <p className={`${titleTextColor} opacity-80 text-sm md:text-lg leading-snug mt-0.5 md:mt-1`}>
+              {getLocalizedField(lesson, 'description', language) || 'Sélectionnez un niveau pour voir ses détails et choisir partie.'}
             </p>
           </div>
         </div>
