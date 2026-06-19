@@ -45,11 +45,19 @@ export function DesktopLessonLevelsView({
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 1024;
-    if (isMobile) {
-      document.documentElement.style.scrollSnapType = 'y mandatory';
-    }
+    const updateSnap = () => {
+      if (window.innerWidth < 1024) {
+        document.documentElement.style.scrollSnapType = 'y mandatory';
+      } else {
+        document.documentElement.style.scrollSnapType = 'none';
+      }
+    };
+
+    updateSnap();
+    window.addEventListener('resize', updateSnap);
+
     return () => {
+      window.removeEventListener('resize', updateSnap);
       document.documentElement.style.scrollSnapType = '';
     };
   }, []);
