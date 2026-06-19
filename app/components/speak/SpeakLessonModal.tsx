@@ -138,19 +138,17 @@ export default function SpeakLessonModal({
                 </div>
               </div>
 
-              <div className="mb-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                    {selectedLesson.lesson.isReview || modalLevel === 10
-                      ? (modalLevel === 10
+              {(selectedLesson.lesson.isReview || modalLevel === 10) && (
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
+                      {modalLevel === 10
                         ? (getTranslation('auto.stats_mastery', language))
-                        : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
-                      : (modalLevel === 1 ? getTranslation('auto.conversation_success_50', language) : getTranslation('auto.pronunciation_success_50', language))
-                    }
-                  </h4>
-                </div>
+                        : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
+                      }
+                    </h4>
+                  </div>
 
-                {selectedLesson.lesson.isReview ? (
                   <div className="flex flex-col gap-3">
                     {(() => {
                       const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
@@ -197,17 +195,8 @@ export default function SpeakLessonModal({
                       }
                     })()}
                   </div>
-                ) : (
-                  <div className="flex flex-col gap-2 w-full pb-2">
-                    {selectedLesson.lesson.phrases?.map((p: any) => (
-                      <button onClick={() => playThaiTTS(p.th)} key={p.id} className={`w-full group bg-white border border-slate-200 rounded-xl px-4 py-3 flex flex-col items-start gap-1 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
-                        <span className={`font-bold text-[15px] ${selectedLesson.unitText}`}>{p.th}</span>
-                        <span className="text-slate-500 text-[13px] font-medium text-left">({getLocalizedField(p, '', language)})</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 

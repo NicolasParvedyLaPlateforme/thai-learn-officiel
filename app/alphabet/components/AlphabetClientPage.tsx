@@ -544,30 +544,6 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                             )}
                           </div>
                         </div>
-
-                        {/* Letters preview */}
-                        <div className="mb-4">
-                          <div className="flex items-center justify-between mb-4">
-                            <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                              {getTranslation('auto.letters', language)} ({letterCount}) :
-                            </h4>
-                            <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
-                          </div>
-
-                          <div className="flex flex-wrap gap-2.5 pb-2">
-                              {selectedLesson.lesson.items.slice(0, 10).map((i: any) => (
-                                <button onClick={() => playThaiTTS(i.letter)} key={i.letter} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
-                                    <span className={`font-bold text-[17px] font-thai ${selectedLesson.unitText}`}>{formatCombiningChar(i.letter)}</span> 
-                                    <span className="text-slate-500 text-[13px] font-medium">({i.romanization})</span>
-                                </button>
-                              ))}
-                              {letterCount > 10 && (
-                                <div className="shrink-0 border border-dashed border-slate-300 text-slate-400 rounded-[2rem] px-4 py-2 flex items-center justify-center font-medium text-[13px]">
-                                   +{letterCount - 10} {getTranslation('auto.others', language)}
-                                </div>
-                              )}
-                          </div>
-                        </div>
                       </div>
                     );
                   })()}

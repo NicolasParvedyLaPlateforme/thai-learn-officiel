@@ -286,22 +286,17 @@ export default function LearnLessonModal({
                 </div>
               </div>
 
-              <div className="mb-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
-                    {selectedLesson.lesson.isReview || modalLevel === 10
-                      ? (modalLevel === 10
+              {(selectedLesson.lesson.isReview || modalLevel === 10) && (
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-[12px] font-black uppercase text-slate-500 tracking-wider">
+                      {modalLevel === 10
                         ? (getTranslation('auto.stats_mastery', language))
-                        : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`))
-                      : (`${getTranslation('auto.vocabulary', language)} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
-                    }
-                  </h4>
-                  {!selectedLesson.lesson.isReview && modalLevel !== 10 && (
-                    <div className="bg-blue-50/50 text-blue-700 font-black text-[10px] uppercase px-2 py-0.5 rounded">Chips</div>
-                  )}
-                </div>
+                        : (`${getTranslation('auto.stats', language) || 'Stats'} (${getTranslation('auto.lvl', language)} ${modalLevel + 1}) :`)
+                      }
+                    </h4>
+                  </div>
 
-                {selectedLesson.lesson.isReview || modalLevel === 10 ? (
                   <div className="flex flex-col gap-3">
                     {(() => {
                       const stats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
@@ -348,17 +343,8 @@ export default function LearnLessonModal({
                       }
                     })()}
                   </div>
-                ) : (
-                  <div className="flex flex-wrap gap-2.5 pb-2">
-                    {selectedLesson.lesson.words?.filter((w: any) => w.id !== 'w_dots').map((w: any) => (
-                      <button onClick={() => playThaiTTS(w.th)} key={w.id} className={`group shrink-0 bg-white border border-slate-200 rounded-[2rem] px-4 py-2 flex items-center justify-center gap-2.5 shadow-sm transition-colors cursor-pointer active:scale-95 ${selectedLesson.unitBorder.replace('border-', 'hover:border-')} ${selectedLesson.unitColor.replace('bg-', 'hover:bg-').replace('500', '100')}`}>
-                        <span className={`font-bold text-[17px] ${selectedLesson.unitText}`}>{w.th}</span>
-                        <span className="text-slate-500 text-[13px] font-medium">({getLocalizedField(w, '', language)})</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -367,21 +353,11 @@ export default function LearnLessonModal({
               <div className="flex gap-3">
                 <Link
                   href={`/writing?lessonId=${selectedLesson.lesson.id}`}
-                  className="flex-1 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer"
+                  className="w-full py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer"
                 >
                   <Pencil size={16} className="mr-2" />
                   {getTranslation('auto.writing', language)}
                 </Link>
-                <button
-                  onClick={() => {
-                    resetLessonLevel(selectedLesson.lesson.id);
-                    setModalLevel(0);
-                  }}
-                  className="flex-1 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors cursor-pointer"
-                >
-                  <RotateCcw size={16} className="mr-2" />
-                  {getTranslation('auto.reset', language)}
-                </button>
               </div>
             )}
             <div className="flex items-center gap-2 w-full mt-1 relative">
