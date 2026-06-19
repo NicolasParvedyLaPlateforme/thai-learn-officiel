@@ -90,8 +90,8 @@ export function DesktopLessonLevelsView({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: isReady ? 1 : 0, y: isReady ? 0 : 30 }}
       exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className={`flex flex-col gap-6 w-full transition-opacity duration-1000 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className={`flex flex-col gap-6 w-full transition-opacity duration-500 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}
     >
       {/* Immersive Header Banner */}
       <div className="flex w-[calc(100%+2rem)] md:w-full -mx-4 md:mx-0 -mt-2 md:-mt-8 relative">
