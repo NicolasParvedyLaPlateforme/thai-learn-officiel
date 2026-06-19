@@ -47,39 +47,41 @@ export default function LearnDesktopTimeline({
     <div key={`desktop-unit-${unit.id}`} className="flex flex-col gap-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
       <div
         onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
-        className={`p-8 md:p-10 ${unit.colorClass} border-b-[6px] ${unit.borderClass} rounded-3xl text-white shadow-xl relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform`}
+        className={`p-8 md:p-10 ${unit.colorClass} border-b-[6px] ${unit.borderClass} rounded-[2rem] text-white shadow-lg relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[200px] flex items-center`}
       >
         {unit.imageUrl && (
-          <>
-            <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-50 mix-blend-overlay" priority />
-            <div className={`absolute inset-0 bg-gradient-to-r from-black/30 via-black/10 to-transparent z-0`}></div>
-            <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 z-0`}></div>
-          </>
+          <div 
+            className="absolute top-0 right-0 bottom-0 w-[60%] md:w-[55%] z-0 pointer-events-none"
+            style={{ WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 25%)', maskImage: 'linear-gradient(to right, transparent 0%, black 25%)' }}
+          >
+            <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-80" priority />
+          </div>
         )}
-        <div className="relative z-10 w-full">
-          <div className="flex justify-between items-start mb-3">
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-white drop-shadow-md uppercase tracking-tight">
+        
+        <div className="relative z-10 w-full md:w-[65%] lg:w-[60%] pr-4 md:pr-8">
+          <div className="flex justify-between items-start mb-2">
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-white uppercase tracking-tight">
               {getLocalizedField(unit, 'title', language)}
             </h2>
           </div>
-          <p className={`${unit.imageUrl ? 'text-white' : unit.lightTextClass} mb-10 font-medium text-xl drop-shadow`}>
+          <p className={`${unit.lightTextClass || 'text-white/90'} mb-8 font-medium text-lg leading-snug`}>
             {getLocalizedField(unit, 'description', language)}
           </p>
 
           <div className="flex items-center gap-6">
             <div className="flex-1">
-              <div className={`flex flex-col mb-3`}>
-                <div className={`text-sm text-white font-bold mb-2 flex justify-between uppercase tracking-wide drop-shadow-sm`}>
+              <div className={`flex flex-col`}>
+                <div className={`text-sm text-white font-bold mb-2 flex justify-between uppercase tracking-wide`}>
                   <span>{getTranslation('auto.mastery_5', language)}</span>
                   <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
                 </div>
-                <div className={`w-full ${unit.imageUrl ? 'bg-black/20 backdrop-blur-sm' : unit.bgMutedClass} rounded-full h-4 overflow-hidden shadow-inner mb-2`}>
+                <div className={`w-full bg-black/15 rounded-full h-3 overflow-hidden shadow-inner mb-2`}>
                   <div
-                    className={`bg-white h-full rounded-full transition-all duration-1000 origin-left ${unit.imageUrl && 'shadow-[0_0_10px_rgba(255,255,255,0.7)]'}`}
+                    className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
                     style={{ width: `${progressPercent}%` }}
                   ></div>
                 </div>
-                <div className={`text-sm ${unit.imageUrl ? 'text-white' : unit.lightTextClass} font-bold drop-shadow-sm`}>
+                <div className={`text-[11px] ${unit.lightTextClass || 'text-white/80'} font-bold`}>
                   {getTranslation('auto.10_levels_per_lesson_total_mas', language)}
                 </div>
               </div>
@@ -87,7 +89,7 @@ export default function LearnDesktopTimeline({
           </div>
         </div>
         {!unit.imageUrl && (
-          <div className={`absolute -bottom-10 -right-10 opacity-20 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
+          <div className={`absolute -bottom-10 -right-10 opacity-10 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
             <BookOpen size={200} />
           </div>
         )}
