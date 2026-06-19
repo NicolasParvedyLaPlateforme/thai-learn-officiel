@@ -325,6 +325,9 @@ export function LessonPathMap({
                     ${activeMobileLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
                     ${activeMobileLevel !== levelIndex && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
                   `}>
+                    <div className={`bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-2 shadow-sm mb-3 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-sm md:text-base text-center transition-all duration-500 ${!isAccessible ? 'opacity-60' : ''}`}>
+                      {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
+                    </div>
                     <img 
                       src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} 
                       alt="Objectif du niveau" 
@@ -339,6 +342,9 @@ export function LessonPathMap({
                     ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-12' : ''}
                     ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-12' : ''}
                   `}>
+                    <div className={`bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm mb-2 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-[11px] text-center transition-all duration-500 ${!isAccessible ? 'opacity-60' : ''}`}>
+                      {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
+                    </div>
                     <img 
                       src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} 
                       alt="Objectif du niveau" 

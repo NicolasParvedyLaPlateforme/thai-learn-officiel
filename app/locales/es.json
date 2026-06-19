@@ -408,5 +408,15 @@
   "auto.phrases": "Frases",
   "auto.access_levels": "Acceder a niveles",
   "auto.unlock_levels_for_words": "Desbloquea más niveles para ver las palabras.",
-  "auto.unlock_levels_for_phrases": "Desbloquea más niveles para ver las frases."
+  "auto.unlock_levels_for_phrases": "Desbloquea más niveles para ver las frases.",
+  "levelTitle.1": "Selecciona la respuesta correcta",
+  "levelTitle.2": "Completa la oración",
+  "levelTitle.3": "Crea la oración",
+  "levelTitle.4": "Mezcla todo",
+  "levelTitle.5": "Enlaza las palabras",
+  "levelTitle.6": "Escucha y enlaza",
+  "levelTitle.7": "Enlaza las palabras sin sonido",
+  "levelTitle.8": "Escribe las palabras",
+  "levelTitle.9": "Escribe las oraciones",
+  "levelTitle.10": "Escribe de memoria"
 }

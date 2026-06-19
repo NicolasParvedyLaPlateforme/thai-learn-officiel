@@ -410,5 +410,15 @@
   "auto.phrases": "Frasi",
   "auto.access_levels": "Accedi ai livelli",
   "auto.unlock_levels_for_words": "Sblocca altri livelli per vedere le parole.",
-  "auto.unlock_levels_for_phrases": "Sblocca altri livelli per vedere le frasi."
+  "auto.unlock_levels_for_phrases": "Sblocca altri livelli per vedere le frasi.",
+  "levelTitle.1": "Seleziona la risposta corretta",
+  "levelTitle.2": "Completa la frase",
+  "levelTitle.3": "Crea la frase",
+  "levelTitle.4": "Mescola tutto",
+  "levelTitle.5": "Collega le parole",
+  "levelTitle.6": "Ascolta e collega",
+  "levelTitle.7": "Collega le parole senza suono",
+  "levelTitle.8": "Scrivi le parole",
+  "levelTitle.9": "Scrivi le frasi",
+  "levelTitle.10": "Scrivi a memoria"
 }

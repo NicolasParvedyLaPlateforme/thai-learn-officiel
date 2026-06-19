@@ -410,5 +410,15 @@
   "auto.phrases": "Phrases",
   "auto.access_levels": "Accéder aux niveaux",
   "auto.unlock_levels_for_words": "Débloquez plus de niveaux pour voir les mots.",
-  "auto.unlock_levels_for_phrases": "Débloquez plus de niveaux pour voir les phrases."
+  "auto.unlock_levels_for_phrases": "Débloquez plus de niveaux pour voir les phrases.",
+  "levelTitle.1": "Sélectionner la bonne réponse",
+  "levelTitle.2": "Compléter la phrase",
+  "levelTitle.3": "Créer la phrase",
+  "levelTitle.4": "On mix tout",
+  "levelTitle.5": "Lier les mots",
+  "levelTitle.6": "Écouter et lier",
+  "levelTitle.7": "Lier les mots sans son",
+  "levelTitle.8": "Écrit les mots",
+  "levelTitle.9": "Écrit les phrases",
+  "levelTitle.10": "Écrit de tête"
 }

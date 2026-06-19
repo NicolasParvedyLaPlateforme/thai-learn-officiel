@@ -410,5 +410,15 @@
   "auto.phrases": "Sätze",
   "auto.access_levels": "Level aufrufen",
   "auto.unlock_levels_for_words": "Schalte weitere Level frei, um Wörter zu sehen.",
-  "auto.unlock_levels_for_phrases": "Schalte weitere Level frei, um Sätze zu sehen."
+  "auto.unlock_levels_for_phrases": "Schalte weitere Level frei, um Sätze zu sehen.",
+  "levelTitle.1": "Wähle die richtige Antwort",
+  "levelTitle.2": "Vervollständige den Satz",
+  "levelTitle.3": "Erstelle den Satz",
+  "levelTitle.4": "Alles mischen",
+  "levelTitle.5": "Verbinde die Wörter",
+  "levelTitle.6": "Hören und verbinden",
+  "levelTitle.7": "Wörter ohne Ton verbinden",
+  "levelTitle.8": "Schreibe die Wörter",
+  "levelTitle.9": "Schreibe die Sätze",
+  "levelTitle.10": "Aus dem Gedächtnis schreiben"
 }
