@@ -155,7 +155,9 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
               
               const lastLvl = localStorage.getItem(`last_level_${baseId}`);
               if (lastLvl !== null) {
-                setModalLevel(parseInt(lastLvl, 10));
+                if (window.innerWidth >= 1280) {
+                  setModalLevel(parseInt(lastLvl, 10));
+                }
               }
             }
           }

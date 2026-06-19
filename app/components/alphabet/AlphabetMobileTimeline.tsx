@@ -177,10 +177,10 @@ export default function AlphabetMobileTimeline({
               >
                 <div
                   className={`relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
-                  onClick={(e) => {
+                    onClick={(e) => {
                     e.stopPropagation();
                     setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(Math.min(level, maxLevelPerLesson - 1));
+                    setModalLevel(null);
                   }}
                 >
                   {isMaxLevel && (
@@ -216,7 +216,7 @@ export default function AlphabetMobileTimeline({
                     isMobileLayout={true}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      setModalLevel(Math.min(level, maxLevelPerLesson - 1));
+                      setModalLevel(null);
                     }}
                   />
                 </div>

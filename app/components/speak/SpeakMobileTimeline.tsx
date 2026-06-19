@@ -225,7 +225,7 @@ export default function SpeakMobileTimeline({
                         return;
                       }
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      setModalLevel(Math.min(level, (maxLevelPerLesson || 10) - 1));
+                      setModalLevel(null);
                     }}
                   />
                 </div>
