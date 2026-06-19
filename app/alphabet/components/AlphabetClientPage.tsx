@@ -68,9 +68,9 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
 
   const globalSuggested = useGlobalSuggestedLesson(lightweightLessons);
   
-  const { consonants, vowels } = getAlphabetLessons();
+  const { consonants, vowels } = useMemo(() => getAlphabetLessons(), []);
 
-  const UNITS = [
+  const UNITS = useMemo(() => [
     {
       ...ALPHABET_BASE_UNITS[0],
       lessons: consonants
@@ -79,7 +79,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       ...ALPHABET_BASE_UNITS[1],
       lessons: vowels
     }
-  ];
+  ], [consonants, vowels]);
 
   const suggestedLessonId = globalSuggested?.type === 'alphabet' ? globalSuggested.id : null;
 
