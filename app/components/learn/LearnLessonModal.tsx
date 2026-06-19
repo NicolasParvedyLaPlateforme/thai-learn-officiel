@@ -20,7 +20,7 @@ interface LearnLessonModalProps {
   lessonStars: Record<string, number[]>;
   resetLessonLevel: (lessonId: string) => void;
   reviewStats: Record<string, Record<number, any>>;
-  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean, partIndex?: number | null) => { xp: number, isFirstTime: boolean, key: string };
+  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean, partIndex?: number | null) => { xp: number, maxXp: number, isFirstTime: boolean, key: string };
 }
 
 export default function LearnLessonModal({
@@ -88,7 +88,7 @@ export default function LearnLessonModal({
   const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
 
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
-  const { xp: expectedXp, isFirstTime } = getExpectedXp(
+  const { xp: expectedXp, maxXp, isFirstTime } = getExpectedXp(
     selectedLesson.lesson.id, 
     modalLevel, 
     !!isReviewOrBilan,
@@ -275,7 +275,12 @@ export default function LearnLessonModal({
                   </div>
                   <div className="flex flex-col items-center justify-center py-4 bg-amber-50 border border-amber-100 rounded-2xl flex-1">
                     <Star size={20} className="text-amber-500 mb-2" />
-                    <span className="text-xl font-black text-amber-600">+{expectedXp}</span>
+                    <span className="text-xl font-black text-amber-600">
+                      {!isFirstTime && maxXp > expectedXp && (
+                        <span className="line-through text-amber-400/60 mr-1 opacity-80 text-sm">+{maxXp}</span>
+                      )}
+                      +{expectedXp}
+                    </span>
                     <span className="text-[10px] uppercase tracking-wider text-amber-500/70 font-bold mt-1">XP</span>
                   </div>
                   <div className="flex flex-col items-center justify-center py-4 bg-blue-50 border border-blue-100 rounded-2xl flex-1">

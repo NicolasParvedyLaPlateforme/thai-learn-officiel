@@ -547,7 +547,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                         let estimatedSecs = stepsCount * secsPerStep;
                         let estimatedMins = Math.max(1, Math.ceil(estimatedSecs / 60));
                         
-                        const { xp: expectedXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel ?? 0, false);
+                        const { xp: expectedXp, maxXp, isFirstTime } = getExpectedXp(selectedLesson.lesson.id, modalLevel ?? 0, false);
                         
                         return (
                           <div className="px-7 pt-2 flex flex-col">
@@ -560,10 +560,10 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                           <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-bold shadow-sm whitespace-nowrap">
                             <Star size={16} className="fill-amber-500 text-amber-600" />
                             {isFirstTime ? `+${expectedXp} XP` : (
-                              <>
-                                <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : (expectedXp === 25 ? 50 : 200)}</span>
+                                <>
+                                {maxXp > expectedXp && <span className="line-through text-amber-400/60 mr-1 opacity-80">+{maxXp}</span>}
                                 <span>+{expectedXp} XP</span>
-                              </>
+                                </>
                             )}
                           </div>
                         </div>

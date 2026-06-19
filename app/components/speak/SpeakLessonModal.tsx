@@ -18,7 +18,7 @@ interface SpeakLessonModalProps {
   lessonStars: Record<string, number[]>;
   resetLessonLevel: (lessonId: string) => void;
   reviewStats: Record<string, Record<number, any>>;
-  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean, partIndex?: number | null) => { xp: number, isFirstTime: boolean, key: string };
+  getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean, partIndex?: number | null) => { xp: number, maxXp: number, isFirstTime: boolean, key: string };
   maxLevelPerLesson?: number;
 }
 
@@ -80,7 +80,7 @@ export default function SpeakLessonModal({
   }
 
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
-  const { xp: expectedXp, isFirstTime } = getExpectedXp(`speak_${selectedLesson.lesson.id}`, modalLevel, !!isReviewOrBilan);
+  const { xp: expectedXp, maxXp, isFirstTime } = getExpectedXp(`speak_${selectedLesson.lesson.id}`, modalLevel, !!isReviewOrBilan);
 
   // Mastery Logic
   const isUnlockedMastery = currentProgress >= maxLevelPerLesson;
@@ -131,8 +131,12 @@ export default function SpeakLessonModal({
                   <Star size={16} className="fill-amber-500 text-amber-600" />
                   {isFirstTime ? `+${expectedXp} XP` : (
                     <>
-                      <span className="line-through text-amber-400/60 mr-1 opacity-80">+{expectedXp === 5 ? 20 : expectedXp === 15 ? 50 : expectedXp === 25 ? 50 : expectedXp === 30 ? 100 : expectedXp === 45 ? 150 : expectedXp === 90 ? 300 : 200}</span>
-                      <span>+{expectedXp} XP</span>
+                      <span className="text-xl font-black text-amber-600">
+                        {!isFirstTime && maxXp > expectedXp && (
+                          <span className="line-through text-amber-400/60 mr-1 opacity-80 text-sm">+{maxXp}</span>
+                        )}
+                        +{expectedXp} XP
+                      </span>
                     </>
                   )}
                 </div>
