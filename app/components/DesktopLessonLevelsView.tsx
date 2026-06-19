@@ -80,6 +80,16 @@ export function DesktopLessonLevelsView({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    if (isMobile) {
+      document.documentElement.style.scrollSnapType = 'y mandatory';
+    }
+    return () => {
+      document.documentElement.style.scrollSnapType = '';
+    };
+  }, []);
+
   const lessonTitle = suggestionType === 'alphabet' && (lesson.type === 'consonant' || lesson.type === 'vowel')
     ? `${getTranslation(lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} ${lesson.id.split('-').pop()}`
     : getLocalizedField(lesson, 'title', language);
@@ -109,7 +119,7 @@ export function DesktopLessonLevelsView({
       </div>
 
       {/* Header */}
-      <div ref={headerRef} className={`p-0 ${unitColor} border-b-[6px] ${unitBorder} rounded-[2rem] shadow-xl relative overflow-hidden -mt-20 md:-mt-24 min-h-[240px] md:min-h-[280px] flex items-center`}>
+      <div ref={headerRef} className={`snap-start scroll-mt-[100px] p-0 ${unitColor} border-b-[6px] ${unitBorder} rounded-[2rem] shadow-xl relative overflow-hidden -mt-20 md:-mt-24 min-h-[240px] md:min-h-[280px] flex items-center`}>
         {lesson.imageUrl ? (
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
             <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />

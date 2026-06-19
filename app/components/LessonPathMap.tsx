@@ -47,7 +47,7 @@ export function LessonPathMap({
 
   const getMobileOffset = (index: number) => {
     // Zigzag pattern mobile to leave space for images
-    return index % 2 === 0 ? -70 : 70;
+    return index % 2 === 0 ? -95 : 95;
   };
 
   const getImageNameForLevel = (index: number) => {
@@ -68,8 +68,20 @@ export function LessonPathMap({
 
   const currentLevelRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(null);
   const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    if (activeMobileLevel !== null && carouselRef.current) {
+      const button = carouselRef.current.querySelector(`[data-nav-level="${activeMobileLevel}"]`) as HTMLElement;
+      if (button) {
+        const container = carouselRef.current;
+        const scrollLeft = button.offsetLeft - container.offsetLeft - (container.clientWidth / 2) + (button.clientWidth / 2);
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      }
+    }
+  }, [activeMobileLevel]);
 
   useEffect(() => {
     if (currentLevelRef.current) {
@@ -88,31 +100,41 @@ export function LessonPathMap({
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idx = Number(entry.target.getAttribute('data-level-index'));
-            if (!isNaN(idx)) {
-              setActiveMobileLevel(idx);
+    let timeout: NodeJS.Timeout;
+    const handleScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const centerY = window.innerHeight / 2;
+        let closestIndex: number | null = null;
+        let minDistance = Infinity;
+
+        nodeRefs.current.forEach((node, index) => {
+          if (node) {
+            const rect = node.getBoundingClientRect();
+            const nodeCenterY = rect.top + rect.height / 2;
+            const distance = Math.abs(nodeCenterY - centerY);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestIndex = index;
             }
           }
         });
-      },
-      { rootMargin: '-30% 0px -30% 0px', threshold: 0 }
-    );
 
-    const validRefs = nodeRefs.current.filter(Boolean);
-    validRefs.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
+        if (closestIndex !== null && minDistance < window.innerHeight / 2) {
+          setActiveMobileLevel(closestIndex);
+        }
+      }, 50);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Execute once to set initial active level based on current scroll
+    setTimeout(handleScroll, 100);
 
     return () => {
-      validRefs.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timeout);
     };
-  }, [nodes.length]);
+  }, []);
 
   const isUnlockedMastery = currentProgress >= maxLevel;
   const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
@@ -153,7 +175,7 @@ export function LessonPathMap({
                   }
                 `}
               >
-                {isMastery ? <Crown size={14} className="fill-current" /> : <span className={`text-xs font-black`}>{levelIndex + 1}</span>}
+                {isMastery ? <Crown size={14} className="fill-current w-4 h-4" /> : <span className={`text-xs font-black`}>{levelIndex + 1}</span>}
                 
                 {/* Tooltip on hover */}
                 <div className="absolute left-full ml-4 px-3 py-1.5 bg-slate-800 text-white text-xs font-bold rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
@@ -171,13 +193,70 @@ export function LessonPathMap({
               }}
               className={`relative z-10 w-10 h-10 rounded-[12px] flex items-center justify-center mt-6 transition-all duration-300 hover:scale-110 shadow-md ${unitColor} text-white group`}
             >
-              <ChevronLeft size={22} strokeWidth={3} className="mr-0.5" />
+              <ChevronLeft size={22} strokeWidth={3} className="mr-0.5 w-[22px] h-[22px]" />
               <div className="absolute left-full ml-4 px-3 py-1.5 bg-slate-800 text-white text-xs font-bold rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
                 {getTranslation('auto.back', language)}
               </div>
             </button>
           )}
         </div>
+      </div>
+
+      {/* Horizontal Navigation Bar (Mobile Only) */}
+      <div className="flex lg:hidden fixed bottom-0 left-0 right-0 h-[76px] bg-white border-t border-slate-200 z-[60] items-center px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.1)] pointer-events-auto">
+         {onBack && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onBack();
+              }}
+              className={`shrink-0 w-10 h-10 rounded-[12px] flex items-center justify-center shadow-md ${unitColor} text-white mx-2`}
+            >
+              <ChevronLeft size={22} strokeWidth={3} className="mr-0.5" />
+            </button>
+         )}
+
+         {onBack && <div className="w-px h-8 bg-slate-200 mx-1 shrink-0" />}
+
+         <div 
+           ref={carouselRef}
+           className="flex-1 overflow-x-auto flex items-center gap-4 px-4 h-full snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+         >
+            {[...nodes].reverse().map((levelIndex) => {
+              const isMastery = levelIndex === maxLevel;
+              const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
+              const isCompleted = isMastery ? earnedStarsMastery > 0 : levelIndex < currentProgress;
+              const isActive = (activeMobileLevel === levelIndex) || (activeMobileLevel === null && levelIndex === currentProgress);
+
+              return (
+                <button
+                  key={`nav-mobile-${levelIndex}`}
+                  data-nav-level={levelIndex}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (isAccessible) {
+                      setActiveMobileLevel(levelIndex);
+                      const targetNode = nodeRefs.current[levelIndex];
+                      if (targetNode) {
+                        targetNode.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                      }
+                    }
+                  }}
+                  disabled={!isAccessible}
+                  className={`
+                    shrink-0 relative z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 snap-center
+                    ${!isAccessible ? 'opacity-50 cursor-not-allowed bg-slate-200 border-2 border-slate-300 text-slate-400' 
+                      : isActive ? `${unitColor} ring-[4px] ring-offset-2 ${unitColor.replace('bg-', 'ring-')} text-white scale-[1.1] shadow-md` 
+                      : isCompleted ? `${unitColor} border-[3px] border-white shadow-sm text-white`
+                      : `bg-white border-[3px] ${unitColor.replace('bg-', 'border-')} ${unitText}`
+                    }
+                  `}
+                >
+                  {isMastery ? <Crown size={16} className="fill-current" /> : <span className={`text-sm font-black`}>{levelIndex + 1}</span>}
+                </button>
+              );
+            })}
+         </div>
       </div>
 
       {nodes.map((levelIndex) => {
@@ -200,7 +279,7 @@ export function LessonPathMap({
              : 'text-slate-200';
 
         return (
-          <div key={levelIndex} className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center">
+          <div key={levelIndex} className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center snap-center">
             {/* Connection Line to the node below */}
             {levelIndex > 0 && (
               <>
@@ -279,9 +358,9 @@ export function LessonPathMap({
                   </div>
 
                   {/* Mobile Image */}
-                  <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-44 z-0 transition-all duration-500 ease-out 
+                  <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-40 z-0 transition-all duration-500 ease-out 
                     ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-                    ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-6' : 'right-full mr-6'}
+                    ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-4' : 'right-full mr-4'}
                     ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-4' : ''}
                     ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-4' : ''}
                   `}>
