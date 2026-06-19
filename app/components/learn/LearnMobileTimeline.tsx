@@ -37,6 +37,7 @@ export default function LearnMobileTimeline({
   mounted,
   handleUnitSelect,
   setIsUnitsModalOpen,
+  setIsQuestsModalOpen,
   setSelectedLesson,
   setModalLevel,
   setLockedReviewModalOpen,
