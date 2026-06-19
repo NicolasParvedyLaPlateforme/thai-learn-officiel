@@ -183,21 +183,22 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
             
             if (unitIndex !== -1) {
               const unit = UNITS[unitIndex];
+              const lastLvlStr = localStorage.getItem(`last_level_${baseId}`);
+              const parsedLastLvl = lastLvlStr !== null ? parseInt(lastLvlStr, 10) : undefined;
+
               setSelectedLesson({
                 lesson: foundLesson,
                 isCompleted,
                 unitColor: unit.colorClass,
                 unitBorder: unit.borderClass,
                 unitText: unit.textClass,
-                unitHover: unit.hoverClass
+                unitHover: unit.hoverClass,
+                initialScrollLevel: parsedLastLvl
               });
               setActiveUnitIndex(unitIndex);
               
-              const lastLvl = localStorage.getItem(`last_level_${baseId}`);
-              if (lastLvl !== null) {
-                if (window.innerWidth >= 1280) {
-                  setModalLevel(parseInt(lastLvl, 10));
-                }
+              if (parsedLastLvl !== undefined && window.innerWidth >= 1280) {
+                setModalLevel(parsedLastLvl);
               }
             }
           }
