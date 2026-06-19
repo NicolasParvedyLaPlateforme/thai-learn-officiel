@@ -722,11 +722,13 @@ export const useProgressStore = create<ProgressState>()(
           type = 'alphabet';
         }
 
-        get().progressQuest(type, 'lessons', 1);
-        get().progressQuest(type, 'xp', finalXp);
-        if (earnedStars >= 3) {
-          get().progressQuest(type, 'perfect_lesson', 1);
+        if (!isFromParts) {
+          get().progressQuest(type, 'lessons', 1);
+          if (earnedStars >= 3) {
+            get().progressQuest(type, 'perfect_lesson', 1);
+          }
         }
+        get().progressQuest(type, 'xp', finalXp);
         get().triggerForceSync();
       },
       completeLessonPart: (lessonId, fallbackXp, playedLevel, partIndex, totalParts, earnedStars = 3, isBilan = false) => {
@@ -773,7 +775,11 @@ export const useProgressStore = create<ProgressState>()(
           type = 'alphabet';
         }
 
+        get().progressQuest(type, 'lessons', 1);
         get().progressQuest(type, 'xp', finalXp);
+        if (earnedStars >= 3) {
+          get().progressQuest(type, 'perfect_lesson', 1);
+        }
         get().triggerForceSync();
 
         // Check if all parts are now completed
