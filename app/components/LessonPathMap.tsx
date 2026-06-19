@@ -105,6 +105,8 @@ export function LessonPathMap({
 
   useEffect(() => {
     if (activeMobileLevel !== null && carouselRef.current) {
+      if (isClickScrolling.current) return; // Prevent interrupting the page's smooth scroll
+
       const button = carouselRef.current.querySelector(`[data-nav-level="${activeMobileLevel}"]`) as HTMLElement;
       if (button) {
         const container = carouselRef.current;
@@ -244,10 +246,22 @@ export function LessonPathMap({
                         if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
                         scrollEndTimer.current = setTimeout(() => {
                           isClickScrolling.current = false;
-                        }, 500);
+                        }, 800);
+
+                        // 1. Center the carousel button instantly
+                        const button = carouselRef.current?.querySelector(`[data-nav-level="${levelIndex}"]`) as HTMLElement;
+                        if (carouselRef.current && button) {
+                          const container = carouselRef.current;
+                          const containerRect = container.getBoundingClientRect();
+                          const buttonRect = button.getBoundingClientRect();
+                          const scrollLeft = container.scrollLeft + (buttonRect.left - containerRect.left) - (containerRect.width / 2) + (buttonRect.width / 2);
+                          container.scrollTo({ left: scrollLeft, behavior: 'auto' });
+                        }
 
                         setActiveMobileLevel(levelIndex);
-                        const targetNode = nodeRefs.current[levelIndex];
+                        
+                        // 2. Smoothly scroll the page immediately (without setTimeout to prevent Safari from blocking it)
+                        const targetNode = document.getElementById(`path-level-${levelIndex}`);
                         if (targetNode) {
                           targetNode.scrollIntoView({ block: 'center', behavior: 'smooth' });
                         }
@@ -291,7 +305,7 @@ export function LessonPathMap({
              : 'text-slate-200';
 
         return (
-          <div key={levelIndex} className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center">
+          <div key={levelIndex} className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center" id={`path-level-${levelIndex}`}>
             {/* Connection Line to the node below */}
             {levelIndex > 0 && (
               <>
