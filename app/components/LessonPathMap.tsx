@@ -66,6 +66,24 @@ export function LessonPathMap({
     }
   };
 
+  const generatePath = (index: number, isMobile: boolean) => {
+    const height = isMobile ? 240 : 320;
+    const startX = 100 + (isMobile ? getMobileOffset(index) : getOffset(index));
+    const endX = 100 + (isMobile ? getMobileOffset(index - 1) : getOffset(index - 1));
+    
+    // Strict S-curve matching the drawing: no outward bulge.
+    const c1x = startX;
+    const c2x = endX;
+    
+    // Cross the Y control points to force the path to drop vertically from the node,
+    // make a quick horizontal sweep in the middle (where there are no images),
+    // and then drop vertically into the next node.
+    const c1y = height * 0.8;
+    const c2y = height * 0.2;
+
+    return `M ${startX} 0 C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${height}`;
+  };
+
   const currentLevelRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -286,7 +304,7 @@ export function LessonPathMap({
                 {/* Desktop SVG */}
                 <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[320px] overflow-visible z-0 pointer-events-none">
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 160, ${100 + getOffset(levelIndex - 1)} 160, ${100 + getOffset(levelIndex - 1)} 320`}
+                    d={generatePath(levelIndex, false)}
                     fill="none"
                     stroke="currentColor"
                     className={strokeClass}
@@ -295,7 +313,7 @@ export function LessonPathMap({
                   />
                   {/* Inner track for depth */}
                   <path
-                    d={`M ${100 + getOffset(levelIndex)} 0 C ${100 + getOffset(levelIndex)} 160, ${100 + getOffset(levelIndex - 1)} 160, ${100 + getOffset(levelIndex - 1)} 320`}
+                    d={generatePath(levelIndex, false)}
                     fill="none"
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="8"
@@ -305,7 +323,7 @@ export function LessonPathMap({
                 {/* Mobile SVG */}
                 <svg className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[240px] overflow-visible z-0 pointer-events-none">
                   <path
-                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 120, ${100 + getMobileOffset(levelIndex - 1)} 120, ${100 + getMobileOffset(levelIndex - 1)} 240`}
+                    d={generatePath(levelIndex, true)}
                     fill="none"
                     stroke="currentColor"
                     className={strokeClass}
@@ -314,7 +332,7 @@ export function LessonPathMap({
                   />
                   {/* Inner track for depth */}
                   <path
-                    d={`M ${100 + getMobileOffset(levelIndex)} 0 C ${100 + getMobileOffset(levelIndex)} 120, ${100 + getMobileOffset(levelIndex - 1)} 120, ${100 + getMobileOffset(levelIndex - 1)} 240`}
+                    d={generatePath(levelIndex, true)}
                     fill="none"
                     stroke="rgba(255,255,255,0.2)"
                     strokeWidth="8"
