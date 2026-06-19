@@ -163,20 +163,11 @@ export function LessonPathMap({
 
   return (
     <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh]">
-      <style>{`
-        @keyframes slideUpNavMobile {
-          from { transform: translateY(150%); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes slideRightNavDesktop {
-          from { transform: translateX(-150%); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-      `}</style>
-
       {/* Floating Back Button (for desktop primarily, mobile has its own in the horizontal nav) */}
-      <div 
-        style={{ animation: 'slideRightNavDesktop 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both' }}
+      <motion.div 
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className="hidden lg:block fixed bottom-6 lg:bottom-10 left-6 lg:left-10 z-[100]"
       >
         {onBack && (
@@ -190,13 +181,15 @@ export function LessonPathMap({
             <ChevronLeft size={28} />
           </button>
         )}
-      </div>
+      </motion.div>
 
       {/* Vertical Navigation Bar (Desktop Only) removed for cleaner UI */}
 
       {/* Horizontal Navigation Bar (Mobile Only) */}
-      <div 
-        style={{ animation: 'slideUpNavMobile 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both' }}
+      <motion.div 
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className="flex lg:hidden fixed bottom-6 left-4 right-4 h-[72px] bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-[2.5rem] z-[60] items-center px-3 shadow-[0_8px_30px_rgb(0,0,0,0.08)] pointer-events-auto"
       >
          {onBack && (
@@ -250,7 +243,7 @@ export function LessonPathMap({
               );
             })}
          </div>
-      </div>
+      </motion.div>
 
       {nodes.map((levelIndex) => {
         const isMastery = levelIndex === maxLevel;
