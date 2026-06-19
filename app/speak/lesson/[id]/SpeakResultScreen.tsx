@@ -1,7 +1,9 @@
 import { getTranslation } from '../../../hooks/useTranslation';
-import { m as motion } from "framer-motion";
+import { m as motion, AnimatePresence } from "framer-motion";
 import { Check, Star, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useProgressStore } from "../../lib/store";
+import { DailyQuestsWidget } from "../../components/DailyQuestsWidget";
 
 interface SpeakResultScreenProps {
   lessonId: string;
@@ -69,9 +71,13 @@ export default function SpeakResultScreen({
           : (getTranslation('auto.level_completed', language) || 'Niveau {level} terminé !').replace('{level}', String(currentLevel + 1))}
       </h1>
       
-      <p className="text-slate-500 mb-8 text-center text-lg font-medium">
+      <p className="text-slate-500 mb-4 text-center text-lg font-medium">
         + {earnedXp !== undefined ? earnedXp : exercisesLength * 3} XP
       </p>
+
+      <div className="w-full max-w-md mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
+        <DailyQuestsWidget category="speak" />
+      </div>
       
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
         {currentLevel + 1 < 5 && (

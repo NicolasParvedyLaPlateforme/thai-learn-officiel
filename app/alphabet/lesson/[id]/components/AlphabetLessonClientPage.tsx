@@ -15,6 +15,7 @@ import { ColoredPhonetic } from '../../../../components/ColoredPhonetic';
 import { AlphabetCard } from '../../../../components/AlphabetCard';
 import { Suspense } from 'react';
 import { LoadingScreen } from "../../../../components/LoadingScreen";
+import { DailyQuestsWidget } from "../../../../components/DailyQuestsWidget";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {
@@ -233,6 +234,7 @@ function AlphabetLessonContent() {
     const isLastConsonant = lesson && consonants.length > 0 && lesson.id === consonants[consonants.length - 1].id;
     const isLastVowel = lesson && vowels.length > 0 && lesson.id === vowels[vowels.length - 1].id;
     const isEndOfUnit = isLastConsonant || isLastVowel;
+    
     const { unopenedGifts } = useProgressStore.getState();
 
     const handleNavigate = (nextUrl: string, isReplay = false) => {
@@ -277,7 +279,12 @@ function AlphabetLessonContent() {
         <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
           {language === 'en' ? `Level ${currentLevel + 1} completed!` : `Niveau ${currentLevel + 1} terminé !`}
         </h1>
-        <p className="text-slate-500 mb-8 text-center text-lg font-medium">+ {earnedXp || 15} XP</p>
+        <p className="text-slate-500 mb-4 text-center text-lg font-medium">+ {earnedXp || 15} XP</p>
+
+        <div className="w-full max-w-md mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
+          <DailyQuestsWidget category="alphabet" />
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           {isEndOfUnit && nextUnitIndex !== -1 && (
             <button

@@ -8,9 +8,12 @@ import { Target, CheckCircle2, Star } from 'lucide-react';
 export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' | 'alphabet' | 'speak' }) {
   const { dailyQuests, language, questsDate, unopenedGifts } = useProgressStore();
   const [mounted, setMounted] = useState(false);
+  const [animateBars, setAnimateBars] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const t = setTimeout(() => setAnimateBars(true), 300);
+    return () => clearTimeout(t);
   }, []);
 
   if (!mounted) return null;
@@ -96,8 +99,8 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
                 <div className="flex items-center gap-3 w-full pl-2">
                   <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner relative">
                     <div 
-                      className={`h-full rounded-full transition-all duration-700 ease-out relative ${quest.completed ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`}`}
-                      style={{ width: `${progressPercent}%` }}
+                      className={`h-full rounded-full transition-all duration-[1500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] relative ${quest.completed ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`}`}
+                      style={{ width: `${animateBars ? progressPercent : 0}%` }}
                     >
                       {/* Brillance sur la barre */}
                       {!quest.completed && progressPercent > 5 && (
