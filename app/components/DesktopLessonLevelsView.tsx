@@ -93,8 +93,8 @@ export function DesktopLessonLevelsView({
       className={`flex flex-col gap-6 w-full transition-opacity duration-700 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}`}
     >
       {/* Immersive Header Banner */}
-      <div className="flex w-[calc(100%+2rem)] md:w-[calc(100%+3rem)] lg:w-[calc(100%+4rem)] -mx-4 md:-mx-6 lg:-mx-8 -mt-2 md:-mt-8 relative">
-        <div className={`w-full h-[220px] md:h-[280px] ${unitColor} relative overflow-hidden rounded-b-3xl md:rounded-b-[2.5rem] shadow-sm`}>
+      <div className="flex w-[calc(100%+2rem)] md:w-full -mx-4 md:mx-0 -mt-2 md:-mt-8 relative">
+        <div className={`w-full h-[220px] md:h-[280px] ${unitColor} relative overflow-hidden rounded-b-3xl md:rounded-none shadow-sm`}>
           {lesson.imageUrl ? (
             <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />
           ) : (

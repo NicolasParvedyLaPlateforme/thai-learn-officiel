@@ -392,8 +392,8 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
             setShowDesktopUnitsList(false);
           }}
         >
-          <div className="flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12">
-            <div className="flex flex-col gap-10 w-full max-w-4xl">
+          <div className={`flex-1 flex justify-center w-full pt-8 pb-32 ${!selectedLesson ? 'px-6 lg:px-8 pr-8 xl:pr-12' : ''}`}>
+            <div className={`flex flex-col gap-10 w-full ${!selectedLesson ? 'max-w-4xl' : ''}`}>
               {(() => {
                 const unit = UNITS[activeUnitIndex];
                 const unitLessons = data.lessons.slice(unit.startIndex, unit.endIndex);
