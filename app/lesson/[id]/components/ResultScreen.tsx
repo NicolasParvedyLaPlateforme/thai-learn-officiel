@@ -51,6 +51,23 @@ export default function ResultScreen({
     return `${m}min ${s}s`;
   };
 
+  const { unopenedGifts } = useProgressStore();
+
+  const handleNavigate = (nextUrl: string, isReplay = false) => {
+    const giftsAvailable = unopenedGifts?.learn || 0;
+    if (giftsAvailable > 0) {
+      if (isReplay) {
+        const replayUrl = typeof window !== 'undefined' ? window.location.pathname + window.location.search : nextUrl;
+        router.push(`/reward?category=learn&replayUrl=${encodeURIComponent(replayUrl)}&nextUrl=/learn`);
+      } else {
+        router.push(`/reward?category=learn&nextUrl=${encodeURIComponent(nextUrl)}`);
+      }
+    } else {
+      if (isReplay) window.location.reload();
+      else router.push(nextUrl);
+    }
+  };
+
   if (failedDueToTime) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
@@ -66,14 +83,14 @@ export default function ResultScreen({
         
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}`, true)}
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
             {getTranslation('auto.retry', language)}
           </button>
           <button
-            onClick={() => router.push(`/learn#lesson-${lesson.id}`)}
+            onClick={() => handleNavigate(`/learn#lesson-${lesson.id}`)}
             className="px-8 py-3 flex-1 rounded-xl bg-slate-200 border-b-4 border-slate-300 text-slate-500 font-bold text-lg shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {getTranslation('auto.back', language)}
@@ -135,7 +152,7 @@ export default function ResultScreen({
           <button
             onClick={() => {
               setLastActiveUnitIndex(nextUnitIndex);
-              router.push("/learn");
+              handleNavigate("/learn");
             }}
             className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all text-center"
           >
@@ -145,7 +162,7 @@ export default function ResultScreen({
         {isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1 ? (
           <button
             onClick={() =>
-              router.push(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`)
+              handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`)
             }
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
@@ -156,9 +173,9 @@ export default function ResultScreen({
             onClick={() => {
               const nextTotalParts = getLevelSplit(currentLevel + 1, lesson);
               if (nextTotalParts > 1) {
-                router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`);
+                handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`);
               } else {
-                router.push(`/lesson/${lesson.id}?level=${currentLevel + 2}`);
+                handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 2}`);
               }
             }}
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
@@ -167,14 +184,14 @@ export default function ResultScreen({
           </button>
         )}
         <button
-          onClick={() => window.location.reload()}
+          onClick={() => handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}`, true)}
           className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
         >
           <RotateCcw size={20} />
           {getTranslation('auto.retry', language)}
         </button>
         <button
-          onClick={() => router.push(`/learn#lesson-${lesson.id}`)}
+          onClick={() => handleNavigate(`/learn#lesson-${lesson.id}`)}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
         >
           {getTranslation('auto.back', language)}

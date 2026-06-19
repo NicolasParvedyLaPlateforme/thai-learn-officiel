@@ -157,6 +157,8 @@ interface ProgressState {
   lastConversionMonth: string | null;
   pendingGoldConversion: { oldXp: number, newCoins: number } | null;
   clearPendingGoldConversion: () => void;
+  unopenedGifts: { learn: number, alphabet: number, speak: number };
+  claimGift: (category: 'learn' | 'alphabet' | 'speak') => { xp: number, coins: number } | null;
   seenAlphabets: string[]; // Keep track of seen alphabet letters
   isExerciseRunning: boolean;
   setExerciseRunning: (state: boolean) => void;
@@ -256,6 +258,7 @@ export const useProgressStore = create<ProgressState>()(
       lastConversionMonth: null,
       pendingGoldConversion: null,
       clearPendingGoldConversion: () => set({ pendingGoldConversion: null }),
+      unopenedGifts: { learn: 0, alphabet: 0, speak: 0 },
       hiddenInstructions: [],
       hasSeenCommunityModal: false,
       showCommunityModal: false,
@@ -352,10 +355,13 @@ export const useProgressStore = create<ProgressState>()(
         if (!state.dailyQuests) return state; // or handle initialization
         const questsForCategory = state.dailyQuests[category] || [];
         
+        let newGiftsCount = 0;
+
         const updatedQuestsForCategory = questsForCategory.map((quest) => {
           if (quest.type === type && !quest.completed) {
             const newProgress = Math.min(quest.progress + amount, quest.target);
             const completed = newProgress >= quest.target;
+            if (completed) newGiftsCount++;
             return { ...quest, progress: newProgress, completed };
           }
           return quest;
@@ -373,8 +379,42 @@ export const useProgressStore = create<ProgressState>()(
             [category]: updatedQuestsForCategory,
           },
           xp: state.xp + earnedXp,
+          unopenedGifts: {
+            ...state.unopenedGifts,
+            [category]: (state.unopenedGifts?.[category] || 0) + newGiftsCount
+          }
         };
       }),
+
+      claimGift: (category) => {
+        const state = get();
+        const giftsAvailable = state.unopenedGifts?.[category] || 0;
+        if (giftsAvailable <= 0) return null;
+
+        // Generate random reward
+        // XP: 20 to 300, skewed towards lower values (r1^2 makes lower values more probable)
+        const r1 = Math.random();
+        const xpAmount = Math.floor(20 + Math.pow(r1, 2) * 280); 
+        
+        // Coins: 20% chance
+        const r2 = Math.random();
+        const getsCoins = r2 < 0.20;
+        const coinsAmount = getsCoins ? Math.floor(Math.random() * 3) + 1 : 0;
+
+        // Update state
+        set((s) => ({
+          unopenedGifts: {
+            ...s.unopenedGifts,
+            [category]: Math.max(0, (s.unopenedGifts?.[category] || 0) - 1)
+          },
+          xp: s.xp + xpAmount,
+          goldCoins: s.goldCoins + coinsAmount
+        }));
+        
+        get().triggerForceSync();
+
+        return { xp: xpAmount, coins: coinsAmount };
+      },
 
       checkAndGenerateQuests: () => set((state) => {
         const today = getLocalDateString();

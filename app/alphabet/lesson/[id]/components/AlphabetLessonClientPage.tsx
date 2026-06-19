@@ -233,7 +233,22 @@ function AlphabetLessonContent() {
     const isLastConsonant = lesson && consonants.length > 0 && lesson.id === consonants[consonants.length - 1].id;
     const isLastVowel = lesson && vowels.length > 0 && lesson.id === vowels[vowels.length - 1].id;
     const isEndOfUnit = isLastConsonant || isLastVowel;
-    const nextUnitIndex = isLastConsonant ? 1 : -1;
+    const { unopenedGifts } = useProgressStore.getState();
+
+    const handleNavigate = (nextUrl: string, isReplay = false) => {
+      const giftsAvailable = unopenedGifts?.alphabet || 0;
+      if (giftsAvailable > 0) {
+        if (isReplay) {
+          const replayUrl = typeof window !== 'undefined' ? window.location.pathname + window.location.search : nextUrl;
+          router.push(`/reward?category=alphabet&replayUrl=${encodeURIComponent(replayUrl)}&nextUrl=/alphabet`);
+        } else {
+          router.push(`/reward?category=alphabet&nextUrl=${encodeURIComponent(nextUrl)}`);
+        }
+      } else {
+        if (isReplay) window.location.reload();
+        else router.push(nextUrl);
+      }
+    };
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
@@ -266,7 +281,7 @@ function AlphabetLessonContent() {
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           {isEndOfUnit && nextUnitIndex !== -1 && (
             <button
-              onClick={() => router.push(`/alphabet?unit=${nextUnitIndex}`)}
+              onClick={() => handleNavigate(`/alphabet?unit=${nextUnitIndex}`)}
               className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all text-center"
             >
               {getTranslation('auto.next_unit', language)}
@@ -274,21 +289,21 @@ function AlphabetLessonContent() {
           )}
           {currentLevel + 1 < 4 && (
             <button
-              onClick={() => router.push(`/alphabet/lesson/${lesson?.id}?level=${currentLevel + 2}`)}
+              onClick={() => handleNavigate(`/alphabet/lesson/${lesson?.id}?level=${currentLevel + 2}`)}
               className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
             >
               {getTranslation('auto.next_level', language)}
             </button>
           )}
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => handleNavigate(`/alphabet/lesson/${lesson?.id}?level=${currentLevel + 1}`, true)}
             className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
             {getTranslation('auto.retry', language)}
           </button>
           <button
-            onClick={() => router.push(`/alphabet#lesson-${lesson?.id}`)}
+            onClick={() => handleNavigate(`/alphabet#lesson-${lesson?.id}`)}
             className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {getTranslation('auto.back', language)}

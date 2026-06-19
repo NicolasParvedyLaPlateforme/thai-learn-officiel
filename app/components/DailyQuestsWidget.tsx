@@ -6,7 +6,7 @@ import { useProgressStore, DailyQuest } from '../lib/store';
 import { Target, CheckCircle2, Star } from 'lucide-react';
 
 export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' | 'alphabet' | 'speak' }) {
-  const { dailyQuests, language, questsDate } = useProgressStore();
+  const { dailyQuests, language, questsDate, unopenedGifts } = useProgressStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
 
   const questsForCategory = dailyQuests?.[category] || [];
   const completedCount = questsForCategory.filter(q => q.completed).length;
+  const giftsAvailable = unopenedGifts?.[category] || 0;
 
   return (
     <div className="w-full bg-white rounded-[24px] border-2 border-slate-100 p-5 shadow-sm flex flex-col gap-4 relative overflow-hidden">
@@ -37,13 +38,23 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
           </h2>
         </div>
         
-        {/* Jauge globale en forme de badge stylisé */}
-        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-sm shadow-sm transition-colors ${completedCount === questsForCategory.length ? 'bg-emerald-500 text-white shadow-emerald-200' : 'bg-slate-100 text-slate-500'}`}>
-          <span className="flex items-center justify-center">
-            {completedCount === questsForCategory.length ? '🏆' : '🎁'}
-          </span>
-          <span>{completedCount} / {questsForCategory.length}</span>
-        </div>
+        {/* Jauge globale en forme de badge stylisé ou bouton Cadeau */}
+        {giftsAvailable > 0 ? (
+          <button 
+            onClick={() => window.location.href = `/reward?category=${category}&nextUrl=${encodeURIComponent(window.location.pathname)}`}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-sm shadow-md bg-rose-500 text-white shadow-rose-200 hover:scale-105 active:scale-95 transition-all animate-pulse cursor-pointer"
+          >
+            <span className="flex items-center justify-center text-lg">🎁</span>
+            <span>{giftsAvailable}</span>
+          </button>
+        ) : (
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-sm shadow-sm transition-colors ${completedCount === questsForCategory.length && questsForCategory.length > 0 ? 'bg-emerald-500 text-white shadow-emerald-200' : 'bg-slate-100 text-slate-500'}`}>
+            <span className="flex items-center justify-center">
+              {completedCount === questsForCategory.length && questsForCategory.length > 0 ? '🏆' : '🎁'}
+            </span>
+            <span>{completedCount} / {questsForCategory.length}</span>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-3 relative z-10 mt-1">
