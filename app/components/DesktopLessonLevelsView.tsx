@@ -122,8 +122,8 @@ export function DesktopLessonLevelsView({
         </div>
       </div>
 
-      {/* Mobile Immersive Header */}
-      <div className="flex md:hidden flex-col w-[calc(100%+2rem)] -mx-4 -mt-2 relative">
+      {/* Mobile Immersive Header Banner */}
+      <div className="flex md:hidden w-[calc(100%+2rem)] -mx-4 -mt-2 relative">
         <div className={`w-full h-[220px] ${unitColor} relative overflow-hidden rounded-b-3xl shadow-sm`}>
           {lesson.imageUrl ? (
             <IconImage src={lesson.imageUrl} alt="" fill className="object-cover opacity-100" priority />
@@ -131,14 +131,14 @@ export function DesktopLessonLevelsView({
             <div className="absolute inset-0 w-full h-full z-0 bg-black/10 pointer-events-none"></div>
           )}
         </div>
+      </div>
         
-        {/* Sticky Title Box */}
-        <div className="sticky top-4 z-50 px-6 -mt-8 flex justify-center w-full pointer-events-none">
-          <div className="bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[1.25rem] py-3 px-6 max-w-[90%] pointer-events-auto">
-            <h2 className={`text-lg font-extrabold ${titleTextColor} text-center leading-tight`}>
-              {lessonTitle}
-            </h2>
-          </div>
+      {/* Sticky Title Box (Mobile) */}
+      <div className="sticky top-4 z-50 px-6 -mt-14 flex md:hidden justify-center w-full pointer-events-none">
+        <div className="bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[1.25rem] py-3 px-6 max-w-[90%] pointer-events-auto">
+          <h2 className={`text-lg font-extrabold ${titleTextColor} text-center leading-tight`}>
+            {lessonTitle}
+          </h2>
         </div>
       </div>
 
