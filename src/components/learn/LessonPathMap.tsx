@@ -83,9 +83,9 @@ export function LessonPathMap({
     return `M ${startX} 0 C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${height}`;
   };
 
-  const currentLevelRef = useRef<HTMLDivElement>(null);
+  const currentLevelRef = useRef<HTMLDivElement | null>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
   const targetLevel = initialScrollLevel !== undefined ? initialScrollLevel : currentProgress;
   const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(targetLevel);
   const [isReady, setIsReady] = useState(false);

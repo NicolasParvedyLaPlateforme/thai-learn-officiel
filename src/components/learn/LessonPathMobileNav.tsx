@@ -11,7 +11,7 @@ interface LessonPathMobileNavProps {
   unitColor: string;
   isUnlockedMastery: boolean;
   menuVisible: boolean;
-  carouselRef: React.RefObject<HTMLDivElement>;
+  carouselRef: React.RefObject<HTMLDivElement | null>;
   isClickScrolling: React.MutableRefObject<boolean>;
   scrollEndTimer: React.MutableRefObject<NodeJS.Timeout | null>;
   onBack?: () => void;
