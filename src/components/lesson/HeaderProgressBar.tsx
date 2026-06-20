@@ -13,9 +13,9 @@ interface HeaderProgressBarProps {
   currentIndex: number;
   exercisesLength: number;
   currentExercise: Exercise | undefined;
-  showRomanization: boolean;
-  setShowRomanization: (val: boolean) => void;
-  setShowInfoModal: (val: boolean) => void;
+  showRomanization?: boolean;
+  setShowRomanization?: (val: boolean) => void;
+  setShowInfoModal?: (val: boolean) => void;
   isReview?: boolean;
   timeLeft?: number | null;
   initialTime?: number | null;
@@ -111,11 +111,18 @@ export default function HeaderProgressBar({
               customTitle
             ) : currentLevel < 9 && !isReview ? (
               <span className="flex items-center text-slate-400 font-semibold tracking-wide">
-                <Star size={16} className="fill-current mr-1" />
-                <span className="hidden sm:inline">
-                  {getTranslation('auto.lvl', language)} {currentLevel + 1}
-                </span>
-                <span className="sm:hidden">{currentLevel + 1}</span>
+                <div className="hidden sm:flex text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={16}
+                      className={i < earnedStars ? "fill-current" : "text-slate-200 fill-slate-200"}
+                    />
+                  ))}
+                </div>
+                <div className="flex sm:hidden text-amber-400">
+                    <Star size={16} className="fill-current" />
+                </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
@@ -130,7 +137,12 @@ export default function HeaderProgressBar({
                 >
                   <path d="m9 18 6-6-6-6" />
                 </svg>
-                {getTranslation('auto.lvl', language)} {currentLevel + 2}
+                <span className="hidden sm:inline">
+                  {getTranslation('auto.lvl', language)} {currentLevel + 2}
+                </span>
+                <span className="sm:hidden">
+                  {getTranslation('auto.lvl', language)} {currentLevel + 2}
+                </span>
               </span>
             ) : (
               <span className="flex items-center text-amber-500">
@@ -151,7 +163,7 @@ export default function HeaderProgressBar({
               )}
             </span>
 
-            {!isReview && !currentExercise?.forceHideRomanization && (
+            {!isReview && setShowRomanization && !currentExercise?.forceHideRomanization && (
               <button
                 onClick={() => setShowRomanization(!showRomanization)}
                 className={`w-9 h-9 flex flex-col items-center justify-center rounded-xl font-bold border-2 transition-colors ${showRomanization
@@ -170,7 +182,7 @@ export default function HeaderProgressBar({
               </button>
             )}
 
-            {!isReview && (
+            {!isReview && setShowInfoModal && (
               <button
                 onClick={() => setShowInfoModal(true)}
                 className="text-slate-400 hover:text-indigo-500 transition-colors p-1"

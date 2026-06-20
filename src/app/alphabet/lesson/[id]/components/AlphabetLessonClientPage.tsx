@@ -18,6 +18,7 @@ import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
 import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
 import Footer from "@/components/lesson/Footer";
+import { useLessonEngine } from '@/hooks/useLessonEngine';
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {
@@ -58,21 +59,55 @@ function AlphabetLessonContent() {
 
   const currentLevel = requestedLevelStr ? (isDev ? Math.max(0, parseInt(requestedLevelStr, 10) - 1) : Math.min(savedLevel, Math.max(0, parseInt(requestedLevelStr, 10) - 1))) : (exercisesGeneratedFor?.level !== undefined ? exercisesGeneratedFor.level : savedLevel);
 
-  const [exercises, setExercises] = useState<AlphabetExercise[]>([]);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Interaction State
-  const [selectedOption, setSelectedOption] = useState<AlphabetItem | null>(null);
-  const [isChecking, setIsChecking] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [isFinished, setIsFinished] = useState(false);
+  const [initialExercises, setInitialExercises] = useState<AlphabetExercise[]>([]);
   const [showHint, setShowHint] = useState(false);
-
   const [showExerciseUI, setShowExerciseUI] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [mistakes, setMistakes] = useState(0);
   const [earnedXp, setEarnedXp] = useState<number>(0);
+
+  const {
+    exercises,
+    currentExercise,
+    currentIndex,
+    progress,
+    isChecking,
+    isCorrect,
+    isFinished,
+    mistakes,
+    selectedAnswer: selectedOption,
+    setSelectedAnswer: setSelectedOption,
+    handleCheck,
+  } = useLessonEngine<AlphabetExercise, AlphabetItem>({
+    initialExercises,
+    isExerciseIntroOrReview: (ex) => ex.type === 'intro' || ex.type === 'review',
+    evaluateAnswer: (ex, ans) => ans?.letter === ex.letterToPick,
+    onComplete: (totalMistakes) => {
+      if (lesson) {
+        const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, false);
+        setEarnedXp(expected.xp);
+        const earnedStarsLocal = Math.max(0, 5 - totalMistakes);
+        completeLesson(lesson.id, 0, currentLevel, earnedStarsLocal, false);
+      }
+      triggerConfetti();
+    },
+    onCorrect: (ex) => {
+      if (ex.type === 'intro' && !seenAlphabets.includes(ex.item.letter)) {
+        markAlphabetSeen(ex.item.letter);
+      } else if (ex.type !== 'intro') {
+        if (ex.type === 'phonetic-match' || ex.type === 'audio-match') {
+          playThaiTTS(ex.item.exampleWord);
+        } else {
+          playThaiTTS(ex.targetText);
+        }
+      }
+    },
+    onIncorrect: () => {
+      if (lesson) setLastPlayedLesson(lesson.id, "alphabet");
+    },
+    onExerciseChange: () => {
+      setShowHint(false);
+    }
+  });
 
   const earnedStars = Math.max(0, 5 - mistakes);
 
@@ -121,14 +156,7 @@ function AlphabetLessonContent() {
 
       preloadThaiVoices();
       getAlphabetExercisesServer(lesson.id, currentLevel, language).then(generated => {
-        setExercises(generated as unknown as AlphabetExercise[]);
-        setCurrentIndex(0);
-        setIsFinished(false);
-        setIsChecking(false);
-        setIsCorrect(null);
-        setSelectedOption(null);
-        setShowHint(false);
-        setMistakes(0);
+        setInitialExercises(generated as unknown as AlphabetExercise[]);
         setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
       });
     }
@@ -141,7 +169,6 @@ function AlphabetLessonContent() {
         setEarnedXp(expected.xp);
         completeLesson(lesson.id, 0, currentLevel, 3, false);
       }
-      setIsFinished(true);
       triggerConfetti();
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
@@ -151,71 +178,6 @@ function AlphabetLessonContent() {
   if (!isDataLoaded && !showExerciseUI) {
     // Need this block to prevent early access
   }
-
-  const currentExercise = exercises.length > 0 ? exercises[currentIndex] : null;
-  const progress = exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0;
-
-  const handleCheck = (overrideOpt?: any) => {
-    if (!currentExercise) return;
-    // If it's intro or review phase, just proceed
-    if (currentExercise.type === 'intro' || currentExercise.type === 'review') {
-      if (currentExercise.type === 'intro' && !seenAlphabets.includes(currentExercise.item.letter)) {
-        markAlphabetSeen(currentExercise.item.letter);
-      }
-      proceedToNext();
-      return;
-    }
-
-    if (isChecking) {
-      if (isCorrect) {
-        proceedToNext(exercises.length);
-      } else {
-        // Retry logic: Add at the end of the queue with a new ID for animations
-        // eslint-disable-next-line react-hooks/purity
-        const retryExercise = { ...currentExercise, id: currentExercise.id + '-retry-' + Date.now() };
-        setExercises(prev => [...prev, retryExercise]);
-        proceedToNext(exercises.length + 1);
-      }
-      return;
-    }
-
-    // Validate
-    const optionToCheck = overrideOpt || selectedOption;
-    if (!optionToCheck) return;
-
-    const correct = optionToCheck.letter === currentExercise.letterToPick;
-
-    setIsCorrect(correct);
-    setIsChecking(true);
-    if (correct) {
-      if (currentExercise.type === 'phonetic-match' || currentExercise.type === 'audio-match') {
-        playThaiTTS(currentExercise.item.exampleWord);
-      } else {
-        playThaiTTS(currentExercise.targetText);
-      }
-    } else {
-      setMistakes(prev => prev + 1);
-      if (lesson) setLastPlayedLesson(lesson.id, "alphabet");
-    }
-  };
-
-  const proceedToNext = (targetLength: number = exercises.length) => {
-    if (currentIndex < targetLength - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setIsChecking(false);
-      setIsCorrect(null);
-      setSelectedOption(null);
-      setShowHint(false);
-    } else {
-      if (lesson) {
-        const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, false);
-        setEarnedXp(expected.xp);
-        completeLesson(lesson.id, 0, currentLevel, earnedStars, false);
-      }
-      setIsFinished(true);
-      triggerConfetti();
-    }
-  };
 
   const getOptionColorClass = (opt: AlphabetItem, isSelected: boolean, isCorrectState: boolean | null) => {
     if (isSelected) {
@@ -598,15 +560,7 @@ function AlphabetLessonContent() {
               currentIndex={currentIndex}
               exercisesLength={exercises.length}
               currentExercise={undefined}
-              showRomanization={false}
-              setShowRomanization={() => {}}
-              setShowInfoModal={() => {}}
               returnUrl={`/alphabet#lesson-${lesson?.id}`}
-              customTitle={
-                lesson?.type === 'consonant'
-                  ? getTranslation('auto.consonants', language)
-                  : getTranslation('auto.vowels', language)
-              }
             />
 
             {/* Main Exercise Area */}
