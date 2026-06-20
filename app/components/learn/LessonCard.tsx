@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { getLocalizedField, getTranslation } from '../../hooks/useTranslation';
 import { CheckCircle, Star } from 'lucide-react';
-import IconImage from '../IconImage';
+import IconImage from '../ui/IconImage';
 
 interface LessonCardProps {
   lesson: any;

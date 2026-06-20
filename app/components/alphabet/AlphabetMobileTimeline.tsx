@@ -1,10 +1,10 @@
 import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
-import IconImage from '../../components/IconImage';
+import IconImage from '../ui/IconImage';
 import { AlphabetLessonCard } from './AlphabetLessonCard';
 import { formatCombiningChar } from '../../lib/alphabet-utils';
-import { NextUnitCard } from '../NextUnitCard';
+import { NextUnitCard } from '../learn/NextUnitCard';
 
 interface AlphabetMobileTimelineProps {
   unit: any;

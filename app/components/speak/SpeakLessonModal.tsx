@@ -4,8 +4,8 @@ import { BookOpen, Star, Lock, Crown, Clock, Pencil, RotateCcw } from 'lucide-re
 import Link from 'next/link';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import { playThaiTTS } from '../../lib/tts';
-import IconImage from '../../components/IconImage';
-import { LessonPathMap } from '../../components/LessonPathMap';
+import IconImage from '../ui/IconImage';
+import { LessonPathMap } from '../learn/LessonPathMap';
 import SharedLessonModal from '../ui/SharedLessonModal';
 
 interface SpeakLessonModalProps {

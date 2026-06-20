@@ -1,6 +1,6 @@
 import { BookOpen, User, Menu } from 'lucide-react';
 import Link from 'next/link';
-import PWAInstallButton from '../../components/PWAInstallButton';
+import PWAInstallButton from '../ui/PWAInstallButton';
 import { getTranslation } from '../../hooks/useTranslation';
 import { useProgressStore } from '../../lib/store';
 

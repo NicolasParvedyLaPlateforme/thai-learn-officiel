@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Lesson } from "../../../types";
 import { useProgressStore } from "../../../lib/store";
 import { getLevelSplit } from '../../../lib/levelSplits';
-import { DailyQuestsWidget } from "../../../components/DailyQuestsWidget";
+import { DailyQuestsWidget } from "../../../components/widgets/DailyQuestsWidget";
 
 interface ResultScreenProps {
   lesson: Lesson;

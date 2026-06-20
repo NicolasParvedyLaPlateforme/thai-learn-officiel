@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useProgressStore } from '../../../lib/store';
 import { Word, Phrase } from '../../../types';
 import { ArrowLeft, Loader2, X, Star, Crown, BookOpen } from 'lucide-react';
-import { SpeakingExercise } from '../../../components/SpeakingExercise';
+import { SpeakingExercise } from '../../../components/speak/SpeakingExercise';
 import { SpeakConversationExercise, DialogueLine } from '../../../components/speak/SpeakConversationExercise';
 import { SpeakAnswerMeExercise } from '../../../components/speak/SpeakAnswerMeExercise';
 import { SpeakBuildPhraseExercise } from '../../../components/speak/SpeakBuildPhraseExercise';

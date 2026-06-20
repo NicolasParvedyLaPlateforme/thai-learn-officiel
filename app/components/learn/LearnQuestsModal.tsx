@@ -1,8 +1,8 @@
 import { Drawer } from 'vaul';
 import { X } from 'lucide-react';
-import { DailyQuestsWidget } from '../../components/DailyQuestsWidget';
-import { ConversationObjectiveWidget } from '../../components/ConversationObjectiveWidget';
-import { LeaderboardWidget } from '../../components/LeaderboardWidget';
+import { DailyQuestsWidget } from '../widgets/DailyQuestsWidget';
+import { ConversationObjectiveWidget } from '../widgets/ConversationObjectiveWidget';
+import { LeaderboardWidget } from '../widgets/LeaderboardWidget';
 
 interface LearnQuestsModalProps {
   isOpen: boolean;

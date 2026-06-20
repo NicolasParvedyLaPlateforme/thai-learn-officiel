@@ -1,7 +1,7 @@
 import { m as motion } from "motion/react";
 import { BookOpen, Star, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
-import IconImage from '../../components/IconImage';
+import IconImage from '../ui/IconImage';
 import { useState } from 'react';
 
 interface LearnDesktopTimelineProps {
@@ -21,7 +21,7 @@ interface LearnDesktopTimelineProps {
   nextUnit?: any;
 }
 
-import { NextUnitCard } from '../NextUnitCard';
+import { NextUnitCard } from './NextUnitCard';
 import { LessonCard } from './LessonCard';
 
 export default function LearnDesktopTimeline({

@@ -11,16 +11,16 @@ import { getAlphabetLessons, AlphabetLessonDef, formatCombiningChar } from '../.
 import { playThaiTTS } from '../../lib/tts';
 import { Drawer } from 'vaul';
 import { CheckCircle, BookOpen, Star, Play, Crown, RotateCcw, Pencil, Lock, ChevronLeft, ChevronRight, Clock, Target, Users, Flame, User, Coins, Menu, Globe, X, Sparkles, Volume2 } from 'lucide-react';
-import IconImage from '../../components/IconImage';
-import { LessonPathMap } from '../../components/LessonPathMap';
+import IconImage from '../../components/ui/IconImage';
+import { LessonPathMap } from '../../components/learn/LessonPathMap';
 
 import { useGlobalSuggestedLesson } from '../../lib/useGlobalSuggestedLesson';
-import { DesktopSidebarRight } from '../../components/DesktopSidebarRight';
-import { MobileHeaderMenu } from '../../components/MobileHeaderMenu';
-import { DesktopLessonLevelsView } from '../../components/DesktopLessonLevelsView';
-import PWAInstallButton from '../../components/PWAInstallButton';
-import { DailyQuestsWidget } from '../../components/DailyQuestsWidget';
-import { ConversationObjectiveWidget } from '../../components/ConversationObjectiveWidget';
+import { DesktopSidebarRight } from '../../components/layout/DesktopSidebarRight';
+import { MobileHeaderMenu } from '../../components/layout/MobileHeaderMenu';
+import { DesktopLessonLevelsView } from '../../components/learn/DesktopLessonLevelsView';
+import PWAInstallButton from '../../components/ui/PWAInstallButton';
+import { DailyQuestsWidget } from '../../components/widgets/DailyQuestsWidget';
+import { ConversationObjectiveWidget } from '../../components/widgets/ConversationObjectiveWidget';
 import ALPHABET_BASE_UNITS from '../../data/alphabet_units.json';
 import { useIsPWA } from '../../../hooks/use-pwa';
 import AlphabetDesktopTimeline from '../../components/alphabet/AlphabetDesktopTimeline';

@@ -11,11 +11,11 @@ import { getAlphabetExercisesServer } from '../../../../actions/course';
 import { X, Check, Star, Volume2, HelpCircle, Info, RotateCcw } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from '../../../../lib/tts';
 import { m as motion, AnimatePresence } from "motion/react";
-import { ColoredPhonetic } from '../../../../components/ColoredPhonetic';
-import { AlphabetCard } from '../../../../components/AlphabetCard';
+import { ColoredPhonetic } from '../../../../components/learn/ColoredPhonetic';
+import { AlphabetCard } from '../../../../components/alphabet/AlphabetCard';
 import { Suspense } from 'react';
-import { LoadingScreen } from "../../../../components/LoadingScreen";
-import { DailyQuestsWidget } from "../../../../components/DailyQuestsWidget";
+import { LoadingScreen } from "../../../../components/ui/LoadingScreen";
+import { DailyQuestsWidget } from "../../../../components/widgets/DailyQuestsWidget";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {

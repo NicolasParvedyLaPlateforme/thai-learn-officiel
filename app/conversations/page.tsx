@@ -3,18 +3,18 @@
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import IconImage from '../components/IconImage';
+import IconImage from '../components/ui/IconImage';
 import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from '../lib/store';
-import PWAInstallButton from '../components/PWAInstallButton';
+import PWAInstallButton from '../components/ui/PWAInstallButton';
 import { ArrowLeft, MessageCircle, Star, BookOpen, Info, ChevronRight, Play, X, Book, Image as ImageIcon, Lock, Check, Clock, Users, Volume2, MapPin, User, Menu } from 'lucide-react';
 import conversationsData from '../data/conversations.json';
 import CONVERSATION_UNITS from '../data/conversation_units.json';
 import { useIsPWA } from '../../hooks/use-pwa';
 
 import { getRequiredLessonsForConv, RequiredVocabLesson } from '../lib/vocabulary-utils';
-import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
-import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
+import { MobileHeaderMenu } from '../components/layout/MobileHeaderMenu';
+import { DailyQuestsWidget } from '../components/widgets/DailyQuestsWidget';
 
 const UNITS: Record<string, any> = CONVERSATION_UNITS;
 

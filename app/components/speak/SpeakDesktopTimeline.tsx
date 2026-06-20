@@ -1,8 +1,8 @@
 import { m as motion } from "motion/react";
 import { BookOpen, Star, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
-import IconImage from '../../components/IconImage';
-import { NextUnitCard } from '../NextUnitCard';
+import IconImage from '../ui/IconImage';
+import { NextUnitCard } from '../learn/NextUnitCard';
 
 import { useState } from 'react';
 import { SpeakLessonCard } from './SpeakLessonCard';

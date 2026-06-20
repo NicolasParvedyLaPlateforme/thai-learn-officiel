@@ -3,7 +3,7 @@
 import { getTranslation, getLocalizedField } from '../../../hooks/useTranslation';
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import Link from 'next/link';
-import IconImage from '../../../components/IconImage';
+import IconImage from '../../../components/ui/IconImage';
 import { useParams, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Play, RotateCcw, Volume2, Star, MessageCircle, Check, X, Home, Image as ImageIcon, Type, Sparkles } from 'lucide-react';
 import { useProgressStore } from '../../../lib/store';
@@ -12,7 +12,7 @@ import conversationsData from '../../../data/conversations.json';
 import speakersConfig from '../../../data/speakers.json';
 import { getVocabularyServer } from '../../../actions/course';
 import { Word } from '../../../types';
-import { LoadingScreen } from '../../../components/LoadingScreen';
+import { LoadingScreen } from '../../../components/ui/LoadingScreen';
 import { m as motion, AnimatePresence } from "motion/react";
 
 // Helper to shuffle an array

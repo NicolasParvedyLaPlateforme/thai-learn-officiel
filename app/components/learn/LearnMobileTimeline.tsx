@@ -1,7 +1,7 @@
 import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
-import IconImage from '../../components/IconImage';
+import IconImage from '../ui/IconImage';
 
 interface LearnMobileTimelineProps {
   unit: any;
@@ -23,7 +23,7 @@ interface LearnMobileTimelineProps {
 }
 
 import { LessonCard } from './LessonCard';
-import { NextUnitCard } from '../NextUnitCard';
+import { NextUnitCard } from './NextUnitCard';
 
 export default function LearnMobileTimeline({
   unit,

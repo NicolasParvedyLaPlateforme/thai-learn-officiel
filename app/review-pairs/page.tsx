@@ -8,10 +8,10 @@ import { Exercise, CourseData, Word } from '../types';
 import { X, Check, Play } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from '../lib/tts';
 import { m as motion, AnimatePresence } from "motion/react";
-import { LoadingScreen } from '../components/LoadingScreen';
+import { LoadingScreen } from '../components/ui/LoadingScreen';
 
 // Exercise Components
-import PairMatch from '../components/PairMatch';
+import PairMatch from '../components/learn/PairMatch';
 import { getEndlessPairMatchingServer } from '../actions/course';
 
 import Footer from '../lesson/[id]/components/Footer';

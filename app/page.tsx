@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import LandingPageClient from './components/LandingPageClient';
+import LandingPageClient from './components/landing/LandingPageClient';
 
 export const metadata: Metadata = {
   title: 'ThaiLearn - Apprenez le Thaï Facilement et Gratuitement',

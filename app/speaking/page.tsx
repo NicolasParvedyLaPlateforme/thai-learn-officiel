@@ -7,7 +7,7 @@ import { useProgressStore } from '../lib/store';
 import { getVocabularyServer, getDictionaryForExerciseServer } from '../actions/course';
 import { Word, Phrase } from '../types';
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import { SpeakingExercise } from '../components/SpeakingExercise';
+import { SpeakingExercise } from '../components/speak/SpeakingExercise';
 
 export default function SpeakingPage() {
   const router = useRouter();

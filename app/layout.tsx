@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter, Sarabun } from 'next/font/google';
 import './globals.css'; // Global styles
-import BottomNav from './components/BottomNav';
+import BottomNav from './components/layout/BottomNav';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,11 +32,11 @@ export const metadata: Metadata = {
   }
 };
 
-import DesktopSidebarLeft from './components/DesktopSidebarLeft';
-import AuthProvider from './components/AuthProvider';
-import SyncProgress from './components/SyncProgress';
-import GlobalModals from './components/GlobalModals';
-import MotionProvider from './components/MotionProvider';
+import DesktopSidebarLeft from './components/layout/DesktopSidebarLeft';
+import AuthProvider from './components/providers/AuthProvider';
+import SyncProgress from './components/providers/SyncProgress';
+import GlobalModals from './components/layout/GlobalModals';
+import MotionProvider from './components/providers/MotionProvider';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (

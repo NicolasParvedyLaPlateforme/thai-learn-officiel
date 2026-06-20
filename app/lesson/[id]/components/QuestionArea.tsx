@@ -1,7 +1,7 @@
-import IconImage from "../../../components/IconImage";
+import IconImage from "../../../components/ui/IconImage";
 import { useEffect } from "react";
 import { Exercise, Lesson, Word } from "../../../types";
-import { SentenceWithHints } from "../../../components/Hints";
+import { SentenceWithHints } from "../../../components/learn/Hints";
 import { playThaiTTS } from "../../../lib/tts";
 import { m as motion } from "motion/react";
 import { useTranslation } from "../../../hooks/useTranslation";

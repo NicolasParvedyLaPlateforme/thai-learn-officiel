@@ -4,10 +4,10 @@ import { BookOpen, Star, Lock, Crown, Clock, Pencil, RotateCcw, PieChart, Circle
 import Link from 'next/link';
 import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import { playThaiTTS } from '../../lib/tts';
-import IconImage from '../../components/IconImage';
+import IconImage from '../ui/IconImage';
 import { useProgressStore } from '../../lib/store';
 import { getLevelSplit } from '../../lib/levelSplits';
-import { LessonPathMap } from '../../components/LessonPathMap';
+import { LessonPathMap } from './LessonPathMap';
 import SharedLessonModal from '../ui/SharedLessonModal';
 
 interface LearnLessonModalProps {

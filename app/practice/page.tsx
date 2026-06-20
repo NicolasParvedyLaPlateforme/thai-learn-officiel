@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { m as motion , AnimatePresence } from "motion/react";
 import { Brain, BookOpen, Pencil, Star, Mic, User, Wand2, Menu, RotateCcw } from 'lucide-react';
 import { useProgressStore } from '../lib/store';
-import { WritingConfigModal } from '../components/WritingConfigModal';
-import { SpeakingConfigModal } from '../components/SpeakingConfigModal';
-import { ReviewConfigModal } from '../components/ReviewConfigModal';
-import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
-import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
-import PWAInstallButton from '../components/PWAInstallButton';
+import { WritingConfigModal } from '../components/modals/WritingConfigModal';
+import { SpeakingConfigModal } from '../components/modals/SpeakingConfigModal';
+import { ReviewConfigModal } from '../components/modals/ReviewConfigModal';
+import { MobileHeaderMenu } from '../components/layout/MobileHeaderMenu';
+import { DailyQuestsWidget } from '../components/widgets/DailyQuestsWidget';
+import PWAInstallButton from '../components/ui/PWAInstallButton';
 import { useIsPWA } from '../../hooks/use-pwa';
 
 export default function PracticePage() {

@@ -13,12 +13,12 @@ import { playThaiTTS, preloadThaiVoices, preloadThaiAudio } from "../../../lib/t
 import { m as motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 
-import { ErrorBoundary } from "../../../components/ErrorBoundary";
+import { ErrorBoundary } from "../../../components/providers/ErrorBoundary";
 
 // Static imports for maximum offline resilience
 import WordMatch from './WordMatch';
 import SentenceBuilder from './SentenceBuilder';
-import PairMatch from '../../../components/PairMatch';
+import PairMatch from '../../../components/learn/PairMatch';
 import VirtualKeyboard from '../../../writing/components/VirtualKeyboard';
 import FreeTypingInput from './FreeTypingInput';
 import InstructionExample from './InstructionExample';
@@ -26,8 +26,8 @@ import GlossaryModal from './GlossaryModal';
 import ResultScreen from './ResultScreen';
 
 import { Suspense } from "react";
-import { LoadingScreen } from "../../../components/LoadingScreen";
-import { TooltipHint, SentenceWithHints } from "../../../components/Hints";
+import { LoadingScreen } from "../../../components/ui/LoadingScreen";
+import { TooltipHint, SentenceWithHints } from "../../../components/learn/Hints";
 import HeaderProgressBar from "./HeaderProgressBar";
 import InstructionBlock from "./InstructionBlock";
 import Footer from "./Footer";

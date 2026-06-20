@@ -3,17 +3,17 @@
 import { getTranslation, getLocalizedField } from '../hooks/useTranslation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import IconImage from '../components/IconImage';
+import IconImage from '../components/ui/IconImage';
 import { m as motion } from "motion/react";
 import { useProgressStore } from '../lib/store';
-import PWAInstallButton from '../components/PWAInstallButton';
+import PWAInstallButton from '../components/ui/PWAInstallButton';
 import { ArrowLeft, Search, Star, ChevronRight, Play, MapPin, Menu, User } from 'lucide-react';
 import detectiveData from '../data/detective.json';
 import DETECTIVE_CATEGORIES from '../data/detective_categories.json';
 import { useIsPWA } from '../../hooks/use-pwa';
 import { DetectiveLevel } from '../types';
-import { MobileHeaderMenu } from '../components/MobileHeaderMenu';
-import { DailyQuestsWidget } from '../components/DailyQuestsWidget';
+import { MobileHeaderMenu } from '../components/layout/MobileHeaderMenu';
+import { DailyQuestsWidget } from '../components/widgets/DailyQuestsWidget';
 
 const CATEGORIES: Record<string, any> = DETECTIVE_CATEGORIES;
 

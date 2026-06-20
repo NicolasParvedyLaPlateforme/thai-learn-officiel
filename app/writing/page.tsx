@@ -10,10 +10,10 @@ import { playThaiTTS } from '../lib/tts';
 
 import { getCharacterHint } from '../lib/phonetic-mapper';
 import VirtualKeyboard from './components/VirtualKeyboard';
-import { SentenceWithHints } from '../components/Hints';
+import { SentenceWithHints } from '../components/learn/Hints';
 import { formatCombiningChar } from '../lib/alphabet-utils';
 import { getWritingExercisesServer, getDictionaryForExerciseServer, getPhrasesForExerciseServer } from '../actions/course';
-import { LoadingScreen } from '../components/LoadingScreen';
+import { LoadingScreen } from '../components/ui/LoadingScreen';
 import { m as motion, AnimatePresence } from "motion/react";
 
 export default function WritingPage() {

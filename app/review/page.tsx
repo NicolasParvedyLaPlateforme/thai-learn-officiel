@@ -9,7 +9,7 @@ import { Exercise, CourseData, Word } from '../types';
 import { X, Check, Settings, Play } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from '../lib/tts';
 import { m as motion, AnimatePresence } from "motion/react";
-import { LoadingScreen } from '../components/LoadingScreen';
+import { LoadingScreen } from '../components/ui/LoadingScreen';
 
 // Exercise Components
 import WordMatch from '../lesson/[id]/components/WordMatch';
@@ -18,7 +18,7 @@ import FreeTypingInput from '../lesson/[id]/components/FreeTypingInput';
 import VirtualKeyboard from '../writing/components/VirtualKeyboard';
 import QuestionArea from '../lesson/[id]/components/QuestionArea';
 import Footer from '../lesson/[id]/components/Footer';
-import { SentenceWithHints } from '../components/Hints';
+import { SentenceWithHints } from '../components/learn/Hints';
 import { getEndlessReviewServer, getDictionaryForExerciseServer, getPhrasesForExerciseServer } from '../actions/course';
 
 export default function ReviewPage() {

@@ -1,5 +1,5 @@
 import { BookOpen } from 'lucide-react';
-import PWAInstallButton from '../PWAInstallButton';
+import PWAInstallButton from '../ui/PWAInstallButton';
 import { useEffect, useState } from 'react';
 
 export default function LandingHeader() {
