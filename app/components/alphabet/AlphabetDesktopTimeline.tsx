@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { AlphabetLessonCard } from './AlphabetLessonCard';
 import { formatCombiningChar } from '../../lib/alphabet-utils';
 import { NextUnitCard } from '../learn/NextUnitCard';
+import PathTimelineLine from '../path-ui/PathTimelineLine';
 
 interface AlphabetDesktopTimelineProps {
   unit: any;
@@ -98,10 +99,8 @@ export default function AlphabetDesktopTimeline({
         )}
       </div>
 
-      <div className="flex flex-col w-full mt-4 items-center">
-        <div className="flex flex-col relative w-full pb-8 md:pb-16 items-center">
-          <div className="absolute left-1/2 top-8 bottom-0 w-3 -translate-x-1/2 bg-slate-200 rounded-full z-0"></div>
-
+      <div className="flex flex-col w-full mt-10">
+        <div className="flex flex-col relative w-full pb-8 md:pb-16">
         {unitLessons.map((lesson, idx) => {
           const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
           const isMaxLevel = level >= maxLevelPerLesson;
@@ -120,6 +119,7 @@ export default function AlphabetDesktopTimeline({
               onViewportEnter={() => setActiveCenteredLessonId(lesson.id)}
               viewport={{ margin: "-35% 0px -35% 0px" }}
             >
+              <PathTimelineLine level={level} maxLevel={4} colorClass={unit.colorClass} isDesktop={true} />
               <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
                 <div className="w-full max-w-[360px]">
                   <AlphabetLessonCard

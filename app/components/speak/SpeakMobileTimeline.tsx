@@ -4,6 +4,7 @@ import { getTranslation, getLocalizedField } from '../../hooks/useTranslation';
 import IconImage from '../ui/IconImage';
 import { SpeakLessonCard } from './SpeakLessonCard';
 import { NextUnitCard } from '../learn/NextUnitCard';
+import PathTimelineLine from '../path-ui/PathTimelineLine';
 
 interface SpeakMobileTimelineProps {
   unit: any;
@@ -161,8 +162,6 @@ export default function SpeakMobileTimeline({
 
         <div className="flex flex-col w-full mt-8 pl-2 pr-2 sm:pl-4 sm:pr-4">
           <div className="flex flex-col relative w-full pb-8">
-            <div className={`absolute left-[1.25rem] sm:left-[1.5rem] top-0 bottom-0 w-2 -translate-x-1/2 ${unit.colorClass} rounded-full z-0 opacity-80`}></div>
-
           {unitLessons.map((lesson, idx) => {
             const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
             let isReviewLocked = false;
@@ -172,8 +171,6 @@ export default function SpeakMobileTimeline({
             }
 
             const isMaxLevel = level >= (maxLevelPerLesson || 10);
-            const showLineToNext = idx < unitLessons.length - 1;
-            const lineToNextColor = level > 0 ? unit.colorClass : "bg-slate-200";
 
             return (
               <motion.div
@@ -184,6 +181,8 @@ export default function SpeakMobileTimeline({
                 transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
                 className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
               >
+                <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} />
+                
                 <div
                   className={`relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
                   onClick={(e) => {
@@ -233,10 +232,6 @@ export default function SpeakMobileTimeline({
                     }}
                   />
                 </div>
-
-                {showLineToNext && (
-                  <div className={`absolute top-5 sm:top-6 left-[1.25rem] sm:left-[1.5rem] -translate-x-1/2 w-2 h-[calc(100%+1.5rem)] sm:h-[calc(100%+2rem)] ${lineToNextColor} z-0 opacity-80`}></div>
-                )}
               </motion.div>
             )
           })}
