@@ -16,6 +16,8 @@ import { AlphabetCard } from "@/components/alphabet/AlphabetCard";
 import { Suspense } from 'react';
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
+import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
+import Footer from "@/components/lesson/Footer";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {
@@ -587,24 +589,25 @@ function AlphabetLessonContent() {
             className="flex-1 flex flex-col h-full w-full absolute inset-0"
           >
             {/* Header */}
-            <header className="h-16 px-4 md:px-8 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white">
-              <div className="flex items-center gap-4 md:gap-6 w-full max-w-4xl mx-auto flex-1">
-                <button onClick={() => router.push(`/alphabet#lesson-${lesson?.id}`)} className="text-slate-400 hover:text-slate-600 transition-colors">
-                  <X size={24} strokeWidth={2.5} />
-                </button>
-                <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                  <div
-                    className="bg-emerald-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.3)]"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <div className="font-bold text-slate-400 flex items-center gap-3">
-                  {lesson?.type === 'consonant'
-                    ? (getTranslation('auto.consonants', language))
-                    : (getTranslation('auto.vowels', language))}
-                </div>
-              </div>
-            </header>
+            <HeaderProgressBar
+              lessonId={lesson?.id || ""}
+              language={language}
+              currentLevel={currentLevel}
+              progress={progress}
+              earnedStars={earnedStars}
+              currentIndex={currentIndex}
+              exercisesLength={exercises.length}
+              currentExercise={undefined}
+              showRomanization={false}
+              setShowRomanization={() => {}}
+              setShowInfoModal={() => {}}
+              returnUrl={`/alphabet#lesson-${lesson?.id}`}
+              customTitle={
+                lesson?.type === 'consonant'
+                  ? getTranslation('auto.consonants', language)
+                  : getTranslation('auto.vowels', language)
+              }
+            />
 
             {/* Main Exercise Area */}
             <main className="flex-1 overflow-y-auto hide-scrollbar flex flex-col py-6 md:py-12 px-4 w-full relative">
@@ -627,67 +630,23 @@ function AlphabetLessonContent() {
             </main>
 
             {/* Footer Actions */}
-            <>
-              <div className="shrink-0 min-h-[100px] md:min-h-[128px] w-full bg-transparent"></div>
-              {(() => {
-                if (!currentExercise) return false;
-                if (!isChecking && currentExercise.type !== 'intro' && currentExercise.type !== 'review') {
-                  return false;
-                }
-                return true;
-              })() && currentExercise && (
-                  <AnimatePresence>
-                    {showFooter && (
-                      <motion.footer
-                        initial={{ y: "100%", opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: "100%", opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[128px] py-4 md:py-0 border-t-2 items-center justify-center px-4 md:px-8 flex transition-colors duration-300 z-50 ${isChecking ? (isCorrect ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200 shadow-[0_-10px_40px_rgba(244,63,94,0.1)]') : 'bg-white border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]'}`}
-                      >
-                        <div className="w-full max-w-4xl flex sm:flex-row flex-col items-center justify-between gap-4">
-
-                          <div className="flex-1 w-full text-center sm:text-left">
-                            {isChecking && isCorrect && (
-                              <div className="flex items-center justify-center sm:justify-start gap-3 text-emerald-600 font-extrabold text-xl">
-                                <div className="bg-white text-emerald-500 rounded-full p-1"><Check size={24} strokeWidth={3} /></div>
-                                {getTranslation('auto.excellent', language)}
-                              </div>
-                            )}
-                            {isChecking && !isCorrect && (
-                              <div className="flex flex-col text-rose-600 font-extrabold text-xl gap-1 items-center sm:items-start">
-                                <div className="flex items-center gap-3">
-                                  <div className="bg-white text-rose-500 rounded-full p-1"><X size={24} strokeWidth={3} /></div>
-                                  {getTranslation('auto.incorrect', language)}
-                                </div>
-                                <div className="text-rose-800 text-sm mt-1 uppercase tracking-widest">
-                                  {getTranslation('auto.correct_answer', language)}
-                                </div>
-                                <div className="text-rose-900 font-medium font-thai text-xl md:text-2xl mt-1 sm:mt-0">{formatCombiningChar(currentExercise.letterToPick!)}</div>
-                              </div>
-                            )}
-                          </div>
-
-                          <button
-                            onClick={() => handleCheck()}
-                            disabled={currentExercise.type !== 'intro' && currentExercise.type !== 'review' && !isChecking && !selectedOption}
-                            className={`w-full sm:w-auto px-12 py-3 rounded-xl border-b-4 font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest disabled:opacity-50 disabled:scale-100 disabled:shadow-none
-                  ${(currentExercise.type === 'intro' || currentExercise.type === 'review') ? 'bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400' :
-                                isChecking
-                                  ? (isCorrect
-                                    ? 'bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400'
-                                    : 'bg-rose-500 border-rose-700 text-white hover:bg-rose-400')
-                                  : 'bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400'}
-                `}
-                          >
-                            {(currentExercise.type === 'intro' || currentExercise.type === 'review') || isChecking ? (getTranslation('auto.continue', language)) : (getTranslation('auto.check', language))}
-                          </button>
-                        </div>
-                      </motion.footer>
-                    )}
-                  </AnimatePresence>
-                )}
-            </>
+            <Footer
+              currentExercise={currentExercise as any}
+              isChecking={isChecking}
+              isCorrect={isCorrect}
+              language={language}
+              selectedAnswer={selectedOption?.letter || null}
+              showFooter={showFooter}
+              handleCheck={handleCheck}
+              customCorrectAnswer={
+                <div className="font-medium font-thai text-xl md:text-2xl mt-1 sm:mt-0">
+                  {currentExercise ? formatCombiningChar(currentExercise.letterToPick!) : ""}
+                </div>
+              }
+              disableCheck={
+                !!(currentExercise && currentExercise.type !== 'intro' && currentExercise.type !== 'review' && !isChecking && !selectedOption)
+              }
+            />
           </motion.div>
         )}
       </AnimatePresence>

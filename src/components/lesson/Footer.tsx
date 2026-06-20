@@ -8,9 +8,11 @@ interface FooterProps {
   isChecking: boolean;
   isCorrect: boolean | null;
   language: string;
-  selectedAnswer: string | string[] | null;
+  selectedAnswer?: string | string[] | null;
   showFooter: boolean;
   handleCheck: () => void;
+  customCorrectAnswer?: React.ReactNode;
+  disableCheck?: boolean;
 }
 
 export default function Footer({
@@ -21,15 +23,16 @@ export default function Footer({
   selectedAnswer,
   showFooter,
   handleCheck,
+  customCorrectAnswer,
+  disableCheck,
 }: FooterProps) {
   const shouldRender = (() => {
     if (currentExercise.type === "pair-matching")
       return isChecking && !isCorrect;
     if (
       !isChecking &&
-      (currentExercise.type === "word-match" ||
-        currentExercise.type === "sentence-builder" ||
-        currentExercise.type === "writing")
+      currentExercise.type !== "intro" &&
+      (currentExercise.type as any) !== "review"
     ) {
       return false;
     }
@@ -134,7 +137,9 @@ export default function Footer({
                     {getTranslation('auto.correct_answer', language)}
                   </div>
                   <div className="font-medium font-thai text-xl md:text-2xl mt-1 sm:mt-0">
-                    {currentExercise.type === "writing" &&
+                    {customCorrectAnswer ? (
+                      customCorrectAnswer
+                    ) : currentExercise.type === "writing" &&
                     currentExercise.blindMode &&
                     currentExercise.correctComponents ? (
                       (() => {
@@ -151,7 +156,7 @@ export default function Footer({
                           chars: string;
                           isMatch: boolean;
                         }[] = [];
-                        currentExercise.correctComponents.forEach((char, i) => {
+                        currentExercise.correctComponents.forEach((char: string, i: number) => {
                           const typedChar = (
                             (selectedAnswer as string[]) || []
                           )[i];
@@ -213,6 +218,7 @@ export default function Footer({
               id="next-btn"
               onClick={handleCheck}
               disabled={
+                disableCheck !== undefined ? disableCheck :
                 currentExercise.type !== "intro" &&
                 !isChecking &&
                 (!selectedAnswer ||

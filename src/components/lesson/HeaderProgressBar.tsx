@@ -19,6 +19,8 @@ interface HeaderProgressBarProps {
   isReview?: boolean;
   timeLeft?: number | null;
   initialTime?: number | null;
+  returnUrl?: string;
+  customTitle?: React.ReactNode;
 }
 
 export default function HeaderProgressBar({
@@ -36,12 +38,14 @@ export default function HeaderProgressBar({
   isReview,
   timeLeft,
   initialTime,
+  returnUrl,
+  customTitle,
 }: HeaderProgressBarProps) {
   const router = useRouter();
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
 
   const handleQuit = () => {
-    router.push(`/learn#lesson-${lessonId}`);
+    router.push(returnUrl || `/learn#lesson-${lessonId}`);
   };
 
   return (
@@ -102,32 +106,27 @@ export default function HeaderProgressBar({
             )}
           </div>
 
-          <div className="font-bold text-slate-400 flex items-center gap-2 sm:gap-3 text-sm sm:text-base shrink-0">
-            <div className="hidden sm:flex items-center gap-0.5 mr-1">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  size={16}
-                  className={
-                    i < earnedStars
-                      ? "fill-amber-400 text-amber-400"
-                      : "fill-slate-200 text-slate-200"
-                  }
-                />
-              ))}
-            </div>
-            {currentLevel + 1 < 9 ? (
-              <span className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-4 flex-shrink-0 text-sm sm:text-base whitespace-nowrap overflow-hidden">
+            {customTitle ? (
+              customTitle
+            ) : currentLevel < 9 && !isReview ? (
+              <span className="flex items-center text-slate-400 font-semibold tracking-wide">
+                <Star size={16} className="fill-current mr-1" />
+                <span className="hidden sm:inline">
+                  {getTranslation('auto.lvl', language)} {currentLevel + 1}
+                </span>
+                <span className="sm:hidden">{currentLevel + 1}</span>
                 <svg
-                  width="16"
-                  height="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-slate-300"
+                  className="text-slate-300 mx-1 sm:mx-2"
                 >
                   <path d="m9 18 6-6-6-6" />
                 </svg>

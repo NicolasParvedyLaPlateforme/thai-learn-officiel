@@ -15,6 +15,7 @@ import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { getWritingExercisesServer, getDictionaryForExerciseServer, getPhrasesForExerciseServer } from "@/actions/course";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { m as motion, AnimatePresence } from "motion/react";
+import Footer from "@/components/lesson/Footer";
 
 export default function WritingPage() {
   const router = useRouter();
@@ -390,39 +391,17 @@ export default function WritingPage() {
             {/* Footer */}
             <>
               <div className="shrink-0 min-h-[100px] md:h-32 w-full bg-transparent"></div>
-              {isChecking && (
-                <footer className={`fixed bottom-0 left-0 right-0 z-50 min-h-[100px] md:h-32 py-4 md:py-0 border-t-2 border-slate-200 flex items-center justify-center transition-colors duration-300 ${isCorrect ? 'bg-emerald-50' : 'bg-rose-50 border-rose-200'}`}>
-                  <div className="w-full max-w-2xl px-4 flex sm:flex-row flex-col items-center justify-between gap-4">
-
-                    <div className="flex-1 w-full text-center sm:text-left">
-                      {isCorrect ? (
-                        <div className="flex items-center justify-center sm:justify-start gap-3 text-emerald-600 font-extrabold text-xl">
-                          <div className="bg-white text-emerald-500 rounded-full p-1"><Check size={24} strokeWidth={3} /></div>
-                          {getTranslation('auto.perfect', language)}
-                        </div>
-                      ) : (
-                        <div className="flex flex-col text-rose-600 font-extrabold text-xl gap-1 items-center sm:items-start">
-                          <div className="flex items-center gap-3">
-                            <div className="bg-white text-rose-500 rounded-full p-1"><X size={24} strokeWidth={3} /></div>
-                            {getTranslation('auto.almost', language)}
-                          </div>
-                          <div className="text-rose-800 text-sm mt-1 uppercase tracking-widest hidden sm:block">
-                            {getTranslation('auto.the_exact_spelling_was', language)}
-                          </div>
-                          <div className="text-rose-900 font-medium font-thai text-2xl md:text-3xl mt-1 tracking-wider">{currentExercise.answer}</div>
-                        </div>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={() => handleCheck()}
-                      disabled={selectedAnswer.length === 0}
-                      className={`w-full sm:w-auto px-12 py-3 rounded-xl border-b-4 font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest disabled:opacity-50 disabled:scale-100 disabled:shadow-none ${isCorrect ? 'bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400' : 'bg-rose-500 border-rose-700 text-white hover:bg-rose-400'}`}
-                    >
-                      {getTranslation('auto.continue', language)}
-                    </button>
-                  </div>
-                </footer>
+              {currentExercise && (
+                <Footer
+                  currentExercise={currentExercise as any}
+                  isChecking={isChecking}
+                  isCorrect={isCorrect}
+                  language={language}
+                  selectedAnswer={selectedAnswer}
+                  showFooter={isChecking}
+                  handleCheck={handleCheck}
+                  disableCheck={selectedAnswer.length === 0}
+                />
               )}
             </>
           </motion.div>
