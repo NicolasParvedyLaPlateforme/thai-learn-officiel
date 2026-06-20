@@ -94,7 +94,7 @@ export default function DesktopSidebarLeft() {
         )}
         <div className="flex items-center gap-2 mb-10 overflow-hidden shrink-0 px-2 justify-center group-hover:justify-start xl:justify-start relative">
           <div className="bg-emerald-500 text-white p-2 rounded-xl shrink-0 absolute left-1/2 -translate-x-1/2 transition-all duration-300 xl:translate-x-0 xl:relative xl:left-auto group-hover:translate-x-0 group-hover:relative group-hover:left-auto">
-            <BookOpen size={24} />
+            <BookOpen size={24} strokeWidth={2.5} />
           </div>
           <h1 className="text-2xl font-bold text-slate-800 tracking-tight whitespace-nowrap transition-opacity duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100 xl:ml-1 group-hover:ml-1">
             ThaiLearn
@@ -111,30 +111,30 @@ export default function DesktopSidebarLeft() {
         <div className="flex flex-col gap-2 flex-1 w-full overflow-y-auto hide-scrollbar pb-4">
           <NavCategory 
             title={t('sidebar.category.learn') || 'Apprendre'} 
-            icon={<GraduationCap size={24} />} 
+            icon={<GraduationCap size={24} strokeWidth={2.5} />} 
             isOpen={openCategories.learn} 
             onToggle={() => toggleCategory('learn')}
             isActive={isLearnActive || isAlphabetActive || isSpeakActive}
           >
-            <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={20} />} label={t('sidebar.vocabulary') || 'Vocabulaire'} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} isSubItem />
-            <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={20} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} isSubItem />
-            <NavItem href={getHrefWithHash('/speak', 'speak')} icon={<Mic size={20} />} label={t('sidebar.speaking') || 'Parler'} active={isSpeakActive} isSubItem />
+            <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={20} strokeWidth={2.5} />} label={t('sidebar.vocabulary') || 'Vocabulaire'} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} isSubItem />
+            <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={20} strokeWidth={2.5} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} isSubItem />
+            <NavItem href={getHrefWithHash('/speak', 'speak')} icon={<Mic size={20} strokeWidth={2.5} />} label={t('sidebar.speaking') || 'Parler'} active={isSpeakActive} isSubItem />
           </NavCategory>
 
           <NavCategory 
             title={t('sidebar.category.immersion') || 'Immersion'} 
-            icon={<MessageCircle size={24} />} 
+            icon={<MessageCircle size={24} strokeWidth={2.5} />} 
             isOpen={openCategories.immersion} 
             onToggle={() => toggleCategory('immersion')}
             isActive={isConversationsActive || isDetectiveActive}
           >
-            <NavItem href="/conversations" icon={<MessageCircle size={20} />} label={t('sidebar.dialogs')} active={isConversationsActive} isSubItem />
-            <NavItem href="/detective" icon={<Search size={20} />} label={t('sidebar.detective')} active={isDetectiveActive} isSubItem />
+            <NavItem href="/conversations" icon={<MessageCircle size={20} strokeWidth={2.5} />} label={t('sidebar.dialogs')} active={isConversationsActive} isSubItem />
+            <NavItem href="/detective" icon={<Search size={20} strokeWidth={2.5} />} label={t('sidebar.detective')} active={isDetectiveActive} isSubItem />
           </NavCategory>
 
           <NavCategory 
             title={t('sidebar.practice') || 'Pratique'} 
-            icon={<Brain size={24} />} 
+            icon={<Brain size={24} strokeWidth={2.5} />} 
             isOpen={openCategories.practice} 
             onToggle={() => toggleCategory('practice')}
             isActive={isPracticeActive || isPairsActive || isReviewActive || pathname === '/writing'}
@@ -147,12 +147,12 @@ export default function DesktopSidebarLeft() {
                    window.dispatchEvent(new Event('openReviewModal'));
                 }
               }}
-              icon={<RotateCcw size={20} />} 
+              icon={<RotateCcw size={20} strokeWidth={2.5} />} 
               label={getTranslation('auto.review_9', language) || 'Rappel'} 
               active={isPracticeActive && !pathname.includes('writing') && !pathname.includes('speaking')} 
               isSubItem 
             />
-            <NavItem href="/review-pairs" icon={<BookOpen size={20} />} label={getTranslation('auto.pairs', language) || 'Paires'} active={isPairsActive} isSubItem />
+            <NavItem href="/review-pairs" icon={<BookOpen size={20} strokeWidth={2.5} />} label={getTranslation('auto.pairs', language) || 'Paires'} active={isPairsActive} isSubItem />
             <NavItem 
               href="/practice?action=writing" 
               onClick={(e) => {
@@ -161,7 +161,7 @@ export default function DesktopSidebarLeft() {
                    window.dispatchEvent(new Event('openWritingModal'));
                 }
               }}
-              icon={<Pencil size={20} />} 
+              icon={<Pencil size={20} strokeWidth={2.5} />} 
               label={getTranslation('auto.writing', language) || 'Écriture'} 
               active={pathname === '/writing' || (isPracticeActive && typeof window !== 'undefined' && window.location.search.includes('writing'))} 
               isSubItem 
@@ -174,7 +174,7 @@ export default function DesktopSidebarLeft() {
                    window.dispatchEvent(new Event('openSpeakingModal'));
                 }
               }}
-              icon={<Mic size={20} />} 
+              icon={<Mic size={20} strokeWidth={2.5} />} 
               label={getTranslation('auto.speaking', language) || 'Parler'} 
               active={isPracticeActive && typeof window !== 'undefined' && window.location.search.includes('speaking')} 
               isSubItem 

@@ -25,6 +25,7 @@ interface LearnMobileTimelineProps {
 import { LessonCard } from './LessonCard';
 import { NextUnitCard } from './NextUnitCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
+import { PathDecorations } from '../path-ui/PathDecorations';
 
 export default function LearnMobileTimeline({
   unit,
@@ -179,6 +180,7 @@ export default function LearnMobileTimeline({
                 className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
               >
                 <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} />
+                <PathDecorations index={idx} isDesktop={false} />
                 
                 {/* Compact Timeline Node */}
                 <div

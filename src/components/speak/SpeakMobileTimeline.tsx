@@ -5,6 +5,7 @@ import IconImage from '../ui/IconImage';
 import { SpeakLessonCard } from './SpeakLessonCard';
 import { NextUnitCard } from '../learn/NextUnitCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
+import { PathDecorations } from '../path-ui/PathDecorations';
 
 interface SpeakMobileTimelineProps {
   unit: any;
@@ -182,6 +183,7 @@ export default function SpeakMobileTimeline({
                 className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
               >
                 <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} />
+                <PathDecorations index={idx} isDesktop={false} />
                 
                 <div
                   className={`relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}

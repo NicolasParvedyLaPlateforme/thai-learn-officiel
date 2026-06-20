@@ -6,6 +6,7 @@ import { AlphabetLessonCard } from './AlphabetLessonCard';
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { NextUnitCard } from '../learn/NextUnitCard';
 import PathTimelineLine from "@/components/path-ui/PathTimelineLine";
+import { PathDecorations } from "@/components/path-ui/PathDecorations";
 
 interface AlphabetMobileTimelineProps {
   unit: any;
@@ -178,6 +179,7 @@ export default function AlphabetMobileTimeline({
                 className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
               >
                 <PathTimelineLine level={level} maxLevel={maxLevelPerLesson} colorClass={unit.colorClass} />
+                <PathDecorations index={idx} isDesktop={false} />
 
                 <div
                   className={`relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}

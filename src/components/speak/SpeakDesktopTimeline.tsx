@@ -7,6 +7,7 @@ import { NextUnitCard } from '../learn/NextUnitCard';
 import { useState } from 'react';
 import { SpeakLessonCard } from './SpeakLessonCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
+import { PathDecorations } from '../path-ui/PathDecorations';
 
 interface SpeakDesktopTimelineProps {
   unit: any;
@@ -121,11 +122,12 @@ export default function SpeakDesktopTimeline({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
-              className={`relative w-full flex ${isLeft ? 'justify-start' : 'justify-end'} z-10 mb-16 group`}
               onViewportEnter={() => setActiveCenteredLessonId(lesson.id)}
               viewport={{ margin: "-35% 0px -35% 0px" }}
+              className={`relative w-full flex ${isLeft ? 'justify-start' : 'justify-end'} scroll-mt-24 z-10 mb-16 group/node`}
             >
               <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} isDesktop={true} />
+              <PathDecorations index={idx} isDesktop={true} />
               <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
                 <div className="w-full max-w-[360px]">
                   <SpeakLessonCard

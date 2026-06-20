@@ -66,55 +66,53 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
             {getTranslation('auto.no_quests_for_today', language)}
           </div>
         ) : (
-          questsForCategory.map((quest, i) => {
-            const progressPercent = Math.min(100, Math.max(0, (quest.progress / quest.target) * 100));
-            // Couleurs alternées pour un côté plus fun (vert, bleu, violet)
-            const colors = [
-              { border: 'bg-emerald-400', bar: 'from-emerald-400 to-emerald-300', text: 'text-emerald-500', light: 'bg-emerald-50' },
-              { border: 'bg-blue-400', bar: 'from-blue-400 to-blue-300', text: 'text-blue-500', light: 'bg-blue-50' },
-              { border: 'bg-purple-400', bar: 'from-purple-400 to-purple-300', text: 'text-purple-500', light: 'bg-purple-50' }
-            ];
-            const theme = colors[i % colors.length];
+          <div className="flex flex-col">
+            {questsForCategory.map((quest, i) => {
+              const progressPercent = Math.min(100, Math.max(0, (quest.progress / quest.target) * 100));
+              const colors = [
+                { bar: 'from-emerald-400 to-emerald-300', iconBg: 'bg-emerald-100 text-emerald-500' },
+                { bar: 'from-blue-400 to-blue-300', iconBg: 'bg-blue-100 text-blue-500' },
+                { bar: 'from-purple-400 to-purple-300', iconBg: 'bg-purple-100 text-purple-500' }
+              ];
+              const theme = colors[i % colors.length];
 
-            return (
-              <div key={quest.id} className="group relative w-full flex flex-col bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-sm hover:border-slate-200 transition-all overflow-hidden">
-                {/* Bordure colorée à gauche */}
-                <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${quest.completed ? 'bg-emerald-500' : theme.border}`} />
-
-                <div className="flex items-start justify-between mb-3 pl-2">
-                  <span className={`text-[14.5px] font-bold leading-tight ${quest.completed ? 'text-slate-400 line-through' : 'text-slate-700'}`}>
-                    {getTitle(quest)}
-                  </span>
-                  {quest.completed ? (
-                    <div className="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-500 shrink-0 ml-3">
-                      <CheckCircle2 size={16} className="stroke-[3]" />
+              return (
+                <div key={quest.id} className="group relative w-full flex items-center py-3 border-b border-slate-100/60 last:border-0 hover:bg-slate-50/50 transition-colors rounded-lg px-2 -mx-2">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mr-3 shadow-sm ${quest.completed ? 'bg-emerald-100 text-emerald-500' : theme.iconBg}`}>
+                    {quest.completed ? <CheckCircle2 size={18} className="stroke-[3]" /> : <Target size={18} className="stroke-[2.5]" />}
+                  </div>
+                  
+                  <div className="flex flex-col flex-1 min-w-0 pr-3">
+                    <span className={`text-[13.5px] font-bold leading-tight truncate mb-1.5 ${quest.completed ? 'text-slate-400 line-through' : 'text-slate-700'}`}>
+                      {getTitle(quest)}
+                    </span>
+                    
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner relative">
+                        <div
+                          className={`h-full rounded-full transition-all duration-[1500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] relative ${quest.completed ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`}`}
+                          style={{ width: `${animateBars ? progressPercent : 0}%` }}
+                        >
+                          {!quest.completed && progressPercent > 5 && (
+                            <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-r from-transparent via-white/30 to-transparent w-full animate-[shimmer_2s_infinite]"></div>
+                          )}
+                        </div>
+                      </div>
+                      <span className={`text-[11px] font-black shrink-0 ${quest.completed ? 'text-emerald-500' : 'text-slate-400'}`}>
+                        {quest.progress}/{quest.target}
+                      </span>
                     </div>
-                  ) : (
-                    <div className="flex items-center gap-1 bg-amber-100 border border-amber-200 px-2 py-1 rounded-lg text-[11px] font-black text-amber-600 shrink-0 ml-3 shadow-sm">
-                      <Star size={12} className="fill-current" /> +{quest.rewardXp} XP
+                  </div>
+                  
+                  {!quest.completed && (
+                    <div className="flex items-center gap-1 text-[11px] font-black text-amber-500 shrink-0">
+                      <Star size={12} className="fill-current" /> {quest.rewardXp}
                     </div>
                   )}
                 </div>
-
-                <div className="flex items-center gap-3 w-full pl-2">
-                  <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner relative">
-                    <div
-                      className={`h-full rounded-full transition-all duration-[1500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] relative ${quest.completed ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`}`}
-                      style={{ width: `${animateBars ? progressPercent : 0}%` }}
-                    >
-                      {/* Brillance sur la barre */}
-                      {!quest.completed && progressPercent > 5 && (
-                        <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-r from-transparent via-white/30 to-transparent w-full animate-[shimmer_2s_infinite]"></div>
-                      )}
-                    </div>
-                  </div>
-                  <span className={`text-[12px] font-black w-10 text-right shrink-0 ${quest.completed ? 'text-emerald-500' : 'text-slate-400'}`}>
-                    {quest.progress}/{quest.target}
-                  </span>
-                </div>
-              </div>
-            );
-          })
+              );
+            })}
+          </div>
         )}
       </div>
     </div>
