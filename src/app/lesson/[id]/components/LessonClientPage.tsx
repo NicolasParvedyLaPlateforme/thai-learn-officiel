@@ -21,17 +21,17 @@ import SentenceBuilder from './SentenceBuilder';
 import PairMatch from "@/components/learn/PairMatch";
 import VirtualKeyboard from '../../../writing/components/VirtualKeyboard';
 import FreeTypingInput from './FreeTypingInput';
-import InstructionExample from './InstructionExample';
-import GlossaryModal from './GlossaryModal';
-import ResultScreen from './ResultScreen';
+import InstructionExample from '@/components/lesson/InstructionExample';
+import GlossaryModal from '@/components/lesson/GlossaryModal';
+import ResultScreen from '@/components/lesson/ResultScreen';
 
 import { Suspense } from "react";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { TooltipHint, SentenceWithHints } from "@/components/learn/Hints";
-import HeaderProgressBar from "./HeaderProgressBar";
-import InstructionBlock from "./InstructionBlock";
-import Footer from "./Footer";
-import QuestionArea from "./QuestionArea";
+import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
+import InstructionBlock from "@/components/lesson/InstructionBlock";
+import Footer from "@/components/lesson/Footer";
+import QuestionArea from "@/components/lesson/QuestionArea";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {

@@ -14,7 +14,7 @@ import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import PairMatch from "@/components/learn/PairMatch";
 import { getEndlessPairMatchingServer } from "@/actions/course";
 
-import Footer from '../lesson/[id]/components/Footer';
+import Footer from '@/components/lesson/Footer';
 
 export default function ReviewPairsPage() {
   const router = useRouter();
