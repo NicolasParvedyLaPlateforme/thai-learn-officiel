@@ -73,40 +73,40 @@ export default function AlphabetMobileTimeline({
       >
         <div
           onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-          className={`mb-6 p-4 sm:p-5 ${unit.colorClass} border-b-4 ${unit.borderClass} -mx-4 -mt-2 text-white shadow-md relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[140px] flex items-center`}
+          className={`mb-6 p-5 sm:p-6 ${unit.colorClass} rounded-2xl text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[160px] flex items-center group`}
         >
           {unit.imageUrl && (
             <div 
-              className="absolute top-0 right-0 bottom-0 w-[60%] sm:w-[50%] z-0 pointer-events-none"
-              style={{ WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 35%)', maskImage: 'linear-gradient(to right, transparent 0%, black 35%)' }}
+              className="absolute top-0 right-0 bottom-0 w-[70%] sm:w-[60%] z-0 pointer-events-none overflow-hidden"
+              style={{ WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 50%)', maskImage: 'linear-gradient(to right, transparent 0%, black 50%)' }}
             >
-              <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-80" priority />
+              <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-85 transition-transform duration-1000 group-hover:scale-105" priority />
             </div>
           )}
           
           <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
             <div className="flex justify-between items-start w-full mb-1">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-white uppercase tracking-tight break-words pr-2">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight break-words pr-2 drop-shadow-sm">
                 {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
               </h2>
             </div>
-            <p className={`${unit.lightTextClass || 'text-white/90'} mb-4 font-medium text-sm sm:text-base leading-snug`}>
+            <p className={`${unit.lightTextClass || 'text-white/90'} mb-5 font-medium text-sm sm:text-base leading-snug drop-shadow-sm`}>
               {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
             </p>
 
             <div className="w-full">
               <div className="flex flex-col">
-                <div className="flex justify-between text-xs font-bold text-white mb-1 px-1 uppercase tracking-wide">
+                <div className={`flex justify-between text-xs font-bold text-white mb-1.5 uppercase tracking-wide drop-shadow-sm`}>
                   <span>{getTranslation('auto.mastery_13', language)}</span>
                   <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
                 </div>
-                <div className={`w-full bg-black/15 rounded-full h-2 overflow-hidden mb-1 shadow-inner`}>
+                <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-2.5 overflow-hidden mb-1 shadow-inner`}>
                   <div
                     className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
                     style={{ width: `${progressPercent}%` }}
                   ></div>
                 </div>
-                <div className={`${unit.lightTextClass || 'text-white/80'} font-bold text-[10px] px-1`}>
+                <div className={`${unit.lightTextClass || 'text-white/80'} font-bold text-[10px] drop-shadow-sm`}>
                   {getTranslation('auto.4_levels_per_letter_total_mast', language)}
                 </div>
               </div>
@@ -127,10 +127,10 @@ export default function AlphabetMobileTimeline({
         {mounted && (
           <div
             onClick={() => setIsQuestsModalOpen(true)}
-            className="xl:hidden mt-6 w-full bg-white rounded-2xl border-2 border-slate-100 p-4 shadow-sm flex items-center justify-between cursor-pointer active:scale-95 transition-transform gap-2"
+            className="xl:hidden mt-6 w-full bg-white rounded-2xl border border-slate-100 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
           >
             <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
-              <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
                 <Target size={20} className="text-emerald-500" />
               </div>
               <div className="flex flex-col min-w-0">

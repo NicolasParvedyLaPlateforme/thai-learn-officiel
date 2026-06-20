@@ -401,10 +401,10 @@ export function DesktopSidebarRight({
         >
           <button
             onClick={() => setShowUnitsList(true)}
-            className="w-full flex items-center justify-between p-5 bg-white hover:bg-slate-50 border-2 border-slate-100 rounded-[24px] shadow-sm transition-all group cursor-pointer"
+            className="w-full flex items-center justify-between p-5 bg-white hover:bg-slate-50 border border-slate-100 rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-sm transition-all group cursor-pointer"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shadow-inner">
+              <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center border border-slate-100">
                 <BookOpen size={24} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
               </div>
               <div className="flex flex-col text-left">
@@ -473,14 +473,14 @@ export function DesktopSidebarRight({
                 return (
                   <div
                     key={u.id}
-                    className={`w-full text-left rounded-2xl transition-all relative overflow-hidden flex flex-col p-4 shrink-0 bg-white border-2 cursor-default ${u.colorClass.replace('bg-', 'border-')} shadow-sm`}
+                    className={`w-full text-left rounded-3xl transition-all relative overflow-hidden flex flex-col p-4 shrink-0 bg-white border cursor-default ${u.colorClass.replace('bg-', 'border-')} shadow-sm`}
                   >
                     {hasSuggestion && (
                       <span className="absolute top-3 right-3 w-3 h-3 bg-amber-400 border-2 border-white rounded-full z-10"></span>
                     )}
                     <div className="flex items-center gap-4 mb-4">
                       {u.imageUrl ? (
-                        <div className={`w-16 h-16 rounded-2xl overflow-hidden relative shadow-sm shrink-0 border-[3px] ${u.colorClass.replace('bg-', 'border-')}`}>
+                        <div className={`w-16 h-16 rounded-2xl overflow-hidden relative shadow-sm shrink-0 border-2 ${u.colorClass.replace('bg-', 'border-')}`}>
                           <img src={u.imageUrl} alt={getLocalizedField(u, 'title', language)} className="object-cover w-full h-full" />
                         </div>
                       ) : (
@@ -508,17 +508,17 @@ export function DesktopSidebarRight({
                 <button
                   key={u.id}
                   onClick={() => onUnitSelect(i)}
-                  className="w-full text-left rounded-2xl transition-all relative flex flex-row items-center p-3 shrink-0 bg-slate-50 border border-transparent hover:border-slate-200 hover:bg-slate-100 active:scale-[0.98] group/btn cursor-pointer"
+                  className="w-full text-left rounded-3xl transition-all relative flex flex-row items-center p-3 shrink-0 bg-white border border-slate-100 hover:border-slate-200 hover:bg-slate-50 hover:shadow-[0_2px_10px_rgba(0,0,0,0.02)] active:scale-[0.98] group/btn cursor-pointer"
                 >
                   {hasSuggestion && (
                     <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-amber-400 rounded-full z-10"></span>
                   )}
                   {u.imageUrl ? (
-                    <div className="w-14 h-14 rounded-[14px] overflow-hidden relative shadow-sm shrink-0 mr-4 border-2 border-slate-200 group-hover/btn:border-slate-300 transition-colors bg-white">
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden relative shadow-sm shrink-0 mr-4 border border-slate-100 group-hover/btn:border-slate-200 transition-colors bg-white">
                       <img src={u.imageUrl} alt={getLocalizedField(u, 'title', language)} className="object-cover w-full h-full opacity-80 group-hover/btn:opacity-100 transition-opacity grayscale-[30%] group-hover/btn:grayscale-0" />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-[16px] bg-white text-slate-400 group-hover/btn:bg-slate-50 group-hover/btn:text-slate-600 shrink-0 mr-4 transition-colors shadow-sm border border-slate-200 group-hover/btn:border-slate-300">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-[16px] bg-slate-50 text-slate-400 group-hover/btn:bg-white group-hover/btn:text-slate-600 shrink-0 mr-4 transition-colors border border-slate-100 group-hover/btn:border-slate-200">
                       {i + 1}
                     </div>
                   )}

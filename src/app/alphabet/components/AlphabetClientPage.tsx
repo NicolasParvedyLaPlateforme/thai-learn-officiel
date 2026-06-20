@@ -79,10 +79,10 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                              onUnitSelect(index);
                              onOpenChange(false);
                            }}
-                           className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all ${
+                           className={`w-full flex items-center gap-4 p-4 rounded-3xl border text-left transition-all shadow-sm ${
                              isActive 
                                ? `bg-${unit.colorClass}-50 ${unit.borderClass}`
-                               : 'bg-white border-slate-200 hover:border-slate-300'
+                               : 'bg-white border-slate-100 hover:shadow-md hover:border-slate-200'
                            }`}
                          >
                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white ${
