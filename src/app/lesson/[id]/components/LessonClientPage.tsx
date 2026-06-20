@@ -27,7 +27,8 @@ import ResultScreen from '@/components/lesson/ResultScreen';
 
 import { Suspense } from "react";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
-import { TooltipHint, SentenceWithHints } from "@/components/learn/Hints";
+import { SentenceWithHints } from "@/components/learn/Hints";
+import { TooltipHint } from "@/components/ui/TooltipHint";
 import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
 import InstructionBlock from "@/components/lesson/InstructionBlock";
 import Footer from "@/components/lesson/Footer";
