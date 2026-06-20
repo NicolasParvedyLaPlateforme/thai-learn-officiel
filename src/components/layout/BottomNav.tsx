@@ -77,7 +77,7 @@ export default function BottomNav() {
 
   return (
     <>
-      <nav id="bottom-nav" ref={navRef} className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center h-[72px] px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.1)] transition-all duration-300">
+      <nav id="bottom-nav" ref={navRef} className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-100 z-40 flex justify-around items-center h-[72px] px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.05)] transition-all duration-300">
         
         {/* POPOVERS */}
         <AnimatePresence>
@@ -87,7 +87,7 @@ export default function BottomNav() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.15 }}
-              className="absolute bottom-[80px] left-4 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 flex flex-col gap-1 z-50 w-44 origin-bottom-left"
+              className="absolute bottom-[80px] left-4 bg-white/95 backdrop-blur-md rounded-3xl shadow-lg border border-slate-100 p-2 flex flex-col gap-1 z-50 w-44 origin-bottom-left"
             >
               <Link href={getHrefWithHash('/learn', 'learn')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isLearnActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
                  <BookOpen size={20} className={`shrink-0 ${isLearnActive ? 'text-emerald-500' : 'text-slate-400'}`} />
@@ -116,7 +116,7 @@ export default function BottomNav() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.15 }}
-              className="absolute bottom-[80px] right-4 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 flex flex-col gap-1 z-50 w-52 origin-bottom-right"
+              className="absolute bottom-[80px] right-4 bg-white/95 backdrop-blur-md rounded-3xl shadow-lg border border-slate-100 p-2 flex flex-col gap-1 z-50 w-52 origin-bottom-right"
             >
               <Link href="/practice?action=review" onClick={(e) => {
                  if (pathname === '/practice') {

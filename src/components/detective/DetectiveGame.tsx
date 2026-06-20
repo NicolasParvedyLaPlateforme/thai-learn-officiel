@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { playThaiTTS } from "@/lib/tts";
 import detectiveData from "@/data/detective.json";
+import { Button } from "@/components/ui/Button";
 
 interface Props {
   level: DetectiveLevel;
@@ -267,12 +268,12 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         </p>
 
         <div className="w-full space-y-4">
-          <button onClick={() => startGame(1)} className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all">
+          <Button onClick={() => startGame(1)} size="lg" className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-6 rounded-2xl shadow-sm transition-all">
             Niveau 1 (Thaï + Traduction)
-          </button>
-          <button onClick={() => startGame(2)} className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all">
+          </Button>
+          <Button onClick={() => startGame(2)} size="lg" className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-6 rounded-2xl shadow-sm transition-all">
             Niveau 2 (Thaï uniquement)
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -307,15 +308,15 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         <p className="text-slate-600 mb-8">
           {language === 'en' ? `You found all ${level.objects?.length || 0} objects with ${mistakes} mistakes.` : `Tu as trouvé les ${level.objects?.length || 0} objets avec ${mistakes} erreurs.`}
         </p>
-        <div className="w-full flex flex-col gap-3 px-4">
+        <div className="w-full flex flex-col gap-3 px-4 mt-6">
           {nextLevel && (
-            <button onClick={() => { window.location.href = `/detective/level/${nextLevel.id}${initialDiff ? `?diff=${initialDiff}` : ''}`; }} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-sm transition-all text-center">
+            <Button onClick={() => { window.location.href = `/detective/level/${nextLevel.id}${initialDiff ? `?diff=${initialDiff}` : ''}`; }} size="lg" className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-6 rounded-2xl shadow-sm transition-all text-center">
               {getTranslation('auto.next_level', language)}
-            </button>
+            </Button>
           )}
-          <button onClick={() => initialDiff ? startGame(initialDiff) : setLevelState('intro')} className={`w-full ${nextLevel ? 'bg-slate-200 hover:bg-slate-300 text-slate-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} font-bold py-4 rounded-2xl shadow-sm transition-all`}>
+          <Button onClick={() => initialDiff ? startGame(initialDiff) : setLevelState('intro')} size="lg" className={`w-full ${nextLevel ? 'bg-slate-100 hover:bg-slate-200 text-slate-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'} font-bold py-6 rounded-2xl shadow-sm transition-all`}>
             {getTranslation('auto.play_again', language)}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -498,7 +499,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
       {/* Bottom HUD Panel */}
       <div
-        className={`h-14 lg:h-32 bg-[#faf7ec] border-t-4 border-[#e0d6b8] flex flex-row items-center justify-between shrink-0 w-full z-[120] shadow-[0_-5px_15px_rgba(0,0,0,0.1)]`}
+        className={`h-14 lg:h-32 bg-white/95 backdrop-blur-md border-t border-slate-100 flex flex-row items-center justify-between shrink-0 w-full z-[120] shadow-[0_-5px_15px_rgba(0,0,0,0.05)]`}
         style={{
           paddingLeft: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-top))' : 'max(1rem, env(safe-area-inset-left))',
           paddingRight: isPortraitPhone ? 'max(0.5rem, env(safe-area-inset-bottom))' : 'max(1rem, env(safe-area-inset-right))',
@@ -507,13 +508,13 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
       >
         {/* Left side: Back & Progress */}
         <div className="flex items-center gap-1.5 lg:gap-4 h-full pl-1 lg:pl-2">
-          <Link href="/detective" className="p-1.5 lg:p-3 text-[#5c4a3d] hover:bg-[#e0d6b8]/50 rounded-full transition-colors shrink-0">
+          <Link href="/detective" className="p-1.5 lg:p-3 text-slate-500 hover:bg-slate-100 rounded-full transition-colors shrink-0">
             <ChevronLeft className="w-5 h-5 lg:w-8 lg:h-8" />
           </Link>
           <div className="flex flex-col justify-center h-full">
             <div className="flex gap-0.5 lg:gap-1 mb-0.5 lg:mb-1 relative">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={isLandscapePhone || isPortraitPhone ? 10 : 16} className={i < earnedStars ? "fill-amber-400 text-amber-400" : "fill-[#d4c8a9] text-[#d4c8a9]"} />
+                <Star key={i} size={isLandscapePhone || isPortraitPhone ? 10 : 16} className={i < earnedStars ? "fill-amber-400 text-amber-400" : "fill-slate-200 text-slate-200"} />
               ))}
               {showStarLoss && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-2 z-[200] text-[10px] lg:text-xs font-bold text-rose-500 animate-in fade-in zoom-in slide-in-from-bottom-2 duration-300 drop-shadow-lg bg-rose-50 px-1.5 lg:px-2 py-0.5 lg:py-1 rounded-md border border-rose-200 flex items-center gap-1 whitespace-nowrap">
@@ -522,10 +523,10 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
               )}
             </div>
             <div className="flex items-center gap-1.5 lg:gap-2">
-              <div className="w-16 lg:w-32 h-2 lg:h-3 bg-[#d4c8a9] rounded-full overflow-hidden border border-[#c1b596] shadow-inner">
+              <div className="w-16 lg:w-32 h-2 lg:h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner">
                 <div className="h-full bg-emerald-500 transition-all duration-300" style={{ width: `${(currentIndex / (level.objects?.length || 1)) * 100}%` }} />
               </div>
-              <span className="text-[10px] lg:text-sm font-bold text-[#5c4a3d] min-w-[1.5rem] lg:min-w-[2rem]">{currentIndex}/{level.objects?.length || 0}</span>
+              <span className="text-[10px] lg:text-sm font-bold text-slate-600 min-w-[1.5rem] lg:min-w-[2rem]">{currentIndex}/{level.objects?.length || 0}</span>
             </div>
           </div>
         </div>
@@ -540,7 +541,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
           </button>
           
           <div className="flex flex-col items-center justify-center min-w-[80px] lg:min-w-[200px]">
-            <div className="text-lg lg:text-4xl font-bold font-thai text-[#3a2f26] mb-0 lg:mb-1 drop-shadow-sm tracking-wide">
+            <div className="text-lg lg:text-4xl font-bold font-thai text-slate-800 mb-0 lg:mb-1 tracking-wide">
               {currentObj.th}
             </div>
             <div className="h-4 lg:h-8 flex items-center justify-center">
@@ -552,7 +553,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
                     {getLocalizedField(currentObj, '', language)}
                   </span>
                 ) : (
-                  <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-[#e0d6b8] hover:bg-[#d4c8a9] text-[#5c4a3d] rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
+                  <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
                     <Eye className="w-3 h-3 lg:w-4 lg:h-4" /> {getTranslation('auto.show_hint', language)}
                   </button>
                 )

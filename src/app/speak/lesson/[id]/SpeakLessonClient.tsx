@@ -14,6 +14,7 @@ import { SpeakBuildByLettersExercise } from "@/components/speak/SpeakBuildByLett
 import SpeakResultScreen from './SpeakResultScreen';
 import speakDialogues from "@/data/speak_dialogues.json";
 import speakAnswerMe from "@/data/speak_answer_me.json";
+import { Button } from "@/components/ui/Button";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {
@@ -281,18 +282,21 @@ export default function SpeakLessonClient({
           {getTranslation('auto.resume_lesson_desc', language) || "Vous avez une leçon en cours. Voulez-vous reprendre là où vous vous étiez arrêté ?"}
         </p>
         <div className="flex flex-col gap-3 w-full">
-          <button
+          <Button
             onClick={() => handleResumeChoice(true)}
-            className="w-full py-4 rounded-xl font-bold text-[17px] text-white bg-indigo-500 hover:bg-indigo-600 active:translate-y-1 shadow-md transition-all flex items-center justify-center"
+            size="lg"
+            className="w-full bg-indigo-500 hover:bg-indigo-600 shadow-sm"
           >
             {getTranslation('auto.resume_button', language) || "Reprendre"}
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => handleResumeChoice(false)}
-            className="w-full py-4 rounded-xl font-bold text-[17px] text-slate-500 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 transition-colors flex items-center justify-center"
+            variant="outline"
+            size="lg"
+            className="w-full"
           >
             {getTranslation('auto.restart_button', language) || "Recommencer"}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -439,18 +443,22 @@ export default function SpeakLessonClient({
                 : (getTranslation('auto.your_progress_will_be_lost', language) || 'Votre progression sera perdue.')}
             </p>
             <div className="flex flex-col gap-3 w-full">
-              <button 
+              <Button 
                 onClick={handleQuitEarly}
-                className="w-full py-4 bg-rose-500 text-white rounded-2xl font-extrabold shadow-[0_4px_0_rgb(225,29,72)] active:translate-y-1 active:shadow-[0_0px_0_rgb(225,29,72)] transition-all"
+                variant="danger"
+                size="lg"
+                className="w-full"
               >
                 {getTranslation('auto.quit', language) || 'Quitter'}
-              </button>
-              <button 
+              </Button>
+              <Button 
                 onClick={() => setShowQuitConfirm(false)}
-                className="w-full py-4 bg-slate-100 text-slate-500 rounded-2xl font-extrabold hover:bg-slate-200 transition-colors"
+                variant="outline"
+                size="lg"
+                className="w-full"
               >
                 {getTranslation('auto.cancel', language) || 'Annuler'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

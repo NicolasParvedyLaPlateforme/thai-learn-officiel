@@ -159,7 +159,7 @@ export default function QuestionArea({
               : "w-40 h-40 sm:w-48 sm:h-48 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-3xl text-7xl md:text-5xl"
             } mx-auto items-center justify-center relative flex-shrink-0 ${imageUrl
               ? "bg-transparent overflow-visible"
-              : "bg-emerald-100 shadow-sm border border-emerald-200 overflow-hidden"
+              : "bg-emerald-50 shadow-sm border border-emerald-100 overflow-hidden"
             }`}
         >
           {imageUrl ? (
@@ -193,7 +193,7 @@ export default function QuestionArea({
                   {currentExercise.question}
                 </p>
                 <div
-                  className="inline-flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border-2 border-emerald-100 shadow-sm cursor-pointer hover:bg-emerald-50 transition-colors"
+                  className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md px-6 py-4 rounded-3xl border border-slate-100 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors"
                   onClick={() => playThaiTTS(currentExercise.answer)}
                 >
                   <span className="font-thai text-3xl md:text-4xl text-emerald-600 font-semibold">
@@ -211,7 +211,7 @@ export default function QuestionArea({
                         </span>
                       </div>
                     )}
-                  <div className="ml-2 bg-emerald-100 text-emerald-600 p-2 rounded-full">
+                  <div className="ml-2 bg-emerald-50 text-emerald-600 p-2.5 rounded-full">
                     <svg
                       width="20"
                       height="20"

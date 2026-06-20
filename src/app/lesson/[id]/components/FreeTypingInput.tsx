@@ -2,11 +2,11 @@ import { getTranslation } from "@/hooks/useTranslation";
 import React, { useState, useRef, useEffect } from 'react';
 import { Exercise } from "@/types";
 import { useProgressStore } from "@/lib/store";
-import { useShallow } from 'zustand/react/shallow';
-import { Keyboard, Delete, Volume2, ArrowUp } from 'lucide-react';
+import { Keyboard, Delete, Volume2 } from 'lucide-react';
 import { playThaiTTS } from "@/lib/tts";
 
 import { formatCombiningChar } from "@/lib/alphabet-utils";
+import { Button } from "@/components/ui/Button";
 
 interface Props {
   exercise: Exercise;
@@ -21,19 +21,14 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
   const [showVirtual, setShowVirtual] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Generate virtual keyboard letters from answer if needed
   const [vKeys, setVKeys] = useState<string[]>([]);
 
   useEffect(() => {
-    // Collect all unique characters from the answer + some distractors if we want,
-    // or just the answer characters shuffled.
     const chars = Array.from(new Set(exercise.answer.replace(/\s+/g, '').split('')));
-    // Shuffle them
     for (let i = chars.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [chars[i], chars[j]] = [chars[j], chars[i]];
     }
-
     setVKeys(chars);
   }, [exercise.answer]);
 
@@ -61,14 +56,14 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
               value={selected}
               onChange={(e) => onChange(e.target.value)}
               disabled={disabled}
-              className="w-full text-center font-thai text-3xl md:text-4xl leading-loose md:leading-loose py-4 px-6 md:py-6 border-4 border-slate-200 rounded-2xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 transition-all text-slate-800 disabled:opacity-50 disabled:bg-slate-50"
+              className="w-full text-center font-thai text-3xl md:text-4xl leading-loose md:leading-loose py-4 px-6 md:py-6 border-2 border-slate-100 rounded-[2rem] shadow-sm focus:outline-none focus:border-emerald-300 focus:ring-4 focus:ring-emerald-50/50 transition-all text-slate-800 disabled:opacity-50 disabled:bg-slate-50/50"
               placeholder={getTranslation('auto.type_in_thai', language)}
               autoFocus
               dir="ltr"
             />
             <button
               onClick={() => setShowVirtual(!showVirtual)}
-              className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 sm:p-2 rounded-lg transition-all ${showVirtual ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-400 hover:text-slate-600 hover:bg-slate-200'}`}
+              className={`absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-2xl transition-all ${showVirtual ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-100'}`}
               title={getTranslation('auto.toggle_virtual_keyboard', language)}
             >
               <Keyboard size={24} />
@@ -76,13 +71,11 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
           </div>
           {exercise.type === 'writing' && exercise.blindMode && exercise.correctComponents && !isChecking && (
             <button
-              className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors flex-shrink-0 self-stretch"
+              className="flex items-center justify-center gap-1 bg-emerald-50 border border-emerald-100 text-emerald-600 p-3 sm:px-5 sm:py-3.5 rounded-2xl sm:text-sm font-semibold hover:bg-emerald-100 transition-colors flex-shrink-0 self-stretch"
               onClick={() => {
                 const selLen = selected.replace(/\s+/g, '').length;
                 const fullText = exercise.correctComponents!.join('');
                 if (selLen < fullText.length) {
-                  // We can't perfectly map to components since FreeTyping is unconstrained, but we can try 
-                  // just using the fullText string length
                   const targetStr = fullText.charAt(selLen);
                   playThaiTTS(targetStr);
                 } else {
@@ -99,7 +92,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
       </div>
 
       {showVirtual && (
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 p-4 bg-slate-100 rounded-2xl w-full border-2 border-slate-200 animate-in fade-in slide-in-from-bottom-4">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 p-5 bg-slate-50/80 backdrop-blur-md rounded-3xl w-full border border-slate-100 animate-in fade-in slide-in-from-bottom-4 shadow-sm">
           {vKeys.map((k, i) => {
             const displayStr = formatCombiningChar(k);
             return (
@@ -107,7 +100,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
                 key={i}
                 onClick={() => handleVKeyClick(k)}
                 disabled={disabled}
-                className="w-12 h-12 sm:w-14 sm:h-14 bg-white border-2 border-b-[4px] border-slate-200 rounded-xl text-2xl sm:text-3xl font-thai text-slate-700 hover:bg-slate-50 active:border-b-2 active:translate-y-[2px] transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-12 h-12 sm:w-14 sm:h-14 bg-white border border-slate-200 shadow-sm rounded-2xl text-2xl sm:text-3xl font-thai text-slate-700 hover:bg-slate-50 hover:border-emerald-200 hover:shadow-md active:scale-95 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {displayStr}
               </button>
@@ -117,7 +110,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
           <button
             onClick={handleBackspace}
             disabled={disabled || selected.length === 0}
-            className="w-12 h-12 sm:w-14 sm:h-14 bg-rose-50 border-2 border-b-[4px] border-rose-200 text-rose-500 rounded-xl hover:bg-rose-100 hover:border-rose-300 active:border-b-2 active:translate-y-[2px] transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-12 h-12 sm:w-14 sm:h-14 bg-rose-50 border border-rose-100 shadow-sm text-rose-500 rounded-2xl hover:bg-rose-100 hover:border-rose-200 hover:shadow-md active:scale-95 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Delete size={20} className="sm:w-6 sm:h-6" />
           </button>

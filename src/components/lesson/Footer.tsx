@@ -2,6 +2,8 @@ import { getTranslation } from "@/hooks/useTranslation";
 import { m as motion, AnimatePresence } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { Exercise, Word } from "@/types";
+import { Button } from "@/components/ui/Button";
+import { Typography } from "@/components/ui/Typography";
 
 interface FooterProps {
   currentExercise: Exercise;
@@ -49,35 +51,35 @@ export default function Footer({
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "100%", opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[128px] py-4 md:py-0 border-t-2 items-center justify-center flex transition-colors duration-300 z-50 ${
+          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[110px] py-4 md:py-0 border-t items-center justify-center flex transition-colors duration-300 z-50 ${
             isChecking
               ? isCorrect
-                ? "bg-emerald-50 border-emerald-200"
-                : "bg-rose-50 border-rose-200 shadow-[0_-10px_40px_rgba(244,63,94,0.1)]"
-              : "bg-white border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]"
+                ? "bg-emerald-50/90 backdrop-blur-md border-emerald-100"
+                : "bg-rose-50/90 backdrop-blur-md border-rose-100 shadow-[0_-10px_40px_rgba(244,63,94,0.05)]"
+              : "bg-white/95 backdrop-blur-md border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]"
           }`}
         >
-          <div className="w-full max-w-2xl px-4 flex sm:flex-row flex-col items-center justify-between gap-4">
+          <div className="w-full max-w-3xl px-6 flex sm:flex-row flex-col items-center justify-between gap-6">
             <div className="flex-1 w-full text-center sm:text-left">
               {isChecking && isCorrect && (
-                <div className="flex items-center justify-center sm:justify-start gap-3 text-emerald-600 font-extrabold text-xl">
-                  <div className="bg-white text-emerald-500 rounded-full p-1">
-                    <Check size={24} strokeWidth={3} />
+                <div className="flex items-center justify-center sm:justify-start gap-3 text-emerald-600 font-bold text-xl">
+                  <div className="bg-emerald-100 text-emerald-600 rounded-full p-1.5">
+                    <Check size={24} strokeWidth={2.5} />
                   </div>
                   {getTranslation('auto.excellent', language)}
                 </div>
               )}
               {isChecking && !isCorrect && (
-                <div className="flex flex-col text-rose-600 font-extrabold text-xl gap-1 items-center sm:items-start">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-white text-rose-500 rounded-full p-1">
-                      <X size={24} strokeWidth={3} />
+                <div className="flex flex-col text-rose-600 gap-1 items-center sm:items-start">
+                  <div className="flex items-center gap-3 font-bold text-xl">
+                    <div className="bg-rose-100 text-rose-600 rounded-full p-1.5">
+                      <X size={24} strokeWidth={2.5} />
                     </div>
                     {getTranslation('auto.incorrect', language)}
                     {currentExercise.type === "writing" &&
                       currentExercise.blindMode &&
                       currentExercise.correctComponents && (
-                        <span className="text-sm font-bold opacity-80 ml-2">
+                        <span className="text-sm font-semibold opacity-80 ml-2">
                           {Math.round(
                             (((selectedAnswer as string[]) || []).filter(
                               (c: string, i: number) =>
@@ -91,7 +93,7 @@ export default function Footer({
                       )}
                     {currentExercise.type === "free-typing" &&
                       typeof selectedAnswer === "string" && (
-                        <span className="text-sm font-bold opacity-80 ml-2">
+                        <span className="text-sm font-semibold opacity-80 ml-2">
                           {Math.round(
                             (1 -
                               (() => {
@@ -133,10 +135,10 @@ export default function Footer({
                         </span>
                       )}
                   </div>
-                  <div className="text-rose-800 text-sm mt-1 uppercase tracking-widest">
+                  <div className="text-rose-800/70 text-xs mt-2 uppercase tracking-widest font-semibold">
                     {getTranslation('auto.correct_answer', language)}
                   </div>
-                  <div className="font-medium font-thai text-xl md:text-2xl mt-1 sm:mt-0">
+                  <div className="font-medium font-thai text-xl md:text-2xl mt-1 text-rose-900">
                     {customCorrectAnswer ? (
                       customCorrectAnswer
                     ) : currentExercise.type === "writing" &&
@@ -181,7 +183,7 @@ export default function Footer({
                             className={
                               cluster.isMatch
                                 ? "text-emerald-600"
-                                : "text-rose-600"
+                                : "text-rose-600 font-bold underline decoration-rose-300 decoration-2 underline-offset-4"
                             }
                           >
                             {cluster.chars}
@@ -189,11 +191,7 @@ export default function Footer({
                         ));
                       })()
                     ) : (
-                      <span
-                        className={`text-rose-900 ${
-                          currentExercise.reverse ? "font-sans" : ""
-                        }`}
-                      >
+                      <span className={currentExercise.reverse ? "font-sans" : ""}>
                         {currentExercise.reverse
                           ? (() => {
                               const correctOpt = (
@@ -214,7 +212,7 @@ export default function Footer({
               )}
             </div>
 
-            <button
+            <Button
               id="next-btn"
               onClick={handleCheck}
               disabled={
@@ -229,22 +227,14 @@ export default function Footer({
                         currentExercise.correctComponents.length
                       : selectedAnswer.length === 0)))
               }
-              className={`w-full sm:w-auto px-12 py-3 rounded-xl border-b-4 font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest disabled:opacity-50 disabled:scale-100 disabled:shadow-none
-                ${
-                  currentExercise.type === "intro"
-                    ? "bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400"
-                    : isChecking
-                      ? isCorrect
-                        ? "bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400"
-                        : "bg-rose-500 border-rose-700 text-white hover:bg-rose-400"
-                      : "bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-400"
-                }
-              `}
+              size="lg"
+              variant={isChecking && !isCorrect ? "danger" : "default"}
+              className="w-full sm:w-auto min-w-[200px] shadow-md hover:shadow-lg text-lg uppercase tracking-wider"
             >
               {currentExercise.type === "intro" || isChecking
                 ? getTranslation('auto.continue', language)
                 : getTranslation('auto.check', language)}
-            </button>
+            </Button>
           </div>
         </motion.footer>
       )}

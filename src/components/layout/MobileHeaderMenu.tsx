@@ -6,6 +6,8 @@ import { useProgressStore } from "@/lib/store";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Star, Flame, Coins, Target, User, Heart, X } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from "@/components/ui/Button";
+import { Typography } from "@/components/ui/Typography";
 
 interface MobileHeaderMenuProps {
   isOpen: boolean;
@@ -27,7 +29,7 @@ export function MobileHeaderMenu({ isOpen, onClose, onOpenQuests }: MobileHeader
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-[100] bg-slate-900/20 backdrop-blur-sm md:hidden"
           />
 
           {/* Bottom Sheet */}
@@ -44,78 +46,81 @@ export function MobileHeaderMenu({ isOpen, onClose, onOpenQuests }: MobileHeader
                 onClose();
               }
             }}
-            className="fixed bottom-0 left-0 right-0 z-[110] bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex flex-col overflow-hidden md:hidden"
+            className="fixed bottom-0 left-0 right-0 z-[110] bg-white/95 backdrop-blur-md rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] flex flex-col overflow-hidden md:hidden border-t border-slate-100"
           >
             {/* Drag Handle */}
-            <div className="w-full flex justify-center py-3 cursor-grab active:cursor-grabbing">
-              <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
+            <div className="w-full flex justify-center py-4 cursor-grab active:cursor-grabbing">
+              <div className="w-12 h-1.5 bg-slate-200/60 rounded-full" />
             </div>
 
-            <div className="px-6 pb-8 flex flex-col gap-6">
+            <div className="px-6 pb-10 flex flex-col gap-8">
               {/* Top Row: Community Heart & Close */}
               <div className="flex justify-between items-center">
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => {
                     onClose();
                     setShowCommunityModal(true);
                   }}
-                  className="flex items-center gap-2 px-4 py-2 bg-rose-50 text-rose-500 rounded-2xl font-extrabold hover:bg-rose-100 transition-colors"
+                  className="gap-2 text-rose-500 hover:text-rose-600 hover:bg-rose-50"
                 >
-                  <Heart size={20} className="fill-rose-500" />
-                  <span>Soutien & Communauté</span>
-                </button>
+                  <Heart size={20} className="fill-rose-500/20" />
+                  Soutien & Communauté
+                </Button>
 
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={onClose}
-                  className="p-2 bg-slate-100 text-slate-400 rounded-full hover:bg-slate-200 hover:text-slate-600 transition-colors"
+                  className="rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100"
                 >
                   <X size={20} strokeWidth={2.5} />
-                </button>
+                </Button>
               </div>
 
               {/* Stats Row */}
               <div className="grid grid-cols-3 gap-3">
-                <div className="flex flex-col items-center justify-center p-3 bg-amber-50 rounded-2xl border-2 border-amber-100">
-                  <Star size={24} className="text-amber-500 fill-amber-500 mb-1" />
-                  <span className="font-extrabold text-slate-800 text-lg">{xp}</span>
-                  <span className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">XP</span>
+                <div className="flex flex-col items-center justify-center p-4 bg-slate-50/80 rounded-3xl">
+                  <Star size={24} className="text-amber-400 fill-amber-400 mb-2" />
+                  <Typography variant="h4" className="text-slate-800">{xp}</Typography>
+                  <Typography variant="small" className="text-slate-400 mt-1 uppercase tracking-wider">XP</Typography>
                 </div>
-                <div className="flex flex-col items-center justify-center p-3 bg-yellow-50 rounded-2xl border-2 border-yellow-100">
-                  <Coins size={24} className="text-yellow-500 fill-yellow-500 mb-1" />
-                  <span className="font-extrabold text-slate-800 text-lg">{goldCoins || 0}</span>
-                  <span className="text-[10px] font-bold text-yellow-600 uppercase tracking-wider">Pièces</span>
+                <div className="flex flex-col items-center justify-center p-4 bg-slate-50/80 rounded-3xl">
+                  <Coins size={24} className="text-yellow-400 fill-yellow-400 mb-2" />
+                  <Typography variant="h4" className="text-slate-800">{goldCoins || 0}</Typography>
+                  <Typography variant="small" className="text-slate-400 mt-1 uppercase tracking-wider">Pièces</Typography>
                 </div>
-                <div className="flex flex-col items-center justify-center p-3 bg-orange-50 rounded-2xl border-2 border-orange-100">
-                  <Flame size={24} className={`${currentStreak > 0 ? 'text-orange-500 fill-orange-500' : 'text-slate-300'} mb-1`} />
-                  <span className={`font-extrabold text-lg ${currentStreak > 0 ? 'text-slate-800' : 'text-slate-400'}`}>{currentStreak}</span>
-                  <span className={`text-[10px] font-bold uppercase tracking-wider ${currentStreak > 0 ? 'text-orange-600' : 'text-slate-400'}`}>Série</span>
+                <div className="flex flex-col items-center justify-center p-4 bg-slate-50/80 rounded-3xl">
+                  <Flame size={24} className={`${currentStreak > 0 ? 'text-orange-400 fill-orange-400' : 'text-slate-300'} mb-2`} />
+                  <Typography variant="h4" className={currentStreak > 0 ? 'text-slate-800' : 'text-slate-400'}>{currentStreak}</Typography>
+                  <Typography variant="small" className={`mt-1 uppercase tracking-wider ${currentStreak > 0 ? 'text-slate-500' : 'text-slate-400'}`}>Série</Typography>
                 </div>
               </div>
 
               {/* Action Buttons */}
               <div className="flex flex-col gap-3">
-                <button
+                <Button
+                  variant="secondary"
+                  size="lg"
                   onClick={() => {
                     onClose();
                     onOpenQuests();
                   }}
-                  className="flex items-center gap-4 w-full p-4 bg-emerald-50 text-emerald-600 rounded-2xl hover:bg-emerald-100 transition-colors border border-emerald-100"
+                  className="w-full justify-start gap-4 px-2"
                 >
-                  <div className="bg-emerald-500 text-white p-2 rounded-xl">
+                  <div className="bg-white text-emerald-500 p-2.5 rounded-xl shadow-sm ml-1">
                     <Target size={20} strokeWidth={2.5} />
                   </div>
-                  <span className="font-extrabold text-lg">Quêtes du jour</span>
-                </button>
+                  Quêtes du jour
+                </Button>
 
-                <Link
-                  href="/profile"
-                  onClick={onClose}
-                  className="flex items-center gap-4 w-full p-4 bg-indigo-50 text-indigo-600 rounded-2xl hover:bg-indigo-100 transition-colors border border-indigo-100"
-                >
-                  <div className="bg-indigo-500 text-white p-2 rounded-xl">
-                    <User size={20} strokeWidth={2.5} />
-                  </div>
-                  <span className="font-extrabold text-lg">Mon Profil</span>
+                <Link href="/profile" onClick={onClose} className="w-full">
+                  <Button variant="outline" size="lg" className="w-full justify-start gap-4 px-2 border-slate-100 bg-slate-50/50">
+                    <div className="bg-white text-indigo-500 p-2.5 rounded-xl shadow-sm ml-1 border border-slate-100">
+                      <User size={20} strokeWidth={2.5} />
+                    </div>
+                    <span className="text-slate-700">Mon Profil</span>
+                  </Button>
                 </Link>
               </div>
             </div>
