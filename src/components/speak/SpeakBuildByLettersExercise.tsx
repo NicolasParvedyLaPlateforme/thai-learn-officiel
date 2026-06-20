@@ -11,7 +11,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
 import { getWritingClustersAndGroups } from "@/lib/exercise-generator";
-import { THAI_ALPHABET, AlphabetItem } from "@/lib/alphabet-data";
+import { THAI_ALPHABET, AlphabetItem } from "@/data/alphabet-data";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 
 const normalizeThai = (str: string) => {

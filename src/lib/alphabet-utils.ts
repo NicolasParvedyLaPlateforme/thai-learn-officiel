@@ -1,4 +1,4 @@
-import { THAI_ALPHABET, AlphabetItem } from './alphabet-data';
+import { THAI_ALPHABET, AlphabetItem } from '@/data/alphabet-data';
 import { Word, Phrase } from "@/types";
 import { getLocalizedField } from "@/hooks/useTranslation";
 

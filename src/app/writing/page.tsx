@@ -8,7 +8,7 @@ import { Exercise, CourseData, Word } from "@/types";
 import { X, Check, Volume2 } from 'lucide-react';
 import { playThaiTTS } from "@/lib/tts";
 
-import { getCharacterHint } from "@/lib/phonetic-mapper";
+import { getCharacterHint } from "@/data/phonetic-mapper";
 import VirtualKeyboard from "./components/VirtualKeyboard";
 import { SentenceWithHints } from "@/components/learn/Hints";
 import { formatCombiningChar } from "@/lib/alphabet-utils";

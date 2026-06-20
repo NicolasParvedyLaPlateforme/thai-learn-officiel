@@ -6,7 +6,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from "@/lib/store";
 import { getAlphabetLessons, AlphabetExercise, AlphabetLessonDef, formatCombiningChar } from "@/lib/alphabet-utils";
-import { AlphabetItem } from "@/lib/alphabet-data";
+import { AlphabetItem } from "@/data/alphabet-data";
 import { getAlphabetExercisesServer } from "@/actions/course";
 import { X, Check, Star, Volume2, HelpCircle, Info, RotateCcw } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from "@/lib/tts";

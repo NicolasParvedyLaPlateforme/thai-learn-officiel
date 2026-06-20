@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins, Mic, ChevronUp, Pencil, RotateCcw, GraduationCap } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
-import { useGlobalSuggestedLesson } from "@/lib/useGlobalSuggestedLesson";
+import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 import { useSession, signOut } from 'next-auth/react';
 import { useTranslation, getTranslation } from "@/hooks/useTranslation";
 

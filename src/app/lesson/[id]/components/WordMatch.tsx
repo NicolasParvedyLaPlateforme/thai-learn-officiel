@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { Exercise } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
-import { THAI_ALPHABET } from "@/lib/alphabet-data";
+import { THAI_ALPHABET } from "@/data/alphabet-data";
 import { Volume2, Image as ImageIcon, Type, Sparkles } from 'lucide-react';
 
 interface Props {

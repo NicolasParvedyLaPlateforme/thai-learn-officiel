@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useProgressStore } from "@/lib/store";
 import { getAlphabetLessons } from "@/lib/alphabet-utils";
 
-import { useGlobalSuggestedLesson } from "@/lib/useGlobalSuggestedLesson";
+import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 import { DesktopLessonLevelsView } from "@/components/learn/DesktopLessonLevelsView";
 import ALPHABET_BASE_UNITS from "@/data/alphabet_units.json";
 import AlphabetDesktopTimeline from "@/components/alphabet/AlphabetDesktopTimeline";

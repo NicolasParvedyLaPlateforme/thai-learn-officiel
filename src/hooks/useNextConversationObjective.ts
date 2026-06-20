@@ -1,6 +1,6 @@
-import { useProgressStore } from './store';
+import { useProgressStore } from '@/lib/store';
 import conversationsData from "@/data/conversations.json";
-import { getRequiredLessonsForConv, RequiredVocabLesson } from './vocabulary-utils';
+import { getRequiredLessonsForConv, RequiredVocabLesson } from '@/lib/vocabulary-utils';
 
 export type ConversationObjective = 
   | { type: 'vocab', conversationTitle: string, conversationTitleEn: string | undefined, lessonId: string, lessonTitle: string, lessonTitleEn: string }
@@ -15,7 +15,7 @@ export function useNextConversationObjective(): ConversationObjective {
     if (highestCompleted < 3) {
       // This is the first conversation that is not completely finished
       const vocabReqs = getRequiredLessonsForConv(conv.dialogs as any);
-      const missingVocabReqs = vocabReqs.filter(req => (lessonLevels[req.lessonId] || 0) < 1);
+      const missingVocabReqs = vocabReqs.filter((req: any) => (lessonLevels[req.lessonId] || 0) < 1);
 
       if (missingVocabReqs.length > 0) {
         // Find the first missing vocabulary lesson requirement

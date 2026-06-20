@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { BookOpen, MessageCircle, Brain, Search, ChevronUp, Pencil, Mic, Wand2, GraduationCap, RotateCcw } from 'lucide-react';
 import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from "@/lib/store";
-import { useGlobalSuggestedLesson } from "@/lib/useGlobalSuggestedLesson";
+import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 import { useTranslation, getTranslation } from "@/hooks/useTranslation";
 
 export default function BottomNav() {

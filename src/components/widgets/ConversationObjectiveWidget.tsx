@@ -2,7 +2,7 @@ import { getTranslation } from "@/hooks/useTranslation";
 import React from 'react';
 import Link from 'next/link';
 import { useProgressStore } from "@/lib/store";
-import { useNextConversationObjective } from "@/lib/useNextConversationObjective";
+import { useNextConversationObjective } from "@/hooks/useNextConversationObjective";
 import { Target, MessageCircle, Map, Play, BookOpen, ChevronRight } from 'lucide-react';
 
 export function ConversationObjectiveWidget() {

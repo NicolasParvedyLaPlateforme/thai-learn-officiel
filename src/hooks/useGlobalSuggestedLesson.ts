@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
-import { useProgressStore } from './store';
-import { getAlphabetLessons } from './alphabet-utils';
+import { useProgressStore } from '@/lib/store';
+import { getAlphabetLessons } from '@/lib/alphabet-utils';
 import { getLightweightLessons } from "@/actions/course";
 
 export type SuggestedLesson = {

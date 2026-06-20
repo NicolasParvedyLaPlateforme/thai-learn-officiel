@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { useProgressStore } from "@/lib/store";
 import BASE_UNITS from "@/data/speak_units.json";
-import { useGlobalSuggestedLesson } from "@/lib/useGlobalSuggestedLesson";
+import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 
 import dynamic from 'next/dynamic';
 

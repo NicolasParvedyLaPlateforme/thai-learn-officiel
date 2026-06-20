@@ -1,7 +1,7 @@
 import { getTranslation } from "@/hooks/useTranslation";
 import { Exercise } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
-import { THAI_ALPHABET } from "@/lib/alphabet-data";
+import { THAI_ALPHABET } from "@/data/alphabet-data";
 import React, { useState } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
