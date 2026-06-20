@@ -10,7 +10,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
-import { getWritingClustersAndGroups } from "@/lib/exercise-generator";
+import { getWritingClustersAndGroups } from "@/lib/generators";
 import { THAI_ALPHABET, AlphabetItem } from "@/data/alphabet-data";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 

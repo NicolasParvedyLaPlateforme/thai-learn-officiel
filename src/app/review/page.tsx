@@ -4,7 +4,7 @@ import { getTranslation } from "@/hooks/useTranslation";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
-import type { ReviewOptions } from "@/lib/exercise-generator";
+import type { ReviewOptions } from "@/lib/generators";
 import { Exercise, CourseData, Word } from "@/types";
 import { X, Check, Settings, Play } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from "@/lib/tts";

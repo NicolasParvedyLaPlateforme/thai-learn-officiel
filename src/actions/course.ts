@@ -1,6 +1,6 @@
 'use server';
 
-import { generateExercises, generateEndlessReviewExercises, generateWritingExercises, generateEndlessPairMatching } from "@/lib/exercise-generator";
+import { generateExercises, generateEndlessReviewExercises, generateWritingExercises, generateEndlessPairMatching } from "@/lib/generators";
 import { generateAlphabetExercises, getAlphabetLessons } from "@/lib/alphabet-utils";
 import courseData from "@/data/course.json";
 import { CourseData, Word, Phrase } from "@/types";
