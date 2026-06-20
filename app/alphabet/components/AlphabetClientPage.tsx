@@ -64,9 +64,9 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                 <Drawer.Content className="bg-white flex flex-col rounded-t-3xl mt-24 fixed bottom-0 left-0 right-0 z-[120] max-h-[85vh] outline-none">
                   <div className="p-4 bg-white rounded-t-3xl shrink-0 flex items-center justify-center sticky top-0 z-10 border-b border-slate-100">
                     <div className="w-12 h-1.5 shrink-0 rounded-full bg-slate-200 mb-6 absolute top-3" />
-                    <h2 className="text-xl font-extrabold text-slate-800 mt-2">
+                    <Drawer.Title className="text-xl font-extrabold text-slate-800 mt-2">
                       {getTranslation('units.title', language)}
-                    </h2>
+                    </Drawer.Title>
                   </div>
                   <div className="p-6 flex flex-col gap-4 overflow-y-auto pb-12 hide-scrollbar">
                     {units.map((unit: any, index: number) => {
