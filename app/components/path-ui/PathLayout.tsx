@@ -414,6 +414,7 @@ export default function PathLayout({
               lessonStars={lessonStars}
               resetLessonLevel={resetLessonLevel}
               reviewStats={reviewStats}
+              questsCategory={pathType}
             />
           </div>
         )}
