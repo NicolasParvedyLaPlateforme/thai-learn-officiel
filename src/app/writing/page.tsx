@@ -16,18 +16,13 @@ import { getWritingExercisesServer, getDictionaryForExerciseServer, getPhrasesFo
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { m as motion, AnimatePresence } from "motion/react";
 import Footer from "@/components/lesson/Footer";
+import { useLessonEngine } from "@/hooks/useLessonEngine";
 
 export default function WritingPage() {
   const router = useRouter();
   const { completedLessons, unlockedLessons, addXp, language, _hasHydrated, writingConfig, showRomanization, setShowRomanization, setExerciseRunning } = useProgressStore();
 
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Interaction State
-  const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
-  const [isChecking, setIsChecking] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [initialExercises, setInitialExercises] = useState<Exercise[]>([]);
   const [showExerciseUI, setShowExerciseUI] = useState(false);
 
   const [mounted, setMounted] = useState(false);
@@ -59,7 +54,7 @@ export default function WritingPage() {
 
         if (targetLessons.length > 0) {
           getWritingExercisesServer(targetLessons, language, urlLessonId ? null : writingConfig.selectedWordIds).then(generated => {
-            setExercises(generated);
+            setInitialExercises(generated);
           });
         }
         initialized = true;
@@ -73,6 +68,47 @@ export default function WritingPage() {
     });
     return () => clearTimeout(timer);
   }, [completedLessons, language, _hasHydrated, unlockedLessons, writingConfig]);
+
+  const {
+    exercises,
+    currentExercise,
+    progress,
+    isChecking,
+    isCorrect,
+    selectedAnswer: engineSelectedAnswer,
+    setSelectedAnswer,
+    handleCheck,
+  } = useLessonEngine<Exercise, string[]>({
+    initialExercises,
+    isExerciseIntroOrReview: () => false,
+    evaluateAnswer: (ex, answerToCheck) => {
+      const builtValue = answerToCheck.join('').replace(/\s+/g, '');
+      const targetValue = ex.answer?.replace(/\s+/g, '') || '';
+      return builtValue === targetValue;
+    },
+    onComplete: () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLessonId = urlParams.get('lessonId');
+
+      let targetLessons = completedLessons;
+      if (urlLessonId) {
+        targetLessons = [urlLessonId];
+      } else if (writingConfig.lessonId !== 'all') {
+        targetLessons = [writingConfig.lessonId];
+      }
+      getWritingExercisesServer(targetLessons, language, urlLessonId ? null : writingConfig.selectedWordIds).then(generated => {
+        setInitialExercises(generated);
+      });
+    },
+    onCorrect: (ex) => {
+      addXp(3);
+      if (ex.answer) playThaiTTS(ex.answer);
+    },
+    onIncorrect: (ex) => {
+      if (ex.answer) playThaiTTS(ex.answer);
+    },
+    retryIncorrect: true,
+  });
 
   if (!mounted) return null;
 
@@ -104,65 +140,15 @@ export default function WritingPage() {
     );
   }
 
+
+
+  const selectedAnswer = engineSelectedAnswer || [];
+
   const isDataLoaded = mounted && exercises.length > 0;
 
   if (!isDataLoaded && !showExerciseUI) {
     // prevent early render
   }
-
-  const currentExercise = exercises[currentIndex] || null;
-  // Loop back or refill if needed
-  const progress = exercises.length > 0 ? ((currentIndex / exercises.length) * 100) : 0;
-
-  const handleCheck = (overrideAnswer?: string[]) => {
-    if (!currentExercise) return;
-    if (isChecking) {
-      if (isCorrect) {
-        addXp(3);
-
-        if (currentIndex >= exercises.length - 1) {
-          const urlParams = new URLSearchParams(window.location.search);
-          const urlLessonId = urlParams.get('lessonId');
-
-          let targetLessons = completedLessons;
-          if (urlLessonId) {
-            targetLessons = [urlLessonId];
-          } else if (writingConfig.lessonId !== 'all') {
-            targetLessons = [writingConfig.lessonId];
-          }
-          getWritingExercisesServer(targetLessons, language, urlLessonId ? null : writingConfig.selectedWordIds).then(generated => {
-            setExercises(generated);
-            setCurrentIndex(0);
-          });
-        } else {
-          setCurrentIndex(currentIndex + 1);
-        }
-
-        setIsChecking(false);
-        setIsCorrect(null);
-        setSelectedAnswer([]);
-      } else {
-        // If wrong, re-add to end
-        setExercises([...exercises, currentExercise]);
-        setCurrentIndex(currentIndex + 1);
-        setIsChecking(false);
-        setIsCorrect(null);
-        setSelectedAnswer([]);
-      }
-      return;
-    }
-
-    const answerToCheck = overrideAnswer || selectedAnswer;
-    if (answerToCheck.length === 0) return;
-
-    const builtValue = answerToCheck.join('').replace(/\s+/g, '');
-    const targetValue = currentExercise.answer.replace(/\s+/g, '');
-    const correct = builtValue === targetValue;
-
-    setIsCorrect(correct);
-    setIsChecking(true);
-    playThaiTTS(currentExercise.answer);
-  };
 
   const nextCharIdx = selectedAnswer.length;
   const charHint = currentExercise?.correctComponents && nextCharIdx < currentExercise.correctComponents.length
