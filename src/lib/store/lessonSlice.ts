@@ -1,5 +1,7 @@
 import { StateCreator } from 'zustand';
 import { ProgressState } from "./types";
+import { calculateExpectedXp } from '../xp-utils';
+import { calculateLessonLevelAndStars } from '../lesson-utils';
 
 const getLocalDateString = (date: Date = new Date()) => {
   const y = date.getFullYear();
@@ -122,85 +124,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     const state = get();
     const today = getLocalDateString();
     const completedToday = state.questsDate === today ? (state.completedToday || []) : [];
-    let isFirstTime = false;
-    let xp = 0;
-    let maxXp = 0;
-    let key = '';
-
-    if (lessonId.startsWith('detective_')) {
-       key = lessonId;
-       isFirstTime = !completedToday.includes(key);
-       xp = isFirstTime ? 50 : 20;
-       maxXp = 50;
-    } else if (lessonId.startsWith('speak_')) {
-       key = `${lessonId}_level-${levelIndex}`;
-       if (isPart) {
-          if (partIndex !== null && partIndex !== undefined) {
-             key += `_part_${partIndex}`;
-          } else {
-             key += `_part`;
-          }
-       }
-       isFirstTime = !completedToday.includes(key);
-       if (isFullLongLevel) {
-          xp = isFirstTime ? 500 : 100;
-          maxXp = 500;
-       } else if (isPart) {
-          xp = isFirstTime ? 50 : 10;
-          maxXp = 50;
-       } else {
-          if (levelIndex === 0) { xp = isFirstTime ? 50 : 15; maxXp = 50; }
-          else if (levelIndex === 1) { xp = isFirstTime ? 100 : 30; maxXp = 100; }
-          else if (levelIndex === 2) { xp = isFirstTime ? 100 : 30; maxXp = 100; }
-          else if (levelIndex === 3) { xp = isFirstTime ? 150 : 45; maxXp = 150; }
-          else if (levelIndex === 4) { xp = isFirstTime ? 300 : 90; maxXp = 300; }
-          else { xp = isFirstTime ? 50 : 15; maxXp = 50; }
-       }
-    } else if (levelIndex === 10) {
-       key = `learn_${lessonId}_level-10`;
-       isFirstTime = !completedToday.includes(key);
-       xp = isFirstTime ? 1000 : 200;
-       maxXp = 1000;
-    } else if (isBilan) {
-       key = `learn_${lessonId}_level-${levelIndex}`;
-       isFirstTime = !completedToday.includes(key);
-       xp = isFirstTime ? 50 : 25;
-       maxXp = 50;
-    } else {
-       const type = (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) ? 'alphabet' : 'learn';
-       key = `${type}_${lessonId}_level-${levelIndex}`;
-       if (isPart) {
-          if (partIndex !== null && partIndex !== undefined) {
-             key += `_part_${partIndex}`;
-          } else {
-             key += `_part`;
-          }
-       }
-       isFirstTime = !completedToday.includes(key);
-       if (type === 'learn') {
-          if (isPart) {
-             if (levelIndex <= 6) { xp = isFirstTime ? 10 : 5; maxXp = 10; }
-             else if (levelIndex === 7) { xp = isFirstTime ? 20 : 5; maxXp = 20; }
-             else if (levelIndex === 8) { xp = isFirstTime ? 30 : 5; maxXp = 30; }
-             else if (levelIndex === 9) { xp = isFirstTime ? 50 : 5; maxXp = 50; }
-             else { xp = isFirstTime ? 10 : 5; maxXp = 10; }
-          } else {
-             if (levelIndex <= 6) { xp = isFirstTime ? 30 : 5; maxXp = 30; }
-             else if (levelIndex === 7) { xp = isFirstTime ? 50 : 5; maxXp = 50; }
-             else if (levelIndex === 8) { xp = isFirstTime ? 100 : 25; maxXp = 100; }
-             else if (levelIndex === 9) { xp = isFirstTime ? 300 : 50; maxXp = 300; }
-             else { xp = isFirstTime ? 30 : 5; maxXp = 30; }
-          }
-       } else {
-          if (isPart) {
-             xp = isFirstTime ? 10 : 5; maxXp = 10;
-          } else {
-             xp = isFirstTime ? 30 : 5; maxXp = 30;
-          }
-       }
-    }
-
-    return { xp, maxXp, isFirstTime, key };
+    return calculateExpectedXp(lessonId, levelIndex, isBilan, isPart, isFullLongLevel, partIndex, completedToday);
   },
 
   completeLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars: number = 3, isBilan: boolean = false, isFromParts: boolean = false) => {
@@ -216,20 +140,9 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, actualPlayedLevel, isBilan, false, isFullLongLevel);
     const finalXp = lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp);
 
+    const { newLevel, newStars } = calculateLessonLevelAndStars(currentLevel, playedLevel, earnedStars, state.lessonStars[lessonId]);
+
     set((state: ProgressState) => {
-      let newLevel = currentLevel;
-      if (playedLevel !== undefined) {
-        if (playedLevel === currentLevel) {
-           newLevel = Math.min(currentLevel + 1, 10);
-        }
-      } else {
-         newLevel = Math.min(currentLevel + 1, 10);
-      }
-      
-      const currentStars = state.lessonStars[lessonId] ? [...state.lessonStars[lessonId]] : Array(10).fill(0);
-      if (playedLevel !== undefined && playedLevel >= 0 && playedLevel < 10) {
-         currentStars[playedLevel] = Math.max(currentStars[playedLevel], earnedStars);
-      }
       
       let type: 'learn' | 'alphabet' = 'learn';
       if (lessonId.startsWith('alphabet_') || lessonId.startsWith('alpha-')) {
@@ -256,7 +169,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
         },
         lessonStars: {
           ...state.lessonStars,
-          [lessonId]: currentStars
+          [lessonId]: newStars
         },
         xp: state.xp + finalXp,
         lastPlayedLessonId: lessonId,
@@ -349,20 +262,9 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
        finalXp = fallbackXp;
     }
 
+    const { newLevel, newStars } = calculateLessonLevelAndStars(currentLevel, playedLevel, earnedStars, state.speakLessonStars[lessonId]);
+
     set((state: ProgressState) => {
-      let newLevel = currentLevel;
-      if (playedLevel !== undefined) {
-        if (playedLevel === currentLevel) {
-           newLevel = Math.min(currentLevel + 1, 10);
-        }
-      } else {
-         newLevel = Math.min(currentLevel + 1, 10);
-      }
-      
-      const currentStars = state.speakLessonStars[lessonId] ? [...state.speakLessonStars[lessonId]] : Array(10).fill(0);
-      if (playedLevel !== undefined && playedLevel >= 0 && playedLevel < 10) {
-         currentStars[playedLevel] = Math.max(currentStars[playedLevel], earnedStars);
-      }
 
       const newCompletedToday = state.completedToday || [];
       const updatedCompletedToday = isFirstTime ? [...newCompletedToday, key] : newCompletedToday;
@@ -378,7 +280,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
         },
         speakLessonStars: {
           ...state.speakLessonStars,
-          [lessonId]: currentStars
+          [lessonId]: newStars
         },
         xp: state.xp + finalXp,
         lastPlayedLessonId: lessonId,

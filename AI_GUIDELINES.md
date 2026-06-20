@@ -96,7 +96,7 @@ L'application est entièrement multilingue via le système de locales.
 - Si une idée d'amélioration pertinente me vient à l'esprit, je dois la *proposer* d'abord.
 
 ### 4. Architecture & Performances ⚡
-- **Modulatité (Petits composants) :** Un composant React ne devrait idéalement pas dépasser 300-400 lignes. S'il grossit, diviser le visuel en sous-composants "bêtes" (ex: `src/components/learn/`) tout en gardant la logique d'état complexe dans le parent.
+- **Modulatité et Fichiers courts :** Un fichier (composant React ou store Zustand) ne doit idéalement pas dépasser 300 lignes. S'il grossit, diviser le visuel en sous-composants "bêtes". La logique métier complexe (calculs d'XP, montées de niveau) doit systématiquement être extraite dans `src/lib/` sous forme de fonctions pures (ex: `xp-utils.ts`), laissant le store Zustand s'occuper uniquement de la sauvegarde de l'état (setters purs).
 - **Lazy Loading (next/dynamic) :** Toutes les Modales, Tiroirs (Drawers) et composants lourds non visibles au chargement initial doivent **impérativement** être importés via `next/dynamic({ ssr: false })`. Cela est critique pour réduire la consommation de RAM sur mobile et alléger le bundle de `layout.tsx`.
   - **Exception (Mode Hors-ligne) :** Les composants d'exercices au sein d'une leçon (`WordMatch`, `SentenceBuilder`, etc.) doivent utiliser des imports **statiques** et non dynamiques. Cela garantit qu'une perte de connexion réseau au milieu d'une leçon ne provoque pas de crash (`ChunkLoadError`).
 
