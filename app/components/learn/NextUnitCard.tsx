@@ -10,6 +10,8 @@ interface NextUnitCardProps {
   isMobile?: boolean;
 }
 
+import { ChevronsDown } from 'lucide-react';
+
 export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSelect, isMobile = false }: NextUnitCardProps) {
   if (!nextUnit) return null;
 
@@ -18,9 +20,17 @@ export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSele
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className={`w-full bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mt-8 mb-16 flex ${isMobile ? 'flex-col-reverse' : 'flex-row'} items-stretch`}
+      className={`relative w-full mt-8 mb-16 group cursor-pointer`}
+      onClick={() => handleUnitSelect(nextUnitIndex)}
     >
-      {/* Content Side */}
+      {/* Premium Anchor Badge */}
+      <div className={`absolute ${isMobile ? '-top-6' : '-top-8'} ${isMobile ? 'left-[1.25rem] sm:left-[1.5rem]' : 'left-1/2'} -translate-x-1/2 w-12 h-12 md:w-16 md:h-16 rounded-full ${nextUnit.colorClass || 'bg-emerald-500'} border-[4px] md:border-[6px] border-white shadow-xl flex items-center justify-center z-30 transition-transform duration-300 group-hover:scale-110 group-active:scale-95`}>
+        <div className="absolute inset-0 rounded-full bg-white/20 animate-pulse"></div>
+        <ChevronsDown size={isMobile ? 24 : 32} className="text-white stroke-[3] relative z-10 animate-bounce" />
+      </div>
+
+      <div className={`w-full h-full bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden flex ${isMobile ? 'flex-col-reverse' : 'flex-row'} items-stretch transition-shadow duration-300 group-hover:shadow-lg`}>
+        {/* Content Side */}
       <div className={`flex flex-col justify-center p-8 sm:p-10 ${isMobile ? 'w-full' : 'w-1/2'} gap-4 z-10 bg-white`}>
         <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-indigo-500">
           {getTranslation('auto.go_to_next_unit', language) || "Aller à l'unité suivante"}
@@ -49,6 +59,7 @@ export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSele
          ) : (
            <div className={`w-32 h-32 rounded-full ${nextUnit.colorClass || 'bg-emerald-500'} opacity-20`} />
          )}
+      </div>
       </div>
     </motion.div>
   );
