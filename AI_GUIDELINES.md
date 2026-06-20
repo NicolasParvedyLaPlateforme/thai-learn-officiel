@@ -48,14 +48,14 @@ L'application est divisée en sections principales, chacune accessible via son U
 
 ### 1. Fichiers de données (Intouchables 🚫)
 Les fichiers JSON suivants situés dans `app/data/` sont formellement interdits de modification par moi-même (sauf autorisation EXPLICITE de l'utilisateur). Ces fichiers sont gérés automatiquement par le CMS de l'utilisateur.
-- `app/data/course.json`
-- `app/data/emoji_mapping.json` (et dérivés d'emojis)
-- `app/data/units.json` (et dérivés `alphabet_units.json`, `conversation_units.json`)
-- `app/data/conversations.json`
+- `src/data/course.json`
+- `src/data/emoji_mapping.json` (et dérivés d'emojis)
+- `src/data/units.json` (et dérivés `alphabet_units.json`, `conversation_units.json`)
+- `src/data/conversations.json`
 
 ### 2. Multilinguisme & Traduction (⚠️ TRÈS IMPORTANT 🌍)
 L'application est entièrement multilingue via le système de locales.
-- **Règle d'or :** Si j'ajoute un bouton, un texte, une infobulle ou tout élément d'interface utilisateur, **je DOIS systématiquement le traduire** dans les fichiers JSON du dossier `app/locales/` (`fr.json`, `en.json`, `de.json`, `es.json`, `it.json`). Penser impérativement à mettre à jour **tous** ces fichiers.
+- **Règle d'or :** Si j'ajoute un bouton, un texte, une infobulle ou tout élément d'interface utilisateur, **je DOIS systématiquement le traduire** dans les fichiers JSON du dossier `src/locales/` (`fr.json`, `en.json`, `de.json`, `es.json`, `it.json`). Penser impérativement à mettre à jour **tous** ces fichiers.
 - **Aucun texte en dur ou condition "bricolée" :** Ne JAMAIS laisser de texte en dur (ex: `<div>Bonjour</div>`) et ne JAMAIS utiliser de conditions simplistes de type `language === 'en' ? 'Yes' : 'Oui'` pour court-circuiter le système.
 - **Pour l'UI statique** : Je dois utiliser le hook `useTranslation` ou la fonction `getTranslation` :
   ```tsx
@@ -80,15 +80,15 @@ L'application est entièrement multilingue via le système de locales.
 - Si une idée d'amélioration pertinente me vient à l'esprit, je dois la *proposer* d'abord.
 
 ### 4. Architecture & Performances ⚡
-- **Modulatité (Petits composants) :** Un composant React ne devrait idéalement pas dépasser 300-400 lignes. S'il grossit, diviser le visuel en sous-composants "bêtes" (ex: `app/components/learn/`) tout en gardant la logique d'état complexe dans le parent.
+- **Modulatité (Petits composants) :** Un composant React ne devrait idéalement pas dépasser 300-400 lignes. S'il grossit, diviser le visuel en sous-composants "bêtes" (ex: `src/components/learn/`) tout en gardant la logique d'état complexe dans le parent.
 - **Lazy Loading (next/dynamic) :** Toutes les Modales, Tiroirs (Drawers) et composants lourds non visibles au chargement initial doivent **impérativement** être importés via `next/dynamic({ ssr: false })`. Cela est critique pour réduire la consommation de RAM sur mobile et alléger le bundle de `layout.tsx`.
   - **Exception (Mode Hors-ligne) :** Les composants d'exercices au sein d'une leçon (`WordMatch`, `SentenceBuilder`, etc.) doivent utiliser des imports **statiques** et non dynamiques. Cela garantit qu'une perte de connexion réseau au milieu d'une leçon ne provoque pas de crash (`ChunkLoadError`).
 
 ---
 
-## 🛠️ Types et Modèles de Données (`app/types.ts` & Prisma)
+## 🛠️ Types et Modèles de Données (`src/types.ts` & Prisma)
 
-Pour comprendre la structure des leçons et exercices, il faut se référer à `app/types.ts`.
+Pour comprendre la structure des leçons et exercices, il faut se référer à `src/types.ts`.
 - **`Word`** : Unité de base (id, th, fr, en, phonetic, imageUrl).
 - **`Phrase`** : Unité composée de mots (contient `components` qui est un tableau d'ids de `Word`).
 - **`Lesson`** : Contient une liste de mots et de phrases.
