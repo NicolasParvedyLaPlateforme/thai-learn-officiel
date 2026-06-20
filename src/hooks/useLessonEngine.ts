@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 
 export interface UseLessonEngineOptions<TExercise> {
   initialExercises: TExercise[];
+  initialIndex?: number;
+  initialMistakes?: number;
   isExerciseIntroOrReview: (exercise: TExercise) => boolean;
   evaluateAnswer: (exercise: TExercise, answer: any) => boolean;
   onComplete: (mistakes: number) => void;
@@ -15,6 +17,8 @@ export interface UseLessonEngineOptions<TExercise> {
 
 export function useLessonEngine<TExercise, TAnswer = any>({
   initialExercises,
+  initialIndex = 0,
+  initialMistakes = 0,
   isExerciseIntroOrReview,
   evaluateAnswer,
   onComplete,
@@ -37,15 +41,15 @@ export function useLessonEngine<TExercise, TAnswer = any>({
   useEffect(() => {
     if (initialExercises.length > 0) {
       setExercises(initialExercises);
-      setCurrentIndex(0);
+      setCurrentIndex(initialIndex);
       setIsChecking(false);
       setIsCorrect(null);
       setIsFinished(false);
-      setMistakes(0);
+      setMistakes(initialMistakes);
       setSelectedAnswer(null);
       setIsExiting(false);
     }
-  }, [initialExercises]);
+  }, [initialExercises, initialIndex, initialMistakes]);
 
   const currentExercise = exercises.length > 0 && currentIndex < exercises.length ? exercises[currentIndex] : null;
   const progress = exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0;
@@ -128,7 +132,9 @@ export function useLessonEngine<TExercise, TAnswer = any>({
     isChecking,
     isCorrect,
     isFinished,
+    setIsFinished,
     mistakes,
+    setMistakes,
     selectedAnswer,
     setSelectedAnswer,
     isExiting,

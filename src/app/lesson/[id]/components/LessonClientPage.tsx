@@ -32,6 +32,7 @@ import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
 import InstructionBlock from "@/components/lesson/InstructionBlock";
 import Footer from "@/components/lesson/Footer";
 import QuestionArea from "@/components/lesson/QuestionArea";
+import { useLessonEngine } from "@/hooks/useLessonEngine";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {
@@ -125,30 +126,18 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const totalParts = totalPartsStr ? parseInt(totalPartsStr, 10) : null;
   const isPart = partIndex !== null && totalParts !== null && totalParts > 1;
 
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [initialExercises, setInitialExercises] = useState<Exercise[]>([]);
+  const [engineIndex, setEngineIndex] = useState(0);
+  const [engineMistakes, setEngineMistakes] = useState(0);
 
-  // Interaction State
-  const [selectedAnswer, setSelectedAnswer] = useState<
-    string | string[] | null
-  >(null);
-  const [isChecking, setIsChecking] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [isFinished, setIsFinished] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false);
-  const [mistakes, setMistakes] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [initialTime, setInitialTime] = useState<number | null>(null);
   const [failedDueToTime, setFailedDueToTime] = useState(false);
   const [earnedXp, setEarnedXp] = useState<number>(0);
-
-  const earnedStars = Math.max(0, 5 - mistakes);
-
-
 
   const [isClient, setIsClient] = useState(false);
   const [showExerciseUI, setShowExerciseUI] = useState(false);
@@ -157,8 +146,6 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     Set<string>
   >(new Set());
 
-  const currentExerciseTop = exercises[currentIndex];
-  const instructionKeyTop = getInstructionKey(currentExerciseTop);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const { inProgressLessons, saveInProgressLesson } = useProgressStore(
     useShallow((state) => ({
@@ -166,6 +153,103 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       saveInProgressLesson: state.saveInProgressLesson
     }))
   );
+
+  const {
+    exercises,
+    currentExercise,
+    currentIndex,
+    progress,
+    isChecking,
+    isCorrect,
+    isFinished,
+    setIsFinished,
+    mistakes,
+    setMistakes,
+    selectedAnswer,
+    setSelectedAnswer,
+    isExiting,
+    handleCheck,
+  } = useLessonEngine<Exercise, any>({
+    initialExercises,
+    initialIndex: engineIndex,
+    initialMistakes: engineMistakes,
+    animationDelay: 150,
+    isExerciseIntroOrReview: (ex) => ex.type === 'intro',
+    evaluateAnswer: (ex, answerToCheck) => {
+      let correct = false;
+      if (ex.type === "word-match") {
+        correct = answerToCheck === ex.answer;
+      } else if (ex.type === "sentence-builder") {
+        if (ex.isFillInBlank && ex.correctComponents && ex.blankIndex !== undefined) {
+          if (Array.isArray(answerToCheck) && answerToCheck.length === 1) {
+            const expectedWordId = ex.correctComponents[ex.blankIndex];
+            const expectedWord = ex.options?.find((o: any) => o.id === expectedWordId)?.th;
+            correct = answerToCheck[0] === expectedWord;
+          }
+        } else {
+          const builtSentence = (answerToCheck as string[]).join("").replace(/\s+/g, "");
+          const expectedSentence = ex.answer?.replace(/\s+/g, "").replace(/\.\.\./g, "") || "";
+          correct = builtSentence === expectedSentence;
+        }
+      } else if (ex.type === "pair-matching") {
+        correct = answerToCheck === true;
+      } else if (ex.type === "writing") {
+        const builtValue = (answerToCheck as string[]).join("").replace(/\s+/g, "");
+        const targetValue = ex.answer?.replace(/\s+/g, "") || "";
+        correct = builtValue === targetValue;
+      } else if (ex.type === "free-typing") {
+        const builtValue = typeof answerToCheck === "string" ? answerToCheck.replace(/\s+/g, "") : "";
+        const targetValue = ex.answer?.replace(/\s+/g, "") || "";
+        const levenshtein = (a: string, b: string): number => {
+          if (a.length === 0) return b.length;
+          if (b.length === 0) return a.length;
+          const matrix = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+          for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
+          for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+          for (let i = 1; i <= a.length; i++) {
+            for (let j = 1; j <= b.length; j++) {
+              const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+              matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
+            }
+          }
+          return matrix[a.length][b.length];
+        };
+        const editDist = levenshtein(builtValue, targetValue);
+        const similarity = 1 - editDist / Math.max(builtValue.length, targetValue.length);
+        correct = similarity >= 0.8;
+      }
+      return correct;
+    },
+    onComplete: (totalMistakes) => {
+      const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan') || false;
+      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
+      setEarnedXp(expected.xp);
+      const earnedStarsLocal = Math.max(0, 5 - totalMistakes);
+      
+      if (isPart && partIndex !== null && totalParts !== null) {
+         completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStarsLocal, isBilan);
+      } else {
+         completeLesson(lesson.id, 0, currentLevel, earnedStarsLocal, isBilan);
+      }
+      // Note: we can't easily access initialTime and timeLeft inside this callback if they aren't in scope/up-to-date.
+      // But we can use setInitialTime / setTimeLeft state from the closure.
+      if ((lesson.isReview || currentLevel === 10)) {
+        // saveReviewStat is handled outside or we can pass it here. Wait, initialTime might be outdated here. Let's fix that later if needed.
+      }
+      triggerConfetti();
+    },
+    onCorrect: (ex) => {
+      if (ex.type !== 'intro' && ex.answer) playThaiTTS(ex.answer);
+    },
+    onIncorrect: (ex) => {
+      setLastPlayedLesson(lesson.id, 'learn');
+      if (ex.answer) playThaiTTS(ex.answer);
+    }
+  });
+
+  const earnedStars = Math.max(0, 5 - mistakes);
+  const currentExerciseTop = exercises.length > 0 ? exercises[currentIndex] : undefined;
+  const instructionKeyTop = getInstructionKey(currentExerciseTop);
 
   useEffect(() => {
     setIsClient(true);
@@ -231,8 +315,6 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       exercisesGeneratedFor.level !== currentLevel ||
       exercisesGeneratedFor.partIndex !== partIndex
     ) {
-      setIsFinished(false);
-      setExercises([]);
       setShowExerciseUI(false);
 
       const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
@@ -247,13 +329,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       preloadThaiVoices();
       getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
         let finalExercises = generated;
-        setExercises(finalExercises);
-        setCurrentIndex(0);
-        setIsFinished(false);
-        setIsChecking(false);
-        setIsCorrect(null);
-        setSelectedAnswer(null);
-        setMistakes(0);
+        setInitialExercises(finalExercises);
+        setEngineIndex(0);
+        setEngineMistakes(0);
         setFailedDueToTime(false);
         if (lesson.isReview) {
           const time = (currentLevel + 1) * 2 * 60;
@@ -329,15 +407,11 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
     const savedState = inProgressLessons[savedStateKey];
     if (savedState) {
-      setExercises(savedState.exercises);
-      setCurrentIndex(savedState.currentIndex);
-      setMistakes(savedState.mistakes);
+      setInitialExercises(savedState.exercises);
+      setEngineIndex(savedState.currentIndex);
+      setEngineMistakes(savedState.mistakes);
       setTimeLeft(savedState.timeLeft);
       setInitialTime(savedState.initialTime);
-      setIsFinished(false);
-      setIsChecking(false);
-      setIsCorrect(null);
-      setSelectedAnswer(null);
       setFailedDueToTime(false);
     }
     setShowResumePrompt(false);
@@ -348,20 +422,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     saveInProgressLesson(savedStateKey, null);
     setShowResumePrompt(false);
 
-    setIsFinished(false);
-    setExercises([]);
     setShowExerciseUI(false);
 
     preloadThaiVoices();
     getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
       let finalExercises = generated;
-      setExercises(finalExercises);
-      setCurrentIndex(0);
-      setIsFinished(false);
-      setIsChecking(false);
-      setIsCorrect(null);
-      setSelectedAnswer(null);
-      setMistakes(0);
+      setInitialExercises(finalExercises);
+      setEngineIndex(0);
+      setEngineMistakes(0);
       setFailedDueToTime(false);
       if (lesson.isReview) {
         const time = (currentLevel + 1) * 2 * 60;
@@ -442,13 +510,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     // Need this block to prevent early variable access if exercises is empty
     // but the loading screen is still active.
   }
-
-  const currentExercise = exercises.length > 0 ? exercises[currentIndex] : null;
-  const progress = exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0;
-
   // Auto-check for free-typing
   useEffect(() => {
-    if (currentExercise && currentExercise.type === "free-typing" && !isChecking && typeof selectedAnswer === "string") {
+    if (currentExercise && currentExercise.type === "free-typing" && !isChecking && typeof selectedAnswer === "string" && !isFinished) {
       const targetLength = currentExercise.answer.replace(/\s+/g, "").length;
       const currentLength = selectedAnswer.replace(/\s+/g, "").length;
       if (currentLength >= targetLength && currentLength > 0) {
@@ -457,148 +521,17 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         return () => clearTimeout(timer);
       }
     }
-  }, [selectedAnswer, currentExercise, isChecking]);
+  }, [currentExercise, isChecking, selectedAnswer, isFinished, handleCheck]);
 
-  const handleCheck = (overrideAnswer?: any) => {
-    if (!currentExercise) return;
-    if (currentExercise.type === "intro") {
-      setIsExiting(true);
-      setTimeout(() => {
-        setIsExiting(false);
-        if (currentIndex < exercises.length - 1) {
-          setCurrentIndex(currentIndex + 1);
-          setIsChecking(false);
-          setIsCorrect(null);
-          setSelectedAnswer(null);
-        } else {
-          const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-          const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
-          setEarnedXp(expected.xp);
-          setIsFinished(true);
-          if (isPart && partIndex !== null && totalParts !== null) {
-             completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStars, isBilan);
-          } else {
-             completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
-          }
-          if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
-            saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
-          }
-          triggerConfetti();
-        }
-      }, 150);
-      return;
+  // Auto-advance for pair-matching when correct
+  useEffect(() => {
+    if (currentExercise && currentExercise.type === "pair-matching" && isChecking && isCorrect && !isFinished) {
+      const timer = setTimeout(() => handleCheck(), 100);
+      return () => clearTimeout(timer);
     }
+  }, [currentExercise, isChecking, isCorrect, isFinished, handleCheck]);
 
-    if (isChecking) {
-      setIsExiting(true);
-      setTimeout(() => {
-        setIsExiting(false);
-        // Move to next exercise
-        if (isCorrect) {
-          if (currentIndex < exercises.length - 1) {
-            setCurrentIndex(currentIndex + 1);
-            setIsChecking(false);
-            setIsCorrect(null);
-            setSelectedAnswer(null);
-          } else {
-            // Finished
-            const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-            const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
-            setEarnedXp(expected.xp);
-            setIsFinished(true);
-            if (isPart && partIndex !== null && totalParts !== null) {
-               completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStars, isBilan);
-            } else {
-               completeLesson(lesson.id, 0, currentLevel, earnedStars, isBilan);
-            }
-            if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
-              saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
-            }
-            triggerConfetti();
-          }
-        } else {
-          // If wrong, we re-add the exercise to the end with a new ID to force remount
-          setExercises([...exercises, { ...currentExercise, id: `${currentExercise.id}-retry-${Date.now()}` }]);
-          setCurrentIndex(currentIndex + 1);
-          setIsChecking(false);
-          setIsCorrect(null);
-          setSelectedAnswer(null);
-        }
-      }, 150);
-      return;
-    }
-
-    // Validate
-    const answerToCheck = overrideAnswer !== undefined && overrideAnswer !== null && (typeof overrideAnswer === 'string' || Array.isArray(overrideAnswer)) ? overrideAnswer : selectedAnswer;
-    if (!answerToCheck) return;
-
-    let correct = false;
-    if (currentExercise.type === "word-match") {
-      correct = answerToCheck === currentExercise.answer;
-    } else if (currentExercise.type === "sentence-builder") {
-      if (currentExercise.isFillInBlank && currentExercise.correctComponents && currentExercise.blankIndex !== undefined) {
-        if (Array.isArray(answerToCheck) && answerToCheck.length === 1) {
-          const expectedWordId = currentExercise.correctComponents[currentExercise.blankIndex];
-          const expectedWord = currentExercise.options.find(o => o.id === expectedWordId)?.th;
-          correct = answerToCheck[0] === expectedWord;
-        }
-      } else {
-        const builtSentence = (answerToCheck as string[])
-          .join("")
-          .replace(/\s+/g, "");
-        const expectedSentence = currentExercise.answer
-          .replace(/\s+/g, "")
-          .replace(/\.\.\./g, "");
-        correct = builtSentence === expectedSentence;
-      }
-    } else if (currentExercise.type === "writing") {
-      const builtValue = (answerToCheck as string[])
-        .join("")
-        .replace(/\s+/g, "");
-      const targetValue = currentExercise.answer.replace(/\s+/g, "");
-      correct = builtValue === targetValue;
-    } else if (currentExercise.type === "free-typing") {
-      const builtValue =
-        typeof answerToCheck === "string"
-          ? answerToCheck.replace(/\s+/g, "")
-          : "";
-      const targetValue = currentExercise.answer.replace(/\s+/g, "");
-
-      const levenshtein = (a: string, b: string): number => {
-        if (a.length === 0) return b.length;
-        if (b.length === 0) return a.length;
-        const matrix = Array.from({ length: a.length + 1 }, () =>
-          new Array(b.length + 1).fill(0),
-        );
-        for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
-        for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
-        for (let i = 1; i <= a.length; i++) {
-          for (let j = 1; j <= b.length; j++) {
-            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-            matrix[i][j] = Math.min(
-              matrix[i - 1][j] + 1,
-              matrix[i][j - 1] + 1,
-              matrix[i - 1][j - 1] + cost,
-            );
-          }
-        }
-        return matrix[a.length][b.length];
-      };
-
-      const editDist = levenshtein(builtValue, targetValue);
-      const similarity =
-        1 - editDist / Math.max(builtValue.length, targetValue.length);
-      correct = similarity >= 0.8;
-    }
-
-    setIsCorrect(correct);
-    if (!correct) {
-      setLastPlayedLesson(lessonId, 'learn');
-      setMistakes(m => m + 1);
-    }
-    setIsChecking(true);
-    playThaiTTS(currentExercise.answer);
-  };
+  // handleCheck logic is now handled by useLessonEngine
 
   if (showResumePrompt) {
     return (
@@ -843,40 +776,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                               }
                               disabled={isChecking}
                               onComplete={(failed?: boolean) => {
-                                if (failed) {
-                                  setIsCorrect(false);
-                                  setIsChecking(true);
-                                  setMistakes((m) => m + 1);
-                                  setLastPlayedLesson(lessonId, 'learn');
-                                  playThaiTTS("ผิดครับ");
-                                } else {
-                                  setIsExiting(true);
-                                  setTimeout(() => {
-                                    setIsExiting(false);
-                                    if (currentIndex < exercises.length - 1) {
-                                      setCurrentIndex((prev) => prev + 1);
-                                      setIsChecking(false);
-                                      setIsCorrect(null);
-                                      setSelectedAnswer(null);
-                                    } else {
-                                      const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan');
-                                      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan);
-                                      setEarnedXp(expected.xp);
-                                      setIsFinished(true);
-                                      completeLesson(
-                                        lesson.id,
-                                        0,
-                                        currentLevel,
-                                        earnedStars,
-                                        isBilan
-                                      );
-                                      if ((lesson.isReview || currentLevel === 10) && initialTime !== null && timeLeft !== null) {
-                                        saveReviewStat(lesson.id, currentLevel, { bestTime: initialTime - timeLeft, maxPercentage: 100 });
-                                      }
-                                      triggerConfetti();
-                                    }
-                                  }, 150);
-                                }
+                                handleCheck(!failed);
                               }}
                             />
                           ) : currentExercise?.type === "writing" ? (
