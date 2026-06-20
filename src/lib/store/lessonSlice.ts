@@ -9,6 +9,8 @@ const getLocalDateString = (date: Date = new Date()) => {
 };
 
 export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set, get) => ({
+  isExerciseRunning: false,
+  setExerciseRunning: (state: boolean) => set({ isExerciseRunning: state }),
   completedLessons: [],
   completedToday: [],
   completedConversations: {},
