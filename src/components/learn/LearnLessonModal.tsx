@@ -71,7 +71,7 @@ export default function LearnLessonModal({
   const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
   const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
 
-  const exactStepsCount = (stepsMetadata as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
+  const exactStepsCount = (stepsMetadata as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.[(playFullLevel || totalParts === 1) ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
 
   let secsPerStep = 5;
   if (modalLevel <= 1) secsPerStep = 5;

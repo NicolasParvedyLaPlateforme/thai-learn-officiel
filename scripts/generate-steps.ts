@@ -44,9 +44,16 @@ async function generateMetadata() {
     metadata.alphabet[lesson.id] = {};
     for (let level = 0; level <= 10; level++) {
       metadata.alphabet[lesson.id][level] = {};
-      const totalParts = 1; // Alphabet has no parts usually
-      const fullCount = await getExactStepsCountServer('alphabet', lesson.id, level, 'fr', null, totalParts);
+      const totalParts = getLevelSplit(level, lesson);
+      const fullCount = await getExactStepsCountServer('alphabet', lesson.id, level, 'fr', null, null);
       metadata.alphabet[lesson.id][level]['full'] = fullCount;
+
+      if (totalParts > 1) {
+        for (let part = 0; part < totalParts; part++) {
+          const partCount = await getExactStepsCountServer('alphabet', lesson.id, level, 'fr', part, totalParts);
+          metadata.alphabet[lesson.id][level][`part_${part}`] = partCount;
+        }
+      }
     }
   }
 
@@ -56,9 +63,16 @@ async function generateMetadata() {
     metadata.speak[lesson.id] = {};
     for (let level = 0; level <= 4; level++) {
       metadata.speak[lesson.id][level] = {};
-      const totalParts = 1;
-      const fullCount = await getExactStepsCountServer('speak', lesson.id, level, 'fr', null, totalParts);
+      const totalParts = getLevelSplit(level, lesson);
+      const fullCount = await getExactStepsCountServer('speak', lesson.id, level, 'fr', null, null);
       metadata.speak[lesson.id][level]['full'] = fullCount;
+
+      if (totalParts > 1) {
+        for (let part = 0; part < totalParts; part++) {
+          const partCount = await getExactStepsCountServer('speak', lesson.id, level, 'fr', part, totalParts);
+          metadata.speak[lesson.id][level][`part_${part}`] = partCount;
+        }
+      }
     }
   }
 

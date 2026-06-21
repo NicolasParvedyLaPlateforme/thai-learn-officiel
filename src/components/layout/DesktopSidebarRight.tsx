@@ -128,7 +128,7 @@ export function DesktopSidebarRight({
         );
       }
 
-      const totalParts = suggestionType === 'learn' ? getLevelSplit(modalLevel, selectedLesson.lesson) : 1;
+      const totalParts = getLevelSplit(modalLevel, selectedLesson.lesson);
       const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
       const completedParts = lessonPartsCompleted[partsKey] || [];
       const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
@@ -139,7 +139,7 @@ export function DesktopSidebarRight({
       const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
       const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
 
-      const exactStepsCount = (getStepsData(suggestionType || 'learn') as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
+      const exactStepsCount = (getStepsData(suggestionType || 'learn') as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.[(playFullLevel || totalParts === 1) ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
 
       let secsPerStep = 5;
       if (modalLevel <= 1) secsPerStep = 5;
