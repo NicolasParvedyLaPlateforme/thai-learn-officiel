@@ -218,21 +218,10 @@ export default function LearnDesktopTimeline({
                     </div>
                   </>
                 }
+                isImageActive={activeCenteredLessonId === lesson.id}
                 imageNode={
                   (lesson as any).imageUrl ? (
-                     <motion.div
-                        initial={false}
-                        animate={{ 
-                           opacity: activeCenteredLessonId === lesson.id ? 1 : 0.4, 
-                           x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? -20 : 20),
-                           scale: activeCenteredLessonId === lesson.id ? 1 : 0.85,
-                           filter: activeCenteredLessonId === lesson.id ? 'grayscale(0%)' : 'grayscale(60%)'
-                        }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="w-56 h-56 md:w-64 md:h-64 relative rounded-[2rem] overflow-hidden shadow-xl border-4 border-white pointer-events-none"
-                     >
-                        <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
-                     </motion.div>
+                     <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
                   ) : undefined
                 }
               />
