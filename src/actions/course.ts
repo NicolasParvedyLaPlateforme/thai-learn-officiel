@@ -81,10 +81,10 @@ export async function getExactStepsCountServer(type: 'learn' | 'alphabet' | 'spe
   
   if (type === 'speak') {
     const speakCourseData = (await import("@/data/speak_course.json")).default;
-    const speakLessonMeta = speakCourseData.lessons.find((l: any) => l.id === lessonId);
+    const speakLessonMeta = speakCourseData.lessons.find((l: any) => l.id === lessonId) as any;
     if (!speakLessonMeta) return 0;
     
-    if (currentLevel === 0) return speakLessonMeta.phraseIds.length;
+    if (currentLevel === 0) return speakLessonMeta.phraseIds?.length || 0;
     if (currentLevel === 1) return speakLessonMeta.dialogue?.length || 0;
     if (currentLevel === 2) {
        const speakAnswerMeData = (await import("@/data/speak_answer_me.json")).default as any;
