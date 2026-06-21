@@ -40,6 +40,7 @@ export function SharedLessonCard({
   const [isHovered, setIsHovered] = useState(false);
   
   const isMaxLevel = level >= maxLevelPerLesson;
+  const displayLevel = Math.min(level, maxLevelPerLesson);
   const isSuggested = suggestedLessonId === lesson.id;
   
   const hasUnlockedWords = level >= 1;
@@ -285,7 +286,7 @@ export function SharedLessonCard({
           <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2">
             <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
               <span className="font-extrabold">{getTranslation('auto.mastery_6', language)}</span>
-              <span className={cn(textDynamicColor, "font-black")}>{level}/{maxLevelPerLesson}</span>
+              <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
             </div>
             {renderMobileProgressBar()}
           </div>
@@ -342,7 +343,7 @@ export function SharedLessonCard({
       <div className="w-full flex flex-col gap-1 mt-1">
         <div className="flex justify-between text-xs font-bold tracking-wider uppercase px-1">
           <span className="text-slate-400">{getTranslation('auto.mastery_6', language)}</span>
-          <span className={cn(textDynamicColor, "font-black")}>{level}/{maxLevelPerLesson}</span>
+          <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
         </div>
         <div className="px-1">
           {renderDesktopProgressBar()}
