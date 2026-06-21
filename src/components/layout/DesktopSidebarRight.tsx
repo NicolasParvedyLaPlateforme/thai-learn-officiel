@@ -13,7 +13,15 @@ import { useProgressStore } from "@/lib/store";
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
 import { getLevelSplit } from "@/lib/levelSplits";
-import stepsMetadata from "@/data/steps_metadata.json";
+import stepsLearn from "@/data/steps_metadata_learn.json";
+import stepsAlphabet from "@/data/steps_metadata_alphabet.json";
+import stepsSpeak from "@/data/steps_metadata_speak.json";
+
+const getStepsData = (type: string) => {
+  if (type === 'alphabet') return stepsAlphabet;
+  if (type === 'speak') return stepsSpeak;
+  return stepsLearn;
+};
 
 interface Unit {
   id: string;
@@ -131,7 +139,7 @@ export function DesktopSidebarRight({
       const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
       const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
 
-      const exactStepsCount = (stepsMetadata as any)[suggestionType || 'learn']?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
+      const exactStepsCount = (getStepsData(suggestionType || 'learn') as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
 
       let secsPerStep = 5;
       if (modalLevel <= 1) secsPerStep = 5;

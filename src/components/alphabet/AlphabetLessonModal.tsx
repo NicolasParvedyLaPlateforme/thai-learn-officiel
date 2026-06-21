@@ -5,6 +5,7 @@ import { buttonVariants } from '../ui/Button';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { useProgressStore } from "@/lib/store";
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
+import stepsAlphabet from "@/data/steps_metadata_alphabet.json";
 
 interface AlphabetLessonModalProps {
   isOpen: boolean;
@@ -43,8 +44,7 @@ export default function AlphabetLessonModal({
   const isMastery = false; // Alphabet doesn't use mastery in the same way right now
   const isReviewOrMastery = false;
 
-  const wordCount = selectedLesson.lesson.words?.length || 0;
-  const stepsCount = 10 + wordCount + (selectedLesson.lesson.phrases?.length || 0);
+  const exactStepsCount = (stepsAlphabet as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.['full'] || 0;
   
   let secsPerStep = 5;
   if (modalLevel <= 1) secsPerStep = 5;
@@ -53,7 +53,7 @@ export default function AlphabetLessonModal({
   else if (modalLevel === 7) secsPerStep = 20;
   else secsPerStep = 40;
 
-  let estimatedSecs = stepsCount * secsPerStep;
+  let estimatedSecs = exactStepsCount * secsPerStep;
   let estimatedMins = Math.ceil(estimatedSecs / 60);
 
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
@@ -97,7 +97,7 @@ export default function AlphabetLessonModal({
 
         <div className="flex flex-col items-center mb-8 border-b border-slate-100 pb-8 w-full">
           <LessonDetailsStats 
-            stepsCount={stepsCount}
+            stepsCount={exactStepsCount}
             expectedXp={expectedXp}
             maxXp={maxXp}
             isFirstTime={isFirstTime}

@@ -9,6 +9,7 @@ import { LessonPathMap } from '../learn/LessonPathMap';
 import { buttonVariants } from '../ui/Button';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
+import stepsSpeak from "@/data/steps_metadata_speak.json";
 
 interface SpeakLessonModalProps {
   isOpen: boolean;
@@ -60,8 +61,7 @@ export default function SpeakLessonModal({
   if (!selectedLesson) return null;
 
   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
-  const wordCount = selectedLesson.lesson.words?.length || 0;
-  const stepsCount = 10 + wordCount + (selectedLesson.lesson.phrases?.length || 0);
+  const exactStepsCount = (stepsSpeak as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.['full'] || 0;
   
   let secsPerStep = 5;
   if (modalLevel <= 1) secsPerStep = 5;
@@ -70,7 +70,7 @@ export default function SpeakLessonModal({
   else if (modalLevel === 7) secsPerStep = 20;
   else secsPerStep = 40;
 
-  let estimatedSecs = stepsCount * secsPerStep;
+  let estimatedSecs = exactStepsCount * secsPerStep;
   let estimatedMins = Math.ceil(estimatedSecs / 60);
   
   if (selectedLesson.lesson.isReview) {
@@ -103,7 +103,7 @@ export default function SpeakLessonModal({
       lessonId={selectedLesson.lesson.id}
       reviewStats={reviewStats}
       footer={
-        <div className="flex items-center gap-3 w-full mt-1">
+        <div className="flex items-center gap-2 w-full mt-1 relative">
           {isBrave ? (
             <button
               disabled
@@ -149,7 +149,7 @@ export default function SpeakLessonModal({
       <div className="px-7 pt-2 flex flex-col">
         <div className="flex flex-col items-center mb-8 border-b border-slate-100 pb-8 w-full">
           <LessonDetailsStats 
-            stepsCount={stepsCount}
+            stepsCount={exactStepsCount}
             expectedXp={expectedXp}
             maxXp={maxXp}
             isFirstTime={isFirstTime}

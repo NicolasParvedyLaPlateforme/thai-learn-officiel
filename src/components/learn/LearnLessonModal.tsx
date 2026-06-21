@@ -6,13 +6,13 @@ import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { playThaiTTS } from "@/lib/tts";
 import IconImage from '../ui/IconImage';
 import { useProgressStore } from "@/lib/store";
-import { getLevelSplit, getEstimatedStepsCount } from "@/lib/levelSplits";
+import { getLevelSplit } from "@/lib/levelSplits";
 import { LessonPathMap } from './LessonPathMap';
 import { buttonVariants } from '../ui/Button';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { LessonPartsSelector } from './LessonPartsSelector';
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
-import stepsMetadata from "@/data/steps_metadata.json";
+import stepsMetadata from "@/data/steps_metadata_learn.json";
 
 interface LearnLessonModalProps {
   isOpen: boolean;
@@ -71,7 +71,7 @@ export default function LearnLessonModal({
   const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
   const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
 
-  const exactStepsCount = (stepsMetadata as any)['learn']?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
+  const exactStepsCount = (stepsMetadata as any)?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
 
   let secsPerStep = 5;
   if (modalLevel <= 1) secsPerStep = 5;

@@ -62,9 +62,16 @@ async function generateMetadata() {
     }
   }
 
-  const outputPath = path.join(process.cwd(), 'src/data/steps_metadata.json');
-  fs.writeFileSync(outputPath, JSON.stringify(metadata, null, 2));
-  console.log(`Metadata successfully saved to ${outputPath}`);
+  const outLearn = path.join(process.cwd(), 'src/data/steps_metadata_learn.json');
+  fs.writeFileSync(outLearn, JSON.stringify(metadata.learn, null, 2));
+
+  const outAlpha = path.join(process.cwd(), 'src/data/steps_metadata_alphabet.json');
+  fs.writeFileSync(outAlpha, JSON.stringify(metadata.alphabet, null, 2));
+
+  const outSpeak = path.join(process.cwd(), 'src/data/steps_metadata_speak.json');
+  fs.writeFileSync(outSpeak, JSON.stringify(metadata.speak, null, 2));
+
+  console.log(`Metadata successfully saved to src/data/steps_metadata_*.json`);
 }
 
 generateMetadata().catch(err => {
