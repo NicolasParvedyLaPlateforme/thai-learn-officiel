@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Play, PlayCircle, Star, Target, CheckCircle2, Lock, Clock, GraduationCap, Medal, Pencil, RotateCcw, BookOpen, X, Users, ChevronLeft, Flag, Crown, PieChart, Circle } from 'lucide-react';
 import Link from 'next/link';
 import IconImage from '../ui/IconImage';
+import { buttonVariants } from '../ui/Button';
 import { playThaiTTS } from "@/lib/tts";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { m as motion , AnimatePresence } from "motion/react";
@@ -375,7 +376,11 @@ export function DesktopSidebarRight({
                   return (
                     <Link
                       href={href}
-                      className={`flex-1 py-4 rounded-xl font-bold text-[17px] text-white shadow-lg flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+                      className={buttonVariants({ 
+                        variant: 'gamified', 
+                        size: 'lg', 
+                        className: `w-full rounded-xl ${selectedLesson.unitColor} ${selectedLesson.unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500')}` 
+                      })}
                     >
                       <Play size={20} className="mr-2 fill-current" />
                       {getTranslation('auto.start_lesson', language)}
