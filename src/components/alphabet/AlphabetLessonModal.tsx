@@ -92,7 +92,7 @@ export default function AlphabetLessonModal({
           {getTranslation(selectedLesson.lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} {selectedLesson.lesson.id.split('-').pop()}
         </h3>
         <p className="text-sm font-medium text-slate-500 text-center mb-6">
-          {getTranslation('lesson.level', language)} {modalLevel + 1}
+          {getTranslation('auto.level', language)} {modalLevel + 1}
         </p>
 
         <div className="flex flex-col items-center mb-8 border-b border-slate-100 pb-8 w-full">
