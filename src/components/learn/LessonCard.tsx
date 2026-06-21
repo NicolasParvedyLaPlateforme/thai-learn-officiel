@@ -36,7 +36,7 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
   const buttonText = level === 0 ? getTranslation('auto.start_learning', language) || "Commencer" : getTranslation('auto.access_levels', language) || "Accéder aux niveaux";
 
   const cardStyle = cn(
-    "relative w-full transition-all duration-300 cursor-pointer overflow-hidden border",
+    "relative w-full transition-all duration-300 cursor-pointer border",
     isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
     isMaxLevel ? "border-emerald-100 bg-emerald-50/10" : 
     isReviewLocked ? "bg-slate-50/50 border-slate-100" : 
