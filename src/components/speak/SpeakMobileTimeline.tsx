@@ -8,8 +8,9 @@ import { MobileTimelineNodeLayout } from '../path-ui/MobileTimelineNodeLayout';
 import { NextUnitCard } from '../learn/NextUnitCard';
 import BannerUnitsButton from '../ui/BannerUnitsButton';
 import MobileStickyBanner from '../path-ui/MobileStickyBanner';
-import PathTimelineLine from '../path-ui/PathTimelineLine';
-import { PathDecorations } from '../path-ui/PathDecorations';
+import PathTimelineLine from "@/components/path-ui/PathTimelineLine";
+import { PathDecorations } from "@/components/path-ui/PathDecorations";
+import { useMobileTimelineNodeClick } from "@/hooks/useMobileTimelineNodeClick";
 
 interface SpeakMobileTimelineProps {
   unit: any;
@@ -50,6 +51,12 @@ export default function SpeakMobileTimeline({
   maxLevelPerLesson,
   nextUnit
 }: SpeakMobileTimelineProps) {
+  const handleNodeClick = useMobileTimelineNodeClick({
+    setSelectedLesson,
+    setModalLevel,
+    setLockedReviewModalOpen,
+    maxLevelPerLesson: 10
+  });
   const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 10);
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => {
     return acc + Math.min(lessonLevels[l.id] || 0, (maxLevelPerLesson || 10));
@@ -203,15 +210,7 @@ export default function SpeakMobileTimeline({
                 isReviewLocked={isReviewLocked}
                 isMaxLevel={isMaxLevel}
                 isReview={lesson.isReview}
-                onNodeClick={(e) => {
-                  e.stopPropagation();
-                  if (isReviewLocked) {
-                    setLockedReviewModalOpen(true);
-                    return;
-                  }
-                  setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(null);
-                }}
+                onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'speak')}
                 cardContent={
                   <SharedLessonCard
                     pathType="speak"

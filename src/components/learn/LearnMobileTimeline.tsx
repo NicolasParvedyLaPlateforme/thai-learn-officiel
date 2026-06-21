@@ -27,8 +27,9 @@ import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from './NextUnitCard';
 import BannerUnitsButton from '../ui/BannerUnitsButton';
 import MobileStickyBanner from '../path-ui/MobileStickyBanner';
-import PathTimelineLine from '../path-ui/PathTimelineLine';
-import { PathDecorations } from '../path-ui/PathDecorations';
+import PathTimelineLine from "@/components/path-ui/PathTimelineLine";
+import { PathDecorations } from "@/components/path-ui/PathDecorations";
+import { useMobileTimelineNodeClick } from "@/hooks/useMobileTimelineNodeClick";
 import { MobileTimelineNodeLayout } from '../path-ui/MobileTimelineNodeLayout';
 
 export default function LearnMobileTimeline({
@@ -49,6 +50,12 @@ export default function LearnMobileTimeline({
   setLockedReviewModalOpen,
   nextUnit
 }: LearnMobileTimelineProps) {
+  const handleNodeClick = useMobileTimelineNodeClick({
+    setSelectedLesson,
+    setModalLevel,
+    setLockedReviewModalOpen,
+    maxLevelPerLesson: 10
+  });
   const maxLevelsInUnit = unitLessons.length * 10;
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc, l) => acc + (lessonLevels[l.id] || 0), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
@@ -200,15 +207,7 @@ export default function LearnMobileTimeline({
                 isReviewLocked={isReviewLocked}
                 isMaxLevel={isMaxLevel}
                 isReview={lesson.isReview}
-                onNodeClick={(e) => {
-                  e.stopPropagation();
-                  if (isReviewLocked) {
-                    setLockedReviewModalOpen(true);
-                    return;
-                  }
-                  setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(null);
-                }}
+                onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'learn')}
                 cardContent={
                   <SharedLessonCard
                     pathType="learn"

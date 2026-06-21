@@ -15,6 +15,8 @@ import PathLayout from "@/components/path-ui/PathLayout";
 import { AnimatePresence } from 'motion/react';
 import { Drawer } from 'vaul';
 import { BookOpen, X, CheckCircle } from 'lucide-react';
+import dynamic from 'next/dynamic';
+const AlphabetLessonModal = dynamic(() => import('@/components/alphabet/AlphabetLessonModal'), { ssr: false });
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
 import { ConversationObjectiveWidget } from "@/components/widgets/ConversationObjectiveWidget";
@@ -55,6 +57,7 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       renderMobileTimeline={(props) => <AlphabetMobileTimeline {...props} alphabetQuests={alphabetQuests} />}
       renderDesktopTimeline={(props) => <AlphabetDesktopTimeline {...props} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="alphabet" maxLevelPerLesson={3} />}
+      renderLessonModal={(props) => <AlphabetLessonModal {...props} />}
       renderUnitsModal={({ isOpen, onOpenChange, language, units, activeUnitIndex, onUnitSelect }) => (
         <AnimatePresence>
           {isOpen && (

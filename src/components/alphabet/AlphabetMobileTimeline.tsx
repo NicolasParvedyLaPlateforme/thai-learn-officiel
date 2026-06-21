@@ -10,6 +10,7 @@ import BannerUnitsButton from '../ui/BannerUnitsButton';
 import MobileStickyBanner from '../path-ui/MobileStickyBanner';
 import PathTimelineLine from "@/components/path-ui/PathTimelineLine";
 import { PathDecorations } from "@/components/path-ui/PathDecorations";
+import { useMobileTimelineNodeClick } from "@/hooks/useMobileTimelineNodeClick";
 
 interface AlphabetMobileTimelineProps {
   unit: any;
@@ -48,6 +49,11 @@ export default function AlphabetMobileTimeline({
   maxLevelPerLesson = 4,
   nextUnit
 }: AlphabetMobileTimelineProps) {
+  const handleNodeClick = useMobileTimelineNodeClick({
+    setSelectedLesson,
+    setModalLevel,
+    maxLevelPerLesson
+  });
   const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => {
     return acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson);
@@ -198,11 +204,7 @@ export default function AlphabetMobileTimeline({
                 isReviewLocked={isReviewLocked}
                 isMaxLevel={isMaxLevel}
                 showLevelProgress={true}
-                onNodeClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(null);
-                }}
+                onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'alphabet')}
                 cardContent={
                   <SharedLessonCard
                     pathType="alphabet"
