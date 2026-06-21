@@ -402,12 +402,17 @@ export function DesktopSidebarRight({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="w-full h-full relative px-6 overflow-y-auto hide-scrollbar pt-6 pb-16 flex flex-col gap-6"
+          className="w-full h-full relative px-6 overflow-y-auto hide-scrollbar pt-6 pb-16 flex flex-col gap-0"
         >
+          <div className="w-full mb-6 mt-2 px-1">
+            <h1 className="text-2xl font-extrabold text-slate-800 tracking-tight">
+              {getTranslation('auto.my_adventure', language)}
+            </h1>
+          </div>
 
-          <div className="w-full flex flex-col gap-6">
-            <DailyQuestsWidget category={questsCategory} />
+          <div className="w-full flex flex-col gap-0">
             <ConversationObjectiveWidget />
+            <DailyQuestsWidget category={questsCategory} />
             <LeaderboardWidget />
           </div>
         </motion.div>

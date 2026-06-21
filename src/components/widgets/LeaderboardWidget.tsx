@@ -49,7 +49,7 @@ export function LeaderboardWidget() {
   if (users.length === 0) return null;
 
   return (
-    <div className="w-full bg-white rounded-3xl border border-slate-100 p-5 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col gap-4 relative group">
+    <div className="w-full py-6 px-1 flex flex-col gap-4 relative group">
       {/* Fond décoratif très subtil */}
       <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-amber-50 rounded-full opacity-60 pointer-events-none"></div>
 
