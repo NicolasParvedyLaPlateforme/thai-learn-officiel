@@ -46,7 +46,7 @@ export function SpeakLessonCard({ lesson, level, unit, language, isReviewLocked,
       >
         {/* Badges */}
         {isMaxLevel ? (
-          <div className="absolute -top-3.5 right-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm z-10">
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm z-10 border border-white">
             <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
           </div>
         ) : isSuggested ? (
@@ -56,11 +56,11 @@ export function SpeakLessonCard({ lesson, level, unit, language, isReviewLocked,
         ) : null}
 
         {/* Header: Title and Description */}
-        <div className="flex flex-col items-start text-left w-full mt-1">
-          <h4 className="font-extrabold text-lg sm:text-xl text-slate-800 leading-tight">
+        <div className="flex flex-col items-start text-left w-full mt-1 overflow-hidden">
+          <h4 className="font-extrabold text-lg sm:text-xl text-slate-800 leading-tight truncate w-full">
             {getLocalizedField(lesson, 'title', language)}
           </h4>
-          <span className={`text-xs font-bold mt-0.5 tracking-wide text-slate-500`}>
+          <span className={`text-xs font-bold mt-0.5 tracking-wide text-slate-500 truncate w-full`}>
             {getLocalizedField(lesson, 'description', language)}
           </span>
         </div>
@@ -146,7 +146,7 @@ export function SpeakLessonCard({ lesson, level, unit, language, isReviewLocked,
     >
       {/* Badges */}
       {isMaxLevel ? (
-        <div className="absolute -top-3.5 left-6 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm z-10">
+        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full flex items-center gap-1 shadow-sm z-10 border-[2px] border-white">
           <CheckCircle size={14} className="fill-current text-white stroke-emerald-500" /> {getTranslation('auto.mastered', language)}
         </div>
       ) : isSuggested ? (
@@ -155,11 +155,11 @@ export function SpeakLessonCard({ lesson, level, unit, language, isReviewLocked,
         </div>
       ) : null}
 
-      <div className="flex flex-col items-start text-left w-full mt-2">
-        <h4 className="font-extrabold text-xl text-slate-800">
+      <div className="flex flex-col items-start text-left w-full mt-2 overflow-hidden">
+        <h4 className="font-extrabold text-xl text-slate-800 truncate w-full">
           {getLocalizedField(lesson, 'title', language)}
         </h4>
-        <span className={`text-sm font-bold mt-1 tracking-wide text-slate-500`}>
+        <span className={`text-sm font-bold mt-1 tracking-wide text-slate-500 truncate w-full`}>
           {getLocalizedField(lesson, 'description', language)}
         </span>
       </div>

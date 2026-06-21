@@ -149,7 +149,7 @@ export default function LearnDesktopTimeline({
               </div>
 
               {/* Center icon */}
-              <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-20">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                 {isMaxLevel && (
                   <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
                     <Crown size={28} className="text-amber-400 fill-amber-400" />
@@ -183,15 +183,18 @@ export default function LearnDesktopTimeline({
 
               </div>
 
+
+
               {/* Side Image */}
               {(lesson as any).imageUrl && (
-                <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-10 xl:pl-20' : 'left-0 justify-end pr-10 xl:pr-20'} z-0`}>
+                <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-16 xl:pl-24' : 'left-0 justify-end pr-16 xl:pr-24'} z-0`}>
                    <motion.div
                       initial={false}
                       animate={{ 
-                         opacity: activeCenteredLessonId === lesson.id ? 0.9 : 0, 
-                         x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? -40 : 40),
-                         scale: activeCenteredLessonId === lesson.id ? 1 : 0.9
+                         opacity: activeCenteredLessonId === lesson.id ? 1 : 0.4, 
+                         x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? -20 : 20),
+                         scale: activeCenteredLessonId === lesson.id ? 1 : 0.85,
+                         filter: activeCenteredLessonId === lesson.id ? 'grayscale(0%)' : 'grayscale(60%)'
                       }}
                       transition={{ duration: 0.5, ease: "easeOut" }}
                       className="w-56 h-56 md:w-64 md:h-64 relative rounded-[2rem] overflow-hidden shadow-xl border-4 border-white pointer-events-none"

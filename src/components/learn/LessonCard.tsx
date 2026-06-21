@@ -57,22 +57,22 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
         {/* Header & Badges */}
         <div className="flex justify-between items-start w-full">
           {/* Header: Title and Description */}
-          <div className="flex flex-col items-start text-left flex-1 pr-2">
-            <Typography variant="h4" className="text-lg sm:text-xl">
+          <div className="flex flex-col items-start text-left flex-1 pr-2 overflow-hidden w-full">
+            <Typography variant="h4" className="text-lg sm:text-xl truncate w-full">
               {getLocalizedField(lesson, 'title', language)}
             </Typography>
-            <Typography variant="muted" className="text-xs font-medium mt-0.5">
+            <Typography variant="muted" className="text-xs font-medium mt-0.5 truncate w-full">
               {getLocalizedField(lesson, 'description', language)}
             </Typography>
           </div>
 
           {/* Badges */}
           {isMaxLevel ? (
-            <Badge className="bg-emerald-100 text-emerald-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-emerald-200 shrink-0">
+            <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-100 text-emerald-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-emerald-200 shrink-0">
               <CheckCircle size={14} /> <span className="hidden sm:inline">{getTranslation('auto.mastered', language)}</span>
             </Badge>
           ) : isSuggested ? (
-            <Badge className="bg-amber-100 text-amber-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-amber-200 shrink-0">
+            <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-amber-200 shrink-0">
               <Star size={12} fill="currentColor" /> <span className="hidden sm:inline">{getTranslation('auto.suggested', language)}</span>
             </Badge>
           ) : null}
@@ -135,11 +135,10 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
               <span>{getTranslation('auto.mastery_6', language) || "Maîtrise"}</span>
               <span className={unit.textClass}>{level}/10</span>
             </div>
-            <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-              <div 
-                className={cn("h-full rounded-full transition-all duration-500", unit.bgClass || unit.colorClass)} 
-                style={{ width: `${(level / 10) * 100}%` }}
-              ></div>
+            <div className="flex justify-between gap-[2px] w-full">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div key={i} className={`h-2.5 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? (unit.bgClass || unit.colorClass).replace('text-', 'bg-') : 'bg-slate-100'}`}></div>
+              ))}
             </div>
           </div>
           
@@ -170,22 +169,22 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
     >
       {/* Header & Badges */}
       <div className="flex justify-between items-start w-full">
-        <div className="flex flex-col items-start text-left flex-1 pr-4">
-          <Typography variant="h3">
+        <div className="flex flex-col items-start text-left flex-1 pr-4 overflow-hidden w-full">
+          <Typography variant="h3" className="truncate w-full">
             {getLocalizedField(lesson, 'title', language)}
           </Typography>
-          <Typography variant="muted" className="mt-1">
+          <Typography variant="muted" className="mt-1 truncate w-full">
             {getLocalizedField(lesson, 'description', language)}
           </Typography>
         </div>
 
         {/* Badges */}
         {isMaxLevel ? (
-          <Badge className="bg-emerald-100 text-emerald-700 shadow-sm px-3 py-1 gap-1 z-10 font-bold border border-emerald-200 shrink-0">
+          <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-100 text-emerald-700 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-emerald-200 shrink-0">
             <CheckCircle size={14} /> {getTranslation('auto.mastered', language)}
           </Badge>
         ) : isSuggested ? (
-          <Badge className="bg-amber-100 text-amber-700 shadow-sm px-3 py-1 gap-1 z-10 font-bold border border-amber-200 shrink-0">
+          <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-amber-200 shrink-0">
             <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
           </Badge>
         ) : null}
@@ -196,11 +195,10 @@ export function LessonCard({ lesson, level, unit, language, isReviewLocked, sugg
           <span>{getTranslation('auto.mastery_6', language) || "Maîtrise"}</span>
           <span className={unit.textClass}>{level}/10</span>
         </div>
-        <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-          <div 
-            className={cn("h-full rounded-full transition-all duration-500", unit.bgClass || unit.colorClass)} 
-            style={{ width: `${(level / 10) * 100}%` }}
-          ></div>
+        <div className="flex justify-between gap-[2px] w-full">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div key={i} className={`h-2.5 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full ${i < level ? (unit.bgClass || unit.colorClass).replace('text-', 'bg-') : 'bg-slate-100'}`}></div>
+          ))}
         </div>
       </div>
 
