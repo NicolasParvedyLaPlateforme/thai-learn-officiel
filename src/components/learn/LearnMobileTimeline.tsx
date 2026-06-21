@@ -29,6 +29,7 @@ import BannerUnitsButton from '../ui/BannerUnitsButton';
 import MobileStickyBanner from '../path-ui/MobileStickyBanner';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
+import { MobileTimelineNodeLayout } from '../path-ui/MobileTimelineNodeLayout';
 
 export default function LearnMobileTimeline({
   unit,
@@ -187,49 +188,28 @@ export default function LearnMobileTimeline({
             const isMaxLevel = level >= 10;
 
             return (
-              <motion.div
-                id={`mobile-lesson-${lesson.id}`}
+              <MobileTimelineNodeLayout
                 key={`mobile-node-${lesson.id}`}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
-                className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
-              >
-                <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} />
-                <PathDecorations index={idx} isDesktop={false} />
-                
-                {/* Compact Timeline Node */}
-                <div
-                  className={`relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isReviewLocked) {
-                      setLockedReviewModalOpen(true);
-                      return;
-                    }
-                    setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    setModalLevel(null);
-                  }}
-                >
-                  {isMaxLevel && (
-                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
-                      <Crown size={22} className="text-amber-400 fill-amber-400" />
-                    </div>
-                  )}
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden
-                      ${isMaxLevel
-                      ? unit.colorClass + ' text-white border-white shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-                      : isReviewLocked
-                        ? 'bg-slate-100 text-slate-300 border-white'
-                        : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white'
-                          : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
-                  >
-                    {isMaxLevel ? <CheckCircle size={22} className="stroke-[3]" /> : isReviewLocked ? <Lock size={18} className="fill-slate-200 text-slate-400 stroke-[2.5]" /> : level > 0 ? <CheckCircle size={22} className="stroke-current stroke-[2.5]" /> : lesson.isReview ? <Star size={20} className="fill-current stroke-current" /> : <Play size={22} className="ml-0.5 fill-current stroke-[2]" />}
-                  </div>
-                </div>
-
-                {/* Lesson Card */}
-                <div className="flex-1 min-w-0 z-10">
+                lessonId={lesson.id}
+                index={idx}
+                level={level}
+                maxLevel={10}
+                unitColorClass={unit.colorClass}
+                unitTextClass={unit.textClass}
+                unitShades={unit.shades}
+                isReviewLocked={isReviewLocked}
+                isMaxLevel={isMaxLevel}
+                isReview={lesson.isReview}
+                onNodeClick={(e) => {
+                  e.stopPropagation();
+                  if (isReviewLocked) {
+                    setLockedReviewModalOpen(true);
+                    return;
+                  }
+                  setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                  setModalLevel(null);
+                }}
+                cardContent={
                   <SharedLessonCard
                     pathType="learn"
                     lesson={lesson}
@@ -248,9 +228,9 @@ export default function LearnMobileTimeline({
                       setModalLevel(null);
                     }}
                   />
-                </div>
-              </motion.div>
-            )
+                }
+              />
+            );
           })}
           </div>
 
