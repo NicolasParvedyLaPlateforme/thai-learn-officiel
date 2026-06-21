@@ -160,7 +160,7 @@ export default function LearnDesktopTimeline({
             >
               <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} isDesktop={true} />
               <PathDecorations index={idx} isDesktop={true} />
-              <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
+              <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-12 xl:pr-20' : 'justify-start pl-12 xl:pl-20'}`}>
                 <div className="w-full max-w-[360px]">
                   <SharedLessonCard
                     pathType="learn"
@@ -223,7 +223,7 @@ export default function LearnDesktopTimeline({
 
               {/* Side Image */}
               {(lesson as any).imageUrl && (
-                <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-16 xl:pl-24' : 'left-0 justify-end pr-16 xl:pr-24'} z-0`}>
+                <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-12 xl:pl-20' : 'left-0 justify-end pr-12 xl:pr-20'} z-0`}>
                    <motion.div
                       initial={false}
                       animate={{ 

@@ -156,7 +156,7 @@ export default function AlphabetDesktopTimeline({
             >
               <PathTimelineLine level={level} maxLevel={4} colorClass={unit.colorClass} isDesktop={true} />
               <PathDecorations index={idx} isDesktop={true} />
-              <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
+              <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-12 xl:pr-20' : 'justify-start pl-12 xl:pl-20'}`}>
                 <div className="w-full max-w-[360px]">
                   <SharedLessonCard 
                     pathType="alphabet"
@@ -212,7 +212,7 @@ export default function AlphabetDesktopTimeline({
 
 
               {/* Side Image */}
-              <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-16 xl:pl-24' : 'left-0 justify-end pr-16 xl:pr-24'} z-0`}>
+              <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-12 xl:pl-20' : 'left-0 justify-end pr-12 xl:pr-20'} z-0`}>
                  <motion.div
                     initial={false}
                     animate={{ 
