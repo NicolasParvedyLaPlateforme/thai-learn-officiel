@@ -77,8 +77,8 @@ export default function SpeakDesktopTimeline({
   }, [mounted]);
 
   return (
-    <>
-      <div className="sticky top-0 z-[60] w-full h-0">
+    <div key={`desktop-unit-${unit.id}`} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
+      <div className="sticky top-[1px] z-[60] w-full h-0">
         <div 
           className={`absolute top-0 left-0 right-0 transition-all duration-300 ${unit.colorClass} shadow-md flex items-center justify-between p-4 px-8 hidden md:flex rounded-b-3xl ${showMiniBanner ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
         >
@@ -95,7 +95,7 @@ export default function SpeakDesktopTimeline({
         </div>
       </div>
 
-      <div key={`desktop-unit-${unit.id}`} className="flex flex-col gap-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative mt-0">
+      <div className="flex flex-col gap-8 w-full relative">
       <div
         onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
         className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer transition-transform min-h-[220px] flex items-center group`}
@@ -289,6 +289,6 @@ export default function SpeakDesktopTimeline({
         )}
       </div>
     </div>
-    </>
+    </div>
   );
 }
