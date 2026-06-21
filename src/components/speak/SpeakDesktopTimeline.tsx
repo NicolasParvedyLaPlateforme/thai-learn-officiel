@@ -11,6 +11,7 @@ import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
 import { DesktopTimelineNodeLayout } from '../path-ui/DesktopTimelineNodeLayout';
+import { useActiveTimelineNode } from '@/hooks/useActiveTimelineNode';
 
 interface SpeakDesktopTimelineProps {
   unit: any;
@@ -51,44 +52,7 @@ export default function SpeakDesktopTimeline({
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson || 10), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
   
-  const [activeCenteredLessonId, setActiveCenteredLessonId] = useState<string | null>(unitLessons.length > 0 ? unitLessons[0].id : null);
-
-  useEffect(() => {
-    if (!mounted) return;
-    
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const lessons = document.querySelectorAll('.group\\/node');
-          let closestId: string | null = null;
-          let minDistance = Infinity;
-          const centerY = window.innerHeight * 0.45;
-
-          lessons.forEach(node => {
-            const rect = node.getBoundingClientRect();
-            const nodeCenter = rect.top + rect.height / 2;
-            const distance = Math.abs(centerY - nodeCenter);
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestId = node.id.replace('desktop-lesson-', '');
-            }
-          });
-
-          if (closestId) {
-            setActiveCenteredLessonId(prev => prev !== closestId ? closestId : prev);
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    setTimeout(handleScroll, 100);
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [mounted]);
+  const [activeCenteredLessonId, setActiveCenteredLessonId] = useActiveTimelineNode(unitLessons.length > 0 ? unitLessons[0].id : null);
 
   return (
     <div key={`desktop-unit-${unit.id}`} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
