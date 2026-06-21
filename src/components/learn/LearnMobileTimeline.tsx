@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
@@ -50,9 +51,50 @@ export default function LearnMobileTimeline({
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc, l) => acc + (lessonLevels[l.id] || 0), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
+  const [showMiniBanner, setShowMiniBanner] = useState(false);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    
+    const handleScroll = () => {
+      if (!mounted) return;
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 250) {
+        if (currentScrollY > lastScrollY) {
+          setShowMiniBanner(true);
+        } else {
+          setShowMiniBanner(false);
+        }
+      } else {
+        setShowMiniBanner(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [mounted]);
+
   return (
-    <main className="max-w-2xl mx-auto px-4 mt-2 flex flex-col gap-8 md:hidden">
-      <motion.div
+    <>
+      <div 
+        className={`fixed top-0 left-0 right-0 z-[60] transition-transform duration-300 ${unit.colorClass} shadow-md flex items-center justify-between p-3 px-4 md:hidden ${showMiniBanner ? 'translate-y-0' : '-translate-y-full'}`}
+      >
+        <div className="flex items-center gap-2">
+          <h2 className="text-white font-extrabold text-[15px] truncate max-w-[200px] drop-shadow-sm">
+            {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
+          </h2>
+        </div>
+        <BannerUnitsButton 
+          onClick={() => setIsUnitsModalOpen(true)} 
+          language={language}
+          className="shadow-none border-none py-1.5"
+        />
+      </div>
+
+      <main className="max-w-2xl mx-auto px-4 mt-2 flex flex-col gap-8 md:hidden">
+        <motion.div
         key={unit.id}
         className="relative z-0"
         initial={{ opacity: 0, x: 20 }}
@@ -95,10 +137,10 @@ export default function LearnMobileTimeline({
             </p>
 
             <div className="w-full">
-              <div className="flex flex-col">
+              <div className="flex flex-col w-[65%]">
                 <div className={`flex justify-between text-xs font-bold text-white mb-1.5 uppercase tracking-wide drop-shadow-sm`}>
                   <span>{getTranslation('auto.mastery_3', language)}</span>
-                  <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
+                  <span>{completedLevelsInUnit} / {maxLevelsInUnit}</span>
                 </div>
                 <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-2.5 overflow-hidden mb-1 shadow-inner`}>
                   <div
@@ -259,5 +301,6 @@ export default function LearnMobileTimeline({
         </div>
       </motion.div>
     </main>
+    </>
   );
 }

@@ -10,6 +10,7 @@ interface PathMobileHeaderProps {
   language: string;
   setIsUnitsModalOpen: (open: boolean) => void;
   setIsMobileMenuOpen: (open: boolean) => void;
+  pageTitleKey?: string;
 }
 
 export default function PathMobileHeader({
@@ -17,18 +18,19 @@ export default function PathMobileHeader({
   mounted,
   language,
   setIsUnitsModalOpen,
-  setIsMobileMenuOpen
+  setIsMobileMenuOpen,
+  pageTitleKey = 'nav.learn'
 }: PathMobileHeaderProps) {
   return (
     <header className={`bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[calc(3.75rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] md:hidden sticky top-0 transition-transform duration-300 ${showHeader ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="flex items-center justify-between w-full h-full px-4 md:px-8 gap-2 sm:gap-6">
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setIsUnitsModalOpen(true)}
+            onClick={() => window.location.reload()}
             className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors md:hidden"
           >
             <BookOpen size={18} className="text-emerald-600" />
-            <span className="font-extrabold text-slate-700 text-sm">{getTranslation('auto.units', language)}</span>
+            <span className="font-extrabold text-slate-700 text-sm">{getTranslation(pageTitleKey, language) || 'Vocabulaire'}</span>
           </button>
         </div>
 
