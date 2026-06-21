@@ -12,17 +12,17 @@
     "descriptionEs": "Preséntate y expresiones útiles.",
     "descriptionIt": "Presentati ed espressioni utili.",
     "imageUrl": "/speak-banner.png",
-    "colorClass": "bg-emerald-500",
-    "borderClass": "border-emerald-700",
-    "textClass": "text-emerald-500",
-    "hoverClass": "hover:bg-emerald-400",
-    "lightTextClass": "text-emerald-100",
-    "bgMutedClass": "bg-emerald-700/50",
+    "colorClass": "bg-yellow-500",
+    "borderClass": "border-yellow-700",
+    "textClass": "text-yellow-500",
+    "hoverClass": "hover:bg-yellow-400",
+    "lightTextClass": "text-yellow-100",
+    "bgMutedClass": "bg-yellow-700/50",
     "shades": {
-      "l1": "bg-emerald-200 border-emerald-400 text-emerald-800 hover:bg-emerald-300",
-      "l2": "bg-emerald-300 border-emerald-500 text-emerald-900 hover:bg-emerald-400",
-      "l3": "bg-emerald-400 border-emerald-600 text-white hover:bg-emerald-500",
-      "l4": "bg-emerald-500 border-emerald-700 text-white hover:bg-emerald-600"
+      "l1": "bg-yellow-200 border-yellow-400 text-yellow-800 hover:bg-yellow-300",
+      "l2": "bg-yellow-300 border-yellow-500 text-yellow-900 hover:bg-yellow-400",
+      "l3": "bg-yellow-400 border-yellow-600 text-white hover:bg-yellow-500",
+      "l4": "bg-yellow-500 border-yellow-700 text-white hover:bg-yellow-600"
     }
   }
 ]

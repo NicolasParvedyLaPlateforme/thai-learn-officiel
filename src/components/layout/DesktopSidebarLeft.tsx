@@ -336,7 +336,7 @@ function NavItem({ href, icon, label, active, hasSuggestion, isSubItem, onClick 
       onClick={onClick}
       className={`flex items-center rounded-xl transition-all overflow-hidden mx-auto justify-center relative
         ${isSubItem 
-          ? 'h-10 w-10 group-hover:w-full group-hover:justify-start group-hover:px-3 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-3 group-hover:pl-9 xl:pl-9' 
+          ? 'h-10 w-10 group-hover:w-full group-hover:justify-start group-hover:px-2 group-hover:gap-2 xl:gap-2 xl:w-full xl:justify-start xl:px-2 group-hover:pl-7 xl:pl-7' 
           : 'h-12 w-12 group-hover:w-full group-hover:justify-start group-hover:px-3 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-3'} 
         ${active ? 'text-emerald-600 font-bold bg-transparent' : 'text-slate-500 font-medium hover:bg-slate-50 hover:text-slate-700'}`}
     >
@@ -349,14 +349,14 @@ function NavItem({ href, icon, label, active, hasSuggestion, isSubItem, onClick 
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 border-2 border-white rounded-full"></span>
         )}
       </div>
-      <span className={`transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto whitespace-nowrap ${isSubItem ? 'text-[14px]' : 'text-[15px]'}`}>
-        {label}
+      <div className={`transition-all duration-300 overflow-hidden flex items-center opacity-0 w-0 group-hover:opacity-100 group-hover:flex-1 group-hover:w-auto xl:opacity-100 xl:flex-1 xl:w-auto ${isSubItem ? 'text-[14px]' : 'text-[15px]'}`}>
+        <span className="whitespace-nowrap">{label}</span>
         {hasSuggestion && (
-           <span className="bg-amber-400 text-amber-900 text-[10px] font-black uppercase px-2 py-0.5 rounded-full ml-2">
+           <span className="bg-amber-400 text-amber-900 text-[9px] font-black uppercase px-1.5 py-0.5 rounded-full ml-1 shrink-0">
               {t('sidebar.suggested')}
            </span>
         )}
-      </span>
+      </div>
     </Link>
   );
 }
