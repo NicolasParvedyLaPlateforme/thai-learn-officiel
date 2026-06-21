@@ -10,6 +10,7 @@ import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { NextUnitCard } from '../learn/NextUnitCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
+import { DesktopTimelineNodeLayout } from '../path-ui/DesktopTimelineNodeLayout';
 
 interface AlphabetDesktopTimelineProps {
   unit: any;
@@ -139,8 +140,6 @@ export default function AlphabetDesktopTimeline({
         {unitLessons.map((lesson, idx) => {
           const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
           const isMaxLevel = level >= maxLevelPerLesson;
-          let isReviewLocked = false; 
-
           const isLeft = idx % 2 === 0;
 
           return (
@@ -156,64 +155,58 @@ export default function AlphabetDesktopTimeline({
             >
               <PathTimelineLine level={level} maxLevel={4} colorClass={unit.colorClass} isDesktop={true} />
               <PathDecorations index={idx} isDesktop={true} />
-              <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-12 xl:pr-20' : 'justify-start pl-12 xl:pl-20'}`}>
-                <div className="w-full max-w-[360px]">
+              <DesktopTimelineNodeLayout
+                isLeft={isLeft}
+                cardContent={
                   <SharedLessonCard 
                     pathType="alphabet"
-                    lesson={lesson}
-                    level={level}
-                    maxLevelPerLesson={4}
-                    unit={unit}
+                    lesson={lesson} 
+                    level={level} 
+                    unit={unit} 
                     language={language}
-                    isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
                       const saved = localStorage.getItem(`last_alphabet_level_${lesson.id}`);
                       setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                      setShowDesktopUnitsList(false);
                     }}
                   />
-                </div>
-              </div>
-
-              {/* Center icon */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                {isMaxLevel && (
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
-                    <Crown size={28} className="text-amber-400 fill-amber-400" />
-                  </div>
-                )}
-                <div
-                  className={`relative w-20 h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden shadow-md cursor-pointer hover:scale-105 active:scale-95 text-2xl font-thai
-                    ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' 
-                    : level >= 3 ? unit.shades.l3 + ' border-white' : level >= 2 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white' 
-                    : 'bg-white ' + unit.textClass + ' border-slate-200'}
-                  `}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    const saved = localStorage.getItem(`last_level_${lesson.id}`);
-                    setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                    setShowDesktopUnitsList(false);
-                  }}
-                >
-                    <div className={`flex items-center justify-center ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
-                      {lesson.items.map((i: any) => formatCombiningChar(i.letter)).join('')}
-                    </div>
+                }
+                centerNode={
+                  <>
                     {isMaxLevel && (
-                      <div className="absolute inset-0 z-20 flex items-center justify-center">
-                        <CheckCircle size={36} className="stroke-[3] text-white" />
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                        <Crown size={28} className="text-amber-400 fill-amber-400" />
                       </div>
                     )}
-                </div>
-
-              </div>
-
-
-
-              {/* Side Image */}
-              <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-12 xl:pl-20' : 'left-0 justify-end pr-12 xl:pr-20'} z-0`}>
-                 <motion.div
+                    <div 
+                      className={`relative w-20 h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden shadow-md cursor-pointer hover:scale-105 active:scale-95 text-2xl font-thai
+                        ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' 
+                        : level >= 3 ? unit.shades.l3 + ' border-white' : level >= 2 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white' 
+                        : 'bg-white ' + unit.textClass + ' border-slate-200'}
+                      `}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                        const saved = localStorage.getItem(`last_alphabet_level_${lesson.id}`);
+                        setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                        setShowDesktopUnitsList(false);
+                      }}
+                    >
+                      <div className={`flex items-center justify-center ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
+                        {lesson.items.map((i: any) => formatCombiningChar(i.letter)).join('')}
+                      </div>
+                      {isMaxLevel && (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center">
+                          <CheckCircle size={36} className="stroke-[3] text-white" />
+                        </div>
+                      )}
+                    </div>
+                  </>
+                }
+                imageNode={
+                  <motion.div
                     initial={false}
                     animate={{ 
                        opacity: activeCenteredLessonId === lesson.id ? 1 : 0.4, 
@@ -223,10 +216,11 @@ export default function AlphabetDesktopTimeline({
                     }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     className="w-56 h-56 md:w-64 md:h-64 relative rounded-[2rem] overflow-hidden shadow-xl border-4 border-white pointer-events-none"
-                 >
+                  >
                     <IconImage src={lesson.imageUrl || "/images/letters.svg"} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
-                 </motion.div>
-              </div>
+                  </motion.div>
+                }
+              />
             </motion.div>
           )
         })}

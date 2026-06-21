@@ -10,6 +10,7 @@ import DesktopStickyBanner from '../path-ui/DesktopStickyBanner';
 import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
+import { DesktopTimelineNodeLayout } from '../path-ui/DesktopTimelineNodeLayout';
 
 interface SpeakDesktopTimelineProps {
   unit: any;
@@ -162,83 +163,71 @@ export default function SpeakDesktopTimeline({
             >
               <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} isDesktop={true} />
               <PathDecorations index={idx} isDesktop={true} />
-              <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-12 xl:pr-20' : 'justify-start pl-12 xl:pl-20'}`}>
-                <div className="w-full max-w-[360px]">
+              <DesktopTimelineNodeLayout
+                isLeft={isLeft}
+                cardContent={
                   <SharedLessonCard 
                     pathType="speak"
-                    lesson={lesson}
-                    level={level}
-                    unit={unit}
+                    lesson={lesson} 
+                    level={level} 
+                    unit={unit} 
                     language={language}
-                    isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
                       const saved = localStorage.getItem(`last_speak_level_${lesson.id}`);
                       setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                      setShowDesktopUnitsList(false);
                     }}
                   />
-                </div>
-              </div>
-
-              {/* Center icon */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                {isMaxLevel && (
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
-                    <Crown size={28} className="text-amber-400 fill-amber-400" />
-                  </div>
-                )}
-                <div
-                  className={`relative w-20 h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden bg-white shadow-md cursor-pointer hover:scale-105 active:scale-95
-                    ${isMaxLevel ? unit.colorClass + ' text-white ' + unit.borderClass 
-                    : isReviewLocked ? 'bg-slate-100 text-slate-300 border-slate-200 border-2 active:border-b-2 active:translate-y-1' 
-                    : level >= 8 ? unit.shades.l4 : level >= 6 ? unit.shades.l3 : level >= 3 ? unit.shades.l2 : level >= 1 ? unit.shades.l1 
-                    : 'bg-white ' + unit.textClass + ' border-slate-200 border-2 active:border-b-2 active:translate-y-1'}
-                  `}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isReviewLocked) {
-                      setLockedReviewModalOpen(true);
-                      return;
-                    }
-                    setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                    const saved = localStorage.getItem(`last_level_${lesson.id}`);
-                    setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                    setShowDesktopUnitsList(false);
-                  }}
-                >
-                  {(lesson as any).imageUrl ? (
-                    <>
-                      <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''} ${isReviewLocked ? 'opacity-30 grayscale' : ''}`} sizes="(max-width: 768px) 5rem" />
-                      {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={32} className="stroke-[3] text-white" /></div>}
-                      {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10"><Lock size={32} className="text-slate-500 stroke-[2]" /></div>}
-                    </>
-                  ) : (
-                    isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : isReviewLocked ? <Lock size={32} className="fill-slate-200 text-slate-400 stroke-[2]" /> : lesson.isReview ? <Star size={32} className="fill-current stroke-current" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
-                  )}
-                </div>
-              </div>
-
-
-
-              {/* Side Image */}
-              {(lesson as any).imageUrl && (
-                <div className={`absolute top-1/2 -translate-y-1/2 w-1/2 flex items-center ${isLeft ? 'right-0 justify-start pl-12 xl:pl-20' : 'left-0 justify-end pr-12 xl:pr-20'} z-0`}>
-                   <motion.div
-                      initial={false}
-                      animate={{ 
-                         opacity: activeCenteredLessonId === lesson.id ? 1 : 0.4, 
-                         x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? -20 : 20),
-                         scale: activeCenteredLessonId === lesson.id ? 1 : 0.85,
-                         filter: activeCenteredLessonId === lesson.id ? 'grayscale(0%)' : 'grayscale(60%)'
+                }
+                centerNode={
+                  <>
+                    {isMaxLevel && (
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30 drop-shadow-md">
+                        <Crown size={28} className="text-amber-400 fill-amber-400" />
+                      </div>
+                    )}
+                    <div 
+                      className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden bg-white shadow-md hover:scale-105 active:scale-95 cursor-pointer
+                        ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white' : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                        const saved = localStorage.getItem(`last_speak_level_${lesson.id}`);
+                        setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                        setShowDesktopUnitsList(false);
                       }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
-                      className="w-56 h-56 md:w-64 md:h-64 relative rounded-[2rem] overflow-hidden shadow-xl border-4 border-white pointer-events-none"
-                   >
-                      <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
-                   </motion.div>
-                </div>
-              )}
+                    >
+                      {(lesson as any).imageUrl ? (
+                        <>
+                          <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
+                          {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={32} className="stroke-[3] text-white" /></div>}
+                        </>
+                      ) : (
+                        isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : lesson.isReview ? <Star size={32} className="fill-current stroke-current" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
+                      )}
+                    </div>
+                  </>
+                }
+                imageNode={
+                  (lesson as any).imageUrl ? (
+                     <motion.div
+                        initial={false}
+                        animate={{ 
+                           opacity: activeCenteredLessonId === lesson.id ? 1 : 0.4, 
+                           x: activeCenteredLessonId === lesson.id ? 0 : (isLeft ? -20 : 20),
+                           scale: activeCenteredLessonId === lesson.id ? 1 : 0.85,
+                           filter: activeCenteredLessonId === lesson.id ? 'grayscale(0%)' : 'grayscale(60%)'
+                        }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        className="w-56 h-56 md:w-64 md:h-64 relative rounded-[2rem] overflow-hidden shadow-xl border-4 border-white pointer-events-none"
+                     >
+                        <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
+                     </motion.div>
+                  ) : undefined
+                }
+              />
             </motion.div>
           )
         })}
