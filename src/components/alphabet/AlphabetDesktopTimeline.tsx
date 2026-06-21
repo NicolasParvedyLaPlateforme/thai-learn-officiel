@@ -51,8 +51,7 @@ export default function AlphabetDesktopTimeline({
   return (
     <div key={`desktop-unit-${unit.id}`} className="flex flex-col gap-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
       <div
-        onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
-        className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[220px] flex items-center group`}
+        className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden transition-transform min-h-[220px] flex items-center group`}
       >
         {unit.imageUrl && (
           <div 
