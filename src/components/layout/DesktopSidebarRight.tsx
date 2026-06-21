@@ -13,6 +13,7 @@ import { useProgressStore } from "@/lib/store";
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
 import { getLevelSplit } from "@/lib/levelSplits";
+import stepsMetadata from "@/data/steps_metadata.json";
 
 interface Unit {
   id: string;
@@ -119,26 +120,6 @@ export function DesktopSidebarRight({
         );
       }
 
-      const wordCount = selectedLesson.lesson.words?.length || 0;
-      const stepsCount = 10 + wordCount + (selectedLesson.lesson.phrases?.length || 0);
-      let secsPerStep = 5;
-      if (modalLevel <= 1) secsPerStep = 5;
-      else if (modalLevel <= 3) secsPerStep = 7;
-      else if (modalLevel <= 6) secsPerStep = 10;
-      else if (modalLevel === 7) secsPerStep = 20;
-      else secsPerStep = 40;
-
-      let estimatedSecs = stepsCount * secsPerStep;
-      let estimatedMins = Math.ceil(estimatedSecs / 60);
-      if (selectedLesson.lesson.isReview) {
-        estimatedMins = (modalLevel + 1) * 2;
-      } else if (modalLevel === 10) {
-        estimatedMins = 20;
-      } else {
-        if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
-        else estimatedMins = Math.max(1, estimatedMins);
-      }
-
       const totalParts = suggestionType === 'learn' ? getLevelSplit(modalLevel, selectedLesson.lesson) : 1;
       const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
       const completedParts = lessonPartsCompleted[partsKey] || [];
@@ -149,6 +130,26 @@ export function DesktopSidebarRight({
 
       const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
       const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
+
+      const exactStepsCount = (stepsMetadata as any)[suggestionType || 'learn']?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
+
+      let secsPerStep = 5;
+      if (modalLevel <= 1) secsPerStep = 5;
+      else if (modalLevel <= 3) secsPerStep = 7;
+      else if (modalLevel <= 6) secsPerStep = 10;
+      else if (modalLevel === 7) secsPerStep = 20;
+      else secsPerStep = 40;
+
+      let estimatedSecs = exactStepsCount * secsPerStep;
+      let estimatedMins = Math.ceil(estimatedSecs / 60);
+      if (selectedLesson.lesson.isReview) {
+        estimatedMins = (modalLevel + 1) * 2;
+      } else if (modalLevel === 10) {
+        estimatedMins = 20;
+      } else {
+        if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
+        else estimatedMins = Math.max(1, estimatedMins);
+      }
 
       const { getExpectedXp } = useProgressStore.getState();
       const lessonIdForXp = suggestionType === 'speak' ? `speak_${selectedLesson.lesson.id}` : selectedLesson.lesson.id;
@@ -338,7 +339,7 @@ export function DesktopSidebarRight({
               {/* Stats Section */}
               <div className="p-6 border-b border-slate-100 flex flex-col items-center">
                 <LessonDetailsStats 
-                  stepsCount={playFullLevel ? stepsCount : Math.ceil(stepsCount/totalParts)}
+                  stepsCount={exactStepsCount}
                   expectedXp={expectedXp}
                   maxXp={expectedXp} // For desktop sidebar we don't necessarily show strikethrough maxXp, or we could pass maxXp if available
                   isFirstTime={isFirstTime}

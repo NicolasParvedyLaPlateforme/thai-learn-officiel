@@ -6,12 +6,13 @@ import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { playThaiTTS } from "@/lib/tts";
 import IconImage from '../ui/IconImage';
 import { useProgressStore } from "@/lib/store";
-import { getLevelSplit } from "@/lib/levelSplits";
+import { getLevelSplit, getEstimatedStepsCount } from "@/lib/levelSplits";
 import { LessonPathMap } from './LessonPathMap';
 import { buttonVariants } from '../ui/Button';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { LessonPartsSelector } from './LessonPartsSelector';
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
+import stepsMetadata from "@/data/steps_metadata.json";
 
 interface LearnLessonModalProps {
   isOpen: boolean;
@@ -59,27 +60,6 @@ export default function LearnLessonModal({
   if (!selectedLesson) return null;
 
   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
-  const wordCount = selectedLesson.lesson.words?.length || 0;
-  const stepsCount = 10 + wordCount + (selectedLesson.lesson.phrases?.length || 0);
-  
-  let secsPerStep = 5;
-  if (modalLevel <= 1) secsPerStep = 5;
-  else if (modalLevel <= 3) secsPerStep = 7;
-  else if (modalLevel <= 6) secsPerStep = 10;
-  else if (modalLevel === 7) secsPerStep = 20;
-  else secsPerStep = 40;
-
-  let estimatedSecs = stepsCount * secsPerStep;
-  let estimatedMins = Math.ceil(estimatedSecs / 60);
-  
-  if (selectedLesson.lesson.isReview) {
-    estimatedMins = (modalLevel + 1) * 2;
-  } else if (modalLevel === 10) {
-    estimatedMins = 20;
-  } else {
-    if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
-    else estimatedMins = Math.max(1, estimatedMins);
-  }
 
   const totalParts = getLevelSplit(modalLevel, selectedLesson.lesson);
   const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
@@ -90,6 +70,27 @@ export default function LearnLessonModal({
   const isPlayingPart = totalParts > 1 && !playFullLevel;
   const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
   const selectedPartIndex = playFullLevel ? -1 : (manualPartIndex !== null ? manualPartIndex : nextUncompletedPart);
+
+  const exactStepsCount = (stepsMetadata as any)['learn']?.[selectedLesson.lesson.id]?.[modalLevel]?.[playFullLevel ? 'full' : `part_${Math.max(0, selectedPartIndex)}`] || 0;
+
+  let secsPerStep = 5;
+  if (modalLevel <= 1) secsPerStep = 5;
+  else if (modalLevel <= 3) secsPerStep = 7;
+  else if (modalLevel <= 6) secsPerStep = 10;
+  else if (modalLevel === 7) secsPerStep = 20;
+  else secsPerStep = 40;
+
+  let estimatedSecs = exactStepsCount * secsPerStep;
+  let estimatedMins = Math.ceil(estimatedSecs / 60);
+  
+  if (selectedLesson.lesson.isReview) {
+    estimatedMins = (modalLevel + 1) * 2;
+  } else if (modalLevel === 10) {
+    estimatedMins = 20;
+  } else {
+    if (modalLevel === 9) estimatedMins = Math.max(30, estimatedMins);
+    else estimatedMins = Math.max(1, estimatedMins);
+  }
 
   const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
   const { xp: expectedXp, maxXp, isFirstTime } = getExpectedXp(
@@ -162,7 +163,7 @@ export default function LearnLessonModal({
                 />
 
                 <LessonDetailsStats 
-                  stepsCount={playFullLevel ? stepsCount : Math.ceil(stepsCount/totalParts)}
+                  stepsCount={exactStepsCount}
                   expectedXp={expectedXp}
                   maxXp={maxXp}
                   isFirstTime={isFirstTime}

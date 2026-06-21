@@ -67,6 +67,42 @@ export async function getExercisesServer(lessonId: string, currentLevel: number,
   return generateExercises(lesson, data.lessons, currentLevel, language, partIndex, totalParts);
 }
 
+export async function getExactStepsCountServer(type: 'learn' | 'alphabet' | 'speak', lessonId: string, currentLevel: number, language: string, partIndex: number | null = null, totalParts: number | null = null): Promise<number> {
+  if (type === 'alphabet') {
+    const allPhrases = data.lessons.flatMap(l => l.phrases || []);
+    const allWords = data.lessons.flatMap(l => l.words || []);
+    const rawLessons = getAlphabetLessons();
+    const allAlphaLessons = [...rawLessons.consonants, ...rawLessons.vowels];
+    const lesson = allAlphaLessons.find(l => l.id === lessonId);
+    if (!lesson) return 0;
+    const exercises = generateAlphabetExercises(lesson, currentLevel, language, allWords as unknown as Word[], allPhrases as unknown as Phrase[]);
+    return exercises.length;
+  }
+  
+  if (type === 'speak') {
+    const speakCourseData = (await import("@/data/speak_course.json")).default;
+    const speakLessonMeta = speakCourseData.lessons.find((l: any) => l.id === lessonId);
+    if (!speakLessonMeta) return 0;
+    
+    if (currentLevel === 0) return speakLessonMeta.phraseIds.length;
+    if (currentLevel === 1) return speakLessonMeta.dialogue?.length || 0;
+    if (currentLevel === 2) {
+       const speakAnswerMeData = (await import("@/data/speak_answer_me.json")).default as any;
+       const answerData = speakAnswerMeData.exercises[lessonId] || [];
+       return answerData.length;
+    }
+    if (currentLevel === 3 || currentLevel === 4) {
+       return Math.min(3, speakLessonMeta.phraseIds.length);
+    }
+    return 0;
+  }
+
+  const lesson = data.lessons.find(l => l.id === lessonId);
+  if (!lesson) return 0;
+  const exercises = generateExercises(lesson, data.lessons, currentLevel, language, partIndex, totalParts);
+  return exercises.length;
+}
+
 export async function getEndlessReviewServer(completedLessons: string[], language: string, options: any) {
   return generateEndlessReviewExercises(data.lessons, completedLessons, language, options);
 }
