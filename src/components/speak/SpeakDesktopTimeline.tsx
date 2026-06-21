@@ -168,9 +168,11 @@ export default function SpeakDesktopTimeline({
                   <SharedLessonCard 
                     pathType="speak"
                     lesson={lesson} 
-                    level={level} 
+                    level={level}
+                    maxLevelPerLesson={maxLevelPerLesson}
                     unit={unit} 
                     language={language}
+                    isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });

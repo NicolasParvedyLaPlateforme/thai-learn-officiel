@@ -164,6 +164,7 @@ export default function AlphabetDesktopTimeline({
                     maxLevelPerLesson={4}
                     unit={unit} 
                     language={language}
+                    isReviewLocked={false}
                     suggestedLessonId={suggestedLessonId}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });

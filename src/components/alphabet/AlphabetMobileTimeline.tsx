@@ -211,6 +211,7 @@ export default function AlphabetMobileTimeline({
                     maxLevelPerLesson={4}
                     unit={unit}
                     language={language}
+                    isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     isMobileLayout={true}
                     onClick={() => {
