@@ -22,8 +22,8 @@ async function generateMetadata() {
       metadata.learn[lesson.id][level] = {};
       const totalParts = getLevelSplit(level, lesson);
       
-      // Full level (playFullLevel = true, so partIndex = null)
-      const fullCount = await getExactStepsCountServer('learn', lesson.id, level, 'fr', null, totalParts);
+      // Full level (playFullLevel = true, so partIndex = null, totalParts = null)
+      const fullCount = await getExactStepsCountServer('learn', lesson.id, level, 'fr', null, null);
       metadata.learn[lesson.id][level]['full'] = fullCount;
 
       // Parts
