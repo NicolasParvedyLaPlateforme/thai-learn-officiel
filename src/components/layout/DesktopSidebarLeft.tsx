@@ -92,11 +92,11 @@ export default function DesktopSidebarLeft() {
              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
            </button>
         )}
-        <div className="flex items-center gap-2 mb-10 shrink-0 px-2 justify-center group-hover:justify-start xl:justify-start relative">
-          <div className="bg-emerald-500 text-white p-2 rounded-xl shrink-0 absolute left-1/2 -translate-x-1/2 transition-all duration-300 xl:translate-x-0 xl:relative xl:left-auto group-hover:translate-x-0 group-hover:relative group-hover:left-auto">
+        <div className="-mt-6 -mx-2 px-2 pt-8 pb-6 mb-8 bg-slate-50/80 border-b border-slate-200 flex items-center gap-2 shrink-0 justify-center group-hover:justify-start xl:justify-start relative transition-all duration-300">
+          <div className="bg-emerald-500 text-white p-2 rounded-xl shrink-0 absolute left-1/2 -translate-x-1/2 transition-all duration-300 xl:translate-x-0 xl:relative xl:left-auto group-hover:translate-x-0 group-hover:relative group-hover:left-auto ml-0 group-hover:ml-4 xl:ml-4">
             <BookOpen size={24} strokeWidth={2.5} />
           </div>
-          <h1 className="text-2xl font-semibold text-slate-800 whitespace-nowrap transition-opacity duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100 xl:ml-1 group-hover:ml-1">
+          <h1 className="text-[26px] font-light font-serif tracking-wide text-slate-800 whitespace-nowrap transition-opacity duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100 xl:ml-1 group-hover:ml-1 mt-1">
             ThaiLearn
           </h1>
           <button 
