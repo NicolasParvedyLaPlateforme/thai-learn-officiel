@@ -52,10 +52,10 @@ export function SharedLessonCard({
     : false;
 
   const buttonText = level === 0 
-    ? (getTranslation('auto.start_learning', language) || "Commencer") 
+    ? getTranslation('auto.start_learning', language)
     : isMaxLevel 
-      ? (getTranslation('auto.review', language) || "Réviser") 
-      : (getTranslation('auto.continue', language) || "Continuer");
+      ? getTranslation('auto.review', language)
+      : getTranslation('auto.continue', language);
 
   const getDynamicColorClass = () => {
     if (unit.bgClass) return unit.bgClass;
@@ -284,7 +284,7 @@ export function SharedLessonCard({
         <div className="flex items-center justify-between w-full mt-2 gap-4">
           <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2">
             <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
-              <span className="font-extrabold">{getTranslation('auto.mastery_6', language) || "MAÎTRISE"}</span>
+              <span className="font-extrabold">{getTranslation('auto.mastery_6', language)}</span>
               <span className={cn(textDynamicColor, "font-black")}>{level}/{maxLevelPerLesson}</span>
             </div>
             {renderMobileProgressBar()}
@@ -341,7 +341,7 @@ export function SharedLessonCard({
 
       <div className="w-full flex flex-col gap-1 mt-1">
         <div className="flex justify-between text-xs font-bold tracking-wider uppercase px-1">
-          <span className="text-slate-400">{getTranslation('auto.mastery_6', language) || "MAÎTRISE"}</span>
+          <span className="text-slate-400">{getTranslation('auto.mastery_6', language)}</span>
           <span className={cn(textDynamicColor, "font-black")}>{level}/{maxLevelPerLesson}</span>
         </div>
         <div className="px-1">
