@@ -162,6 +162,7 @@ export default function AlphabetDesktopTimeline({
                     pathType="alphabet"
                     lesson={lesson} 
                     level={level} 
+                    maxLevelPerLesson={4}
                     unit={unit} 
                     language={language}
                     suggestedLessonId={suggestedLessonId}
