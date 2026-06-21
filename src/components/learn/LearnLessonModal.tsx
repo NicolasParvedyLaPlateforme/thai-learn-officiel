@@ -11,6 +11,7 @@ import { LessonPathMap } from './LessonPathMap';
 import { buttonVariants } from '../ui/Button';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { LessonPartsSelector } from './LessonPartsSelector';
+import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
 
 interface LearnLessonModalProps {
   isOpen: boolean;
@@ -160,32 +161,14 @@ export default function LearnLessonModal({
                   isLevelFullyCompleted={isLevelFullyCompleted}
                 />
 
-                <h4 className="text-[12px] font-black uppercase text-slate-400 tracking-widest mb-6 text-center">
-                  {playFullLevel ? "NIVEAU ENTIER" : totalParts > 1 ? `PARTIE ${selectedPartIndex + 1}` : "DÉTAILS"}
-                </h4>
-                
-                <div className="flex items-center justify-center gap-4 w-full">
-                  <div className="flex flex-col items-center justify-center py-4 bg-slate-50 border border-slate-100 rounded-2xl flex-1">
-                    <BookOpen size={20} className="text-slate-400 mb-2" />
-                    <span className="text-xl font-black text-slate-700">{playFullLevel ? stepsCount : Math.ceil(stepsCount/totalParts)}</span>
-                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1">étapes</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center py-4 bg-amber-50 border border-amber-100 rounded-2xl flex-1">
-                    <Star size={20} className="text-amber-500 mb-2" />
-                    <span className="text-xl font-black text-amber-600">
-                      {!isFirstTime && maxXp > expectedXp && (
-                        <span className="line-through text-amber-400/60 mr-1 opacity-80 text-sm">+{maxXp}</span>
-                      )}
-                      +{expectedXp}
-                    </span>
-                    <span className="text-[10px] uppercase tracking-wider text-amber-500/70 font-bold mt-1">XP</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center py-4 bg-blue-50 border border-blue-100 rounded-2xl flex-1">
-                    <Clock size={20} className="text-blue-500 mb-2" />
-                    <span className="text-xl font-black text-slate-700">{playFullLevel ? estimatedMins : Math.max(1, Math.ceil(estimatedMins/totalParts))}</span>
-                    <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1">min</span>
-                  </div>
-                </div>
+                <LessonDetailsStats 
+                  stepsCount={playFullLevel ? stepsCount : Math.ceil(stepsCount/totalParts)}
+                  expectedXp={expectedXp}
+                  maxXp={maxXp}
+                  isFirstTime={isFirstTime}
+                  estimatedMins={playFullLevel ? estimatedMins : Math.ceil(estimatedMins/totalParts)}
+                  title={playFullLevel ? "NIVEAU ENTIER" : totalParts > 1 ? `PARTIE ${selectedPartIndex + 1}` : "DÉTAILS"}
+                />
         </div>
       </div>
     </SharedLessonModal>
