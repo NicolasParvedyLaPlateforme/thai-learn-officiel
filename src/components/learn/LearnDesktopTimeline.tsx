@@ -51,7 +51,8 @@ export default function LearnDesktopTimeline({
   return (
     <div key={`desktop-unit-${unit.id}`} className="flex flex-col gap-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
       <div
-        className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden transition-transform min-h-[220px] flex items-center group`}
+        onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
+        className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer transition-transform min-h-[220px] flex items-center group`}
       >
         {unit.imageUrl && (
           <div 
@@ -101,7 +102,7 @@ export default function LearnDesktopTimeline({
         <div className="absolute bottom-6 right-6 z-20 hidden md:block">
           <button
             onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
-            className="flex items-center justify-between p-3.5 pr-4 bg-white/95 backdrop-blur-md hover:bg-white border border-white/40 rounded-[1.25rem] shadow-lg hover:shadow-xl transition-all group cursor-pointer min-w-[240px]"
+            className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-[1.25rem] shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px]"
           >
             <div className="flex items-center gap-3">
               <div className={`w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100`}>
