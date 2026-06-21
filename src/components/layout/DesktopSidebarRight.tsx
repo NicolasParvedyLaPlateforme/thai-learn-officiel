@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Play, PlayCircle, Star, Target, CheckCircle2, Lock, Clock, GraduationCap, Medal, Pencil, RotateCcw, BookOpen, X, Users, ChevronLeft, Flag, Crown, PieChart, Circle } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import IconImage from '../ui/IconImage';
 import { buttonVariants } from '../ui/Button';
 import { playThaiTTS } from "@/lib/tts";
@@ -467,7 +468,7 @@ export function DesktopSidebarRight({
                     <div className="flex items-center gap-4 mb-4">
                       {u.imageUrl ? (
                         <div className={`w-16 h-16 rounded-2xl overflow-hidden relative shadow-sm shrink-0 border-2 ${u.colorClass.replace('bg-', 'border-')}`}>
-                          <img src={u.imageUrl} alt={getLocalizedField(u, 'title', language)} className="object-cover w-full h-full" />
+                          <Image src={u.imageUrl} alt={getLocalizedField(u, 'title', language) || ''} fill sizes="64px" className="object-cover" />
                         </div>
                       ) : (
                         <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-black text-[20px] text-white ${u.colorClass} shadow-sm shrink-0`}>
@@ -501,7 +502,7 @@ export function DesktopSidebarRight({
                   )}
                   {u.imageUrl ? (
                     <div className="w-14 h-14 rounded-2xl overflow-hidden relative shadow-sm shrink-0 mr-4 border border-slate-100 group-hover/btn:border-slate-200 transition-colors bg-white">
-                      <img src={u.imageUrl} alt={getLocalizedField(u, 'title', language)} className="object-cover w-full h-full opacity-80 group-hover/btn:opacity-100 transition-opacity grayscale-[30%] group-hover/btn:grayscale-0" />
+                      <Image src={u.imageUrl} alt={getLocalizedField(u, 'title', language) || ''} fill sizes="64px" className="object-cover opacity-80 group-hover/btn:opacity-100 transition-opacity grayscale-[30%] group-hover/btn:grayscale-0" />
                     </div>
                   ) : (
                     <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-[16px] bg-slate-50 text-slate-400 group-hover/btn:bg-white group-hover/btn:text-slate-600 shrink-0 mr-4 transition-colors border border-slate-100 group-hover/btn:border-slate-200">
