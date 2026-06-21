@@ -59,7 +59,7 @@ export default function LearnDesktopTimeline({
       const currentScrollY = window.scrollY;
       
       if (currentScrollY > 350) {
-        if (currentScrollY > lastScrollY) {
+        if (currentScrollY < lastScrollY) {
           setShowMiniBanner(true);
         } else {
           setShowMiniBanner(false);
