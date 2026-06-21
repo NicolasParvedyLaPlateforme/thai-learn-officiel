@@ -28,8 +28,7 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
 
   return (
     <div className="w-full border-b border-slate-100 py-6 px-1 flex flex-col gap-4 relative">
-      {/* Fond décoratif très subtil */}
-      <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-emerald-50 rounded-full opacity-50 pointer-events-none"></div>
+
 
       <div className="flex items-center justify-between mb-1 relative z-10">
         <div className="flex items-center gap-3">

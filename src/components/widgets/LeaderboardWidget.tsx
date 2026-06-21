@@ -50,8 +50,6 @@ export function LeaderboardWidget() {
 
   return (
     <div className="w-full py-6 px-1 flex flex-col gap-4 relative group">
-      {/* Fond décoratif très subtil */}
-      <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-amber-50 rounded-full opacity-60 pointer-events-none"></div>
 
       <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3">
