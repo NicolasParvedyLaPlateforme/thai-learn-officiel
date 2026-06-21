@@ -216,16 +216,16 @@ export function SharedLessonCard({
                   {activeTab === 'words' ? (getTranslation('auto.unlock_levels_for_words', language) || "Débloquez plus de niveaux pour voir les mots.") : (getTranslation('auto.unlock_levels_for_phrases', language) || "Débloquez plus de niveaux pour voir les phrases.")}
                 </span>
               ) : activeTab === 'words' ? (
-                lesson.words?.slice(0, isMobileLayout ? 3 : 5).map((w: any, i: number) => (
+                lesson.words?.filter((w: any) => w.th !== '...' && w.phonetic !== '...').slice(0, isMobileLayout ? 3 : 5).map((w: any, i: number) => (
                     <div key={i} className="flex justify-between items-center text-[11px] sm:text-sm border-b border-slate-100 last:border-0 pb-0.5 sm:pb-1.5 last:pb-0">
-                      <span className="font-semibold text-slate-700 truncate pr-1">{w.phonetic || w.th}</span>
+                      <span className="font-medium text-slate-700 truncate pr-1 font-thai text-sm sm:text-base">{w.th || w.phonetic}</span>
                       <span className="text-slate-400 truncate text-right">{getLocalizedField(w, '', language)}</span>
                     </div>
                 ))
               ) : (
-                lesson.phrases?.slice(0, isMobileLayout ? 2 : 3).map((p: any, i: number) => (
+                lesson.phrases?.filter((p: any) => p.th !== '...' && p.phonetic !== '...').slice(0, isMobileLayout ? 2 : 3).map((p: any, i: number) => (
                     <div key={i} className="flex flex-col text-[11px] sm:text-sm border-b border-slate-100 last:border-0 pb-0.5 sm:pb-1.5 last:pb-0">
-                      <span className="font-semibold text-slate-700 truncate">{p.phonetic || p.th}</span>
+                      <span className="font-medium text-slate-700 truncate font-thai text-sm sm:text-base">{p.th || p.phonetic}</span>
                       <span className="text-slate-400 truncate text-[10px] sm:text-xs">{getLocalizedField(p, '', language)}</span>
                     </div>
                 ))
