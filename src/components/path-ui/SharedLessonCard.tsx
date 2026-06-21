@@ -51,7 +51,11 @@ export function SharedLessonCard({
     ? !hasUnlockedPhrases
     : false;
 
-  const buttonText = level === 0 ? getTranslation('auto.start_learning', language) || "Commencer" : getTranslation('auto.access_levels', language) || "Accéder aux niveaux";
+  const buttonText = level === 0 
+    ? (getTranslation('auto.start_learning', language) || "Commencer") 
+    : isMaxLevel 
+      ? (getTranslation('auto.review', language) || "Réviser") 
+      : (getTranslation('auto.continue', language) || "Continuer");
 
   const getDynamicColorClass = () => {
     if (unit.bgClass) return unit.bgClass;
@@ -72,14 +76,14 @@ export function SharedLessonCard({
     isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
   );
 
-  // Renders the fragmented progress bar (vertical pills for mobile)
+  // Renders the fragmented progress bar (horizontal dashes for mobile)
   const renderMobileProgressBar = () => (
-    <div className="flex gap-[3px] items-center">
+    <div className="flex justify-between gap-1 w-full mt-0.5">
       {Array.from({ length: maxLevelPerLesson }).map((_, i) => (
         <div 
           key={i} 
           className={cn(
-            "w-2 h-3.5 rounded-full transition-all", 
+            "h-2 sm:h-2.5 flex-1 rounded-full transition-all", 
             i < level ? dynamicColor : 'bg-slate-100'
           )} 
         />
@@ -279,9 +283,9 @@ export function SharedLessonCard({
         {/* Bottom: Progress Bar & Button (Mobile side-by-side) */}
         <div className="flex items-center justify-between w-full mt-2 gap-4">
           <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2">
-            <div className="flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase mb-1">
-              <span className="text-slate-400">{getTranslation('auto.mastery_6', language) || "MAÎTRISE"}</span>
-              <span className={cn(textDynamicColor)}>{level}/{maxLevelPerLesson}</span>
+            <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
+              <span className="font-extrabold">{getTranslation('auto.mastery_6', language) || "MAÎTRISE"}</span>
+              <span className={cn(textDynamicColor, "font-black")}>{level}/{maxLevelPerLesson}</span>
             </div>
             {renderMobileProgressBar()}
           </div>
