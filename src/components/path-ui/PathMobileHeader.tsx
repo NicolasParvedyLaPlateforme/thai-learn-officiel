@@ -1,4 +1,4 @@
-import { BookOpen, User, Menu } from 'lucide-react';
+import { BookOpen, User, Menu, Globe, Mic } from 'lucide-react';
 import Link from 'next/link';
 import PWAInstallButton from '../ui/PWAInstallButton';
 import { getTranslation } from "@/hooks/useTranslation";
@@ -11,6 +11,7 @@ interface PathMobileHeaderProps {
   setIsUnitsModalOpen: (open: boolean) => void;
   setIsMobileMenuOpen: (open: boolean) => void;
   pageTitleKey?: string;
+  pathType?: 'learn' | 'alphabet' | 'speak';
 }
 
 export default function PathMobileHeader({
@@ -19,7 +20,8 @@ export default function PathMobileHeader({
   language,
   setIsUnitsModalOpen,
   setIsMobileMenuOpen,
-  pageTitleKey = 'nav.learn'
+  pageTitleKey = 'sidebar.vocabulary',
+  pathType = 'learn'
 }: PathMobileHeaderProps) {
   return (
     <header className={`bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[calc(3.75rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] md:hidden sticky top-0 transition-transform duration-300 ${showHeader ? 'translate-y-0' : '-translate-y-full'}`}>
@@ -29,7 +31,13 @@ export default function PathMobileHeader({
             onClick={() => window.location.reload()}
             className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors md:hidden"
           >
-            <BookOpen size={18} className="text-emerald-600" />
+            {pathType === 'alphabet' ? (
+              <Globe size={18} className="text-emerald-600" />
+            ) : pathType === 'speak' ? (
+              <Mic size={18} className="text-emerald-600" />
+            ) : (
+              <BookOpen size={18} className="text-emerald-600" />
+            )}
             <span className="font-extrabold text-slate-700 text-sm">{getTranslation(pageTitleKey, language) || 'Vocabulaire'}</span>
           </button>
         </div>

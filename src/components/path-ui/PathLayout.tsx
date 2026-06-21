@@ -236,6 +236,7 @@ export default function PathLayout({
   }, [autoDetectLanguage, lessons, completedLessons, units, pathType]);
 
   const activeUnit = units[activeUnitIndex];
+  const pageTitleKey = pathType === 'alphabet' ? 'sidebar.alphabet' : pathType === 'speak' ? 'sidebar.speaking' : 'sidebar.vocabulary';
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
@@ -247,6 +248,8 @@ export default function PathLayout({
           language={language}
           setIsUnitsModalOpen={setIsUnitsModalOpen}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
+          pageTitleKey={pageTitleKey}
+          pathType={pathType}
         />
       )}
       
