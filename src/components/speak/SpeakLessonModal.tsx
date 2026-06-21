@@ -6,6 +6,7 @@ import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { playThaiTTS } from "@/lib/tts";
 import IconImage from '../ui/IconImage';
 import { LessonPathMap } from '../learn/LessonPathMap';
+import { buttonVariants } from '../ui/Button';
 import SharedLessonModal from '../ui/SharedLessonModal';
 
 interface SpeakLessonModalProps {
@@ -105,14 +106,18 @@ export default function SpeakLessonModal({
           {isBrave ? (
             <button
               disabled
-              className={`w-full py-4 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center opacity-50 cursor-not-allowed bg-slate-400`}
+              className={buttonVariants({ variant: 'gamified', size: 'lg', className: "w-full rounded-xl opacity-50 cursor-not-allowed bg-slate-400 border-slate-500" })}
             >
               {getTranslation('auto.unavailable_on_brave', language)}
             </button>
           ) : (
             <Link
               href={`/speak/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-              className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+              className={buttonVariants({ 
+                variant: 'gamified', 
+                size: 'lg', 
+                className: `w-full rounded-xl ${selectedLesson.unitColor} ${selectedLesson.unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500')}` 
+              })}
             >
               {getTranslation('auto.start_lesson', language)}
             </Link>

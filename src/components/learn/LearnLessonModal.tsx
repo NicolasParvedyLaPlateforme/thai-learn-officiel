@@ -8,6 +8,7 @@ import IconImage from '../ui/IconImage';
 import { useProgressStore } from "@/lib/store";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { LessonPathMap } from './LessonPathMap';
+import { buttonVariants } from '../ui/Button';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { LessonPartsSelector } from './LessonPartsSelector';
 
@@ -122,7 +123,7 @@ export default function LearnLessonModal({
             <div className="flex gap-3">
               <Link
                 href={`/writing?lessonId=${selectedLesson.lesson.id}`}
-                className="w-full py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer"
+                className={buttonVariants({ variant: 'flat', size: 'lg', className: "w-full rounded-xl" })}
               >
                 <Pencil size={16} className="mr-2" />
                 {getTranslation('auto.writing', language)}
@@ -134,7 +135,11 @@ export default function LearnLessonModal({
               href={(totalParts > 1 && !playFullLevel)
                 ? `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}&part=${selectedPartIndex}&totalParts=${totalParts}` 
                 : `/lesson/${selectedLesson.lesson.id}?level=${modalLevel + 1}`}
-              className={`flex-1 py-4 xl:py-4 md:py-3 rounded-xl font-bold text-[17px] text-white shadow-md flex items-center justify-center hover:opacity-90 active:translate-y-1 transition-all ${selectedLesson.unitColor}`}
+              className={buttonVariants({ 
+                variant: 'gamified', 
+                size: 'lg', 
+                className: `w-full rounded-xl ${selectedLesson.unitColor} ${selectedLesson.unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500')}` 
+              })}
             >
               {getTranslation('auto.start_lesson', language)}
             </Link>
