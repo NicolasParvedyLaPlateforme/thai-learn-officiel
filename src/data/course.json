@@ -8,20 +8,20 @@
         {
           "id": "w_sawatdee",
           "th": "สวัสดี",
-          "fr": "Bonjour",
           "phonetic": "sà-wàt-dii",
-          "en": "Good morning",
+          "fr": "Bonjour",
+          "en": "Hello / Hi",
           "imageUrl": "/images/unite-1/mot/bonjour-mot.webp",
           "es": "Buenos días",
-          "de": "Guten Morgen",
+          "de": "Hallo / Guten Tag",
           "it": "Buongiorno",
           "syllabe": "1, 4"
         },
         {
           "id": "w_khopkhun",
           "th": "ขอบคุณ",
-          "fr": "Merci",
           "phonetic": "khɔ̀p-khun",
+          "fr": "Merci",
           "en": "Thanks",
           "imageUrl": "/images/unite-1/mot/merci.webp",
           "es": "Gracias",
@@ -32,32 +32,32 @@
         {
           "id": "w_krap",
           "th": "ครับ",
-          "fr": "particule polie homme",
           "phonetic": "khráp",
+          "fr": "particule polie homme",
           "en": "polite male particle",
           "imageUrl": "/images/unite-1/mot/homme.webp",
           "es": "partícula cortés masculina",
-          "de": "höfliche Partikel für Männer",
+          "de": "höflicher Partikel für Männer",
           "it": "particella cortese maschile",
           "syllabe": ""
         },
         {
           "id": "w_kha",
           "th": "ค่ะ",
-          "fr": "particule polie femme",
           "phonetic": "khâ",
+          "fr": "particule polie femme",
           "en": "polite female particle",
           "imageUrl": "/images/unite-1/mot/femme.webp",
           "es": "partícula cortés femenina",
-          "de": "höfliche Partikel für Frauen",
+          "de": "höflicher Partikel für Frauen",
           "it": "particella cortese femminile",
           "syllabe": ""
         },
         {
           "id": "w_sabai",
           "th": "สบาย",
-          "fr": "bien / à l'aise",
           "phonetic": "sà-baai",
+          "fr": "bien / à l'aise",
           "en": "good / comfortable",
           "imageUrl": "/images/unite-1/mot/cavabien.webp",
           "es": "bien / cómodo",
@@ -68,8 +68,8 @@
         {
           "id": "w_dee",
           "th": "ดี",
-          "fr": "bien / bon",
           "phonetic": "dii",
+          "fr": "bien / bon",
           "en": "good",
           "imageUrl": "/images/unite-1/mot/bien.webp",
           "es": "bien / bueno",
@@ -80,9 +80,9 @@
         {
           "id": "w_mai",
           "th": "ไหม",
-          "fr": "est-ce que (question)",
           "phonetic": "mǎi",
-          "en": "does (question)",
+          "fr": "est-ce que (question)",
+          "en": "question particle (yes/no)",
           "imageUrl": "/images/unite-1/mot/question.webp",
           "es": "partícula interrogativa",
           "de": "Fragepartikel",
@@ -94,13 +94,13 @@
         {
           "id": "p_hello_m",
           "th": "สวัสดีครับ",
-          "fr": "bonjour (homme)",
           "phonetic": "sà-wàt-dii khráp",
+          "fr": "bonjour (homme)",
+          "en": "hello (man)",
           "components": [
             "w_sawatdee",
             "w_krap"
           ],
-          "en": "hello (man)",
           "imageUrl": "/images/unite-1/mot/bonjour-mot.webp",
           "es": "hola (hombre)",
           "de": "hallo (Mann)",
@@ -110,13 +110,13 @@
         {
           "id": "p_hello_f",
           "th": "สวัสดีค่ะ",
-          "fr": "bonjour (femme)",
           "phonetic": "sà-wàt-dii khâ",
+          "fr": "bonjour (femme)",
+          "en": "hello (woman)",
           "components": [
             "w_sawatdee",
             "w_kha"
           ],
-          "en": "hello (woman)",
           "imageUrl": "/images/unite-1/phrase/bonjour-femme.webp",
           "es": "hola (mujer)",
           "de": "hallo (Frau)",
@@ -126,14 +126,14 @@
         {
           "id": "p_how_are_you",
           "th": "สบายดีไหม",
-          "fr": "comment ça va ?",
           "phonetic": "sà-baai dii mǎi",
+          "fr": "comment ça va ?",
+          "en": "How are you ?",
           "components": [
             "w_sabai",
             "w_dee",
             "w_mai"
           ],
-          "en": "How are you ?",
           "imageUrl": "/images/unite-1/phrase/cavabien-question-compress.webp",
           "es": "¿cómo estás?",
           "de": "wie geht es dir?",
@@ -143,13 +143,13 @@
         {
           "id": "p_thanks_m",
           "th": "ขอบคุณครับ",
-          "fr": "merci (homme)",
           "phonetic": "khɔ̀p-khun khráp",
+          "fr": "merci (homme)",
+          "en": "thank you (man)",
           "components": [
             "w_khopkhun",
             "w_krap"
           ],
-          "en": "thank you (man)",
           "imageUrl": "/images/p_p_thanks_m.svg",
           "es": "gracias (hombre)",
           "de": "danke (Mann)",
@@ -159,13 +159,13 @@
         {
           "id": "p_thanks_f",
           "th": "ขอบคุณค่ะ",
-          "fr": "merci (femme)",
           "phonetic": "khɔ̀p-khun khâ",
+          "fr": "merci (femme)",
+          "en": "thank you (woman)",
           "components": [
             "w_khopkhun",
             "w_kha"
           ],
-          "en": "thank you (woman)",
           "imageUrl": "/images/p_p_thanks_f.svg",
           "es": "gracias (mujer)",
           "de": "danke (Frau)",
@@ -175,13 +175,13 @@
         {
           "id": "p_i_am_fine",
           "th": "สบายดี",
-          "fr": "je vais bien",
           "phonetic": "sà-baai dii",
+          "fr": "je vais bien",
+          "en": "I'm doing well",
           "components": [
             "w_sabai",
             "w_dee"
           ],
-          "en": "I'm doing well",
           "imageUrl": "/images/p_p_i_am_fine.svg",
           "es": "estoy bien",
           "de": "mir geht es gut",
@@ -408,7 +408,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_la.svg",
           "es": "y (para devolver la pregunta)",
-          "de": "und (um die Frage zurückzugeben)",
+          "de": "und (um die Frage zu beantworten)",
           "it": "e (per rigirare la domanda)",
           "syllabe": ""
         },
@@ -432,6 +432,7 @@
           "fr": "(prénom)",
           "en": "(first name)",
           "allowIdenticalTranslation": false,
+          "imageUrl": "",
           "es": "(nombre)",
           "de": "(Vorname)",
           "it": "(nome)",
@@ -1165,7 +1166,6 @@
       "titleEn": "Unit 1 Assessment",
       "descriptionEn": "First challenge! Test your Thai basics: greetings, introductions, numbers from 0 to 10, and early time concepts.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Evaluación de la Unidad 1",
       "titleDe": "Überprüfung Einheit 1",
       "titleIt": "Valutazione Unità 1",
@@ -1636,8 +1636,8 @@
         {
           "id": "w_duem",
           "th": "ดื่ม",
-          "fr": "boire (polie)",
           "phonetic": "dùuem",
+          "fr": "boire (polie)",
           "en": "drink (formal)",
           "imageUrl": "/images/w_w_duem.svg",
           "es": "beber (formal)",
@@ -2361,7 +2361,6 @@
       "titleEn": "Unit 2 Assessment",
       "descriptionEn": "Time to eat! Review how to express quantities, essential food vocabulary, and crucial polite phrases.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "",
       "titleDe": "",
       "titleIt": "",
@@ -2484,7 +2483,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_understand_well.svg",
           "es": "No entiendo muy bien.",
-          "de": "Ich verstehe nicht so gut.",
+          "de": "Ich verstehe das nicht so ganz.",
           "it": "Non capisco molto bene.",
           "syllabe": ""
         },
@@ -3128,8 +3127,8 @@
         {
           "id": "w_khru",
           "th": "ครู",
-          "fr": "professeur",
           "phonetic": "khruu",
+          "fr": "professeur",
           "en": "teacher",
           "imageUrl": "/images/w_w_khru.svg",
           "es": "profesor / maestro",
@@ -3140,21 +3139,21 @@
         {
           "id": "w_jai_dee",
           "th": "ใจดี",
-          "fr": "gentil",
           "phonetic": "jai dii",
+          "fr": "gentil",
           "en": "kind",
           "imageUrl": "/images/w_w_jai_dee.svg",
           "es": "amable / bondadoso",
-          "de": "gütig / nett",
+          "de": "gutherzig / nett",
           "it": "gentile / buono",
           "syllabe": ""
         },
         {
-          "th": "ใจ",
-          "en": "heart",
           "id": "w_jai",
-          "fr": "cœur",
+          "th": "ใจ",
           "phonetic": "jai",
+          "fr": "cœur",
+          "en": "heart",
           "imageUrl": "/images/w_w_jai.svg",
           "es": "corazón",
           "de": "Herz",
@@ -3164,9 +3163,9 @@
         {
           "id": "w_tham",
           "th": "ทำ",
-          "fr": "faire",
           "phonetic": "tham",
-          "en": "TO DO",
+          "fr": "faire",
+          "en": "to do / make",
           "imageUrl": "/images/w_w_tham.svg",
           "es": "hacer",
           "de": "tun / machen",
@@ -3176,8 +3175,8 @@
         {
           "id": "w_yak",
           "th": "อยาก",
-          "fr": "vouloir",
           "phonetic": "yàak",
+          "fr": "vouloir",
           "en": "to want",
           "imageUrl": "/images/w_w_yak.svg",
           "es": "querer",
@@ -3190,14 +3189,14 @@
         {
           "id": "p_new_l6_1",
           "th": "เพื่อนชื่ออะไร",
-          "fr": "comment s'appelle ton ami ?",
           "phonetic": "phûean chûue à-rai",
+          "fr": "comment s'appelle ton ami ?",
+          "en": "what's your friend's name?",
           "components": [
             "w_phuean",
             "w_chue",
             "w_arai"
           ],
-          "en": "what's your friend's name?",
           "imageUrl": "/images/p_p_new_l6_1.svg",
           "es": "¿cómo se llama tu amigo?",
           "de": "wie heißt dein Freund?",
@@ -3207,14 +3206,14 @@
         {
           "id": "p_new_l6_2",
           "th": "เด็กกินข้าว",
-          "fr": "l'enfant mange du riz",
           "phonetic": "dèk kin khâao",
+          "fr": "l'enfant mange du riz",
+          "en": "the child eats rice",
           "components": [
             "w_dek",
             "w_kin",
             "w_khao"
           ],
-          "en": "the child eats rice",
           "imageUrl": "/images/p_p_new_l6_2.svg",
           "es": "el niño come arroz",
           "de": "das Kind isst Reis",
@@ -3224,13 +3223,13 @@
         {
           "id": "p_new_l6_3",
           "th": "ครูใจดี",
-          "fr": "le prof est bon (bien)",
           "phonetic": "khruu jai dii",
+          "fr": "le prof est bon (bien)",
+          "en": "the teacher is kind / nice",
           "components": [
             "w_khru",
             "w_jai_dee"
           ],
-          "en": "the teacher is good",
           "imageUrl": "/images/p_p_new_l6_3.svg",
           "es": "el profesor es amable",
           "de": "der Lehrer ist nett",
@@ -3240,15 +3239,15 @@
         {
           "id": "p_new_l6_4",
           "th": "เพื่อนสบายดีไหม",
-          "fr": "est-ce que ton ami va bien ?",
           "phonetic": "phûean sà-baai dii mǎi",
+          "fr": "est-ce que ton ami va bien ?",
+          "en": "is your friend well?",
           "components": [
             "w_phuean",
             "w_sabai",
             "w_dee",
             "w_mai"
           ],
-          "en": "is your friend well?",
           "imageUrl": "/images/p_p_new_l6_4.svg",
           "es": "¿tu amigo está bien?",
           "de": "geht es deinem Freund gut?",
@@ -3258,14 +3257,14 @@
         {
           "id": "p_new_l6_5",
           "th": "แม่ของเด็ก",
-          "fr": "la mère de l'enfant",
           "phonetic": "mâe khɔ̌ɔng dèk",
+          "fr": "la mère de l'enfant",
+          "en": "the child's mother",
           "components": [
             "w_mae",
             "w_khong_of",
             "w_dek"
           ],
-          "en": "the child's mother",
           "imageUrl": "/images/p_p_new_l6_5.svg",
           "es": "la madre del niño",
           "de": "die Mutter des Kindes",
@@ -3275,13 +3274,13 @@
         {
           "id": "p_what_are_you_doing",
           "th": "ทำอะไร",
-          "fr": "que fais-tu ?",
           "phonetic": "tham à-rai",
+          "fr": "que fais-tu ?",
+          "en": "what are you doing ?",
           "components": [
             "w_tham",
             "w_arai"
           ],
-          "en": "what are you doing ?",
           "imageUrl": "/images/p_p_what_are_you_doing.svg",
           "es": "¿qué haces? / ¿qué está haciendo?",
           "de": "was machst du? / was tun Sie?",
@@ -3291,14 +3290,14 @@
         {
           "id": "p_want_to_go_f",
           "th": "อยากไปค่ะ",
-          "fr": "je veux y aller (femme)",
           "phonetic": "yàak bpai khâ",
+          "fr": "je veux y aller (femme)",
+          "en": "I want to go (woman)",
           "components": [
             "w_yak",
             "w_pai",
             "w_kha"
           ],
-          "en": "I want to go (woman)",
           "imageUrl": "/images/p_p_want_to_go_f.svg",
           "es": "quiero ir (mujer)",
           "de": "ich will gehen (Frau)",
@@ -3336,8 +3335,8 @@
         {
           "id": "w_du",
           "th": "ดู",
-          "fr": "regarder",
           "phonetic": "duu",
+          "fr": "regarder",
           "en": "watch",
           "imageUrl": "/images/w_w_du.svg",
           "es": "mirar",
@@ -3348,8 +3347,8 @@
         {
           "id": "w_khit",
           "th": "คิด",
-          "fr": "penser",
           "phonetic": "khít",
+          "fr": "penser",
           "en": "think",
           "imageUrl": "/images/w_w_khit.svg",
           "es": "pensar",
@@ -3360,8 +3359,8 @@
         {
           "id": "w_ro",
           "th": "รอ",
-          "fr": "attendre",
           "phonetic": "rɔɔ",
+          "fr": "attendre",
           "en": "wait",
           "imageUrl": "/images/w_w_ro.svg",
           "es": "esperar",
@@ -3372,8 +3371,8 @@
         {
           "id": "w_thammai",
           "th": "ทำไม",
-          "fr": "pourquoi ?",
           "phonetic": "tham-mai",
+          "fr": "pourquoi ?",
           "en": "Why ?",
           "imageUrl": "/images/w_w_thammai.svg",
           "es": "¿Por qué?",
@@ -3386,14 +3385,14 @@
         {
           "id": "p_want_eat",
           "th": "อยากกินข้าว",
-          "fr": "je veux manger",
           "phonetic": "yàak kin khâao",
+          "fr": "je veux manger",
+          "en": "I want to eat",
           "components": [
             "w_yak",
             "w_kin",
             "w_khao"
           ],
-          "en": "I want to eat",
           "imageUrl": "/images/p_p_want_eat.svg",
           "es": "quiero comer",
           "de": "ich will essen",
@@ -3403,13 +3402,13 @@
         {
           "id": "p_new_l7_1",
           "th": "ดูอะไร",
-          "fr": "regardes-tu quoi ?",
           "phonetic": "duu à-rai",
+          "fr": "regardes-tu quoi ?",
+          "en": "what are you watching?",
           "components": [
             "w_du",
             "w_arai"
           ],
-          "en": "what are you watching?",
           "imageUrl": "/images/p_p_new_l7_1.svg",
           "es": "¿qué estás mirando?",
           "de": "Was schaust du?",
@@ -3419,13 +3418,13 @@
         {
           "id": "p_new_l7_3",
           "th": "คิดอะไร",
-          "fr": "à quoi penses-tu ?",
           "phonetic": "khít à-rai",
+          "fr": "à quoi penses-tu ?",
+          "en": "what are you thinking about?",
           "components": [
             "w_khit",
             "w_arai"
           ],
-          "en": "what are you thinking about?",
           "imageUrl": "/images/p_p_new_l7_3.svg",
           "es": "¿en qué estás pensando?",
           "de": "Woran denkst du?",
@@ -3435,13 +3434,13 @@
         {
           "id": "p_new_l7_2",
           "th": "อยากรอ",
-          "fr": "vouloir attendre",
           "phonetic": "yàak rɔɔ",
+          "fr": "vouloir attendre",
+          "en": "want to wait",
           "components": [
             "w_yak",
             "w_ro"
           ],
-          "en": "want to wait",
           "imageUrl": "/images/p_p_new_l7_2.svg",
           "es": "querer esperar",
           "de": "warten wollen",
@@ -3451,13 +3450,13 @@
         {
           "id": "p_new_l7_4",
           "th": "มาดู",
-          "fr": "viens regarder",
           "phonetic": "maa duu",
+          "fr": "viens regarder",
+          "en": "come watch",
           "components": [
             "w_maa",
             "w_du"
           ],
-          "en": "come watch",
           "imageUrl": "/images/p_p_new_l7_4.svg",
           "es": "ven a mirar",
           "de": "komm schauen",
@@ -3467,13 +3466,13 @@
         {
           "id": "p_new_l7_5",
           "th": "ทำไมรอ",
-          "fr": "pourquoi attendre",
           "phonetic": "tham-mai rɔɔ",
+          "fr": "pourquoi attendre",
+          "en": "Why wait?",
           "components": [
             "w_thammai",
             "w_ro"
           ],
-          "en": "Why wait?",
           "imageUrl": "/images/p_p_new_l7_5.svg",
           "es": "¿por qué esperar?",
           "de": "Warum warten?",
@@ -3483,13 +3482,13 @@
         {
           "id": "p_where_go",
           "th": "ไปที่ไหน",
-          "fr": "où vas-tu ?",
           "phonetic": "bpai thîi nǎi",
+          "fr": "où vas-tu ?",
+          "en": "where are you going?",
           "components": [
             "w_pai",
             "w_thi_nai"
           ],
-          "en": "where are you going?",
           "imageUrl": "/images/p_p_where_go.svg",
           "es": "¿a dónde vas?",
           "de": "Wohin gehst du?",
@@ -3528,7 +3527,6 @@
       "titleEn": "Unit 3 Assessment",
       "descriptionEn": "Map out your surroundings: practice basic locations, talk about your close family, and review everyday actions.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "",
       "titleDe": "",
       "titleIt": "",
@@ -3556,8 +3554,8 @@
         {
           "id": "w_sue",
           "th": "ซื้อ",
-          "fr": "acheter",
           "phonetic": "súue",
+          "fr": "acheter",
           "en": "buy",
           "imageUrl": "/images/w_w_sue.svg",
           "es": "comprar",
@@ -3568,8 +3566,8 @@
         {
           "id": "w_khai_sell",
           "th": "ขาย",
-          "fr": "vendre",
           "phonetic": "khǎai",
+          "fr": "vendre",
           "en": "sell",
           "imageUrl": "/images/w_w_khai_sell.svg",
           "es": "vender",
@@ -3580,8 +3578,8 @@
         {
           "id": "w_ngern",
           "th": "เงิน",
-          "fr": "argent",
           "phonetic": "ngoen",
+          "fr": "argent",
           "en": "money",
           "imageUrl": "/images/w_w_ngern.svg",
           "es": "dinero",
@@ -3592,8 +3590,8 @@
         {
           "id": "w_baht",
           "th": "บาท",
-          "fr": "baht (monnaie)",
           "phonetic": "bàat",
+          "fr": "baht (monnaie)",
           "en": "baht (currency)",
           "imageUrl": "/images/w_w_baht.svg",
           "es": "baht (moneda)",
@@ -3604,8 +3602,8 @@
         {
           "id": "w_thao_rai",
           "th": "เท่าไหร่",
-          "fr": "combien",
           "phonetic": "thâo rai",
+          "fr": "combien",
           "en": "How much",
           "imageUrl": "/images/w_w_thao_rai.svg",
           "es": "cuánto",
@@ -3618,14 +3616,14 @@
         {
           "id": "p_have_water",
           "th": "มีน้ำไหม",
-          "fr": "avez-vous de l'eau ?",
           "phonetic": "mii náam mǎi",
+          "fr": "avez-vous de l'eau ?",
+          "en": "do you have water?",
           "components": [
             "w_mee",
             "w_nam",
             "w_mai"
           ],
-          "en": "do you have water?",
           "imageUrl": "/images/p_p_have_water.svg",
           "es": "¿tiene agua?",
           "de": "Haben Sie Wasser?",
@@ -3635,13 +3633,13 @@
         {
           "id": "p_come_here_m",
           "th": "มาครับ",
-          "fr": "je viens (homme)",
           "phonetic": "maa khráp",
+          "fr": "je viens (homme)",
+          "en": "I come (man)",
           "components": [
             "w_maa",
             "w_krap"
           ],
-          "en": "I come (man)",
           "imageUrl": "/images/p_p_come_here_m.svg",
           "es": "ya voy (hombre)",
           "de": "Ich komme (Mann)",
@@ -3651,13 +3649,13 @@
         {
           "id": "p_how_much",
           "th": "เท่าไหร่ครับ",
-          "fr": "ça coûte combien ? (homme)",
           "phonetic": "thao rai khráp",
+          "fr": "ça coûte combien ? (homme)",
+          "en": "how much does it cost? (man)",
           "components": [
             "w_thao_rai",
             "w_krap"
           ],
-          "en": "how much does it cost? (man)",
           "imageUrl": "/images/p_p_how_much.svg",
           "es": "¿cuánto cuesta? (hombre)",
           "de": "Wie viel kostet das? (Mann)",
@@ -3667,13 +3665,13 @@
         {
           "id": "p_how_much_f",
           "th": "เท่าไหร่ค่ะ",
-          "fr": "ça coûte combien ? (femme)",
           "phonetic": "thao rai khâ",
+          "fr": "ça coûte combien ? (femme)",
+          "en": "how much does it cost? (woman)",
           "components": [
             "w_thao_rai",
             "w_kha"
           ],
-          "en": "how much does it cost? (woman)",
           "imageUrl": "/images/p_p_how_much_f.svg",
           "es": "¿cuánto cuesta? (mujer)",
           "de": "Wie viel kostet das? (Frau)",
@@ -3683,13 +3681,13 @@
         {
           "id": "p_new_l8_1",
           "th": "ขายเท่าไหร่",
-          "fr": "tu vends à combien ?",
           "phonetic": "khǎai thâo rai",
+          "fr": "tu vends à combien ?",
+          "en": "how much do you sell it for?",
           "components": [
             "w_khai_sell",
             "w_thao_rai"
           ],
-          "en": "how much do you sell it for?",
           "imageUrl": "/images/p_p_new_l8_1.svg",
           "es": "¿a cuánto lo vendes?",
           "de": "Für wie viel verkaufst du es?",
@@ -3699,14 +3697,14 @@
         {
           "id": "p_new_l8_3",
           "th": "มีเงินไหม",
-          "fr": "as-tu de l'argent ?",
           "phonetic": "mii ngoen mǎi",
+          "fr": "as-tu de l'argent ?",
+          "en": "do you have money?",
           "components": [
             "w_mee",
             "w_ngern",
             "w_mai"
           ],
-          "en": "do you have money?",
           "imageUrl": "/images/p_p_new_l8_3.svg",
           "es": "¿tienes dinero?",
           "de": "Hast du Geld?",
@@ -3716,13 +3714,13 @@
         {
           "id": "p_buy_water",
           "th": "ซื้อน้ำ",
-          "fr": "acheter de l'eau",
           "phonetic": "súue náam",
+          "fr": "acheter de l'eau",
+          "en": "buy water",
           "components": [
             "w_sue",
             "w_nam"
           ],
-          "en": "buy water",
           "imageUrl": "/images/p_p_buy_water.svg",
           "es": "comprar agua",
           "de": "Wasser kaufen",
@@ -3760,8 +3758,8 @@
         {
           "id": "w_phaeng",
           "th": "แพง",
-          "fr": "cher",
           "phonetic": "phaeng",
+          "fr": "cher",
           "en": "expensive",
           "imageUrl": "/images/w_w_phaeng.svg",
           "es": "caro",
@@ -3772,8 +3770,8 @@
         {
           "id": "w_lot",
           "th": "ลด",
-          "fr": "réduire",
           "phonetic": "lót",
+          "fr": "réduire",
           "en": "reduce",
           "imageUrl": "/images/w_w_lot.svg",
           "es": "reducir",
@@ -3784,8 +3782,8 @@
         {
           "id": "w_dai",
           "th": "ได้",
-          "fr": "pouvoir",
           "phonetic": "dâai",
+          "fr": "pouvoir",
           "en": "can",
           "imageUrl": "/images/w_w_dai.svg",
           "es": "poder",
@@ -3796,8 +3794,8 @@
         {
           "id": "w_thuuk",
           "th": "ถูก",
-          "fr": "pas cher",
           "phonetic": "thùuk",
+          "fr": "pas cher",
           "en": "cheap",
           "imageUrl": "/images/w_w_thuk.svg",
           "es": "barato",
@@ -3808,9 +3806,9 @@
         {
           "id": "w_gamlang",
           "th": "กำลัง",
+          "phonetic": "kam-lang",
           "fr": "en train de",
           "en": "in the process of",
-          "phonetic": "kam-lang",
           "imageUrl": "/images/w_w_gamlang.svg",
           "es": "en proceso de",
           "de": "dabei sein zu",
@@ -3822,13 +3820,13 @@
         {
           "id": "p_very_expensive",
           "th": "แพงมาก",
-          "fr": "très cher",
           "phonetic": "phaeng mâak",
+          "fr": "très cher",
+          "en": "very expensive",
           "components": [
             "w_phaeng",
             "w_mak"
           ],
-          "en": "very expensive",
           "imageUrl": "/images/p_p_very_expensive.svg",
           "es": "muy caro",
           "de": "sehr teuer",
@@ -3838,14 +3836,14 @@
         {
           "id": "p_discount",
           "th": "ลดได้ไหม",
-          "fr": "pouvez-vous baisser le prix ?",
           "phonetic": "lót dâai mǎi",
+          "fr": "pouvez-vous baisser le prix ?",
+          "en": "can you lower the price?",
           "components": [
             "w_lot",
             "w_dai",
             "w_mai"
           ],
-          "en": "can you lower the price?",
           "imageUrl": "/images/p_p_discount.svg",
           "es": "¿puede bajar el precio?",
           "de": "Können Sie den Preis senken?",
@@ -3855,13 +3853,13 @@
         {
           "id": "p_nine_baht",
           "th": "เก้าบาท",
-          "fr": "neuf bahts",
           "phonetic": "kâao bàat",
+          "fr": "neuf bahts",
+          "en": "nine baht",
           "components": [
             "w_9",
             "w_baht"
           ],
-          "en": "nine baht",
           "imageUrl": "/images/p_p_nine_baht.svg",
           "es": "nueve bahts",
           "de": "neun Baht",
@@ -3871,13 +3869,13 @@
         {
           "id": "p_buy_three",
           "th": "ซื้อสาม",
-          "fr": "acheter trois",
           "phonetic": "súue sǎam",
+          "fr": "acheter trois",
+          "en": "buy three",
           "components": [
             "w_sue",
             "w_3"
           ],
-          "en": "buy three",
           "imageUrl": "/images/p_p_buy_three.svg",
           "es": "comprar tres",
           "de": "drei kaufen",
@@ -3887,14 +3885,14 @@
         {
           "id": "p_cannot_reduce",
           "th": "ลดไม่ได้",
-          "fr": "je ne peux pas baisser le prix",
           "phonetic": "lót mâi dâai",
+          "fr": "je ne peux pas baisser le prix",
+          "en": "I can't lower the price",
           "components": [
             "w_lot",
             "w_mai_neg",
             "w_dai"
           ],
-          "en": "I can't lower the price",
           "imageUrl": "/images/p_p_cannot_reduce.svg",
           "es": "no puedo bajar el precio",
           "de": "Ich kann den Preis nicht senken",
@@ -3904,13 +3902,13 @@
         {
           "id": "p_new_l8_2",
           "th": "ถูกมาก",
-          "fr": "très bon marché",
           "phonetic": "thùuk mâak",
+          "fr": "très bon marché",
+          "en": "very cheap",
           "components": [
             "w_thuuk",
             "w_mak"
           ],
-          "en": "very cheap",
           "imageUrl": "/images/p_p_new_l8_2.svg",
           "es": "muy barato",
           "de": "sehr billig",
@@ -3920,13 +3918,13 @@
         {
           "id": "p_new_l8_4",
           "th": "ขายถูก",
-          "fr": "vendre pas cher",
           "phonetic": "khǎai thùuk",
+          "fr": "vendre pas cher",
+          "en": "sell cheap",
           "components": [
             "w_khai_sell",
             "w_thuuk"
           ],
-          "en": "sell cheap",
           "imageUrl": "/images/p_p_new_l8_4.svg",
           "es": "vender barato",
           "de": "billig verkaufen",
@@ -3964,8 +3962,8 @@
         {
           "id": "w_hiw",
           "th": "หิว",
-          "fr": "avoir faim",
           "phonetic": "hǐw",
+          "fr": "avoir faim",
           "en": "to be hungry",
           "imageUrl": "/images/w_w_hiw.svg",
           "es": "tener hambre",
@@ -3976,9 +3974,9 @@
         {
           "id": "w_nueay",
           "th": "เหนื่อย",
-          "fr": "fatigué",
           "phonetic": "nùeay",
-          "en": "fatigue",
+          "fr": "fatigué",
+          "en": "tired",
           "imageUrl": "/images/w_w_nueay.svg",
           "es": "cansado",
           "de": "müde",
@@ -3988,8 +3986,8 @@
         {
           "id": "w_dee_jai",
           "th": "ดีใจ",
-          "fr": "content / ravi",
           "phonetic": "dii jai",
+          "fr": "content / ravi",
           "en": "glad / pleased",
           "imageUrl": "/images/w_w_dee_jai.svg",
           "es": "contento / encantado",
@@ -4000,8 +3998,8 @@
         {
           "id": "w_chop",
           "th": "ชอบ",
-          "fr": "adore",
           "phonetic": "chɔ̂ɔp",
+          "fr": "adore",
           "en": "to like",
           "imageUrl": "/images/w_w_chop.svg",
           "es": "gustar / gustar mucho",
@@ -4012,8 +4010,8 @@
         {
           "id": "w_krot",
           "th": "โกรธ",
-          "fr": "en colère / fâché",
           "phonetic": "kròot",
+          "fr": "en colère / fâché",
           "en": "angry",
           "imageUrl": "/images/w_w_krot.svg",
           "es": "enojado / enfadado",
@@ -4024,8 +4022,8 @@
         {
           "id": "w_nguang",
           "th": "ง่วง",
-          "fr": "avoir sommeil",
           "phonetic": "ngûang",
+          "fr": "avoir sommeil",
           "en": "sleepy",
           "imageUrl": "/images/w_w_nguang.svg",
           "es": "tener sueño",
@@ -4036,8 +4034,8 @@
         {
           "id": "w_sao",
           "th": "เศร้า",
-          "fr": "triste",
           "phonetic": "sâo",
+          "fr": "triste",
           "en": "sad",
           "imageUrl": "/images/w_w_sao.svg",
           "es": "triste",
@@ -4050,13 +4048,13 @@
         {
           "id": "p_hungry",
           "th": "หิวมาก",
-          "fr": "j'ai très faim",
           "phonetic": "hǐw mâak",
+          "fr": "j'ai très faim",
+          "en": "I'm very hungry",
           "components": [
             "w_hiw",
             "w_mak"
           ],
-          "en": "I'm very hungry",
           "imageUrl": "/images/p_p_hungry.svg",
           "es": "tengo mucha hambre",
           "de": "Ich habe großen Hunger",
@@ -4066,13 +4064,13 @@
         {
           "id": "p_like_q",
           "th": "ชอบไหม",
-          "fr": "tu aimes ?",
           "phonetic": "chɔ̂ɔp mǎi",
+          "fr": "tu aimes ?",
+          "en": "do you like it?",
           "components": [
             "w_chop",
             "w_mai"
           ],
-          "en": "do you like it?",
           "imageUrl": "/images/p_p_like_q.svg",
           "es": "¿te gusta?",
           "de": "Gefällt es dir?",
@@ -4082,13 +4080,13 @@
         {
           "id": "p_very_tired",
           "th": "เหนื่อยมาก",
-          "fr": "je suis très fatigué",
           "phonetic": "nùeay mâak",
+          "fr": "je suis très fatigué",
+          "en": "I am very tired",
           "components": [
             "w_nueay",
             "w_mak"
           ],
-          "en": "I am very tired",
           "imageUrl": "/images/p_p_very_tired.svg",
           "es": "estoy muy cansado",
           "de": "Ich bin sehr müde",
@@ -4098,13 +4096,13 @@
         {
           "id": "p_happy_m",
           "th": "ดีใจครับ",
-          "fr": "je suis heureux (homme)",
           "phonetic": "dii jai khráp",
+          "fr": "je suis heureux (homme)",
+          "en": "I am happy (man)",
           "components": [
             "w_dee_jai",
             "w_krap"
           ],
-          "en": "I am happy (man)",
           "imageUrl": "/images/p_p_happy_m.svg",
           "es": "estoy feliz (hombre)",
           "de": "Ich bin glücklich (Mann)",
@@ -4114,13 +4112,13 @@
         {
           "id": "p_happy_f",
           "th": "ดีใจค่ะ",
-          "fr": "je suis heureuse (femme)",
           "phonetic": "dii jai khâ",
+          "fr": "je suis heureuse (femme)",
+          "en": "I am happy (woman)",
           "components": [
             "w_dee_jai",
             "w_kha"
           ],
-          "en": "I am happy (woman)",
           "imageUrl": "/images/p_p_happy_f.svg",
           "es": "estoy feliz (mujer)",
           "de": "Ich bin glücklich (Frau)",
@@ -4130,13 +4128,13 @@
         {
           "id": "p_not_like",
           "th": "ไม่ชอบ",
-          "fr": "je n'aime pas",
           "phonetic": "mâi chɔ̂ɔp",
+          "fr": "je n'aime pas",
+          "en": "I don't like",
           "components": [
             "w_mai_neg",
             "w_chop"
           ],
-          "en": "I don't like",
           "imageUrl": "/images/p_p_not_like.svg",
           "es": "no me gusta",
           "de": "Ich mag das nicht",
@@ -4146,13 +4144,13 @@
         {
           "id": "p_i_like_it",
           "th": "ผมชอบ",
-          "fr": "j'aime bien (homme)",
           "phonetic": "phǒm chɔ̂ɔp",
+          "fr": "j'aime bien (homme)",
+          "en": "I like (man)",
           "components": [
             "w_phom",
             "w_chop"
           ],
-          "en": "I like (man)",
           "imageUrl": "/images/p_p_i_like_it.svg",
           "es": "me gusta (hombre)",
           "de": "Ich mag das (Mann)",
@@ -4190,8 +4188,8 @@
         {
           "id": "w_rot",
           "th": "รถ",
-          "fr": "voiture / véhicule",
           "phonetic": "rót",
+          "fr": "voiture / véhicule",
           "en": "car / vehicle",
           "imageUrl": "/images/w_w_rot.svg",
           "es": "coche / vehículo",
@@ -4202,11 +4200,11 @@
         {
           "id": "w_sathannee",
           "th": "สถานี",
-          "fr": "station",
           "phonetic": "sà-thǎa-nii",
+          "fr": "station",
           "en": "station",
-          "imageUrl": "/images/w_w_sathannee.svg",
           "allowIdenticalTranslation": true,
+          "imageUrl": "/images/w_w_sathannee.svg",
           "es": "estación",
           "de": "Station",
           "it": "stazione",
@@ -4215,8 +4213,8 @@
         {
           "id": "w_sanambin",
           "th": "สนามบิน",
-          "fr": "aéroport",
           "phonetic": "sà-nǎam-bin",
+          "fr": "aéroport",
           "en": "airport",
           "imageUrl": "/images/w_w_sanambin.svg",
           "es": "aeropuerto",
@@ -4227,8 +4225,8 @@
         {
           "id": "w_khap",
           "th": "ขับ",
-          "fr": "conduire (voiture/camion)",
           "phonetic": "khàp",
+          "fr": "conduire (voiture/camion)",
           "en": "to drive (car/truck)",
           "imageUrl": "/images/w_w_khap.svg",
           "es": "conducir (coche/camión)",
@@ -4239,34 +4237,34 @@
         {
           "id": "w_yuu",
           "th": "อยู่",
-          "fr": "être (situé) / rester",
           "phonetic": "yùu",
+          "fr": "être (situé) / rester",
           "en": "to be (located) / to stay",
           "imageUrl": "/images/w_w_yuu.svg",
           "es": "estar (situado) / quedarse",
-          "de": "sein (befindlich) / bleiben",
+          "de": "sein (befinden) / bleiben",
           "it": "essere (situato) / restare",
           "syllabe": ""
         },
         {
           "id": "w_rot_fai",
           "th": "รถไฟ",
+          "phonetic": "rót-fai",
           "fr": "train",
           "en": "train",
-          "phonetic": "rót-fai",
-          "imageUrl": "/images/w_w_rot_fai.svg",
           "allowIdenticalTranslation": true,
+          "imageUrl": "/images/w_w_rot_fai.svg",
           "es": "tren",
-          "de": "Zug",
+          "de": "Zug / Bahn",
           "it": "treno",
           "syllabe": ""
         },
         {
           "id": "w_nan",
           "th": "นั้น",
+          "phonetic": "nán",
           "fr": "ce/cette (là)",
           "en": "that",
-          "phonetic": "nán",
           "imageUrl": "/images/w_w_nan.svg",
           "es": "ese / esa",
           "de": "dieser / diese / dieses (da)",
@@ -4278,13 +4276,13 @@
         {
           "id": "p_train_station",
           "th": "สถานีรถไฟ",
-          "fr": "gare (station de train)",
           "phonetic": "sà-thǎa-nii rót fai",
+          "fr": "gare (station de train)",
+          "en": "train station",
           "components": [
             "w_sathannee",
             "w_rot_fai"
           ],
-          "en": "train station (train station)",
           "imageUrl": "/images/p_p_train_station.svg",
           "es": "estación de tren",
           "de": "Bahnhof",
@@ -4294,13 +4292,13 @@
         {
           "id": "p_go_airport",
           "th": "ไปสนามบิน",
-          "fr": "aller à l'aéroport",
           "phonetic": "bpai sà-nǎam-bin",
+          "fr": "aller à l'aéroport",
+          "en": "go to the airport",
           "components": [
             "w_pai",
             "w_sanambin"
           ],
-          "en": "go to the airport",
           "imageUrl": "/images/p_p_go_airport.svg",
           "es": "ir al aeropuerto",
           "de": "zum Flughafen gehen",
@@ -4310,13 +4308,13 @@
         {
           "id": "p_ride_car",
           "th": "ขับรถ",
-          "fr": "conduire une voiture",
           "phonetic": "khàp rót",
+          "fr": "conduire une voiture",
+          "en": "drive a car",
           "components": [
             "w_khap",
             "w_rot"
           ],
-          "en": "drive a car",
           "imageUrl": "/images/p_p_ride_car.svg",
           "es": "conducir un coche",
           "de": "ein Auto fahren",
@@ -4326,13 +4324,13 @@
         {
           "id": "p_train_good",
           "th": "รถไฟดี",
-          "fr": "le train est bien",
           "phonetic": "rót fai dii",
+          "fr": "le train est bien",
+          "en": "the train is good",
           "components": [
             "w_rot_fai",
             "w_dee"
           ],
-          "en": "the train is good",
           "imageUrl": "/images/p_p_train_good.svg",
           "es": "el tren está bien",
           "de": "der Zug ist gut",
@@ -4342,14 +4340,14 @@
         {
           "id": "p_where_station",
           "th": "สถานีอยู่ที่ไหน",
-          "fr": "où est la station ?",
           "phonetic": "sà-thǎa-nii yùu thîi nǎi",
+          "fr": "où est la station ?",
+          "en": "where is the station?",
           "components": [
             "w_sathannee",
             "w_yuu",
             "w_thi_nai"
           ],
-          "en": "where is the station?",
           "imageUrl": "/images/p_p_where_station.svg",
           "es": "¿dónde está la estación?",
           "de": "Wo ist die Station?",
@@ -4359,14 +4357,14 @@
         {
           "id": "p_new_l8_5",
           "th": "เงินสิบบาท",
-          "fr": "dix bahts (d'argent)",
           "phonetic": "ngen sìp bàat",
+          "fr": "dix bahts (d'argent)",
+          "en": "ten baht money",
           "components": [
             "w_ngern",
             "w_10",
             "w_baht"
           ],
-          "en": "ten baht money",
           "imageUrl": "/images/p_p_new_l8_5.svg",
           "es": "diez bahts (de dinero)",
           "de": "zehn Baht (Geld)",
@@ -4376,13 +4374,13 @@
         {
           "id": "p_i_like_it_f",
           "th": "ฉันชอบ",
-          "fr": "j'aime bien (femme)",
           "phonetic": "chǎn chɔ̂ɔp",
+          "fr": "j'aime bien (femme)",
+          "en": "I like (woman)",
           "components": [
             "w_chan",
             "w_chop"
           ],
-          "en": "I like (woman)",
           "imageUrl": "/images/p_p_i_like_it_f.svg",
           "es": "me gusta (mujer)",
           "de": "Ich mag das (Frau)",
@@ -4420,8 +4418,8 @@
         {
           "id": "w_phrung",
           "th": "พรุ่ง",
-          "fr": "demain (base)",
           "phonetic": "phrûng",
+          "fr": "demain (base)",
           "en": "tomorrow (basic)",
           "imageUrl": "/images/w_w_phrung.svg",
           "es": "mañana (base)",
@@ -4432,8 +4430,8 @@
         {
           "id": "w_muea",
           "th": "เมื่อ",
-          "fr": "quand (passé)",
           "phonetic": "mûea",
+          "fr": "quand (passé)",
           "en": "when (past)",
           "imageUrl": "/images/w_w_muea.svg",
           "es": "cuando (pasado)",
@@ -4444,8 +4442,8 @@
         {
           "id": "w_wela",
           "th": "เวลา",
-          "fr": "temps / heure",
           "phonetic": "wee-laa",
+          "fr": "temps / heure",
           "en": "time / hour",
           "imageUrl": "/images/w_w_wela.svg",
           "es": "tiempo / hora",
@@ -4454,11 +4452,11 @@
           "syllabe": ""
         },
         {
-          "th": "วาน",
-          "en": "yesterday (short form)",
           "id": "w_wan_yesterday",
-          "fr": "hier (court / familier)",
+          "th": "วาน",
           "phonetic": "waan",
+          "fr": "hier (court / familier)",
+          "en": "yesterday (short form)",
           "imageUrl": "/images/w_w_wan_yesterday.svg",
           "es": "ayer (forma corta)",
           "de": "gestern (Kurzform)",
@@ -4466,11 +4464,11 @@
           "syllabe": ""
         },
         {
-          "th": "พรุ่งนี้",
-          "en": "tomorrow",
           "id": "w_phrungnii",
-          "fr": "demain",
+          "th": "พรุ่งนี้",
           "phonetic": "phrûng-níi",
+          "fr": "demain",
+          "en": "tomorrow",
           "imageUrl": "/images/w_w_phrungnii.svg",
           "es": "mañana",
           "de": "morgen",
@@ -4478,11 +4476,11 @@
           "syllabe": ""
         },
         {
-          "th": "นี้",
-          "en": "this (modifier)",
           "id": "w_nii_this",
-          "fr": "ce / cette",
+          "th": "นี้",
           "phonetic": "níi",
+          "fr": "ce / cette",
+          "en": "this (modifier)",
           "imageUrl": "/images/w_w_nii_this.svg",
           "es": "este / esta",
           "de": "dieser / diese / dieses",
@@ -4492,9 +4490,9 @@
         {
           "id": "w_wan_nii",
           "th": "วันนี้",
+          "phonetic": "wan-níi",
           "fr": "aujourd'hui",
           "en": "today",
-          "phonetic": "wan-níi",
           "imageUrl": "/images/w_w_wan_nii.svg",
           "es": "hoy",
           "de": "heute",
@@ -4506,12 +4504,12 @@
         {
           "id": "p_today",
           "th": "วันนี้",
-          "fr": "aujourd'hui",
           "phonetic": "wan níi",
+          "fr": "aujourd'hui",
+          "en": "Today",
           "components": [
             "w_wan_nii"
           ],
-          "en": "Today",
           "imageUrl": "/images/p_p_today.svg",
           "es": "Hoy",
           "de": "Heute",
@@ -4521,12 +4519,12 @@
         {
           "id": "p_tomorrow",
           "th": "พรุ่งนี้",
-          "fr": "demain",
           "phonetic": "phrûng níi",
+          "fr": "demain",
+          "en": "tomorrow",
           "components": [
             "w_phrungnii"
           ],
-          "en": "tomorrow",
           "imageUrl": "/images/p_p_tomorrow.svg",
           "es": "mañana",
           "de": "morgen",
@@ -4536,14 +4534,14 @@
         {
           "id": "p_yesterday",
           "th": "เมื่อวานนี้",
-          "fr": "hier",
           "phonetic": "mûea waan níi",
+          "fr": "hier",
+          "en": "yesterday",
           "components": [
             "w_muea",
             "w_wan_yesterday",
             "w_nii_this"
           ],
-          "en": "yesterday",
           "imageUrl": "/images/p_p_yesterday.svg",
           "es": "ayer",
           "de": "gestern",
@@ -4553,13 +4551,13 @@
         {
           "id": "p_five_days",
           "th": "ห้าวัน",
-          "fr": "cinq jours",
           "phonetic": "hâa wan",
+          "fr": "cinq jours",
+          "en": "five days",
           "components": [
             "w_5",
             "w_wan"
           ],
-          "en": "five days",
           "imageUrl": "/images/p_p_five_days.svg",
           "es": "cinco días",
           "de": "fünf Tage",
@@ -4569,13 +4567,13 @@
         {
           "id": "p_what_time_is_it",
           "th": "เวลาอะไร",
-          "fr": "quelle heure est-il ? (formel)",
           "phonetic": "wee-laa à-rai",
+          "fr": "quelle heure est-il ? (formel)",
+          "en": "what time is it? (formal)",
           "components": [
             "w_wela",
             "w_arai"
           ],
-          "en": "what time is it? (formal)",
           "imageUrl": "/images/p_p_what_time_is_it.svg",
           "es": "¿qué hora es? (formal)",
           "de": "Wie viel Uhr ist es? (formal)",
@@ -4585,13 +4583,13 @@
         {
           "id": "p_go_tomorrow",
           "th": "ไปพรุ่งนี้",
-          "fr": "aller demain",
           "phonetic": "bpai phrûng níi",
+          "fr": "aller demain",
+          "en": "go tomorrow",
           "components": [
             "w_pai",
             "w_phrungnii"
           ],
-          "en": "go tomorrow",
           "imageUrl": "/images/p_p_go_tomorrow.svg",
           "es": "ir mañana",
           "de": "morgen gehen",
@@ -4601,15 +4599,15 @@
         {
           "id": "p_yesterday_good",
           "th": "เมื่อวานนี้ดี",
-          "fr": "hier c'était bien",
           "phonetic": "mûea waan níi dii",
+          "fr": "hier c'était bien",
+          "en": "yesterday was good",
           "components": [
             "w_muea",
             "w_wan_yesterday",
             "w_nii_this",
             "w_dee"
           ],
-          "en": "yesterday was good",
           "imageUrl": "/images/p_p_yesterday_good.svg",
           "es": "ayer estuvo bien / ayer fue un buen día",
           "de": "gestern war es gut",
@@ -4692,7 +4690,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phak_kon.svg",
           "es": "descansar primero",
-          "de": "ausruhen zuerst / sich zuerst ausruhen",
+          "de": "zuerst ausruhen/ sich zuerst ausruhen",
           "it": "riposarsi prima",
           "syllabe": ""
         },
@@ -4829,7 +4827,6 @@
       "titleEn": "Unit 4 Assessment",
       "descriptionEn": "Head to the market! Validate your skills in getting around, bargaining, expressing feelings, and telling time.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "",
       "titleDe": "",
       "titleIt": "",
@@ -5324,8 +5321,8 @@
         {
           "id": "w_jep",
           "th": "เจ็บ",
-          "fr": "avoir mal",
           "phonetic": "jèp",
+          "fr": "avoir mal",
           "en": "to be in pain",
           "imageUrl": "/images/w_w_jep.svg",
           "es": "estar en dolor",
@@ -5336,8 +5333,8 @@
         {
           "id": "w_puat",
           "th": "ปวด",
-          "fr": "douleur (plus interne)",
           "phonetic": "bpùuat",
+          "fr": "douleur (plus interne)",
           "en": "pain (more internal)",
           "imageUrl": "/images/w_w_puat.svg",
           "es": "dolor (más interno)",
@@ -5348,8 +5345,8 @@
         {
           "id": "w_hua",
           "th": "หัว",
-          "fr": "tête",
           "phonetic": "hǔua",
+          "fr": "tête",
           "en": "head",
           "imageUrl": "/images/w_w_hua.svg",
           "es": "cabeza",
@@ -5360,8 +5357,8 @@
         {
           "id": "w_thong",
           "th": "ท้อง",
-          "fr": "ventre",
           "phonetic": "thɔ́ɔng",
+          "fr": "ventre",
           "en": "belly",
           "imageUrl": "/images/w_w_thong.svg",
           "es": "barriga",
@@ -5372,8 +5369,8 @@
         {
           "id": "w_rong_phayaban",
           "th": "โรงพยาบาล",
-          "fr": "hôpital",
           "phonetic": "roong phá-yaa-baan",
+          "fr": "hôpital",
           "en": "hospital",
           "imageUrl": "/images/w_w_rong_phayaban.svg",
           "es": "hospital",
@@ -5386,13 +5383,13 @@
         {
           "id": "p_headache",
           "th": "ปวดหัว",
-          "fr": "j'ai mal à la tête",
           "phonetic": "bpùuat hǔua",
+          "fr": "j'ai mal à la tête",
+          "en": "I have a headache",
           "components": [
             "w_puat",
             "w_hua"
           ],
-          "en": "I have a headache",
           "imageUrl": "/images/p_p_headache.svg",
           "es": "Me duele la cabeza",
           "de": "Ich habe Kopfschmerzen",
@@ -5402,13 +5399,13 @@
         {
           "id": "p_stomach_ache",
           "th": "ปวดท้อง",
-          "fr": "j'ai mal au ventre",
           "phonetic": "bpùuat thɔ́ɔng",
+          "fr": "j'ai mal au ventre",
+          "en": "I have a stomach ache",
           "components": [
             "w_puat",
             "w_thong"
           ],
-          "en": "I have a stomach ache",
           "imageUrl": "/images/p_p_stomach_ache.svg",
           "es": "Tengo dolor de estómago",
           "de": "Ich habe Bauchschmerzen",
@@ -5418,13 +5415,13 @@
         {
           "id": "p_go_hospital",
           "th": "ไปโรงพยาบาล",
-          "fr": "aller à l'hôpital",
           "phonetic": "bpai roong phá-yaa-baan",
+          "fr": "aller à l'hôpital",
+          "en": "go to the hospital",
           "components": [
             "w_pai",
             "w_rong_phayaban"
           ],
-          "en": "go to the hospital",
           "imageUrl": "/images/p_p_go_hospital.svg",
           "es": "ir al hospital",
           "de": "geh ins Krankenhaus",
@@ -5434,15 +5431,15 @@
         {
           "id": "p_head_hospital",
           "th": "ปวดหัวไปโรงพยาบาล",
-          "fr": "j'ai mal la tête, je vais à l'hôpital",
           "phonetic": "bpùuat hǔua bpai roong phá-yaa-baan",
+          "fr": "j'ai mal la tête, je vais à l'hôpital",
+          "en": "I have a headache, I'm going to the hospital",
           "components": [
             "w_puat",
             "w_hua",
             "w_pai",
             "w_rong_phayaban"
           ],
-          "en": "I have a headache, I'm going to the hospital",
           "imageUrl": "/images/p_p_head_hospital.svg",
           "es": "Me duele la cabeza, voy al hospital.",
           "de": "Ich habe Kopfschmerzen, ich gehe ins Krankenhaus",
@@ -5452,14 +5449,14 @@
         {
           "id": "p_where_hospital",
           "th": "โรงพยาบาลอยู่ที่ไหน",
-          "fr": "où est l'hôpital ?",
           "phonetic": "roong phá-yaa-baan thîi nǎi",
+          "fr": "où est l'hôpital ?",
+          "en": "where is the hospital?",
           "components": [
             "w_rong_phayaban",
             "w_yuu",
             "w_thi_nai"
           ],
-          "en": "where is the hospital?",
           "imageUrl": "/images/p_p_where_hospital.svg",
           "es": "donde esta el hospital?",
           "de": "Wo ist das Krankenhaus?",
@@ -5469,14 +5466,14 @@
         {
           "id": "p_stomach_ache_very",
           "th": "ปวดท้องมาก",
-          "fr": "j'ai très mal au ventre",
           "phonetic": "bpùuat thɔ́ɔng mâak",
+          "fr": "j'ai très mal au ventre",
+          "en": "I have a very bad stomach ache",
           "components": [
             "w_puat",
             "w_thong",
             "w_mak"
           ],
-          "en": "I have a very bad stomach ache",
           "imageUrl": "/images/p_p_stomach_ache_very.svg",
           "es": "tengo un dolor de estomago muy fuerte",
           "de": "Ich habe sehr starke Bauchschmerzen",
@@ -5533,7 +5530,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_lek.svg",
           "es": "pequeño",
-          "de": "wenig",
+          "de": "klein",
           "it": "poco",
           "syllabe": ""
         },
@@ -5694,8 +5691,8 @@
         {
           "id": "w_see_color",
           "th": "สี",
-          "fr": "couleur",
           "phonetic": "sìi",
+          "fr": "couleur",
           "en": "color",
           "imageUrl": "/images/w_w_see_color.svg",
           "es": "color",
@@ -5706,44 +5703,44 @@
         {
           "id": "w_daeng",
           "th": "แดง",
-          "fr": "rouge",
           "phonetic": "daeng",
+          "fr": "rouge",
           "en": "red",
           "imageUrl": "/images/w_w_daeng.svg",
           "es": "rojo",
-          "de": "Rot",
+          "de": "rot",
           "it": "rosso",
           "syllabe": ""
         },
         {
           "id": "w_khao_color",
           "th": "ขาว",
-          "fr": "blanc",
           "phonetic": "khǎao",
+          "fr": "blanc",
           "en": "white",
           "imageUrl": "/images/w_w_khao_color.svg",
           "es": "blanco",
-          "de": "Weiß",
+          "de": "weiß",
           "it": "bianco",
           "syllabe": ""
         },
         {
           "id": "w_dam",
           "th": "ดำ",
-          "fr": "noir",
           "phonetic": "dam",
+          "fr": "noir",
           "en": "black",
           "imageUrl": "/images/w_w_dam.svg",
           "es": "negro",
-          "de": "Schwarz",
+          "de": "schwarz",
           "it": "nero",
           "syllabe": ""
         },
         {
           "id": "w_nam_ngoen",
           "th": "น้ำเงิน",
-          "fr": "bleu (foncé)",
           "phonetic": "náam ngoen",
+          "fr": "bleu (foncé)",
           "en": "blue (dark)",
           "imageUrl": "/images/w_w_nam_ngoen.svg",
           "es": "azul (oscuro)",
@@ -5756,13 +5753,13 @@
         {
           "id": "p_color_red",
           "th": "สีแดง",
-          "fr": "la couleur rouge",
           "phonetic": "sìi daeng",
+          "fr": "la couleur rouge",
+          "en": "the color red",
           "components": [
             "w_see_color",
             "w_daeng"
           ],
-          "en": "the color red",
           "imageUrl": "/images/p_p_color_red.svg",
           "es": "el color rojo",
           "de": "die Farbe Rot",
@@ -5772,15 +5769,15 @@
         {
           "id": "p_want_black",
           "th": "อยากได้สีดำ",
-          "fr": "je veux le noir",
           "phonetic": "yàak dâai sìi dam",
+          "fr": "je veux le noir",
+          "en": "I want black",
           "components": [
             "w_yak",
             "w_dai",
             "w_see_color",
             "w_dam"
           ],
-          "en": "I want black",
           "imageUrl": "/images/p_p_want_black.svg",
           "es": "quiero negro",
           "de": "Ich will Schwarz",
@@ -5790,13 +5787,13 @@
         {
           "id": "p_what_color",
           "th": "สีอะไร",
-          "fr": "quelle couleur ?",
           "phonetic": "sìi à-rai",
+          "fr": "quelle couleur ?",
+          "en": "what color?",
           "components": [
             "w_see_color",
             "w_arai"
           ],
-          "en": "what color?",
           "imageUrl": "/images/p_p_what_color.svg",
           "es": "¿de qué color?",
           "de": "Welche Farbe?",
@@ -5806,13 +5803,13 @@
         {
           "id": "p_color_white",
           "th": "สีขาว",
-          "fr": "couleur blanche",
           "phonetic": "sìi khâao",
+          "fr": "couleur blanche",
+          "en": "white color",
           "components": [
             "w_see_color",
             "w_khao_color"
           ],
-          "en": "white color",
           "imageUrl": "/images/p_p_color_white.svg",
           "es": "color blanco",
           "de": "weiße Farbe",
@@ -5822,13 +5819,13 @@
         {
           "id": "p_blue_pen",
           "th": "สีน้ำเงิน",
-          "fr": "couleur bleue",
           "phonetic": "sìi náam ngoen",
+          "fr": "couleur bleue",
+          "en": "blue",
           "components": [
             "w_see_color",
             "w_nam_ngoen"
           ],
-          "en": "blue",
           "imageUrl": "/images/p_p_blue_pen.svg",
           "es": "azul",
           "de": "Blau",
@@ -5838,15 +5835,15 @@
         {
           "id": "p_want_red",
           "th": "อยากได้สีแดง",
-          "fr": "je veux le rouge",
           "phonetic": "yàak dâai sìi daeng",
+          "fr": "je veux le rouge",
+          "en": "I want red",
           "components": [
             "w_yak",
             "w_dai",
             "w_see_color",
             "w_daeng"
           ],
-          "en": "I want red",
           "imageUrl": "/images/p_p_want_red.svg",
           "es": "quiero rojo",
           "de": "Ich will Rot",
@@ -6067,7 +6064,6 @@
       "titleEn": "Unit 5 Assessment",
       "descriptionEn": "Don't get lost! Test your knowledge of directions, colors, health vocabulary, and describing your environment.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Evaluación de la Unidad 5",
       "titleDe": "Bewertung von Einheit 5",
       "titleIt": "Unità 5 Valutazione",
@@ -6208,7 +6204,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_want_beef.svg",
           "es": "tengo carne",
-          "de": "Ich habe Rindfleisch",
+          "de": "Ich nehme Rindfleisch",
           "it": "Ho carne di manzo",
           "syllabe": ""
         },
@@ -6534,8 +6530,8 @@
         {
           "id": "w_priao",
           "th": "เปรี้ยว",
-          "fr": "aigre / acide",
           "phonetic": "bprîiao",
+          "fr": "aigre / acide",
           "en": "sour/acid",
           "imageUrl": "/images/w_w_priao.svg",
           "es": "agrio/ácido",
@@ -6546,9 +6542,9 @@
         {
           "id": "w_waan_sucre",
           "th": "น้ำตาล",
+          "phonetic": "nám-dtan",
           "fr": "sucre",
           "en": "sugar",
-          "phonetic": "nám-dtan",
           "imageUrl": "/images/w_w_waan_sucre.svg",
           "es": "azúcar",
           "de": "Zucker",
@@ -6558,9 +6554,9 @@
         {
           "id": "w_lesson-24-a3_4",
           "th": "ถ้วย",
+          "phonetic": "thûay",
           "fr": "bol",
           "en": "bowl",
-          "phonetic": "thûay",
           "imageUrl": "/images/w_w_lesson-24-a3_4.svg",
           "es": "bol",
           "de": "Schüssel",
@@ -6570,9 +6566,9 @@
         {
           "id": "w_lesson-24-a5_1",
           "th": "ซุป",
+          "phonetic": "súp",
           "fr": "soupe",
           "en": "soup",
-          "phonetic": "súp",
           "imageUrl": "/images/w_w_lesson-24-a5_1.svg",
           "es": "sopa",
           "de": "Suppe",
@@ -6584,13 +6580,13 @@
         {
           "id": "p_very_sweet",
           "th": "หวานมาก",
-          "fr": "très sucré",
           "phonetic": "wǎan mâak",
+          "fr": "très sucré",
+          "en": "very sweet",
           "components": [
             "w_waan",
             "w_mak"
           ],
-          "en": "very sweet",
           "imageUrl": "/images/p_p_very_sweet.svg",
           "es": "muy dulce",
           "de": "sehr süß",
@@ -6600,13 +6596,13 @@
         {
           "id": "p_salty",
           "th": "เค็มมาก",
-          "fr": "très salé",
           "phonetic": "khem mâak",
+          "fr": "très salé",
+          "en": "very salty",
           "components": [
             "w_khem",
             "w_mak"
           ],
-          "en": "very salty",
           "imageUrl": "/images/p_p_salty.svg",
           "es": "muy salado",
           "de": "sehr salzig",
@@ -6616,13 +6612,13 @@
         {
           "id": "p_sour",
           "th": "เปรี้ยวมาก",
-          "fr": "très aigre",
           "phonetic": "bprîiao mâak",
+          "fr": "très aigre",
+          "en": "very sour",
           "components": [
             "w_priao",
             "w_mak"
           ],
-          "en": "very acidic",
           "imageUrl": "/images/p_p_sour.svg",
           "es": "muy amargo",
           "de": "sehr sauer",
@@ -6632,13 +6628,13 @@
         {
           "id": "p_delicious_sweet",
           "th": "หวานอร่อย",
-          "fr": "sucré et délicieux",
           "phonetic": "wǎan à-rɔ̀i",
+          "fr": "sucré et délicieux",
+          "en": "sweet and delicious",
           "components": [
             "w_waan",
             "w_aroi"
           ],
-          "en": "sweet and delicious",
           "imageUrl": "/images/p_p_delicious_sweet.svg",
           "es": "dulce y delicioso",
           "de": "süß und lecker",
@@ -6648,9 +6644,9 @@
         {
           "id": "p_new_lesson-24-a3_6",
           "th": "ถ้วยซุป",
+          "phonetic": "thûay súp",
           "fr": "Un bol de soupe",
           "en": "A bowl of soup",
-          "phonetic": "thûay súp",
           "components": [
             "w_lesson-24-a3_4",
             "w_lesson-24-a5_1"
@@ -6698,7 +6694,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_gep_ngoen.svg",
           "es": "la adición",
-          "de": "der Zusatz",
+          "de": "Die Rechnung",
           "it": "l'aggiunta",
           "syllabe": ""
         },
@@ -6737,7 +6733,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_sang.svg",
           "es": "orden",
-          "de": "Befehl",
+          "de": "bestellen",
           "it": "ordine",
           "syllabe": ""
         },
@@ -6873,8 +6869,6 @@
       "id": "lesson-24-a1",
       "title": "Alimentation 1 : Les Fruits",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Alimentation 1 : Fruits",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-24-a1_0",
@@ -6956,7 +6950,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_lesson-24-a1_0.svg",
           "es": "come una manzana",
-          "de": "Iss einen Apfel",
+          "de": "Einen Apfel essen",
           "it": "Mangia una mela",
           "syllabe": ""
         },
@@ -6973,7 +6967,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_lesson-24-a1_1.svg",
           "es": "quiero una naranja",
-          "de": "Willst du eine Orange?",
+          "de": "Eine Orange haben wollen",
           "it": "Vuoi un'arancia",
           "syllabe": ""
         },
@@ -7008,7 +7002,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_lesson-24-a1_3.svg",
           "es": "La sandia es muy dulce.",
-          "de": "Wassermelone ist sehr süß",
+          "de": "Die Wassermelone ist sehr süß",
           "it": "L'anguria è molto dolce",
           "syllabe": ""
         },
@@ -7031,6 +7025,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Alimentation 1 : Fruits",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Comida 1: Frutas",
       "titleDe": "Lebensmittel 1: Früchte",
@@ -7055,15 +7051,13 @@
       "id": "lesson-24-a2",
       "title": "Alimentation 2 : Les Légumes",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Vegetables",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-24-a2_0",
           "th": "มะเขือเทศ",
+          "phonetic": "má-khǔea-thêet",
           "fr": "tomate",
           "en": "tomato",
-          "phonetic": "má-khǔea-thêet",
           "imageUrl": "/images/w_w_lesson-24-a2_0.svg",
           "es": "tomate",
           "de": "Tomate",
@@ -7073,9 +7067,9 @@
         {
           "id": "w_lesson-24-a2_1",
           "th": "แตงกวา",
+          "phonetic": "taeng-kwaa",
           "fr": "concombre",
           "en": "cucumber",
-          "phonetic": "taeng-kwaa",
           "imageUrl": "/images/w_w_lesson-24-a2_1.svg",
           "es": "pepino",
           "de": "Gurke",
@@ -7085,9 +7079,9 @@
         {
           "id": "w_lesson-24-a2_2",
           "th": "ผัก",
+          "phonetic": "phàk",
           "fr": "légume",
           "en": "vegetable",
-          "phonetic": "phàk",
           "imageUrl": "/images/w_w_lesson-24-a2_2.svg",
           "es": "verdura",
           "de": "Gemüse",
@@ -7097,12 +7091,12 @@
         {
           "id": "w_khiao",
           "th": "เขียว",
-          "fr": "vert",
           "phonetic": "khǐiao",
-          "en": "Green",
+          "fr": "vert",
+          "en": "green",
           "imageUrl": "/images/w_w_khiao.svg",
           "es": "Verde",
-          "de": "Grün",
+          "de": "grün",
           "it": "Verde",
           "syllabe": ""
         }
@@ -7111,25 +7105,25 @@
         {
           "id": "p_new_lesson-24-a2_0",
           "th": "กินผัก",
+          "phonetic": "kin phàk",
           "fr": "Manger des légumes",
           "en": "Eat vegetables",
-          "phonetic": "kin phàk",
           "components": [
             "w_kin",
             "w_lesson-24-a2_2"
           ],
           "imageUrl": "/images/p_p_new_lesson-24-a2_0.svg",
           "es": "comer verduras",
-          "de": "Iss Gemüse",
+          "de": "Gemüse essen",
           "it": "Mangia verdure",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-24-a2_1",
           "th": "ไม่ชอบแตงกวา",
+          "phonetic": "mâi chɔ̂ɔp taeng-kwaa",
           "fr": "Ne pas aimer le concombre",
           "en": "Don't like cucumber",
-          "phonetic": "mâi chɔ̂ɔp taeng-kwaa",
           "components": [
             "w_mai_neg",
             "w_chop",
@@ -7144,25 +7138,25 @@
         {
           "id": "p_new_lesson-24-a2_2",
           "th": "ซื้อมะเขือเทศ",
+          "phonetic": "súue má-khǔea-thêet",
           "fr": "Acheter une tomate",
           "en": "Buy a tomato",
-          "phonetic": "súue má-khǔea-thêet",
           "components": [
             "w_sue",
             "w_lesson-24-a2_0"
           ],
           "imageUrl": "/images/p_p_new_lesson-24-a2_2.svg",
           "es": "comprar un tomate",
-          "de": "Kaufen Sie eine Tomate",
+          "de": "Eine Tomate kaufen",
           "it": "Compra un pomodoro",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-24-a2_3",
           "th": "ผักสีเขียว",
-          "fr": "Légume vert",
-          "en": "Green vegetable",
           "phonetic": "phàk sǐi khǐiao",
+          "fr": "Légume vert",
+          "en": "green vegetable",
           "components": [
             "w_lesson-24-a2_2",
             "w_see_color",
@@ -7177,20 +7171,22 @@
         {
           "id": "p_new_lesson-24-a2_4",
           "th": "เอาแตงกวา",
+          "phonetic": "ao taeng-kwaa",
           "fr": "Vouloir du concombre",
           "en": "Want cucumber",
-          "phonetic": "ao taeng-kwaa",
           "components": [
             "w_ao",
             "w_lesson-24-a2_1"
           ],
           "imageUrl": "/images/p_p_new_lesson-24-a2_4.svg",
           "es": "quiero pepino",
-          "de": "Willst du Gurke?",
+          "de": "Eine Gurke wollen",
           "it": "Vuoi il cetriolo",
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Vegetables",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Comida 2: Verduras",
       "titleDe": "Lebensmittel 2: Gemüse",
@@ -7215,15 +7211,13 @@
       "id": "lesson-24-a3",
       "title": "À Table : Les Ustensiles",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Utensils",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-24-a3_0",
           "th": "ช้อน",
+          "phonetic": "chɔ́ɔn",
           "fr": "cuillère",
           "en": "spoon",
-          "phonetic": "chɔ́ɔn",
           "imageUrl": "/images/w_w_lesson-24-a3_0.svg",
           "es": "cuchara",
           "de": "Löffel",
@@ -7233,9 +7227,9 @@
         {
           "id": "w_lesson-24-a3_1",
           "th": "ส้อม",
+          "phonetic": "sɔ̂m",
           "fr": "fourchette",
           "en": "fork",
-          "phonetic": "sɔ̂m",
           "imageUrl": "/images/w_w_lesson-24-a3_1.svg",
           "es": "tenedor",
           "de": "Gabel",
@@ -7245,21 +7239,21 @@
         {
           "id": "w_lesson-24-a3_2",
           "th": "จาน",
+          "phonetic": "jaan",
           "fr": "assiette",
           "en": "plate",
-          "phonetic": "jaan",
           "imageUrl": "/images/w_w_lesson-24-a3_2.svg",
           "es": "lámina",
-          "de": "Platte",
+          "de": "Teller",
           "it": "piatto",
           "syllabe": ""
         },
         {
           "id": "w_lesson-29-a4_2",
           "th": "ใช้",
+          "phonetic": "chái",
           "fr": "utiliser",
           "en": "use",
-          "phonetic": "chái",
           "imageUrl": "/images/w_w_lesson-29-a4_2.svg",
           "es": "usar",
           "de": "zu verwenden",
@@ -7267,11 +7261,11 @@
           "syllabe": ""
         },
         {
-          "th": "ล้าง",
-          "en": "to wash (dishes, hands, car)",
           "id": "w_lang",
-          "fr": "laver (vaisselle, mains, voiture)",
+          "th": "ล้าง",
           "phonetic": "láang",
+          "fr": "laver (vaisselle, mains, voiture)",
+          "en": "to wash (dishes, hands, car)",
           "imageUrl": "/images/w_w_lang.svg",
           "es": "lavar (platos, manos, coche)",
           "de": "Waschen (Geschirr, Hände, Auto)",
@@ -7281,9 +7275,9 @@
         {
           "id": "w_lesson-24-a3_3",
           "th": "ตะเกียบ",
+          "phonetic": "dtà-gìiap",
           "fr": "baguettes",
           "en": "chopsticks",
-          "phonetic": "dtà-gìiap",
           "imageUrl": "/images/w_w_lesson-24-a3_3.svg",
           "es": "palillos",
           "de": "Essstäbchen",
@@ -7295,9 +7289,9 @@
         {
           "id": "p_new_lesson-24-a3_0",
           "th": "ขอช้อน",
+          "phonetic": "khɔ̌ɔ chɔ́ɔn",
           "fr": "Je voudrais une cuillère",
           "en": "I'd like a spoon",
-          "phonetic": "khɔ̌ɔ chɔ́ɔn",
           "components": [
             "w_kho_req",
             "w_lesson-24-a3_0"
@@ -7311,9 +7305,9 @@
         {
           "id": "p_new_lesson-24-a3_1",
           "th": "ใช้ส้อม",
+          "phonetic": "chái sɔ̂m",
           "fr": "Utiliser une fourchette",
           "en": "Use a fork",
-          "phonetic": "chái sɔ̂m",
           "components": [
             "w_lesson-29-a4_2",
             "w_lesson-24-a3_1"
@@ -7327,9 +7321,9 @@
         {
           "id": "p_new_lesson-24-a3_2",
           "th": "จานใหญ่",
+          "phonetic": "jaan yài",
           "fr": "Grande assiette",
           "en": "Big plate",
-          "phonetic": "jaan yài",
           "components": [
             "w_lesson-24-a3_2",
             "w_yai"
@@ -7343,9 +7337,9 @@
         {
           "id": "p_new_lesson-24-a3_3",
           "th": "ล้างจาน",
+          "phonetic": "láang jaan",
           "fr": "Laver les assiettes",
           "en": "Wash plates",
-          "phonetic": "láang jaan",
           "components": [
             "w_lang",
             "w_lesson-24-a3_2"
@@ -7359,9 +7353,9 @@
         {
           "id": "p_new_lesson-24-a3_4",
           "th": "เอาส้อมไหม",
+          "phonetic": "ao sɔ̂m mǎi",
           "fr": "Voulez-vous une fourchette ?",
           "en": "Do you want a fork?",
-          "phonetic": "ao sɔ̂m mǎi",
           "components": [
             "w_ao",
             "w_lesson-24-a3_1",
@@ -7376,9 +7370,9 @@
         {
           "id": "p_new_lesson-24-a3_5",
           "th": "ใช้ตะเกียบ",
+          "phonetic": "chái dtà-gìiap",
           "fr": "Utiliser des baguettes",
           "en": "Use chopsticks",
-          "phonetic": "chái dtà-gìiap",
           "components": [
             "w_lesson-29-a4_2",
             "w_lesson-24-a3_3"
@@ -7390,6 +7384,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Utensils",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "En la mesa: utensilios",
       "titleDe": "Am Tisch: Utensilien",
@@ -7419,7 +7415,6 @@
       "titleEn": "Unit 6 Assessment",
       "descriptionEn": "Become a food connoisseur! Review menus, fruits, vegetables, and the essential vocabulary for ordering at a restaurant.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Unidad 6 Evaluación",
       "titleDe": "Bewertung von Einheit 6",
       "titleIt": "Unità 6 Valutazione",
@@ -7443,15 +7438,13 @@
       "id": "lesson-24-a4",
       "title": "En Cuisine : Les Cuissons",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Cooking",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-24-a4_0",
           "th": "ทอด",
+          "phonetic": "thɔ̂ɔt",
           "fr": "frit",
           "en": "fried",
-          "phonetic": "thɔ̂ɔt",
           "imageUrl": "/images/w_w_lesson-24-a4_0.svg",
           "es": "frito",
           "de": "gebraten",
@@ -7461,9 +7454,9 @@
         {
           "id": "w_lesson-24-a4_1",
           "th": "ต้ม",
+          "phonetic": "tôm",
           "fr": "bouilli",
           "en": "boiled",
-          "phonetic": "tôm",
           "imageUrl": "/images/w_w_lesson-24-a4_1.svg",
           "es": "hervido",
           "de": "gekocht",
@@ -7473,21 +7466,21 @@
         {
           "id": "w_lesson-24-a4_2",
           "th": "ย่าง",
+          "phonetic": "yâang",
           "fr": "grillé",
           "en": "grilled",
-          "phonetic": "yâang",
           "imageUrl": "/images/w_w_lesson-24-a4_2.svg",
           "es": "red",
-          "de": "Netz",
+          "de": "gebraten",
           "it": "griglia",
           "syllabe": ""
         },
         {
           "id": "w_lesson-24-a4_3",
           "th": "ผัด",
+          "phonetic": "phàt",
           "fr": "sauté",
           "en": "stir-fried",
-          "phonetic": "phàt",
           "imageUrl": "/images/w_w_lesson-24-a4_3.svg",
           "es": "salteado",
           "de": "sautiert",
@@ -7499,9 +7492,9 @@
         {
           "id": "p_new_lesson-24-a4_0",
           "th": "ไก่ทอด",
+          "phonetic": "kài thɔ̂ɔt",
           "fr": "Poulet frit",
           "en": "Fried chicken",
-          "phonetic": "kài thɔ̂ɔt",
           "components": [
             "w_kai",
             "w_lesson-24-a4_0"
@@ -7515,9 +7508,9 @@
         {
           "id": "p_new_lesson-24-a4_1",
           "th": "หมูย่าง",
+          "phonetic": "mǔu yâang",
           "fr": "Porc grillé",
           "en": "Grilled pork",
-          "phonetic": "mǔu yâang",
           "components": [
             "w_mu",
             "w_lesson-24-a4_2"
@@ -7531,9 +7524,9 @@
         {
           "id": "p_new_lesson-24-a4_2",
           "th": "ไข่ต้ม",
+          "phonetic": "khài tôm",
           "fr": "Oeuf dur",
           "en": "Boiled egg",
-          "phonetic": "khài tôm",
           "components": [
             "w_khai_egg",
             "w_lesson-24-a4_1"
@@ -7547,9 +7540,9 @@
         {
           "id": "p_new_lesson-24-a4_3",
           "th": "ทอดไข่",
+          "phonetic": "thɔ̂ɔt khài",
           "fr": "Frire un oeuf",
           "en": "Fry an egg",
-          "phonetic": "thɔ̂ɔt khài",
           "components": [
             "w_lesson-24-a4_0",
             "w_khai_egg"
@@ -7563,9 +7556,9 @@
         {
           "id": "p_new_lesson-24-a4_4",
           "th": "ชอบไก่ย่าง",
+          "phonetic": "chɔ̂ɔp kài yâang",
           "fr": "Aimer le poulet grillé",
           "en": "Like grilled chicken",
-          "phonetic": "chɔ̂ɔp kài yâang",
           "components": [
             "w_chop",
             "w_kai",
@@ -7580,9 +7573,9 @@
         {
           "id": "p_new_lesson-24-a4_5",
           "th": "ผัดผัก",
+          "phonetic": "phàt phàk",
           "fr": "Légumes sautés",
           "en": "Stir-fried vegetables",
-          "phonetic": "phàt phàk",
           "components": [
             "w_lesson-24-a4_3",
             "w_lesson-24-a2_2"
@@ -7596,9 +7589,9 @@
         {
           "id": "p_new_lesson-24-a4_6",
           "th": "หมูผัด",
+          "phonetic": "mǔu phàt",
           "fr": "Porc sauté",
           "en": "Stir-fried pork",
-          "phonetic": "mǔu phàt",
           "components": [
             "w_mu",
             "w_lesson-24-a4_3"
@@ -7610,6 +7603,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Cooking",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "En la cocina: cocinar",
       "titleDe": "In der Küche: Kochen",
@@ -7634,8 +7629,6 @@
       "id": "lesson-24-a5",
       "title": "À Table 3 : Desserts et Compléments",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Extras",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_khong_waan",
@@ -7659,7 +7652,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_naam_khaeng.svg",
           "es": "cubito de hielo",
-          "de": "Eiswürfel",
+          "de": "Eis / Eiswürfel",
           "it": "cubetto di ghiaccio",
           "syllabe": ""
         },
@@ -7681,11 +7674,11 @@
           "th": "ขนม",
           "phonetic": "khà-nǒm",
           "fr": "friandise",
-          "en": "snack",
+          "en": "snack / sweet / pastry",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khanom.svg",
           "es": "tratar",
-          "de": "behandeln",
+          "de": "Süßigkeiten / Gebäck",
           "it": "trattare",
           "syllabe": ""
         },
@@ -7717,7 +7710,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_eat_dessert.svg",
           "es": "comer postre",
-          "de": "Iss Nachtisch",
+          "de": "Nachtisch essen",
           "it": "Mangia il dolce",
           "syllabe": ""
         },
@@ -7795,6 +7788,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Extras",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "En la Mesa 3: Postres y Complementos",
       "titleDe": "An Tisch 3: Desserts und Ergänzungen",
@@ -7917,7 +7912,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_listen_me.svg",
           "es": "escúchame",
-          "de": "hört mir zu",
+          "de": "höre mir zu",
           "it": "ascoltami",
           "syllabe": ""
         },
@@ -7935,7 +7930,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_walk_where.svg",
           "es": "¿dónde estás caminando?",
-          "de": "Wo gehst du hin?",
+          "de": "Wohin gehst du?",
           "it": "dove stai camminando?",
           "syllabe": ""
         },
@@ -8082,7 +8077,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_work.svg",
           "es": "ir a trabajar",
-          "de": "geh zur Arbeit",
+          "de": "Zur Arbeit gehen",
           "it": "andare a lavorare",
           "syllabe": ""
         },
@@ -8133,7 +8128,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_write_name.svg",
           "es": "escribe un nombre",
-          "de": "schreibe einen Namen",
+          "de": "Einen Namen schreiben",
           "it": "scrivere un nome",
           "syllabe": ""
         },
@@ -8185,8 +8180,8 @@
         {
           "id": "w_rian",
           "th": "เรียน",
-          "fr": "apprendre",
           "phonetic": "riian",
+          "fr": "apprendre",
           "en": "learn",
           "imageUrl": "/images/w_w_rian.svg",
           "es": "aprender",
@@ -8197,8 +8192,8 @@
         {
           "id": "w_nangsue",
           "th": "หนังสือ",
-          "fr": "livre",
           "phonetic": "nǎng-sǔue",
+          "fr": "livre",
           "en": "book",
           "imageUrl": "/images/w_w_nangsue.svg",
           "es": "libro",
@@ -8207,11 +8202,11 @@
           "syllabe": ""
         },
         {
-          "th": "ภาษา",
-          "en": "language",
           "id": "w_phaasaa",
-          "fr": "langue",
+          "th": "ภาษา",
           "phonetic": "phaa-sǎa",
+          "fr": "langue",
+          "en": "language",
           "imageUrl": "/images/w_w_phaasaa.svg",
           "es": "idioma",
           "de": "Sprache",
@@ -8219,11 +8214,11 @@
           "syllabe": ""
         },
         {
-          "th": "ไทย",
-          "en": "Thai",
           "id": "w_thai",
-          "fr": "thaï",
+          "th": "ไทย",
           "phonetic": "thai",
+          "fr": "thaï",
+          "en": "Thai",
           "imageUrl": "/images/w_w_thai.svg",
           "es": "tailandés",
           "de": "Thailändisch",
@@ -8235,13 +8230,13 @@
         {
           "id": "p_read_book",
           "th": "อ่านหนังสือ",
-          "fr": "lire un livre",
           "phonetic": "àan nǎng-sǔue",
+          "fr": "lire un livre",
+          "en": "read a book",
           "components": [
             "w_aan",
             "w_nangsue"
           ],
-          "en": "read a book",
           "imageUrl": "/images/p_p_read_book.svg",
           "es": "leer un libro",
           "de": "ein Buch lesen",
@@ -8251,30 +8246,30 @@
         {
           "id": "p_learn_thai",
           "th": "เรียนภาษาไทย",
-          "fr": "apprendre le thaï",
           "phonetic": "riian phaa-sǎa thai",
+          "fr": "apprendre le thaï",
+          "en": "learn Thai",
           "components": [
             "w_rian",
             "w_phaasaa",
             "w_thai"
           ],
-          "en": "learn Thai",
           "imageUrl": "/images/p_p_learn_thai.svg",
           "es": "aprender tailandés",
-          "de": "lerne Thailändisch",
+          "de": "Thailändisch lernen",
           "it": "imparare il tailandese",
           "syllabe": ""
         },
         {
           "id": "p_learn_much",
           "th": "เรียนมาก",
-          "fr": "apprendre beaucoup",
           "phonetic": "riian mâak",
+          "fr": "apprendre beaucoup",
+          "en": "learn a lot",
           "components": [
             "w_rian",
             "w_mak"
           ],
-          "en": "learn a lot",
           "imageUrl": "/images/p_p_learn_much.svg",
           "es": "aprende mucho",
           "de": "viel lernen",
@@ -8284,13 +8279,13 @@
         {
           "id": "p_write_book",
           "th": "เขียนหนังสือ",
-          "fr": "écrire un livre",
           "phonetic": "khǐian nǎng-sǔue",
+          "fr": "écrire un livre",
+          "en": "write a book",
           "components": [
             "w_khian",
             "w_nangsue"
           ],
-          "en": "write a book",
           "imageUrl": "/images/p_p_write_book.svg",
           "es": "escribir un libro",
           "de": "ein Buch schreiben",
@@ -8300,13 +8295,13 @@
         {
           "id": "p_read_good",
           "th": "อ่านเก่ง",
-          "fr": "lire bien (doué)",
           "phonetic": "àan gèng",
+          "fr": "lire bien (doué)",
+          "en": "read well (gifted)",
           "components": [
             "w_aan",
             "w_kreng"
           ],
-          "en": "read well (gifted)",
           "imageUrl": "/images/p_p_read_good.svg",
           "es": "leer bien (superdotado)",
           "de": "gut lesen (begabt)",
@@ -8316,13 +8311,13 @@
         {
           "id": "p_what_book",
           "th": "หนังสืออะไร",
-          "fr": "quel livre ?",
           "phonetic": "nǎng-sǔue à-rai",
+          "fr": "quel livre ?",
+          "en": "what book?",
           "components": [
             "w_nangsue",
             "w_arai"
           ],
-          "en": "what book?",
           "imageUrl": "/images/p_p_what_book.svg",
           "es": "¿qué libro?",
           "de": "welches Buch?",
@@ -8404,9 +8399,9 @@
           "en": "card",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_bat.svg",
-          "es": "mapa ",
-          "de": "Karte ",
-          "it": "mappa ",
+          "es": "mapa",
+          "de": "Karte",
+          "it": "mappa",
           "syllabe": ""
         },
         {
@@ -8543,7 +8538,6 @@
       "titleEn": "Unit 7 Assessment",
       "descriptionEn": "Take action! Assess your mastery of movement verbs, cooking vocabulary, learning terms, and commerce.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Evaluación de la Unidad 7",
       "titleDe": "Bewertung von Einheit 7",
       "titleIt": "Unità 7 Valutazione",
@@ -8567,8 +8561,6 @@
       "id": "lesson-29-a1",
       "title": "Mouvements : Vitesse et Arrêt",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Movements",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_yut",
@@ -8601,7 +8593,7 @@
           "th": "รีบ",
           "phonetic": "rîip",
           "fr": "se dépêcher",
-          "en": "hurry",
+          "en": "to hurry / be in a hurry",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_riip.svg",
           "es": "apurarse",
@@ -8758,6 +8750,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Movements",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Movimientos: Acelerar y Parar",
       "titleDe": "Bewegungen: Geschwindigkeit und Stopp",
@@ -8782,8 +8776,6 @@
       "id": "lesson-29-a2",
       "title": "Communication : Questions et Réponses",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Dialogues",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_ask",
@@ -8829,7 +8821,7 @@
           "th": "คำตอบ",
           "phonetic": "kham-dtɔ̀ɔp",
           "fr": "réponse",
-          "en": "the answer ",
+          "en": "the answer",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_answer_noun.svg",
           "es": "respuesta",
@@ -8941,6 +8933,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Dialogues",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Comunicación: preguntas y respuestas",
       "titleDe": "Kommunikation: Fragen und Antworten",
@@ -8965,15 +8959,13 @@
       "id": "lesson-29-a3",
       "title": "Quotidien : Tâches Ménagères",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: House verbs",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-29-a3_0",
           "th": "ทำความสะอาด",
+          "phonetic": "tham-khwaam-sà-àat",
           "fr": "nettoyer",
           "en": "to clean",
-          "phonetic": "tham-khwaam-sà-àat",
           "imageUrl": "/images/w_w_lesson-29-a3_0.svg",
           "es": "limpiar",
           "de": "zu reinigen",
@@ -8983,9 +8975,9 @@
         {
           "id": "w_lesson-29-a3_1",
           "th": "ซัก",
+          "phonetic": "sák",
           "fr": "laver (vêtements) / faire la lessive",
           "en": "to wash (clothes) / to do laundry",
-          "phonetic": "sák",
           "imageUrl": "/images/w_w_lesson-29-a3_1.svg",
           "es": "lavar (ropa) / lavar la ropa",
           "de": "(Kleidung) waschen / Wäsche waschen",
@@ -8995,9 +8987,9 @@
         {
           "id": "w_lesson-29-a3_2",
           "th": "ทำอาหาร",
+          "phonetic": "tham-aa-hǎan",
           "fr": "cuisiner",
           "en": "to cook",
-          "phonetic": "tham-aa-hǎan",
           "imageUrl": "/images/w_w_lesson-29-a3_2.svg",
           "es": "cocinar",
           "de": "kochen",
@@ -9007,8 +8999,8 @@
         {
           "id": "w_suea",
           "th": "เสื้อ",
-          "fr": "chemise / haut",
           "phonetic": "sûea",
+          "fr": "chemise / haut",
           "en": "shirt / top",
           "imageUrl": "/images/w_w_suea.svg",
           "es": "camisa / top",
@@ -9017,11 +9009,11 @@
           "syllabe": ""
         },
         {
-          "th": "ผ้า",
-          "en": "cloth",
           "id": "w_pha_cloth",
-          "fr": "tissu / vêtement",
+          "th": "ผ้า",
           "phonetic": "phâa",
+          "fr": "tissu / vêtement",
+          "en": "cloth",
           "imageUrl": "/images/w_w_pha_cloth.svg",
           "es": "tela/prenda",
           "de": "Stoff / Kleidungsstück",
@@ -9033,25 +9025,25 @@
         {
           "id": "p_new_lesson-29-a3_0",
           "th": "กำลังทำอาหาร",
+          "phonetic": "gam-lang tham aa-hǎan",
           "fr": "En train de cuisiner",
           "en": "Cooking",
-          "phonetic": "gam-lang tham aa-hǎan",
           "components": [
             "w_gamlang",
             "w_lesson-29-a3_2"
           ],
           "imageUrl": "/images/p_p_new_lesson-29-a3_0.svg",
           "es": "cocinando",
-          "de": "Kochen",
+          "de": "Gerade am Kochen",
           "it": "cucina",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-29-a3_1",
           "th": "ซักเสื้อผ้า",
+          "phonetic": "sák sʉ̂a-phâa",
           "fr": "Laver les vêtements",
           "en": "Wash clothes",
-          "phonetic": "sák sʉ̂a-phâa",
           "components": [
             "w_lesson-29-a3_1",
             "w_suea",
@@ -9066,9 +9058,9 @@
         {
           "id": "p_new_lesson-29-a3_2",
           "th": "ทำความสะอาดบ้าน",
+          "phonetic": "tham khwaam-sà-àat bâan",
           "fr": "Nettoyer la maison",
           "en": "Clean house",
-          "phonetic": "tham khwaam-sà-àat bâan",
           "components": [
             "w_lesson-29-a3_0",
             "w_baan"
@@ -9082,25 +9074,25 @@
         {
           "id": "p_new_lesson-29-a3_3",
           "th": "ชอบทำอาหาร",
+          "phonetic": "chɔ̂ɔp tham aa-hǎan",
           "fr": "Aimer cuisiner",
           "en": "Like cooking",
-          "phonetic": "chɔ̂ɔp tham aa-hǎan",
           "components": [
             "w_chop",
             "w_lesson-29-a3_2"
           ],
           "imageUrl": "/images/p_p_new_lesson-29-a3_3.svg",
           "es": "Me encanta cocinar",
-          "de": "Liebe es zu kochen",
+          "de": "Gerne kochen",
           "it": "Adoro cucinare",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-29-a3_4",
           "th": "ไม่ซัก",
+          "phonetic": "mâi sák",
           "fr": "Ne pas laver",
           "en": "Not washing",
-          "phonetic": "mâi sák",
           "components": [
             "w_mai_neg",
             "w_lesson-29-a3_1"
@@ -9112,6 +9104,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: House verbs",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/house.svg",
       "titleEs": "Diariamente: Tareas del hogar",
       "titleDe": "Täglich: Hausarbeiten",
@@ -9136,8 +9130,6 @@
       "id": "lesson-29-a4",
       "title": "Maison : Portes et Fenêtres",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Object verbs",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_open",
@@ -9296,6 +9288,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Object verbs",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Hogar: Puertas y Ventanas",
       "titleDe": "Zuhause: Türen und Fenster",
@@ -9320,15 +9314,13 @@
       "id": "lesson-29-a5",
       "title": "Actions : Transitions et États",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Transitions",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-29-a5_0",
           "th": "เริ่ม",
+          "phonetic": "rə̂əm",
           "fr": "commencer",
           "en": "begin",
-          "phonetic": "rə̂əm",
           "imageUrl": "/images/w_w_lesson-29-a5_0.svg",
           "es": "para empezar",
           "de": "beginnen",
@@ -9338,9 +9330,9 @@
         {
           "id": "w_lesson-29-a5_1",
           "th": "เสร็จ",
+          "phonetic": "sèt",
           "fr": "finir",
           "en": "finish",
-          "phonetic": "sèt",
           "imageUrl": "/images/w_w_lesson-29-a5_1.svg",
           "es": "finalizar",
           "de": "beenden",
@@ -9350,9 +9342,9 @@
         {
           "id": "w_lesson-29-a5_2",
           "th": "เปลี่ยน",
+          "phonetic": "plìan",
           "fr": "changer",
           "en": "change",
-          "phonetic": "plìan",
           "imageUrl": "/images/w_w_lesson-29-a5_2.svg",
           "es": "cambiar",
           "de": "ändern",
@@ -9362,9 +9354,9 @@
         {
           "id": "w_lesson-44-a2_1",
           "th": "ชุด",
+          "phonetic": "chút",
           "fr": "robe/ensemble",
           "en": "dress/suit",
-          "phonetic": "chút",
           "imageUrl": "/images/w_w_lesson-44-a2_1.svg",
           "es": "vestido/conjunto",
           "de": "Kleid/Set",
@@ -9372,23 +9364,23 @@
           "syllabe": ""
         },
         {
-          "th": "ยัง",
-          "en": "still/yet",
           "id": "w_yang",
-          "fr": "encore",
+          "th": "ยัง",
           "phonetic": "yang",
+          "fr": "encore",
+          "en": "still/yet",
           "imageUrl": "/images/w_w_yang.svg",
           "es": "De nuevo",
-          "de": "Wieder",
+          "de": "(immer) noch",
           "it": "Ancora",
           "syllabe": ""
         },
         {
-          "th": "เพิ่ง",
-          "en": "just now",
           "id": "w_phoeng",
-          "fr": "venir de",
+          "th": "เพิ่ง",
           "phonetic": "phôeng",
+          "fr": "venir de",
+          "en": "just now",
           "imageUrl": "/images/w_w_phoeng.svg",
           "es": "venir de",
           "de": "kommen aus",
@@ -9400,9 +9392,9 @@
         {
           "id": "p_new_lesson-29-a5_0",
           "th": "เริ่มทำ",
+          "phonetic": "rə̂əm tham",
           "fr": "Commencer à faire",
           "en": "Begin doing",
-          "phonetic": "rə̂əm tham",
           "components": [
             "w_lesson-29-a5_0",
             "w_tham"
@@ -9416,9 +9408,9 @@
         {
           "id": "p_new_lesson-29-a5_1",
           "th": "เสร็จแล้ว",
+          "phonetic": "sèt-lɛ́ɛw",
           "fr": "Déjà fini",
           "en": "Already finished",
-          "phonetic": "sèt-lɛ́ɛw",
           "components": [
             "w_lesson-29-a5_1",
             "w_laew"
@@ -9432,9 +9424,9 @@
         {
           "id": "p_new_lesson-29-a5_2",
           "th": "เปลี่ยนชุด",
+          "phonetic": "b̀liian chút",
           "fr": "Changer de vêtements",
           "en": "Change clothes",
-          "phonetic": "b̀liian chút",
           "components": [
             "w_lesson-29-a5_2",
             "w_lesson-44-a2_1"
@@ -9448,9 +9440,9 @@
         {
           "id": "p_new_lesson-29-a5_3",
           "th": "ยังไม่เสร็จ",
+          "phonetic": "yang mâi sèt",
           "fr": "Pas encore fini",
           "en": "Not finished yet",
-          "phonetic": "yang mâi sèt",
           "components": [
             "w_yang",
             "w_mai_neg",
@@ -9465,9 +9457,9 @@
         {
           "id": "p_new_lesson-29-a5_4",
           "th": "เพิ่งเริ่ม",
+          "phonetic": "pə̂ng rə̂əm",
           "fr": "Viens de commencer",
           "en": "Just began",
-          "phonetic": "pə̂ng rə̂əm",
           "components": [
             "w_phoeng",
             "w_lesson-29-a5_0"
@@ -9479,6 +9471,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Transitions",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Acciones: Transiciones y Estados",
       "titleDe": "Aktionen: Übergänge und Zustände",
@@ -9507,8 +9501,8 @@
         {
           "id": "w_chao",
           "th": "เช้า",
-          "fr": "matin",
           "phonetic": "cháao",
+          "fr": "matin",
           "en": "Morning",
           "imageUrl": "/images/w_w_chao.svg",
           "es": "Mañana",
@@ -9519,8 +9513,8 @@
         {
           "id": "w_yen_evening",
           "th": "เย็น",
-          "fr": "soir",
           "phonetic": "yen",
+          "fr": "soir",
           "en": "evening",
           "imageUrl": "/images/w_w_yen.svg",
           "es": "noche",
@@ -9531,8 +9525,8 @@
         {
           "id": "w_khuen",
           "th": "คืน",
-          "fr": "nuit",
           "phonetic": "kheun",
+          "fr": "nuit",
           "en": "night",
           "imageUrl": "/images/w_w_khuen.svg",
           "es": "noche",
@@ -9541,11 +9535,11 @@
           "syllabe": ""
         },
         {
-          "th": "ตอน",
-          "en": "part/period",
           "id": "w_ton",
-          "fr": "moment / partie",
+          "th": "ตอน",
           "phonetic": "dtoon",
+          "fr": "moment / partie",
+          "en": "part/period",
           "imageUrl": "/images/w_w_ton.svg",
           "es": "momento/parte",
           "de": "Moment/Teil",
@@ -9557,13 +9551,13 @@
         {
           "id": "p_this_morning",
           "th": "เช้านี้",
-          "fr": "ce matin",
           "phonetic": "cháao née",
+          "fr": "ce matin",
+          "en": "This morning",
           "components": [
             "w_chao",
             "w_nii_this"
           ],
-          "en": "This morning",
           "imageUrl": "/images/p_p_this_morning.svg",
           "es": "Esta mañana",
           "de": "Heute Morgen",
@@ -9573,31 +9567,31 @@
         {
           "id": "p_work_morning",
           "th": "ทำงานเช้านี้",
-          "fr": "travailler ce matin",
           "phonetic": "tham-ngaan cháao née",
+          "fr": "travailler ce matin",
+          "en": "work this morning",
           "components": [
             "w_tham_ngan",
             "w_chao",
             "w_nii_this"
           ],
-          "en": "work this morning",
           "imageUrl": "/images/p_p_work_morning.svg",
           "es": "trabajar esta mañana",
-          "de": "Arbeit heute Morgen",
+          "de": "heute Morgen arbeiten",
           "it": "lavorare stamattina",
           "syllabe": ""
         },
         {
           "id": "p_eat_evening",
           "th": "กินข้าวเย็น",
-          "fr": "manger le soir / Dîner ",
           "phonetic": "kin khâao yen",
+          "fr": "manger le soir / Dîner",
+          "en": "eat in the evening / have dinner",
           "components": [
             "w_kin",
             "w_khao",
             "w_yen_evening"
           ],
-          "en": "eat in the evening / have dinner",
           "imageUrl": "/images/p_p_eat_evening.svg",
           "es": "comer por la noche / cenar",
           "de": "abends essen / Abendessen",
@@ -9607,14 +9601,14 @@
         {
           "id": "p_sleep_night",
           "th": "นอนคืนนี้",
-          "fr": "dormir cette nuit",
           "phonetic": "nɔɔn kheun nee",
+          "fr": "dormir cette nuit",
+          "en": "sleep tonight",
           "components": [
             "w_non",
             "w_khuen",
             "w_nii_this"
           ],
-          "en": "sleep tonight",
           "imageUrl": "/images/p_p_sleep_night.svg",
           "es": "dormir esta noche",
           "de": "heute Nacht schlafen",
@@ -9624,14 +9618,14 @@
         {
           "id": "p_good_evening",
           "th": "สวัสดีตอนเย็น",
-          "fr": "bonsoir",
           "phonetic": "sà-wàt-dii dtoon yen",
+          "fr": "bonsoir",
+          "en": "Good evening",
           "components": [
             "w_sawatdee",
             "w_ton",
             "w_yen_evening"
           ],
-          "en": "Good evening",
           "imageUrl": "/images/p_p_good_evening.svg",
           "es": "Buenas noches",
           "de": "Guten Abend",
@@ -9772,7 +9766,7 @@
           "th": "มีแดด",
           "phonetic": "mii dàet",
           "fr": "il y a du soleil",
-          "en": "there is sun",
+          "en": "it's sunny",
           "components": [
             "w_mee",
             "w_daet"
@@ -9780,7 +9774,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_sun_out.svg",
           "es": "hay sol",
-          "de": "es gibt Sonne",
+          "de": "es ist sonnig",
           "it": "c'è il sole",
           "syllabe": ""
         },
@@ -9815,7 +9809,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_use_umbrella.svg",
           "es": "usa un paraguas",
-          "de": "Benutze einen Regenschirm",
+          "de": "Einen Regenschirm benutzen",
           "it": "utilizzare un ombrello",
           "syllabe": ""
         }
@@ -9851,7 +9845,6 @@
       "titleEn": "Unit 8 Assessment",
       "descriptionEn": "Around the house: solidify your basics on daily chores, fundamental communication, times of day, and the weather.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Evaluación de la Unidad 8",
       "titleDe": "Bewertung von Einheit 8",
       "titleIt": "Unità 8 Valutazione",
@@ -9879,8 +9872,8 @@
         {
           "id": "w_lom",
           "th": "ลม",
-          "fr": "vent",
           "phonetic": "lom",
+          "fr": "vent",
           "en": "wind",
           "imageUrl": "/images/w_w_lom.svg",
           "es": "viento",
@@ -9889,14 +9882,14 @@
           "syllabe": ""
         },
         {
-          "th": "อากาศ",
-          "en": "weather",
           "id": "w_akat",
-          "fr": "temps / météo",
+          "th": "อากาศ",
           "phonetic": "aa-gàat",
+          "fr": "temps / météo",
+          "en": "weather",
           "imageUrl": "/images/w_w_akat.svg",
           "es": "tiempo / clima",
-          "de": "Zeit / Wetter",
+          "de": "Wetter",
           "it": "tempo/meteo",
           "syllabe": ""
         }
@@ -9905,13 +9898,13 @@
         {
           "id": "p_very_cold",
           "th": "หนาวมาก",
-          "fr": "il fait très froid",
           "phonetic": "nǎao mâak",
+          "fr": "il fait très froid",
+          "en": "it's very cold",
           "components": [
             "w_naow",
             "w_mak"
           ],
-          "en": "it's very cold",
           "imageUrl": "/images/p_p_very_cold.svg",
           "es": "hace mucho frio",
           "de": "es ist sehr kalt",
@@ -9921,13 +9914,13 @@
         {
           "id": "p_wind_strong",
           "th": "ลมมาก",
-          "fr": "beaucoup de vent",
           "phonetic": "lom mâak",
+          "fr": "beaucoup de vent",
+          "en": "very windy",
           "components": [
             "w_lom",
             "w_mak"
           ],
-          "en": "very windy ",
           "imageUrl": "/images/p_p_wind_strong.svg",
           "es": "mucho viento",
           "de": "viel Wind",
@@ -9937,13 +9930,13 @@
         {
           "id": "p_cold_wind",
           "th": "ลมหนาว",
-          "fr": "vent froid",
           "phonetic": "lom nǎao",
+          "fr": "vent froid",
+          "en": "cold wind",
           "components": [
             "w_lom",
             "w_naow"
           ],
-          "en": "cold wind",
           "imageUrl": "/images/p_p_cold_wind.svg",
           "es": "viento frio",
           "de": "kalter Wind",
@@ -9953,14 +9946,14 @@
         {
           "id": "p_hot_not_cold",
           "th": "ร้อนไม่หนาว",
-          "fr": "chaud, pas froid",
           "phonetic": "rɔ́ɔn mâi nǎao",
+          "fr": "chaud, pas froid",
+          "en": "warm, not cold",
           "components": [
             "w_ron",
             "w_mai_neg",
             "w_naow"
           ],
-          "en": "warm, not cold",
           "imageUrl": "/images/p_p_hot_not_cold.svg",
           "es": "cálido, no frío",
           "de": "warm, nicht kalt",
@@ -9970,13 +9963,13 @@
         {
           "id": "p_weather_good",
           "th": "อากาศดี",
-          "fr": "il fait beau",
           "phonetic": "aa-gàat dii",
+          "fr": "il fait beau",
+          "en": "the weather is nice",
           "components": [
             "w_akat",
             "w_dee"
           ],
-          "en": "the weather is nice",
           "imageUrl": "/images/p_p_weather_good.svg",
           "es": "el clima es agradable",
           "de": "das Wetter ist schön",
@@ -10059,7 +10052,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khrueng.svg",
           "es": "mitad, mitad",
-          "de": "halb, halb",
+          "de": "halb",
           "it": "metà, metà",
           "syllabe": ""
         },
@@ -10108,7 +10101,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_when.svg",
           "es": "¿Cuándo vas allí?",
-          "de": "Wann gehst du dorthin?",
+          "de": "Wann gehst du?",
           "it": "quando ci vai?",
           "syllabe": ""
         },
@@ -10191,8 +10184,6 @@
       "id": "lesson-34-a1",
       "title": "Météo 2 : Vent et Tempêtes",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Climates",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_snow",
@@ -10347,6 +10338,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Climates",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Clima 2: viento y tormentas",
       "titleDe": "Wetter 2: Wind und Sturm",
@@ -10371,8 +10364,6 @@
       "id": "lesson-34-a2",
       "title": "Météo 3 : Les Saisons",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Seasons",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_season_hot",
@@ -10533,6 +10524,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Seasons",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Clima 3: Las estaciones",
       "titleDe": "Wetter 3: Die Jahreszeiten",
@@ -10557,8 +10550,6 @@
       "id": "lesson-34-a3",
       "title": "Temps 3 : Jours et Passé",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Days",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_mueawaan",
@@ -10628,12 +10619,12 @@
         {
           "id": "w_mai_khoei",
           "th": "ไม่เคย",
-          "fr": "jamais",
           "phonetic": "mâi-khoei",
+          "fr": "jamais",
           "en": "Never",
           "imageUrl": "/images/w_w_mai_khoei.svg",
           "es": "Nunca",
-          "de": "Niemals",
+          "de": "niemals",
           "it": "Mai",
           "syllabe": ""
         }
@@ -10723,11 +10714,13 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_i_go_first.svg",
           "es": "iré allí primero",
-          "de": "Ich werde zuerst dorthin gehen",
+          "de": "Ich gehe zuerst",
           "it": "Ci andrò prima",
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Days",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Tiempo 3: Días y Pasado",
       "titleDe": "Zeit 3: Tage und Vergangenheit",
@@ -10752,8 +10745,6 @@
       "id": "lesson-34-a4",
       "title": "Temps 4 : L'après-midi et Attente",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Periods",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_bai",
@@ -10803,7 +10794,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_diao.svg",
           "es": "Un momento",
-          "de": "in einem Moment",
+          "de": "gleich / in Kürze",
           "it": "tra un attimo",
           "syllabe": ""
         },
@@ -10930,6 +10921,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Periods",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Hora 4: Tarde y Espera",
       "titleDe": "Zeit 4: Nachmittag und Warten",
@@ -10954,8 +10947,6 @@
       "id": "lesson-34-a5",
       "title": "Temps 5 : Les Durées exactes",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Durations",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-34-a5_1",
@@ -10979,7 +10970,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_lesson-34-a5_2.svg",
           "es": "segundo",
-          "de": "zweite",
+          "de": "Sekunde",
           "it": "secondo",
           "syllabe": ""
         },
@@ -11130,6 +11121,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Durations",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Hora 5: Las duraciones exactas",
       "titleDe": "Zeit 5: Die genauen Dauern",
@@ -11159,7 +11152,6 @@
       "titleEn": "Unit 9 Assessment",
       "descriptionEn": "What's the weather like? Validate your knowledge of complex weather, telling the exact time, seasons, and expressing durations.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Evaluación de la Unidad 9",
       "titleDe": "Bewertung von Einheit 9",
       "titleIt": "Unità 9 Valutazione",
@@ -11219,7 +11211,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_talat.svg",
           "es": "caminar",
-          "de": "gehen",
+          "de": "Markt",
           "it": "camminare",
           "syllabe": ""
         },
@@ -11282,7 +11274,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_school.svg",
           "es": "ir a la escuela",
-          "de": "Geh zur Schule",
+          "de": "Zur Schule gehen",
           "it": "Vai a scuola",
           "syllabe": ""
         },
@@ -11299,7 +11291,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_school_big.svg",
           "es": "gran escuela",
-          "de": "Tolle Schule",
+          "de": "Große Schule",
           "it": "Ottima scuola",
           "syllabe": ""
         },
@@ -11449,7 +11441,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_ton_mai.svg",
           "es": "ÁRBOL",
-          "de": "BAUM",
+          "de": "Baum",
           "it": "ALBERO",
           "syllabe": ""
         },
@@ -11516,7 +11508,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_park.svg",
           "es": "ir al parque",
-          "de": "geh in den Park",
+          "de": "In den Park gehen",
           "it": "vai al parco",
           "syllabe": ""
         },
@@ -11732,7 +11724,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_pier.svg",
           "es": "ir al muelle",
-          "de": "geh zum Pier",
+          "de": "Zum Pier gehen",
           "it": "vai al molo",
           "syllabe": ""
         }
@@ -11980,15 +11972,13 @@
       "id": "lesson-39-a1",
       "title": "Bâtiments Publics",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Buildings",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-39-a1_2",
           "th": "สถานีตำรวจ",
-          "fr": "commissariat",
-          "en": "police stat.",
           "phonetic": "sà-thǎa-nii-tam-rùat",
+          "fr": "commissariat",
+          "en": "police station",
           "imageUrl": "/images/w_w_lesson-39-a1_2.svg",
           "es": "comisaría de policía",
           "de": "Polizeistation",
@@ -11998,8 +11988,8 @@
         {
           "id": "w_mo",
           "th": "หมอ",
-          "fr": "médecin",
           "phonetic": "mɔ̌ɔ",
+          "fr": "médecin",
           "en": "doctor",
           "imageUrl": "/images/w_w_mo.svg",
           "es": "doctor",
@@ -12010,8 +12000,8 @@
         {
           "id": "w_thii",
           "th": "ที่",
-          "fr": "à / chez",
           "phonetic": "thîi",
+          "fr": "à / chez",
           "en": "at",
           "imageUrl": "/images/w_w_thii.svg",
           "es": "a/en",
@@ -12020,13 +12010,13 @@
           "syllabe": ""
         },
         {
-          "th": "ตำรวจ",
-          "en": "police",
           "id": "w_tamruat",
-          "fr": "police",
+          "th": "ตำรวจ",
           "phonetic": "dtam-rùuat",
-          "imageUrl": "/images/w_w_tamruat.svg",
+          "fr": "police",
+          "en": "police",
           "allowIdenticalTranslation": true,
+          "imageUrl": "/images/w_w_tamruat.svg",
           "es": "policía",
           "de": "Polizei",
           "it": "Polizia Stradale",
@@ -12037,9 +12027,9 @@
         {
           "id": "p_new_lesson-39-a1_0",
           "th": "ไปธนาคาร",
+          "phonetic": "bpai thá-naa-khaan",
           "fr": "Aller à la banque",
           "en": "Go to bank",
-          "phonetic": "bpai thá-naa-khaan",
           "components": [
             "w_pai",
             "w_thanaakhaan"
@@ -12053,9 +12043,9 @@
         {
           "id": "p_new_lesson-39-a1_1",
           "th": "หมอที่โรงพยาบาล",
+          "phonetic": "mɔ̌ɔ thîi roong-phá-yaa-baan",
           "fr": "Docteur à l'hôpital",
           "en": "Doctor at hospital",
-          "phonetic": "mɔ̌ɔ thîi roong-phá-yaa-baan",
           "components": [
             "w_mo",
             "w_thii",
@@ -12070,25 +12060,25 @@
         {
           "id": "p_new_lesson-39-a1_2",
           "th": "หาตำรวจ",
+          "phonetic": "hǎa dtam-rùat",
           "fr": "Chercher la police",
           "en": "Find police",
-          "phonetic": "hǎa dtam-rùat",
           "components": [
             "w_ha",
             "w_tamruat"
           ],
           "imageUrl": "/images/p_p_new_lesson-39-a1_2.svg",
           "es": "buscar la fuente",
-          "de": "Suchen Sie nach der Schriftart",
+          "de": "Die Polizei suchen",
           "it": "Cerca il carattere",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-39-a1_3",
           "th": "โรงพยาบาลใหญ่",
+          "phonetic": "roong-phá-yaa-baan yài",
           "fr": "Le grand hôpital",
           "en": "Big hospital",
-          "phonetic": "roong-phá-yaa-baan yài",
           "components": [
             "w_rong_phayaban",
             "w_yai"
@@ -12102,9 +12092,9 @@
         {
           "id": "p_new_lesson-39-a1_4",
           "th": "อยู่ธนาคาร",
+          "phonetic": "yùu thá-naa-khaan",
           "fr": "Être à la banque",
           "en": "At the bank",
-          "phonetic": "yùu thá-naa-khaan",
           "components": [
             "w_yuu",
             "w_thanaakhaan"
@@ -12116,6 +12106,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Buildings",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/time.svg",
       "titleEs": "Edificios públicos",
       "titleDe": "Öffentliche Gebäude",
@@ -12140,15 +12132,13 @@
       "id": "lesson-39-a2",
       "title": "Points Cardinaux",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Directions",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-39-a2_0",
           "th": "เหนือ",
+          "phonetic": "nʉ̌a",
           "fr": "nord",
           "en": "north",
-          "phonetic": "nʉ̌a",
           "imageUrl": "/images/w_w_lesson-39-a2_0.svg",
           "es": "norte",
           "de": "Norden",
@@ -12158,9 +12148,9 @@
         {
           "id": "w_lesson-39-a2_1",
           "th": "ใต้",
+          "phonetic": "dtâai",
           "fr": "sud",
           "en": "south",
-          "phonetic": "dtâai",
           "imageUrl": "/images/w_w_lesson-39-a2_1.svg",
           "es": "sur",
           "de": "Süden",
@@ -12170,9 +12160,9 @@
         {
           "id": "w_lesson-39-a2_2",
           "th": "ตะวันออก",
+          "phonetic": "dtà-wan-ɔ̀ɔk",
           "fr": "est",
           "en": "east",
-          "phonetic": "dtà-wan-ɔ̀ɔk",
           "imageUrl": "/images/w_w_lesson-39-a2_2.svg",
           "es": "Este",
           "de": "Ost",
@@ -12180,11 +12170,11 @@
           "syllabe": ""
         },
         {
-          "th": "ภาค",
-          "en": "region",
           "id": "w_phak",
-          "fr": "région",
+          "th": "ภาค",
           "phonetic": "phâak",
+          "fr": "région",
+          "en": "region",
           "imageUrl": "/images/w_w_phak.svg",
           "es": "región",
           "de": "Region",
@@ -12192,11 +12182,11 @@
           "syllabe": ""
         },
         {
-          "th": "ทิศตะวันออก",
-          "en": "east direction / cardinal point east",
           "id": "w_thittawanok",
-          "fr": "direction de l'Est / point cardinal Est",
+          "th": "ทิศตะวันออก",
           "phonetic": "thít dtà-wan-ɔ̀ɔk",
+          "fr": "direction de l'Est / point cardinal Est",
+          "en": "east direction / cardinal point east",
           "imageUrl": "/images/w_w_thittawanok.svg",
           "es": "dirección del Este / punto cardinal Este",
           "de": "Richtung Osten / Himmelsrichtung Osten",
@@ -12208,9 +12198,9 @@
         {
           "id": "p_new_lesson-39-a2_0",
           "th": "ภาคเหนือ",
+          "phonetic": "phâak-nǔuea",
           "fr": "Région du nord",
           "en": "North region",
-          "phonetic": "phâak-nǔuea",
           "components": [
             "w_phak",
             "w_lesson-39-a2_0"
@@ -12224,9 +12214,9 @@
         {
           "id": "p_new_lesson-39-a2_1",
           "th": "ไปภาคใต้",
+          "phonetic": "pai phâak-tâi",
           "fr": "Aller au sud",
           "en": "Go south",
-          "phonetic": "pai phâak-tâi",
           "components": [
             "w_pai",
             "w_phak",
@@ -12234,31 +12224,31 @@
           ],
           "imageUrl": "/images/p_p_new_lesson-39-a2_1.svg",
           "es": "ir al sur",
-          "de": "Geh nach Süden",
+          "de": "Nach Süden gehen",
           "it": "Vai a sud",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-39-a2_2",
           "th": "ทิศตะวันออก",
+          "phonetic": "thít tà-wan-òok",
           "fr": "L'est",
           "en": "The east",
-          "phonetic": "thít tà-wan-òok",
           "components": [
             "w_thittawanok"
           ],
           "imageUrl": "/images/p_p_new_lesson-39-a2_2.svg",
           "es": "Lastre",
-          "de": "Ballast",
+          "de": "der Osten",
           "it": "Zavorra",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-39-a2_3",
           "th": "คนใต้",
+          "phonetic": "khon tâi",
           "fr": "Les gens du sud",
           "en": "Southern people",
-          "phonetic": "khon tâi",
           "components": [
             "w_khon",
             "w_lesson-39-a2_1"
@@ -12272,9 +12262,9 @@
         {
           "id": "p_new_lesson-39-a2_4",
           "th": "ลมเหนือ",
+          "phonetic": "lom nǔuea",
           "fr": "Vent du nord",
           "en": "North wind",
-          "phonetic": "lom nǔuea",
           "components": [
             "w_lom",
             "w_lesson-39-a2_0"
@@ -12286,6 +12276,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Directions",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Puntos cardinales",
       "titleDe": "Himmelsrichtungen",
@@ -12315,7 +12307,6 @@
       "titleEn": "Unit 10 Assessment",
       "descriptionEn": "Explore the city! Review urban locations, public transportation, official buildings, and cardinal points.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Unidad 10 Evaluación",
       "titleDe": "Bewertung von Einheit 10",
       "titleIt": "Unità 10 Valutazione",
@@ -12339,8 +12330,6 @@
       "id": "lesson-39-a3",
       "title": "La Gare et les Billets",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Travel",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_map",
@@ -12364,7 +12353,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_which.svg",
           "es": "qué",
-          "de": "Was",
+          "de": "welche / welches",
           "it": "Che cosa",
           "syllabe": ""
         },
@@ -12457,7 +12446,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_board_train.svg",
           "es": "Sube al tren",
-          "de": "Steigen Sie in den Zug",
+          "de": "In den Zug steigen",
           "it": "Sali sul treno",
           "syllabe": ""
         },
@@ -12479,6 +12468,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Travel",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/numbers.svg",
       "titleEs": "La estación y los billetes.",
       "titleDe": "Der Bahnhof und Tickets",
@@ -12503,8 +12494,6 @@
       "id": "lesson-39-a4",
       "title": "Véhicules terrestres",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Vehicles",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_jakkayaan",
@@ -12603,7 +12592,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_nang_taeksi.svg",
           "es": "Tomar un taxi",
-          "de": "Nehmen Sie ein Taxi",
+          "de": "Ein Taxi nehmen",
           "it": "Prendi un taxi",
           "syllabe": ""
         },
@@ -12656,7 +12645,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_ro_taeksi.svg",
           "es": "Espera un taxi",
-          "de": "Warten Sie auf ein Taxi",
+          "de": "Auf ein Taxi warten",
           "it": "Aspetta un taxi",
           "syllabe": ""
         },
@@ -12673,7 +12662,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_lesson-39-a4_1.svg",
           "es": "tomar el tren",
-          "de": "Nehmen Sie den Zug",
+          "de": "Den Zug nehmen",
           "it": "Prendi il treno",
           "syllabe": ""
         },
@@ -12690,7 +12679,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_new_lesson-39-a4_2.svg",
           "es": "Espera el autobús",
-          "de": "Warte auf den Bus",
+          "de": "Auf den Bus warten",
           "it": "Aspetta l'autobus",
           "syllabe": ""
         },
@@ -12729,6 +12718,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Vehicles",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Vehículos terrestres",
       "titleDe": "Landfahrzeuge",
@@ -12753,8 +12744,6 @@
       "id": "lesson-39-a5",
       "title": "Guider sur le chemin",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Guiding",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_thaang",
@@ -12817,7 +12806,7 @@
           "allowIdenticalTranslation": true,
           "imageUrl": "/images/w_w_yaek.svg",
           "es": "intersección",
-          "de": "Überschneidung",
+          "de": "Kreuzung",
           "it": "intersezione",
           "syllabe": ""
         }
@@ -12873,7 +12862,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_doen_phaan_rong_pha_ya_baan.svg",
           "es": "Camina frente al hospital",
-          "de": "Gehen Sie vor das Krankenhaus",
+          "de": "Gehen Sie am Krankenhaus vorbei",
           "it": "Cammina davanti all'ospedale",
           "syllabe": ""
         },
@@ -12915,6 +12904,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Guiding",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Guía en el camino",
       "titleDe": "Wegweiser auf dem Weg",
@@ -13131,7 +13122,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_lueang.svg",
           "es": "AMARILLO",
-          "de": "GELB",
+          "de": "gelb",
           "it": "GIALLO",
           "syllabe": ""
         },
@@ -13360,7 +13351,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_sa_aat.svg",
           "es": "propio",
-          "de": "eigen",
+          "de": "sauber",
           "it": "Proprio",
           "syllabe": ""
         },
@@ -13439,7 +13430,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_clean_room.svg",
           "es": "cuarto limpio",
-          "de": "Reinraum",
+          "de": "ein sauberes Zimmer",
           "it": "stanza pulita",
           "syllabe": ""
         },
@@ -13607,7 +13598,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_can_try_on.svg",
           "es": "¿Puedo probarlo?",
-          "de": "Kann ich es versuchen?",
+          "de": "Kann ich es anprobieren?",
           "it": "Posso provarlo?",
           "syllabe": ""
         },
@@ -13716,7 +13707,6 @@
       "titleEn": "Unit 11 Assessment",
       "descriptionEn": "Pack your bags! Assess your skills in train travel, clothing, secondary colors, and boutique shopping.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Unidad 11 Evaluación",
       "titleDe": "Bewertung von Einheit 11",
       "titleIt": "Unità 11 Valutazione",
@@ -13740,8 +13730,6 @@
       "id": "lesson-44-a1",
       "title": "Accessoires 1 : Chapeaux et Sacs",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Accessories",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_backpack",
@@ -13765,7 +13753,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_wallet.svg",
           "es": "billetera",
-          "de": "Geldbörse",
+          "de": "Geldbeutel / Portemonnaie",
           "it": "portafoglio",
           "syllabe": ""
         },
@@ -13902,6 +13890,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Accessories",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Accesorios 1: Sombreros y Bolsos",
       "titleDe": "Zubehör 1: Hüte und Taschen",
@@ -13926,8 +13916,6 @@
       "id": "lesson-44-a2",
       "title": "Vêtements 3 : Jupes et Chaussettes",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Wardrobe",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_san",
@@ -13964,7 +13952,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_thot.svg",
           "es": "quitar",
-          "de": "zu entfernen",
+          "de": "ausziehen",
           "it": "rimuovere",
           "syllabe": ""
         },
@@ -14080,11 +14068,13 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_skirt_pattern.svg",
           "es": "Falda con bonito estampado.",
-          "de": "Rock mit schönem Muster",
+          "de": "Ein Rock mit schönem Muster",
           "it": "Gonna con bellissimo motivo",
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Wardrobe",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Ropa 3: Faldas y Calcetines",
       "titleDe": "Kleidung 3: Röcke und Socken",
@@ -14109,8 +14099,6 @@
       "id": "lesson-44-a3",
       "title": "Description 2 : Les Longueurs",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Size",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_mai_tee",
@@ -14173,7 +14161,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_bang.svg",
           "es": "delgado / delgado (objeto)",
-          "de": "dünn / dünn (Objekt)",
+          "de": "dünn (Objekt)",
           "it": "sottile / sottile (oggetto)",
           "syllabe": ""
         }
@@ -14260,11 +14248,13 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_nang_sue_bang.svg",
           "es": "Buen libro",
-          "de": "Schönes Buch",
+          "de": "Ein dünnes Buch",
           "it": "Bel libro",
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Size",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Descripción 2: Longitudes",
       "titleDe": "Beschreibung 2: Längen",
@@ -14289,8 +14279,6 @@
       "id": "lesson-44-a4",
       "title": "Description 3 : Poids et Mesures",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Measure",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_nak",
@@ -14448,6 +14436,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Measure",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Descripción 3: Pesos y Medidas",
       "titleDe": "Beschreibung 3: Gewichte und Maße",
@@ -14472,15 +14462,13 @@
       "id": "lesson-44-a5",
       "title": "Accessoires 2 : Matériaux et Bijoux",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Materials",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-44-a5_0",
           "th": "ทอง",
+          "phonetic": "thɔɔng",
           "fr": "or",
           "en": "gold",
-          "phonetic": "thɔɔng",
           "imageUrl": "/images/w_w_lesson-44-a5_0.svg",
           "es": "oro",
           "de": "Gold",
@@ -14490,9 +14478,9 @@
         {
           "id": "w_lesson-44-a5_1",
           "th": "เงิน",
+          "phonetic": "ngen",
           "fr": "argent/métal",
           "en": "silver",
-          "phonetic": "ngen",
           "imageUrl": "/images/w_w_lesson-44-a5_1.svg",
           "es": "plata/metal",
           "de": "Silber/Metall",
@@ -14502,9 +14490,9 @@
         {
           "id": "w_lesson-44-a5_2",
           "th": "เพชร",
+          "phonetic": "phét",
           "fr": "diamant",
           "en": "diamond",
-          "phonetic": "phét",
           "imageUrl": "/images/w_w_lesson-44-a5_2.svg",
           "es": "diamante",
           "de": "Diamant",
@@ -14514,8 +14502,8 @@
         {
           "id": "w_roi",
           "th": "ร้อย",
-          "fr": "cent",
           "phonetic": "rɔ́ɔi",
+          "fr": "cent",
           "en": "hundred",
           "imageUrl": "/images/w_w_roi.svg",
           "es": "centenar",
@@ -14524,11 +14512,11 @@
           "syllabe": ""
         },
         {
-          "th": "แหวน",
-          "en": "ring",
           "id": "w_waen",
-          "fr": "bague",
+          "th": "แหวน",
           "phonetic": "wǎen",
+          "fr": "bague",
+          "en": "ring",
           "imageUrl": "/images/w_w_waen.svg",
           "es": "anillo",
           "de": "Ring",
@@ -14536,11 +14524,11 @@
           "syllabe": ""
         },
         {
-          "th": "สร้อย",
-          "en": "necklace",
           "id": "w_soi_collier",
-          "fr": "collier",
+          "th": "สร้อย",
           "phonetic": "sɔ̂y",
+          "fr": "collier",
+          "en": "necklace",
           "imageUrl": "/images/w_w_soi.svg",
           "es": "collar",
           "de": "Halskette",
@@ -14552,9 +14540,9 @@
         {
           "id": "p_new_lesson-44-a5_0",
           "th": "ซื้อทอง",
+          "phonetic": "súue thoong",
           "fr": "Acheter de l'or",
           "en": "Buy gold",
-          "phonetic": "súue thoong",
           "components": [
             "w_sue",
             "w_lesson-44-a5_0"
@@ -14568,9 +14556,9 @@
         {
           "id": "p_new_lesson-44-a5_1",
           "th": "แหวนเงิน",
+          "phonetic": "wǎaen ngoeen",
           "fr": "Bague en argent",
           "en": "Silver ring",
-          "phonetic": "wǎaen ngoeen",
           "components": [
             "w_waen",
             "w_ngern"
@@ -14584,25 +14572,25 @@
         {
           "id": "p_new_lesson-44-a5_2",
           "th": "ชอบเพชร",
+          "phonetic": "chôop phét",
           "fr": "Aimer les diamants",
           "en": "Like diamonds",
-          "phonetic": "chôop phét",
           "components": [
             "w_chop",
             "w_lesson-44-a5_2"
           ],
           "imageUrl": "/images/p_p_new_lesson-44-a5_2.svg",
           "es": "Amar los diamantes",
-          "de": "Liebevolle Diamanten",
+          "de": "Diamanten mögen",
           "it": "Amare i diamanti",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-44-a5_3",
           "th": "สร้อยทอง",
+          "phonetic": "sôoy thoong",
           "fr": "Collier en or",
           "en": "Gold necklace",
-          "phonetic": "sôoy thoong",
           "components": [
             "w_soi_collier",
             "w_lesson-44-a5_0"
@@ -14616,9 +14604,9 @@
         {
           "id": "p_new_lesson-44-a5_4",
           "th": "เพชรแพง",
+          "phonetic": "phét phaaeng",
           "fr": "Diamant cher",
           "en": "Expensive diamond",
-          "phonetic": "phét phaaeng",
           "components": [
             "w_lesson-44-a5_2",
             "w_phaeng"
@@ -14630,6 +14618,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Materials",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Accesorios 2: Materiales y Joyas",
       "titleDe": "Zubehör 2: Materialien und Schmuck",
@@ -14811,7 +14801,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_grandchild_plays_with_friend.svg",
           "es": "nieto juega con un amigo",
-          "de": "Enkelkind spielt mit Freund",
+          "de": "Das Enkelkind spielt mit dem Freund",
           "it": "il nipote gioca con un amico",
           "syllabe": ""
         }
@@ -14846,8 +14836,8 @@
         {
           "id": "w_ta",
           "th": "ตา",
-          "fr": "oeil",
           "phonetic": "dtaa",
+          "fr": "oeil",
           "en": "eye",
           "imageUrl": "/images/w_w_ta.svg",
           "es": "ojo",
@@ -14858,8 +14848,8 @@
         {
           "id": "w_pak",
           "th": "ปาก",
-          "fr": "bouche",
           "phonetic": "bpàak",
+          "fr": "bouche",
           "en": "mouth",
           "imageUrl": "/images/w_w_pak.svg",
           "es": "boca",
@@ -14870,8 +14860,8 @@
         {
           "id": "w_mue",
           "th": "มือ",
-          "fr": "main",
           "phonetic": "muue",
+          "fr": "main",
           "en": "hand",
           "imageUrl": "/images/w_w_mue.svg",
           "es": "mano",
@@ -14884,29 +14874,29 @@
         {
           "id": "p_hurt_hand",
           "th": "เจ็บมือ",
-          "fr": "j'ai mal à la main",
           "phonetic": "jèp muue",
+          "fr": "j'ai mal à la main",
+          "en": "my hand hurts",
           "components": [
             "w_jep",
             "w_mue"
           ],
-          "en": "my hand hurts",
           "imageUrl": "/images/p_p_hurt_hand.svg",
           "es": "me duele la mano",
-          "de": "meine hand tut weh",
+          "de": "meine Hand tut weh",
           "it": "mi fa male la mano",
           "syllabe": ""
         },
         {
           "id": "p_hurt_eye",
           "th": "เจ็บตา",
-          "fr": "j'ai mal à l'oeil",
           "phonetic": "jèp dtaa",
+          "fr": "j'ai mal à l'oeil",
+          "en": "my eye hurts",
           "components": [
             "w_jep",
             "w_ta"
           ],
-          "en": "my eye hurts",
           "imageUrl": "/images/p_p_hurt_eye.svg",
           "es": "me duele el ojo",
           "de": "Mein Auge tut weh",
@@ -14916,13 +14906,13 @@
         {
           "id": "p_red_mouth",
           "th": "ปากแดง",
-          "fr": "bouche rouge",
           "phonetic": "bpàak daeng",
+          "fr": "bouche rouge",
+          "en": "red mouth",
           "components": [
             "w_pak",
             "w_daeng"
           ],
-          "en": "red mouth",
           "imageUrl": "/images/p_p_red_mouth.svg",
           "es": "boca roja",
           "de": "roter Mund",
@@ -14932,13 +14922,13 @@
         {
           "id": "p_big_hand",
           "th": "มือใหญ่",
-          "fr": "grande main",
           "phonetic": "muue yài",
+          "fr": "grande main",
+          "en": "big hand",
           "components": [
             "w_mue",
             "w_yai"
           ],
-          "en": "big hand",
           "imageUrl": "/images/p_p_big_hand.svg",
           "es": "mano grande",
           "de": "große Hand",
@@ -14948,13 +14938,13 @@
         {
           "id": "p_wash_hand",
           "th": "ล้างมือ",
-          "fr": "laver les mains",
           "phonetic": "láang muue",
+          "fr": "laver les mains",
+          "en": "wash your hands",
           "components": [
             "w_lang",
             "w_mue"
           ],
-          "en": "wash your hands",
           "imageUrl": "/images/p_p_wash_hand.svg",
           "es": "lávese las manos",
           "de": "Wasch deine Hände",
@@ -14993,7 +14983,6 @@
       "titleEn": "Unit 12 Assessment",
       "descriptionEn": "Shopping spree! Review accessories, measurements, materials, as well as the human body and friends.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Unidad 12 Evaluación",
       "titleDe": "Bewertung von Einheit 12",
       "titleIt": "Unità 12 Valutazione",
@@ -15053,7 +15042,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_klom.svg",
           "es": "redondo",
-          "de": "runden",
+          "de": "rund",
           "it": "girare",
           "syllabe": ""
         },
@@ -15066,7 +15055,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_baen.svg",
           "es": "departamento",
-          "de": "Wohnung",
+          "de": "flach / platt",
           "it": "Piatto",
           "syllabe": ""
         },
@@ -15079,7 +15068,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_rup_rang.svg",
           "es": "silueta",
-          "de": "Silhouette",
+          "de": "Körperform / Figur",
           "it": "silhouette",
           "syllabe": ""
         }
@@ -15098,7 +15087,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_he_is_fat.svg",
           "es": "el es grande",
-          "de": "er ist groß",
+          "de": "er ist dick / er ist übergewichtig",
           "it": "lui è grande",
           "syllabe": ""
         },
@@ -15115,7 +15104,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_not_fat.svg",
           "es": "no grande",
-          "de": "nicht groß",
+          "de": "nicht dick / nicht übergewichtig",
           "it": "non grande",
           "syllabe": ""
         },
@@ -15202,24 +15191,24 @@
         {
           "id": "w_sanuk",
           "th": "สนุก",
-          "fr": "amusant",
           "phonetic": "sà-nùk",
-          "en": "amusing",
+          "fr": "amusant",
+          "en": "fun",
           "imageUrl": "/images/w_w_sanuk.svg",
           "es": "divertido",
-          "de": "amüsant",
+          "de": "amüsant / lustig",
           "it": "divertente",
           "syllabe": ""
         },
         {
           "id": "w_nak_rian",
           "th": "นักเรียน",
-          "fr": "étudiant",
           "phonetic": "nák-riian",
+          "fr": "étudiant",
           "en": "student",
           "imageUrl": "/images/w_w_nak_rian.svg",
           "es": "alumno",
-          "de": "Student",
+          "de": "Schüler",
           "it": "studente",
           "syllabe": ""
         }
@@ -15228,13 +15217,13 @@
         {
           "id": "p_good_student",
           "th": "นักเรียนเก่ง",
-          "fr": "bon étudiant",
           "phonetic": "nák-riian gèng",
+          "fr": "bon étudiant",
+          "en": "good student",
           "components": [
             "w_nak_rian",
             "w_kreng"
           ],
-          "en": "good student",
           "imageUrl": "/images/p_p_good_student.svg",
           "es": "buen estudiante",
           "de": "guter Schüler",
@@ -15244,13 +15233,13 @@
         {
           "id": "p_kind_friend",
           "th": "เพื่อนใจดี",
-          "fr": "ami gentil",
           "phonetic": "phûean jai dii",
+          "fr": "ami gentil",
+          "en": "kind friend",
           "components": [
             "w_phuean",
             "w_jai_dee"
           ],
-          "en": "kind friend",
           "imageUrl": "/images/p_p_kind_friend.svg",
           "es": "amable amigo",
           "de": "freundlicher Freund",
@@ -15260,13 +15249,13 @@
         {
           "id": "p_fun_game",
           "th": "เล่นสนุก",
-          "fr": "jouer est amusant",
           "phonetic": "lên sà-nùk",
+          "fr": "jouer est amusant",
+          "en": "playing is fun",
           "components": [
             "w_len",
             "w_sanuk"
           ],
-          "en": "playing is fun",
           "imageUrl": "/images/p_p_fun_game.svg",
           "es": "jugar es divertido",
           "de": "Spielen macht Spaß",
@@ -15276,13 +15265,13 @@
         {
           "id": "p_student_learn",
           "th": "นักเรียนเรียน",
-          "fr": "l'étudiant apprend",
           "phonetic": "nák-riian riian",
+          "fr": "l'étudiant apprend",
+          "en": "the student learns",
           "components": [
             "w_nak_rian",
             "w_rian"
           ],
-          "en": "the student learns",
           "imageUrl": "/images/p_p_student_learn.svg",
           "es": "el estudiante aprende",
           "de": "der Schüler lernt",
@@ -15292,13 +15281,13 @@
         {
           "id": "p_not_fun",
           "th": "ไม่สนุก",
-          "fr": "pas amusant",
           "phonetic": "mâi sà-nùk",
+          "fr": "pas amusant",
+          "en": "not fun",
           "components": [
             "w_mai_neg",
             "w_sanuk"
           ],
-          "en": "not fun",
           "imageUrl": "/images/p_p_not_fun.svg",
           "es": "no es divertido",
           "de": "kein Spaß",
@@ -15332,15 +15321,13 @@
       "id": "lesson-49-a1",
       "title": "Famille 2 : Les Aînés",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Elders",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-49-a1_0",
           "th": "ปู่",
+          "phonetic": "pùu",
           "fr": "grand-père",
           "en": "grandfather",
-          "phonetic": "pùu",
           "imageUrl": "/images/w_w_lesson-49-a1_0.svg",
           "es": "abuelo",
           "de": "Großvater",
@@ -15350,9 +15337,9 @@
         {
           "id": "w_lesson-49-a1_1",
           "th": "ย่า",
+          "phonetic": "yâa",
           "fr": "grand-mère",
           "en": "grandmother",
-          "phonetic": "yâa",
           "imageUrl": "/images/w_w_lesson-49-a1_1.svg",
           "es": "abuela",
           "de": "Großmutter",
@@ -15362,9 +15349,9 @@
         {
           "id": "w_lesson-49-a1_2",
           "th": "ลุง",
+          "phonetic": "lung",
           "fr": "oncle",
           "en": "uncle",
-          "phonetic": "lung",
           "imageUrl": "/images/w_w_lesson-49-a1_2.svg",
           "es": "tío",
           "de": "Onkel",
@@ -15372,11 +15359,11 @@
           "syllabe": ""
         },
         {
-          "th": "รัก",
-          "en": "love",
           "id": "w_rak",
-          "fr": "aimer",
+          "th": "รัก",
           "phonetic": "rák",
+          "fr": "aimer",
+          "en": "love",
           "imageUrl": "/images/w_w_rak.svg",
           "es": "gustar",
           "de": "mögen",
@@ -15388,9 +15375,9 @@
         {
           "id": "p_new_lesson-49-a1_0",
           "th": "ปู่ใจดี",
+          "phonetic": "pùu cai-dii",
           "fr": "Grand-père est gentil",
           "en": "Grandfather is nice",
-          "phonetic": "pùu cai-dii",
           "components": [
             "w_lesson-49-a1_0",
             "w_jai_dee"
@@ -15404,25 +15391,25 @@
         {
           "id": "p_new_lesson-49-a1_1",
           "th": "รักย่า",
+          "phonetic": "rák yâa",
           "fr": "Aimer grand-mère",
           "en": "Love grandmother",
-          "phonetic": "rák yâa",
           "components": [
             "w_rak",
             "w_lesson-49-a1_1"
           ],
           "imageUrl": "/images/p_p_new_lesson-49-a1_1.svg",
           "es": "Abuela cariñosa",
-          "de": "Liebevolle Oma",
+          "de": "Die Oma lieben",
           "it": "Nonna amorevole",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-49-a1_2",
           "th": "ลุงมาหา",
+          "phonetic": "lung maa hǎa",
           "fr": "Oncle vient visiter",
           "en": "Uncle comes visiting",
-          "phonetic": "lung maa hǎa",
           "components": [
             "w_lesson-49-a1_2",
             "w_maa",
@@ -15430,16 +15417,16 @@
           ],
           "imageUrl": "/images/p_p_new_lesson-49-a1_2.svg",
           "es": "el tio viene de visita",
-          "de": "Onkel kommt zu Besuch",
+          "de": "Der Onkel kommt zu Besuch",
           "it": "Lo zio viene a trovarci",
           "syllabe": ""
         },
         {
           "id": "p_new_lesson-49-a1_3",
           "th": "บ้านปู่",
+          "phonetic": "bâan pùu",
           "fr": "La maison de grand-père",
           "en": "Grandfather's house",
-          "phonetic": "bâan pùu",
           "components": [
             "w_baan",
             "w_lesson-49-a1_0"
@@ -15453,9 +15440,9 @@
         {
           "id": "p_new_lesson-49-a1_4",
           "th": "ย่าทำอาหาร",
+          "phonetic": "yâa tham aa-hǎan",
           "fr": "Grand-mère cuisine",
           "en": "Grandmother cooks",
-          "phonetic": "yâa tham aa-hǎan",
           "components": [
             "w_lesson-49-a1_1",
             "w_lesson-29-a3_2"
@@ -15467,6 +15454,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Elders",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Familia 2: Los Ancianos",
       "titleDe": "Familie 2: Die Ältesten",
@@ -15491,8 +15480,6 @@
       "id": "lesson-49-a2",
       "title": "Famille 3 : La Parenté",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Relatives",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_paa",
@@ -15516,7 +15503,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_luk_phi_luk_nong.svg",
           "es": "prima, prima",
-          "de": "Cousin, Cousin",
+          "de": "Cousin / Cousine",
           "it": "cugino, cugino",
           "syllabe": ""
         },
@@ -15594,7 +15581,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_paa_pai_baan.svg",
           "es": "La tía va a la casa de la abuela.",
-          "de": "Tante geht zum Haus der Großmutter.",
+          "de": "Die Tante geht zum Haus der Großmutter.",
           "it": "La zia va a casa della nonna.",
           "syllabe": ""
         },
@@ -15631,7 +15618,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_aa_chop_kin_khao.svg",
           "es": "Al tío le gusta comer arroz.",
-          "de": "Onkel isst gern Reis.",
+          "de": "Der Onkel isst gern Reis.",
           "it": "Allo zio piace mangiare il riso.",
           "syllabe": ""
         },
@@ -15655,6 +15642,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Relatives",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Familia 3: Paternidad",
       "titleDe": "Familie 3: Elternschaft",
@@ -15679,15 +15668,13 @@
       "id": "lesson-49-a3",
       "title": "Identité et Beauté",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Beauty",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_lesson-49-a3_1",
           "th": "หล่อ",
+          "phonetic": "lɔ̀ɔ",
           "fr": "beau (charisme)",
           "en": "handsome",
-          "phonetic": "lɔ̀ɔ",
           "imageUrl": "/images/w_w_lesson-49-a3_1.svg",
           "es": "hermoso (carisma)",
           "de": "schön (Charisma)",
@@ -15697,33 +15684,33 @@
         {
           "id": "w_lesson-49-a3_2",
           "th": "น่ารัก",
+          "phonetic": "nâa-rák",
           "fr": "mignon",
           "en": "cute",
-          "phonetic": "nâa-rák",
           "imageUrl": "/images/w_w_lesson-49-a3_2.svg",
           "es": "lindo",
-          "de": "Niedlich",
+          "de": "niedlich",
           "it": "Carino",
           "syllabe": ""
         },
         {
-          "th": "ผู้หญิง",
-          "en": "woman",
           "id": "w_phuying",
-          "fr": "femme",
+          "th": "ผู้หญิง",
           "phonetic": "phûu-yǐng",
+          "fr": "femme",
+          "en": "woman",
           "imageUrl": "/images/w_w_phuying.svg",
           "es": "mujer",
-          "de": "Frauen",
+          "de": "Frau",
           "it": "donne",
           "syllabe": ""
         },
         {
-          "th": "ผู้ชาย",
-          "en": "man",
           "id": "w_phuchai",
-          "fr": "homme",
+          "th": "ผู้ชาย",
           "phonetic": "phûu-chaai",
+          "fr": "homme",
+          "en": "man",
           "imageUrl": "/images/w_w_phuchai.svg",
           "es": "hombre",
           "de": "Mann",
@@ -15735,9 +15722,9 @@
         {
           "id": "p_new_lesson-49-a3_0",
           "th": "ผู้หญิงสวย",
+          "phonetic": "phûu-yǐng sǔay",
           "fr": "Belle femme",
           "en": "Beautiful woman",
-          "phonetic": "phûu-yǐng sǔay",
           "components": [
             "w_phuying",
             "w_suay"
@@ -15751,9 +15738,9 @@
         {
           "id": "p_new_lesson-49-a3_1",
           "th": "ผู้ชายหล่อ",
+          "phonetic": "phûu-chaai lòo",
           "fr": "Beau garçon",
           "en": "Handsome man",
-          "phonetic": "phûu-chaai lòo",
           "components": [
             "w_phuchai",
             "w_lesson-49-a3_1"
@@ -15767,9 +15754,9 @@
         {
           "id": "p_new_lesson-49-a3_2",
           "th": "เด็กน่ารัก",
+          "phonetic": "dèk nâa-rák",
           "fr": "Mignon enfant",
           "en": "Cute child",
-          "phonetic": "dèk nâa-rák",
           "components": [
             "w_dek",
             "w_lesson-49-a3_2"
@@ -15783,9 +15770,9 @@
         {
           "id": "p_new_lesson-49-a3_3",
           "th": "น่ารักมาก",
+          "phonetic": "nâa-rák mâak",
           "fr": "Très mignon!",
           "en": "Very cute!",
-          "phonetic": "nâa-rák mâak",
           "components": [
             "w_lesson-49-a3_2",
             "w_mak"
@@ -15797,6 +15784,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Beauty",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Identidad y belleza",
       "titleDe": "Identität und Schönheit",
@@ -15821,8 +15810,6 @@
       "id": "lesson-49-a4",
       "title": "Apparence 2 : Nuances",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Body shape",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_maew",
@@ -15979,6 +15966,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Body shape",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/body.svg",
       "titleEs": "Apariencia 2: Sombras",
       "titleDe": "Aussehen 2: Schatten",
@@ -16003,8 +15992,6 @@
       "id": "lesson-49-a5",
       "title": "Qualités et Intelligence",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Qualities",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_chalaat",
@@ -16054,7 +16041,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khayan.svg",
           "es": "obrero",
-          "de": "Arbeitnehmer",
+          "de": "fleißig",
           "it": "lavoratore",
           "syllabe": ""
         },
@@ -16160,6 +16147,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Qualities",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Cualidades e Inteligencia",
       "titleDe": "Qualitäten und Intelligenz",
@@ -16189,7 +16178,6 @@
       "titleEn": "Unit 13 Assessment",
       "descriptionEn": "Describe your circle: validate your vocabulary on physical appearance, character traits, extended family, and intelligence.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Unidad 13 Evaluación",
       "titleDe": "Bewertung von Einheit 13",
       "titleIt": "Unità 13 Valutazione",
@@ -16328,7 +16316,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_have_fever.svg",
           "es": "Tener fiebre",
-          "de": "Habe Fieber",
+          "de": "Fieber haben",
           "it": "Hai la febbre",
           "syllabe": ""
         },
@@ -16345,7 +16333,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_sore_throat.svg",
           "es": "tener dolor de garganta",
-          "de": "Habe Halsschmerzen",
+          "de": "Halsschmerzen haben",
           "it": "Hai mal di gola",
           "syllabe": ""
         },
@@ -16456,7 +16444,7 @@
           "th": "ตรวจ",
           "phonetic": "dtrùat",
           "fr": "examiner",
-          "en": "to examine",
+          "en": "to examine / to check / to inspect",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_examine.svg",
           "es": "examinar",
@@ -16562,7 +16550,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_have_runny_nose.svg",
           "es": "Lloriquear",
-          "de": "Schniefen",
+          "de": "Eine laufende Nase haben",
           "it": "Piangere",
           "syllabe": ""
         },
@@ -16672,7 +16660,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khriat.svg",
           "es": "estresado",
-          "de": "betont",
+          "de": "gestresst",
           "it": "sottolineato",
           "syllabe": ""
         }
@@ -16876,7 +16864,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_i_dont_know.svg",
           "es": "No sé",
-          "de": "Ich weiß nicht",
+          "de": "Ich weiß es nicht",
           "it": "Non lo so",
           "syllabe": ""
         },
@@ -16893,7 +16881,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_back_pain.svg",
           "es": "tener dolor de espalda",
-          "de": "Habe Rückenschmerzen",
+          "de": "Rückenschmerzen haben",
           "it": "Avere mal di schiena",
           "syllabe": ""
         },
@@ -16976,8 +16964,6 @@
       "id": "lesson-54-a1",
       "title": "Émotions 1 : Tristesse et Certitude",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Health",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_sia_jai",
@@ -17137,6 +17123,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Health",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Emociones 1: Tristeza y Certeza",
       "titleDe": "Emotionen 1: Traurigkeit und Gewissheit",
@@ -17161,8 +17149,6 @@
       "id": "lesson-54-a2",
       "title": "Émotions 2 : Joie et Colère",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Illness",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_mee_khwaam_suk",
@@ -17199,7 +17185,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_ya_not.svg",
           "es": "no (imperativo)",
-          "de": "nicht (zwingend)",
+          "de": "nicht (Imperativ)",
           "it": "no (imperativo)",
           "syllabe": ""
         },
@@ -17320,6 +17306,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Illness",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Emociones 2: Alegría e Ira",
       "titleDe": "Emotionen 2: Freude und Wut",
@@ -17344,8 +17332,6 @@
       "id": "lesson-54-a3",
       "title": "États 1 : Faim et Fatigue",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Emotions",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_hiw_nam",
@@ -17504,6 +17490,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Emotions",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/feelings.svg",
       "titleEs": "Estados 1: Hambre y Fatiga",
       "titleDe": "Zustände 1: Hunger und Müdigkeit",
@@ -17533,7 +17521,6 @@
       "titleEn": "Unit 14 Assessment",
       "descriptionEn": "Take care of yourself: review medical vocabulary, symptoms, pain, and the expression of your emotions and physical states.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Unidad 14 Evaluación",
       "titleDe": "Einheit 14 Bewertung",
       "titleIt": "Unità 14 Valutazione",
@@ -17557,8 +17544,6 @@
       "id": "lesson-54-a4",
       "title": "États 2 : Expressions du Visage",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Ext: Needs",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_hua_ro",
@@ -17719,6 +17704,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Ext: Needs",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/default-lesson.svg",
       "titleEs": "Estados 2: Expresiones faciales",
       "titleDe": "Zustände 2: Gesichtsausdrücke",
@@ -17743,8 +17730,6 @@
       "id": "lesson-54-a5",
       "title": "Révisions : Santé et États",
       "description": "Plus de vocabulaire pour cette unité.",
-      "titleEn": "Face",
-      "descriptionEn": "More vocabulary for this unit.",
       "words": [
         {
           "id": "w_khaeng_raeng",
@@ -17794,7 +17779,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_wian_hua.svg",
           "es": "mareado / mareado",
-          "de": "schwindelig / schwindelig",
+          "de": "schwindelig",
           "it": "vertigini/vertigini",
           "syllabe": ""
         },
@@ -17826,7 +17811,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_auto_lesson-50_3.svg",
           "es": "[Práctica] y (para devolver la pregunta) / no",
-          "de": "[Üben] und (um die Frage zurückzugeben) / nicht",
+          "de": "[Üben] und (um die Frage zu beantworten) / nicht",
           "it": "[Pratica] e (per restituire la domanda) / no",
           "syllabe": ""
         },
@@ -17959,6 +17944,8 @@
           "syllabe": ""
         }
       ],
+      "titleEn": "Face",
+      "descriptionEn": "More vocabulary for this unit.",
       "imageUrl": "/images/numbers.svg",
       "titleEs": "Revisiones: Salud y Estados",
       "titleDe": "Revisionen: Gesundheit und Staaten",
@@ -17993,7 +17980,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_samoe.svg",
           "es": "siempre",
-          "de": "stets",
+          "de": "immer / stets",
           "it": "Sempre",
           "syllabe": ""
         },
@@ -18019,7 +18006,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_bang_thi.svg",
           "es": "A veces",
-          "de": "Manchmal",
+          "de": "manchmal",
           "it": "A volte",
           "syllabe": ""
         },
@@ -18032,7 +18019,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_pakati.svg",
           "es": "Normalmente",
-          "de": "Normalerweise",
+          "de": "normalerweise",
           "it": "Normalmente",
           "syllabe": ""
         },
@@ -18119,7 +18106,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_work_normally.svg",
           "es": "Trabajar normalmente",
-          "de": "Funktioniert normal",
+          "de": "Normal arbeiten",
           "it": "Lavora normalmente",
           "syllabe": ""
         },
@@ -18177,7 +18164,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_khrai.svg",
           "es": "OMS",
-          "de": "WHO",
+          "de": "wer",
           "it": "Chi",
           "syllabe": ""
         },
@@ -18190,7 +18177,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_yang_ngai.svg",
           "es": "cómo",
-          "de": "Wie",
+          "de": "wie",
           "it": "Come",
           "syllabe": ""
         },
@@ -18620,7 +18607,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_go_with_friend.svg",
           "es": "ir con un amigo",
-          "de": "Geh mit einem Freund",
+          "de": "Mit einem Freund gehen",
           "it": "vai con un amico",
           "syllabe": ""
         },
@@ -18743,7 +18730,6 @@
       "titleEn": "Unit 15 Assessment",
       "descriptionEn": "Express yourself clearly! Master facial expressions, question words, emotional nuances, and your habits.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "Unidad 15 Evaluación",
       "titleDe": "Einheit 15 Bewertung",
       "titleIt": "Unità 15 Valutazione",
@@ -19001,7 +18987,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_phruehat.svg",
           "es": "JUEVES",
-          "de": "DONNERSTAG",
+          "de": "Donnerstag",
           "it": "GIOVEDÌ",
           "syllabe": ""
         },
@@ -19027,7 +19013,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_sao_day.svg",
           "es": "SÁBADO",
-          "de": "SAMSTAG",
+          "de": "Samstag",
           "it": "SABATO",
           "syllabe": ""
         },
@@ -19110,7 +19096,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_thursday.svg",
           "es": "JUEVES",
-          "de": "DONNERSTAG",
+          "de": "Donnerstag",
           "it": "GIOVEDÌ",
           "syllabe": ""
         },
@@ -19144,7 +19130,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_saturday.svg",
           "es": "SÁBADO",
-          "de": "SAMSTAG",
+          "de": "Samstag",
           "it": "SABATO",
           "syllabe": ""
         },
@@ -19197,7 +19183,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_work_monday.svg",
           "es": "trabajar el lunes",
-          "de": "Arbeit am Montag",
+          "de": "Am Montag arbeiten",
           "it": "lavorare lunedì",
           "syllabe": ""
         },
@@ -19250,8 +19236,8 @@
         {
           "id": "w_aayu",
           "th": "อายุ",
-          "fr": "âge",
           "phonetic": "aa-yú",
+          "fr": "âge",
           "en": "age",
           "imageUrl": "/images/w_w_aayu.svg",
           "es": "edad",
@@ -19262,8 +19248,8 @@
         {
           "id": "w_farangset",
           "th": "ฝรั่งเศส",
-          "fr": "France / français",
           "phonetic": "fà-ràng-sèet",
+          "fr": "France / français",
           "en": "France / French",
           "imageUrl": "/images/w_w_farangset.svg",
           "es": "Francia / Francés",
@@ -19274,8 +19260,8 @@
         {
           "id": "w_angkrit",
           "th": "อังกฤษ",
-          "fr": "Angleterre / anglais",
           "phonetic": "ang-grìt",
+          "fr": "Angleterre / anglais",
           "en": "England / English",
           "imageUrl": "/images/w_w_angkrit.svg",
           "es": "Inglaterra / Inglés",
@@ -19286,8 +19272,8 @@
         {
           "id": "w_phuak_khao",
           "th": "พวกเขา",
-          "fr": "ils / elles",
           "phonetic": "phûak khao",
+          "fr": "ils / elles",
           "en": "they",
           "imageUrl": "/images/w_w_phuak_khao.svg",
           "es": "ellos/ellas",
@@ -19300,13 +19286,13 @@
         {
           "id": "p_how_old",
           "th": "อายุเท่าไหร่",
-          "fr": "quel âge as-tu ?",
           "phonetic": "aa-yú thâo-rài",
+          "fr": "quel âge as-tu ?",
+          "en": "how old are you?",
           "components": [
             "w_aayu",
             "w_thao_rai"
           ],
-          "en": "how old are you?",
           "imageUrl": "/images/p_p_how_old.svg",
           "es": "¿cuántos años tienes?",
           "de": "Wie alt bist du?",
@@ -19316,15 +19302,15 @@
         {
           "id": "p_thirty_years_old",
           "th": "อายุสามสิบปี",
-          "fr": "j'ai trente ans",
           "phonetic": "aa-yú sǎam sìp bpii",
+          "fr": "j'ai trente ans",
+          "en": "I am thirty years old",
           "components": [
             "w_aayu",
             "w_3",
             "w_10",
             "w_pi"
           ],
-          "en": "I am thirty years old",
           "imageUrl": "/images/p_p_thirty_years_old.svg",
           "es": "tengo treinta años",
           "de": "Ich bin dreißig Jahre alt",
@@ -19334,13 +19320,13 @@
         {
           "id": "p_french_person",
           "th": "คนฝรั่งเศส",
-          "fr": "personne française",
           "phonetic": "khon fà-ràng-sèet",
+          "fr": "personne française",
+          "en": "French person",
           "components": [
             "w_khon",
             "w_farangset"
           ],
-          "en": "French person",
           "imageUrl": "/images/p_p_french_person.svg",
           "es": "persona francesa",
           "de": "Franzose",
@@ -19350,13 +19336,13 @@
         {
           "id": "p_english_language",
           "th": "ภาษาอังกฤษ",
-          "fr": "langue anglaise",
           "phonetic": "phaa-sǎa ang-grìt",
+          "fr": "langue anglaise",
+          "en": "English language",
           "components": [
             "w_phaasaa",
             "w_angkrit"
           ],
-          "en": "English language",
           "imageUrl": "/images/p_p_english_language.svg",
           "es": "Idioma inglés",
           "de": "Englische Sprache",
@@ -19366,13 +19352,13 @@
         {
           "id": "p_they_go",
           "th": "พวกเขาไป",
-          "fr": "Ils s'en vont",
           "phonetic": "phûak khao bpai",
+          "fr": "Ils s'en vont",
+          "en": "they go",
           "components": [
             "w_phuak_khao",
             "w_pai"
           ],
-          "en": "they go",
           "imageUrl": "/images/p_p_they_go.svg",
           "es": "ellos van",
           "de": "sie gehen",
@@ -19442,7 +19428,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_klai_near.svg",
           "es": "cerca",
-          "de": "schließen",
+          "de": "nah / in der Nähe",
           "it": "vicino",
           "syllabe": ""
         },
@@ -19464,11 +19450,11 @@
           "th": "หลง",
           "phonetic": "lǒng",
           "fr": "se perdre",
-          "en": "to get lost",
+          "en": "to be/get lost",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_long_lost.svg",
           "es": "Piérdase",
-          "de": "Hau ab",
+          "de": "sich verirren / verirrt sein",
           "it": "va al diavolo",
           "syllabe": ""
         }
@@ -19596,7 +19582,7 @@
           "th": "เช็คบิล",
           "phonetic": "chék bin",
           "fr": "l'addition (version anglaise)",
-          "en": "the bill (english version)",
+          "en": "the bill (loanword form)",
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/w_w_check_bin.svg",
           "es": "la cuenta (versión en inglés)",
@@ -19662,8 +19648,8 @@
           "id": "p_bill_please_eng",
           "th": "เช็คบิลครับ",
           "phonetic": "chék bin khráp",
-          "fr": "L'addition s'il vous plaît (anglais homme) ",
-          "en": "The bill please (english man)",
+          "fr": "L'addition s'il vous plaît (anglais homme)",
+          "en": "The bill, please (man, loanword form)",
           "components": [
             "w_check_bin",
             "w_krap"
@@ -19671,7 +19657,7 @@
           "allowIdenticalTranslation": false,
           "imageUrl": "/images/p_p_bill_please_eng.svg",
           "es": "La cuenta por favor (inglés)",
-          "de": "Die Rechnung bitte (Engländer)",
+          "de": "Die Rechnung bitte (Mann, informell)",
           "it": "Il conto per favore (uomo inglese)",
           "syllabe": ""
         },
@@ -19733,7 +19719,7 @@
           "th": "ฉันกินมังสวิรัติ",
           "phonetic": "chǎn gin mang-sà-wí-rát",
           "fr": "Je mange végétarien (femme)",
-          "en": "I eat vegetarian (woman)",
+          "en": "I am vegetarian (woman)",
           "components": [
             "w_chan",
             "w_kin",
@@ -19796,7 +19782,6 @@
       "titleEn": "A1 Final Assessment",
       "descriptionEn": "The final test! Validate your A1 level with this comprehensive global review including large numbers, nationalities, and everyday life.",
       "imageUrl": "/images/default-lesson.svg",
-      "isReview": true,
       "titleEs": "La gran evaluación A1",
       "titleDe": "Das A1-Grand-Assessment",
       "titleIt": "La valutazione generale A1",
