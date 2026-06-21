@@ -399,27 +399,6 @@ export function DesktopSidebarRight({
           transition={{ duration: 0.2, ease: "easeOut" }}
           className="w-full h-full relative px-6 overflow-y-auto hide-scrollbar pt-6 pb-16 flex flex-col gap-6"
         >
-          <button
-            onClick={() => setShowUnitsList(true)}
-            className="w-full flex items-center justify-between p-5 bg-white hover:bg-slate-50 border border-slate-100 rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-sm transition-all group cursor-pointer"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center border border-slate-100">
-                <BookOpen size={24} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="font-extrabold text-[17px] text-slate-800 tracking-tight">
-                  {getTranslation('auto.course_units', language)}
-                </span>
-                <span className="text-[13px] text-slate-400 font-medium mt-0.5">
-                  {getTranslation('auto.change_or_view_units', language)}
-                </span>
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-slate-200 border border-slate-100 group-hover:border-slate-300 flex items-center justify-center transition-all">
-              <ChevronLeft size={18} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </button>
 
           <div className="w-full flex flex-col gap-6">
             <DailyQuestsWidget category={questsCategory} />

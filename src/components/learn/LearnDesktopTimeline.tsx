@@ -1,5 +1,5 @@
 import { m as motion } from "motion/react";
-import { BookOpen, Star, CheckCircle, Lock, Play, Crown } from 'lucide-react';
+import { BookOpen, Star, CheckCircle, Lock, Play, Crown, ChevronLeft } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
 import { useState } from 'react';
@@ -98,6 +98,30 @@ export default function LearnDesktopTimeline({
             <BookOpen size={200} />
           </div>
         )}
+        
+        <div className="absolute bottom-6 right-6 z-20 hidden md:block">
+          <button
+            onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
+            className="flex items-center justify-between p-3.5 pr-4 bg-white/95 backdrop-blur-md hover:bg-white border border-white/40 rounded-[1.25rem] shadow-lg hover:shadow-xl transition-all group cursor-pointer min-w-[240px]"
+          >
+            <div className="flex items-center gap-3">
+              <div className={`w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100`}>
+                <BookOpen size={20} className={`text-slate-500`} />
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="font-extrabold text-[15px] text-slate-800 tracking-tight leading-tight">
+                  {getTranslation('auto.course_units', language)}
+                </span>
+                <span className="text-[11px] text-slate-500 font-medium">
+                  {getTranslation('auto.change_or_view_units', language)}
+                </span>
+              </div>
+            </div>
+            <div className="w-8 h-8 ml-4 rounded-full bg-slate-50 group-hover:bg-slate-100 border border-slate-100 flex items-center justify-center transition-all">
+              <ChevronLeft size={16} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-0.5" />
+            </div>
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col w-full mt-10">
