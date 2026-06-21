@@ -68,6 +68,7 @@ export function SharedLessonCard({
   const textDynamicColor = dynamicColor.replace('bg-', 'text-');
   const borderDynamicColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500');
   const lightBorderDynamicColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '200').replace(/400$/, '200');
+  const hoverDynamicColor = isReviewLocked ? '' : (isMaxLevel ? 'hover:bg-emerald-400' : (unit.hoverClass || 'hover:brightness-110'));
 
   const cardStyle = cn(
     "relative w-full transition-all duration-300 cursor-pointer border-[2px]",
@@ -357,7 +358,7 @@ export function SharedLessonCard({
       <Button 
         variant={"gamified" as const}
         size="lg"
-        className={cn("w-full mt-2 shadow-none text-white", dynamicColor, borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+        className={cn("w-full mt-2 shadow-none text-white cursor-pointer transition-colors duration-200", dynamicColor, borderDynamicColor, hoverDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
         onClick={(e) => {
            e.stopPropagation();
            onClick();
