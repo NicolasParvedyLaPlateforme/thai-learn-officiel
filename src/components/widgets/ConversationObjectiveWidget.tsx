@@ -12,7 +12,7 @@ export function ConversationObjectiveWidget() {
   if (!objective) return null;
 
   return (
-    <div className="w-full border-b border-slate-100 py-6 px-1 flex flex-col gap-4 relative group">
+    <div className="w-full border-b border-slate-200 py-6 px-1 flex flex-col gap-4 relative group">
       <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-blue-100/50 text-blue-500 rounded-xl flex items-center justify-center shadow-sm">
@@ -71,8 +71,8 @@ export function ConversationObjectiveWidget() {
               ? `/lesson/${objective.lesson.id}?level=1`
               : `/conversations/${objective.conversation.id}${objective.levelToComplete > 0 ? `?level=${objective.levelToComplete}` : ''}`
           }
-          className={`mt-4 md:mt-5 w-full flex items-center justify-center gap-2 py-2.5 md:py-3 rounded-xl font-bold text-[14px] md:text-[15px] text-white shadow-md transition-all active:scale-[0.98] relative overflow-hidden group/btn
-             ${objective.type === 'vocab' ? 'bg-indigo-500 hover:bg-indigo-600 shadow-indigo-200' : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-200'}
+          className={`mt-4 md:mt-5 w-full flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-[15px] md:text-[16px] text-white transition-all active:translate-y-[4px] active:border-b-0 relative overflow-hidden group/btn
+             ${objective.type === 'vocab' ? 'bg-indigo-500 hover:bg-indigo-400 border-b-[4px] border-indigo-600' : 'bg-emerald-500 hover:bg-emerald-400 border-b-[4px] border-emerald-600'}
           `}
         >
           {/* Effet de brillance au hover */}

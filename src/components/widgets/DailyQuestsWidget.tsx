@@ -27,7 +27,7 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
   const giftsAvailable = unopenedGifts?.[category] || 0;
 
   return (
-    <div className="w-full border-b border-slate-100 py-6 px-1 flex flex-col gap-4 relative">
+    <div className="w-full border-b border-slate-200 py-6 px-1 flex flex-col gap-4 relative">
 
 
       <div className="flex items-center justify-between mb-1 relative z-10">
@@ -76,7 +76,7 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
               const theme = colors[i % colors.length];
 
               return (
-                <div key={quest.id} className="group w-full flex flex-col gap-1.5 py-3 border-b border-slate-100/60 last:border-0 hover:bg-slate-50/50 transition-colors rounded-lg px-2 -mx-2">
+                <div key={quest.id} className="group w-full flex flex-col gap-1.5 py-3 border-b border-slate-200/60 last:border-0 hover:bg-slate-50/50 transition-colors rounded-lg px-2 -mx-2">
                   
                   <div className="flex justify-between items-start w-full">
                     <span className={`text-[13.5px] font-bold leading-tight flex-1 pr-3 ${quest.completed ? 'text-slate-400 line-through' : 'text-slate-700'}`}>
