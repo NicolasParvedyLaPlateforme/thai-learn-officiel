@@ -68,7 +68,7 @@ export function SharedLessonCard({
   const textDynamicColor = dynamicColor.replace('bg-', 'text-');
   const borderDynamicColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500');
   const lightBorderDynamicColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '200').replace(/400$/, '200');
-  const hoverDynamicColor = isReviewLocked ? '' : (isMaxLevel ? 'hover:bg-emerald-400' : (unit.hoverClass || 'hover:brightness-110'));
+  const hoverDynamicColor = isReviewLocked ? '' : (unit.hoverClass || 'hover:brightness-110');
 
   const cardStyle = cn(
     "relative w-full transition-all duration-300 cursor-pointer border-[2px]",
