@@ -51,6 +51,43 @@ export default function LearnDesktopTimeline({
   
   const [activeCenteredLessonId, setActiveCenteredLessonId] = useState<string | null>(unitLessons.length > 0 ? unitLessons[0].id : null);
 
+  useEffect(() => {
+    if (!mounted) return;
+    
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const lessons = document.querySelectorAll('.group\\/node');
+          let closestId: string | null = null;
+          let minDistance = Infinity;
+          const centerY = window.innerHeight * 0.45;
+
+          lessons.forEach(node => {
+            const rect = node.getBoundingClientRect();
+            const nodeCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(centerY - nodeCenter);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestId = node.id.replace('desktop-lesson-', '');
+            }
+          });
+
+          if (closestId) {
+            setActiveCenteredLessonId(prev => prev !== closestId ? closestId : prev);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    setTimeout(handleScroll, 100);
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [mounted]);
+
   return (
     <div key={`desktop-unit-${unit.id}`} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
       <DesktopStickyBanner 
@@ -156,8 +193,6 @@ export default function LearnDesktopTimeline({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
               className={`relative w-full flex ${isLeft ? 'justify-start' : 'justify-end'} scroll-mt-24 z-10 mb-16 group/node`}
-              onViewportEnter={() => setActiveCenteredLessonId(lesson.id)}
-              viewport={{ margin: "-35% 0px -35% 0px" }}
             >
               <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} isDesktop={true} />
               <PathDecorations index={idx} isDesktop={true} />
