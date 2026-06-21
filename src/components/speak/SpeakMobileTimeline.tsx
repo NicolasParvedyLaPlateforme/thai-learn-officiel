@@ -6,6 +6,7 @@ import IconImage from '../ui/IconImage';
 import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from '../learn/NextUnitCard';
 import BannerUnitsButton from '../ui/BannerUnitsButton';
+import MobileStickyBanner from '../path-ui/MobileStickyBanner';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
 
@@ -54,47 +55,14 @@ export default function SpeakMobileTimeline({
   }, 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
-  const [showMiniBanner, setShowMiniBanner] = useState(false);
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    
-    const handleScroll = () => {
-      if (!mounted) return;
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > 250) {
-        if (currentScrollY > lastScrollY) {
-          setShowMiniBanner(true);
-        } else {
-          setShowMiniBanner(false);
-        }
-      } else {
-        setShowMiniBanner(false);
-      }
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [mounted]);
-
   return (
     <>
-      <div 
-        className={`fixed top-0 left-0 right-0 z-[60] transition-transform duration-300 ${unit.colorClass} shadow-md flex items-center justify-between p-3 px-4 md:hidden ${showMiniBanner ? 'translate-y-0' : '-translate-y-full'}`}
-      >
-        <div className="flex items-center gap-2">
-          <h2 className="text-white font-extrabold text-[15px] truncate max-w-[200px] drop-shadow-sm">
-            {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
-          </h2>
-        </div>
-        <BannerUnitsButton 
-          onClick={() => setIsUnitsModalOpen(true)} 
-          language={language}
-          className="shadow-none border-none py-1.5"
-        />
-      </div>
+      <MobileStickyBanner 
+        unit={unit} 
+        language={language} 
+        mounted={mounted} 
+        onOpenUnitsList={() => setIsUnitsModalOpen(true)} 
+      />
 
       <main className="max-w-2xl mx-auto px-4 mt-2 flex flex-col gap-8 md:hidden">
         <motion.div
