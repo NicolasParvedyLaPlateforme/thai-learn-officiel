@@ -12,10 +12,7 @@ export function ConversationObjectiveWidget() {
   if (!objective) return null;
 
   return (
-    <div className="w-full bg-blue-50/40 rounded-3xl border border-blue-100/50 p-5 flex flex-col gap-4 relative group">
-      {/* Fond avec un motif très léger (points) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
-
+    <div className="w-full border-b border-slate-100 py-6 px-1 flex flex-col gap-4 relative group">
       <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-blue-100/50 text-blue-500 rounded-xl flex items-center justify-center shadow-sm">
@@ -27,10 +24,13 @@ export function ConversationObjectiveWidget() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-[16px] md:rounded-[20px] p-3 md:p-4 border border-slate-100/80 shadow-[0_4px_12px_rgba(0,0,0,0.02)] relative z-10 overflow-hidden">
+      <div className="w-full flex flex-col bg-blue-50/40 rounded-[16px] md:rounded-[20px] p-4 md:p-5 border border-blue-100/50 relative z-10 overflow-hidden">
+        {/* Fond avec un motif très léger (points) */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
+        
         {/* Cercles de décoration en arrière-plan du bloc */}
-        <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-100/40 rounded-full blur-xl pointer-events-none"></div>
-        <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-purple-100/40 rounded-full blur-xl pointer-events-none"></div>
+        <div className="absolute -right-8 -top-8 w-24 h-24 bg-blue-200/40 rounded-full blur-xl pointer-events-none"></div>
+        <div className="absolute -left-8 -bottom-8 w-24 h-24 bg-purple-200/40 rounded-full blur-xl pointer-events-none"></div>
 
         <div className="flex items-start justify-between gap-3 relative z-10">
           <div className="flex flex-col gap-1.5 pr-2 w-full">
