@@ -1,10 +1,11 @@
 import { useProgressStore } from '@/lib/store';
 import conversationsData from "@/data/conversations.json";
+import courseData from "@/data/course.json";
 import { getRequiredLessonsForConv, RequiredVocabLesson } from '@/lib/vocabulary-utils';
 
 export type ConversationObjective = 
-  | { type: 'vocab', conversationTitle: string, conversationTitleEn: string | undefined, lessonId: string, lessonTitle: string, lessonTitleEn: string }
-  | { type: 'conversation', conversationId: string, conversationTitle: string, conversationTitleEn: string | undefined, levelToComplete: number }
+  | { type: 'vocab', conversation: any, lesson: any }
+  | { type: 'conversation', conversation: any, levelToComplete: number }
   | null;
 
 export function useNextConversationObjective(): ConversationObjective {
@@ -20,20 +21,16 @@ export function useNextConversationObjective(): ConversationObjective {
       if (missingVocabReqs.length > 0) {
         // Find the first missing vocabulary lesson requirement
         const firstMissing = missingVocabReqs[0];
+        const lessonObj = courseData.lessons.find((l: any) => l.id === firstMissing.lessonId) || firstMissing;
         return {
           type: 'vocab',
-          conversationTitle: conv.title,
-          conversationTitleEn: conv.titleEn,
-          lessonId: firstMissing.lessonId,
-          lessonTitle: firstMissing.lessonTitle,
-          lessonTitleEn: firstMissing.lessonTitleEn,
+          conversation: conv,
+          lesson: lessonObj,
         };
       } else {
         return {
           type: 'conversation',
-          conversationId: conv.id,
-          conversationTitle: conv.title,
-          conversationTitleEn: conv.titleEn,
+          conversation: conv,
           levelToComplete: highestCompleted + 1,
         };
       }

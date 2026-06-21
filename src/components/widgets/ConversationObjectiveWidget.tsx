@@ -1,4 +1,4 @@
-import { getTranslation } from "@/hooks/useTranslation";
+import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import React from 'react';
 import Link from 'next/link';
 import { useProgressStore } from "@/lib/store";
@@ -43,19 +43,21 @@ export function ConversationObjectiveWidget() {
             </div>
 
             <span className="text-[15px] font-extrabold text-slate-800 leading-tight mt-1">
-              {language === 'en' ? (objective.conversationTitleEn || objective.conversationTitle) : objective.conversationTitle}
+              {getLocalizedField(objective.conversation, 'title', language)}
             </span>
 
             <span className="text-[13px] text-slate-500 font-medium">
               {objective.type === 'vocab' ? (
                 <>
                   {getTranslation('auto.complete_level_1_of', language)}{' '}
-                  <strong className="text-indigo-600 bg-indigo-50 px-1 rounded">{language === 'en' ? objective.lessonTitleEn : objective.lessonTitle}</strong>
+                  <strong className="text-indigo-600 bg-indigo-50 px-1 rounded">{getLocalizedField(objective.lesson, 'title', language)}</strong>
                 </>
               ) : (
                 <>
                   {language === 'en'
                     ? `Complete ${objective.levelToComplete === 0 ? 'Base conversation' : `Level ${objective.levelToComplete}`}`
+                    : language === 'es'
+                    ? `Completa ${objective.levelToComplete === 0 ? 'Conversación base' : `Nivel ${objective.levelToComplete}`}`
                     : `Terminer ${objective.levelToComplete === 0 ? 'Conversation de base' : `Niveau ${objective.levelToComplete}`}`}
                 </>
               )}
@@ -66,8 +68,8 @@ export function ConversationObjectiveWidget() {
         <Link
           href={
             objective.type === 'vocab'
-              ? `/lesson/${objective.lessonId}?level=1`
-              : `/conversations/${objective.conversationId}${objective.levelToComplete > 0 ? `?level=${objective.levelToComplete}` : ''}`
+              ? `/lesson/${objective.lesson.id}?level=1`
+              : `/conversations/${objective.conversation.id}${objective.levelToComplete > 0 ? `?level=${objective.levelToComplete}` : ''}`
           }
           className={`mt-4 md:mt-5 w-full flex items-center justify-center gap-2 py-2.5 md:py-3 rounded-xl font-bold text-[14px] md:text-[15px] text-white shadow-md transition-all active:scale-[0.98] relative overflow-hidden group/btn
              ${objective.type === 'vocab' ? 'bg-indigo-500 hover:bg-indigo-600 shadow-indigo-200' : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-200'}
