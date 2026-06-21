@@ -21,7 +21,7 @@ interface LearnDesktopTimelineProps {
   nextUnit?: any;
 }
 
-import { LessonCard } from './LessonCard';
+import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from './NextUnitCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
@@ -152,7 +152,8 @@ export default function LearnDesktopTimeline({
               <PathDecorations index={idx} isDesktop={true} />
               <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
                 <div className="w-full max-w-[360px]">
-                  <LessonCard 
+                  <SharedLessonCard
+                    pathType="learn"
                     lesson={lesson}
                     level={level}
                     unit={unit}
@@ -165,7 +166,8 @@ export default function LearnDesktopTimeline({
                         return;
                       }
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      setModalLevel(null);
+                      const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                      setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                       setShowDesktopUnitsList(false);
                     }}
                   />

@@ -22,7 +22,7 @@ interface LearnMobileTimelineProps {
   nextUnit?: any;
 }
 
-import { LessonCard } from './LessonCard';
+import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from './NextUnitCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
@@ -214,7 +214,8 @@ export default function LearnMobileTimeline({
 
                 {/* Lesson Card */}
                 <div className="flex-1 min-w-0 z-10">
-                  <LessonCard 
+                  <SharedLessonCard
+                    pathType="learn"
                     lesson={lesson}
                     level={level}
                     unit={unit}
@@ -228,7 +229,8 @@ export default function LearnMobileTimeline({
                         return;
                       }
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      setModalLevel(null);
+                      const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                      setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                     }}
                   />
                 </div>

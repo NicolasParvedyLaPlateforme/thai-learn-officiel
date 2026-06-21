@@ -5,7 +5,7 @@ import IconImage from '../ui/IconImage';
 import { NextUnitCard } from '../learn/NextUnitCard';
 
 import { useState } from 'react';
-import { SpeakLessonCard } from './SpeakLessonCard';
+import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
 
@@ -154,23 +154,18 @@ export default function SpeakDesktopTimeline({
               <PathDecorations index={idx} isDesktop={true} />
               <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
                 <div className="w-full max-w-[360px]">
-                  <SpeakLessonCard
+                  <SharedLessonCard 
+                    pathType="speak"
                     lesson={lesson}
                     level={level}
                     unit={unit}
                     language={language}
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
-                    maxLevelPerLesson={maxLevelPerLesson}
                     onClick={() => {
-                      if (isReviewLocked) {
-                        setLockedReviewModalOpen(true);
-                        return;
-                      }
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                      const saved = localStorage.getItem(`last_speak_level_${lesson.id}`);
                       setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                      setShowDesktopUnitsList(false);
                     }}
                   />
                 </div>

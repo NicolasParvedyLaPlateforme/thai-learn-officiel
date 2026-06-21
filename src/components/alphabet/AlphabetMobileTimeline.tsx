@@ -2,8 +2,7 @@ import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
-import { AlphabetLessonCard } from './AlphabetLessonCard';
-import { formatCombiningChar } from "@/lib/alphabet-utils";
+import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from '../learn/NextUnitCard';
 import PathTimelineLine from "@/components/path-ui/PathTimelineLine";
 import { PathDecorations } from "@/components/path-ui/PathDecorations";
@@ -209,20 +208,22 @@ export default function AlphabetMobileTimeline({
                     </div>
                   )}
                 </div>
-
+                {/* Lesson Card */}
                 <div className="flex-1 min-w-0 z-10">
-                  <AlphabetLessonCard 
+                  <SharedLessonCard 
+                    pathType="alphabet"
                     lesson={lesson}
                     level={level}
+                    maxLevelPerLesson={4}
                     unit={unit}
                     language={language}
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
-                    maxLevelPerLesson={maxLevelPerLesson}
                     isMobileLayout={true}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      setModalLevel(null);
+                      const saved = localStorage.getItem(`last_alphabet_level_${lesson.id}`);
+                      setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                     }}
                   />
                 </div>

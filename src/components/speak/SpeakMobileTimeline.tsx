@@ -2,7 +2,7 @@ import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
-import { SpeakLessonCard } from './SpeakLessonCard';
+import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from '../learn/NextUnitCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
@@ -214,23 +214,21 @@ export default function SpeakMobileTimeline({
                   </div>
                 </div>
 
+                {/* Lesson Card */}
                 <div className="flex-1 min-w-0 z-10">
-                  <SpeakLessonCard 
+                  <SharedLessonCard 
+                    pathType="speak"
                     lesson={lesson}
                     level={level}
                     unit={unit}
                     language={language}
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
-                    maxLevelPerLesson={maxLevelPerLesson}
                     isMobileLayout={true}
                     onClick={() => {
-                      if (isReviewLocked) {
-                        setLockedReviewModalOpen(true);
-                        return;
-                      }
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      setModalLevel(null);
+                      const saved = localStorage.getItem(`last_speak_level_${lesson.id}`);
+                      setModalLevel(saved !== null ? parseInt(saved, 10) : null);
                     }}
                   />
                 </div>

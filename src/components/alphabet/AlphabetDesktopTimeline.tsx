@@ -3,7 +3,7 @@ import { BookOpen, Star, CheckCircle, Lock, Crown, ChevronLeft } from 'lucide-re
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
 import { useState } from 'react';
-import { AlphabetLessonCard } from './AlphabetLessonCard';
+import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { NextUnitCard } from '../learn/NextUnitCard';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
@@ -148,19 +148,19 @@ export default function AlphabetDesktopTimeline({
               <PathDecorations index={idx} isDesktop={true} />
               <div className={`w-1/2 flex ${isLeft ? 'justify-end pr-10 xl:pr-16' : 'justify-start pl-10 xl:pl-16'}`}>
                 <div className="w-full max-w-[360px]">
-                  <AlphabetLessonCard
+                  <SharedLessonCard 
+                    pathType="alphabet"
                     lesson={lesson}
                     level={level}
+                    maxLevelPerLesson={4}
                     unit={unit}
                     language={language}
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
-                    maxLevelPerLesson={maxLevelPerLesson}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      const saved = localStorage.getItem(`last_level_${lesson.id}`);
+                      const saved = localStorage.getItem(`last_alphabet_level_${lesson.id}`);
                       setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                      setShowDesktopUnitsList(false);
                     }}
                   />
                 </div>

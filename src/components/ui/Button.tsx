@@ -4,16 +4,18 @@ import { cn } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:pointer-events-none disabled:opacity-50 active:scale-95",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm hover:shadow-md",
-        secondary: "bg-emerald-50 text-emerald-600 hover:bg-emerald-100",
-        outline: "border-2 border-slate-200 bg-transparent hover:bg-slate-50 text-slate-700",
-        ghost: "hover:bg-slate-100 text-slate-600",
-        danger: "bg-rose-500 text-white hover:bg-rose-600 shadow-sm",
-        dangerOutline: "border-2 border-rose-200 bg-transparent hover:bg-rose-50 text-rose-600",
+        default: "bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm hover:shadow-md active:scale-95",
+        secondary: "bg-emerald-50 text-emerald-600 hover:bg-emerald-100 active:scale-95",
+        outline: "border-2 border-slate-200 bg-transparent hover:bg-slate-50 text-slate-700 active:scale-95",
+        ghost: "hover:bg-slate-100 text-slate-600 active:scale-95",
+        danger: "bg-rose-500 text-white hover:bg-rose-600 shadow-sm active:scale-95",
+        dangerOutline: "border-2 border-rose-200 bg-transparent hover:bg-rose-50 text-rose-600 active:scale-95",
+        gamified: "bg-emerald-500 text-white border-b-4 border-emerald-600 active:border-b-0 active:translate-y-1",
+        gamifiedSecondary: "bg-slate-100 text-slate-700 border-b-4 border-slate-200 active:border-b-0 active:translate-y-1 hover:bg-slate-200 hover:border-slate-300",
       },
       size: {
         default: "h-12 px-6 py-2",
