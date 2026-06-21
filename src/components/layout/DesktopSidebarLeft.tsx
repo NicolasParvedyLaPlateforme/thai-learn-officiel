@@ -81,22 +81,22 @@ export default function DesktopSidebarLeft() {
 
       <nav 
         id="desktop-sidebar-nav"
-        className={`hidden md:flex fixed top-0 left-0 h-screen bg-[#F0FDF4] border-r border-emerald-100 flex-col py-6 transition-all duration-300 ease-in-out z-[70] shadow-sm ${
+        className={`hidden md:flex fixed top-0 left-0 h-screen bg-slate-50 border-r border-slate-200/60 flex-col py-6 transition-all duration-300 ease-in-out z-[70] ${
           isMobileLandscape 
-            ? (isMobileSidebarOpen ? 'w-64 px-4 translate-x-0' : 'w-64 px-4 -translate-x-full')
-            : 'w-20 px-2 hover:w-64 hover:px-4 xl:w-64 xl:px-4'
+            ? (isMobileSidebarOpen ? 'w-64 px-2 translate-x-0' : 'w-64 px-2 -translate-x-full')
+            : 'w-20 px-2 hover:w-64 xl:w-64'
         } group`}
       >
         {isMobileLandscape && isMobileSidebarOpen && (
-           <button onClick={() => setMobileSidebarOpen(false)} className="absolute top-4 right-4 p-2 text-slate-500 hover:bg-emerald-100 rounded-lg">
+           <button onClick={() => setMobileSidebarOpen(false)} className="absolute top-4 right-4 p-2 text-slate-500 hover:bg-slate-200 rounded-lg">
              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
            </button>
         )}
-        <div className="flex items-center gap-2 mb-10 overflow-hidden shrink-0 px-2 justify-center group-hover:justify-start xl:justify-start relative">
+        <div className="flex items-center gap-2 mb-10 shrink-0 px-2 justify-center group-hover:justify-start xl:justify-start relative">
           <div className="bg-emerald-500 text-white p-2 rounded-xl shrink-0 absolute left-1/2 -translate-x-1/2 transition-all duration-300 xl:translate-x-0 xl:relative xl:left-auto group-hover:translate-x-0 group-hover:relative group-hover:left-auto">
             <BookOpen size={24} strokeWidth={2.5} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800 tracking-tight whitespace-nowrap transition-opacity duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100 xl:ml-1 group-hover:ml-1">
+          <h1 className="text-2xl font-semibold text-slate-800 whitespace-nowrap transition-opacity duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100 xl:ml-1 group-hover:ml-1">
             ThaiLearn
           </h1>
           <button 
@@ -114,7 +114,7 @@ export default function DesktopSidebarLeft() {
             icon={<GraduationCap size={24} strokeWidth={2.5} />} 
             isOpen={openCategories.learn} 
             onToggle={() => toggleCategory('learn')}
-            isActive={isLearnActive || isAlphabetActive || isSpeakActive}
+            isActive={isLearnCategoryActive}
           >
             <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={20} strokeWidth={2.5} />} label={t('sidebar.vocabulary') || 'Vocabulaire'} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} isSubItem />
             <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={20} strokeWidth={2.5} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} isSubItem />
@@ -126,7 +126,7 @@ export default function DesktopSidebarLeft() {
             icon={<MessageCircle size={24} strokeWidth={2.5} />} 
             isOpen={openCategories.immersion} 
             onToggle={() => toggleCategory('immersion')}
-            isActive={isConversationsActive || isDetectiveActive}
+            isActive={isImmersionCategoryActive}
           >
             <NavItem href="/conversations" icon={<MessageCircle size={20} strokeWidth={2.5} />} label={t('sidebar.dialogs')} active={isConversationsActive} isSubItem />
             <NavItem href="/detective" icon={<Search size={20} strokeWidth={2.5} />} label={t('sidebar.detective')} active={isDetectiveActive} isSubItem />
@@ -137,7 +137,7 @@ export default function DesktopSidebarLeft() {
             icon={<Brain size={24} strokeWidth={2.5} />} 
             isOpen={openCategories.practice} 
             onToggle={() => toggleCategory('practice')}
-            isActive={isPracticeActive || isPairsActive || isReviewActive || pathname === '/writing'}
+            isActive={isPracticeCategoryActive}
           >
             <NavItem 
               href="/practice?action=review" 
@@ -183,104 +183,110 @@ export default function DesktopSidebarLeft() {
         </div>
 
         {/* User Summary / Level */}
-        <div className="mt-auto shrink-0 border-t border-emerald-200/60 pt-6 overflow-hidden flex flex-col items-center gap-3 px-0 group-hover:px-2 xl:px-2 transition-all">
+        <div className="mt-auto shrink-0 pt-4 overflow-hidden flex flex-col items-center gap-3 w-full px-2">
           
-          <div className="flex gap-1 w-full justify-center transition-all bg-transparent p-1">
-            {/* XP */}
-            <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-amber-50 text-amber-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="XP">
-              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
-                <Star size={18} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
-                <span>{xp >= 10000 ? (xp / 1000).toFixed(1) + 'k' : xp}</span>
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col w-full overflow-hidden transition-all duration-300">
+            <div className="flex gap-1 w-full justify-center transition-all bg-transparent p-2">
+              {/* XP */}
+              <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-amber-50 text-amber-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="XP">
+                <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
+                  <Star size={18} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
+                  <span>{xp >= 10000 ? (xp / 1000).toFixed(1) + 'k' : xp}</span>
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
+                  <Star size={20} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
+                </div>
+              </div>
+
+              <div className="w-[1px] h-6 bg-slate-100 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
+
+              {/* Coins */}
+              <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-yellow-50 text-yellow-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Pièces">
+                <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
+                  <Coins size={18} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
+                  <span>{goldCoins >= 10000 ? (goldCoins / 1000).toFixed(1) + 'k' : (goldCoins || 0)}</span>
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
+                  <Coins size={20} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
+                </div>
+              </div>
+
+              <div className="w-[1px] h-6 bg-slate-100 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
+              
+              {/* Streak */}
+              <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-orange-50 text-orange-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Série">
+                <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
+                  <Flame size={18} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
+                  <span className={`${currentStreak > 0 ? '' : 'text-slate-400'}`}>{currentStreak}</span>
+                </span>
+                <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
+                  <Flame size={20} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full h-[1px] bg-slate-100 transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
+
+            {/* Language Button */}
+            <button 
+              onClick={() => setShowLanguageModal(true)}
+              className="w-full h-10 flex items-center justify-center font-bold bg-transparent hover:bg-slate-50 text-slate-500 transition-all px-0 group-hover:px-4 xl:px-4 relative group/lang"
+              title={t('sidebar.language')}
+            >
+              <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center justify-center gap-3 text-sm whitespace-nowrap w-full">
+                <div className="text-slate-400 text-xs uppercase font-black tracking-widest">
+                  {language.substring(0,2)}
+                </div>
+                <span className="uppercase tracking-widest text-[11px] text-slate-400 font-bold">{t('sidebar.language')}</span>
               </span>
               <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                 <Star size={22} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
+                <div className="text-slate-400 text-xs uppercase font-black tracking-widest">
+                  {language.substring(0,2)}
+                </div>
               </div>
-            </div>
+            </button>
 
-            <div className="w-[2px] h-5 bg-slate-200/60 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
+            <div className="w-full h-[1px] bg-slate-100 transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
 
-            {/* Coins */}
-            <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-yellow-50 text-yellow-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Pièces">
-              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
-                <Coins size={18} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
-                <span>{goldCoins >= 10000 ? (goldCoins / 1000).toFixed(1) + 'k' : (goldCoins || 0)}</span>
-              </span>
-              <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                 <Coins size={22} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
-              </div>
-            </div>
-
-            <div className="w-[2px] h-5 bg-slate-200/60 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
-            
-            {/* Streak */}
-            <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-orange-50 text-orange-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Série">
-              <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
-                <Flame size={18} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
-                <span className={`${currentStreak > 0 ? '' : 'text-slate-400'}`}>{currentStreak}</span>
-              </span>
-              <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                 <Flame size={22} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
-              </div>
-            </div>
-          </div>
-
-          {/* Language Button */}
-          <button 
-            onClick={() => setShowLanguageModal(true)}
-            className="w-full h-[3rem] mt-1 flex items-center justify-center rounded-[1.25rem] font-extrabold bg-white hover:bg-slate-50 text-slate-600 transition-all shadow-sm overflow-hidden px-0 group-hover:px-4 xl:px-4 relative group/lang"
-            title={t('sidebar.language')}
-          >
-            <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center justify-center gap-3 text-sm whitespace-nowrap w-full">
-              <div className="w-7 h-7 rounded-full border-2 border-slate-100 flex items-center justify-center bg-white text-slate-500 text-[10px] uppercase font-black tracking-tighter">
-                {language.substring(0,2)}
-              </div>
-              <span className="uppercase tracking-widest text-[13px]">{t('sidebar.language')}</span>
-            </span>
-            <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-              <div className="w-8 h-8 rounded-full border-2 border-slate-100 flex items-center justify-center bg-white text-slate-500 text-xs uppercase font-black tracking-tighter">
-                {language.substring(0,2)}
-              </div>
-            </div>
-          </button>
-
-          {/* User Account / Auth */}
-          <div className="mt-2 w-full pt-2 border-t border-emerald-200/60">
-            {status === 'loading' ? (
-              <div className="h-10 w-full animate-pulse bg-slate-200 rounded-xl" />
-            ) : session?.user ? (
-              <div className="flex items-center justify-between gap-2 w-full group-hover:px-2 xl:px-2 transition-all">
-                <Link href="/profile" className="flex items-center gap-2 overflow-hidden flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto transition-all duration-300 hover:opacity-80">
-                  <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold shrink-0">
-                    {session.user.name?.[0]?.toUpperCase() || 'U'}
+            {/* User Account / Auth */}
+            <div className="w-full">
+              {status === 'loading' ? (
+                <div className="h-12 w-full animate-pulse bg-slate-50" />
+              ) : session?.user ? (
+                <div className="flex items-center justify-between gap-2 w-full group-hover:px-2 xl:px-2 transition-all h-14">
+                  <Link href="/profile" className="flex items-center gap-2 overflow-hidden flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto transition-all duration-300 hover:opacity-80">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold shrink-0 text-sm">
+                      {session.user.name?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                    <span className="text-[13px] font-bold text-slate-700 truncate">
+                      {session.user.name}
+                    </span>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      useProgressStore.getState().resetProgress();
+                      signOut();
+                    }}
+                    className="p-2 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0 transition-colors"
+                    title={t('sidebar.logout')}
+                  >
+                    <LogOut size={16} />
+                  </button>
+                </div>
+              ) : (
+                <Link 
+                  href="/login"
+                  className="w-full h-14 flex items-center justify-center font-bold bg-transparent text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors px-0 group-hover:px-3 xl:px-3"
+                >
+                  <div className="shrink-0 flex items-center justify-center w-6 h-6 transition-transform duration-300 relative">
+                    <User size={18} />
                   </div>
-                  <span className="text-sm font-semibold text-slate-700 truncate">
-                    {session.user.name}
+                  <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto ml-0 group-hover:ml-3 xl:ml-3 text-[13px] whitespace-nowrap">
+                    {t('sidebar.login')}
                   </span>
                 </Link>
-                <button
-                  onClick={() => {
-                    useProgressStore.getState().resetProgress();
-                    signOut();
-                  }}
-                  className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0"
-                  title={t('sidebar.logout')}
-                >
-                  <LogOut size={20} />
-                </button>
-              </div>
-            ) : (
-              <Link 
-                href="/login"
-                className="w-full h-10 flex items-center justify-center rounded-xl font-bold bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors px-0 group-hover:px-3 xl:px-3"
-              >
-                <div className="shrink-0 flex items-center justify-center w-6 h-6 transition-transform duration-300 relative">
-                  <User size={20} />
-                </div>
-                <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto ml-0 group-hover:ml-2 xl:ml-2 text-sm whitespace-nowrap">
-                  {t('sidebar.login')}
-                </span>
-              </Link>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </nav>
@@ -290,19 +296,19 @@ export default function DesktopSidebarLeft() {
 
 function NavCategory({ title, icon, isOpen, onToggle, isActive, children }: any) {
   return (
-    <div className="flex flex-col w-full mb-1">
+    <div className="flex flex-col w-full mb-1 px-2">
       <button 
         onClick={onToggle}
-        className={`flex items-center rounded-xl transition-all h-10 overflow-hidden w-12 mx-auto justify-center group-hover:w-full group-hover:justify-start group-hover:px-4 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-4 hover:bg-emerald-50 cursor-pointer ${isActive ? 'text-emerald-600' : 'text-slate-400'}`}
+        className={`flex items-center rounded-xl transition-all h-10 overflow-hidden w-12 mx-auto justify-center group-hover:w-full group-hover:justify-start group-hover:px-3 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-3 cursor-pointer hover:bg-slate-50 ${isActive ? 'text-slate-700' : 'text-slate-500'}`}
       >
         <div className="shrink-0 flex items-center justify-center w-6 h-6 transition-transform duration-300 relative">
           {icon}
         </div>
         <div className="flex items-center justify-between flex-1 transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto whitespace-nowrap">
-          <span className="font-bold text-xs tracking-wider uppercase">
+          <span className="font-bold text-[11px] tracking-widest uppercase text-slate-400">
             {title}
           </span>
-          <ChevronUp size={16} className={`transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`} />
+          <ChevronUp size={16} className={`text-slate-400 transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`} />
         </div>
       </button>
       
@@ -319,19 +325,22 @@ function NavItem({ href, icon, label, active, hasSuggestion, isSubItem, onClick 
     <Link 
       href={href} 
       onClick={onClick}
-      className={`flex items-center rounded-xl transition-all overflow-hidden mx-auto justify-center 
+      className={`flex items-center rounded-xl transition-all overflow-hidden mx-auto justify-center relative
         ${isSubItem 
-          ? 'h-10 w-10 group-hover:w-full group-hover:justify-start group-hover:px-4 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-4 group-hover:pl-10 xl:pl-10' 
-          : 'h-12 w-12 group-hover:w-full group-hover:justify-start group-hover:px-4 group-hover:gap-4 xl:gap-4 xl:w-full xl:justify-start xl:px-4'} 
-        ${active ? 'bg-emerald-100 text-emerald-800 font-bold' : 'text-slate-600 font-medium hover:bg-emerald-50 hover:text-emerald-700'}`}
+          ? 'h-10 w-10 group-hover:w-full group-hover:justify-start group-hover:px-3 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-3 group-hover:pl-9 xl:pl-9' 
+          : 'h-12 w-12 group-hover:w-full group-hover:justify-start group-hover:px-3 group-hover:gap-3 xl:gap-3 xl:w-full xl:justify-start xl:px-3'} 
+        ${active ? 'text-emerald-600 font-bold bg-transparent' : 'text-slate-500 font-medium hover:bg-slate-50 hover:text-slate-700'}`}
     >
-      <div className={`shrink-0 flex items-center justify-center transition-transform duration-300 relative ${isSubItem ? 'w-5 h-5' : 'w-6 h-6'} ${active ? 'scale-110 group-hover:scale-100 xl:scale-100' : ''}`}>
+      {active && (
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 bg-emerald-500 rounded-r-full"></div>
+      )}
+      <div className={`shrink-0 flex items-center justify-center transition-transform duration-300 relative ${isSubItem ? 'w-5 h-5' : 'w-6 h-6'} ${active ? 'scale-105' : ''}`}>
         {icon}
         {hasSuggestion && (
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 border-2 border-white rounded-full"></span>
         )}
       </div>
-      <span className={`transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto whitespace-nowrap ${isSubItem ? 'text-sm' : ''}`}>
+      <span className={`transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto whitespace-nowrap ${isSubItem ? 'text-[14px]' : 'text-[15px]'}`}>
         {label}
         {hasSuggestion && (
            <span className="bg-amber-400 text-amber-900 text-[10px] font-black uppercase px-2 py-0.5 rounded-full ml-2">
