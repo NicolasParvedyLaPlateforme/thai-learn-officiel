@@ -231,12 +231,12 @@ export default function DesktopSidebarLeft() {
             <div className="px-2 w-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100 h-0 group-hover:h-[2.5rem] xl:h-[2.5rem] mb-0 group-hover:mb-6 xl:mb-6 overflow-hidden">
               <button 
                 onClick={() => setShowLanguageModal(true)}
-                className="w-full h-[2.5rem] flex items-center justify-center rounded-full font-bold bg-[#00b268] hover:bg-[#009b5a] text-white transition-all shadow-sm relative group/lang"
+                className="w-full h-[2.5rem] flex items-center justify-center rounded-full font-bold bg-white border border-[#00b268] hover:bg-emerald-50 transition-all shadow-sm relative group/lang"
                 title={t('sidebar.language')}
               >
                 <span className="flex items-center justify-center gap-2 text-sm whitespace-nowrap w-full">
-                  <span className="uppercase font-black text-white text-[12px]">{language.substring(0,2)}</span>
-                  <span className="uppercase tracking-widest text-[11px] text-emerald-50 font-bold">{t('sidebar.language')}</span>
+                  <span className="uppercase font-black text-emerald-700 text-[12px] group-hover:text-[#00b268] transition-colors">{language.substring(0,2)}</span>
+                  <span className="uppercase tracking-widest text-[11px] text-[#00b268] font-bold">{t('sidebar.language')}</span>
                 </span>
               </button>
             </div>
@@ -244,7 +244,7 @@ export default function DesktopSidebarLeft() {
             <div className="hidden group-hover:hidden xl:hidden w-full h-[2.5rem] mb-6 flex-col items-center justify-center">
               <button 
                  onClick={() => setShowLanguageModal(true)}
-                 className="w-10 h-10 rounded-full bg-[#00b268] hover:bg-[#009b5a] text-white flex items-center justify-center font-black text-[12px] uppercase shadow-sm"
+                 className="w-10 h-10 rounded-full bg-white border border-[#00b268] hover:bg-emerald-50 flex items-center justify-center font-black text-[12px] text-emerald-700 uppercase shadow-sm transition-colors"
               >
                 {language.substring(0,2)}
               </button>
