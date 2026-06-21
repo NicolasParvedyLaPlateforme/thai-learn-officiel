@@ -405,7 +405,7 @@ export function DesktopSidebarRight({
           className="w-full h-full relative px-6 overflow-y-auto hide-scrollbar pt-6 pb-16 flex flex-col gap-0"
         >
           <div className="w-auto -mt-6 -mx-6 px-6 pt-8 pb-6 mb-6 bg-slate-50/80 border-b border-slate-100 flex items-center justify-center">
-            <h1 className="text-[22px] font-black text-slate-800 tracking-tight text-center uppercase">
+            <h1 className="text-[26px] font-light font-serif text-slate-800 tracking-wide text-center">
               {getTranslation('auto.my_adventure', language)}
             </h1>
           </div>
