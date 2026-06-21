@@ -14,7 +14,7 @@ import PathLayout from "@/components/path-ui/PathLayout";
 // Imports for inline modals
 import { AnimatePresence } from 'motion/react';
 import { Drawer } from 'vaul';
-import { BookOpen, X } from 'lucide-react';
+import { BookOpen, X, CheckCircle } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
 import { ConversationObjectiveWidget } from "@/components/widgets/ConversationObjectiveWidget";
@@ -65,12 +65,18 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                   <div className="p-4 bg-white rounded-t-3xl shrink-0 flex items-center justify-center sticky top-0 z-10 border-b border-slate-100">
                     <div className="w-12 h-1.5 shrink-0 rounded-full bg-slate-200 mb-6 absolute top-3" />
                     <Drawer.Title className="text-xl font-extrabold text-slate-800 mt-2">
-                      {getTranslation('units.title', language)}
+                      Unités d'Alphabet
                     </Drawer.Title>
                   </div>
+                  <button
+                    onClick={() => onOpenChange(false)}
+                    className="absolute top-4 right-4 text-slate-400 bg-slate-100 p-2 rounded-full hover:bg-slate-200 hover:text-slate-600 transition-colors z-20"
+                  >
+                    <X size={20} />
+                  </button>
                   <div className="p-6 flex flex-col gap-4 overflow-y-auto pb-12 hide-scrollbar">
                     {units.map((unit: any, index: number) => {
-                       const title = getLocalizedField(unit, '', language);
+                       const title = getLocalizedField(unit, 'title', language);
                        const isActive = index === activeUnitIndex;
                        return (
                          <button
@@ -91,13 +97,18 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
                              <BookOpen size={24} />
                            </div>
                            <div className="flex flex-col flex-1">
-                             <div className="text-sm font-bold text-slate-500 mb-1">
-                               {getTranslation('unit', language)} {index + 1}
+                             <div className={`text-sm font-bold uppercase mb-1 ${isActive ? unit.textClass : 'text-slate-500'}`}>
+                               UNITÉ {index + 1}
                              </div>
-                             <div className={`font-extrabold ${isActive ? unit.textClass : 'text-slate-700'}`}>
+                             <div className={`font-extrabold ${isActive ? 'text-slate-800' : 'text-slate-700'}`}>
                                {title}
                              </div>
                            </div>
+                           {isActive && (
+                             <div className={unit.textClass}>
+                               <CheckCircle size={24} strokeWidth={2.5} />
+                             </div>
+                           )}
                          </button>
                        );
                     })}
