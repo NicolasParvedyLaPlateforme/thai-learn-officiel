@@ -24,6 +24,7 @@ interface LearnMobileTimelineProps {
 
 import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from './NextUnitCard';
+import BannerUnitsButton from '../ui/BannerUnitsButton';
 import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
 
@@ -72,7 +73,7 @@ export default function LearnMobileTimeline({
       >
         <div
           onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-          className={`mb-6 p-5 sm:p-6 ${unit.colorClass} rounded-2xl text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[160px] flex items-center group`}
+          className={`-mx-4 -mt-2 mb-6 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-none text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[160px] flex items-center group`}
         >
           {unit.imageUrl && (
             <div 
@@ -111,7 +112,12 @@ export default function LearnMobileTimeline({
               </div>
             </div>
           </div>
-          {!unit.imageUrl && (
+          <BannerUnitsButton 
+            onClick={() => setIsUnitsModalOpen(true)} 
+            language={language}
+            className="absolute bottom-4 right-4 z-20"
+          />
+        {!unit.imageUrl && (
             <>
               <div className={`absolute -bottom-8 -left-8 opacity-10 drop-shadow-lg text-black rotate-[-15deg] pointer-events-none`}>
                 <BookOpen size={160} />
