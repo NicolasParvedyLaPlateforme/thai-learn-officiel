@@ -81,7 +81,7 @@ export default function DesktopSidebarLeft() {
 
       <nav 
         id="desktop-sidebar-nav"
-        className={`hidden md:flex fixed top-0 left-0 h-screen bg-slate-50 border-r border-slate-200/60 flex-col py-6 transition-all duration-300 ease-in-out z-[70] ${
+        className={`hidden md:flex fixed top-0 left-0 h-screen bg-white border-r border-slate-200 shadow-sm flex-col py-6 transition-all duration-300 ease-in-out z-[70] ${
           isMobileLandscape 
             ? (isMobileSidebarOpen ? 'w-64 px-2 translate-x-0' : 'w-64 px-2 -translate-x-full')
             : 'w-20 px-2 hover:w-64 xl:w-64'
@@ -183,100 +183,109 @@ export default function DesktopSidebarLeft() {
         </div>
 
         {/* User Summary / Level */}
-        <div className="mt-auto shrink-0 pt-4 overflow-hidden flex flex-col items-center gap-3 w-full px-2">
+        <div className="mt-auto shrink-0 pt-4 overflow-hidden flex flex-col items-center w-full px-2">
           
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col w-full overflow-hidden transition-all duration-300">
-            <div className="flex gap-1 w-full justify-center transition-all bg-transparent p-2">
+          <div className="flex flex-col w-full overflow-hidden transition-all duration-300">
+            <div className="w-full h-[1px] bg-slate-200/80 mb-4 transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
+
+            <div className="flex gap-1 w-full justify-center transition-all bg-transparent px-2 mb-6">
               {/* XP */}
-              <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-amber-50 text-amber-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="XP">
+              <div className="flex-1 flex justify-center items-center h-8 rounded-xl hover:bg-amber-50 text-amber-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="XP">
                 <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
-                  <Star size={18} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
+                  <Star size={16} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
                   <span>{xp >= 10000 ? (xp / 1000).toFixed(1) + 'k' : xp}</span>
                 </span>
                 <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                  <Star size={20} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
+                  <Star size={18} className="fill-amber-400 text-amber-400 drop-shadow-sm" />
                 </div>
               </div>
 
               <div className="w-[1px] h-6 bg-slate-100 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
 
               {/* Coins */}
-              <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-yellow-50 text-yellow-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Pièces">
+              <div className="flex-1 flex justify-center items-center h-8 rounded-xl hover:bg-yellow-50 text-yellow-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Pièces">
                 <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
-                  <Coins size={18} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
+                  <Coins size={16} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
                   <span>{goldCoins >= 10000 ? (goldCoins / 1000).toFixed(1) + 'k' : (goldCoins || 0)}</span>
                 </span>
                 <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                  <Coins size={20} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
+                  <Coins size={18} className="fill-yellow-400 text-yellow-400 drop-shadow-sm" />
                 </div>
               </div>
 
               <div className="w-[1px] h-6 bg-slate-100 my-auto rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
               
               {/* Streak */}
-              <div className="flex-1 flex justify-center items-center h-10 rounded-xl hover:bg-orange-50 text-orange-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Série">
+              <div className="flex-1 flex justify-center items-center h-8 rounded-xl hover:bg-orange-50 text-orange-500 font-extrabold transition-colors cursor-pointer relative group/stat" title="Série">
                 <span className="transition-all duration-300 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center gap-1.5 text-[15px]">
-                  <Flame size={18} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
+                  <Flame size={16} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
                   <span className={`${currentStreak > 0 ? '' : 'text-slate-400'}`}>{currentStreak}</span>
                 </span>
                 <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                  <Flame size={20} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
+                  <Flame size={18} className={`${currentStreak > 0 ? 'fill-orange-500 text-orange-500 drop-shadow-sm' : 'text-slate-300 fill-slate-200'}`} />
                 </div>
               </div>
             </div>
 
-            <div className="w-full h-[1px] bg-slate-100 transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
-
             {/* Language Button */}
-            <button 
-              onClick={() => setShowLanguageModal(true)}
-              className="w-full h-10 flex items-center justify-center font-bold bg-transparent hover:bg-slate-50 text-slate-500 transition-all px-0 group-hover:px-4 xl:px-4 relative group/lang"
-              title={t('sidebar.language')}
-            >
-              <span className="transition-all duration-300 overflow-hidden opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto flex items-center justify-center gap-3 text-sm whitespace-nowrap w-full">
-                <div className="text-slate-400 text-xs uppercase font-black tracking-widest">
-                  {language.substring(0,2)}
-                </div>
-                <span className="uppercase tracking-widest text-[11px] text-slate-400 font-bold">{t('sidebar.language')}</span>
-              </span>
-              <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 group-hover:opacity-0 xl:opacity-0 pointer-events-none">
-                <div className="text-slate-400 text-xs uppercase font-black tracking-widest">
-                  {language.substring(0,2)}
-                </div>
-              </div>
-            </button>
+            <div className="px-2 w-full transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100 h-0 group-hover:h-[2.5rem] xl:h-[2.5rem] mb-0 group-hover:mb-6 xl:mb-6 overflow-hidden">
+              <button 
+                onClick={() => setShowLanguageModal(true)}
+                className="w-full h-[2.5rem] flex items-center justify-center rounded-full font-bold bg-[#00b268] hover:bg-[#009b5a] text-white transition-all shadow-sm relative group/lang"
+                title={t('sidebar.language')}
+              >
+                <span className="flex items-center justify-center gap-2 text-sm whitespace-nowrap w-full">
+                  <span className="uppercase font-black text-white text-[12px]">{language.substring(0,2)}</span>
+                  <span className="uppercase tracking-widest text-[11px] text-emerald-50 font-bold">{t('sidebar.language')}</span>
+                </span>
+              </button>
+            </div>
+            
+            <div className="hidden group-hover:hidden xl:hidden w-full h-[2.5rem] mb-6 flex-col items-center justify-center">
+              <button 
+                 onClick={() => setShowLanguageModal(true)}
+                 className="w-10 h-10 rounded-full bg-[#00b268] hover:bg-[#009b5a] text-white flex items-center justify-center font-black text-[12px] uppercase shadow-sm"
+              >
+                {language.substring(0,2)}
+              </button>
+            </div>
 
-            <div className="w-full h-[1px] bg-slate-100 transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
+            <div className="w-full h-[1px] bg-slate-100 mb-2 transition-all duration-300 opacity-0 group-hover:opacity-100 xl:opacity-100"></div>
 
             {/* User Account / Auth */}
-            <div className="w-full">
+            <div className="w-full px-2">
               {status === 'loading' ? (
                 <div className="h-12 w-full animate-pulse bg-slate-50" />
               ) : session?.user ? (
-                <div className="flex items-center justify-between gap-2 w-full group-hover:px-2 xl:px-2 transition-all h-14">
-                  <Link href="/profile" className="flex items-center gap-2 overflow-hidden flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto transition-all duration-300 hover:opacity-80">
+                <div className="flex items-center justify-between gap-2 w-full transition-all h-14">
+                  <Link href="/profile" className="flex items-center gap-3 overflow-hidden flex-1 opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto transition-all duration-300 hover:opacity-80">
                     <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold shrink-0 text-sm">
                       {session.user.name?.[0]?.toUpperCase() || 'U'}
                     </div>
-                    <span className="text-[13px] font-bold text-slate-700 truncate">
+                    <span className="text-[14px] font-bold text-slate-700 truncate">
                       {session.user.name}
                     </span>
                   </Link>
+                  <div className="opacity-100 w-auto group-hover:opacity-0 group-hover:w-0 xl:opacity-0 xl:w-0 transition-all duration-300 overflow-hidden flex justify-center">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm">
+                      {session.user.name?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                  </div>
                   <button
                     onClick={() => {
                       useProgressStore.getState().resetProgress();
                       signOut();
                     }}
-                    className="p-2 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0 transition-colors"
+                    className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg shrink-0 mx-auto group-hover:mx-0 xl:mx-0 transition-colors opacity-0 w-0 group-hover:opacity-100 group-hover:w-auto xl:opacity-100 xl:w-auto"
                     title={t('sidebar.logout')}
                   >
-                    <LogOut size={16} />
+                    <LogOut size={18} />
                   </button>
                 </div>
               ) : (
                 <Link 
                   href="/login"
-                  className="w-full h-14 flex items-center justify-center font-bold bg-transparent text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors px-0 group-hover:px-3 xl:px-3"
+                  className="w-full h-14 flex items-center justify-center font-bold bg-transparent text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-colors"
                 >
                   <div className="shrink-0 flex items-center justify-center w-6 h-6 transition-transform duration-300 relative">
                     <User size={18} />
