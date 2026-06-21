@@ -81,7 +81,7 @@ export default function DesktopSidebarLeft() {
 
       <nav 
         id="desktop-sidebar-nav"
-        className={`hidden md:flex fixed top-0 left-0 h-screen bg-white border-r border-slate-200 shadow-sm flex-col py-6 transition-all duration-300 ease-in-out z-[70] ${
+        className={`hidden md:flex fixed top-0 left-0 h-screen bg-[#fdfdfd] border-r border-slate-200 shadow-sm flex-col py-6 transition-all duration-300 ease-in-out z-[70] ${
           isMobileLandscape 
             ? (isMobileSidebarOpen ? 'w-64 px-2 translate-x-0' : 'w-64 px-2 -translate-x-full')
             : 'w-20 px-2 hover:w-64 xl:w-64'
