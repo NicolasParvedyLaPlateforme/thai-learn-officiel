@@ -24,7 +24,7 @@ export function ConversationObjectiveWidget() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col bg-blue-50/40 rounded-[16px] md:rounded-[20px] p-4 md:p-5 border border-blue-100/50 relative z-10 overflow-hidden">
+      <div className="w-full flex flex-col bg-blue-50/40 rounded-[16px] md:rounded-[20px] p-4 md:p-5 border border-blue-100/50 relative z-10 overflow-hidden mb-3">
         {/* Fond avec un motif très léger (points) */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
         
