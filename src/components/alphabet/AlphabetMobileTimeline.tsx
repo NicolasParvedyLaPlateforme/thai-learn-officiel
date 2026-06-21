@@ -239,8 +239,7 @@ export default function AlphabetMobileTimeline({
                     isMobileLayout={true}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                      const saved = localStorage.getItem(`last_alphabet_level_${lesson.id}`);
-                      setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                      setModalLevel(null);
                     }}
                   />
                 </div>
