@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { m as motion } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
