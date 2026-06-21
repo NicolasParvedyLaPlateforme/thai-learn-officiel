@@ -1,0 +1,61 @@
+import type { Metadata, Viewport } from 'next';
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Inter, Sarabun } from 'next/font/google';
+import './globals.css'; // Global styles
+import BottomNav from "@/components/layout/BottomNav";
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
+
+const sarabun = Sarabun({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['thai'],
+  variable: '--font-thai',
+});
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
+export const metadata: Metadata = {
+  title: 'ThaiLearn',
+  description: 'Apprenez le thaïlandais facilement',
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icon.svg',
+  }
+};
+
+import DesktopSidebarLeft from "@/components/layout/DesktopSidebarLeft";
+import AuthProvider from "@/components/providers/AuthProvider";
+import SyncProgress from "@/components/providers/SyncProgress";
+import GlobalModals from "@/components/layout/GlobalModals";
+import MotionProvider from "@/components/providers/MotionProvider";
+
+export default function RootLayout({children}: {children: React.ReactNode}) {
+  return (
+    <html lang="en" className={`${inter.variable} ${sarabun.variable}`}>
+       <body className="font-sans antialiased text-slate-900 bg-slate-50 min-h-screen flex overflow-x-clip" suppressHydrationWarning>
+         <MotionProvider>
+           <AuthProvider>
+             <SyncProgress />
+           <DesktopSidebarLeft />
+           <GlobalModals />
+           <div className="flex-1 flex flex-col min-h-screen min-w-0">
+             {children}
+             <BottomNav />
+           </div>
+           <Analytics />
+           <SpeedInsights />
+         </AuthProvider>
+       </MotionProvider>
+       </body>
+    </html>
+  );
+}
