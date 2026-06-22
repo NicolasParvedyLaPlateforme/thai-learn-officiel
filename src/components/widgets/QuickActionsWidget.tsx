@@ -8,7 +8,7 @@ import { getLevelSplit } from "@/lib/levelSplits";
 
 interface QuickActionsWidgetProps {
   lightweightLessons?: any[];
-  variant?: 'desktop' | 'mobile-bubble';
+  variant?: 'desktop' | 'mobile-bubble' | 'desktop-floating';
 }
 
 export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: QuickActionsWidgetProps) {
@@ -159,6 +159,51 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
         >
           <RotateCcw size={15} />
           <span className="font-bold text-[11px] tracking-wide">Réviser</span>
+        </button>
+      </div>
+    );
+  }
+
+  if (variant === 'desktop-floating') {
+    return (
+      <div className="flex bg-white/95 backdrop-blur-xl rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200 p-2 gap-2 relative items-center">
+        {/* Info XP + Pièces (Tooltip explicatif) */}
+        <div className="flex gap-2 relative group/coins">
+          {/* Bouton Révision */}
+          <button 
+            onClick={handleRevision}
+            disabled={!randomMasteredLesson}
+            className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-[14px] transition-all cursor-pointer ${randomMasteredLesson ? 'bg-white text-slate-600 hover:text-purple-500 hover:bg-purple-50 hover:scale-[1.02] active:scale-95 border-2 border-slate-100 hover:border-purple-100' : 'bg-slate-50 text-slate-300 border-2 border-slate-100'}`}
+          >
+            <RotateCcw size={18} className={randomMasteredLesson ? "text-purple-500" : ""} />
+            <span className="font-bold text-[14px] tracking-wide w-[75px] text-left">Réviser</span>
+            <span className="text-[11px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded w-[52px] text-center shrink-0">+50 XP</span>
+          </button>
+
+          {/* Bouton Entraînement */}
+          <button 
+            onClick={handleEntrainement}
+            disabled={!nextLesson}
+            className={`flex items-center justify-center gap-2 px-5 py-3.5 rounded-[14px] transition-all cursor-pointer ${nextLesson ? 'bg-white text-slate-600 hover:text-blue-500 hover:bg-blue-50 hover:scale-[1.02] active:scale-95 border-2 border-slate-100 hover:border-blue-100' : 'bg-slate-50 text-slate-300 border-2 border-slate-100'}`}
+          >
+            <Target size={18} className={nextLesson ? "text-blue-500" : ""} />
+            <span className="font-bold text-[14px] tracking-wide w-[75px] text-left">S'entraîner</span>
+            <span className="text-[11px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded w-[52px] text-center shrink-0">+10 XP</span>
+          </button>
+
+          <div className="absolute -top-14 left-1/2 -translate-x-1/2 whitespace-nowrap bg-slate-800 text-white text-[13px] font-bold px-4 py-2.5 rounded-xl opacity-0 group-hover/coins:opacity-100 transition-opacity pointer-events-none shadow-xl">
+            1 chance sur 5 de gagner 1 à 3 pièces ! 🪙
+            <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-800 rotate-45"></div>
+          </div>
+        </div>
+
+        {/* Bouton Suivant */}
+        <button 
+          onClick={handleSuivant}
+          className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-[14px] transition-all cursor-pointer ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 shadow-sm'}`}
+        >
+          <Play size={18} className="fill-current stroke-current" />
+          <span className="font-extrabold text-[15px] tracking-wide">Suivant</span>
         </button>
       </div>
     );

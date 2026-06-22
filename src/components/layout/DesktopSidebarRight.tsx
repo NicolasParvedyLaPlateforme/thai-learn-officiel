@@ -410,7 +410,6 @@ export function DesktopSidebarRight({
           </div>
 
           <div className="w-full flex flex-col gap-0">
-            <QuickActionsWidget />
             <ConversationObjectiveWidget />
             <DailyQuestsWidget category={questsCategory} />
             <LeaderboardWidget />
