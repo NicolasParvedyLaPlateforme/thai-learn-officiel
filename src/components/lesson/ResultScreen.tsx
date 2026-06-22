@@ -215,7 +215,7 @@ export default function ResultScreen({
             if (mode === 'training') {
                const partStr = searchParams.get("part");
                const totalPartsStr = searchParams.get("totalParts");
-               let url = `/lesson/${lesson.id}?level=${currentLevel}`;
+               let url = `/lesson/${lesson.id}?level=${currentLevel + 1}`;
                if (partStr && totalPartsStr) {
                  url += `&part=${partStr}&totalParts=${totalPartsStr}`;
                }
