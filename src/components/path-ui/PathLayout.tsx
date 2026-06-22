@@ -398,18 +398,6 @@ export default function PathLayout({
               </div>
             </div>
 
-            {/* Fixed overlay to align the widget to the bottom right of the main column */}
-            <div className="fixed inset-0 pointer-events-none z-50 hidden xl:flex justify-center items-end pb-8">
-              <div className="w-full max-w-[1400px] mx-auto flex justify-center gap-8 px-6 xl:pr-6">
-                <div className="flex-1 w-full max-w-[1000px] flex justify-end items-end pr-8">
-                  <div className="pointer-events-auto drop-shadow-2xl hover:-translate-y-1 transition-transform">
-                    <QuickActionsWidget variant="desktop-floating" />
-                  </div>
-                </div>
-                <div className="w-80 shrink-0 hidden xl:block"></div>
-              </div>
-            </div>
-
             <DesktopSidebarRight
               showUnitsList={showDesktopUnitsList}
               setShowUnitsList={setShowDesktopUnitsList}

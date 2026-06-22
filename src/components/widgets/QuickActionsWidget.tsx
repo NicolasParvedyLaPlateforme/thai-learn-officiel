@@ -210,27 +210,56 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
   }
 
   return (
-    <div className="w-full border-b border-slate-200 py-6 px-1 flex flex-col gap-4 relative group">
-      <div className="flex items-center justify-between relative z-10 mb-2">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-amber-100/50 text-amber-500 rounded-xl flex items-center justify-center shadow-sm">
-            <Zap size={22} className="stroke-[2.5]" />
-          </div>
-          <h2 className="font-extrabold text-slate-800 text-[17px] tracking-tight">
-            Action Rapide
-          </h2>
-        </div>
-      </div>
-
+    <div className="w-full flex flex-col gap-3 relative group">
       <div className="flex flex-col gap-3 relative z-10">
         
+        <div className="flex gap-3">
+          {/* BOUTON ENTRAINEMENT */}
+          <button 
+            onClick={handleEntrainement}
+            disabled={!nextLesson}
+            className={`flex-1 relative rounded-[16px] p-3 flex flex-col items-center justify-center gap-1.5 transition-all group/btn
+              ${nextLesson 
+                ? 'bg-white border-2 border-slate-200 text-slate-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 active:scale-95 cursor-pointer' 
+                : 'bg-slate-50 border-2 border-slate-100 text-slate-400 cursor-not-allowed opacity-50'}`}
+          >
+            <Target size={20} className={nextLesson ? "text-blue-500" : "text-slate-400"} />
+            <span className="font-bold text-[13px]">Entraînement</span>
+
+            {/* Bulle Tooltip */}
+            <div className="absolute -top-16 left-0 bg-slate-800 text-white text-[12px] font-bold px-3 py-2 rounded-xl opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none shadow-xl z-20 w-[200px] text-center leading-tight">
+              +10 XP • 1 chance sur 5 de gagner 1 à 3 pièces ! 🪙
+              <div className="absolute -bottom-1.5 left-[30%] -translate-x-1/2 w-3 h-3 bg-slate-800 rotate-45"></div>
+            </div>
+          </button>
+
+          {/* BOUTON REVISION */}
+          <button 
+            onClick={handleRevision}
+            disabled={!randomMasteredLesson}
+            className={`flex-1 relative rounded-[16px] p-3 flex flex-col items-center justify-center gap-1.5 transition-all group/btn
+              ${randomMasteredLesson 
+                ? 'bg-white border-2 border-slate-200 text-slate-700 hover:border-purple-400 hover:bg-purple-50 hover:text-purple-600 active:scale-95 cursor-pointer' 
+                : 'bg-slate-50 border-2 border-slate-100 text-slate-400 cursor-not-allowed opacity-50'}`}
+          >
+            <RotateCcw size={20} className={randomMasteredLesson ? "text-purple-500" : "text-slate-400"} />
+            <span className="font-bold text-[13px]">Réviser</span>
+
+            {/* Bulle Tooltip */}
+            <div className="absolute -top-16 right-0 bg-slate-800 text-white text-[12px] font-bold px-3 py-2 rounded-xl opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none shadow-xl z-20 w-[200px] text-center leading-tight">
+              +50 XP • 1 chance sur 5 de gagner 1 à 3 pièces ! 🪙
+              <div className="absolute -bottom-1.5 right-[30%] translate-x-1/2 w-3 h-3 bg-slate-800 rotate-45"></div>
+            </div>
+          </button>
+        </div>
+
         {/* BOUTON SUIVANT */}
         <button 
           onClick={handleSuivant}
-          className={`w-full relative overflow-hidden rounded-[16px] p-4 flex items-center justify-between group/btn transition-all
+          className={`w-full relative overflow-hidden rounded-[16px] p-4 flex items-center justify-between group/btn transition-all cursor-pointer
             ${isUnitCompleted 
               ? 'bg-slate-100 border-slate-200 text-slate-600' 
-              : 'bg-emerald-500 border-emerald-600 text-white shadow-sm hover:-translate-y-0.5 hover:shadow-md active:translate-y-0'}`}
+              : 'bg-blue-500 border-blue-600 text-white shadow-sm hover:bg-blue-400 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0'}`}
         >
           <div className="flex items-center gap-3 relative z-10">
             <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isUnitCompleted ? 'bg-white/50 text-slate-500' : 'bg-white/20 text-white'}`}>
@@ -248,41 +277,6 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
             </div>
           </div>
         </button>
-
-        <div className="flex gap-3">
-          {/* BOUTON ENTRAINEMENT */}
-          <button 
-            onClick={handleEntrainement}
-            disabled={!nextLesson}
-            className={`flex-1 relative overflow-hidden rounded-[16px] p-3 flex flex-col items-center justify-center gap-1.5 transition-all
-              ${nextLesson 
-                ? 'bg-white border-2 border-slate-200 text-slate-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 active:scale-95 cursor-pointer' 
-                : 'bg-slate-50 border-2 border-slate-100 text-slate-400 cursor-not-allowed opacity-50'}`}
-          >
-            <Target size={20} className={nextLesson ? "text-blue-500" : "text-slate-400"} />
-            <span className="font-bold text-[13px]">Entraînement</span>
-            <div className="flex items-center gap-1 text-[10px] font-bold text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">
-              +10 XP
-            </div>
-          </button>
-
-          {/* BOUTON REVISION */}
-          <button 
-            onClick={handleRevision}
-            disabled={!randomMasteredLesson}
-            className={`flex-1 relative overflow-hidden rounded-[16px] p-3 flex flex-col items-center justify-center gap-1.5 transition-all
-              ${randomMasteredLesson 
-                ? 'bg-white border-2 border-slate-200 text-slate-700 hover:border-purple-400 hover:bg-purple-50 hover:text-purple-600 active:scale-95 cursor-pointer' 
-                : 'bg-slate-50 border-2 border-slate-100 text-slate-400 cursor-not-allowed opacity-50'}`}
-          >
-            <RotateCcw size={20} className={randomMasteredLesson ? "text-purple-500" : "text-slate-400"} />
-            <span className="font-bold text-[13px]">Réviser</span>
-            <div className="flex items-center gap-1 text-[10px] font-bold text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">
-              +50 XP
-            </div>
-          </button>
-        </div>
-
       </div>
     </div>
   );

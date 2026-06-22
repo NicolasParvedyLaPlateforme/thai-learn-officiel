@@ -401,18 +401,24 @@ export function DesktopSidebarRight({
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="w-full h-full relative px-6 overflow-y-auto hide-scrollbar pt-6 pb-16 flex flex-col gap-0"
+          className="w-full h-full relative flex flex-col bg-white"
         >
-          <div className="w-auto -mt-6 -mx-6 px-6 pt-8 pb-6 mb-6 bg-slate-50/80 border-b border-slate-200 flex items-center justify-center">
-            <h1 className="text-[26px] font-light font-serif text-slate-800 tracking-wide text-center">
-              {getTranslation('auto.my_adventure', language)}
-            </h1>
+          <div className="flex-1 overflow-y-auto hide-scrollbar px-6 pt-6 pb-6">
+            <div className="w-auto -mt-6 -mx-6 px-6 pt-8 pb-6 mb-6 bg-slate-50/80 border-b border-slate-200 flex items-center justify-center">
+              <h1 className="text-[26px] font-light font-serif text-slate-800 tracking-wide text-center">
+                {getTranslation('auto.my_adventure', language)}
+              </h1>
+            </div>
+
+            <div className="w-full flex flex-col gap-0">
+              <ConversationObjectiveWidget />
+              <DailyQuestsWidget category={questsCategory} />
+              <LeaderboardWidget />
+            </div>
           </div>
 
-          <div className="w-full flex flex-col gap-0">
-            <ConversationObjectiveWidget />
-            <DailyQuestsWidget category={questsCategory} />
-            <LeaderboardWidget />
+          <div className="w-full mt-auto flex flex-col gap-0 border-t border-slate-100 bg-white z-10 px-6 pb-6 pt-2 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+            <QuickActionsWidget variant="desktop" />
           </div>
         </motion.div>
       );
