@@ -14,6 +14,8 @@ export function generateExercises(
   const globalWords = allLessons.flatMap(l => l.words).filter(w => w.id !== 'w_dots');
   let validLessonWords = lesson.words.filter(w => w.id !== 'w_dots');
   let lessonPhrases = lesson.phrases || [];
+  const fullLessonWords = [...validLessonWords];
+  const fullLessonPhrases = [...lessonPhrases];
 
   if (partIndex !== null && totalParts !== null && totalParts > 1) {
     const getChunk = <T>(arr: T[], pIndex: number, tParts: number): T[] => {
@@ -76,7 +78,7 @@ export function generateExercises(
     case 4:
     case 5:
     case 6:
-      finalExercises = generateLevel4To6(validLessonWords, lessonPhrases, globalWords, allPhrases, language, level, totalParts);
+      finalExercises = generateLevel4To6(validLessonWords, lessonPhrases, globalWords, allPhrases, language, level, totalParts, fullLessonWords, fullLessonPhrases);
       break;
     case 7:
       finalExercises = generateLevel7(validLessonWords, language);
