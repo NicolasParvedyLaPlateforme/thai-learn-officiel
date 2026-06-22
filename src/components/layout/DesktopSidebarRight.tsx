@@ -403,13 +403,14 @@ export function DesktopSidebarRight({
           transition={{ duration: 0.2, ease: "easeOut" }}
           className="w-full h-full relative flex flex-col bg-white"
         >
-          <div className="flex-1 overflow-y-auto hide-scrollbar px-6 pt-6 pb-6">
-            <div className="w-auto -mt-6 -mx-6 px-6 pt-8 pb-6 mb-6 bg-slate-50/80 border-b border-slate-200 flex items-center justify-center">
-              <h1 className="text-[26px] font-light font-serif text-slate-800 tracking-wide text-center">
-                {getTranslation('auto.my_adventure', language)}
-              </h1>
-            </div>
+          {/* Header Fixed */}
+          <div className="w-full px-6 pt-8 pb-6 bg-slate-50/80 border-b border-slate-200 flex items-center justify-center shrink-0 z-20">
+            <h1 className="text-[26px] font-light font-serif text-slate-800 tracking-wide text-center">
+              {getTranslation('auto.my_adventure', language)}
+            </h1>
+          </div>
 
+          <div className="flex-1 overflow-y-auto hide-scrollbar px-6 pt-6 pb-6">
             <div className="w-full flex flex-col gap-0">
               <ConversationObjectiveWidget />
               <DailyQuestsWidget category={questsCategory} />
