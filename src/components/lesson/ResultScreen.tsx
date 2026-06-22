@@ -43,6 +43,7 @@ export default function ResultScreen({
   mode,
 }: ResultScreenProps) {
   const router = useRouter();
+  const searchParams = require('next/navigation').useSearchParams();
   const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
   
   const percentage = failedDueToTime && currentIndex !== undefined ? Math.round((currentIndex / exercisesLength) * 100) : 100;
@@ -122,17 +123,20 @@ export default function ResultScreen({
           </motion.div>
         ))}
       </div>
-      <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
-        {currentLevel === 10 
-          ? (getTranslation('auto.mastery_level_completed', language))
-          : isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1
-            ? (language === "en" 
-                ? `Part ${partIndex + 1}/${totalParts} completed!` 
-                : `Partie ${partIndex + 1}/${totalParts} terminée !`)
-            : (language === "en"
-                ? `Level ${currentLevel + 1} completed!`
-                : `Niveau ${currentLevel + 1} terminé !`)}
-      </h1>
+      <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight drop-shadow-sm text-center mb-2 px-4">
+        {mode === 'training'
+          ? "Entraînement terminé !"
+          : mode === 'revision'
+            ? "Révision terminée !"
+            : currentLevel === 10
+              ? getTranslation('auto.mastery_level_completed', language)
+              : isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null
+                ? `Partie ${partIndex + 1}/${totalParts} terminée !`
+                : (language === "en"
+                  ? `Level ${currentLevel + 1} completed!`
+                  : `Niveau ${currentLevel + 1} terminé !`)
+        }
+      </h2>
       
       {(lesson.isReview || currentLevel === 10) && timeTakenSec !== null ? (
         <p className="text-indigo-500 mb-4 text-center text-lg font-bold flex items-center justify-center gap-2">
@@ -161,7 +165,7 @@ export default function ResultScreen({
             {getTranslation('auto.next_unit', language)}
           </button>
         )}
-        {isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1 ? (
+        {mode !== 'training' && mode !== 'revision' && isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1 ? (
           <button
             onClick={() =>
               handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, language === "en" ? "Next Part" : "Partie suivante")
@@ -170,7 +174,7 @@ export default function ResultScreen({
           >
             {language === "en" ? "Next Part" : "Partie suivante"}
           </button>
-        ) : currentLevel + 1 < 10 && (
+        ) : mode !== 'training' && mode !== 'revision' && currentLevel + 1 < 10 && (
           <button
             onClick={() => {
               const nextTotalParts = getLevelSplit(currentLevel + 1, lesson);

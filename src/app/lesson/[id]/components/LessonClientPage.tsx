@@ -112,6 +112,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     id: string;
     level: number;
     partIndex?: number | null;
+    mode?: string | null;
   } | null>(null);
 
   // Use requested level if provided, otherwise the saved level, but lock it to the generated level if already playing
@@ -337,20 +338,23 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       }
     }
 
+    const currentMode = searchParams.get('mode');
+    
     if (
       !exercisesGeneratedFor ||
       exercisesGeneratedFor.id !== lesson.id ||
       exercisesGeneratedFor.level !== currentLevel ||
-      exercisesGeneratedFor.partIndex !== partIndex
+      exercisesGeneratedFor.partIndex !== partIndex ||
+      exercisesGeneratedFor.mode !== currentMode
     ) {
       setShowExerciseUI(false);
 
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
+      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
       const savedState = inProgressLessons[savedStateKey];
 
       if (savedState && savedState.exercises && savedState.exercises.length > 0) {
         setShowResumePrompt(true);
-        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
+        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
         return;
       }
 
@@ -389,7 +393,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setTimeLeft(null);
           setInitialTime(null);
         }
-        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
+        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
       }).catch(e => {
         console.error("Failed to load exercises (likely cache mismatch):", e);
         window.location.reload();
@@ -523,7 +527,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   useEffect(() => {
     if (!lesson) return;
     if (exercises.length > 0 && !isFinished && !showResumePrompt && isDataLoaded) {
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
+      const currentMode = searchParams.get('mode');
+      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
       saveInProgressLesson(savedStateKey, {
         exercises,
         currentIndex,
@@ -538,7 +543,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   useEffect(() => {
     if (!lesson) return;
     if (isFinished) {
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
+      const currentMode = searchParams.get('mode');
+      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
       saveInProgressLesson(savedStateKey, null);
     }
   }, [isFinished, lesson?.id, currentLevel, saveInProgressLesson]);
@@ -650,6 +656,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         isPart={isPart}
         partIndex={partIndex}
         totalParts={totalParts}
+        mode={searchParams.get('mode')}
       />
     );
   }
