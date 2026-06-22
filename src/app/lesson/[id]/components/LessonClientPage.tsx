@@ -324,12 +324,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       return;
     }
 
+    const currentMode = searchParams.get('mode');
+
     // Security check for parts
     const actualTotalParts = getLevelSplit(currentLevel, lesson);
     const partsKey = `${lesson.id}_level-${currentLevel}`;
     const completedParts = lessonPartsCompleted[partsKey] || [];
     
-    if (!isDev && !lesson.isReview && actualTotalParts > 1) {
+    if (!isDev && !lesson.isReview && actualTotalParts > 1 && currentMode !== 'training' && currentMode !== 'revision') {
       const expectedPart = completedParts.length;
       if (partIndex !== null && partIndex > expectedPart) {
         console.warn("Security redirect triggered:", { partIndex, expectedPart, totalParts, actualTotalParts });
@@ -337,8 +339,6 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         return;
       }
     }
-
-    const currentMode = searchParams.get('mode');
     
     if (
       !exercisesGeneratedFor ||
@@ -352,7 +352,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
       const savedState = inProgressLessons[savedStateKey];
 
-      if (savedState && savedState.exercises && savedState.exercises.length > 0) {
+      if (currentMode !== 'training' && currentMode !== 'revision' && savedState && savedState.exercises && savedState.exercises.length > 0) {
         setShowResumePrompt(true);
         setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
         return;
@@ -528,26 +528,30 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     if (!lesson) return;
     if (exercises.length > 0 && !isFinished && !showResumePrompt && isDataLoaded) {
       const currentMode = searchParams.get('mode');
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
-      saveInProgressLesson(savedStateKey, {
-        exercises,
-        currentIndex,
-        mistakes,
-        timeLeft,
-        initialTime,
-        lastUpdated: Date.now()
-      });
+      if (currentMode !== 'training' && currentMode !== 'revision') {
+        const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
+        saveInProgressLesson(savedStateKey, {
+          exercises,
+          currentIndex,
+          mistakes,
+          timeLeft,
+          initialTime,
+          lastUpdated: Date.now()
+        });
+      }
     }
-  }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson]);
+  }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson, searchParams]);
 
   useEffect(() => {
     if (!lesson) return;
     if (isFinished) {
       const currentMode = searchParams.get('mode');
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
-      saveInProgressLesson(savedStateKey, null);
+      if (currentMode !== 'training' && currentMode !== 'revision') {
+        const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
+        saveInProgressLesson(savedStateKey, null);
+      }
     }
-  }, [isFinished, lesson?.id, currentLevel, saveInProgressLesson]);
+  }, [isFinished, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson, searchParams]);
 
   useEffect(() => {
     if (timeLeft === null || isFinished || !showExerciseUI || !isDataLoaded) return;
