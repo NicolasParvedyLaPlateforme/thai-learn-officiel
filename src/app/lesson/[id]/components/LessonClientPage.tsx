@@ -139,6 +139,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   const [initialTime, setInitialTime] = useState<number | null>(null);
   const [failedDueToTime, setFailedDueToTime] = useState(false);
   const [earnedXp, setEarnedXp] = useState<number>(0);
+  const [debugError, setDebugError] = useState<string | null>(null);
 
   const [isClient, setIsClient] = useState(false);
   const [showExerciseUI, setShowExerciseUI] = useState(false);
@@ -349,7 +350,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
       }).catch(e => {
         console.error("Failed to load exercises (likely cache mismatch):", e);
-        window.location.reload();
+        setDebugError(e instanceof Error ? e.stack || e.message : String(e));
       });
     }
   }, [
@@ -450,7 +451,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
     }).catch(e => {
       console.error("Failed to load exercises (likely cache mismatch):", e);
-      window.location.reload();
+      setDebugError(e instanceof Error ? e.stack || e.message : String(e));
     });
   };
 
@@ -638,6 +639,34 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   return (
     <div className="h-[100dvh] flex flex-col bg-[#FAFAFA] font-sans text-slate-800 overflow-hidden relative">
+      {debugError && (
+        <div className="absolute inset-0 z-[9999] bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-xl flex flex-col gap-4 max-h-[80vh]">
+            <h2 className="text-xl font-bold text-red-600">Erreur de chargement</h2>
+            <p className="text-sm text-slate-600">Une erreur s'est produite lors de la récupération des données. Veuillez copier l'erreur ci-dessous :</p>
+            <div className="bg-slate-100 p-3 rounded-lg overflow-y-auto flex-1 font-mono text-[10px] sm:text-xs text-slate-800 break-all">
+              {debugError}
+            </div>
+            <div className="flex gap-3 mt-2">
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(debugError);
+                  alert("Copié dans le presse-papier !");
+                }}
+                className="flex-1 bg-amber-400 text-white font-bold py-3 rounded-xl hover:bg-amber-500 transition-colors"
+              >
+                Copier l'erreur
+              </button>
+              <button 
+                onClick={() => setDebugError(null)}
+                className="flex-1 bg-slate-200 text-slate-700 font-bold py-3 rounded-xl hover:bg-slate-300 transition-colors"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <AnimatePresence mode="wait">
         {!showExerciseUI ? (
           <LoadingScreen
