@@ -207,7 +207,19 @@ export default function ResultScreen({
         )}
 
         <button
-          onClick={() => router.push("/learn")}
+          onClick={() => {
+            if (mode === 'training') {
+               const partStr = searchParams.get("part");
+               const totalPartsStr = searchParams.get("totalParts");
+               let url = `/lesson/${lesson.id}?level=${currentLevel}`;
+               if (partStr && totalPartsStr) {
+                 url += `&part=${partStr}&totalParts=${totalPartsStr}`;
+               }
+               handleNavigate(url, "Enchaîner la leçon");
+            } else {
+               router.push("/learn");
+            }
+          }}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
         >
           {mode === 'training' ? "Enchaîner la leçon" : getTranslation('auto.continue', language)}

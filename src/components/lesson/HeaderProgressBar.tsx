@@ -130,7 +130,7 @@ export default function HeaderProgressBar({
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-4 flex-shrink-0 text-sm sm:text-base whitespace-nowrap overflow-hidden">
-            {customTitle ? (
+            {mode === 'training' || mode === 'revision' ? null : customTitle ? (
               customTitle
             ) : currentLevel < 9 && !isReview ? (
               <span className="flex items-center text-slate-400 font-semibold tracking-wide">

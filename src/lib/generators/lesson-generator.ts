@@ -172,13 +172,33 @@ function pickRandomExercises(pools: Exercise[][], count: number = 5): Exercise[]
   all = all.filter(e => e.type !== 'intro');
   
   const result: Exercise[] = [];
+  const usedTypes = new Set<string>();
+
   for (const ex of all) {
     if (result.length >= count) break;
     if (result.length === 0 || result[result.length - 1].answer !== ex.answer) {
       result.push(ex);
+      usedTypes.add(ex.type);
     }
   }
+
   if (result.length < count) {
+    // Phase 1: Try to add unused types first
+    for (const ex of all) {
+      if (result.length >= count) break;
+      if (!result.includes(ex) && !usedTypes.has(ex.type)) {
+        result.push(ex);
+        usedTypes.add(ex.type);
+      }
+    }
+    // Phase 2: Try to avoid same consecutive types
+    for (const ex of all) {
+      if (result.length >= count) break;
+      if (!result.includes(ex) && result[result.length - 1]?.type !== ex.type) {
+        result.push(ex);
+      }
+    }
+    // Phase 3: Fill whatever is left
     for (const ex of all) {
       if (result.length >= count) break;
       if (!result.includes(ex)) result.push(ex);

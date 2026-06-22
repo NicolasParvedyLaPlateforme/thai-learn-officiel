@@ -4,6 +4,7 @@ import { getTranslation } from "@/hooks/useTranslation";
 import { Zap, Play, RotateCcw, Target, Crown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { getLightweightLessons } from "@/actions/course";
+import { getLevelSplit } from "@/lib/levelSplits";
 
 interface QuickActionsWidgetProps {
   lightweightLessons?: any[];
@@ -66,9 +67,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     let unitCompleted = false;
 
     if (nextLsn) {
-      const wordsLength = nextLsn.words ? nextLsn.words.length - (nextLsn.words.find((w: any) => w.id === 'w_dots') ? 1 : 0) : 0;
-      const isLongLevel = wordsLength > 4;
-      nTotalParts = isLongLevel ? Math.ceil(wordsLength / 3) : 1;
+      nTotalParts = getLevelSplit(nextLvl, nextLsn);
 
       if (nTotalParts > 1) {
         const partsKey = `${nextLsn.id}_level-${nextLvl}`;
@@ -106,7 +105,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     }
     if (!nextLesson) return;
     
-    let url = `/lesson/${nextLesson.id}?level=${nextLevel}`;
+    let url = `/lesson/${nextLesson.id}?level=${nextLevel + 1}`;
     if (nextTotalParts > 1) {
       url += `&part=${nextPart}&totalParts=${nextTotalParts}`;
     }
@@ -115,7 +114,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
 
   const handleEntrainement = () => {
     if (!nextLesson) return;
-    let url = `/lesson/${nextLesson.id}?level=${nextLevel}&mode=training`;
+    let url = `/lesson/${nextLesson.id}?level=${nextLevel + 1}&mode=training`;
     if (nextTotalParts > 1) {
       url += `&part=${nextPart}&totalParts=${nextTotalParts}`;
     }
