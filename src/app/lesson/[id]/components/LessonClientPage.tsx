@@ -330,6 +330,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
       preloadThaiVoices();
       getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
+        if (!generated || generated.length === 0) {
+          setDebugError(`Exercises empty! ID: ${lesson.id}, Level: ${currentLevel}, partIndex: ${partIndex}, totalParts: ${totalParts}`);
+          return;
+        }
         let finalExercises = generated;
         setInitialExercises(finalExercises);
         setEngineIndex(0);
@@ -431,6 +435,10 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
     preloadThaiVoices();
     getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
+      if (!generated || generated.length === 0) {
+        setDebugError(`Exercises empty! ID: ${lesson.id}, Level: ${currentLevel}, partIndex: ${partIndex}, totalParts: ${totalParts}`);
+        return;
+      }
       let finalExercises = generated;
       setInitialExercises(finalExercises);
       setEngineIndex(0);
