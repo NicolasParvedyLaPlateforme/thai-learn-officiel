@@ -278,7 +278,7 @@ export function SharedLessonCard({
         </div>
 
         {/* Middle Section */}
-        <div className="flex flex-row gap-4 w-full items-stretch mt-1">
+        <div className="flex flex-row-reverse gap-4 w-full items-center mt-1">
           {renderMiddleSection()}
         </div>
 
