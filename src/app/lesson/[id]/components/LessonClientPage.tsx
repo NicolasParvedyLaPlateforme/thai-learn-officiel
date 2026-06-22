@@ -347,6 +347,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setInitialTime(null);
         }
         setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
+      }).catch(e => {
+        console.error("Failed to load exercises (likely cache mismatch):", e);
+        window.location.reload();
       });
     }
   }, [
@@ -445,6 +448,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         setInitialTime(null);
       }
       setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
+    }).catch(e => {
+      console.error("Failed to load exercises (likely cache mismatch):", e);
+      window.location.reload();
     });
   };
 
