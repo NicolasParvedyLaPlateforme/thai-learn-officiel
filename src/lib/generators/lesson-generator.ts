@@ -163,3 +163,52 @@ export function generateExercises(
 
   return exercisesWithIntros;
 }
+
+import { shuffle } from './utils';
+
+function pickRandomExercises(pools: Exercise[][], count: number = 5): Exercise[] {
+  let all = pools.flat();
+  all = shuffle(all);
+  all = all.filter(e => e.type !== 'intro');
+  
+  const result: Exercise[] = [];
+  for (const ex of all) {
+    if (result.length >= count) break;
+    if (result.length === 0 || result[result.length - 1].answer !== ex.answer) {
+      result.push(ex);
+    }
+  }
+  if (result.length < count) {
+    for (const ex of all) {
+      if (result.length >= count) break;
+      if (!result.includes(ex)) result.push(ex);
+    }
+  }
+  return result;
+}
+
+export function generateTrainingExercises(
+  lesson: Lesson,
+  allLessons: Lesson[],
+  language: string = 'fr',
+  partIndex: number,
+  totalParts: number
+): Exercise[] {
+  const pools = [];
+  for (let lvl = 0; lvl <= 8; lvl++) {
+    pools.push(generateExercises(lesson, allLessons, lvl, language, partIndex, totalParts));
+  }
+  return pickRandomExercises(pools, 5);
+}
+
+export function generateRevisionExercises(
+  lesson: Lesson,
+  allLessons: Lesson[],
+  language: string = 'fr'
+): Exercise[] {
+  const pools = [];
+  for (let lvl = 0; lvl <= 9; lvl++) {
+    pools.push(generateExercises(lesson, allLessons, lvl, language, null, null));
+  }
+  return pickRandomExercises(pools, 5);
+}

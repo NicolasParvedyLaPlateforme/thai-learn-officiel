@@ -9,6 +9,7 @@ import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { m as motion, AnimatePresence } from 'motion/react';
 import { DailyQuestsWidget } from '../widgets/DailyQuestsWidget';
 import { ConversationObjectiveWidget } from '../widgets/ConversationObjectiveWidget';
+import { QuickActionsWidget } from '../widgets/QuickActionsWidget';
 import { LeaderboardWidget } from '../widgets/LeaderboardWidget';
 import { useProgressStore } from "@/lib/store";
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
@@ -409,6 +410,7 @@ export function DesktopSidebarRight({
           </div>
 
           <div className="w-full flex flex-col gap-0">
+            <QuickActionsWidget />
             <ConversationObjectiveWidget />
             <DailyQuestsWidget category={questsCategory} />
             <LeaderboardWidget />

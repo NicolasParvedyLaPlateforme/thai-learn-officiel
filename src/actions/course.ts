@@ -1,6 +1,6 @@
 'use server';
 
-import { generateExercises, generateEndlessReviewExercises, generateWritingExercises, generateEndlessPairMatching } from "@/lib/generators";
+import { generateExercises, generateEndlessReviewExercises, generateWritingExercises, generateEndlessPairMatching, generateTrainingExercises, generateRevisionExercises } from "@/lib/generators";
 import { generateAlphabetExercises, getAlphabetLessons } from "@/lib/alphabet-utils";
 import courseData from "@/data/course.json";
 import { CourseData, Word, Phrase } from "@/types";
@@ -13,6 +13,18 @@ export async function getEndlessPairMatchingServer(completedLessons: string[], l
 
 export async function getWritingExercisesServer(targetLessons: string[], language: string, selectedWordIds: string[] | null) {
   return generateWritingExercises(data.lessons, targetLessons, language, selectedWordIds);
+}
+
+export async function getTrainingExercisesServer(lessonId: string, language: string, partIndex: number, totalParts: number) {
+  const lesson = data.lessons.find(l => l.id === lessonId);
+  if (!lesson) return [];
+  return generateTrainingExercises(lesson, data.lessons, language, partIndex, totalParts);
+}
+
+export async function getRevisionExercisesServer(lessonId: string, language: string) {
+  const lesson = data.lessons.find(l => l.id === lessonId);
+  if (!lesson) return [];
+  return generateRevisionExercises(lesson, data.lessons, language);
 }
 
 export async function getAlphabetExercisesServer(lessonId: string, currentLevel: number, language: string) {

@@ -1,5 +1,9 @@
 export * from './utils';
-export * from './writing-generator';
-export * from './review-generator';
+export {
+  generateExercises,
+  generateTrainingExercises,
+  generateRevisionExercises
+} from './lesson-generator';
+export { generateEndlessReviewExercises } from './review-generator';
 export * from './pair-matching-generator';
 export * from './lesson-generator';

@@ -22,6 +22,7 @@ interface ResultScreenProps {
   partIndex?: number | null;
   totalParts?: number | null;
   currentIndex?: number;
+  mode?: string | null;
 }
 
 export default function ResultScreen({
@@ -39,6 +40,7 @@ export default function ResultScreen({
   isPart,
   partIndex,
   totalParts,
+  mode,
 }: ResultScreenProps) {
   const router = useRouter();
   const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
@@ -183,18 +185,22 @@ export default function ResultScreen({
             {getTranslation('auto.next_level', language)}
           </button>
         )}
-        <button
-          onClick={() => window.location.reload()}
-          className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
-        >
-          <RotateCcw size={20} />
-          {getTranslation('auto.retry', language)}
-        </button>
+        
+        {mode === 'training' && (
+          <button
+            onClick={() => window.location.reload()}
+            className="px-8 py-3 flex-1 rounded-xl bg-blue-500 border-b-4 border-blue-700 text-white font-bold text-lg shadow-lg hover:bg-blue-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
+          >
+            <RotateCcw size={20} />
+            S'entraîner à nouveau
+          </button>
+        )}
+
         <button
           onClick={() => router.push("/learn")}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
         >
-          {getTranslation('auto.back', language)}
+          {mode === 'training' ? "Enchaîner la leçon" : getTranslation('auto.continue', language)}
         </button>
       </div>
     </div>
