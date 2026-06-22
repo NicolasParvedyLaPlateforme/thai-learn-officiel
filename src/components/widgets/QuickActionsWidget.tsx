@@ -227,9 +227,9 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
             <span className="font-bold text-[13px]">Entraînement</span>
 
             {/* Bulle Tooltip */}
-            <div className="absolute -top-16 left-0 bg-slate-800 text-white text-[12px] font-bold px-3 py-2 rounded-xl opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none shadow-xl z-20 w-[200px] text-center leading-tight">
-              +10 XP • 1 chance sur 5 de gagner 1 à 3 pièces ! 🪙
-              <div className="absolute -bottom-1.5 left-[30%] -translate-x-1/2 w-3 h-3 bg-slate-800 rotate-45"></div>
+            <div className="absolute -top-16 left-0 bg-white border-2 border-slate-100 text-slate-600 text-[13px] font-bold px-4 py-3 rounded-2xl opacity-0 group-hover/btn:opacity-100 transition-all pointer-events-none shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-20 w-[220px] text-center leading-snug">
+              <span className="text-amber-500 font-extrabold">+10 XP</span> • 1 chance sur 5 de gagner 1 à 3 pièces ! 🪙
+              <div className="absolute -bottom-2 left-[30%] -translate-x-1/2 w-3.5 h-3.5 bg-white border-b-2 border-r-2 border-slate-100 rotate-45"></div>
             </div>
           </button>
 
@@ -246,9 +246,9 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
             <span className="font-bold text-[13px]">Réviser</span>
 
             {/* Bulle Tooltip */}
-            <div className="absolute -top-16 right-0 bg-slate-800 text-white text-[12px] font-bold px-3 py-2 rounded-xl opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none shadow-xl z-20 w-[200px] text-center leading-tight">
-              +50 XP • 1 chance sur 5 de gagner 1 à 3 pièces ! 🪙
-              <div className="absolute -bottom-1.5 right-[30%] translate-x-1/2 w-3 h-3 bg-slate-800 rotate-45"></div>
+            <div className="absolute -top-16 right-0 bg-white border-2 border-slate-100 text-slate-600 text-[13px] font-bold px-4 py-3 rounded-2xl opacity-0 group-hover/btn:opacity-100 transition-all pointer-events-none shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-20 w-[220px] text-center leading-snug">
+              <span className="text-amber-500 font-extrabold">+50 XP</span> • 1 chance sur 5 de gagner 1 à 3 pièces ! 🪙
+              <div className="absolute -bottom-2 right-[30%] translate-x-1/2 w-3.5 h-3.5 bg-white border-b-2 border-r-2 border-slate-100 rotate-45"></div>
             </div>
           </button>
         </div>

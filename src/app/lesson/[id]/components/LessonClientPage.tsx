@@ -234,7 +234,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         useProgressStore.getState().addXp(finalXp);
         if (Math.random() < 0.2) {
           wonCoin = true;
-          useProgressStore.setState((s) => ({ goldCoins: s.goldCoins + 1 }));
+          const coinsEarned = Math.floor(Math.random() * 3) + 1;
+          useProgressStore.setState((s) => ({ goldCoins: s.goldCoins + coinsEarned }));
         }
       } else if (mode === 'revision') {
         finalXp = 50;
@@ -242,7 +243,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         useProgressStore.getState().addXp(finalXp);
         if (Math.random() < 0.2) {
           wonCoin = true;
-          useProgressStore.setState((s) => ({ goldCoins: s.goldCoins + 1 }));
+          const coinsEarned = Math.floor(Math.random() * 3) + 1;
+          useProgressStore.setState((s) => ({ goldCoins: s.goldCoins + coinsEarned }));
         }
       } else {
         const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan') || false;
