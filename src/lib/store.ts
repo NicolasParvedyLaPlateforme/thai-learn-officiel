@@ -75,47 +75,51 @@ export const useProgressStore = create<ProgressState>()(
         if (state && typeof window !== 'undefined') {
           const migrationKey = 'migration_level_8_9_reset_v5';
           if (!window.localStorage.getItem(migrationKey)) {
-             let migrated = false;
-             const newLessonLevels = { ...state.lessonLevels };
-             const newLessonPartsCompleted = { ...state.lessonPartsCompleted };
-             const newInProgress = { ...state.inProgressLessons };
-             const newLessonStars = { ...state.lessonStars };
-             
-             Object.keys(newLessonLevels).forEach(lessonId => {
-               if (newLessonLevels[lessonId] > 7) {
-                 newLessonLevels[lessonId] = 7; 
-                 migrated = true;
-               }
-               if (newLessonStars[lessonId]) {
-                 newLessonStars[lessonId][7] = 0;
-                 newLessonStars[lessonId][8] = 0;
-                 migrated = true;
-               }
-             });
-
-             Object.keys(newLessonPartsCompleted).forEach(key => {
-               if (key.endsWith('_level-7') || key.endsWith('_level-8')) {
-                 delete newLessonPartsCompleted[key];
-                 migrated = true;
-               }
-             });
-
-             Object.keys(newInProgress).forEach(key => {
-               if (key.includes('_7') || key.includes('_8')) {
-                 delete newInProgress[key];
-                 migrated = true;
-               }
-             });
-
-             if (migrated) {
-               useProgressStore.setState({
-                 lessonLevels: newLessonLevels,
-                 lessonPartsCompleted: newLessonPartsCompleted,
-                 inProgressLessons: newInProgress,
-                 lessonStars: newLessonStars
+             try {
+               let migrated = false;
+               const newLessonLevels = { ...state.lessonLevels };
+               const newLessonPartsCompleted = { ...state.lessonPartsCompleted };
+               const newInProgress = { ...state.inProgressLessons };
+               const newLessonStars = { ...state.lessonStars };
+               
+               Object.keys(newLessonLevels).forEach(lessonId => {
+                 if (newLessonLevels[lessonId] > 7) {
+                   newLessonLevels[lessonId] = 7; 
+                   migrated = true;
+                 }
+                 if (newLessonStars[lessonId] && Array.isArray(newLessonStars[lessonId])) {
+                   newLessonStars[lessonId][7] = 0;
+                   newLessonStars[lessonId][8] = 0;
+                   migrated = true;
+                 }
                });
+
+               Object.keys(newLessonPartsCompleted).forEach(key => {
+                 if (key.endsWith('_level-7') || key.endsWith('_level-8')) {
+                   delete newLessonPartsCompleted[key];
+                   migrated = true;
+                 }
+               });
+
+               Object.keys(newInProgress).forEach(key => {
+                 if (key.includes('_7') || key.includes('_8')) {
+                   delete newInProgress[key];
+                   migrated = true;
+                 }
+               });
+
+               if (migrated) {
+                 useProgressStore.setState({
+                   lessonLevels: newLessonLevels,
+                   lessonPartsCompleted: newLessonPartsCompleted,
+                   inProgressLessons: newInProgress,
+                   lessonStars: newLessonStars
+                 });
+               }
+               window.localStorage.setItem(migrationKey, 'true');
+             } catch (e) {
+               console.error("Migration failed, ignoring to prevent crash", e);
              }
-             window.localStorage.setItem(migrationKey, 'true');
           }
         }
       }
