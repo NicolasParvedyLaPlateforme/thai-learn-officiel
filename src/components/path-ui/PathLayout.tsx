@@ -5,12 +5,12 @@ import dynamic from 'next/dynamic';
 import { useProgressStore } from "@/lib/store";
 import PathMobileHeader from './PathMobileHeader';
 
-const DesktopSidebarRight = dynamic(() => import('../layout/DesktopSidebarRight').then(mod => mod.DesktopSidebarRight), { 
+const DesktopSidebarRight = dynamic(() => import('../layout/DesktopSidebarRight').then(mod => mod.DesktopSidebarRight), {
   ssr: false,
   loading: () => (
     <div className="hidden xl:flex w-80 shrink-0 flex-col gap-6 sticky top-8">
-       <div className="w-full h-40 bg-slate-200 rounded-[24px] animate-pulse" />
-       <div className="w-full h-64 bg-slate-200 rounded-[24px] animate-pulse" />
+      <div className="w-full h-40 bg-slate-200 rounded-[24px] animate-pulse" />
+      <div className="w-full h-64 bg-slate-200 rounded-[24px] animate-pulse" />
     </div>
   )
 });
@@ -56,7 +56,7 @@ export default function PathLayout({
   const lessonLevels = pathType === 'speak' ? store.speakLessonLevels : store.lessonLevels;
   const lessonStars = pathType === 'speak' ? store.speakLessonStars : store.lessonStars;
   const { resetLessonLevel, language, autoDetectLanguage, lastActiveUnitIndex, setLastActiveUnitIndex, reviewStats, getExpectedXp } = store;
-  
+
   const [mounted, setMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -121,9 +121,9 @@ export default function PathLayout({
 
   useEffect(() => {
     if (!mounted || units.length === 0) return;
-    
+
     let targetIndex = 0;
-    
+
     // For alphabet, we might have ?unit= query param
     const params = new URLSearchParams(window.location.search);
     const unitParam = params.get('unit');
@@ -152,10 +152,10 @@ export default function PathLayout({
         }
       }
     }
-    
+
     setActiveUnitIndex(targetIndex);
     if (pathType !== 'alphabet') { // alphabet doesn't sync active unit to store in original code ? Wait, let's just sync it.
-       setLastActiveUnitIndex(targetIndex);
+      setLastActiveUnitIndex(targetIndex);
     }
   }, [mounted, lastActiveUnitIndex, setLastActiveUnitIndex, units, lessons, completedLessons, pathType]);
 
@@ -174,19 +174,19 @@ export default function PathLayout({
     if (hash && hash.startsWith('#lesson-')) {
       try {
         const baseId = hash.substring(1).replace('lesson-', '');
-        
+
         const foundLesson = lessons.find(l => l.id === baseId);
         if (foundLesson) {
           const isCompleted = completedLessons.includes(baseId);
-          
+
           let unitIndex = -1;
           if (pathType === 'learn' || pathType === 'speak') {
-             const targetIdx = lessons.findIndex(l => l.id === baseId);
-             unitIndex = units.findIndex(u => targetIdx >= u.startIndex && targetIdx < u.endIndex);
+            const targetIdx = lessons.findIndex(l => l.id === baseId);
+            unitIndex = units.findIndex(u => targetIdx >= u.startIndex && targetIdx < u.endIndex);
           } else if (pathType === 'alphabet') {
-             unitIndex = units.findIndex(u => u.lessons?.some((l: any) => l.id === baseId));
+            unitIndex = units.findIndex(u => u.lessons?.some((l: any) => l.id === baseId));
           }
-          
+
           if (unitIndex !== -1) {
             const unit = units[unitIndex];
             const lastLvlStr = localStorage.getItem(`last_level_${baseId}`);
@@ -202,7 +202,7 @@ export default function PathLayout({
               initialScrollLevel: parsedLastLvl
             });
             setActiveUnitIndex(unitIndex);
-            
+
             if (parsedLastLvl !== undefined && window.innerWidth >= 1280) {
               setModalLevel(parsedLastLvl);
             }
@@ -228,7 +228,7 @@ export default function PathLayout({
         console.error(e);
       }
     }
-    
+
     setIsProcessingHash(false);
     setMounted(true);
     autoDetectLanguage();
@@ -242,7 +242,7 @@ export default function PathLayout({
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
 
       {!selectedLesson && (
-        <PathMobileHeader 
+        <PathMobileHeader
           showHeader={showHeader}
           mounted={mounted}
           language={language}
@@ -252,11 +252,11 @@ export default function PathLayout({
           pathType={pathType}
         />
       )}
-      
-      <MobileHeaderMenu 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
-        onOpenQuests={() => setIsQuestsModalOpen(true)} 
+
+      <MobileHeaderMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        onOpenQuests={() => setIsQuestsModalOpen(true)}
       />
 
       {/* Main Content (Mobile Only) */}
@@ -326,25 +326,25 @@ export default function PathLayout({
           <div className="flex flex-row w-full items-start relative min-h-screen">
             <div className="flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12">
               <div className="flex flex-col gap-10 w-full max-w-4xl">
-                 <div className="flex flex-col gap-8 w-full">
+                <div className="flex flex-col gap-8 w-full">
                   <div className="p-8 md:p-10 bg-slate-200 border-b-[6px] border-slate-300 rounded-3xl h-[300px] w-full flex flex-col justify-between overflow-hidden relative">
-                     <div className="relative z-10">
-                       <div className="w-64 h-10 bg-slate-300 rounded-lg animate-pulse mb-4" />
-                       <div className="w-96 h-6 bg-slate-300 rounded-md animate-pulse" />
-                     </div>
+                    <div className="relative z-10">
+                      <div className="w-64 h-10 bg-slate-300 rounded-lg animate-pulse mb-4" />
+                      <div className="w-96 h-6 bg-slate-300 rounded-md animate-pulse" />
+                    </div>
                   </div>
                   <div className="flex flex-col relative w-full pl-6 md:pl-10 mt-4 pb-32">
-                     <div className="absolute left-[calc(3.5rem-5px)] md:left-[calc(5rem-5px)] top-[5rem] bottom-[8rem] w-[10px] bg-slate-200 rounded-full z-0 animate-pulse"></div>
-                     {[...Array(6)].map((_, i) => (
-                       <div key={i} className="relative flex items-center w-full z-10 gap-6 md:gap-8 min-h-[8.5rem] py-3">
-                         <div className="w-16 h-16 md:w-20 md:h-20 rounded-[2rem] bg-white border-2 border-slate-200 border-b-[6px] flex items-center justify-center"></div>
-                         <div className="flex-1 rounded-[1.5rem] border-2 border-slate-100 h-[8.5rem] bg-white"></div>
-                       </div>
-                     ))}
+                    <div className="absolute left-[calc(3.5rem-5px)] md:left-[calc(5rem-5px)] top-[5rem] bottom-[8rem] w-[10px] bg-slate-200 rounded-full z-0 animate-pulse"></div>
+                    {[...Array(6)].map((_, i) => (
+                      <div key={i} className="relative flex items-center w-full z-10 gap-6 md:gap-8 min-h-[8.5rem] py-3">
+                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-[2rem] bg-white border-2 border-slate-200 border-b-[6px] flex items-center justify-center"></div>
+                        <div className="flex-1 rounded-[1.5rem] border-2 border-slate-100 h-[8.5rem] bg-white"></div>
+                      </div>
+                    ))}
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
-          </div>
           </div>
         ) : (
           <div
@@ -357,25 +357,25 @@ export default function PathLayout({
               <div className={`flex flex-col gap-10 w-full ${!selectedLesson ? 'max-w-4xl' : ''}`}>
                 {(() => {
                   if (selectedLesson && renderLessonLevelsView) {
-                     return renderLessonLevelsView({
-                       lessonData: selectedLesson,
-                       unitTitle: activeUnit ? (activeUnit.title || activeUnit.titleEn) : undefined,
-                       modalLevel,
-                       setModalLevel: (lvl: number | null) => {
-                         setModalLevel(lvl);
-                         if (lvl !== null) {
-                           localStorage.setItem(`last_level_${selectedLesson.lesson.id}`, lvl.toString());
-                         }
-                       },
-                       onBack: () => {
-                         setSelectedLesson(null);
-                         setShowDesktopUnitsList(false);
-                       },
-                       language,
-                       lessonLevels,
-                       lessonStars,
-                       maxLevelPerLesson
-                     });
+                    return renderLessonLevelsView({
+                      lessonData: selectedLesson,
+                      unitTitle: activeUnit ? (activeUnit.title || activeUnit.titleEn) : undefined,
+                      modalLevel,
+                      setModalLevel: (lvl: number | null) => {
+                        setModalLevel(lvl);
+                        if (lvl !== null) {
+                          localStorage.setItem(`last_level_${selectedLesson.lesson.id}`, lvl.toString());
+                        }
+                      },
+                      onBack: () => {
+                        setSelectedLesson(null);
+                        setShowDesktopUnitsList(false);
+                      },
+                      language,
+                      lessonLevels,
+                      lessonStars,
+                      maxLevelPerLesson
+                    });
                   }
                   return renderDesktopTimeline({
                     unit: activeUnit,

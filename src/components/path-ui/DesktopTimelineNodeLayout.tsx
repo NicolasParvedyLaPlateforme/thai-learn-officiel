@@ -36,7 +36,7 @@ export function DesktopTimelineNodeLayout({
             ${!isImageActive && isLeft ? '-translate-x-16' : ''}
             ${!isImageActive && !isLeft ? 'translate-x-16' : ''}
           `}>
-             {imageNode}
+            {imageNode}
           </div>
         </div>
       )}
