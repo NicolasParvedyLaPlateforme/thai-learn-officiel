@@ -15,6 +15,8 @@ const buttonVariants = cva(
         danger: "bg-rose-500 text-white hover:bg-rose-600 shadow-sm active:scale-95",
         dangerOutline: "border-2 border-rose-200 bg-transparent hover:bg-rose-50 text-rose-600 active:scale-95",
         gamified: "bg-emerald-500 text-white border-b-4 border-emerald-600 active:border-b-0 active:translate-y-1",
+        dangerGamified: "bg-rose-500 text-white border-b-4 border-rose-600 active:border-b-0 active:translate-y-1 hover:bg-rose-600",
+        blueGamified: "bg-blue-500 text-white border-b-4 border-blue-600 active:border-b-0 active:translate-y-1 hover:bg-blue-400",
         gamifiedSecondary: "bg-slate-100 text-slate-700 border-b-4 border-slate-200 active:border-b-0 active:translate-y-1 hover:bg-slate-200 hover:border-slate-300",
         flat: "bg-slate-50 border border-slate-200 text-slate-500 hover:bg-slate-100 active:scale-95 shadow-none",
       },

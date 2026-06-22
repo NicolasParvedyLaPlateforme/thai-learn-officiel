@@ -15,7 +15,7 @@ export async function getWritingExercisesServer(targetLessons: string[], languag
   return generateWritingExercises(data.lessons, targetLessons, language, selectedWordIds);
 }
 
-export async function getTrainingExercisesServer(lessonId: string, language: string, partIndex: number, totalParts: number) {
+export async function getTrainingExercisesServer(lessonId: string, language: string, partIndex: number | null, totalParts: number | null) {
   const lesson = data.lessons.find(l => l.id === lessonId);
   if (!lesson) return [];
   return generateTrainingExercises(lesson, data.lessons, language, partIndex, totalParts);

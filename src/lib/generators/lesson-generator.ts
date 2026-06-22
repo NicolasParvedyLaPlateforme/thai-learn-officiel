@@ -211,8 +211,8 @@ export function generateTrainingExercises(
   lesson: Lesson,
   allLessons: Lesson[],
   language: string = 'fr',
-  partIndex: number,
-  totalParts: number
+  partIndex: number | null,
+  totalParts: number | null
 ): Exercise[] {
   const pools = [];
   for (let lvl = 0; lvl <= 8; lvl++) {

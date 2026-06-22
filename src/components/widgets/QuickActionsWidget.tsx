@@ -5,6 +5,7 @@ import { Zap, Play, RotateCcw, Target, Crown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { getLightweightLessons } from "@/actions/course";
 import { getLevelSplit } from "@/lib/levelSplits";
+import { Button } from "@/components/ui/Button";
 
 interface QuickActionsWidgetProps {
   lightweightLessons?: any[];
@@ -254,29 +255,27 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
         </div>
 
         {/* BOUTON SUIVANT */}
-        <button 
+        <Button 
+          variant={isUnitCompleted ? "gamifiedSecondary" : "blueGamified"}
           onClick={handleSuivant}
-          className={`w-full relative overflow-hidden rounded-[16px] p-4 flex items-center justify-between group/btn transition-all cursor-pointer
-            ${isUnitCompleted 
-              ? 'bg-slate-100 border-slate-200 text-slate-600' 
-              : 'bg-blue-500 border-blue-600 text-white shadow-sm hover:bg-blue-400 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0'}`}
+          className="w-full relative p-4 flex items-center justify-between group/btn transition-all cursor-pointer h-auto py-3.5"
         >
-          <div className="flex items-center gap-3 relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isUnitCompleted ? 'bg-white/50 text-slate-500' : 'bg-white/20 text-white'}`}>
+          <div className="flex items-center gap-3 relative z-10 w-full">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isUnitCompleted ? 'bg-slate-200 text-slate-500' : 'bg-white/20 text-white'}`}>
               <Play size={18} className="fill-current stroke-current ml-0.5" />
             </div>
-            <div className="flex flex-col items-start text-left">
-              <span className="font-extrabold text-[16px] leading-tight">
+            <div className="flex flex-col items-start text-left flex-1 min-w-0">
+              <span className={`font-extrabold text-[16px] leading-tight ${isUnitCompleted ? 'text-slate-600' : 'text-white'}`}>
                 {isUnitCompleted ? 'Toutes les leçons maîtrisées !' : 'Suivant'}
               </span>
               {!isUnitCompleted && nextLesson && (
-                <span className={`text-[12px] font-medium opacity-90 truncate max-w-[140px] md:max-w-[200px]`}>
+                <span className={`text-[12px] font-medium opacity-90 truncate w-full text-white/90`}>
                   Continuer {language === 'en' ? nextLesson.titleEn : nextLesson.title}
                 </span>
               )}
             </div>
           </div>
-        </button>
+        </Button>
       </div>
     </div>
   );
