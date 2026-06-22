@@ -31,7 +31,6 @@ import PathTimelineLine from "@/components/path-ui/PathTimelineLine";
 import { PathDecorations } from "@/components/path-ui/PathDecorations";
 import { useMobileTimelineNodeClick } from "@/hooks/useMobileTimelineNodeClick";
 import { MobileTimelineNodeLayout } from '../path-ui/MobileTimelineNodeLayout';
-import { QuickActionsWidget } from '../widgets/QuickActionsWidget';
 
 export default function LearnMobileTimeline({
   unit,
@@ -62,11 +61,7 @@ export default function LearnMobileTimeline({
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
   return (
-    <div className="flex flex-col w-full pb-32">
-      <div className="px-4 mt-4">
-        <QuickActionsWidget />
-      </div>
-
+    <>
       <MobileStickyBanner 
         unit={unit} 
         language={language} 
@@ -252,6 +247,6 @@ export default function LearnMobileTimeline({
         </div>
       </motion.div>
     </main>
-    </div>
+    </>
   );
 }

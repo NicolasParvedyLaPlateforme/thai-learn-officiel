@@ -8,6 +8,7 @@ import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from "@/lib/store";
 import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 import { useTranslation, getTranslation } from "@/hooks/useTranslation";
+import { QuickActionsWidget } from "../widgets/QuickActionsWidget";
 
 export default function BottomNav() {
   const pathname = usePathname();
@@ -161,6 +162,21 @@ export default function BottomNav() {
                  {getTranslation('auto.speaking', language)}
               </Link>
             </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Action Rapide Bubble - Only on Learn */}
+        <AnimatePresence>
+          {isLearnActive && !activePopover && (
+             <motion.div
+               initial={{ opacity: 0, y: 10, scale: 0.9 }}
+               animate={{ opacity: 1, y: 0, scale: 1 }}
+               exit={{ opacity: 0, y: 10, scale: 0.9 }}
+               transition={{ duration: 0.2 }}
+               className="absolute bottom-[80px] left-2 z-[60]"
+             >
+               <QuickActionsWidget variant="mobile-bubble" />
+             </motion.div>
           )}
         </AnimatePresence>
 

@@ -7,9 +7,10 @@ import { getLightweightLessons } from "@/actions/course";
 
 interface QuickActionsWidgetProps {
   lightweightLessons?: any[];
+  variant?: 'desktop' | 'mobile-bubble';
 }
 
-export function QuickActionsWidget({ lightweightLessons }: QuickActionsWidgetProps) {
+export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: QuickActionsWidgetProps) {
   const { 
     language, 
     lessonLevels, 
@@ -125,6 +126,44 @@ export function QuickActionsWidget({ lightweightLessons }: QuickActionsWidgetPro
     if (!randomMasteredLesson) return;
     router.push(`/lesson/${randomMasteredLesson.id}?level=10&mode=revision`);
   };
+
+  if (variant === 'mobile-bubble') {
+    return (
+      <div className="flex bg-white rounded-[1.25rem] shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-slate-100 p-1.5 gap-1.5 relative">
+        {/* Flèche pointant vers le bas */}
+        <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white border-b border-r border-slate-100 transform rotate-45" />
+        
+        {/* Bouton Suivant */}
+        <button 
+          onClick={handleSuivant}
+          className={`flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
+        >
+          <Play size={14} className="fill-current stroke-current" />
+          <span className="font-extrabold text-[11px] tracking-wide">Suivant</span>
+        </button>
+
+        {/* Bouton Entraînement */}
+        <button 
+          onClick={handleEntrainement}
+          disabled={!nextLesson}
+          className={`flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all ${nextLesson ? 'bg-blue-50 text-blue-500 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
+        >
+          <Target size={15} />
+          <span className="font-bold text-[11px] tracking-wide">S'entraîner</span>
+        </button>
+
+        {/* Bouton Révision */}
+        <button 
+          onClick={handleRevision}
+          disabled={!randomMasteredLesson}
+          className={`flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all ${randomMasteredLesson ? 'bg-purple-50 text-purple-500 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
+        >
+          <RotateCcw size={15} />
+          <span className="font-bold text-[11px] tracking-wide">Réviser</span>
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full border-b border-slate-200 py-6 px-1 flex flex-col gap-4 relative group">
