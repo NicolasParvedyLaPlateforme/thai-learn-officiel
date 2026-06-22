@@ -109,7 +109,7 @@ export default function HeaderProgressBar({
           </button>
 
           <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
-            {getTranslation('auto.lvl', language)} {currentLevel + 1}
+            {mode === 'training' ? "Entraînement" : mode === 'revision' ? "Révision" : `${getTranslation('auto.lvl', language)} ${currentLevel + 1}`}
           </div>
 
           <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">

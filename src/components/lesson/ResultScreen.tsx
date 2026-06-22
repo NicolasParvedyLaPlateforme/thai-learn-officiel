@@ -196,6 +196,16 @@ export default function ResultScreen({
           </button>
         )}
 
+        {mode === 'revision' && (
+          <button
+            onClick={() => window.location.reload()}
+            className="px-8 py-3 flex-1 rounded-xl bg-purple-500 border-b-4 border-purple-700 text-white font-bold text-lg shadow-lg hover:bg-purple-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
+          >
+            <RotateCcw size={20} />
+            Réviser à nouveau
+          </button>
+        )}
+
         <button
           onClick={() => router.push("/learn")}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
