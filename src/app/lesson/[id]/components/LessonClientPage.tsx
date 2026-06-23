@@ -383,7 +383,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         setEngineIndex(0);
         setEngineMistakes(0);
         setFailedDueToTime(false);
-        if (lesson.isReview) {
+        const isBilanLesson = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
+        if (isBilanLesson) {
           const time = (currentLevel + 1) * 2 * 60;
           setTimeLeft(time);
           setInitialTime(time);
@@ -489,7 +490,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       setEngineIndex(0);
       setEngineMistakes(0);
       setFailedDueToTime(false);
-      if (lesson.isReview) {
+      const isBilanLesson = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
+      if (isBilanLesson) {
         const time = (currentLevel + 1) * 2 * 60;
         setTimeLeft(time);
         setInitialTime(time);
@@ -726,7 +728,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
               showRomanization={showRomanization}
               setShowRomanization={setShowRomanization}
               setShowInfoModal={setShowInfoModal}
-              isReview={lesson.isReview || currentLevel === 10}
+              isReview={lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan') || currentLevel === 10}
               timeLeft={timeLeft}
               initialTime={initialTime}
             />

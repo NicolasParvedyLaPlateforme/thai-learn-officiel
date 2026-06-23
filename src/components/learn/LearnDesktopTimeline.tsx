@@ -140,9 +140,10 @@ export default function LearnDesktopTimeline({
         <div className="flex flex-col relative w-full pb-8 md:pb-16">
         {unitLessons.map((lesson, idx) => {
           const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
+          const isBilan = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
           let isReviewLocked = false;
-          if (lesson.isReview && mounted) {
-            const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview);
+          if (isBilan && mounted) {
+            const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview && !l.id?.startsWith('bilan-') && !l.id?.includes('-bilan'));
             isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
           }
 
@@ -212,7 +213,7 @@ export default function LearnDesktopTimeline({
                           {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10"><Lock size={32} className="text-slate-500 stroke-[2]" /></div>}
                         </>
                       ) : (
-                        isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : isReviewLocked ? <Lock size={32} className="fill-slate-200 text-slate-400 stroke-[2]" /> : lesson.isReview ? <Star size={32} className="fill-current stroke-current" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
+                        isMaxLevel ? <CheckCircle size={32} className="stroke-[3]" /> : isReviewLocked ? <Lock size={32} className="fill-slate-200 text-slate-400 stroke-[2]" /> : isBilan ? <Star size={32} className="fill-current stroke-current" /> : <Play size={32} className="ml-1 fill-current stroke-[2]" />
                       )}
                     </div>
                   </>
