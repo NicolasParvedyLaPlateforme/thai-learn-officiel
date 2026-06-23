@@ -654,7 +654,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     );
   }
 
-  if (isFinished) {
+  if (isFinished && exercisesGeneratedFor?.level === currentLevel) {
     const lessonIndex = parseInt(lesson.id.replace("lesson-", "")) - 1;
     const unitEndIndices = [11, 20, 30, 40, 50, 60, 70, 80, 90, 100];
     let currentUnitIndex = unitEndIndices.findIndex((idx) => lessonIndex < idx);

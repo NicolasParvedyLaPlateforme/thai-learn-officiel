@@ -70,11 +70,11 @@ export default function SpeakResultScreen({
         ))}
       </div>
       <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
-        {currentLevel === 10 
+        {currentLevel === 10
           ? (getTranslation('auto.mastery_level_completed', language))
           : (getTranslation('auto.level_completed', language) || 'Niveau {level} terminé !').replace('{level}', String(currentLevel + 1))}
       </h1>
-      
+
       {elapsedTimeSec !== undefined && elapsedTimeSec !== null ? (
         <p className="text-indigo-500 mb-4 text-center text-lg font-bold flex items-center justify-center gap-2">
           <Clock size={20} />
@@ -89,7 +89,7 @@ export default function SpeakResultScreen({
       <div className="w-full max-w-md mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
         <DailyQuestsWidget category="speak" />
       </div>
-      
+
       <div className="flex flex-col gap-4 w-full max-w-lg">
         {currentLevel + 1 < 5 && (
           <Button
@@ -108,7 +108,7 @@ export default function SpeakResultScreen({
             variant="flat"
             size="lg"
             className="flex-1 text-lg uppercase tracking-widest gap-2"
-            onClick={() => router.push(`/speak`)}
+            onClick={() => router.push(`/speak#lesson-${lessonId}`)}
           >
             <LogOut size={20} className="rotate-180" />
             {getTranslation('auto.back', language) || "Retour"}

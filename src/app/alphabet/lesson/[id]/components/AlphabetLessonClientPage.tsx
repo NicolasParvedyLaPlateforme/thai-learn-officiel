@@ -224,7 +224,7 @@ function AlphabetLessonContent() {
 
 // ... Inside AlphabetLessonContent, replace the isFinished check:
 
-  if (isFinished) {
+  if (isFinished && exercisesGeneratedFor?.level === currentLevel) {
     const isLastConsonant = lesson && consonants.length > 0 && lesson.id === consonants[consonants.length - 1].id;
     const isLastVowel = lesson && vowels.length > 0 && lesson.id === vowels[vowels.length - 1].id;
     const isEndOfUnit = isLastConsonant || isLastVowel;

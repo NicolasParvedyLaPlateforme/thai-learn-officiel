@@ -50,16 +50,16 @@ export default function ResultScreen({
   const router = useRouter();
   const searchParams = require('next/navigation').useSearchParams();
   const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
-  
+
   const percentage = failedDueToTime && currentIndex !== undefined ? Math.round((currentIndex / exercisesLength) * 100) : 100;
-  
+
   let timeTakenSec = null;
   if (elapsedTimeSec !== undefined) {
     timeTakenSec = elapsedTimeSec;
   } else if (initialTime !== undefined && initialTime !== null && timeLeft !== undefined && timeLeft !== null) {
     timeTakenSec = initialTime - Math.max(0, timeLeft);
   }
-  
+
   const formatTime = (sec: number) => {
     const m = Math.floor(sec / 60);
     const s = sec % 60;
@@ -90,7 +90,7 @@ export default function ResultScreen({
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {language === "en" ? `Completion: ${percentage}%` : `Complété à : ${percentage}%`}
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           <button
             onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`, language === "en" ? "Retry" : "Refaire")}
@@ -148,7 +148,7 @@ export default function ResultScreen({
                   : `Niveau ${currentLevel + 1} terminé !`)
         }
       </h2>
-      
+
       {timeTakenSec !== null ? (
         <p className="text-indigo-500 mb-4 text-center text-lg font-bold flex items-center justify-center gap-2">
           <Clock size={20} />
@@ -163,7 +163,7 @@ export default function ResultScreen({
       <div className="w-full max-w-md mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
         <DailyQuestsWidget category={pathType === 'alphabet' ? 'alphabet' : 'learn'} />
       </div>
-      
+
       <div className="flex flex-col gap-4 w-full max-w-lg">
         {nextUnitIndex !== -1 && (
           <Button
@@ -207,7 +207,7 @@ export default function ResultScreen({
             {getTranslation('auto.next_level', language)}
           </Button>
         )}
-        
+
         {mode === 'training' && (
           <Button
             variant="blueGamified"
@@ -239,15 +239,16 @@ export default function ResultScreen({
             className="flex-1 text-lg uppercase tracking-widest gap-2"
             onClick={() => {
               if (mode === 'training') {
-                 const partStr = searchParams.get("part");
-                 const totalPartsStr = searchParams.get("totalParts");
-                 let url = `/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`;
-                 if (partStr && totalPartsStr) {
-                   url += `&part=${partStr}&totalParts=${totalPartsStr}`;
-                 }
-                 handleNavigate(url, "Enchaîner la leçon");
+                const partStr = searchParams.get("part");
+                const totalPartsStr = searchParams.get("totalParts");
+                let url = `/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`;
+                if (partStr && totalPartsStr) {
+                  url += `&part=${partStr}&totalParts=${totalPartsStr}`;
+                }
+                handleNavigate(url, "Enchaîner la leçon");
               } else {
-                 router.push(pathType === 'alphabet' ? '/alphabet' : pathType === 'speak' ? '/speak' : '/learn');
+                const backUrl = pathType === 'alphabet' ? `/alphabet#lesson-${lesson.id}` : pathType === 'speak' ? `/speak#lesson-${lesson.id}` : `/learn#lesson-${lesson.id}`;
+                router.push(backUrl);
               }
             }}
           >
