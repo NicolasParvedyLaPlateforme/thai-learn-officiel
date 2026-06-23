@@ -19,10 +19,34 @@ export default function BottomNav() {
 
   const [mounted, setMounted] = useState(false);
   const [activePopover, setActivePopover] = useState<'learn' | 'practice' | null>(null);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          if (currentScrollY > lastScrollY && currentScrollY > 50) {
+            setIsScrollingDown(true);
+          } else if (currentScrollY < lastScrollY) {
+            setIsScrollingDown(false);
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Close popover when clicking outside
@@ -167,13 +191,13 @@ export default function BottomNav() {
 
         {/* Action Rapide Bubble - Only on Learn */}
         <AnimatePresence>
-          {isLearnActive && !activePopover && (
+          {isLearnActive && !activePopover && !isScrollingDown && (
              <motion.div
                initial={{ opacity: 0, y: 10, scale: 0.9 }}
                animate={{ opacity: 1, y: 0, scale: 1 }}
                exit={{ opacity: 0, y: 10, scale: 0.9 }}
                transition={{ duration: 0.2 }}
-               className="absolute bottom-[80px] left-2 z-[60]"
+               className="absolute bottom-[74px] left-[-10px] z-[60]"
              >
                <QuickActionsWidget variant="mobile-bubble" />
              </motion.div>

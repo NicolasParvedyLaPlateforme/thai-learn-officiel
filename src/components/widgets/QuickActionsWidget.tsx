@@ -129,16 +129,16 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
 
   if (variant === 'mobile-bubble') {
     return (
-      <div className="flex bg-white rounded-[1.25rem] shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-slate-100 p-1.5 gap-1.5 relative">
+      <div className="flex bg-transparent rounded-[0_15px_13px_0] p-0 pl-[10px] gap-1.5 relative">
         {/* Flèche pointant vers le bas */}
-        <div className="absolute -bottom-2 left-8 w-4 h-4 bg-white border-b border-r border-slate-100 transform rotate-45" />
+        <div className={`absolute -bottom-1 left-8 w-2.5 h-2.5 transform rotate-45 ${isUnitCompleted ? 'bg-slate-100' : 'bg-emerald-500'}`} />
         
         {/* Bouton Suivant */}
         <button 
           onClick={handleSuivant}
-          className={`flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
+          className={`relative z-10 flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all shadow-sm border border-slate-200/50 ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
         >
-          <Play size={14} className="fill-current stroke-current" />
+          <Play size={12} className="fill-current stroke-current" />
           <span className="font-extrabold text-[11px] tracking-wide">Suivant</span>
         </button>
 
@@ -146,7 +146,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
         <button 
           onClick={handleEntrainement}
           disabled={!nextLesson}
-          className={`flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all ${nextLesson ? 'bg-blue-50 text-blue-500 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
+          className={`relative z-10 flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all shadow-sm border border-slate-200/50 ${nextLesson ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
         >
           <Target size={15} />
           <span className="font-bold text-[11px] tracking-wide">S'entraîner</span>
@@ -156,7 +156,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
         <button 
           onClick={handleRevision}
           disabled={!randomMasteredLesson}
-          className={`flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all ${randomMasteredLesson ? 'bg-purple-50 text-purple-500 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
+          className={`relative z-10 flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all shadow-sm border border-slate-200/50 ${randomMasteredLesson ? 'bg-purple-50 text-purple-600 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
         >
           <RotateCcw size={15} />
           <span className="font-bold text-[11px] tracking-wide">Réviser</span>
