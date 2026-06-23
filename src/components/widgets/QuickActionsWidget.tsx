@@ -160,10 +160,10 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
                     className={`relative flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${randomMasteredLesson ? 'bg-purple-50 text-purple-600 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
                   >
                     {/* Tooltip Révision */}
-                    <div className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-[10px] whitespace-nowrap shadow-lg flex items-center gap-1 pointer-events-none">
-                      <span className="text-amber-400">+50 XP</span>
-                      <span>+ 🪙</span>
-                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-800 rotate-45"></div>
+                    <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 bg-white border border-slate-200/60 rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center px-3 py-2 pointer-events-none z-[60] min-w-max">
+                      <span className="text-amber-500 font-black text-[13px] leading-none">+50 XP</span>
+                      <span className="text-slate-500 font-bold text-[11px] leading-none mt-1.5">🎲 1/5 🪙</span>
+                      <div className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white border-b border-r border-slate-200/60 rotate-45"></div>
                     </div>
 
                     <RotateCcw size={14} />
@@ -177,10 +177,10 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
                     className={`relative flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${nextLesson ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
                   >
                     {/* Tooltip Entraînement */}
-                    <div className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-[10px] whitespace-nowrap shadow-lg flex items-center gap-1 pointer-events-none">
-                      <span className="text-amber-400">+10 XP</span>
-                      <span>+ 🪙</span>
-                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-800 rotate-45"></div>
+                    <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 bg-white border border-slate-200/60 rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center px-3 py-2 pointer-events-none z-[60] min-w-max">
+                      <span className="text-amber-500 font-black text-[13px] leading-none">+10 XP</span>
+                      <span className="text-slate-500 font-bold text-[11px] leading-none mt-1.5">🎲 1/5 🪙</span>
+                      <div className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white border-b border-r border-slate-200/60 rotate-45"></div>
                     </div>
 
                     <Target size={14} />
@@ -203,11 +203,10 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 5 }}
-                  className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-[10px] whitespace-nowrap shadow-lg flex items-center gap-1 pointer-events-none"
+                  className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 bg-white border border-slate-200/60 rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center px-3 py-2 pointer-events-none z-[60] min-w-max"
                 >
-                  <span className="text-amber-400">+ XP</span>
-                  <span>+ 🪙</span>
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-800 rotate-45"></div>
+                  <span className="text-amber-500 font-black text-[13px] leading-none">+ XP</span>
+                  <div className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white border-b border-r border-slate-200/60 rotate-45"></div>
                 </motion.div>
               )}
             </AnimatePresence>
