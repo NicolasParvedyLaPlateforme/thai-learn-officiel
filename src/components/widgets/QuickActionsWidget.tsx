@@ -183,10 +183,6 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     router.push(`/lesson/${randomMasteredLesson.id}?level=10&mode=revision`);
   };
 
-  if (!hasStartedUnit) {
-    return null;
-  }
-
   const currentUnitIndex = lastActiveUnitIndex || 0;
   const currentUnit = BASE_UNITS[currentUnitIndex] || BASE_UNITS[0];
   const unitColorClass = currentUnit.colorClass || 'bg-emerald-500';
@@ -194,8 +190,17 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
 
   if (variant === 'mobile-bubble') {
     return (
-      <div className="flex items-center justify-end">
-        <div className="flex items-center bg-white/90 backdrop-blur-xl p-1.5 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200/60 gap-1.5">
+      <AnimatePresence mode="wait">
+        {hasStartedUnit && (
+          <motion.div 
+            key={`mobile-fab-${currentUnitIndex}`}
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center justify-end"
+          >
+            <div className="flex items-center bg-white/90 backdrop-blur-xl p-1.5 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200/60 gap-1.5">
           
           {hasCompletedFirstLevel && (
             <button 
@@ -256,7 +261,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
               </motion.div>
             )}
           </AnimatePresence>
-
+          
           {/* Bouton Suivant */}
           <button 
             onClick={handleSuivant}
@@ -282,13 +287,24 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
           </button>
           
         </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 
   if (variant === 'desktop-floating') {
     return (
-      <div className="flex bg-white/95 backdrop-blur-xl rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200 p-2 gap-2 relative items-center">
+      <AnimatePresence mode="wait">
+        {hasStartedUnit && (
+          <motion.div 
+            key={`desktop-float-${currentUnitIndex}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="flex bg-white/95 backdrop-blur-xl rounded-[1.25rem] shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200 p-2 gap-2 relative items-center"
+          >
         {/* Info XP + Pièces (Tooltip explicatif) */}
         <div className="flex gap-2 relative group/coins">
           {/* Bouton Révision */}
@@ -327,13 +343,23 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
           <Play size={18} className="fill-current stroke-current" />
           <span className="font-extrabold text-[15px] tracking-wide">Suivant</span>
         </button>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 
   return (
-    <div className="w-full flex flex-col gap-3 relative group">
-      <div className="flex flex-col gap-3 relative z-10">
+    <AnimatePresence mode="wait">
+      {hasStartedUnit && (
+        <motion.div 
+          key={`desktop-main-${currentUnitIndex}`}
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="w-full flex flex-col gap-3 relative group"
+        >
+          <div className="flex flex-col gap-3 relative z-10">
         
         <div className="flex gap-3">
           {/* BOUTON ENTRAINEMENT */}
@@ -398,6 +424,8 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
           </div>
         </Button>
       </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
