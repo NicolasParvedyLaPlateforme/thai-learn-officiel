@@ -70,9 +70,31 @@ export function SharedLessonCard({
   const lightBorderDynamicColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '200').replace(/400$/, '200');
   const hoverDynamicColor = isReviewLocked ? '' : (unit.hoverClass || 'hover:brightness-110');
 
-  const badgeBgColor = dynamicColor.replace('bg-', 'bg-').replace(/500$/, '100').replace(/400$/, '100');
-  const badgeTextColor = dynamicColor.replace('bg-', 'text-').replace(/500$/, '700').replace(/400$/, '700');
-  const badgeBorderColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '200').replace(/400$/, '200');
+  const colorMatch = dynamicColor.match(/bg-([a-z]+)-/);
+  const colorName = colorMatch ? colorMatch[1] : 'emerald';
+
+  const COLOR_VARIANTS: Record<string, { bg100: string, border200: string, text700: string }> = {
+    emerald: { bg100: 'bg-emerald-100', border200: 'border-emerald-200', text700: 'text-emerald-700' },
+    amber: { bg100: 'bg-amber-100', border200: 'border-amber-200', text700: 'text-amber-700' },
+    yellow: { bg100: 'bg-yellow-100', border200: 'border-yellow-200', text700: 'text-yellow-700' },
+    rose: { bg100: 'bg-rose-100', border200: 'border-rose-200', text700: 'text-rose-700' },
+    blue: { bg100: 'bg-blue-100', border200: 'border-blue-200', text700: 'text-blue-700' },
+    indigo: { bg100: 'bg-indigo-100', border200: 'border-indigo-200', text700: 'text-indigo-700' },
+    violet: { bg100: 'bg-violet-100', border200: 'border-violet-200', text700: 'text-violet-700' },
+    purple: { bg100: 'bg-purple-100', border200: 'border-purple-200', text700: 'text-purple-700' },
+    fuchsia: { bg100: 'bg-fuchsia-100', border200: 'border-fuchsia-200', text700: 'text-fuchsia-700' },
+    pink: { bg100: 'bg-pink-100', border200: 'border-pink-200', text700: 'text-pink-700' },
+    red: { bg100: 'bg-red-100', border200: 'border-red-200', text700: 'text-red-700' },
+    orange: { bg100: 'bg-orange-100', border200: 'border-orange-200', text700: 'text-orange-700' },
+    cyan: { bg100: 'bg-cyan-100', border200: 'border-cyan-200', text700: 'text-cyan-700' },
+    teal: { bg100: 'bg-teal-100', border200: 'border-teal-200', text700: 'text-teal-700' },
+    green: { bg100: 'bg-green-100', border200: 'border-green-200', text700: 'text-green-700' },
+  };
+
+  const badgeTheme = COLOR_VARIANTS[colorName] || COLOR_VARIANTS['emerald'];
+  const badgeBgColor = badgeTheme.bg100;
+  const badgeTextColor = badgeTheme.text700;
+  const badgeBorderColor = badgeTheme.border200;
 
   const isStarted = level > 0 && !isMaxLevel;
 
