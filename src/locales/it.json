@@ -423,5 +423,16 @@
   "levelTitle.7": "Associazione visiva",
   "levelTitle.8": "Scrivi la parola giusta",
   "levelTitle.9": "Forma le tue frasi",
-  "levelTitle.10": "La sfida di memoria!"
+  "levelTitle.10": "La sfida di memoria!",
+  "auto.all_mastered_unit_coming_soon": "Tutto padroneggiato! La prossima unità arriverà presto.",
+  "auto.review_action": "Ripassare",
+  "auto.practice_action": "Esercitarsi",
+  "auto.chance_win_coins": "1 probabilità su 5 di vincere da 1 a 3 monete! 🪙",
+  "auto.training": "Allenamento",
+  "auto.all_lessons_mastered": "Tutte le lezioni padroneggiate!",
+  "auto.no_phrase": "Nessuna frase",
+  "auto.complete_base_conversation": "Completa la Conversazione Base",
+  "auto.complete_level_prefix": "Completa il Livello",
+  "auto.levels_per_lesson": "livelli / lezione",
+  "auto.next": "Avanti"
 }

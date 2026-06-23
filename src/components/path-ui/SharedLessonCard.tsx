@@ -73,7 +73,7 @@ export function SharedLessonCard({
   const cardStyle = cn(
     "relative w-full transition-all duration-300 cursor-pointer border-[2px]",
     isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
-    isMaxLevel ? `${lightBorderDynamicColor} bg-white` :
+    isMaxLevel ? `${borderDynamicColor} bg-white` :
       isReviewLocked ? "bg-slate-50/50 border-slate-100" :
         isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
   );
@@ -174,7 +174,7 @@ export function SharedLessonCard({
                 ))
               ) : (
                 <span className="text-[10px] sm:text-sm font-medium leading-tight text-slate-400 italic text-center mt-2 px-1">
-                  Aucune phrase
+                  {getTranslation('auto.no_phrase', language) || "Aucune phrase"}
                 </span>
               )}
             </div>
