@@ -423,5 +423,16 @@
   "levelTitle.7": "Association visuelle",
   "levelTitle.8": "Écris le mot juste",
   "levelTitle.9": "Forme tes phrases",
-  "levelTitle.10": "Le défi de mémoire !"
+  "levelTitle.10": "Le défi de mémoire !",
+  "auto.all_mastered_unit_coming_soon": "Tout est maîtrisé ! L'unité suivante arrive bientôt.",
+  "auto.review_action": "Réviser",
+  "auto.practice_action": "S'entraîner",
+  "auto.chance_win_coins": "1 chance sur 5 de gagner 1 à 3 pièces ! 🪙",
+  "auto.training": "Entraînement",
+  "auto.all_lessons_mastered": "Toutes les leçons maîtrisées !",
+  "auto.no_phrase": "Aucune phrase",
+  "auto.complete_base_conversation": "Terminer Conversation de base",
+  "auto.complete_level_prefix": "Terminer Niveau",
+  "auto.levels_per_lesson": "niveaux / leçon",
+  "auto.next": "Suivant"
 }

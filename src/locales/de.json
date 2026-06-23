@@ -423,5 +423,16 @@
   "levelTitle.7": "Visuelle Zuordnung",
   "levelTitle.8": "Schreibe das richtige Wort",
   "levelTitle.9": "Bilde deine Sätze",
-  "levelTitle.10": "Die Gedächtnis-Herausforderung!"
+  "levelTitle.10": "Die Gedächtnis-Herausforderung!",
+  "auto.all_mastered_unit_coming_soon": "Alles gemeistert! Die nächste Einheit kommt bald.",
+  "auto.review_action": "Wiederholen",
+  "auto.practice_action": "Üben",
+  "auto.chance_win_coins": "1 zu 5 Chance, 1 bis 3 Münzen zu gewinnen! 🪙",
+  "auto.training": "Training",
+  "auto.all_lessons_mastered": "Alle Lektionen gemeistert!",
+  "auto.no_phrase": "Kein Satz",
+  "auto.complete_base_conversation": "Basis-Konversation abschließen",
+  "auto.complete_level_prefix": "Level abschließen",
+  "auto.levels_per_lesson": "Level / Lektion",
+  "auto.next": "Weiter"
 }

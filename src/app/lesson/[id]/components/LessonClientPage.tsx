@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from "@/lib/store";
-import { getExercisesServer, getLessonData } from "@/actions/course";
+import { getExercisesServer, getTrainingExercisesServer, getRevisionExercisesServer, getLessonData } from "@/actions/course";
 import { Exercise, Lesson, Word } from "@/types";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
@@ -112,6 +112,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     id: string;
     level: number;
     partIndex?: number | null;
+    mode?: string | null;
   } | null>(null);
 
   // Use requested level if provided, otherwise the saved level, but lock it to the generated level if already playing
@@ -222,16 +223,45 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       return correct;
     },
     onComplete: (totalMistakes) => {
-      const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan') || false;
-      const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
-      setEarnedXp(expected.xp);
-      const earnedStarsLocal = Math.max(0, 5 - totalMistakes);
+      const mode = searchParams.get('mode');
       
-      if (isPart && partIndex !== null && totalParts !== null) {
-         completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStarsLocal, isBilan);
+      let finalXp = 0;
+      let wonCoin = false;
+
+      if (mode === 'training') {
+        finalXp = 10;
+        setEarnedXp(finalXp);
+        useProgressStore.getState().addXp(finalXp);
+        if (Math.random() < 0.2) {
+          wonCoin = true;
+          const coinsEarned = Math.floor(Math.random() * 3) + 1;
+          useProgressStore.setState((s) => ({ goldCoins: s.goldCoins + coinsEarned }));
+        }
+      } else if (mode === 'revision') {
+        finalXp = 50;
+        setEarnedXp(finalXp);
+        useProgressStore.getState().addXp(finalXp);
+        if (Math.random() < 0.2) {
+          wonCoin = true;
+          const coinsEarned = Math.floor(Math.random() * 3) + 1;
+          useProgressStore.setState((s) => ({ goldCoins: s.goldCoins + coinsEarned }));
+        }
       } else {
-         completeLesson(lesson.id, 0, currentLevel, earnedStarsLocal, isBilan);
+        const isBilan = lesson.isReview || lesson.title?.toLowerCase().includes('bilan') || false;
+        const expected = useProgressStore.getState().getExpectedXp(lesson.id, currentLevel, isBilan, isPart, !isPart && (currentLevel === 7 || currentLevel === 8), isPart ? partIndex : null);
+        finalXp = expected.xp;
+        setEarnedXp(finalXp);
+        const earnedStarsLocal = Math.max(0, 5 - totalMistakes);
+        
+        if (isPart && partIndex !== null && totalParts !== null) {
+           useProgressStore.getState().completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStarsLocal, isBilan);
+        } else {
+           useProgressStore.getState().completeLesson(lesson.id, 0, currentLevel, earnedStarsLocal, isBilan);
+        }
       }
+      
+      // Pass the wonCoin flag so we can display it later if needed (optional)
+      // Since it's not a state, we might just rely on the UI or add a small state if we want to show it.
       // Note: we can't easily access initialTime and timeLeft inside this callback if they aren't in scope/up-to-date.
       // But we can use setInitialTime / setTimeLeft state from the closure.
       if ((lesson.isReview || currentLevel === 10)) {
@@ -296,12 +326,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       return;
     }
 
+    const currentMode = searchParams.get('mode');
+
     // Security check for parts
     const actualTotalParts = getLevelSplit(currentLevel, lesson);
     const partsKey = `${lesson.id}_level-${currentLevel}`;
     const completedParts = lessonPartsCompleted[partsKey] || [];
     
-    if (!isDev && !lesson.isReview && actualTotalParts > 1) {
+    if (!isDev && !lesson.isReview && actualTotalParts > 1 && currentMode !== 'training' && currentMode !== 'revision') {
       const expectedPart = completedParts.length;
       if (partIndex !== null && partIndex > expectedPart) {
         console.warn("Security redirect triggered:", { partIndex, expectedPart, totalParts, actualTotalParts });
@@ -309,26 +341,38 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         return;
       }
     }
-
+    
     if (
       !exercisesGeneratedFor ||
       exercisesGeneratedFor.id !== lesson.id ||
       exercisesGeneratedFor.level !== currentLevel ||
-      exercisesGeneratedFor.partIndex !== partIndex
+      exercisesGeneratedFor.partIndex !== partIndex ||
+      exercisesGeneratedFor.mode !== currentMode
     ) {
       setShowExerciseUI(false);
 
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
+      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
       const savedState = inProgressLessons[savedStateKey];
 
-      if (savedState && savedState.exercises && savedState.exercises.length > 0) {
+      if (currentMode !== 'training' && currentMode !== 'revision' && savedState && savedState.exercises && savedState.exercises.length > 0) {
         setShowResumePrompt(true);
-        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
+        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
         return;
       }
 
       preloadThaiVoices();
-      getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
+
+      const mode = searchParams.get('mode');
+      let generatorPromise;
+      if (mode === 'training') {
+        generatorPromise = getTrainingExercisesServer(lesson.id, language, isPart ? partIndex : null, isPart ? totalParts : null, currentLevel);
+      } else if (mode === 'revision') {
+        generatorPromise = getRevisionExercisesServer(lesson.id, language);
+      } else {
+        generatorPromise = getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null);
+      }
+
+      generatorPromise.then(generated => {
         if (!generated || generated.length === 0) {
           console.error(`Exercises empty! ID: ${lesson.id}, Level: ${currentLevel}, partIndex: ${partIndex}, totalParts: ${totalParts}`);
           window.location.reload();
@@ -351,7 +395,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setTimeLeft(null);
           setInitialTime(null);
         }
-        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
+        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
       }).catch(e => {
         console.error("Failed to load exercises (likely cache mismatch):", e);
         window.location.reload();
@@ -485,25 +529,31 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   useEffect(() => {
     if (!lesson) return;
     if (exercises.length > 0 && !isFinished && !showResumePrompt && isDataLoaded) {
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
-      saveInProgressLesson(savedStateKey, {
-        exercises,
-        currentIndex,
-        mistakes,
-        timeLeft,
-        initialTime,
-        lastUpdated: Date.now()
-      });
+      const currentMode = searchParams.get('mode');
+      if (currentMode !== 'training' && currentMode !== 'revision') {
+        const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
+        saveInProgressLesson(savedStateKey, {
+          exercises,
+          currentIndex,
+          mistakes,
+          timeLeft,
+          initialTime,
+          lastUpdated: Date.now()
+        });
+      }
     }
-  }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson]);
+  }, [exercises, currentIndex, mistakes, timeLeft, initialTime, isFinished, showResumePrompt, isDataLoaded, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson, searchParams]);
 
   useEffect(() => {
     if (!lesson) return;
     if (isFinished) {
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
-      saveInProgressLesson(savedStateKey, null);
+      const currentMode = searchParams.get('mode');
+      if (currentMode !== 'training' && currentMode !== 'revision') {
+        const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
+        saveInProgressLesson(savedStateKey, null);
+      }
     }
-  }, [isFinished, lesson?.id, currentLevel, saveInProgressLesson]);
+  }, [isFinished, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson, searchParams]);
 
   useEffect(() => {
     if (timeLeft === null || isFinished || !showExerciseUI || !isDataLoaded) return;
@@ -612,6 +662,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         isPart={isPart}
         partIndex={partIndex}
         totalParts={totalParts}
+        mode={searchParams.get('mode')}
       />
     );
   }

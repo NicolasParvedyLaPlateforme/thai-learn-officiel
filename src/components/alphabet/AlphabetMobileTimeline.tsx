@@ -124,8 +124,8 @@ export default function AlphabetMobileTimeline({
                     style={{ width: `${progressPercent}%` }}
                   ></div>
                 </div>
-                <div className={`${unit.lightTextClass || 'text-white/80'} font-bold text-[10px] drop-shadow-sm`}>
-                  {maxLevelPerLesson} niveaux / leçon
+                <div className={`text-[11px] ${unit.lightTextClass || 'text-white/80'} font-bold drop-shadow-sm`}>
+                  {(maxLevelPerLesson || 4) === 4 ? getTranslation('auto.4_levels_per_lesson_total_mas', language) : `${maxLevelPerLesson} ${getTranslation('auto.levels_per_lesson', language) || 'niveaux / leçon'}`}
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
-import AlphabetClientPage from "./components/AlphabetClientPage";
+import AlphabetClientWrapper from "./components/AlphabetClientWrapper";
 import { getLightweightLessons } from "@/actions/course";
 
 export default async function AlphabetPage() {
   const lightweightLessons = await getLightweightLessons();
-  return <AlphabetClientPage lightweightLessons={lightweightLessons} />;
+  return <AlphabetClientWrapper lightweightLessons={lightweightLessons} />;
 }

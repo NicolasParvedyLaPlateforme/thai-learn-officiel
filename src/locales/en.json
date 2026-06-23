@@ -423,5 +423,16 @@
   "levelTitle.7": "Visual matching",
   "levelTitle.8": "Write the correct word",
   "levelTitle.9": "Form your sentences",
-  "levelTitle.10": "The memory challenge!"
+  "levelTitle.10": "The memory challenge!",
+  "auto.all_mastered_unit_coming_soon": "Everything is mastered! The next unit is coming soon.",
+  "auto.review_action": "Review",
+  "auto.practice_action": "Practice",
+  "auto.chance_win_coins": "1 in 5 chance to win 1 to 3 coins! 🪙",
+  "auto.training": "Training",
+  "auto.all_lessons_mastered": "All lessons mastered!",
+  "auto.no_phrase": "No phrase",
+  "auto.complete_base_conversation": "Complete Base Conversation",
+  "auto.complete_level_prefix": "Complete Level",
+  "auto.levels_per_lesson": "levels / lesson",
+  "auto.next": "Next"
 }

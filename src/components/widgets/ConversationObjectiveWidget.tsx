@@ -53,13 +53,9 @@ export function ConversationObjectiveWidget() {
                   <strong className="text-indigo-600 bg-indigo-50 px-1 rounded">{getLocalizedField(objective.lesson, 'title', language)}</strong>
                 </>
               ) : (
-                <>
-                  {language === 'en'
-                    ? `Complete ${objective.levelToComplete === 0 ? 'Base conversation' : `Level ${objective.levelToComplete}`}`
-                    : language === 'es'
-                    ? `Completa ${objective.levelToComplete === 0 ? 'Conversación base' : `Nivel ${objective.levelToComplete}`}`
-                    : `Terminer ${objective.levelToComplete === 0 ? 'Conversation de base' : `Niveau ${objective.levelToComplete}`}`}
-                </>
+                objective.levelToComplete === 0 
+                  ? (getTranslation('auto.complete_base_conversation', language) || 'Terminer Conversation de base') 
+                  : `${getTranslation('auto.complete_level_prefix', language) || 'Terminer Niveau'} ${objective.levelToComplete}`
               )}
             </span>
           </div>

@@ -48,8 +48,8 @@ export default function SpeakDesktopTimeline({
   maxLevelPerLesson,
   nextUnit
 }: SpeakDesktopTimelineProps) {
-  const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 10);
-  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson || 10), 0) : 0;
+  const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 5);
+  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson || 5), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
   
   const [activeCenteredLessonId, setActiveCenteredLessonId] = useActiveTimelineNode(unitLessons.length > 0 ? unitLessons[0].id : null);
@@ -101,7 +101,7 @@ export default function SpeakDesktopTimeline({
                   ></div>
                 </div>
                 <div className={`text-[11px] ${unit.lightTextClass || 'text-white/80'} font-bold drop-shadow-sm`}>
-                  {(maxLevelPerLesson || 10) === 10 ? getTranslation('auto.10_levels_per_lesson_total_mas', language) : `${maxLevelPerLesson} ${getTranslation('auto.levels', language) || 'niveaux'}`}
+                  {(maxLevelPerLesson || 5) === 5 ? getTranslation('auto.5_levels_per_lesson_total_mas', language) : `${maxLevelPerLesson} ${getTranslation('auto.levels', language) || 'niveaux'}`}
                 </div>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function SpeakDesktopTimeline({
         <div className="flex flex-col relative w-full pb-8 md:pb-16">
         {unitLessons.map((lesson, idx) => {
           const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
-          const isMaxLevel = level >= (maxLevelPerLesson || 10);
+          const isMaxLevel = level >= (maxLevelPerLesson || 5);
           let isReviewLocked = false;
           if (lesson.isReview && mounted) {
             const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview);
@@ -160,7 +160,7 @@ export default function SpeakDesktopTimeline({
               transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
               className={`relative w-full flex ${isLeft ? 'justify-start' : 'justify-end'} scroll-mt-24 z-10 mb-16 group/node`}
             >
-              <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} isDesktop={true} />
+              <PathTimelineLine level={level} maxLevel={maxLevelPerLesson || 5} colorClass={unit.colorClass} isDesktop={true} />
               <PathDecorations index={idx} isDesktop={true} />
               <DesktopTimelineNodeLayout
                 isLeft={isLeft}

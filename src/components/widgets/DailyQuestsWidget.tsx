@@ -26,6 +26,10 @@ export function DailyQuestsWidget({ category = 'learn' }: { category?: 'learn' |
   const completedCount = questsForCategory.filter(q => q.completed).length;
   const giftsAvailable = unopenedGifts?.[category] || 0;
 
+  if (questsForCategory.length > 0 && completedCount === questsForCategory.length && giftsAvailable === 0) {
+    return null;
+  }
+
   return (
     <div className="w-full border-b border-slate-200 py-6 px-1 flex flex-col gap-4 relative">
 

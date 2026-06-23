@@ -228,8 +228,8 @@ export default function Footer({
                       : selectedAnswer.length === 0)))
               }
               size="lg"
-              variant={isChecking && !isCorrect ? "danger" : "default"}
-              className="w-full sm:w-auto min-w-[200px] shadow-md hover:shadow-lg text-lg uppercase tracking-wider"
+              variant={isChecking && !isCorrect ? "dangerGamified" : "gamified"}
+              className="w-full sm:w-auto min-w-[200px] text-lg uppercase tracking-wider"
             >
               {currentExercise.type === "intro" || isChecking
                 ? getTranslation('auto.continue', language)

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useProgressStore } from "@/lib/store";
 import PathMobileHeader from './PathMobileHeader';
+import { QuickActionsWidget } from '../widgets/QuickActionsWidget';
 
 const DesktopSidebarRight = dynamic(() => import('../layout/DesktopSidebarRight').then(mod => mod.DesktopSidebarRight), {
   ssr: false,

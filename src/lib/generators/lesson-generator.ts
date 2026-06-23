@@ -163,3 +163,78 @@ export function generateExercises(
 
   return exercisesWithIntros;
 }
+
+import { shuffle } from './utils';
+
+function pickRandomExercises(pools: Exercise[][], count: number = 5): Exercise[] {
+  let all = pools.flat();
+  all = shuffle(all);
+  all = all.filter(e => e.type !== 'intro');
+  
+  const result: Exercise[] = [];
+  const usedTypes = new Set<string>();
+
+  for (const ex of all) {
+    if (result.length >= count) break;
+    if (result.length === 0 || result[result.length - 1].answer !== ex.answer) {
+      result.push(ex);
+      usedTypes.add(ex.type);
+    }
+  }
+
+  if (result.length < count) {
+    // Phase 1: Try to add unused types first
+    for (const ex of all) {
+      if (result.length >= count) break;
+      if (!result.includes(ex) && !usedTypes.has(ex.type)) {
+        result.push(ex);
+        usedTypes.add(ex.type);
+      }
+    }
+    // Phase 2: Try to avoid same consecutive types
+    for (const ex of all) {
+      if (result.length >= count) break;
+      if (!result.includes(ex) && result[result.length - 1]?.type !== ex.type) {
+        result.push(ex);
+      }
+    }
+    // Phase 3: Fill whatever is left
+    for (const ex of all) {
+      if (result.length >= count) break;
+      if (!result.includes(ex)) result.push(ex);
+    }
+  }
+  return result;
+}
+
+export function generateTrainingExercises(
+  lesson: Lesson,
+  allLessons: Lesson[],
+  language: string = 'fr',
+  partIndex: number | null,
+  totalParts: number | null,
+  currentLevel: number = 0
+): Exercise[] {
+  const pools = [];
+  let maxExerciseLvl = currentLevel - 1;
+  if (maxExerciseLvl < 0) maxExerciseLvl = 0;
+
+  for (let lvl = 0; lvl <= maxExerciseLvl; lvl++) {
+    const effectivePartIndex = currentLevel > 0 ? null : partIndex;
+    const effectiveTotalParts = currentLevel > 0 ? null : totalParts;
+    pools.push(generateExercises(lesson, allLessons, lvl, language, effectivePartIndex, effectiveTotalParts));
+  }
+  return pickRandomExercises(pools, 5);
+}
+
+export function generateRevisionExercises(
+  lesson: Lesson,
+  allLessons: Lesson[],
+  language: string = 'fr'
+): Exercise[] {
+  const pools = [];
+  for (let lvl = 0; lvl <= 9; lvl++) {
+    pools.push(generateExercises(lesson, allLessons, lvl, language, null, null));
+  }
+  return pickRandomExercises(pools, 5);
+}

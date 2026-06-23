@@ -55,11 +55,11 @@ export default function SpeakMobileTimeline({
     setSelectedLesson,
     setModalLevel,
     setLockedReviewModalOpen,
-    maxLevelPerLesson: 10
+    maxLevelPerLesson: maxLevelPerLesson || 5
   });
-  const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 10);
+  const maxLevelsInUnit = unitLessons.length * (maxLevelPerLesson || 5);
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => {
-    return acc + Math.min(lessonLevels[l.id] || 0, (maxLevelPerLesson || 10));
+    return acc + Math.min(lessonLevels[l.id] || 0, (maxLevelPerLesson || 5));
   }, 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
@@ -128,7 +128,7 @@ export default function SpeakMobileTimeline({
                   ></div>
                 </div>
                 <div className={`${unit.lightTextClass || 'text-white/80'} font-bold text-[10px] drop-shadow-sm`}>
-                  {(maxLevelPerLesson || 10) === 10 ? getTranslation('auto.10_levels_lesson_mastery', language) : `${(maxLevelPerLesson || 10)} ${getTranslation('auto.levels', language) || 'niveaux'}`}
+                  {(maxLevelPerLesson || 5) === 5 ? getTranslation('auto.5_levels_per_lesson_total_mas', language) : `${(maxLevelPerLesson || 5)} ${getTranslation('auto.levels', language) || 'niveaux'}`}
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function SpeakMobileTimeline({
               isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
             }
 
-            const isMaxLevel = level >= (maxLevelPerLesson || 10);
+            const isMaxLevel = level >= (maxLevelPerLesson || 5);
 
             return (
               <MobileTimelineNodeLayout
@@ -203,7 +203,7 @@ export default function SpeakMobileTimeline({
                 lessonId={lesson.id}
                 index={idx}
                 level={level}
-                maxLevel={10}
+                maxLevel={maxLevelPerLesson || 5}
                 unitColorClass={unit.colorClass}
                 unitTextClass={unit.textClass}
                 unitShades={unit.shades}
@@ -216,6 +216,7 @@ export default function SpeakMobileTimeline({
                     pathType="speak"
                     lesson={lesson}
                     level={level}
+                    maxLevelPerLesson={maxLevelPerLesson || 5}
                     unit={unit}
                     language={language}
                     isReviewLocked={isReviewLocked}

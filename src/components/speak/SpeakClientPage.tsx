@@ -66,10 +66,10 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
       quests={speakQuests}
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
-      maxLevelPerLesson={10}
+      maxLevelPerLesson={5}
       renderMobileTimeline={(props) => <SpeakMobileTimeline {...props} speakQuests={speakQuests} />}
-      renderDesktopTimeline={(props) => <SpeakDesktopTimeline {...props} />}
-      renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="speak" />}
+      renderDesktopTimeline={(props) => <SpeakDesktopTimeline {...props} maxLevelPerLesson={5} />}
+      renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="speak" maxLevelPerLesson={5} />}
       renderLessonModal={(props) => <SpeakLessonModal {...props} />}
       renderUnitsModal={(props) => <SpeakUnitsModal {...props} />}
       renderQuestsModal={(props) => <SpeakQuestsModal {...props} />}

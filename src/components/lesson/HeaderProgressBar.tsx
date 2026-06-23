@@ -1,7 +1,7 @@
 import { getTranslation } from "@/hooks/useTranslation";
 import { useState } from "react";
 import { X, Star, Crown, Clock } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Exercise } from "@/types";
 
 interface HeaderProgressBarProps {
@@ -42,10 +42,25 @@ export default function HeaderProgressBar({
   customTitle,
 }: HeaderProgressBarProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode');
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
 
   const handleQuit = () => {
     router.push(returnUrl || `/learn#lesson-${lessonId}`);
+  };
+
+  const handleTrainInstead = () => {
+    const baseUrl = window.location.pathname;
+    let url = `${baseUrl}?level=${currentLevel}&mode=training`;
+    // We try to pass part info if we can, but since HeaderProgressBar doesn't get partIndex natively,
+    // we just use the current searchParams
+    const part = searchParams.get('part');
+    const totalParts = searchParams.get('totalParts');
+    if (part && totalParts) {
+      url += `&part=${part}&totalParts=${totalParts}`;
+    }
+    window.location.href = url;
   };
 
   return (
@@ -60,6 +75,14 @@ export default function HeaderProgressBar({
               {getTranslation('auto.your_progress_will_be_saved', language) || 'Votre progression est sauvegardée. Vous pourrez revenir à tout moment pour terminer cet exercice.'}
             </p>
             <div className="flex flex-col gap-2 mt-2">
+              {!mode && currentLevel > 0 && (
+                <button
+                  onClick={handleTrainInstead}
+                  className="w-full py-3.5 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-400 transition-colors shadow-sm mb-2"
+                >
+                  S'entraîner d'abord (+10 XP)
+                </button>
+              )}
               <button
                 onClick={handleQuit}
                 className="w-full py-3.5 bg-rose-100 text-rose-600 font-bold rounded-xl hover:bg-rose-200 transition-colors"
@@ -86,7 +109,7 @@ export default function HeaderProgressBar({
           </button>
 
           <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
-            {getTranslation('auto.lvl', language)} {currentLevel + 1}
+            {mode === 'training' ? "Entraînement" : mode === 'revision' ? "Révision" : `${getTranslation('auto.lvl', language)} ${currentLevel + 1}`}
           </div>
 
           <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">
@@ -107,7 +130,7 @@ export default function HeaderProgressBar({
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-4 flex-shrink-0 text-sm sm:text-base whitespace-nowrap overflow-hidden">
-            {customTitle ? (
+            {mode === 'training' || mode === 'revision' ? null : customTitle ? (
               customTitle
             ) : currentLevel < 9 && !isReview ? (
               <span className="flex items-center text-slate-400 font-semibold tracking-wide">

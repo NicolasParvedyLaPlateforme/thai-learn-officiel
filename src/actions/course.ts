@@ -1,6 +1,6 @@
 'use server';
 
-import { generateExercises, generateEndlessReviewExercises, generateWritingExercises, generateEndlessPairMatching } from "@/lib/generators";
+import { generateExercises, generateEndlessReviewExercises, generateWritingExercises, generateEndlessPairMatching, generateTrainingExercises, generateRevisionExercises } from "@/lib/generators";
 import { generateAlphabetExercises, getAlphabetLessons } from "@/lib/alphabet-utils";
 import courseData from "@/data/course.json";
 import { CourseData, Word, Phrase } from "@/types";
@@ -15,6 +15,18 @@ export async function getWritingExercisesServer(targetLessons: string[], languag
   return generateWritingExercises(data.lessons, targetLessons, language, selectedWordIds);
 }
 
+export async function getTrainingExercisesServer(lessonId: string, language: string, partIndex: number | null, totalParts: number | null, currentLevel: number = 0) {
+  const lesson = data.lessons.find(l => l.id === lessonId);
+  if (!lesson) return [];
+  return generateTrainingExercises(lesson, data.lessons, language, partIndex, totalParts, currentLevel);
+}
+
+export async function getRevisionExercisesServer(lessonId: string, language: string) {
+  const lesson = data.lessons.find(l => l.id === lessonId);
+  if (!lesson) return [];
+  return generateRevisionExercises(lesson, data.lessons, language);
+}
+
 export async function getAlphabetExercisesServer(lessonId: string, currentLevel: number, language: string) {
   const allPhrases = data.lessons.flatMap(l => l.phrases || []);
   const allWords = data.lessons.flatMap(l => l.words || []);
@@ -25,6 +37,19 @@ export async function getAlphabetExercisesServer(lessonId: string, currentLevel:
   
   if (!lesson) return [];
   return generateAlphabetExercises(lesson, currentLevel, language, allWords as unknown as Word[], allPhrases as unknown as Phrase[]);
+}
+
+export async function getAlphabetRevisionExercisesServer(lessonId: string, language: string) {
+  const allPhrases = data.lessons.flatMap(l => l.phrases || []);
+  const allWords = data.lessons.flatMap(l => l.words || []);
+  
+  const rawLessons = getAlphabetLessons();
+  const allAlphaLessons = [...rawLessons.consonants, ...rawLessons.vowels];
+  const lesson = allAlphaLessons.find(l => l.id === lessonId);
+  
+  if (!lesson) return [];
+  const { generateAlphabetRevisionExercises } = await import("@/lib/alphabet-utils");
+  return generateAlphabetRevisionExercises(lesson, language, allWords as unknown as Word[], allPhrases as unknown as Phrase[]);
 }
 
 export async function getLightweightLessons() {

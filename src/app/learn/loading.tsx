@@ -16,16 +16,35 @@ export default function Loading() {
       </div>
 
       {/* Mobile Timeline Skeleton */}
-      <div className="md:hidden flex flex-col items-center w-full px-4 mt-2">
+      <div className="md:hidden flex flex-col w-full px-4 mt-2">
         {/* Hero Card Mobile */}
         <div className="w-full h-[180px] bg-slate-200 rounded-2xl animate-pulse mb-6" />
-
-        <div className="flex flex-col relative w-full items-center mt-8 pb-20">
-          <div className="absolute left-1/2 top-0 bottom-0 w-3 -translate-x-1/2 bg-slate-200 rounded-full z-0 animate-pulse"></div>
+        
+        <div className="flex flex-col relative w-full pb-20 mt-8">
+          <div className="absolute left-[1.25rem] sm:left-[1.5rem] top-0 bottom-0 w-[8px] -translate-x-1/2 bg-slate-200 rounded-full z-0 animate-pulse"></div>
+          
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="relative flex flex-col items-center w-full z-10 mb-8 sm:mb-12">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-slate-200 animate-pulse mb-4 border-[6px] border-[#FAFAFA]" />
-              <div className="w-full max-w-[280px] sm:max-w-[320px] rounded-[1.5rem] h-32 bg-slate-200 animate-pulse border-2 border-slate-100" />
+            <div key={i} className="relative flex flex-row items-center w-full z-10 mb-6 sm:mb-8 gap-3 sm:gap-4">
+              <div className="relative shrink-0 z-10">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-200 animate-pulse border-[4px] border-white shadow-sm" />
+              </div>
+              <div className="flex-1 rounded-[1.5rem] border-2 border-slate-100 p-4 sm:p-5 bg-white min-h-[8.5rem] flex flex-col justify-between z-10 shadow-sm">
+                 <div className="flex flex-col gap-3 w-full max-w-[200px]">
+                    <div className="w-32 h-6 bg-slate-200 rounded animate-pulse" />
+                    <div className="w-24 h-4 bg-slate-200 rounded animate-pulse" />
+                 </div>
+                 <div className="w-full mt-4 flex flex-col gap-2">
+                    <div className="flex justify-between w-full">
+                       <div className="w-16 h-3 bg-slate-200 rounded animate-pulse" />
+                       <div className="w-8 h-3 bg-slate-200 rounded animate-pulse" />
+                    </div>
+                    <div className="flex justify-between gap-[2px] w-full">
+                       {Array.from({ length: 4 }).map((_, j) => (
+                         <div key={j} className="h-3 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full bg-slate-100 animate-pulse"></div>
+                       ))}
+                    </div>
+                 </div>
+              </div>
             </div>
           ))}
         </div>

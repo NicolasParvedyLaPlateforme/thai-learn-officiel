@@ -70,12 +70,41 @@ export function SharedLessonCard({
   const lightBorderDynamicColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '200').replace(/400$/, '200');
   const hoverDynamicColor = isReviewLocked ? '' : (unit.hoverClass || 'hover:brightness-110');
 
+  const colorMatch = dynamicColor.match(/bg-([a-z]+)-/);
+  const colorName = colorMatch ? colorMatch[1] : 'emerald';
+
+  const COLOR_VARIANTS: Record<string, { bg100: string, border200: string, text700: string }> = {
+    emerald: { bg100: 'bg-emerald-100', border200: 'border-emerald-200', text700: 'text-emerald-700' },
+    amber: { bg100: 'bg-amber-100', border200: 'border-amber-200', text700: 'text-amber-700' },
+    yellow: { bg100: 'bg-yellow-100', border200: 'border-yellow-200', text700: 'text-yellow-700' },
+    rose: { bg100: 'bg-rose-100', border200: 'border-rose-200', text700: 'text-rose-700' },
+    blue: { bg100: 'bg-blue-100', border200: 'border-blue-200', text700: 'text-blue-700' },
+    indigo: { bg100: 'bg-indigo-100', border200: 'border-indigo-200', text700: 'text-indigo-700' },
+    violet: { bg100: 'bg-violet-100', border200: 'border-violet-200', text700: 'text-violet-700' },
+    purple: { bg100: 'bg-purple-100', border200: 'border-purple-200', text700: 'text-purple-700' },
+    fuchsia: { bg100: 'bg-fuchsia-100', border200: 'border-fuchsia-200', text700: 'text-fuchsia-700' },
+    pink: { bg100: 'bg-pink-100', border200: 'border-pink-200', text700: 'text-pink-700' },
+    red: { bg100: 'bg-red-100', border200: 'border-red-200', text700: 'text-red-700' },
+    orange: { bg100: 'bg-orange-100', border200: 'border-orange-200', text700: 'text-orange-700' },
+    cyan: { bg100: 'bg-cyan-100', border200: 'border-cyan-200', text700: 'text-cyan-700' },
+    teal: { bg100: 'bg-teal-100', border200: 'border-teal-200', text700: 'text-teal-700' },
+    green: { bg100: 'bg-green-100', border200: 'border-green-200', text700: 'text-green-700' },
+  };
+
+  const badgeTheme = COLOR_VARIANTS[colorName] || COLOR_VARIANTS['emerald'];
+  const badgeBgColor = badgeTheme.bg100;
+  const badgeTextColor = badgeTheme.text700;
+  const badgeBorderColor = badgeTheme.border200;
+
+  const isStarted = level > 0 && !isMaxLevel;
+
   const cardStyle = cn(
     "relative w-full transition-all duration-300 cursor-pointer border-[2px]",
     isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
-    isMaxLevel ? `${lightBorderDynamicColor} bg-white` :
-      isReviewLocked ? "bg-slate-50/50 border-slate-100" :
-        isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
+    isMaxLevel ? `${badgeBorderColor} bg-white` :
+      isStarted ? `${borderDynamicColor} bg-white` :
+        isReviewLocked ? "bg-slate-50/50 border-slate-100" :
+          isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
   );
 
   // Renders the fragmented progress bar (horizontal dashes for mobile)
@@ -174,7 +203,7 @@ export function SharedLessonCard({
                 ))
               ) : (
                 <span className="text-[10px] sm:text-sm font-medium leading-tight text-slate-400 italic text-center mt-2 px-1">
-                  Aucune phrase
+                  {getTranslation('auto.no_phrase', language) || "Aucune phrase"}
                 </span>
               )}
             </div>
@@ -267,7 +296,7 @@ export function SharedLessonCard({
 
           {/* Badges */}
           {isMaxLevel ? (
-            <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-100 text-emerald-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-emerald-200 shrink-0">
+            <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-2 py-1 gap-1 z-10 font-bold border shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
               <CheckCircle size={14} /> <span className="hidden sm:inline">{getTranslation('auto.mastered', language)}</span>
             </Badge>
           ) : isSuggested ? (
@@ -293,9 +322,9 @@ export function SharedLessonCard({
           </div>
 
           <Button
-            variant={"gamified" as const}
+            variant={isMaxLevel ? "default" : "gamified"}
             size="sm"
-            className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white", dynamicColor, borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+            className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white", dynamicColor, !isMaxLevel && borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
             onClick={(e) => {
               e.stopPropagation();
               onClick();
@@ -331,7 +360,7 @@ export function SharedLessonCard({
 
         {/* Badges */}
         {isMaxLevel ? (
-          <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-100 text-emerald-700 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-emerald-200 shrink-0">
+          <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
             <CheckCircle size={14} /> {getTranslation('auto.mastered', language)}
           </Badge>
         ) : isSuggested ? (
@@ -356,9 +385,9 @@ export function SharedLessonCard({
       </div>
 
       <Button
-        variant={"gamified" as const}
+        variant={isMaxLevel ? "default" : "gamified"}
         size="lg"
-        className={cn("w-full mt-2 shadow-none text-white cursor-pointer transition-colors duration-200", dynamicColor, borderDynamicColor, hoverDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+        className={cn("w-full mt-2 shadow-none text-white cursor-pointer transition-colors duration-200", dynamicColor, !isMaxLevel && borderDynamicColor, hoverDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
         onClick={(e) => {
           e.stopPropagation();
           onClick();
