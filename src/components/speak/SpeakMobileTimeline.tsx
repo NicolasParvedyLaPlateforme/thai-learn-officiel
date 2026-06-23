@@ -216,6 +216,7 @@ export default function SpeakMobileTimeline({
                     pathType="speak"
                     lesson={lesson}
                     level={level}
+                    maxLevelPerLesson={maxLevelPerLesson || 5}
                     unit={unit}
                     language={language}
                     isReviewLocked={isReviewLocked}
