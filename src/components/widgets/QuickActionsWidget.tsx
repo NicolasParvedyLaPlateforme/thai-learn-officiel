@@ -187,6 +187,11 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     return null;
   }
 
+  const currentUnitIndex = lastActiveUnitIndex || 0;
+  const currentUnit = BASE_UNITS[currentUnitIndex] || BASE_UNITS[0];
+  const unitColorClass = currentUnit.colorClass || 'bg-emerald-500';
+  const unitHoverClass = currentUnit.hoverClass || 'hover:bg-emerald-400';
+
   if (variant === 'mobile-bubble') {
     return (
       <div className="flex items-center justify-end">
@@ -255,7 +260,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
           {/* Bouton Suivant */}
           <button 
             onClick={handleSuivant}
-            className={`relative flex items-center justify-center gap-1.5 h-9 px-4 rounded-full transition-all shadow-sm shrink-0 ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
+            className={`relative flex items-center justify-center gap-1.5 h-9 px-4 rounded-full transition-all shadow-sm shrink-0 ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : `${unitColorClass} text-white ${unitHoverClass}`}`}
           >
             {/* Tooltip Suivant */}
             <AnimatePresence>
@@ -317,7 +322,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
         {/* Bouton Suivant */}
         <button 
           onClick={handleSuivant}
-          className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-[14px] transition-all cursor-pointer ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 shadow-sm'}`}
+          className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-[14px] transition-all cursor-pointer ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : `${unitColorClass} text-white ${unitHoverClass} hover:scale-[1.02] active:scale-95 shadow-sm`}`}
         >
           <Play size={18} className="fill-current stroke-current" />
           <span className="font-extrabold text-[15px] tracking-wide">Suivant</span>
