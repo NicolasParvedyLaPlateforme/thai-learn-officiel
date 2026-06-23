@@ -53,10 +53,10 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       quests={alphabetQuests}
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
-      maxLevelPerLesson={3}
+      maxLevelPerLesson={4}
       renderMobileTimeline={(props) => <AlphabetMobileTimeline {...props} alphabetQuests={alphabetQuests} />}
-      renderDesktopTimeline={(props) => <AlphabetDesktopTimeline {...props} />}
-      renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="alphabet" maxLevelPerLesson={3} />}
+      renderDesktopTimeline={(props) => <AlphabetDesktopTimeline {...props} maxLevelPerLesson={4} />}
+      renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="alphabet" maxLevelPerLesson={4} />}
       renderLessonModal={(props) => <AlphabetLessonModal {...props} />}
       renderUnitsModal={({ isOpen, onOpenChange, language, units, activeUnitIndex, onUnitSelect }) => (
         <AnimatePresence>

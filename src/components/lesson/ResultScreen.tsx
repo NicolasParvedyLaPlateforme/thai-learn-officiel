@@ -23,6 +23,7 @@ interface ResultScreenProps {
   totalParts?: number | null;
   currentIndex?: number;
   mode?: string | null;
+  pathType?: "learn" | "alphabet" | "speak";
 }
 
 export default function ResultScreen({
@@ -41,6 +42,7 @@ export default function ResultScreen({
   partIndex,
   totalParts,
   mode,
+  pathType = "learn",
 }: ResultScreenProps) {
   const router = useRouter();
   const searchParams = require('next/navigation').useSearchParams();
@@ -58,10 +60,10 @@ export default function ResultScreen({
   const { unopenedGifts } = useProgressStore();
 
   const handleNavigate = (nextUrl: string, nextLabel: string) => {
-    const giftsAvailable = unopenedGifts?.learn || 0;
+    const giftsAvailable = (pathType === 'alphabet' ? unopenedGifts?.alphabet : unopenedGifts?.learn) || 0;
     if (giftsAvailable > 0) {
       const replayUrl = typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
-      router.push(`/reward?category=learn&nextUrl=${encodeURIComponent(nextUrl)}&nextLabel=${encodeURIComponent(nextLabel)}&replayUrl=${encodeURIComponent(replayUrl)}`);
+      router.push(`/reward?category=${pathType === 'alphabet' ? 'alphabet' : 'learn'}&nextUrl=${encodeURIComponent(nextUrl)}&nextLabel=${encodeURIComponent(nextLabel)}&replayUrl=${encodeURIComponent(replayUrl)}`);
     } else {
       router.push(nextUrl);
     }
@@ -82,14 +84,14 @@ export default function ResultScreen({
         
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           <button
-            onClick={() => handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}`, language === "en" ? "Retry" : "Refaire")}
+            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`, language === "en" ? "Retry" : "Refaire")}
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
             {getTranslation('auto.retry', language)}
           </button>
           <button
-            onClick={() => handleNavigate(`/learn#lesson-${lesson.id}`, language === "en" ? "Back" : "Accueil")}
+            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet' : 'learn'}#lesson-${lesson.id}`, language === "en" ? "Back" : "Accueil")}
             className="px-8 py-3 flex-1 rounded-xl bg-slate-200 border-b-4 border-slate-300 text-slate-500 font-bold text-lg shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {getTranslation('auto.back', language)}
@@ -150,7 +152,7 @@ export default function ResultScreen({
       )}
 
       <div className="w-full max-w-md mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
-        <DailyQuestsWidget category="learn" />
+        <DailyQuestsWidget category={pathType === 'alphabet' ? 'alphabet' : 'learn'} />
       </div>
       
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
@@ -158,7 +160,7 @@ export default function ResultScreen({
           <button
             onClick={() => {
               setLastActiveUnitIndex(nextUnitIndex);
-              handleNavigate("/learn", getTranslation('auto.next_unit', language));
+              handleNavigate(pathType === 'alphabet' ? "/alphabet" : "/learn", getTranslation('auto.next_unit', language));
             }}
             className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all text-center"
           >
@@ -168,20 +170,21 @@ export default function ResultScreen({
         {mode !== 'training' && mode !== 'revision' && isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1 ? (
           <button
             onClick={() =>
-              handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, language === "en" ? "Next Part" : "Partie suivante")
+              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, language === "en" ? "Next Part" : "Partie suivante")
             }
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {language === "en" ? "Next Part" : "Partie suivante"}
           </button>
-        ) : mode !== 'training' && mode !== 'revision' && currentLevel + 1 < 10 && (
+        ) : mode !== 'training' && mode !== 'revision' && currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10) && (
           <button
             onClick={() => {
-              const nextTotalParts = getLevelSplit(currentLevel + 1, lesson);
+              const basePath = pathType === 'alphabet' ? '/alphabet/lesson' : '/lesson';
+              const nextTotalParts = pathType === 'alphabet' ? 1 : getLevelSplit(currentLevel + 1, lesson);
               if (nextTotalParts > 1) {
-                handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`, getTranslation('auto.next_level', language));
+                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`, getTranslation('auto.next_level', language));
               } else {
-                handleNavigate(`/lesson/${lesson.id}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language));
+                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language));
               }
             }}
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
@@ -215,13 +218,13 @@ export default function ResultScreen({
             if (mode === 'training') {
                const partStr = searchParams.get("part");
                const totalPartsStr = searchParams.get("totalParts");
-               let url = `/lesson/${lesson.id}?level=${currentLevel + 1}`;
+               let url = `/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`;
                if (partStr && totalPartsStr) {
                  url += `&part=${partStr}&totalParts=${totalPartsStr}`;
                }
                handleNavigate(url, "Enchaîner la leçon");
             } else {
-               router.push("/learn");
+               router.push(pathType === 'alphabet' ? '/alphabet' : '/learn');
             }
           }}
           className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"

@@ -39,6 +39,19 @@ export async function getAlphabetExercisesServer(lessonId: string, currentLevel:
   return generateAlphabetExercises(lesson, currentLevel, language, allWords as unknown as Word[], allPhrases as unknown as Phrase[]);
 }
 
+export async function getAlphabetRevisionExercisesServer(lessonId: string, language: string) {
+  const allPhrases = data.lessons.flatMap(l => l.phrases || []);
+  const allWords = data.lessons.flatMap(l => l.words || []);
+  
+  const rawLessons = getAlphabetLessons();
+  const allAlphaLessons = [...rawLessons.consonants, ...rawLessons.vowels];
+  const lesson = allAlphaLessons.find(l => l.id === lessonId);
+  
+  if (!lesson) return [];
+  const { generateAlphabetRevisionExercises } = await import("@/lib/alphabet-utils");
+  return generateAlphabetRevisionExercises(lesson, language, allWords as unknown as Word[], allPhrases as unknown as Phrase[]);
+}
+
 export async function getLightweightLessons() {
   return data.lessons.map(l => ({
     id: l.id,

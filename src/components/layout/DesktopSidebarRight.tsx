@@ -419,7 +419,7 @@ export function DesktopSidebarRight({
           </div>
 
           <div className="w-full mt-auto flex flex-col gap-0 border-t border-slate-100 bg-white z-10 px-6 pb-6 pt-2 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
-            <QuickActionsWidget variant="desktop" />
+            <QuickActionsWidget variant="desktop" pathType={suggestionType as any} units={units} lightweightLessons={lessons} />
           </div>
         </motion.div>
       );

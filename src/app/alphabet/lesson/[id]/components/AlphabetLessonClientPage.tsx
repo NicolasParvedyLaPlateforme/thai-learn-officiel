@@ -19,6 +19,7 @@ import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
 import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
 import Footer from "@/components/lesson/Footer";
 import { useLessonEngine } from '@/hooks/useLessonEngine';
+import ResultScreen from "@/components/lesson/ResultScreen";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {
@@ -155,12 +156,29 @@ function AlphabetLessonContent() {
       // }
 
       preloadThaiVoices();
-      getAlphabetExercisesServer(lesson.id, currentLevel, language).then(generated => {
-        setInitialExercises(generated as unknown as AlphabetExercise[]);
-        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
-      });
+      const isRevision = searchParams.get('mode') === 'revision';
+      
+      if (isRevision) {
+        import("@/actions/course").then(({ getAlphabetRevisionExercisesServer }) => {
+          getAlphabetRevisionExercisesServer(lesson.id, language).then(generated => {
+            const finalEx = generated.slice(0, 8);
+            setInitialExercises(finalEx as unknown as AlphabetExercise[]);
+            setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
+          });
+        });
+      } else {
+        getAlphabetExercisesServer(lesson.id, currentLevel, language).then(generated => {
+          const mode = searchParams.get('mode');
+          let finalEx = generated;
+          if (mode === 'training') {
+             finalEx = generated.slice(0, 8);
+          }
+          setInitialExercises(finalEx as unknown as AlphabetExercise[]);
+          setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
+        });
+      }
     }
-  }, [lesson, router, currentLevel, language, completedLessons, _hasHydrated, lessonId, unlockedLessons, exercisesGeneratedFor]);
+  }, [lesson, router, currentLevel, language, completedLessons, _hasHydrated, lessonId, unlockedLessons, exercisesGeneratedFor, searchParams]);
 
   useEffect(() => {
     if (searchParams.get("dev") === "validate" && exercises.length > 0 && !isFinished) {
@@ -194,89 +212,26 @@ function AlphabetLessonContent() {
     }
   };
 
+// ... Inside AlphabetLessonContent, replace the isFinished check:
+
   if (isFinished) {
     const isLastConsonant = lesson && consonants.length > 0 && lesson.id === consonants[consonants.length - 1].id;
     const isLastVowel = lesson && vowels.length > 0 && lesson.id === vowels[vowels.length - 1].id;
     const isEndOfUnit = isLastConsonant || isLastVowel;
-    const nextUnitIndex = isLastConsonant ? 1 : -1;
+    const nextUnitIndex = isEndOfUnit ? (isLastConsonant ? 1 : -1) : -1;
     
-    const { unopenedGifts } = useProgressStore.getState();
-
-    const handleNavigate = (nextUrl: string, nextLabel: string) => {
-      const giftsAvailable = unopenedGifts?.alphabet || 0;
-      if (giftsAvailable > 0) {
-        const replayUrl = typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
-        router.push(`/reward?category=alphabet&nextUrl=${encodeURIComponent(nextUrl)}&nextLabel=${encodeURIComponent(nextLabel)}&replayUrl=${encodeURIComponent(replayUrl)}`);
-      } else {
-        router.push(nextUrl);
-      }
-    };
-
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
-        <div className="text-emerald-500 mb-2">
-          <Check size={80} className="mx-auto" />
-        </div>
-        <div className="flex gap-2 mb-6">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ scale: 0, rotate: -45 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 0.2 + i * 0.1, type: "spring", stiffness: 200 }}
-            >
-              <Star
-                size={48}
-                className={
-                  i < earnedStars
-                    ? "fill-amber-400 text-amber-500"
-                    : "fill-slate-200 text-slate-300 drop-shadow-sm"
-                }
-              />
-            </motion.div>
-          ))}
-        </div>
-        <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
-          {language === 'en' ? `Level ${currentLevel + 1} completed!` : `Niveau ${currentLevel + 1} terminé !`}
-        </h1>
-        <p className="text-slate-500 mb-4 text-center text-lg font-medium">+ {earnedXp || 15} XP</p>
-
-        <div className="w-full max-w-md mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
-          <DailyQuestsWidget category="alphabet" />
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
-          {isEndOfUnit && nextUnitIndex !== -1 && (
-            <button
-              onClick={() => handleNavigate(`/alphabet?unit=${nextUnitIndex}`, getTranslation('auto.next_unit', language))}
-              className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all text-center"
-            >
-              {getTranslation('auto.next_unit', language)}
-            </button>
-          )}
-          {currentLevel + 1 < 4 && (
-            <button
-              onClick={() => handleNavigate(`/alphabet/lesson/${lesson?.id}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language))}
-              className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
-            >
-              {getTranslation('auto.next_level', language)}
-            </button>
-          )}
-          <button
-            onClick={() => window.location.reload()}
-            className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
-          >
-            <RotateCcw size={20} />
-            {getTranslation('auto.retry', language)}
-          </button>
-          <button
-            onClick={() => router.push(`/alphabet`)}
-            className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
-          >
-            {getTranslation('auto.back', language)}
-          </button>
-        </div>
-      </div>
+      <ResultScreen
+        lesson={lesson as any}
+        currentLevel={currentLevel}
+        earnedStars={earnedStars}
+        exercisesLength={exercises.length}
+        language={language}
+        nextUnitIndex={nextUnitIndex}
+        earnedXp={earnedXp}
+        mode={searchParams.get("mode")}
+        pathType="alphabet"
+      />
     );
   }
 

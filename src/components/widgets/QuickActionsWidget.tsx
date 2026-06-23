@@ -9,17 +9,25 @@ import { getLightweightLessons } from "@/actions/course";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { Button } from "@/components/ui/Button";
 
+import ALPHABET_BASE_UNITS from "@/data/alphabet_units.json";
+import { getAlphabetLessons } from "@/lib/alphabet-utils";
+import SPEAK_BASE_UNITS from "@/data/speak_units.json";
+import { getLightweightSpeakLessons } from "@/actions/speak_course";
+
 interface QuickActionsWidgetProps {
   lightweightLessons?: any[];
   variant?: 'desktop' | 'mobile-bubble' | 'desktop-floating';
+  pathType?: 'learn' | 'alphabet' | 'speak';
+  units?: any[];
 }
 
-export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: QuickActionsWidgetProps) {
+export function QuickActionsWidget({ lightweightLessons, variant = 'desktop', pathType = 'learn', units }: QuickActionsWidgetProps) {
   const { 
     language, 
-    lessonLevels, 
+    lessonLevels: learnLessonLevels, 
     lessonPartsCompleted,
-    lastActiveUnitIndex
+    lastActiveUnitIndex,
+    speakLessonLevels
   } = useProgressStore();
   const router = useRouter();
 
@@ -28,9 +36,15 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
 
   React.useEffect(() => {
     if (!lightweightLessons || lightweightLessons.length === 0) {
-      getLightweightLessons().then(data => setLessonsData(data));
+      if (pathType === 'learn') {
+        getLightweightLessons().then(data => setLessonsData(data));
+      } else if (pathType === 'speak') {
+        getLightweightSpeakLessons().then(data => setLessonsData(data));
+      }
+    } else {
+      setLessonsData(lightweightLessons);
     }
-  }, [lightweightLessons]);
+  }, [lightweightLessons, pathType]);
 
   const {
     nextLesson,
@@ -40,36 +54,64 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     isUnitCompleted,
     randomMasteredLesson,
     hasStartedUnit,
-    hasCompletedFirstLevel
+    hasCompletedFirstLevel,
+    currentUnitColorClass,
+    currentUnitHoverClass
   } = useMemo(() => {
-    let currentStartIndex = 0;
-    let targetStartIndex = 0;
-    let targetEndIndex = lessonsData.length;
+    let unitLessons: any[] = [];
     const targetUnitIndex = lastActiveUnitIndex || 0;
+    
+    let currentUnit: any = null;
 
-    for (let i = 0; i < BASE_UNITS.length; i++) {
-      let endIndex = currentStartIndex;
-      for (let j = currentStartIndex; j < lessonsData.length; j++) {
-        const title = lessonsData[j]?.title || "";
-        const titleEn = lessonsData[j]?.titleEn || "";
-        if (title.toLowerCase().includes("bilan") || titleEn.toLowerCase().includes("review")) {
-          endIndex = j + 1;
+    if (pathType === 'alphabet') {
+      let activeUnits = units;
+      if (!activeUnits) {
+        const { consonants, vowels } = getAlphabetLessons();
+        activeUnits = [
+          { ...ALPHABET_BASE_UNITS[0], lessons: consonants },
+          { ...ALPHABET_BASE_UNITS[1], lessons: vowels }
+        ];
+      }
+      currentUnit = activeUnits[targetUnitIndex] || activeUnits[0];
+      if (currentUnit) {
+        unitLessons = currentUnit.lessons || [];
+      }
+    } else {
+      let activeUnits = units;
+      if (!activeUnits) {
+        activeUnits = pathType === 'speak' ? SPEAK_BASE_UNITS : BASE_UNITS;
+      }
+      currentUnit = activeUnits[targetUnitIndex] || activeUnits[0];
+      
+      let currentStartIndex = 0;
+      let targetStartIndex = 0;
+      let targetEndIndex = lessonsData.length;
+
+      for (let i = 0; i < activeUnits.length; i++) {
+        let endIndex = currentStartIndex;
+        for (let j = currentStartIndex; j < lessonsData.length; j++) {
+          const title = lessonsData[j]?.title || "";
+          const titleEn = lessonsData[j]?.titleEn || "";
+          if (title.toLowerCase().includes("bilan") || titleEn.toLowerCase().includes("review")) {
+            endIndex = j + 1;
+            break;
+          }
+        }
+        if (endIndex === currentStartIndex && currentStartIndex < lessonsData.length) {
+          endIndex = lessonsData.length;
+        }
+
+        if (i === targetUnitIndex) {
+          targetStartIndex = currentStartIndex;
+          targetEndIndex = endIndex;
           break;
         }
+        currentStartIndex = endIndex;
       }
-      if (endIndex === currentStartIndex && currentStartIndex < lessonsData.length) {
-        endIndex = lessonsData.length;
-      }
-
-      if (i === targetUnitIndex) {
-        targetStartIndex = currentStartIndex;
-        targetEndIndex = endIndex;
-        break;
-      }
-      currentStartIndex = endIndex;
+      unitLessons = lessonsData.slice(targetStartIndex, targetEndIndex);
     }
 
-    const unitLessons = lessonsData.slice(targetStartIndex, targetEndIndex);
+    const lessonLevels = pathType === 'speak' ? speakLessonLevels : learnLessonLevels;
 
     let nextLsn = null;
     let nextLvl = 0;
@@ -78,7 +120,10 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     let completedFirstLevel = false;
     const masteredUnitLessons = [];
     
+    const maxLevel = pathType === 'alphabet' ? 4 : 10;
+
     for (const lesson of unitLessons) {
+      if (!lesson) continue;
       const level = lessonLevels[lesson.id] || 0;
       
       if (level > 0) {
@@ -92,29 +137,18 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
         }
       }
 
-      if (level >= 10) {
+      if (level >= maxLevel) {
         masteredUnitLessons.push(lesson);
       }
     }
 
-    // Check for furthest in progress first
+    // Strictly check sequentially for the first unmastered lesson
     for (const lesson of unitLessons) {
+      if (!lesson) continue;
       const level = lessonLevels[lesson.id] || 0;
-      if (level > 0 && level < 10 && !nextLsn) {
+      if (level < maxLevel && !nextLsn) {
         nextLsn = lesson;
         nextLvl = level;
-      }
-    }
-    
-    // If none in progress, find first zero level
-    if (!nextLsn) {
-      for (const lesson of unitLessons) {
-        const level = lessonLevels[lesson.id] || 0;
-        if (level === 0) {
-          nextLsn = lesson;
-          nextLvl = 0;
-          break;
-        }
       }
     }
 
@@ -151,9 +185,17 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
       isUnitCompleted: unitCompleted,
       randomMasteredLesson: rndMastered,
       hasStartedUnit: started,
-      hasCompletedFirstLevel: completedFirstLevel
+      hasCompletedFirstLevel: completedFirstLevel,
+      currentUnitColorClass: currentUnit?.colorClass || 'bg-emerald-500',
+      currentUnitHoverClass: currentUnit?.hoverClass || 'hover:bg-emerald-400'
     };
-  }, [lessonsData, lessonLevels, lessonPartsCompleted, lastActiveUnitIndex]);
+  }, [lessonsData, learnLessonLevels, speakLessonLevels, lessonPartsCompleted, lastActiveUnitIndex, pathType, units]);
+
+  const getBasePath = () => {
+    if (pathType === 'alphabet') return '/alphabet/lesson/';
+    if (pathType === 'speak') return '/speak/lesson/';
+    return '/lesson/';
+  };
 
   const handleSuivant = () => {
     if (isUnitCompleted) {
@@ -162,7 +204,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     }
     if (!nextLesson) return;
     
-    let url = `/lesson/${nextLesson.id}?level=${nextLevel + 1}`;
+    let url = `${getBasePath()}${nextLesson.id}?level=${nextLevel + 1}`;
     if (nextTotalParts > 1) {
       url += `&part=${nextPart}&totalParts=${nextTotalParts}`;
     }
@@ -171,7 +213,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
 
   const handleEntrainement = () => {
     if (!nextLesson) return;
-    let url = `/lesson/${nextLesson.id}?level=${nextLevel + 1}&mode=training`;
+    let url = `${getBasePath()}${nextLesson.id}?level=${nextLevel + 1}&mode=training`;
     if (nextTotalParts > 1) {
       url += `&part=${nextPart}&totalParts=${nextTotalParts}`;
     }
@@ -180,13 +222,13 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
 
   const handleRevision = () => {
     if (!randomMasteredLesson) return;
-    router.push(`/lesson/${randomMasteredLesson.id}?level=10&mode=revision`);
+    const maxLvl = pathType === 'alphabet' ? 4 : pathType === 'speak' ? 5 : 10;
+    router.push(`${getBasePath()}${randomMasteredLesson.id}?level=${maxLvl}&mode=revision`);
   };
 
+  const unitColorClass = currentUnitColorClass;
+  const unitHoverClass = currentUnitHoverClass;
   const currentUnitIndex = lastActiveUnitIndex || 0;
-  const currentUnit = BASE_UNITS[currentUnitIndex] || BASE_UNITS[0];
-  const unitColorClass = currentUnit.colorClass || 'bg-emerald-500';
-  const unitHoverClass = currentUnit.hoverClass || 'hover:bg-emerald-400';
 
   if (variant === 'mobile-bubble') {
     return (

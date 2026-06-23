@@ -2,7 +2,7 @@
 
 import { getTranslation } from "@/hooks/useTranslation";
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
 import { Word, Phrase } from "@/types";
 import { ArrowLeft, Loader2, X, Star, Crown, BookOpen } from 'lucide-react';
@@ -37,6 +37,10 @@ export default function SpeakLessonClient({
   lessonTitle: string 
 }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode');
+  const limitTo8 = mode === 'training' || mode === 'revision';
+  
   const { language, completeSpeakLesson, addXp, getExpectedXp, inProgressLessons, saveInProgressLesson } = useProgressStore();
   
   // Base states
@@ -47,7 +51,7 @@ export default function SpeakLessonClient({
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   
   // Level 1 specific states
-  const [exercises, setExercises] = useState(vocabulary);
+  const [exercises, setExercises] = useState(limitTo8 ? vocabulary.slice(0, 8) : vocabulary);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [successCount, setSuccessCount] = useState(0);
   const [mistakes, setMistakes] = useState(0);
@@ -75,10 +79,11 @@ export default function SpeakLessonClient({
     if (isLevel2) {
       // Load dialogue from json
       const dialogData = (speakDialogues as any).dialogues[lessonId] || [];
-      const populated = dialogData.map((d: any) => {
+      let populated = dialogData.map((d: any) => {
         const phraseData = vocabulary.find(v => v.id === d.phraseId) || dictionary.find(w => w.id === d.phraseId);
         return { ...d, phraseData };
       }).filter((d: any) => d.phraseData);
+      if (limitTo8) populated = populated.slice(0, 8);
       setDialogue(populated);
       
       // Restore state if exists
@@ -88,7 +93,8 @@ export default function SpeakLessonClient({
          setTotalScorePercentage(savedState.mistakes || 0);
       }
     } else if (isLevel3) {
-      const answerData = (speakAnswerMe as any).exercises[lessonId] || [];
+      let answerData = (speakAnswerMe as any).exercises[lessonId] || [];
+      if (limitTo8) answerData = answerData.slice(0, 8);
       const savedState = inProgressLessons[storageKey];
       if (savedState) {
          const currentExercises = (savedState.exercises && savedState.exercises.length > 0) 
@@ -109,7 +115,8 @@ export default function SpeakLessonClient({
          setAnswerMeData(answerData);
       }
     } else if (isLevel4 || isLevel5) {
-      const phrases = vocabulary.filter(v => 'components' in v) as Phrase[];
+      let phrases = vocabulary.filter(v => 'components' in v) as Phrase[];
+      if (limitTo8) phrases = phrases.slice(0, 8);
       setLevel4Phrases(phrases);
       
       const savedState = inProgressLessons[storageKey];

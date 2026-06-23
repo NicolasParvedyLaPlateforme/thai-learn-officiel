@@ -189,9 +189,9 @@ export default function BottomNav() {
           )}
         </AnimatePresence>
 
-        {/* Action Rapide Bubble - Only on Learn */}
+        {/* Action Rapide Bubble - Only on Learn/Alphabet/Speak */}
         <AnimatePresence>
-          {isLearnActive && !activePopover && !isScrollingDown && (
+          {isLearnOrAlphabetActive && !activePopover && !isScrollingDown && (
              <motion.div
                initial={{ opacity: 0, y: 10, scale: 0.9 }}
                animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -199,7 +199,7 @@ export default function BottomNav() {
                transition={{ duration: 0.2 }}
                className="absolute bottom-[80px] right-3 z-[60]"
              >
-               <QuickActionsWidget variant="mobile-bubble" />
+               <QuickActionsWidget variant="mobile-bubble" pathType={isAlphabetActive ? 'alphabet' : isSpeakActive ? 'speak' : 'learn'} />
              </motion.div>
           )}
         </AnimatePresence>

@@ -270,3 +270,113 @@ export function generateAlphabetExercises(lessonDef: AlphabetLessonDef, level: n
 
   return exercises;
 }
+
+export function generateAlphabetRevisionExercises(lessonDef: AlphabetLessonDef, language: string, allWords: Word[], allPhrases: Phrase[]): AlphabetExercise[] {
+  const exercises: AlphabetExercise[] = [];
+  
+  exercises.push({
+      id: `review-${Date.now()}`,
+      type: 'review',
+      item: lessonDef.items[0],
+      options: lessonDef.items,
+      targetText: '',
+      targetTranslation: '',
+      letterToPick: '',
+      phonetic: ''
+  });
+
+  const pms: AlphabetExercise[] = [];
+  const options = [...lessonDef.items].sort(() => Math.random() - 0.5);
+
+  for (const item of lessonDef.items) {
+    const distractors = THAI_ALPHABET.filter(i => i.type === item.type && i.letter !== item.letter);
+    const distractor1 = distractors[Math.floor(Math.random() * distractors.length)];
+    const wmOptions = [item, distractor1].sort(() => Math.random() - 0.5);
+    
+    pms.push({
+       id: `wm-rev-${item.letter}-${Date.now()}`,
+       type: 'word-match',
+       item,
+       options: wmOptions,
+       targetText: item.exampleWord,
+       targetTranslation: getLocalizedField(item, 'exampleTranslation', language),
+       letterToPick: item.letter,
+       phonetic: item.pronunciation
+    });
+
+    pms.push({
+        id: `phonetic-match-rev-${item.letter}-${Date.now()}`,
+        type: 'phonetic-match',
+        item,
+        options,
+        targetText: item.pronunciation,
+        targetTranslation: '',
+        letterToPick: item.letter,
+        phonetic: item.pronunciation
+    });
+
+    pms.push({
+        id: `audio-match-rev-${item.letter}-${Date.now()}`,
+        type: 'audio-match',
+        item,
+        options,
+        targetText: item.exampleWord,
+        targetTranslation: '',
+        letterToPick: item.letter,
+        phonetic: ''
+    });
+
+    let pool = allWords.filter(w => w.th.includes(item.letter));
+    if (pool.length === 0) pool = allPhrases.filter(p => String(p.th).includes(item.letter)) as any;
+    
+    let targetText, targetTranslation, phonetic, explanation;
+    if (pool.length === 0) {
+       targetText = item.exampleWord;
+       targetTranslation = getLocalizedField(item, 'exampleTranslation', language);
+       phonetic = item.pronunciation;
+    } else {
+       const picked = pool[Math.floor(Math.random() * pool.length)];
+       targetText = picked.th;
+       targetTranslation = getLocalizedField(picked, '', language);
+       phonetic = picked.phonetic;
+       explanation = picked.explanation;
+    }
+       
+    pms.push({
+       id: `pm-rev-${item.letter}-${Date.now()}`,
+       type: 'phrase-match',
+       item,
+       options,
+       targetText,
+       targetTranslation,
+       letterToPick: item.letter,
+       phonetic,
+       explanation
+    });
+  }
+
+  pms.sort(() => Math.random() - 0.5);
+  exercises.push(...pms);
+
+  let lastCorrectIndex = -1;
+  for (const ex of exercises) {
+    if ((ex.type === 'word-match' || ex.type === 'phonetic-match' || ex.type === 'audio-match') && ex.options && ex.options.length > 1) {
+      let correctIndex = ex.options.findIndex(o => o.letter === ex.item.letter);
+      if (correctIndex !== -1) {
+        if (correctIndex === lastCorrectIndex) {
+          let newIdx;
+          do {
+            newIdx = Math.floor(Math.random() * ex.options.length);
+          } while (newIdx === correctIndex);
+          const newOptions = [...ex.options];
+          [newOptions[correctIndex], newOptions[newIdx]] = [newOptions[newIdx], newOptions[correctIndex]];
+          ex.options = newOptions;
+          correctIndex = newIdx;
+        }
+        lastCorrectIndex = correctIndex;
+      }
+    }
+  }
+
+  return exercises;
+}
