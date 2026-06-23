@@ -197,7 +197,7 @@ export default function BottomNav() {
                animate={{ opacity: 1, y: 0, scale: 1 }}
                exit={{ opacity: 0, y: 10, scale: 0.9 }}
                transition={{ duration: 0.2 }}
-               className="absolute bottom-[74px] left-[-10px] z-[60]"
+               className="absolute bottom-[74px] right-3 z-[60]"
              >
                <QuickActionsWidget variant="mobile-bubble" />
              </motion.div>

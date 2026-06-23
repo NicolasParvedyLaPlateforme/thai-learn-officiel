@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useProgressStore } from "@/lib/store";
 import { getTranslation } from "@/hooks/useTranslation";
-import { Zap, Play, RotateCcw, Target, Crown } from 'lucide-react';
+import { Zap, Play, RotateCcw, Target, Crown, ChevronLeft } from 'lucide-react';
+import { m as motion, AnimatePresence } from "motion/react";
 import { useRouter } from 'next/navigation';
 import { getLightweightLessons } from "@/actions/course";
 import { getLevelSplit } from "@/lib/levelSplits";
@@ -22,6 +23,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
   const router = useRouter();
 
   const [lessonsData, setLessonsData] = React.useState<any[]>(lightweightLessons || []);
+  const [isFabOpen, setIsFabOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (!lightweightLessons || lightweightLessons.length === 0) {
@@ -129,38 +131,62 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
 
   if (variant === 'mobile-bubble') {
     return (
-      <div className="flex bg-transparent rounded-[0_15px_13px_0] p-0 pl-[10px] gap-1.5 relative">
-        {/* Flèche pointant vers le bas */}
-        <div className={`absolute -bottom-1 left-8 w-2.5 h-2.5 transform rotate-45 ${isUnitCompleted ? 'bg-slate-100' : 'bg-emerald-500'}`} />
-        
-        {/* Bouton Suivant */}
-        <button 
-          onClick={handleSuivant}
-          className={`relative z-10 flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all shadow-sm border border-slate-200/50 ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
-        >
-          <Play size={12} className="fill-current stroke-current" />
-          <span className="font-extrabold text-[11px] tracking-wide">Suivant</span>
-        </button>
+      <div className="flex items-center justify-end">
+        <div className="flex items-center bg-white/90 backdrop-blur-xl p-1.5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-slate-200/60 gap-1.5">
+          
+          <button 
+            onClick={() => setIsFabOpen(!isFabOpen)}
+            className="w-9 h-9 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 transition-colors shrink-0"
+          >
+            <div className={`transition-transform duration-300 ${isFabOpen ? 'rotate-180' : ''}`}>
+               <ChevronLeft size={20} />
+            </div>
+          </button>
 
-        {/* Bouton Entraînement */}
-        <button 
-          onClick={handleEntrainement}
-          disabled={!nextLesson}
-          className={`relative z-10 flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all shadow-sm border border-slate-200/50 ${nextLesson ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
-        >
-          <Target size={15} />
-          <span className="font-bold text-[11px] tracking-wide">S'entraîner</span>
-        </button>
+          <AnimatePresence>
+            {isFabOpen && (
+              <motion.div 
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: 'auto' }}
+                exit={{ opacity: 0, width: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="overflow-hidden"
+              >
+                <div className="flex items-center gap-1.5 min-w-max">
+                  {/* Bouton Révision */}
+                  <button 
+                    onClick={handleRevision}
+                    disabled={!randomMasteredLesson}
+                    className={`flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${randomMasteredLesson ? 'bg-purple-50 text-purple-600 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
+                  >
+                    <RotateCcw size={14} />
+                    <span className="font-bold text-[12px] tracking-wide">Réviser</span>
+                  </button>
 
-        {/* Bouton Révision */}
-        <button 
-          onClick={handleRevision}
-          disabled={!randomMasteredLesson}
-          className={`relative z-10 flex items-center justify-center gap-1.5 h-9 px-3 rounded-xl transition-all shadow-sm border border-slate-200/50 ${randomMasteredLesson ? 'bg-purple-50 text-purple-600 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
-        >
-          <RotateCcw size={15} />
-          <span className="font-bold text-[11px] tracking-wide">Réviser</span>
-        </button>
+                  {/* Bouton Entraînement */}
+                  <button 
+                    onClick={handleEntrainement}
+                    disabled={!nextLesson}
+                    className={`flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${nextLesson ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
+                  >
+                    <Target size={14} />
+                    <span className="font-bold text-[12px] tracking-wide">S'entraîner</span>
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Bouton Suivant */}
+          <button 
+            onClick={handleSuivant}
+            className={`flex items-center justify-center gap-1.5 h-9 px-4 rounded-full transition-all shadow-sm shrink-0 ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
+          >
+            <Play size={13} className="fill-current stroke-current" />
+            <span className="font-extrabold text-[12px] tracking-wide">Suivant</span>
+          </button>
+          
+        </div>
       </div>
     );
   }
