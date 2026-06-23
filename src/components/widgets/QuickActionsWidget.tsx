@@ -132,7 +132,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
   if (variant === 'mobile-bubble') {
     return (
       <div className="flex items-center justify-end">
-        <div className="flex items-center bg-white/90 backdrop-blur-xl p-1.5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-slate-200/60 gap-1.5">
+        <div className="flex items-center bg-white/90 backdrop-blur-xl p-1.5 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200/60 gap-1.5">
           
           <button 
             onClick={() => setIsFabOpen(!isFabOpen)}
