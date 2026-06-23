@@ -1,7 +1,8 @@
 import { getTranslation } from "@/hooks/useTranslation";
 import { m as motion, AnimatePresence } from "framer-motion";
-import { Check, Star, Clock, RotateCcw } from "lucide-react";
+import { Check, Star, Clock, RotateCcw, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/Button";
 import { Lesson } from "@/types";
 import { useProgressStore } from "@/lib/store";
 import { getLevelSplit } from "@/lib/levelSplits";
@@ -24,6 +25,7 @@ interface ResultScreenProps {
   currentIndex?: number;
   mode?: string | null;
   pathType?: "learn" | "alphabet" | "speak";
+  elapsedTimeSec?: number;
 }
 
 export default function ResultScreen({
@@ -43,13 +45,20 @@ export default function ResultScreen({
   totalParts,
   mode,
   pathType = "learn",
+  elapsedTimeSec,
 }: ResultScreenProps) {
   const router = useRouter();
   const searchParams = require('next/navigation').useSearchParams();
   const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
   
   const percentage = failedDueToTime && currentIndex !== undefined ? Math.round((currentIndex / exercisesLength) * 100) : 100;
-  const timeTakenSec = initialTime !== undefined && initialTime !== null && timeLeft !== undefined && timeLeft !== null ? initialTime - Math.max(0, timeLeft) : null;
+  
+  let timeTakenSec = null;
+  if (elapsedTimeSec !== undefined) {
+    timeTakenSec = elapsedTimeSec;
+  } else if (initialTime !== undefined && initialTime !== null && timeLeft !== undefined && timeLeft !== null) {
+    timeTakenSec = initialTime - Math.max(0, timeLeft);
+  }
   
   const formatTime = (sec: number) => {
     const m = Math.floor(sec / 60);
@@ -140,7 +149,7 @@ export default function ResultScreen({
         }
       </h2>
       
-      {(lesson.isReview || currentLevel === 10) && timeTakenSec !== null ? (
+      {timeTakenSec !== null ? (
         <p className="text-indigo-500 mb-4 text-center text-lg font-bold flex items-center justify-center gap-2">
           <Clock size={20} />
           {language === "en" ? `Time: ${formatTime(timeTakenSec)}` : `Temps : ${formatTime(timeTakenSec)}`}
@@ -155,29 +164,36 @@ export default function ResultScreen({
         <DailyQuestsWidget category={pathType === 'alphabet' ? 'alphabet' : 'learn'} />
       </div>
       
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
+      <div className="flex flex-col gap-4 w-full max-w-lg">
         {nextUnitIndex !== -1 && (
-          <button
+          <Button
+            variant="amberGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest"
             onClick={() => {
               setLastActiveUnitIndex(nextUnitIndex);
               handleNavigate(pathType === 'alphabet' ? "/alphabet" : "/learn", getTranslation('auto.next_unit', language));
             }}
-            className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all text-center"
           >
             {getTranslation('auto.next_unit', language)}
-          </button>
+          </Button>
         )}
         {mode !== 'training' && mode !== 'revision' && isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1 ? (
-          <button
+          <Button
+            variant="indigoGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest"
             onClick={() =>
               handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, language === "en" ? "Next Part" : "Partie suivante")
             }
-            className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {language === "en" ? "Next Part" : "Partie suivante"}
-          </button>
+          </Button>
         ) : mode !== 'training' && mode !== 'revision' && currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10) && (
-          <button
+          <Button
+            variant="indigoGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest"
             onClick={() => {
               const basePath = pathType === 'alphabet' ? '/alphabet/lesson' : '/lesson';
               const nextTotalParts = pathType === 'alphabet' ? 1 : getLevelSplit(currentLevel + 1, lesson);
@@ -187,50 +203,74 @@ export default function ResultScreen({
                 handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language));
               }
             }}
-            className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {getTranslation('auto.next_level', language)}
-          </button>
+          </Button>
         )}
         
         {mode === 'training' && (
-          <button
+          <Button
+            variant="blueGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest gap-2"
             onClick={() => window.location.reload()}
-            className="px-8 py-3 flex-1 rounded-xl bg-blue-500 border-b-4 border-blue-700 text-white font-bold text-lg shadow-lg hover:bg-blue-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
             S'entraîner à nouveau
-          </button>
+          </Button>
         )}
 
         {mode === 'revision' && (
-          <button
+          <Button
+            variant="purpleGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest gap-2"
             onClick={() => window.location.reload()}
-            className="px-8 py-3 flex-1 rounded-xl bg-purple-500 border-b-4 border-purple-700 text-white font-bold text-lg shadow-lg hover:bg-purple-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
             Réviser à nouveau
-          </button>
+          </Button>
         )}
 
-        <button
-          onClick={() => {
-            if (mode === 'training') {
-               const partStr = searchParams.get("part");
-               const totalPartsStr = searchParams.get("totalParts");
-               let url = `/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`;
-               if (partStr && totalPartsStr) {
-                 url += `&part=${partStr}&totalParts=${totalPartsStr}`;
-               }
-               handleNavigate(url, "Enchaîner la leçon");
-            } else {
-               router.push(pathType === 'alphabet' ? '/alphabet' : '/learn');
-            }
-          }}
-          className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
-        >
-          {mode === 'training' ? "Enchaîner la leçon" : getTranslation('auto.continue', language)}
-        </button>
+        <div className="flex flex-row gap-4 w-full">
+          <Button
+            variant={mode === 'training' ? "gamified" : "flat"}
+            size="lg"
+            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            onClick={() => {
+              if (mode === 'training') {
+                 const partStr = searchParams.get("part");
+                 const totalPartsStr = searchParams.get("totalParts");
+                 let url = `/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`;
+                 if (partStr && totalPartsStr) {
+                   url += `&part=${partStr}&totalParts=${totalPartsStr}`;
+                 }
+                 handleNavigate(url, "Enchaîner la leçon");
+              } else {
+                 router.push(pathType === 'alphabet' ? '/alphabet' : pathType === 'speak' ? '/speak' : '/learn');
+              }
+            }}
+          >
+            {mode === 'training' ? "Enchaîner la leçon" : (
+              <>
+                <LogOut size={20} className="rotate-180" />
+                {getTranslation('auto.back', language) || "Retour"}
+              </>
+            )}
+          </Button>
+
+          {mode !== 'training' && mode !== 'revision' && (
+            <Button
+              variant="gamifiedSecondary"
+              size="lg"
+              className="px-0 w-16 shrink-0"
+              onClick={() => window.location.reload()}
+              title={getTranslation('auto.retry', language) || "Recommencer"}
+            >
+              <RotateCcw size={24} />
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

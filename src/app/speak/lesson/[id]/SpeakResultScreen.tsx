@@ -1,9 +1,10 @@
 import { getTranslation } from "@/hooks/useTranslation";
 import { m as motion, AnimatePresence } from "framer-motion";
-import { Check, Star, RotateCcw } from "lucide-react";
+import { Check, Star, RotateCcw, Clock, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useProgressStore } from "@/lib/store";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
+import { Button } from "@/components/ui/Button";
 
 interface SpeakResultScreenProps {
   lessonId: string;
@@ -12,6 +13,7 @@ interface SpeakResultScreenProps {
   exercisesLength: number;
   language: string;
   earnedXp: number;
+  elapsedTimeSec?: number;
 }
 
 export default function SpeakResultScreen({
@@ -21,6 +23,7 @@ export default function SpeakResultScreen({
   exercisesLength,
   language,
   earnedXp,
+  elapsedTimeSec,
 }: SpeakResultScreenProps) {
   const router = useRouter();
 
@@ -34,6 +37,12 @@ export default function SpeakResultScreen({
     } else {
       router.push(nextUrl);
     }
+  };
+
+  const formatTime = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
   return (
@@ -66,38 +75,55 @@ export default function SpeakResultScreen({
           : (getTranslation('auto.level_completed', language) || 'Niveau {level} terminé !').replace('{level}', String(currentLevel + 1))}
       </h1>
       
-      <p className="text-slate-500 mb-4 text-center text-lg font-medium">
-        + {earnedXp !== undefined ? earnedXp : exercisesLength * 3} XP
-      </p>
+      {elapsedTimeSec !== undefined && elapsedTimeSec !== null ? (
+        <p className="text-indigo-500 mb-4 text-center text-lg font-bold flex items-center justify-center gap-2">
+          <Clock size={20} />
+          {language === "en" ? `Time: ${formatTime(elapsedTimeSec)}` : `Temps : ${formatTime(elapsedTimeSec)}`}
+        </p>
+      ) : (
+        <p className="text-slate-500 mb-4 text-center text-lg font-medium">
+          + {earnedXp !== undefined ? earnedXp : exercisesLength * 3} XP
+        </p>
+      )}
 
       <div className="w-full max-w-md mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-both">
         <DailyQuestsWidget category="speak" />
       </div>
       
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
+      <div className="flex flex-col gap-4 w-full max-w-lg">
         {currentLevel + 1 < 5 && (
-          <button
+          <Button
+            variant="indigoGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest"
             onClick={() =>
               handleNavigate(`/speak/lesson/${lessonId}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language))
             }
-            className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
           >
             {getTranslation('auto.next_level', language)}
-          </button>
+          </Button>
         )}
-        <button
-          onClick={() => window.location.reload()}
-          className="px-8 py-3 flex-1 rounded-xl bg-amber-500 border-b-4 border-amber-700 text-white font-bold text-lg shadow-lg hover:bg-amber-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
-        >
-          <RotateCcw size={20} />
-          {getTranslation('auto.retry', language)}
-        </button>
-        <button
-          onClick={() => router.push(`/speak`)}
-          className="px-8 py-3 flex-1 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
-        >
-          {getTranslation('auto.back', language)}
-        </button>
+        <div className="flex flex-row gap-4 w-full">
+          <Button
+            variant="flat"
+            size="lg"
+            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            onClick={() => router.push(`/speak`)}
+          >
+            <LogOut size={20} className="rotate-180" />
+            {getTranslation('auto.back', language) || "Retour"}
+          </Button>
+
+          <Button
+            variant="gamifiedSecondary"
+            size="lg"
+            className="px-0 w-16 shrink-0"
+            onClick={() => window.location.reload()}
+            title={getTranslation('auto.retry', language) || "Recommencer"}
+          >
+            <RotateCcw size={24} />
+          </Button>
+        </div>
       </div>
     </div>
   );

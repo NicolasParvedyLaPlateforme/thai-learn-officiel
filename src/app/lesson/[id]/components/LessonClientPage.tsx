@@ -138,6 +138,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [initialTime, setInitialTime] = useState<number | null>(null);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [elapsedTimeSec, setElapsedTimeSec] = useState<number | undefined>(undefined);
   const [failedDueToTime, setFailedDueToTime] = useState(false);
   const [earnedXp, setEarnedXp] = useState<number>(0);
 
@@ -177,6 +179,18 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     initialMistakes: engineMistakes,
     animationDelay: 150,
     isExerciseIntroOrReview: (ex) => ex.type === 'intro',
+    cloneExerciseForRetry: (ex) => {
+      const cloned = { ...ex, id: (ex as any).id + '-retry-' + Date.now() };
+      if (cloned.type === 'word-match' && cloned.options) {
+        const shuffled = [...cloned.options];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        cloned.options = shuffled;
+      }
+      return cloned;
+    },
     evaluateAnswer: (ex, answerToCheck) => {
       let correct = false;
       if (ex.type === "word-match") {
@@ -396,6 +410,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
           setTimeLeft(null);
           setInitialTime(null);
         }
+        setStartTime(Date.now());
         setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
       }).catch(e => {
         console.error("Failed to load exercises (likely cache mismatch):", e);
@@ -466,6 +481,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       setEngineMistakes(savedState.mistakes);
       setTimeLeft(savedState.timeLeft);
       setInitialTime(savedState.initialTime);
+      setStartTime(Date.now());
       setFailedDueToTime(false);
     }
     setShowResumePrompt(false);
@@ -503,6 +519,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         setTimeLeft(null);
         setInitialTime(null);
       }
+      setStartTime(Date.now());
       setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
     }).catch(e => {
       console.error("Failed to load exercises (likely cache mismatch):", e);
@@ -549,13 +566,16 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   useEffect(() => {
     if (!lesson) return;
     if (isFinished) {
+      if (startTime && elapsedTimeSec === undefined) {
+        setElapsedTimeSec(Math.floor((Date.now() - startTime) / 1000));
+      }
       const currentMode = searchParams.get('mode');
       if (currentMode !== 'training' && currentMode !== 'revision') {
         const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
         saveInProgressLesson(savedStateKey, null);
       }
     }
-  }, [isFinished, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson, searchParams]);
+  }, [isFinished, lesson?.id, currentLevel, isPart, partIndex, saveInProgressLesson, searchParams, startTime, elapsedTimeSec]);
 
   useEffect(() => {
     if (timeLeft === null || isFinished || !showExerciseUI || !isDataLoaded) return;
@@ -665,6 +685,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         partIndex={partIndex}
         totalParts={totalParts}
         mode={searchParams.get('mode')}
+        elapsedTimeSec={elapsedTimeSec}
       />
     );
   }
