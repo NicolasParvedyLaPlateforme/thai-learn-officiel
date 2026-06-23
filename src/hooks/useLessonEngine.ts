@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export interface UseLessonEngineOptions<TExercise> {
   initialExercises: TExercise[];
@@ -37,6 +37,7 @@ export function useLessonEngine<TExercise, TAnswer = any>({
   const [mistakes, setMistakes] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<TAnswer | null>(null);
   const [isExiting, setIsExiting] = useState(false);
+  const isTransitioningRef = useRef(false);
 
   useEffect(() => {
     if (initialExercises.length > 0) {
@@ -48,6 +49,7 @@ export function useLessonEngine<TExercise, TAnswer = any>({
       setMistakes(initialMistakes);
       setSelectedAnswer(null);
       setIsExiting(false);
+      isTransitioningRef.current = false;
     }
   }, [initialExercises, initialIndex, initialMistakes]);
 
@@ -56,6 +58,7 @@ export function useLessonEngine<TExercise, TAnswer = any>({
 
   const performProceed = useCallback((targetLength: number) => {
     setIsExiting(false);
+    isTransitioningRef.current = false;
     if (currentIndex < targetLength - 1) {
       const nextIdx = currentIndex + 1;
       setCurrentIndex(nextIdx);
@@ -70,6 +73,9 @@ export function useLessonEngine<TExercise, TAnswer = any>({
   }, [currentIndex, exercises, mistakes, onComplete, onExerciseChange]);
 
   const proceedToNext = useCallback((targetLength: number = exercises.length) => {
+    if (isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
+    
     if (animationDelay > 0) {
       setIsExiting(true);
       setTimeout(() => performProceed(targetLength), animationDelay);
@@ -79,7 +85,7 @@ export function useLessonEngine<TExercise, TAnswer = any>({
   }, [animationDelay, performProceed, exercises.length]);
 
   const handleCheck = useCallback((overrideAnswer?: TAnswer) => {
-    if (!currentExercise) return;
+    if (!currentExercise || isFinished || isTransitioningRef.current) return;
 
     if (isExerciseIntroOrReview(currentExercise)) {
       if (onCorrect) onCorrect(currentExercise, null);
