@@ -29,11 +29,18 @@ export function generateExercises(
     lessonPhrases = getChunk(lessonPhrases, partIndex, totalParts);
   }
 
-  if (lesson.isReview) {
+  // Les leçons bilan n'ont pas isReview=true dans le JSON, mais fonctionnent exactement
+  // comme des leçons de révision : elles n'ont pas leurs propres words/phrases et doivent
+  // agréger les contenus de l'unité précédente.
+  const isBilanLesson = lesson.isReview ||
+    lesson.id?.startsWith('bilan-') ||
+    lesson.id?.includes('-bilan');
+
+  if (isBilanLesson) {
     const currentIdx = allLessons.findIndex(l => l.id === lesson.id);
     let unitStartIdx = 0;
     for (let i = currentIdx - 1; i >= 0; i--) {
-      if (allLessons[i].isReview) {
+      if (allLessons[i].isReview || allLessons[i].id?.startsWith('bilan-') || allLessons[i].id?.includes('-bilan')) {
         unitStartIdx = i + 1;
         break;
       }

@@ -397,65 +397,34 @@
   },
   "bilan-unit-1": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -859,65 +828,34 @@
   },
   "bilan-unit-2": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -1321,65 +1259,34 @@
   },
   "bilan-unit-3": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -1783,65 +1690,34 @@
   },
   "bilan-unit-4": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -2245,65 +2121,34 @@
   },
   "bilan-unit-5": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -2773,65 +2618,34 @@
   },
   "bilan-unit-6": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -3235,65 +3049,34 @@
   },
   "bilan-unit-7": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -3763,65 +3546,34 @@
   },
   "bilan-unit-8": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -4291,65 +4043,34 @@
   },
   "bilan-unit-9": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -4753,65 +4474,34 @@
   },
   "bilan-unit-10": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -5281,65 +4971,34 @@
   },
   "bilan-unit-11": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -5809,65 +5468,34 @@
   },
   "bilan-unit-12": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -6337,65 +5965,34 @@
   },
   "bilan-unit-13": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -6865,65 +6462,34 @@
   },
   "bilan-unit-14": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -7327,65 +6893,34 @@
   },
   "bilan-unit-15": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0
@@ -7723,65 +7258,34 @@
   },
   "lesson-64-bilan-final": {
     "0": {
-      "full": 5,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2
+      "full": 5
     },
     "1": {
-      "full": 10,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 10
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 15
     },
     "3": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 20
     },
     "4": {
-      "full": 23,
-      "part_0": 9,
-      "part_1": 9,
-      "part_2": 9
+      "full": 23
     },
     "5": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 10
+      "full": 26
     },
     "6": {
-      "full": 29,
-      "part_0": 11,
-      "part_1": 11,
-      "part_2": 11
+      "full": 29
     },
     "7": {
-      "full": 32,
-      "part_0": 20,
-      "part_1": 20
+      "full": 32
     },
     "8": {
-      "full": 35,
-      "part_0": 13,
-      "part_1": 13,
-      "part_2": 13
+      "full": 35
     },
     "9": {
-      "full": 10,
-      "part_0": 2,
-      "part_1": 2,
-      "part_2": 2,
-      "part_3": 2,
-      "part_4": 2
+      "full": 10
     },
     "10": {
       "full": 0

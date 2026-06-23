@@ -186,9 +186,10 @@ export default function LearnMobileTimeline({
           <div className="flex flex-col relative w-full pb-8">
           {unitLessons.map((lesson, idx) => {
             const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
+            const isBilan = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
             let isReviewLocked = false;
-            if (lesson.isReview && mounted) {
-              const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview);
+            if (isBilan && mounted) {
+              const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview && !l.id?.startsWith('bilan-') && !l.id?.includes('-bilan'));
               isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
             }
 
@@ -206,7 +207,7 @@ export default function LearnMobileTimeline({
                 unitShades={unit.shades}
                 isReviewLocked={isReviewLocked}
                 isMaxLevel={isMaxLevel}
-                isReview={lesson.isReview}
+                isReview={isBilan}
                 onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'learn')}
                 cardContent={
                   <SharedLessonCard

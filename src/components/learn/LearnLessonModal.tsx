@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Drawer } from 'vaul';
-import { BookOpen, Star, Lock, Crown, Clock, Pencil, RotateCcw, PieChart, Circle } from 'lucide-react';
+import { BookOpen, Star, Lock, Crown, Clock, Pencil, RotateCcw, PieChart, Circle, Trophy, Info } from 'lucide-react';
 import Link from 'next/link';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { playThaiTTS } from "@/lib/tts";
@@ -59,6 +59,12 @@ export default function LearnLessonModal({
 
   if (!selectedLesson) return null;
 
+  // Détection bilan (pas de isReview dans le JSON pour ces leçons)
+  const isBilanLesson = selectedLesson.lesson.isReview ||
+    selectedLesson.lesson.id?.startsWith('bilan-') ||
+    selectedLesson.lesson.id?.includes('-bilan') ||
+    selectedLesson.lesson.title?.toLowerCase().includes('bilan');
+
   const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
 
   const totalParts = getLevelSplit(modalLevel, selectedLesson.lesson);
@@ -83,7 +89,8 @@ export default function LearnLessonModal({
   let estimatedSecs = exactStepsCount * secsPerStep;
   let estimatedMins = Math.ceil(estimatedSecs / 60);
   
-  if (selectedLesson.lesson.isReview) {
+  if (isBilanLesson) {
+    // Durée réelle = temps imparti du chronomètre
     estimatedMins = (modalLevel + 1) * 2;
   } else if (modalLevel === 10) {
     estimatedMins = 20;
@@ -92,11 +99,10 @@ export default function LearnLessonModal({
     else estimatedMins = Math.max(1, estimatedMins);
   }
 
-  const isReviewOrBilan = selectedLesson.lesson.isReview || selectedLesson.lesson.title?.toLowerCase().includes('bilan');
   const { xp: expectedXp, maxXp, isFirstTime } = getExpectedXp(
     selectedLesson.lesson.id, 
     modalLevel, 
-    !!isReviewOrBilan,
+    !!isBilanLesson,
     isPlayingPart,
     !isPlayingPart && (modalLevel === 7 || modalLevel === 8),
     selectedPartIndex >= 0 ? selectedPartIndex : 0
@@ -109,19 +115,23 @@ export default function LearnLessonModal({
   const earnedStarsMastery = starsArrayMastery[10] || 0;
   const isCompletedMastery = isUnlockedMastery && earnedStarsMastery > 0;
 
+  // Stat score du bilan (meilleur temps ou meilleur %)
+  const bilanStats = reviewStats?.[selectedLesson.lesson.id]?.[modalLevel];
+
   return (
     <SharedLessonModal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       language={language}
-      isReviewOrMastery={selectedLesson.lesson.isReview || modalLevel === 10}
+      isReviewOrMastery={isBilanLesson || modalLevel === 10}
       isMastery={modalLevel === 10}
       modalLevel={modalLevel}
       lessonId={selectedLesson.lesson.id}
       reviewStats={reviewStats}
       footer={
         <>
-          {selectedLesson.isCompleted && (
+          {/* Pas de bouton écriture pour les bilans (ils n'ont pas de vocab propre) */}
+          {selectedLesson.isCompleted && !isBilanLesson && (
             <div className="flex gap-3">
               <Link
                 href={`/writing?lessonId=${selectedLesson.lesson.id}`}
@@ -143,13 +153,34 @@ export default function LearnLessonModal({
                 className: `w-full rounded-xl ${selectedLesson.unitColor} ${selectedLesson.unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500')}` 
               })}
             >
-              {getTranslation('auto.start_lesson', language)}
+              {isBilanLesson
+                ? (language === 'en' ? 'Start Assessment' : 'Commencer le bilan')
+                : getTranslation('auto.start_lesson', language)}
             </Link>
           </div>
         </>
       }
     >
       <div className="px-7 pt-2 flex flex-col">
+        {/* Explication logique bilan */}
+        {isBilanLesson && (
+          <div className="flex items-start gap-3 mb-6 p-4 bg-amber-50 rounded-2xl border border-amber-200">
+            <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0 mt-0.5">
+              <Clock size={16} className="text-amber-600 stroke-[2.5]" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-amber-800 font-bold text-[13px]">
+                {language === 'en' ? 'Timed Assessment' : 'Évaluation chronométrée'}
+              </span>
+              <span className="text-amber-700 text-[12px] font-medium leading-snug">
+                {language === 'en'
+                  ? `You have ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} to answer as many questions as possible. The further you get, the better your score!`
+                  : `Vous avez ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} pour répondre à un maximum de questions. Plus vous allez loin, meilleur est votre score !`}
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col items-center mb-8 border-b border-slate-100 pb-8 w-full">
                 <LessonPartsSelector
                   totalParts={totalParts}
@@ -167,11 +198,12 @@ export default function LearnLessonModal({
                   expectedXp={expectedXp}
                   maxXp={maxXp}
                   isFirstTime={isFirstTime}
-                  estimatedMins={playFullLevel ? estimatedMins : Math.ceil(estimatedMins/totalParts)}
-                  title={playFullLevel ? "NIVEAU ENTIER" : totalParts > 1 ? `PARTIE ${selectedPartIndex + 1}` : "DÉTAILS"}
+                  estimatedMins={isBilanLesson ? estimatedMins : (playFullLevel ? estimatedMins : Math.ceil(estimatedMins/totalParts))}
+                  title={isBilanLesson ? 'BILAN' : (playFullLevel ? "NIVEAU ENTIER" : totalParts > 1 ? `PARTIE ${selectedPartIndex + 1}` : "DÉTAILS")}
                 />
         </div>
       </div>
     </SharedLessonModal>
   );
 }
+

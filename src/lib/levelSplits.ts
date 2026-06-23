@@ -1,4 +1,15 @@
 export const getLevelSplit = (levelIndex: number, lesson?: any): number => {
+  // Les leçons de bilan sont toujours en partie unique (1), quoi qu'il y ait dans leur objet `part`.
+  // Elles n'ont pas de système de découpage en sous-parties.
+  if (lesson) {
+    const isBilan =
+      lesson.isReview === true ||
+      lesson.id?.startsWith('bilan-') ||
+      lesson.id?.includes('-bilan') ||
+      lesson.title?.toLowerCase().includes('bilan');
+    if (isBilan) return 1;
+  }
+
   if (lesson && lesson.part) {
     const val = lesson.part[`niveau-${levelIndex + 1}`];
     if (val !== undefined) {
