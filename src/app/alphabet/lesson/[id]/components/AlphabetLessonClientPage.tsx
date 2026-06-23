@@ -65,6 +65,8 @@ function AlphabetLessonContent() {
   const [showExerciseUI, setShowExerciseUI] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [earnedXp, setEarnedXp] = useState<number>(0);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [elapsedTimeSec, setElapsedTimeSec] = useState<number | undefined>(undefined);
 
   const {
     exercises,
@@ -163,6 +165,7 @@ function AlphabetLessonContent() {
           getAlphabetRevisionExercisesServer(lesson.id, language).then(generated => {
             const finalEx = generated.slice(0, 8);
             setInitialExercises(finalEx as unknown as AlphabetExercise[]);
+            setStartTime(Date.now());
             setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
           });
         });
@@ -174,6 +177,7 @@ function AlphabetLessonContent() {
              finalEx = generated.slice(0, 8);
           }
           setInitialExercises(finalEx as unknown as AlphabetExercise[]);
+          setStartTime(Date.now());
           setExercisesGeneratedFor({ id: lesson.id, level: currentLevel });
         });
       }
@@ -190,6 +194,12 @@ function AlphabetLessonContent() {
       triggerConfetti();
     }
   }, [searchParams, exercises.length, isFinished, lesson?.id, currentLevel, completeLesson]);
+
+  useEffect(() => {
+    if (isFinished && startTime && elapsedTimeSec === undefined) {
+      setElapsedTimeSec(Math.floor((Date.now() - startTime) / 1000));
+    }
+  }, [isFinished, startTime, elapsedTimeSec]);
 
   const isDataLoaded = isClient && _hasHydrated && !!lesson && exercises.length > 0;
 
@@ -214,7 +224,7 @@ function AlphabetLessonContent() {
 
 // ... Inside AlphabetLessonContent, replace the isFinished check:
 
-  if (isFinished) {
+  if (isFinished && exercisesGeneratedFor?.level === currentLevel) {
     const isLastConsonant = lesson && consonants.length > 0 && lesson.id === consonants[consonants.length - 1].id;
     const isLastVowel = lesson && vowels.length > 0 && lesson.id === vowels[vowels.length - 1].id;
     const isEndOfUnit = isLastConsonant || isLastVowel;
@@ -231,6 +241,7 @@ function AlphabetLessonContent() {
         earnedXp={earnedXp}
         mode={searchParams.get("mode")}
         pathType="alphabet"
+        elapsedTimeSec={elapsedTimeSec}
       />
     );
   }

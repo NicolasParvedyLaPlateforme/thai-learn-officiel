@@ -49,6 +49,8 @@ export default function SpeakLessonClient({
   const [isFinished, setIsFinished] = useState(false);
   const [earnedXp, setEarnedXp] = useState(0);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [elapsedTimeSec, setElapsedTimeSec] = useState<number | undefined>(undefined);
   
   // Level 1 specific states
   const [exercises, setExercises] = useState(limitTo8 ? vocabulary.slice(0, 8) : vocabulary);
@@ -129,6 +131,7 @@ export default function SpeakLessonClient({
          }
       }
     }
+    setStartTime(Date.now());
     setMounted(true);
   }, [mounted, isLevel2, isLevel3, isLevel4, isLevel5, lessonId, vocabulary, dictionary, inProgressLessons, storageKey]);
 
@@ -143,6 +146,12 @@ export default function SpeakLessonClient({
     setIsFinished(true);
     triggerConfetti();
   };
+
+  useEffect(() => {
+    if (isFinished && startTime && elapsedTimeSec === undefined) {
+      setElapsedTimeSec(Math.floor((Date.now() - startTime) / 1000));
+    }
+  }, [isFinished, startTime, elapsedTimeSec]);
 
   const handleNextLevel4And5 = (phraseId: string, mistakesCount: number, isAbandoned?: boolean) => {
     let newCompleted = completedLevel4PhraseIds;
@@ -318,6 +327,7 @@ export default function SpeakLessonClient({
         exercisesLength={currentLength}
         language={language}
         earnedXp={earnedXp}
+        elapsedTimeSec={elapsedTimeSec}
       />
     );
   }
