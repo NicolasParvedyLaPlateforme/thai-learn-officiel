@@ -212,11 +212,17 @@ export function generateTrainingExercises(
   allLessons: Lesson[],
   language: string = 'fr',
   partIndex: number | null,
-  totalParts: number | null
+  totalParts: number | null,
+  currentLevel: number = 0
 ): Exercise[] {
   const pools = [];
-  for (let lvl = 0; lvl <= 8; lvl++) {
-    pools.push(generateExercises(lesson, allLessons, lvl, language, partIndex, totalParts));
+  let maxExerciseLvl = currentLevel - 1;
+  if (maxExerciseLvl < 0) maxExerciseLvl = 0;
+
+  for (let lvl = 0; lvl <= maxExerciseLvl; lvl++) {
+    const effectivePartIndex = currentLevel > 0 ? null : partIndex;
+    const effectiveTotalParts = currentLevel > 0 ? null : totalParts;
+    pools.push(generateExercises(lesson, allLessons, lvl, language, effectivePartIndex, effectiveTotalParts));
   }
   return pickRandomExercises(pools, 5);
 }

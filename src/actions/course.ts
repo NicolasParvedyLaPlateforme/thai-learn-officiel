@@ -15,10 +15,10 @@ export async function getWritingExercisesServer(targetLessons: string[], languag
   return generateWritingExercises(data.lessons, targetLessons, language, selectedWordIds);
 }
 
-export async function getTrainingExercisesServer(lessonId: string, language: string, partIndex: number | null, totalParts: number | null) {
+export async function getTrainingExercisesServer(lessonId: string, language: string, partIndex: number | null, totalParts: number | null, currentLevel: number = 0) {
   const lesson = data.lessons.find(l => l.id === lessonId);
   if (!lesson) return [];
-  return generateTrainingExercises(lesson, data.lessons, language, partIndex, totalParts);
+  return generateTrainingExercises(lesson, data.lessons, language, partIndex, totalParts, currentLevel);
 }
 
 export async function getRevisionExercisesServer(lessonId: string, language: string) {

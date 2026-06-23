@@ -365,7 +365,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       const mode = searchParams.get('mode');
       let generatorPromise;
       if (mode === 'training') {
-        generatorPromise = getTrainingExercisesServer(lesson.id, language, isPart ? partIndex : null, isPart ? totalParts : null);
+        generatorPromise = getTrainingExercisesServer(lesson.id, language, isPart ? partIndex : null, isPart ? totalParts : null, currentLevel);
       } else if (mode === 'revision') {
         generatorPromise = getRevisionExercisesServer(lesson.id, language);
       } else {
