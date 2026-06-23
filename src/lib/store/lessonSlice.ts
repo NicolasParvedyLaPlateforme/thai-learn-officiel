@@ -153,6 +153,13 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
       const updatedCompletedToday = (isFirstTime && !isFromParts) ? [...newCompletedToday, key] : newCompletedToday;
 
       const partsKey = `${lessonId}_level-${actualPlayedLevel}`;
+      // Quand appelé via isFromParts (chaîne completeLessonPart → completeLesson),
+      // les données de parts sont déjà correctes dans le store → on les préserve.
+      // Quand appelé directement (jeu en mode niveau entier ou bilan),
+      // on marque simplement 1 part complétée [0] pour cohérence avec totalParts = 1.
+      const newPartsForKey = isFromParts
+        ? (state.lessonPartsCompleted[partsKey] || [0])
+        : [0];
       
       return {
         completedLessons: state.completedLessons.includes(lessonId) 
@@ -165,7 +172,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
         },
         lessonPartsCompleted: {
           ...state.lessonPartsCompleted,
-          [partsKey]: [0, 1, 2, 3, 4] 
+          [partsKey]: newPartsForKey
         },
         lessonStars: {
           ...state.lessonStars,
