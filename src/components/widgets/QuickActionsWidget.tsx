@@ -4,6 +4,7 @@ import { getTranslation } from "@/hooks/useTranslation";
 import { Zap, Play, RotateCcw, Target, Crown, ChevronLeft } from 'lucide-react';
 import { m as motion, AnimatePresence } from "motion/react";
 import { useRouter } from 'next/navigation';
+import BASE_UNITS from "@/data/units.json";
 import { getLightweightLessons } from "@/actions/course";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { Button } from "@/components/ui/Button";
@@ -18,7 +19,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     language, 
     lessonLevels, 
     lessonPartsCompleted,
-    setLastActiveUnitIndex
+    lastActiveUnitIndex
   } = useProgressStore();
   const router = useRouter();
 
@@ -37,14 +38,67 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     nextPart,
     nextTotalParts,
     isUnitCompleted,
-    randomMasteredLesson
+    randomMasteredLesson,
+    hasStartedUnit,
+    hasCompletedFirstLevel
   } = useMemo(() => {
+    let currentStartIndex = 0;
+    let targetStartIndex = 0;
+    let targetEndIndex = lessonsData.length;
+    const targetUnitIndex = lastActiveUnitIndex || 0;
+
+    for (let i = 0; i < BASE_UNITS.length; i++) {
+      let endIndex = currentStartIndex;
+      for (let j = currentStartIndex; j < lessonsData.length; j++) {
+        const title = lessonsData[j]?.title || "";
+        const titleEn = lessonsData[j]?.titleEn || "";
+        if (title.toLowerCase().includes("bilan") || titleEn.toLowerCase().includes("review")) {
+          endIndex = j + 1;
+          break;
+        }
+      }
+      if (endIndex === currentStartIndex && currentStartIndex < lessonsData.length) {
+        endIndex = lessonsData.length;
+      }
+
+      if (i === targetUnitIndex) {
+        targetStartIndex = currentStartIndex;
+        targetEndIndex = endIndex;
+        break;
+      }
+      currentStartIndex = endIndex;
+    }
+
+    const unitLessons = lessonsData.slice(targetStartIndex, targetEndIndex);
+
     let nextLsn = null;
     let nextLvl = 0;
     
+    let started = false;
+    let completedFirstLevel = false;
+    const masteredUnitLessons = [];
+    
+    for (const lesson of unitLessons) {
+      const level = lessonLevels[lesson.id] || 0;
+      
+      if (level > 0) {
+        started = true;
+        completedFirstLevel = true;
+      } else {
+        const partsKey = `${lesson.id}_level-0`;
+        const completedParts = lessonPartsCompleted[partsKey] || [];
+        if (completedParts.length > 0) {
+          started = true;
+        }
+      }
+
+      if (level >= 10) {
+        masteredUnitLessons.push(lesson);
+      }
+    }
+
     // Check for furthest in progress first
-    for (const lesson of lessonsData) {
-      if (!lesson) continue;
+    for (const lesson of unitLessons) {
       const level = lessonLevels[lesson.id] || 0;
       if (level > 0 && level < 10 && !nextLsn) {
         nextLsn = lesson;
@@ -54,8 +108,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     
     // If none in progress, find first zero level
     if (!nextLsn) {
-      for (const lesson of lessonsData) {
-        if (!lesson) continue;
+      for (const lesson of unitLessons) {
         const level = lessonLevels[lesson.id] || 0;
         if (level === 0) {
           nextLsn = lesson;
@@ -86,9 +139,8 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
       unitCompleted = true;
     }
 
-    const masteredLessons = lessonsData.filter(l => (lessonLevels[l.id] || 0) >= 10);
-    const rndMastered = masteredLessons.length > 0 
-      ? masteredLessons[Math.floor(Math.random() * masteredLessons.length)] 
+    const rndMastered = masteredUnitLessons.length > 0 
+      ? masteredUnitLessons[Math.floor(Math.random() * masteredUnitLessons.length)] 
       : null;
 
     return {
@@ -97,9 +149,11 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
       nextPart: nPart,
       nextTotalParts: nTotalParts,
       isUnitCompleted: unitCompleted,
-      randomMasteredLesson: rndMastered
+      randomMasteredLesson: rndMastered,
+      hasStartedUnit: started,
+      hasCompletedFirstLevel: completedFirstLevel
     };
-  }, [lessonsData, lessonLevels, lessonPartsCompleted]);
+  }, [lessonsData, lessonLevels, lessonPartsCompleted, lastActiveUnitIndex]);
 
   const handleSuivant = () => {
     if (isUnitCompleted) {
@@ -129,22 +183,28 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
     router.push(`/lesson/${randomMasteredLesson.id}?level=10&mode=revision`);
   };
 
+  if (!hasStartedUnit) {
+    return null;
+  }
+
   if (variant === 'mobile-bubble') {
     return (
       <div className="flex items-center justify-end">
         <div className="flex items-center bg-white/90 backdrop-blur-xl p-1.5 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-200/60 gap-1.5">
           
-          <button 
-            onClick={() => setIsFabOpen(!isFabOpen)}
-            className="w-9 h-9 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 transition-colors shrink-0"
-          >
-            <div className={`transition-transform duration-300 ${isFabOpen ? 'rotate-180' : ''}`}>
-               <ChevronLeft size={20} />
-            </div>
-          </button>
+          {hasCompletedFirstLevel && (
+            <button 
+              onClick={() => setIsFabOpen(!isFabOpen)}
+              className="w-9 h-9 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 transition-colors shrink-0"
+            >
+              <div className={`transition-transform duration-300 ${isFabOpen ? 'rotate-180' : ''}`}>
+                 <ChevronLeft size={20} />
+              </div>
+            </button>
+          )}
 
           <AnimatePresence>
-            {isFabOpen && (
+            {isFabOpen && hasCompletedFirstLevel && (
               <motion.div 
                 initial={{ opacity: 0, width: 0 }}
                 animate={{ opacity: 1, width: 'auto' }}
@@ -154,21 +214,22 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
               >
                 <div className="flex items-center gap-1.5 min-w-max">
                   {/* Bouton Révision */}
-                  <button 
-                    onClick={handleRevision}
-                    disabled={!randomMasteredLesson}
-                    className={`relative flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${randomMasteredLesson ? 'bg-purple-50 text-purple-600 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
-                  >
-                    {/* Tooltip Révision */}
-                    <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 bg-white border border-slate-200/60 rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center px-3 py-2 pointer-events-none z-[60] min-w-max">
-                      <span className="text-amber-500 font-black text-[13px] leading-none">+50 XP</span>
-                      <span className="text-slate-500 font-bold text-[11px] leading-none mt-1.5">🎲 1/5 🪙</span>
-                      <div className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white border-b border-r border-slate-200/60 rotate-45"></div>
-                    </div>
+                  {randomMasteredLesson && (
+                    <button 
+                      onClick={handleRevision}
+                      className={`relative flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm bg-purple-50 text-purple-600 hover:bg-purple-100`}
+                    >
+                      {/* Tooltip Révision */}
+                      <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 bg-white border border-slate-200/60 rounded-xl shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center px-3 py-2 pointer-events-none z-[60] min-w-max">
+                        <span className="text-amber-500 font-black text-[13px] leading-none">+50 XP</span>
+                        <span className="text-slate-500 font-bold text-[11px] leading-none mt-1.5">🎲 1/5 🪙</span>
+                        <div className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white border-b border-r border-slate-200/60 rotate-45"></div>
+                      </div>
 
-                    <RotateCcw size={14} />
-                    <span className="font-bold text-[12px] tracking-wide">Réviser</span>
-                  </button>
+                      <RotateCcw size={14} />
+                      <span className="font-bold text-[12px] tracking-wide">Réviser</span>
+                    </button>
+                  )}
 
                   {/* Bouton Entraînement */}
                   <button 
