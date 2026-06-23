@@ -70,12 +70,19 @@ export function SharedLessonCard({
   const lightBorderDynamicColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '200').replace(/400$/, '200');
   const hoverDynamicColor = isReviewLocked ? '' : (unit.hoverClass || 'hover:brightness-110');
 
+  const badgeBgColor = dynamicColor.replace('bg-', 'bg-').replace(/500$/, '100').replace(/400$/, '100');
+  const badgeTextColor = dynamicColor.replace('bg-', 'text-').replace(/500$/, '700').replace(/400$/, '700');
+  const badgeBorderColor = dynamicColor.replace('bg-', 'border-').replace(/500$/, '200').replace(/400$/, '200');
+
+  const isStarted = level > 0 && !isMaxLevel;
+
   const cardStyle = cn(
     "relative w-full transition-all duration-300 cursor-pointer border-[2px]",
     isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
-    isMaxLevel ? `${borderDynamicColor} bg-white` :
-      isReviewLocked ? "bg-slate-50/50 border-slate-100" :
-        isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
+    isMaxLevel ? `${badgeBorderColor} bg-white` :
+      isStarted ? `${borderDynamicColor} bg-white` :
+        isReviewLocked ? "bg-slate-50/50 border-slate-100" :
+          isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
   );
 
   // Renders the fragmented progress bar (horizontal dashes for mobile)
@@ -267,7 +274,7 @@ export function SharedLessonCard({
 
           {/* Badges */}
           {isMaxLevel ? (
-            <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-100 text-emerald-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-emerald-200 shrink-0">
+            <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-2 py-1 gap-1 z-10 font-bold border shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
               <CheckCircle size={14} /> <span className="hidden sm:inline">{getTranslation('auto.mastered', language)}</span>
             </Badge>
           ) : isSuggested ? (
@@ -293,9 +300,9 @@ export function SharedLessonCard({
           </div>
 
           <Button
-            variant={"gamified" as const}
+            variant={isMaxLevel ? "default" : "gamified"}
             size="sm"
-            className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white", dynamicColor, borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+            className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white", dynamicColor, !isMaxLevel && borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
             onClick={(e) => {
               e.stopPropagation();
               onClick();
@@ -331,7 +338,7 @@ export function SharedLessonCard({
 
         {/* Badges */}
         {isMaxLevel ? (
-          <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-100 text-emerald-700 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-emerald-200 shrink-0">
+          <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
             <CheckCircle size={14} /> {getTranslation('auto.mastered', language)}
           </Badge>
         ) : isSuggested ? (
@@ -356,9 +363,9 @@ export function SharedLessonCard({
       </div>
 
       <Button
-        variant={"gamified" as const}
+        variant={isMaxLevel ? "default" : "gamified"}
         size="lg"
-        className={cn("w-full mt-2 shadow-none text-white cursor-pointer transition-colors duration-200", dynamicColor, borderDynamicColor, hoverDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+        className={cn("w-full mt-2 shadow-none text-white cursor-pointer transition-colors duration-200", dynamicColor, !isMaxLevel && borderDynamicColor, hoverDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
         onClick={(e) => {
           e.stopPropagation();
           onClick();
