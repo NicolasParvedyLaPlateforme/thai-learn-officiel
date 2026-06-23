@@ -150,15 +150,22 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
                 animate={{ opacity: 1, width: 'auto' }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="overflow-hidden"
+                style={{ clipPath: 'inset(-100px 0 -100px 0)' }}
               >
                 <div className="flex items-center gap-1.5 min-w-max">
                   {/* Bouton Révision */}
                   <button 
                     onClick={handleRevision}
                     disabled={!randomMasteredLesson}
-                    className={`flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${randomMasteredLesson ? 'bg-purple-50 text-purple-600 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
+                    className={`relative flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${randomMasteredLesson ? 'bg-purple-50 text-purple-600 hover:bg-purple-100' : 'bg-slate-50 text-slate-300'}`}
                   >
+                    {/* Tooltip Révision */}
+                    <div className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-[10px] whitespace-nowrap shadow-lg flex items-center gap-1 pointer-events-none">
+                      <span className="text-amber-400">+50 XP</span>
+                      <span>+ 🪙</span>
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-800 rotate-45"></div>
+                    </div>
+
                     <RotateCcw size={14} />
                     <span className="font-bold text-[12px] tracking-wide">Réviser</span>
                   </button>
@@ -167,8 +174,15 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
                   <button 
                     onClick={handleEntrainement}
                     disabled={!nextLesson}
-                    className={`flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${nextLesson ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
+                    className={`relative flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full transition-all shadow-sm ${nextLesson ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' : 'bg-slate-50 text-slate-300'}`}
                   >
+                    {/* Tooltip Entraînement */}
+                    <div className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-[10px] whitespace-nowrap shadow-lg flex items-center gap-1 pointer-events-none">
+                      <span className="text-amber-400">+10 XP</span>
+                      <span>+ 🪙</span>
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-800 rotate-45"></div>
+                    </div>
+
                     <Target size={14} />
                     <span className="font-bold text-[12px] tracking-wide">S'entraîner</span>
                   </button>
@@ -180,8 +194,24 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop' }: 
           {/* Bouton Suivant */}
           <button 
             onClick={handleSuivant}
-            className={`flex items-center justify-center gap-1.5 h-9 px-4 rounded-full transition-all shadow-sm shrink-0 ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
+            className={`relative flex items-center justify-center gap-1.5 h-9 px-4 rounded-full transition-all shadow-sm shrink-0 ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : 'bg-emerald-500 text-white hover:bg-emerald-400'}`}
           >
+            {/* Tooltip Suivant */}
+            <AnimatePresence>
+              {isFabOpen && !isUnitCompleted && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 5 }}
+                  className="absolute bottom-full mb-2.5 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-[10px] whitespace-nowrap shadow-lg flex items-center gap-1 pointer-events-none"
+                >
+                  <span className="text-amber-400">+ XP</span>
+                  <span>+ 🪙</span>
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-800 rotate-45"></div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <Play size={13} className="fill-current stroke-current" />
             <span className="font-extrabold text-[12px] tracking-wide">Suivant</span>
           </button>
