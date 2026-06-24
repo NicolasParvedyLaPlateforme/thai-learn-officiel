@@ -53,16 +53,30 @@ export function LessonPathMap({
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : effectiveCurrent;
 
   /**
-   * Compute the slot height for a given levelIndex.
-   * The slot for levelIndex contains the path going to levelIndex-1,
-   * and displays the parts of levelIndex-1 along that path.
-   * So the extra height is based on partsOf(levelIndex-1).
+   * Compute the div height for a given slot.
+   * The slot for levelIndex displays parts of levelIndex-1 along its path.
+   * Extra height is based on partsOf(levelIndex-1).
+   * Note: mastery slot (index === maxLevel) ALSO gets extra height for parts
+   * of the last level (levelIndex-1 = maxLevel-1).
    */
   const getSlotHeight = (index: number): number => {
-    if (index === 0 || index === maxLevel) return BASE_SLOT_HEIGHT;
+    if (index === 0) return BASE_SLOT_HEIGHT; // No path below level 0
     const prevParts = lesson ? getLevelSplit(index - 1, lesson) : 1;
     const extra = prevParts > 1 ? (prevParts - 1) * EXTRA_PER_PART : 0;
     return BASE_SLOT_HEIGHT + extra;
+  };
+
+  /**
+   * Actual pixel distance between center of levelIndex node and center of (levelIndex-1) node.
+   * Each slot div's center is at height/2, so:
+   *   dist = slotHeight(index)/2 + slotHeight(index-1)/2
+   *
+   * This is used as the SVG height for the connecting path, ensuring the path
+   * ends exactly at the previous node's center (no overshoot / tail).
+   */
+  const getPathHeight = (index: number): number => {
+    if (index <= 0) return 0;
+    return getSlotHeight(index) / 2 + getSlotHeight(index - 1) / 2;
   };
 
   const getOffset = (index: number) => {
@@ -90,19 +104,16 @@ export function LessonPathMap({
   };
 
   /**
-   * Generate a cubic bezier SVG path that connects:
-   *   start: center of levelIndex node  (SVG y=0 = slot center)
-   *   end:   center of levelIndex-1 node (SVG y=height = slot bottom)
+   * Generate a cubic bezier SVG path.
+   * The SVG top is at top-1/2 of the slot (= this node's center, y=0).
+   * The path ends at y=pathHeight = the previous node's center.
    */
   const generatePath = (index: number, isMobile: boolean) => {
-    const height = getSlotHeight(index);
+    const height = getPathHeight(index);
     const startX = 100 + (isMobile ? getMobileOffset(index) : getOffset(index));
     const endX   = 100 + (isMobile ? getMobileOffset(index - 1) : getOffset(index - 1));
-
-    // Control points: same for mobile & desktop height, but different curvature
     const c1y = isMobile ? height * 0.8 : height * 0.5;
     const c2y = isMobile ? height * 0.2 : height * 0.5;
-
     return `M ${startX} 0 C ${startX} ${c1y}, ${endX} ${c2y}, ${endX} ${height}`;
   };
 
@@ -296,6 +307,7 @@ export function LessonPathMap({
           getOffset={getOffset}
           generatePath={generatePath}
           slotHeight={getSlotHeight(levelIndex)}
+          pathHeight={getPathHeight(levelIndex)}
         />
       ))}
     </div>

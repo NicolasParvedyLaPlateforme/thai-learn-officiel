@@ -28,8 +28,10 @@ interface LessonPathNodeProps {
   getMobileOffset: (index: number) => number;
   getOffset: (index: number) => number;
   generatePath: (index: number, isMobile: boolean) => string;
-  /** Height in px of the slot (same for mobile and desktop) */
+  /** Height of this slot's div (px) */
   slotHeight: number;
+  /** Actual center-to-center distance to previous node (for SVG path height) */
+  pathHeight: number;
 }
 
 export function LessonPathNode({
@@ -56,6 +58,7 @@ export function LessonPathNode({
   getOffset,
   generatePath,
   slotHeight,
+  pathHeight,
 }: LessonPathNodeProps) {
   const [openPartBubble, setOpenPartBubble] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -112,7 +115,9 @@ export function LessonPathNode({
   // prevLevel is fully done once we've reached levelIndex
   const isPrevLevelCompleted = levelIndex <= currentProgress;
 
-  const showPartNodes = levelIndex > 0 && !isMastery && prevPartsTotal > 1 && lessonId != null;
+  // showPartNodes: display parts of levelIndex-1 in this slot's path.
+  // Allowed even on the mastery slot (shows parts of the last numbered level).
+  const showPartNodes = levelIndex > 0 && lessonId != null && prevPartsTotal > 1;
 
   // Distribute parts evenly from bottom (t=0.8, P1) to top (t=0.2, P(n))
   const partTValues = showPartNodes
@@ -123,28 +128,21 @@ export function LessonPathNode({
     : [];
 
   /**
-   * Evaluate the bezier path at parameter t and return the CSS offset
-   * (in px) from the slot's center to place the part node.
+   * Evaluate the bezier path at t and return the CSS transform offset
+   * from the slot center to place the part node.
    *
-   * The slot div: height=slotHeight, flex items-center → main node at center (50%).
-   * The SVG: top-1/2 (top edge at 50% = main node position), height=slotHeight.
-   *   y=0 in SVG → at main node (levelIndex) position (CSS offset 0 from center).
-   *   y=slotHeight in SVG → at levelIndex-1's center (one full slot below).
-   * So CSS offsetY = bezierY (positive = downward toward levelIndex-1).
+   * SVG: top-1/2 → y=0 is at this node's center. y=pathHeight is at prev node's center.
+   * CSS transform from slot center: offsetY = bezierY (positive = downward).
    */
   const evalBezierXY = (t: number, isMobile: boolean): { x: number; y: number } => {
-    const height = slotHeight;
+    const height = pathHeight; // use actual center-to-center distance
     const startX = 100 + (isMobile ? getMobileOffset(levelIndex) : getOffset(levelIndex));
     const endX   = 100 + (isMobile ? getMobileOffset(prevLevelIndex) : getOffset(prevLevelIndex));
-
-    // Control points (same bezier shape as the track)
     const c1y = isMobile ? height * 0.8 : height * 0.5;
     const c2y = isMobile ? height * 0.2 : height * 0.5;
-
     const mt = 1 - t;
     const bx = mt*mt*mt*startX + 3*mt*mt*t*startX + 3*mt*t*t*endX + t*t*t*endX;
     const by = mt*mt*mt*0     + 3*mt*mt*t*c1y    + 3*mt*t*t*c2y   + t*t*t*height;
-
     return { x: bx - 100, y: by };
   };
 
@@ -152,8 +150,11 @@ export function LessonPathNode({
     return (stepsMetadata as any)?.[lessonId || '']?.[prevLevelIndex]?.[`part_${partIdx}`] || 0;
   };
 
-  // Whether to suppress the thick bezier track (replaced by part circles)
+  // Whether to suppress the thick bezier track (replaced by part circles + dashed line)
   const suppressTrack = showPartNodes;
+
+  // SVG height = pathHeight (center-to-center distance), not slotHeight
+  const svgH = pathHeight;
 
   return (
     <div
@@ -168,7 +169,7 @@ export function LessonPathNode({
           {/* Desktop SVG */}
           <svg
             className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${slotHeight}px` }}
+            style={{ height: `${svgH}px` }}
           >
             <path d={generatePath(levelIndex, false)} fill="none" stroke="currentColor"
               className={strokeClass} strokeWidth="22" strokeLinecap="round" />
@@ -178,7 +179,7 @@ export function LessonPathNode({
           {/* Mobile SVG */}
           <svg
             className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${slotHeight}px` }}
+            style={{ height: `${svgH}px` }}
           >
             <path d={generatePath(levelIndex, true)} fill="none" stroke="currentColor"
               className={strokeClass} strokeWidth="22" strokeLinecap="round" />
@@ -191,18 +192,18 @@ export function LessonPathNode({
       {/* ── Thin connector lines between part circles when track is hidden ── */}
       {suppressTrack && levelIndex > 0 && (
         <>
-          {/* Desktop */}
+          {/* Desktop dashed connector */}
           <svg
             className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${slotHeight}px` }}
+            style={{ height: `${svgH}px` }}
           >
             <path d={generatePath(levelIndex, false)} fill="none" stroke="currentColor"
               className={strokeClass} strokeWidth="8" strokeLinecap="round" strokeDasharray="6 6" opacity="0.35" />
           </svg>
-          {/* Mobile */}
+          {/* Mobile dashed connector */}
           <svg
             className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${slotHeight}px` }}
+            style={{ height: `${svgH}px` }}
           >
             <path d={generatePath(levelIndex, true)} fill="none" stroke="currentColor"
               className={strokeClass} strokeWidth="8" strokeLinecap="round" strokeDasharray="6 6" opacity="0.35" />
