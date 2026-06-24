@@ -62,7 +62,6 @@ export default function LearnDesktopTimeline({
       />
 
       <div className="flex flex-col gap-8 w-full relative">
-      <div className="flex flex-col gap-4 w-full">
       <div
         onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
         className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer transition-transform min-h-[220px] flex items-center group`}
@@ -82,19 +81,40 @@ export default function LearnDesktopTimeline({
               {getLocalizedField(unit, 'title', language)}
             </h2>
           </div>
-          <p className="text-white w-[60%] mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl">
+          <p className={`${unit.lightTextClass || 'text-white/90'} mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl`}>
             {getLocalizedField(unit, 'description', language)}
           </p>
+
+          <div className="flex items-center gap-6">
+            <div className="flex-1">
+              <div className={`flex flex-col`}>
+                <div className={`text-sm text-white font-bold mb-2 flex justify-between uppercase tracking-wide drop-shadow-sm`}>
+                  <span>{getTranslation('auto.mastery_5', language)}</span>
+                  <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
+                </div>
+                <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-3 overflow-hidden shadow-inner mb-2`}>
+                  <div
+                    className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
+                    style={{ width: `${progressPercent}%` }}
+                  ></div>
+                </div>
+                <div className={`text-[11px] ${unit.lightTextClass || 'text-white/80'} font-bold drop-shadow-sm`}>
+                  {getTranslation('auto.10_levels_per_lesson_total_mas', language)}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         {!unit.imageUrl && (
           <div className={`absolute -bottom-10 -right-10 opacity-10 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
             <BookOpen size={200} />
           </div>
         )}
-        <div className="absolute bottom-0 right-0 z-20 hidden md:block">
+        
+        <div className="absolute bottom-6 right-6 z-20 hidden md:block">
           <button
             onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
-            className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-tl-[15px] rounded-tr-none rounded-b-none border-b-0 border-r-0 shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px]"
+            className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-[1.25rem] shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px]"
           >
             <div className="flex items-center gap-3">
               <div className={`w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100`}>
@@ -114,24 +134,6 @@ export default function LearnDesktopTimeline({
             </div>
           </button>
         </div>
-
-      <div className="w-full bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col gap-3">
-        <div className="flex justify-between items-center px-2">
-          <span className="text-sm font-extrabold text-slate-400 uppercase tracking-wider">
-            {getTranslation('auto.mastery_5', language)}
-          </span>
-          <span className="text-sm font-extrabold text-slate-700">
-            {completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}
-          </span>
-        </div>
-        <div className="w-full bg-slate-100 rounded-full h-2.5 shadow-inner overflow-hidden">
-          <div
-            className={`h-full ${unit.colorClass} rounded-full transition-all duration-1000`}
-            style={{ width: `${progressPercent}%` }}
-          />
-        </div>
-      </div>
-      </div>
       </div>
 
       <div className="flex flex-col w-full mt-10">
