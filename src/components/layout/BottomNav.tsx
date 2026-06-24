@@ -102,7 +102,7 @@ export default function BottomNav() {
 
   return (
     <>
-      <nav id="bottom-nav" ref={navRef} className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-100 z-40 flex justify-around items-center h-[72px] px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.05)] transition-all duration-300">
+      <nav id="bottom-nav" ref={navRef} className={`md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-100 z-40 flex justify-around items-center h-[72px] px-2 shadow-[0_-4px_20px_-15px_rgba(0,0,0,0.05)] transition-transform duration-300 ease-in-out ${isScrollingDown ? 'translate-y-full' : 'translate-y-0'}`}>
         
         {/* POPOVERS */}
         <AnimatePresence>
