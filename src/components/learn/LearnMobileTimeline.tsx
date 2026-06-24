@@ -144,17 +144,43 @@ export default function LearnMobileTimeline({
               <span className="text-[11px] sm:text-xs font-extrabold text-slate-400 uppercase tracking-wider">
                 {getTranslation('auto.mastery_3', language)}
               </span>
-              <div className="w-[60%] bg-slate-100 h-[6px] shadow-inner">
+
+              {/* Ajout de 'relative' ici pour permettre la superposition des étoiles */}
+              <div className="relative w-[60%] bg-slate-100 h-[6px] shadow-inner">
+
+                {/* Votre barre d'origine, totalement inchangée */}
                 <div
                   className="h-full bg-gradient-to-r from-green-500 via-green-500 to-yellow-400 transition-all duration-1000"
                   style={{ width: `${progressPercent}%` }}
                 />
+
+                {/* Conteneur des 5 étoiles, superposé par-dessus */}
+                <div className="absolute top-1/2 left-0 w-full h-0 z-10 pointer-events-none">
+                  {[20, 40, 60, 80, 100].map((threshold, index) => {
+                    // L'étoile devient jaune si la progression a atteint ou dépassé son palier
+                    const isStarTouched = progressPercent >= threshold;
+
+                    return (
+                      <span
+                        key={index}
+                        className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-xl transition-all duration-1000 ${isStarTouched
+                          ? 'text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.8)] scale-110'
+                          : 'text-slate-300 drop-shadow-md'
+                          }`}
+                        style={{ left: `${threshold}%` }}
+                      >
+                        ★
+                      </span>
+                    );
+                  })}
+                </div>
+
               </div>
+
               <span className="text-xs font-extrabold text-slate-700">
                 {completedLevelsInUnit} / {maxLevelsInUnit}
               </span>
             </div>
-
           </div>
 
           {mounted && (
