@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { getLocalizedField, getTranslation } from "@/hooks/useTranslation";
-import { CheckCircle, Star } from 'lucide-react';
+import { CheckCircle, Crown, Star } from 'lucide-react';
 import IconImage from '../ui/IconImage';
 import { Card } from "@/components/ui/Card";
 import { Typography } from "@/components/ui/Typography";
@@ -136,12 +136,16 @@ export function SharedLessonCard({
 
   const mobileItems = getMobileItems();
 
-  // Animation: fade+slide out, then in on each index change
+  // Animation: disparition instantanée, puis réapparition en douceur (pas de clignotement)
   useEffect(() => {
     if (!isMobileLayout) return;
     setTextVisible(false);
-    const t = setTimeout(() => setTextVisible(true), 80);
-    return () => clearTimeout(t);
+    // Laisser React rendre l'opacité 0 avant de déclencher le fade-in
+    const raf = requestAnimationFrame(() => {
+      const t = setTimeout(() => setTextVisible(true), 20);
+      return () => clearTimeout(t);
+    });
+    return () => cancelAnimationFrame(raf);
   }, [scrollIndex, isMobileLayout]);
 
   // Register with the module-level scroll coordinator
@@ -421,7 +425,7 @@ export function SharedLessonCard({
     return (
       <Card
         ref={cardRef as React.Ref<HTMLDivElement>}
-        className={cn(cardStyle, "flex flex-col rounded-3xl overflow-hidden p-0")}
+        className={cn(cardStyle, "flex flex-col rounded-[10px] p-0")}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={(e) => {
@@ -429,55 +433,62 @@ export function SharedLessonCard({
           onClick();
         }}
       >
-        {/* ── Badges (mastered / suggested) ────────────────────────────────── */}
-        {isMaxLevel ? (
-          <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-2 py-1 gap-1 z-10 font-bold border shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
-            <CheckCircle size={14} /> <span className="hidden sm:inline">{getTranslation('auto.mastered', language)}</span>
-          </Badge>
-        ) : isSuggested ? (
-          <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-amber-200 shrink-0">
-            <Star size={12} fill="currentColor" /> <span className="hidden sm:inline">{getTranslation('auto.suggested', language)}</span>
-          </Badge>
-        ) : null}
-
-        {/* ── Hero image (no padding, full-width, collée aux bords) ─────────── */}
-        {/* ── Hero image – réduite d'1/4 (h-36 → h-[108px]) ────────────── */}
-        <div className="relative w-full h-[108px] sm:h-[126px] overflow-hidden shrink-0">
-          {lesson.imageUrl ? (
-            <IconImage
-              src={lesson.imageUrl}
-              alt={lesson.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 100vw, 640px"
-            />
-          ) : (
-            <div className={cn("w-full h-full", dynamicColor, "opacity-30")} />
-          )}
-          {/* Lock overlay */}
-          {isReviewLocked && (
-            <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px]">
-              <Star size={28} className="text-white fill-white/50" />
+        {/* ── Header: Image Left, Title/Desc Right ──────────────────────────────── */}
+        <div className="flex flex-row p-3 gap-3 border-b border-slate-100 relative">
+          {/* Mastered badge */}
+          {isMaxLevel && (
+            <div
+              className={cn("absolute -top-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white", badgeTextColor, badgeBorderColor)}
+            >
+              <Crown size={12} className={badgeTextColor} fill="currentColor" />
+              <span className={badgeTextColor}>{getTranslation('auto.mastered', language)}</span>
             </div>
           )}
 
-          {/* Title only in the image overlay (no description) */}
-          <div className={cn("absolute bottom-0 left-0 right-0 px-3 py-2 z-10", overlayColor)}>
-            <Typography variant="h4" className="text-white text-sm sm:text-base font-bold leading-snug line-clamp-1">
+          {/* Suggested badge (if any, matching desktop logic) */}
+          {!isMaxLevel && isSuggested && (
+            <div
+              className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-amber-100 text-amber-700 border-amber-200"
+            >
+              <Star size={10} fill="currentColor" />
+              <span>{getTranslation('auto.suggested', language)}</span>
+            </div>
+          )}
+
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-[10px] overflow-hidden shrink-0">
+            {lesson.imageUrl ? (
+              <IconImage
+                src={lesson.imageUrl}
+                alt={lesson.title}
+                fill
+                className="object-cover"
+                sizes="80px"
+              />
+            ) : (
+              <div className={cn("w-full h-full", dynamicColor, "opacity-30")} />
+            )}
+            {/* Lock overlay */}
+            {isReviewLocked && (
+              <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px]">
+                <Crown size={24} className="text-white fill-white/50" />
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col justify-center min-w-0 flex-1">
+            <Typography variant="h4" className="text-slate-800 text-sm sm:text-base font-bold leading-tight line-clamp-2">
               {getLocalizedField(lesson, 'title', language)}
+            </Typography>
+            <Typography variant="muted" className="text-slate-500 text-[11px] sm:text-xs leading-snug line-clamp-2 font-medium mt-1">
+              {renderDescription()}
             </Typography>
           </div>
         </div>
 
-        {/* Description below the image */}
-        <Typography variant="muted" className="text-slate-500 text-xs leading-snug line-clamp-1 font-medium px-3 pt-2">
-          {renderDescription()}
-        </Typography>
-
         {/* ── Body ─────────────────────────────────────────────────────────── */}
         <div className="flex flex-col gap-2.5 px-3 pt-2.5 pb-3">
 
-          {/* Rotating word / phrase strip – no background, centred */}
+          {/* Rotating word / phrase strip – no background, centred, fade animation */}
           {mobileItems.length > 0 && (
             <div
               className="flex items-center justify-center overflow-hidden"
@@ -488,11 +499,9 @@ export function SharedLessonCard({
                 className="flex items-center justify-center gap-2 w-full min-w-0"
                 style={{
                   opacity: textVisible ? 1 : 0,
-                  transform: textVisible ? 'translateX(0)' : 'translateX(-10px)',
-                  transition: textVisible
-                    ? 'opacity 0.25s ease, transform 0.25s ease'
-                    : 'none',
-                  willChange: 'opacity, transform',
+                  // Sortie instantanée (0s) puis entrée en douceur (0.5s) = pas de clignotement
+                  transition: textVisible ? 'opacity 0.5s ease' : 'opacity 0s',
+                  willChange: 'opacity',
                 }}
               >
                 <span className={cn("font-thai text-base font-bold leading-none truncate shrink-0", badgeTextColor)}>
