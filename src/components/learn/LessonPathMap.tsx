@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { ChevronLeft } from 'lucide-react';
 import { LessonPathMobileNav } from './LessonPathMobileNav';
 import { LessonPathNode } from './LessonPathNode';
+import { getLevelSplit } from '@/lib/levelSplits';
 
 interface LessonPathMapProps {
   maxLevel: number;
@@ -22,6 +23,11 @@ interface LessonPathMapProps {
   onReady?: () => void;
   onBack?: () => void;
 }
+
+/** Base slot height in px */
+const BASE_SLOT_HEIGHT = 290;
+/** Extra height per additional part (beyond 1) in the connecting segment */
+const EXTRA_PER_PART = 100;
 
 export function LessonPathMap({
   maxLevel,
@@ -45,6 +51,19 @@ export function LessonPathMap({
 
   const effectiveCurrent = currentProgress > maxLevel ? maxLevel : currentProgress;
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : effectiveCurrent;
+
+  /**
+   * Compute the slot height for a given levelIndex.
+   * The slot for levelIndex contains the path going to levelIndex-1,
+   * and displays the parts of levelIndex-1 along that path.
+   * So the extra height is based on partsOf(levelIndex-1).
+   */
+  const getSlotHeight = (index: number): number => {
+    if (index === 0 || index === maxLevel) return BASE_SLOT_HEIGHT;
+    const prevParts = lesson ? getLevelSplit(index - 1, lesson) : 1;
+    const extra = prevParts > 1 ? (prevParts - 1) * EXTRA_PER_PART : 0;
+    return BASE_SLOT_HEIGHT + extra;
+  };
 
   const getOffset = (index: number) => {
     return index % 2 === 0 ? -120 : 120;
@@ -70,17 +89,21 @@ export function LessonPathMap({
     }
   };
 
+  /**
+   * Generate a cubic bezier SVG path that connects:
+   *   start: center of levelIndex node  (SVG y=0 = slot center)
+   *   end:   center of levelIndex-1 node (SVG y=height = slot bottom)
+   */
   const generatePath = (index: number, isMobile: boolean) => {
-    const height = isMobile ? 240 : 320;
+    const height = getSlotHeight(index);
     const startX = 100 + (isMobile ? getMobileOffset(index) : getOffset(index));
-    const endX = 100 + (isMobile ? getMobileOffset(index - 1) : getOffset(index - 1));
-    
-    const c1x = startX;
-    const c2x = endX;
+    const endX   = 100 + (isMobile ? getMobileOffset(index - 1) : getOffset(index - 1));
+
+    // Control points: same for mobile & desktop height, but different curvature
     const c1y = isMobile ? height * 0.8 : height * 0.5;
     const c2y = isMobile ? height * 0.2 : height * 0.5;
 
-    return `M ${startX} 0 C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${height}`;
+    return `M ${startX} 0 C ${startX} ${c1y}, ${endX} ${c2y}, ${endX} ${height}`;
   };
 
   const currentLevelRef = useRef<HTMLDivElement | null>(null);
@@ -272,6 +295,7 @@ export function LessonPathMap({
           getMobileOffset={getMobileOffset}
           getOffset={getOffset}
           generatePath={generatePath}
+          slotHeight={getSlotHeight(levelIndex)}
         />
       ))}
     </div>

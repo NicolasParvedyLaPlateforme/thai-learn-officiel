@@ -1,7 +1,9 @@
-import React from 'react';
-import { Star, Lock, Crown, Flag } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Star, Lock, Crown, Flag, CheckCircle2 } from 'lucide-react';
 import { getTranslation } from "@/hooks/useTranslation";
 import { getLevelSplit } from "@/lib/levelSplits";
+import { PartNodeBubble } from './PartNodeBubble';
+import stepsMetadata from "@/data/steps_metadata_learn.json";
 
 interface LessonPathNodeProps {
   levelIndex: number;
@@ -26,6 +28,8 @@ interface LessonPathNodeProps {
   getMobileOffset: (index: number) => number;
   getOffset: (index: number) => number;
   generatePath: (index: number, isMobile: boolean) => string;
+  /** Height in px of the slot (same for mobile and desktop) */
+  slotHeight: number;
 }
 
 export function LessonPathNode({
@@ -50,78 +54,286 @@ export function LessonPathNode({
   getImageNameForLevel,
   getMobileOffset,
   getOffset,
-  generatePath
+  generatePath,
+  slotHeight,
 }: LessonPathNodeProps) {
+  const [openPartBubble, setOpenPartBubble] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (openPartBubble === null) return;
+    const handler = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpenPartBubble(null);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [openPartBubble]);
+
+  // ── Current node state ──
   const isMastery = levelIndex === maxLevel;
   const isUnlockedMastery = currentProgress >= maxLevel;
   const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
-  
   const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
   const isCompleted = isMastery ? earnedStarsMastery > 0 : levelIndex < currentProgress;
   const isCurrent = !isMastery && levelIndex === currentProgress;
   const isSelected = modalLevel === levelIndex;
   const earnedStars = earnedStarsArray[levelIndex] || 0;
-  
-  const totalSteps = lesson ? getLevelSplit(levelIndex, lesson) : 1;
-  const partsKey = `${lessonId}_level-${levelIndex}`;
-  const completedSteps = isCompleted ? totalSteps : (lessonPartsCompleted?.[partsKey]?.length || 0);
 
-  const strokeClass = levelIndex <= currentProgress 
-       ? unitColor.replace('bg-', 'text-') 
-       : 'text-slate-200';
+  // Step counter uses parts of the CURRENT level (for the flag indicator)
+  const currentLevelParts = lesson ? getLevelSplit(levelIndex, lesson) : 1;
+  const partsKey = `${lessonId}_level-${levelIndex}`;
+  const completedPartsForFlag = lessonPartsCompleted?.[partsKey] || [];
+  const completedStepsCount = isCompleted ? currentLevelParts : completedPartsForFlag.length;
+
+  const strokeClass = levelIndex <= currentProgress
+    ? unitColor.replace('bg-', 'text-')
+    : 'text-slate-200';
+
+  // ── Part sub-nodes: parts of (levelIndex - 1) drawn in this slot's path ──
+  //
+  // Layout: nodes rendered top→bottom as [maxLevel, ..., 1, 0].
+  // The path in slot(levelIndex) connects levelIndex (top) → levelIndex-1 (bottom).
+  // To progress FROM levelIndex-1 TO levelIndex, the user must complete parts of levelIndex-1.
+  // So we display parts of levelIndex-1 along the path inside slot(levelIndex).
+  //
+  // P1 goes near levelIndex-1 (bottom of path), P(n) near levelIndex (top of path).
+  // t=0 → top of path (levelIndex's node), t=1 → bottom (levelIndex-1's node).
+  // P1 (i=0): t ≈ 0.75 (near bottom = near levelIndex-1).
+  // P(n) (i=n-1): t ≈ 0.25 (near top = near levelIndex).
+
+  const prevLevelIndex = levelIndex - 1;
+  const prevPartsTotal = (lesson && levelIndex > 0) ? getLevelSplit(prevLevelIndex, lesson) : 1;
+  const prevPartsKey = `${lessonId}_level-${prevLevelIndex}`;
+  const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+  // prevLevel is accessible if we've at least started it
+  const isPrevLevelAccessible = levelIndex > 0 && prevLevelIndex <= currentProgress;
+  // prevLevel is fully done once we've reached levelIndex
+  const isPrevLevelCompleted = levelIndex <= currentProgress;
+
+  const showPartNodes = levelIndex > 0 && !isMastery && prevPartsTotal > 1 && lessonId != null;
+
+  // Distribute parts evenly from bottom (t=0.8, P1) to top (t=0.2, P(n))
+  const partTValues = showPartNodes
+    ? Array.from({ length: prevPartsTotal }, (_, i) => {
+        // t decreasing from 0.8 (P1, near levelIndex-1) to 0.2 (P(n), near levelIndex)
+        return 0.8 - i * (0.6 / (prevPartsTotal - 1 || 1));
+      })
+    : [];
+
+  /**
+   * Evaluate the bezier path at parameter t and return the CSS offset
+   * (in px) from the slot's center to place the part node.
+   *
+   * The slot div: height=slotHeight, flex items-center → main node at center (50%).
+   * The SVG: top-1/2 (top edge at 50% = main node position), height=slotHeight.
+   *   y=0 in SVG → at main node (levelIndex) position (CSS offset 0 from center).
+   *   y=slotHeight in SVG → at levelIndex-1's center (one full slot below).
+   * So CSS offsetY = bezierY (positive = downward toward levelIndex-1).
+   */
+  const evalBezierXY = (t: number, isMobile: boolean): { x: number; y: number } => {
+    const height = slotHeight;
+    const startX = 100 + (isMobile ? getMobileOffset(levelIndex) : getOffset(levelIndex));
+    const endX   = 100 + (isMobile ? getMobileOffset(prevLevelIndex) : getOffset(prevLevelIndex));
+
+    // Control points (same bezier shape as the track)
+    const c1y = isMobile ? height * 0.8 : height * 0.5;
+    const c2y = isMobile ? height * 0.2 : height * 0.5;
+
+    const mt = 1 - t;
+    const bx = mt*mt*mt*startX + 3*mt*mt*t*startX + 3*mt*t*t*endX + t*t*t*endX;
+    const by = mt*mt*mt*0     + 3*mt*mt*t*c1y    + 3*mt*t*t*c2y   + t*t*t*height;
+
+    return { x: bx - 100, y: by };
+  };
+
+  const getStepsForPart = (partIdx: number): number => {
+    return (stepsMetadata as any)?.[lessonId || '']?.[prevLevelIndex]?.[`part_${partIdx}`] || 0;
+  };
+
+  // Whether to suppress the thick bezier track (replaced by part circles)
+  const suppressTrack = showPartNodes;
 
   return (
-    <div className="relative w-full h-[240px] lg:h-[320px] flex items-center justify-center" id={`path-level-${levelIndex}`}>
-      {/* Connection Line to the node below */}
-      {levelIndex > 0 && (
+    <div
+      ref={containerRef}
+      className="relative w-full flex items-center justify-center"
+      style={{ height: `${slotHeight}px` }}
+      id={`path-level-${levelIndex}`}
+    >
+      {/* ── Connection Line (hidden when part circles replace it) ── */}
+      {levelIndex > 0 && !suppressTrack && (
         <>
           {/* Desktop SVG */}
-          <svg className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[320px] overflow-visible z-0 pointer-events-none">
-            <path
-              d={generatePath(levelIndex, false)}
-              fill="none"
-              stroke="currentColor"
-              className={strokeClass}
-              strokeWidth="22"
-              strokeLinecap="round"
-            />
-            {/* Inner track for depth */}
-            <path
-              d={generatePath(levelIndex, false)}
-              fill="none"
-              stroke="rgba(255,255,255,0.2)"
-              strokeWidth="8"
-              strokeLinecap="round"
-            />
+          <svg
+            className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
+            style={{ height: `${slotHeight}px` }}
+          >
+            <path d={generatePath(levelIndex, false)} fill="none" stroke="currentColor"
+              className={strokeClass} strokeWidth="22" strokeLinecap="round" />
+            <path d={generatePath(levelIndex, false)} fill="none" stroke="rgba(255,255,255,0.2)"
+              strokeWidth="8" strokeLinecap="round" />
           </svg>
           {/* Mobile SVG */}
-          <svg className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] h-[240px] overflow-visible z-0 pointer-events-none">
-            <path
-              d={generatePath(levelIndex, true)}
-              fill="none"
-              stroke="currentColor"
-              className={strokeClass}
-              strokeWidth="22"
-              strokeLinecap="round"
-            />
-            {/* Inner track for depth */}
-            <path
-              d={generatePath(levelIndex, true)}
-              fill="none"
-              stroke="rgba(255,255,255,0.2)"
-              strokeWidth="8"
-              strokeLinecap="round"
-            />
+          <svg
+            className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
+            style={{ height: `${slotHeight}px` }}
+          >
+            <path d={generatePath(levelIndex, true)} fill="none" stroke="currentColor"
+              className={strokeClass} strokeWidth="22" strokeLinecap="round" />
+            <path d={generatePath(levelIndex, true)} fill="none" stroke="rgba(255,255,255,0.2)"
+              strokeWidth="8" strokeLinecap="round" />
           </svg>
         </>
       )}
 
-      {/* Node */}
-      <div 
+      {/* ── Thin connector lines between part circles when track is hidden ── */}
+      {suppressTrack && levelIndex > 0 && (
+        <>
+          {/* Desktop */}
+          <svg
+            className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
+            style={{ height: `${slotHeight}px` }}
+          >
+            <path d={generatePath(levelIndex, false)} fill="none" stroke="currentColor"
+              className={strokeClass} strokeWidth="8" strokeLinecap="round" strokeDasharray="6 6" opacity="0.35" />
+          </svg>
+          {/* Mobile */}
+          <svg
+            className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
+            style={{ height: `${slotHeight}px` }}
+          >
+            <path d={generatePath(levelIndex, true)} fill="none" stroke="currentColor"
+              className={strokeClass} strokeWidth="8" strokeLinecap="round" strokeDasharray="6 6" opacity="0.35" />
+          </svg>
+        </>
+      )}
+
+      {/* ── Part sub-nodes (P1, P2, P3…) placed along the path ── */}
+      {showPartNodes && isPrevLevelAccessible && partTValues.map((t, partIdx) => {
+        const isPartCompleted = prevCompletedParts.includes(partIdx);
+        const isNextPart = !isPrevLevelCompleted && prevCompletedParts.length === partIdx;
+        const isPartAccessible = isPrevLevelCompleted || partIdx <= prevCompletedParts.length;
+
+        const dXY = evalBezierXY(t, false); // desktop
+        const mXY = evalBezierXY(t, true);  // mobile
+
+        return (
+          <React.Fragment key={`part-${levelIndex}-${partIdx}`}>
+            {/* Desktop */}
+            <div
+              className="hidden lg:block absolute left-1/2 top-1/2 z-20"
+              style={{ transform: `translate(calc(-50% + ${dXY.x}px), calc(-50% + ${dXY.y}px))` }}
+            >
+              <div className="relative">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!isPartAccessible) return;
+                    setOpenPartBubble(openPartBubble === partIdx ? null : partIdx);
+                  }}
+                  disabled={!isPartAccessible}
+                  title={`Partie ${partIdx + 1}`}
+                  className={[
+                    'w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200',
+                    'border-[3px] shadow-lg font-black text-[11px] tracking-wide',
+                    !isPartAccessible
+                      ? 'bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed'
+                      : isPartCompleted
+                        ? `${unitColor} border-white text-white hover:scale-110 active:scale-95`
+                        : isNextPart
+                          ? `bg-white ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse`
+                          : 'bg-white border-slate-300 text-slate-400 hover:scale-105',
+                    openPartBubble === partIdx
+                      ? `scale-110 ring-2 ring-offset-2 ${unitColor.replace('bg-', 'ring-')}`
+                      : '',
+                  ].join(' ')}
+                >
+                  {isPartCompleted
+                    ? <CheckCircle2 size={18} className="stroke-[2.5]" />
+                    : <span>P{partIdx + 1}</span>
+                  }
+                </button>
+
+                {openPartBubble === partIdx && isPartAccessible && (
+                  <PartNodeBubble
+                    lessonId={lessonId!}
+                    levelIndex={prevLevelIndex}
+                    partIndex={partIdx}
+                    totalParts={prevPartsTotal}
+                    stepsCount={getStepsForPart(partIdx)}
+                    isCompleted={isPartCompleted}
+                    unitColor={unitColor}
+                    unitText={unitText}
+                    nodeX={dXY.x}
+                    onClose={() => setOpenPartBubble(null)}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Mobile */}
+            <div
+              className="flex lg:hidden absolute left-1/2 top-1/2 z-20"
+              style={{ transform: `translate(calc(-50% + ${mXY.x}px), calc(-50% + ${mXY.y}px))` }}
+            >
+              <div className="relative">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!isPartAccessible) return;
+                    setOpenPartBubble(openPartBubble === partIdx ? null : partIdx);
+                  }}
+                  disabled={!isPartAccessible}
+                  title={`Partie ${partIdx + 1}`}
+                  className={[
+                    'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200',
+                    'border-[3px] shadow-lg font-black text-[11px] tracking-wide',
+                    !isPartAccessible
+                      ? 'bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed'
+                      : isPartCompleted
+                        ? `${unitColor} border-white text-white hover:scale-110 active:scale-95`
+                        : isNextPart
+                          ? `bg-white ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse`
+                          : 'bg-white border-slate-300 text-slate-400 hover:scale-105',
+                    openPartBubble === partIdx
+                      ? `scale-110 ring-2 ring-offset-2 ${unitColor.replace('bg-', 'ring-')}`
+                      : '',
+                  ].join(' ')}
+                >
+                  {isPartCompleted
+                    ? <CheckCircle2 size={16} className="stroke-[2.5]" />
+                    : <span>P{partIdx + 1}</span>
+                  }
+                </button>
+
+                {openPartBubble === partIdx && isPartAccessible && (
+                  <PartNodeBubble
+                    lessonId={lessonId!}
+                    levelIndex={prevLevelIndex}
+                    partIndex={partIdx}
+                    totalParts={prevPartsTotal}
+                    stepsCount={getStepsForPart(partIdx)}
+                    isCompleted={isPartCompleted}
+                    unitColor={unitColor}
+                    unitText={unitText}
+                    nodeX={mXY.x}
+                    onClose={() => setOpenPartBubble(null)}
+                  />
+                )}
+              </div>
+            </div>
+          </React.Fragment>
+        );
+      })}
+
+      {/* ── Main node ── */}
+      <div
         className="relative z-10 flex flex-col items-center justify-center transition-transform [transform:translateX(var(--offset-mobile))] lg:[transform:translateX(var(--offset-desktop))]"
-        style={{ 
+        style={{
           '--offset-mobile': `${getMobileOffset(levelIndex)}px`,
-          '--offset-desktop': `${getOffset(levelIndex)}px`
+          '--offset-desktop': `${getOffset(levelIndex)}px`,
         } as React.CSSProperties}
         ref={(el) => {
           nodeRefs.current[levelIndex] = el;
@@ -135,7 +347,6 @@ export function LessonPathNode({
         {/* Objective Images */}
         {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
           <>
-            {/* Desktop Image (pointing INWARDS to avoid overflow) */}
             <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-72 xl:w-80 z-0 transition-all duration-500 ease-out 
               ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
               ${getOffset(levelIndex) < 0 ? 'left-full ml-32' : 'right-full mr-32'}
@@ -145,14 +356,13 @@ export function LessonPathNode({
               <div className={`bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-2 shadow-sm mb-3 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-sm md:text-base text-center transition-all duration-500 ${!isAccessible ? 'opacity-60' : ''}`}>
                 {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
               </div>
-              <img 
-                src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} 
-                alt="Objectif du niveau" 
-                className={`w-full h-auto drop-shadow-2xl rounded-3xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`} 
+              <img
+                src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`}
+                alt="Objectif du niveau"
+                className={`w-full h-auto drop-shadow-2xl rounded-3xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`}
               />
             </div>
 
-            {/* Mobile Image */}
             <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-40 z-0 transition-all duration-500 ease-out 
               ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
               ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-12' : 'right-full mr-12'}
@@ -162,10 +372,10 @@ export function LessonPathNode({
               <div className={`bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm mb-2 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-[11px] text-center transition-all duration-500 ${!isAccessible ? 'opacity-60' : ''}`}>
                 {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
               </div>
-              <img 
-                src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`} 
-                alt="Objectif du niveau" 
-                className={`w-full h-auto drop-shadow-xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`} 
+              <img
+                src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`}
+                alt="Objectif du niveau"
+                className={`w-full h-auto drop-shadow-xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`}
               />
             </div>
           </>
@@ -188,30 +398,24 @@ export function LessonPathNode({
               const y = Math.sin(angleRad) * radius;
               const earned = earnedStars >= i + 1;
               return (
-                <div 
-                  key={i} 
-                  className="absolute left-1/2 top-1/2"
-                  style={{ transform: `translate(-50%, -50%) translate(${x}px, ${y}px)` }}
-                >
-                   <Star size={22} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-white stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
+                <div key={i} className="absolute left-1/2 top-1/2" style={{ transform: `translate(-50%, -50%) translate(${x}px, ${y}px)` }}>
+                  <Star size={22} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-white stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
                 </div>
               );
             })}
           </div>
         )}
 
-        {/* Steps Indicator */}
-        {(!isMastery && isAccessible && totalSteps > 0) && (
+        {/* Steps Indicator (flag) */}
+        {(!isMastery && isAccessible && currentLevelParts > 0) && (
           <>
-            {/* Desktop Step Indicator */}
-            <div className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 ${getOffset(levelIndex) < 0 ? 'left-[calc(100%+16px)]' : getOffset(levelIndex) > 0 ? 'right-[calc(100%+16px)]' : (levelIndex % 2 === 0 ? 'left-[calc(100%+16px)]' : 'right-[calc(100%+16px)]')} items-center justify-center bg-white px-3 py-2 rounded-2xl shadow-md border-2 border-slate-100 gap-2 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-20 whitespace-nowrap`}>
+            <div className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 ${getOffset(levelIndex) < 0 ? 'left-[calc(100%+16px)]' : 'right-[calc(100%+16px)]'} items-center justify-center bg-white px-3 py-2 rounded-2xl shadow-md border-2 border-slate-100 gap-2 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-20 whitespace-nowrap`}>
               <Flag size={16} className={unitColor.replace('bg-', 'text-')} />
-              <span className="text-sm font-black text-slate-700">{completedSteps}/{totalSteps}</span>
+              <span className="text-sm font-black text-slate-700">{completedStepsCount}/{currentLevelParts}</span>
             </div>
-            {/* Mobile Step Indicator */}
             <div className={`flex lg:hidden absolute -bottom-4 left-1/2 -translate-x-1/2 items-center justify-center bg-white px-2.5 py-1 rounded-xl shadow-md border-2 border-slate-100 gap-1.5 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-30 whitespace-nowrap`}>
               <Flag size={14} className={unitColor.replace('bg-', 'text-')} />
-              <span className="text-[11px] font-black text-slate-700">{completedSteps}/{totalSteps}</span>
+              <span className="text-[11px] font-black text-slate-700">{completedStepsCount}/{currentLevelParts}</span>
             </div>
           </>
         )}
@@ -219,36 +423,37 @@ export function LessonPathNode({
         <button
           onClick={(e) => {
             e.stopPropagation();
+            setOpenPartBubble(null);
             if (isAccessible) {
               setModalLevel(levelIndex);
               e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
             }
           }}
           disabled={!isAccessible}
-          className={`
-            w-[96px] h-[96px] rounded-full flex items-center justify-center transition-all duration-300 relative group
-            ${isSelected ? `scale-110 ring-[4px] ring-offset-[3px] shadow-xl z-20 ${unitColor.replace('bg-', 'ring-')}` : 'hover:scale-[1.05] z-10'}
-            ${isMastery
-              ? (isUnlockedMastery 
-                  ? `bg-gradient-to-br from-amber-300 to-amber-500 border-b-[8px] border-amber-600 shadow-md text-white` 
-                  : `bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm`)
+          className={[
+            'w-[96px] h-[96px] rounded-full flex items-center justify-center transition-all duration-300 relative group',
+            isSelected
+              ? `scale-110 ring-[4px] ring-offset-[3px] shadow-xl z-20 ${unitColor.replace('bg-', 'ring-')}`
+              : 'hover:scale-[1.05] z-10',
+            isMastery
+              ? (isUnlockedMastery
+                  ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-b-[8px] border-amber-600 shadow-md text-white'
+                  : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm')
               : (isCompleted
                   ? `${unitColor} border-b-[8px] ${unitBorder} shadow-sm text-white`
                   : isCurrent
                     ? `bg-white border-[6px] border-b-[10px] ${unitColor.replace('bg-', 'border-')} shadow-md ${unitText}`
-                    : `bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm`)
-            }
-          `}
+                    : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm'),
+          ].join(' ')}
         >
-          {/* Node Inner Icon / Number */}
           {isMastery ? (
-             <Crown size={44} className="fill-current stroke-[2] drop-shadow-sm" />
+            <Crown size={44} className="fill-current stroke-[2] drop-shadow-sm" />
           ) : isCompleted ? (
-             <span className="font-black text-4xl drop-shadow-sm text-white">{levelIndex + 1}</span>
+            <span className="font-black text-4xl drop-shadow-sm text-white">{levelIndex + 1}</span>
           ) : isCurrent ? (
-             <span className={`font-black text-4xl drop-shadow-sm ${unitText}`}>{levelIndex + 1}</span>
+            <span className={`font-black text-4xl drop-shadow-sm ${unitText}`}>{levelIndex + 1}</span>
           ) : (
-             <Lock size={36} className="stroke-[2.5]" />
+            <Lock size={36} className="stroke-[2.5]" />
           )}
         </button>
 
