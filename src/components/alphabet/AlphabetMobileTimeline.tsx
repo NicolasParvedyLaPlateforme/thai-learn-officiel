@@ -216,6 +216,7 @@ export default function AlphabetMobileTimeline({
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     isMobileLayout={true}
+                    index={idx}
                     onClick={() => {
                       setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
                       setModalLevel(null);

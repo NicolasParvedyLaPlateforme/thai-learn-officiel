@@ -222,6 +222,7 @@ export default function SpeakMobileTimeline({
                     isReviewLocked={isReviewLocked}
                     suggestedLessonId={suggestedLessonId}
                     isMobileLayout={true}
+                    index={idx}
                     onClick={() => {
                       if (isReviewLocked) {
                         setLockedReviewModalOpen(true);

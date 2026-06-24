@@ -70,6 +70,7 @@ interface SharedLessonCardProps {
   onClick: () => void;
   maxLevelPerLesson?: number;
   isMobileLayout?: boolean;
+  index?: number;
 }
 
 export function SharedLessonCard({
@@ -82,7 +83,8 @@ export function SharedLessonCard({
   suggestedLessonId,
   onClick,
   maxLevelPerLesson = 10,
-  isMobileLayout = false
+  isMobileLayout = false,
+  index
 }: SharedLessonCardProps) {
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
   const [isHovered, setIsHovered] = useState(false);
@@ -434,7 +436,7 @@ export function SharedLessonCard({
         }}
       >
         {/* ── Header: Image Left, Title/Desc Right ──────────────────────────────── */}
-        <div className="flex flex-row p-3 gap-3 border-b border-slate-100 relative">
+        <div className={cn("flex p-3 pt-[14px] gap-3 border-b border-slate-100 relative", index !== undefined && index % 2 !== 0 ? "flex-row-reverse" : "flex-row")}>
           {/* Mastered badge */}
           {isMaxLevel && (
             <div

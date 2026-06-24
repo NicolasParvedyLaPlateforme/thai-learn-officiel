@@ -68,7 +68,7 @@ export function MobileTimelineNodeLayout({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
-      className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-6 sm:mb-8 group gap-3 sm:gap-4"
+      className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-10 sm:mb-12 group gap-3 sm:gap-4"
     >
       <PathTimelineLine level={level} maxLevel={maxLevel} colorClass={unitColorClass} isDesktop={false} />
       <PathDecorations index={index} isDesktop={false} />
