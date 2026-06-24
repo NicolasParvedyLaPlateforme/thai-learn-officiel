@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { getLocalizedField, getTranslation } from "@/hooks/useTranslation";
 import { CheckCircle, Star } from 'lucide-react';
 import IconImage from '../ui/IconImage';
@@ -10,6 +10,54 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
+
+// ───────────────────────────────────────────────────────────────────────────────
+// Module-level scroll coordinator
+// Ensures only the card CLOSEST to the viewport centre rotates at any time.
+// ───────────────────────────────────────────────────────────────────────────────
+type CardEntry = { el: HTMLElement; activate: () => void; deactivate: () => void };
+const _cards = new Map<string, CardEntry>();
+let _rafId: number | null = null;
+let _activeId: string | null = null;
+
+function _pickNearest() {
+  if (_cards.size === 0) return;
+  const mid = window.innerHeight / 2;
+  let bestId = '';
+  let bestDist = Infinity;
+  _cards.forEach(({ el }, id) => {
+    const r = el.getBoundingClientRect();
+    const d = Math.abs(r.top + r.height / 2 - mid);
+    if (d < bestDist) { bestDist = d; bestId = id; }
+  });
+  if (bestId === _activeId) return;
+  _activeId = bestId;
+  _cards.forEach(({ activate, deactivate }, id) =>
+    id === bestId ? activate() : deactivate()
+  );
+}
+
+function _onScroll() {
+  if (_rafId !== null) return;
+  _rafId = requestAnimationFrame(() => { _pickNearest(); _rafId = null; });
+}
+
+function registerCard(id: string, entry: CardEntry) {
+  const wasEmpty = _cards.size === 0;
+  _cards.set(id, entry);
+  if (wasEmpty && typeof window !== 'undefined')
+    window.addEventListener('scroll', _onScroll, { passive: true });
+  // run once on mount to immediately set the right winner
+  if (typeof window !== 'undefined') _pickNearest();
+}
+
+function unregisterCard(id: string) {
+  _cards.delete(id);
+  if (_cards.size === 0 && typeof window !== 'undefined')
+    window.removeEventListener('scroll', _onScroll);
+}
+// ───────────────────────────────────────────────────────────────────────────────
+
 
 interface SharedLessonCardProps {
   pathType: 'learn' | 'alphabet' | 'speak';
@@ -39,12 +87,94 @@ export function SharedLessonCard({
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
   const [isHovered, setIsHovered] = useState(false);
 
+  // ── Mobile-specific state ──────────────────────────────────────────────────
+  const [scrollIndex, setScrollIndex] = useState(0);
+  // textVisible drives the CSS opacity+translate animation on each word change
+  const [textVisible, setTextVisible] = useState(true);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+
+  const hasUnlockedWords   = level >= 1;
+  const hasUnlockedPhrases = pathType === 'speak' ? level >= 1 : level >= 2;
+
+  // Build the list of items to rotate, respecting unlock conditions
+  const getMobileItems = useCallback(() => {
+    if (pathType === 'alphabet') {
+      if (!hasUnlockedWords) return [];
+      return (lesson.items || [])
+        .filter((i: any) => i.letter)
+        .map((i: any) => ({ thai: formatCombiningChar(i.letter), translation: i.pronunciation || '', isPhrase: false }));
+    }
+    if (pathType === 'speak') {
+      if (!hasUnlockedPhrases) return [];
+      return (lesson.phrases || [])
+        .filter((p: any) => p.th !== '...' && p.phonetic !== '...')
+        .map((p: any) => ({ thai: p.th || p.phonetic, translation: getLocalizedField(p, '', language), isPhrase: true }));
+    }
+    // 'learn': show words from level 1, add phrases from level 2
+    const words = hasUnlockedWords
+      ? (lesson.words || [])
+          .filter((w: any) => w.th !== '...' && w.phonetic !== '...')
+          .map((w: any) => ({ thai: w.th || w.phonetic, translation: getLocalizedField(w, '', language), isPhrase: false }))
+      : [];
+    const phrases = hasUnlockedPhrases
+      ? (lesson.phrases || [])
+          .filter((p: any) => p.th !== '...' && p.phonetic !== '...')
+          .map((p: any) => ({ thai: p.th || p.phonetic, translation: getLocalizedField(p, '', language), isPhrase: true }))
+      : [];
+    // interleave
+    const result: typeof words = [];
+    const maxLen = Math.max(words.length, phrases.length);
+    for (let i = 0; i < maxLen; i++) {
+      if (i < words.length) result.push(words[i]);
+      if (i < phrases.length) result.push(phrases[i]);
+    }
+    return result;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathType, lesson, language, hasUnlockedWords, hasUnlockedPhrases]);
+
+  const mobileItems = getMobileItems();
+
+  // Animation: fade+slide out, then in on each index change
+  useEffect(() => {
+    if (!isMobileLayout) return;
+    setTextVisible(false);
+    const t = setTimeout(() => setTextVisible(true), 80);
+    return () => clearTimeout(t);
+  }, [scrollIndex, isMobileLayout]);
+
+  // Register with the module-level scroll coordinator
+  useEffect(() => {
+    if (!isMobileLayout || mobileItems.length <= 1) return;
+    const el = cardRef.current;
+    if (!el) return;
+
+    const start = () => {
+      if (intervalRef.current) return;
+      intervalRef.current = setInterval(() => {
+        setScrollIndex(prev => (prev + 1) % mobileItems.length);
+      }, 2000);
+    };
+    const stop = () => {
+      if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+    };
+
+    registerCard(lesson.id, { el, activate: start, deactivate: stop });
+    return () => {
+      unregisterCard(lesson.id);
+      stop();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobileLayout, mobileItems.length, lesson.id]);
+
+
+  // ── Shared derived values ─────────────────────────────────────────────────
   const isMaxLevel = level >= maxLevelPerLesson;
   const displayLevel = Math.min(level, maxLevelPerLesson);
   const isSuggested = suggestedLessonId === lesson.id;
 
-  const hasUnlockedWords = level >= 1;
-  const hasUnlockedPhrases = pathType === 'speak' ? level >= 1 : level >= 2;
+  // hasUnlockedWords / hasUnlockedPhrases already declared above (mobile section)
 
   const showBlockedMessage = pathType === 'learn'
     ? ((activeTab === 'words' && !hasUnlockedWords) || (activeTab === 'phrases' && !hasUnlockedPhrases))
@@ -73,38 +203,48 @@ export function SharedLessonCard({
   const colorMatch = dynamicColor.match(/bg-([a-z]+)-/);
   const colorName = colorMatch ? colorMatch[1] : 'emerald';
 
-  const COLOR_VARIANTS: Record<string, { bg100: string, border200: string, text700: string }> = {
-    emerald: { bg100: 'bg-emerald-100', border200: 'border-emerald-200', text700: 'text-emerald-700' },
-    amber: { bg100: 'bg-amber-100', border200: 'border-amber-200', text700: 'text-amber-700' },
-    yellow: { bg100: 'bg-yellow-100', border200: 'border-yellow-200', text700: 'text-yellow-700' },
-    rose: { bg100: 'bg-rose-100', border200: 'border-rose-200', text700: 'text-rose-700' },
-    blue: { bg100: 'bg-blue-100', border200: 'border-blue-200', text700: 'text-blue-700' },
-    indigo: { bg100: 'bg-indigo-100', border200: 'border-indigo-200', text700: 'text-indigo-700' },
-    violet: { bg100: 'bg-violet-100', border200: 'border-violet-200', text700: 'text-violet-700' },
-    purple: { bg100: 'bg-purple-100', border200: 'border-purple-200', text700: 'text-purple-700' },
-    fuchsia: { bg100: 'bg-fuchsia-100', border200: 'border-fuchsia-200', text700: 'text-fuchsia-700' },
-    pink: { bg100: 'bg-pink-100', border200: 'border-pink-200', text700: 'text-pink-700' },
-    red: { bg100: 'bg-red-100', border200: 'border-red-200', text700: 'text-red-700' },
-    orange: { bg100: 'bg-orange-100', border200: 'border-orange-200', text700: 'text-orange-700' },
-    cyan: { bg100: 'bg-cyan-100', border200: 'border-cyan-200', text700: 'text-cyan-700' },
-    teal: { bg100: 'bg-teal-100', border200: 'border-teal-200', text700: 'text-teal-700' },
-    green: { bg100: 'bg-green-100', border200: 'border-green-200', text700: 'text-green-700' },
+  const COLOR_VARIANTS: Record<string, { bg100: string, bg50: string, border200: string, text700: string, bgOverlay: string }> = {
+    emerald: { bg100: 'bg-emerald-100', bg50: 'bg-emerald-50', border200: 'border-emerald-200', text700: 'text-emerald-700', bgOverlay: 'bg-emerald-600/80' },
+    amber:   { bg100: 'bg-amber-100',   bg50: 'bg-amber-50',   border200: 'border-amber-200',   text700: 'text-amber-700',   bgOverlay: 'bg-amber-600/80' },
+    yellow:  { bg100: 'bg-yellow-100',  bg50: 'bg-yellow-50',  border200: 'border-yellow-200',  text700: 'text-yellow-700',  bgOverlay: 'bg-yellow-600/80' },
+    rose:    { bg100: 'bg-rose-100',    bg50: 'bg-rose-50',    border200: 'border-rose-200',    text700: 'text-rose-700',    bgOverlay: 'bg-rose-600/80' },
+    blue:    { bg100: 'bg-blue-100',    bg50: 'bg-blue-50',    border200: 'border-blue-200',    text700: 'text-blue-700',    bgOverlay: 'bg-blue-600/80' },
+    indigo:  { bg100: 'bg-indigo-100',  bg50: 'bg-indigo-50',  border200: 'border-indigo-200',  text700: 'text-indigo-700',  bgOverlay: 'bg-indigo-600/80' },
+    violet:  { bg100: 'bg-violet-100',  bg50: 'bg-violet-50',  border200: 'border-violet-200',  text700: 'text-violet-700',  bgOverlay: 'bg-violet-600/80' },
+    purple:  { bg100: 'bg-purple-100',  bg50: 'bg-purple-50',  border200: 'border-purple-200',  text700: 'text-purple-700',  bgOverlay: 'bg-purple-600/80' },
+    fuchsia: { bg100: 'bg-fuchsia-100', bg50: 'bg-fuchsia-50', border200: 'border-fuchsia-200', text700: 'text-fuchsia-700', bgOverlay: 'bg-fuchsia-600/80' },
+    pink:    { bg100: 'bg-pink-100',    bg50: 'bg-pink-50',    border200: 'border-pink-200',    text700: 'text-pink-700',    bgOverlay: 'bg-pink-600/80' },
+    red:     { bg100: 'bg-red-100',     bg50: 'bg-red-50',     border200: 'border-red-200',     text700: 'text-red-700',     bgOverlay: 'bg-red-600/80' },
+    orange:  { bg100: 'bg-orange-100',  bg50: 'bg-orange-50',  border200: 'border-orange-200',  text700: 'text-orange-700',  bgOverlay: 'bg-orange-600/80' },
+    cyan:    { bg100: 'bg-cyan-100',    bg50: 'bg-cyan-50',    border200: 'border-cyan-200',    text700: 'text-cyan-700',    bgOverlay: 'bg-cyan-600/80' },
+    teal:    { bg100: 'bg-teal-100',    bg50: 'bg-teal-50',    border200: 'border-teal-200',    text700: 'text-teal-700',    bgOverlay: 'bg-teal-600/80' },
+    green:   { bg100: 'bg-green-100',   bg50: 'bg-green-50',   border200: 'border-green-200',   text700: 'text-green-700',   bgOverlay: 'bg-green-600/80' },
   };
 
   const badgeTheme = COLOR_VARIANTS[colorName] || COLOR_VARIANTS['emerald'];
   const badgeBgColor = badgeTheme.bg100;
   const badgeTextColor = badgeTheme.text700;
   const badgeBorderColor = badgeTheme.border200;
+  const itemBgColor = badgeTheme.bg50;    // very light background for rotating item
+  const overlayColor = badgeTheme.bgOverlay; // semi-opaque color overlay on image for text
 
   const isStarted = level > 0 && !isMaxLevel;
 
+  // For mobile: mastered (isMaxLevel) and not-started (level===0) have no border/shadow
+  const mobileNoBorderShadow = isMobileLayout && (isMaxLevel || level === 0) && !isReviewLocked && !isSuggested;
+
   const cardStyle = cn(
-    "relative w-full transition-all duration-300 cursor-pointer border-[2px]",
-    isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
-    isMaxLevel ? `${badgeBorderColor} bg-white` :
-      isStarted ? `${borderDynamicColor} bg-white` :
-        isReviewLocked ? "bg-slate-50/50 border-slate-100" :
-          isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
+    "relative w-full transition-all duration-300 cursor-pointer",
+    mobileNoBorderShadow
+      ? "border-0 shadow-none bg-white"
+      : cn(
+          "border-[2px]",
+          isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
+          isMaxLevel ? `${badgeBorderColor} bg-white` :
+            isStarted ? `${borderDynamicColor} bg-white` :
+              isReviewLocked ? "bg-slate-50/50 border-slate-100" :
+                isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
+        )
   );
 
   // Renders the fragmented progress bar (horizontal dashes for mobile)
@@ -137,7 +277,7 @@ export function SharedLessonCard({
     </div>
   );
 
-  // Middle section content renderer based on pathType
+  // Middle section content renderer based on pathType (desktop only)
   const renderMiddleSection = () => {
     if (pathType === 'alphabet') {
       return (
@@ -272,10 +412,16 @@ export function SharedLessonCard({
     return getLocalizedField(lesson, 'description', language);
   };
 
+  // ─────────────────────────────────────────────────────────────────────────────
+  // MOBILE LAYOUT (redesigned)
+  // ─────────────────────────────────────────────────────────────────────────────
   if (isMobileLayout) {
+    const currentItem = mobileItems[scrollIndex] ?? null;
+
     return (
       <Card
-        className={cn(cardStyle, "p-4 flex flex-col gap-3 rounded-3xl")}
+        ref={cardRef as React.Ref<HTMLDivElement>}
+        className={cn(cardStyle, "flex flex-col rounded-3xl overflow-hidden p-0")}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={(e) => {
@@ -283,60 +429,110 @@ export function SharedLessonCard({
           onClick();
         }}
       >
-        {/* Header & Badges */}
-        <div className="flex justify-between items-start w-full">
-          <div className="flex flex-col items-start text-left flex-1 pr-2 overflow-hidden w-full">
-            <Typography variant="h4" className="text-lg sm:text-xl w-full">
+        {/* ── Badges (mastered / suggested) ────────────────────────────────── */}
+        {isMaxLevel ? (
+          <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-2 py-1 gap-1 z-10 font-bold border shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
+            <CheckCircle size={14} /> <span className="hidden sm:inline">{getTranslation('auto.mastered', language)}</span>
+          </Badge>
+        ) : isSuggested ? (
+          <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-amber-200 shrink-0">
+            <Star size={12} fill="currentColor" /> <span className="hidden sm:inline">{getTranslation('auto.suggested', language)}</span>
+          </Badge>
+        ) : null}
+
+        {/* ── Hero image (no padding, full-width, collée aux bords) ─────────── */}
+        {/* ── Hero image – réduite d'1/4 (h-36 → h-[108px]) ────────────── */}
+        <div className="relative w-full h-[108px] sm:h-[126px] overflow-hidden shrink-0">
+          {lesson.imageUrl ? (
+            <IconImage
+              src={lesson.imageUrl}
+              alt={lesson.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 100vw, 640px"
+            />
+          ) : (
+            <div className={cn("w-full h-full", dynamicColor, "opacity-30")} />
+          )}
+          {/* Lock overlay */}
+          {isReviewLocked && (
+            <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px]">
+              <Star size={28} className="text-white fill-white/50" />
+            </div>
+          )}
+
+          {/* Title + description overlay at bottom of image */}
+          <div className={cn("absolute bottom-0 left-0 right-0 px-3 py-2 z-10", overlayColor)}>
+            <Typography variant="h4" className="text-white text-sm sm:text-base font-bold leading-snug line-clamp-1">
               {getLocalizedField(lesson, 'title', language)}
             </Typography>
-            <Typography variant="muted" className="text-xs font-medium mt-0.5 w-full">
+            <Typography variant="muted" className="text-white/85 text-xs leading-snug line-clamp-1 font-medium">
               {renderDescription()}
             </Typography>
           </div>
-
-          {/* Badges */}
-          {isMaxLevel ? (
-            <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-2 py-1 gap-1 z-10 font-bold border shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
-              <CheckCircle size={14} /> <span className="hidden sm:inline">{getTranslation('auto.mastered', language)}</span>
-            </Badge>
-          ) : isSuggested ? (
-            <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 shadow-sm px-2 py-1 gap-1 z-10 font-bold border border-amber-200 shrink-0">
-              <Star size={12} fill="currentColor" /> <span className="hidden sm:inline">{getTranslation('auto.suggested', language)}</span>
-            </Badge>
-          ) : null}
         </div>
 
-        {/* Middle Section */}
-        <div className="flex flex-row-reverse gap-4 w-full items-center mt-1">
-          {renderMiddleSection()}
-        </div>
+        {/* ── Body ─────────────────────────────────────────────────────────── */}
+        <div className="flex flex-col gap-2.5 px-3 pt-2.5 pb-3">
 
-        {/* Bottom: Progress Bar & Button (Mobile side-by-side) */}
-        <div className="flex items-center justify-between w-full mt-2 gap-4">
-          <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2">
-            <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
-              <span className="font-extrabold">{getTranslation('auto.mastery_6', language)}</span>
-              <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
+          {/* Rotating word / phrase strip – single line, fixed height, CSS transition animation */}
+          {mobileItems.length > 0 && (
+            <div
+              className={cn("flex items-center rounded-xl px-2.5 overflow-hidden", itemBgColor)}
+              style={{ height: '2.25rem' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                className="flex items-center gap-2 w-full min-w-0"
+                style={{
+                  opacity: textVisible ? 1 : 0,
+                  transform: textVisible ? 'translateX(0)' : 'translateX(-10px)',
+                  transition: textVisible
+                    ? 'opacity 0.25s ease, transform 0.25s ease'
+                    : 'none',
+                  willChange: 'opacity, transform',
+                }}
+              >
+                <span className={cn("font-thai text-base font-bold leading-none truncate shrink-0", badgeTextColor)}>
+                  {currentItem?.thai}
+                </span>
+                <span className="text-slate-400 text-sm truncate min-w-0">
+                  {currentItem?.translation}
+                </span>
+              </div>
             </div>
-            {renderMobileProgressBar()}
-          </div>
+          )}
 
-          <Button
-            variant={isMaxLevel ? "default" : "gamified"}
-            size="sm"
-            className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white", dynamicColor, !isMaxLevel && borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick();
-            }}
-          >
-            {buttonText}
-          </Button>
+          {/* Progress bar + Button */}
+          <div className="flex items-center justify-between w-full gap-4">
+            <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2">
+              <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
+                <span className="font-extrabold">{getTranslation('auto.mastery_6', language)}</span>
+                <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
+              </div>
+              {renderMobileProgressBar()}
+            </div>
+
+            <Button
+              variant={isMaxLevel ? "default" : "gamified"}
+              size="sm"
+              className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white", dynamicColor, !isMaxLevel && borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClick();
+              }}
+            >
+              {buttonText}
+            </Button>
+          </div>
         </div>
       </Card>
     );
   }
 
+  // ─────────────────────────────────────────────────────────────────────────────
+  // DESKTOP LAYOUT (unchanged)
+  // ─────────────────────────────────────────────────────────────────────────────
   return (
     <Card
       className={cn(cardStyle, "p-6 flex flex-col gap-4 rounded-[2rem]")}
