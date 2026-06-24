@@ -136,6 +136,11 @@ export function LessonPathMap({
 
   useEffect(() => {
     let ticking = false;
+    // Hystérésis : on ne change de nœud actif que si le nouveau candidat
+    // dépasse le nœud actuel d'au moins HYSTERESIS_PX pixels.
+    // Cela évite le flicker quand une carte est exactement à la frontière.
+    const HYSTERESIS_PX = 40;
+
     const handleScroll = () => {
       if (isClickScrolling.current) {
         if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
@@ -148,25 +153,48 @@ export function LessonPathMap({
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const centerY = window.innerHeight / 2;
-          let closestIndex: number | null = null;
-          let minDistance = Infinity;
 
+          // Calculer la distance de chaque nœud au centre
+          const distances: { index: number; distance: number }[] = [];
           nodeRefs.current.forEach((node, index) => {
             if (node) {
               const rect = node.getBoundingClientRect();
               const nodeCenter = rect.top + rect.height / 2;
-              const distance = Math.abs(centerY - nodeCenter);
-
-              if (distance < minDistance) {
-                minDistance = distance;
-                closestIndex = index;
-              }
+              distances.push({ index, distance: Math.abs(centerY - nodeCenter) });
             }
           });
 
-          if (closestIndex !== null && minDistance < window.innerHeight / 2) {
-            setActiveMobileLevel((prev) => prev !== closestIndex ? closestIndex : prev);
+          if (distances.length === 0) {
+            ticking = false;
+            return;
           }
+
+          // Trouver le nœud le plus proche
+          distances.sort((a, b) => a.distance - b.distance);
+          const best = distances[0];
+
+          if (best.distance >= window.innerHeight / 2) {
+            ticking = false;
+            return;
+          }
+
+          setActiveMobileLevel((prev) => {
+            if (prev === best.index) return prev;
+
+            // Si un nœud actif existe, vérifier qu'il n'est pas "presque aussi proche"
+            if (prev !== null) {
+              const currentEntry = distances.find((d) => d.index === prev);
+              if (currentEntry) {
+                // On ne change que si le nouveau est clairement plus proche (hystérésis)
+                if (currentEntry.distance - best.distance < HYSTERESIS_PX) {
+                  return prev; // Pas assez d'avance → on garde le nœud actuel
+                }
+              }
+            }
+
+            return best.index;
+          });
+
           ticking = false;
         });
         ticking = true;
