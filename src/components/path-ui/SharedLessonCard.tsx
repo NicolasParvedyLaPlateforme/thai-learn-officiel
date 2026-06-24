@@ -461,29 +461,31 @@ export function SharedLessonCard({
             </div>
           )}
 
-          {/* Title + description overlay at bottom of image */}
+          {/* Title only in the image overlay (no description) */}
           <div className={cn("absolute bottom-0 left-0 right-0 px-3 py-2 z-10", overlayColor)}>
             <Typography variant="h4" className="text-white text-sm sm:text-base font-bold leading-snug line-clamp-1">
               {getLocalizedField(lesson, 'title', language)}
             </Typography>
-            <Typography variant="muted" className="text-white/85 text-xs leading-snug line-clamp-1 font-medium">
-              {renderDescription()}
-            </Typography>
           </div>
         </div>
+
+        {/* Description below the image */}
+        <Typography variant="muted" className="text-slate-500 text-xs leading-snug line-clamp-1 font-medium px-3 pt-2">
+          {renderDescription()}
+        </Typography>
 
         {/* ── Body ─────────────────────────────────────────────────────────── */}
         <div className="flex flex-col gap-2.5 px-3 pt-2.5 pb-3">
 
-          {/* Rotating word / phrase strip – single line, fixed height, CSS transition animation */}
+          {/* Rotating word / phrase strip – no background, centred */}
           {mobileItems.length > 0 && (
             <div
-              className={cn("flex items-center rounded-xl px-2.5 overflow-hidden", itemBgColor)}
+              className="flex items-center justify-center overflow-hidden"
               style={{ height: '2.25rem' }}
               onClick={(e) => e.stopPropagation()}
             >
               <div
-                className="flex items-center gap-2 w-full min-w-0"
+                className="flex items-center justify-center gap-2 w-full min-w-0"
                 style={{
                   opacity: textVisible ? 1 : 0,
                   transform: textVisible ? 'translateX(0)' : 'translateX(-10px)',
