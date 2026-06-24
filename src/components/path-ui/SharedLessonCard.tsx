@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
+import { AnimatePresence, m } from 'framer-motion';
 
 // ───────────────────────────────────────────────────────────────────────────────
 // Module-level scroll coordinator
@@ -91,8 +92,6 @@ export function SharedLessonCard({
 
   // ── Mobile-specific state ──────────────────────────────────────────────────
   const [scrollIndex, setScrollIndex] = useState(0);
-  // textVisible drives the CSS opacity+translate animation on each word change
-  const [textVisible, setTextVisible] = useState(true);
   const cardRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -138,18 +137,6 @@ export function SharedLessonCard({
 
   const mobileItems = getMobileItems();
 
-  // Animation: disparition instantanée, puis réapparition en douceur (pas de clignotement)
-  useEffect(() => {
-    if (!isMobileLayout) return;
-    setTextVisible(false);
-    // Laisser React rendre l'opacité 0 avant de déclencher le fade-in
-    const raf = requestAnimationFrame(() => {
-      const t = setTimeout(() => setTextVisible(true), 20);
-      return () => clearTimeout(t);
-    });
-    return () => cancelAnimationFrame(raf);
-  }, [scrollIndex, isMobileLayout]);
-
   // Register with the module-level scroll coordinator
   useEffect(() => {
     if (!isMobileLayout || mobileItems.length <= 1) return;
@@ -160,7 +147,7 @@ export function SharedLessonCard({
       if (intervalRef.current) return;
       intervalRef.current = setInterval(() => {
         setScrollIndex(prev => (prev + 1) % mobileItems.length);
-      }, 2000);
+      }, 3000);
     };
     const stop = () => {
       if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
@@ -490,29 +477,30 @@ export function SharedLessonCard({
         {/* ── Body ─────────────────────────────────────────────────────────── */}
         <div className="flex flex-col gap-2.5 px-3 pt-2.5 pb-3">
 
-          {/* Rotating word / phrase strip – no background, centred, fade animation */}
+          {/* Rotating word / phrase strip – framer-motion animated */}
           {mobileItems.length > 0 && (
             <div
-              className="flex items-center justify-center overflow-hidden"
+              className="flex items-center justify-center overflow-hidden relative"
               style={{ height: '2.25rem' }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div
-                className="flex items-center justify-center gap-2 w-full min-w-0"
-                style={{
-                  opacity: textVisible ? 1 : 0,
-                  // Sortie instantanée (0s) puis entrée en douceur (0.5s) = pas de clignotement
-                  transition: textVisible ? 'opacity 0.5s ease' : 'opacity 0s',
-                  willChange: 'opacity',
-                }}
-              >
-                <span className={cn("font-thai text-base font-bold leading-none truncate shrink-0", badgeTextColor)}>
-                  {currentItem?.thai}
-                </span>
-                <span className="text-slate-400 text-sm truncate min-w-0">
-                  {currentItem?.translation}
-                </span>
-              </div>
+              <AnimatePresence mode="wait">
+                <m.div
+                  key={scrollIndex}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute flex items-center justify-center gap-2 w-full min-w-0"
+                >
+                  <span className={cn("font-thai text-base font-bold leading-none truncate shrink-0", badgeTextColor)}>
+                    {currentItem?.thai}
+                  </span>
+                  <span className="text-slate-400 text-sm truncate min-w-0">
+                    {currentItem?.translation}
+                  </span>
+                </m.div>
+              </AnimatePresence>
             </div>
           )}
 
