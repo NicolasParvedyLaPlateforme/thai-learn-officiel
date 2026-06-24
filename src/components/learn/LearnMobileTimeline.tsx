@@ -103,12 +103,7 @@ export default function LearnMobileTimeline({
           )}
           
           <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
-            <div className="flex justify-between items-start w-full mb-1">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight break-words pr-2 drop-shadow-sm">
-                {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
-              </h2>
-            </div>
-            <p className={`${unit.lightTextClass || 'text-white/90'} mb-5 font-medium text-sm sm:text-base leading-snug drop-shadow-sm`}>
+            <p className="text-white w-[60%] mb-5 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
               {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
             </p>
 
@@ -118,7 +113,7 @@ export default function LearnMobileTimeline({
                   <span>{getTranslation('auto.mastery_3', language)}</span>
                   <span>{completedLevelsInUnit} / {maxLevelsInUnit}</span>
                 </div>
-                <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-2.5 overflow-hidden mb-1 shadow-inner`}>
+                <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-[5px] overflow-hidden mb-1 shadow-inner`}>
                   <div
                     className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
                     style={{ width: `${progressPercent}%` }}
@@ -133,7 +128,7 @@ export default function LearnMobileTimeline({
           <BannerUnitsButton 
             onClick={() => setIsUnitsModalOpen(true)} 
             language={language}
-            className="absolute bottom-4 right-4 z-20"
+            className="absolute bottom-0 right-0 z-20 rounded-tl-[15px] rounded-tr-none rounded-b-none border-b-0 border-r-0"
           />
         {!unit.imageUrl && (
             <>
@@ -150,7 +145,7 @@ export default function LearnMobileTimeline({
         {mounted && (
           <div
             onClick={() => setIsQuestsModalOpen(true)}
-            className="xl:hidden mt-6 w-full bg-white rounded-2xl border border-slate-100 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
+            className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
           >
             <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">

@@ -76,12 +76,7 @@ export default function LearnDesktopTimeline({
         )}
         
         <div className="relative z-10 w-full md:w-[65%] lg:w-[60%] pr-4 md:pr-8">
-          <div className="flex justify-between items-start mb-2">
-            <h2 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
-              {getLocalizedField(unit, 'title', language)}
-            </h2>
-          </div>
-          <p className={`${unit.lightTextClass || 'text-white/90'} mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl`}>
+          <p className="text-white w-[60%] mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl">
             {getLocalizedField(unit, 'description', language)}
           </p>
 
@@ -92,7 +87,7 @@ export default function LearnDesktopTimeline({
                   <span>{getTranslation('auto.mastery_5', language)}</span>
                   <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
                 </div>
-                <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-3 overflow-hidden shadow-inner mb-2`}>
+                <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-[5px] overflow-hidden shadow-inner mb-2`}>
                   <div
                     className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
                     style={{ width: `${progressPercent}%` }}
@@ -111,10 +106,10 @@ export default function LearnDesktopTimeline({
           </div>
         )}
         
-        <div className="absolute bottom-6 right-6 z-20 hidden md:block">
+        <div className="absolute bottom-0 right-0 z-20 hidden md:block">
           <button
             onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
-            className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-[1.25rem] shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px]"
+            className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-tl-[15px] rounded-tr-none rounded-b-none border-b-0 border-r-0 shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px]"
           >
             <div className="flex items-center gap-3">
               <div className={`w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100`}>
