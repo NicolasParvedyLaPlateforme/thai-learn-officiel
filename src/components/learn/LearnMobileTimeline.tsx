@@ -98,7 +98,7 @@ export default function LearnMobileTimeline({
         >
           <div
             onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-            className={`-mx-4 -mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-none text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[160px] flex items-center group`}
+            className={`-mx-4 -mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-none text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[120px] max-h-[120px] flex items-center group`}
           >
             {unit.imageUrl && (
               <div
@@ -111,7 +111,7 @@ export default function LearnMobileTimeline({
 
             <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
               <div className="flex justify-between items-start w-[60%] mb-1">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight break-words drop-shadow-sm">
+                <h2 className="text-[20px] sm:text-3xl font-extrabold text-white tracking-tight break-words drop-shadow-sm">
                   {(() => {
                     const titleStr = mounted ? getLocalizedField(unit, 'title', language) : unit.title;
                     return titleStr.includes(':') ? titleStr.substring(titleStr.indexOf(':') + 1).trim() : titleStr;
