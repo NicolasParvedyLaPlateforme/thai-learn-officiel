@@ -223,8 +223,8 @@ export function SharedLessonCard({
 
   const isStarted = level > 0 && !isMaxLevel;
 
-  // For mobile: mastered (isMaxLevel) and not-started (level===0) have no border/shadow
-  const mobileNoBorderShadow = isMobileLayout && (isMaxLevel || level === 0) && !isReviewLocked && !isSuggested;
+  // For mobile: mastered (isMaxLevel) have no border. Not-started (level===0) have no border unless suggested.
+  const mobileNoBorderShadow = isMobileLayout && (isMaxLevel || (level === 0 && !isSuggested)) && !isReviewLocked;
 
   const cardStyle = cn(
     "relative w-full transition-all duration-300 cursor-pointer",
