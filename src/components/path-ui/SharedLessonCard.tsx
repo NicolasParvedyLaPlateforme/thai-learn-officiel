@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
-import { AnimatePresence, m } from 'framer-motion';
+import { AnimatePresence, m, useInView } from 'framer-motion';
 
 // ───────────────────────────────────────────────────────────────────────────────
 // Module-level scroll coordinator
@@ -96,7 +96,7 @@ export function SharedLessonCard({
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
 
-  const hasUnlockedWords   = level >= 1;
+  const hasUnlockedWords = level >= 1;
   const hasUnlockedPhrases = pathType === 'speak' ? level >= 1 : level >= 2;
 
   // Build the list of items to rotate, respecting unlock conditions
@@ -116,13 +116,13 @@ export function SharedLessonCard({
     // 'learn': show words from level 1, add phrases from level 2
     const words = hasUnlockedWords
       ? (lesson.words || [])
-          .filter((w: any) => w.th !== '...' && w.phonetic !== '...')
-          .map((w: any) => ({ thai: w.th || w.phonetic, translation: getLocalizedField(w, '', language), isPhrase: false }))
+        .filter((w: any) => w.th !== '...' && w.phonetic !== '...')
+        .map((w: any) => ({ thai: w.th || w.phonetic, translation: getLocalizedField(w, '', language), isPhrase: false }))
       : [];
     const phrases = hasUnlockedPhrases
       ? (lesson.phrases || [])
-          .filter((p: any) => p.th !== '...' && p.phonetic !== '...')
-          .map((p: any) => ({ thai: p.th || p.phonetic, translation: getLocalizedField(p, '', language), isPhrase: true }))
+        .filter((p: any) => p.th !== '...' && p.phonetic !== '...')
+        .map((p: any) => ({ thai: p.th || p.phonetic, translation: getLocalizedField(p, '', language), isPhrase: true }))
       : [];
     // interleave
     const result: typeof words = [];
@@ -132,7 +132,7 @@ export function SharedLessonCard({
       if (i < phrases.length) result.push(phrases[i]);
     }
     return result;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathType, lesson, language, hasUnlockedWords, hasUnlockedPhrases]);
 
   const mobileItems = getMobileItems();
@@ -158,7 +158,7 @@ export function SharedLessonCard({
       unregisterCard(lesson.id);
       stop();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobileLayout, mobileItems.length, lesson.id]);
 
 
@@ -198,20 +198,20 @@ export function SharedLessonCard({
 
   const COLOR_VARIANTS: Record<string, { bg100: string, bg50: string, border200: string, text700: string, bgOverlay: string }> = {
     emerald: { bg100: 'bg-emerald-100', bg50: 'bg-emerald-50', border200: 'border-emerald-200', text700: 'text-emerald-700', bgOverlay: 'bg-emerald-600/80' },
-    amber:   { bg100: 'bg-amber-100',   bg50: 'bg-amber-50',   border200: 'border-amber-200',   text700: 'text-amber-700',   bgOverlay: 'bg-amber-600/80' },
-    yellow:  { bg100: 'bg-yellow-100',  bg50: 'bg-yellow-50',  border200: 'border-yellow-200',  text700: 'text-yellow-700',  bgOverlay: 'bg-yellow-600/80' },
-    rose:    { bg100: 'bg-rose-100',    bg50: 'bg-rose-50',    border200: 'border-rose-200',    text700: 'text-rose-700',    bgOverlay: 'bg-rose-600/80' },
-    blue:    { bg100: 'bg-blue-100',    bg50: 'bg-blue-50',    border200: 'border-blue-200',    text700: 'text-blue-700',    bgOverlay: 'bg-blue-600/80' },
-    indigo:  { bg100: 'bg-indigo-100',  bg50: 'bg-indigo-50',  border200: 'border-indigo-200',  text700: 'text-indigo-700',  bgOverlay: 'bg-indigo-600/80' },
-    violet:  { bg100: 'bg-violet-100',  bg50: 'bg-violet-50',  border200: 'border-violet-200',  text700: 'text-violet-700',  bgOverlay: 'bg-violet-600/80' },
-    purple:  { bg100: 'bg-purple-100',  bg50: 'bg-purple-50',  border200: 'border-purple-200',  text700: 'text-purple-700',  bgOverlay: 'bg-purple-600/80' },
+    amber: { bg100: 'bg-amber-100', bg50: 'bg-amber-50', border200: 'border-amber-200', text700: 'text-amber-700', bgOverlay: 'bg-amber-600/80' },
+    yellow: { bg100: 'bg-yellow-100', bg50: 'bg-yellow-50', border200: 'border-yellow-200', text700: 'text-yellow-700', bgOverlay: 'bg-yellow-600/80' },
+    rose: { bg100: 'bg-rose-100', bg50: 'bg-rose-50', border200: 'border-rose-200', text700: 'text-rose-700', bgOverlay: 'bg-rose-600/80' },
+    blue: { bg100: 'bg-blue-100', bg50: 'bg-blue-50', border200: 'border-blue-200', text700: 'text-blue-700', bgOverlay: 'bg-blue-600/80' },
+    indigo: { bg100: 'bg-indigo-100', bg50: 'bg-indigo-50', border200: 'border-indigo-200', text700: 'text-indigo-700', bgOverlay: 'bg-indigo-600/80' },
+    violet: { bg100: 'bg-violet-100', bg50: 'bg-violet-50', border200: 'border-violet-200', text700: 'text-violet-700', bgOverlay: 'bg-violet-600/80' },
+    purple: { bg100: 'bg-purple-100', bg50: 'bg-purple-50', border200: 'border-purple-200', text700: 'text-purple-700', bgOverlay: 'bg-purple-600/80' },
     fuchsia: { bg100: 'bg-fuchsia-100', bg50: 'bg-fuchsia-50', border200: 'border-fuchsia-200', text700: 'text-fuchsia-700', bgOverlay: 'bg-fuchsia-600/80' },
-    pink:    { bg100: 'bg-pink-100',    bg50: 'bg-pink-50',    border200: 'border-pink-200',    text700: 'text-pink-700',    bgOverlay: 'bg-pink-600/80' },
-    red:     { bg100: 'bg-red-100',     bg50: 'bg-red-50',     border200: 'border-red-200',     text700: 'text-red-700',     bgOverlay: 'bg-red-600/80' },
-    orange:  { bg100: 'bg-orange-100',  bg50: 'bg-orange-50',  border200: 'border-orange-200',  text700: 'text-orange-700',  bgOverlay: 'bg-orange-600/80' },
-    cyan:    { bg100: 'bg-cyan-100',    bg50: 'bg-cyan-50',    border200: 'border-cyan-200',    text700: 'text-cyan-700',    bgOverlay: 'bg-cyan-600/80' },
-    teal:    { bg100: 'bg-teal-100',    bg50: 'bg-teal-50',    border200: 'border-teal-200',    text700: 'text-teal-700',    bgOverlay: 'bg-teal-600/80' },
-    green:   { bg100: 'bg-green-100',   bg50: 'bg-green-50',   border200: 'border-green-200',   text700: 'text-green-700',   bgOverlay: 'bg-green-600/80' },
+    pink: { bg100: 'bg-pink-100', bg50: 'bg-pink-50', border200: 'border-pink-200', text700: 'text-pink-700', bgOverlay: 'bg-pink-600/80' },
+    red: { bg100: 'bg-red-100', bg50: 'bg-red-50', border200: 'border-red-200', text700: 'text-red-700', bgOverlay: 'bg-red-600/80' },
+    orange: { bg100: 'bg-orange-100', bg50: 'bg-orange-50', border200: 'border-orange-200', text700: 'text-orange-700', bgOverlay: 'bg-orange-600/80' },
+    cyan: { bg100: 'bg-cyan-100', bg50: 'bg-cyan-50', border200: 'border-cyan-200', text700: 'text-cyan-700', bgOverlay: 'bg-cyan-600/80' },
+    teal: { bg100: 'bg-teal-100', bg50: 'bg-teal-50', border200: 'border-teal-200', text700: 'text-teal-700', bgOverlay: 'bg-teal-600/80' },
+    green: { bg100: 'bg-green-100', bg50: 'bg-green-50', border200: 'border-green-200', text700: 'text-green-700', bgOverlay: 'bg-green-600/80' },
   };
 
   const badgeTheme = COLOR_VARIANTS[colorName] || COLOR_VARIANTS['emerald'];
@@ -226,18 +226,22 @@ export function SharedLessonCard({
   // For mobile: mastered (isMaxLevel) have no border. Not-started (level===0) have no border unless suggested.
   const mobileNoBorderShadow = isMobileLayout && (isMaxLevel || (level === 0 && !isSuggested)) && !isReviewLocked;
 
+  const isInView = useInView(cardRef, { amount: 0.85 });
+
   const cardStyle = cn(
-    "relative w-full transition-all duration-300 cursor-pointer",
+    "relative w-full cursor-pointer",
+    isMobileLayout ? "transition-all duration-500 ease-out" : "transition-all duration-300",
+    isMobileLayout && !isInView ? "opacity-0 -translate-x-16 scale-95" : "opacity-100 translate-x-0 scale-100",
     mobileNoBorderShadow
       ? "border-0 shadow-none bg-white"
       : cn(
-          "border-[2px]",
-          isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
-          isMaxLevel ? `${badgeBorderColor} bg-white` :
-            isStarted ? `${borderDynamicColor} bg-white` :
-              isReviewLocked ? "bg-slate-50/50 border-slate-100" :
-                isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
-        )
+        "border-[2px]",
+        isHovered ? "shadow-md -translate-y-1" : "shadow-sm",
+        isMaxLevel ? `${badgeBorderColor} bg-white` :
+          isStarted ? `${borderDynamicColor} bg-white` :
+            isReviewLocked ? "bg-slate-50/50 border-slate-100" :
+              isSuggested ? "border-amber-100 bg-amber-50/10" : "border-slate-100 bg-white/80"
+      )
   );
 
   // Renders the fragmented progress bar (horizontal dashes for mobile)
@@ -536,6 +540,7 @@ export function SharedLessonCard({
   // ─────────────────────────────────────────────────────────────────────────────
   return (
     <Card
+      ref={cardRef as React.Ref<HTMLDivElement>}
       className={cn(cardStyle, "p-6 flex flex-col gap-4 rounded-[2rem]")}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
