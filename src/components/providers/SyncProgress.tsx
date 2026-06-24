@@ -109,6 +109,15 @@ export default function SyncProgress() {
                }
             }
 
+            const mergedLessonPartsCompleted: Record<string, number[]> = { ...(dbState.lessonPartsCompleted || {}) };
+            for (const key in localState.lessonPartsCompleted) {
+              if (!mergedLessonPartsCompleted[key]) {
+                mergedLessonPartsCompleted[key] = [...localState.lessonPartsCompleted[key]];
+              } else {
+                mergedLessonPartsCompleted[key] = Array.from(new Set([...mergedLessonPartsCompleted[key], ...localState.lessonPartsCompleted[key]]));
+              }
+            }
+
             const mergedState = {
               ...dbState,
               xp: (dbState.xp || 0) + (localState.xp || 0), // Addition seulement la première fois !
@@ -136,7 +145,7 @@ export default function SyncProgress() {
               questsDate: (localState.questsDate || "") > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
               reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
               inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
-              lessonPartsCompleted: { ...(dbState.lessonPartsCompleted || {}), ...(localState.lessonPartsCompleted || {}) },
+              lessonPartsCompleted: mergedLessonPartsCompleted,
               lastMergedEmail: userEmail,
             };
 
@@ -171,6 +180,15 @@ export default function SyncProgress() {
               }
             }
 
+            const mergedLessonPartsCompleted: Record<string, number[]> = { ...(dbState.lessonPartsCompleted || {}) };
+            for (const key in localState.lessonPartsCompleted) {
+              if (!mergedLessonPartsCompleted[key]) {
+                mergedLessonPartsCompleted[key] = [...localState.lessonPartsCompleted[key]];
+              } else {
+                mergedLessonPartsCompleted[key] = Array.from(new Set([...mergedLessonPartsCompleted[key], ...localState.lessonPartsCompleted[key]]));
+              }
+            }
+
             const safeState = {
               ...dbState,
               xp: Math.max(dbState.xp || 0, localState.xp || 0), // MAX, pas d'addition
@@ -198,7 +216,7 @@ export default function SyncProgress() {
               questsDate: (localState.questsDate || "") > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
               reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
               inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
-              lessonPartsCompleted: { ...(dbState.lessonPartsCompleted || {}), ...(localState.lessonPartsCompleted || {}) },
+              lessonPartsCompleted: mergedLessonPartsCompleted,
               lastMergedEmail: userEmail,
             };
 
