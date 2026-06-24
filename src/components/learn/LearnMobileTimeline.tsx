@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { m as motion } from "motion/react";
-import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
+import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown, Map } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
+import { useRouter } from 'next/navigation';
+import { useNextConversationObjective } from "@/hooks/useNextConversationObjective";
 import IconImage from '../ui/IconImage';
 
 interface LearnMobileTimelineProps {
@@ -12,6 +14,7 @@ interface LearnMobileTimelineProps {
   language: string;
   lessonLevels: Record<string, number>;
   suggestedLessonId: string | null;
+  globalSuggestedLesson?: any;
   learnQuests: any[];
   mounted: boolean;
   handleUnitSelect: (index: number) => void;
@@ -48,8 +51,12 @@ export default function LearnMobileTimeline({
   setSelectedLesson,
   setModalLevel,
   setLockedReviewModalOpen,
-  nextUnit
+  nextUnit,
+  globalSuggestedLesson
 }: LearnMobileTimelineProps) {
+  const router = useRouter();
+  const storyObjective = useNextConversationObjective();
+  
   const handleNodeClick = useMobileTimelineNodeClick({
     setSelectedLesson,
     setModalLevel,
@@ -150,38 +157,86 @@ export default function LearnMobileTimeline({
         </div>
 
         {mounted && (
-          <div
-            onClick={() => setIsQuestsModalOpen(true)}
-            className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
-          >
-            <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
-                <Target size={20} className="text-emerald-500" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-xs font-semibold text-slate-400">
-                  {getTranslation('auto.daily_quest', language)}
-                </span>
-                {learnQuests.filter(q => !q.completed).length > 0 ? (
+          learnQuests.filter(q => !q.completed).length > 0 ? (
+            <div
+              onClick={() => setIsQuestsModalOpen(true)}
+              className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
+                  <Target size={20} className="text-emerald-500" />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-semibold text-slate-400">
+                    {getTranslation('auto.daily_quest', language)}
+                  </span>
                   <span className="text-sm font-bold text-slate-700 truncate">
                     {getLocalizedField(learnQuests.filter(q => !q.completed)[0], 'title', language)}
                   </span>
-                ) : (
-                  <span className="text-sm font-bold text-emerald-600 truncate">
-                    {getTranslation('auto.all_quests_completed', language)}
-                  </span>
-                )}
+                </div>
               </div>
-            </div>
-            {learnQuests.filter(q => !q.completed).length > 0 && (
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
                   {learnQuests.filter(q => !q.completed)[0].progress} / {learnQuests.filter(q => !q.completed)[0].target}
                 </span>
                 <ChevronRight size={18} className="text-slate-300 shrink-0" />
               </div>
-            )}
-          </div>
+            </div>
+          ) : storyObjective ? (
+            <div
+              onClick={() => setIsQuestsModalOpen(true)}
+              className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
+                  <Map size={20} className="text-blue-500" />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-semibold text-slate-400">
+                    {language === 'en' ? 'Story Objective' : "Objectif d'histoire"}
+                  </span>
+                  <span className="text-sm font-bold text-slate-700 truncate">
+                    {storyObjective.type === 'vocab' 
+                      ? getLocalizedField(storyObjective.lesson, 'title', language)
+                      : getLocalizedField(storyObjective.conversation, 'title', language)
+                    }
+                  </span>
+                </div>
+              </div>
+              <div 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (storyObjective.type === 'vocab') {
+                    router.push(`/lesson/${storyObjective.lesson.id}?level=1`);
+                  } else {
+                    router.push(`/conversations/${storyObjective.conversation.id}${storyObjective.levelToComplete > 0 ? `?level=${storyObjective.levelToComplete}` : ''}`);
+                  }
+                }}
+                className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shrink-0 shadow-sm text-white hover:bg-emerald-600 transition-colors"
+              >
+                <Play size={18} className="ml-1 fill-current" />
+              </div>
+            </div>
+          ) : (
+            <div
+              onClick={() => setIsQuestsModalOpen(true)}
+              className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
+                  <Target size={20} className="text-emerald-500" />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-semibold text-slate-400">
+                    {getTranslation('auto.daily_quest', language)}
+                  </span>
+                  <span className="text-sm font-bold text-emerald-600 truncate">
+                    {getTranslation('auto.all_quests_completed', language)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )
         )}
 
         <div className="flex flex-col w-full mt-8 pl-2 pr-2 sm:pl-4 sm:pr-4">

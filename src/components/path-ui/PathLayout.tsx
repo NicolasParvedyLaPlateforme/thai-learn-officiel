@@ -309,6 +309,7 @@ export default function PathLayout({
           language,
           lessonLevels,
           suggestedLessonId,
+          globalSuggestedLesson: suggestedLessonId ? lessons.find((l: any) => l.id === suggestedLessonId) : null,
           quests,
           mounted,
           handleUnitSelect,
