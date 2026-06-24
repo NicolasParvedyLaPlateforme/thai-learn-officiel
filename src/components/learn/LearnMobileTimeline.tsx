@@ -91,7 +91,7 @@ export default function LearnMobileTimeline({
       >
         <div
           onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-          className={`-mx-4 -mt-2 mb-6 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-none text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[160px] flex items-center group`}
+          className={`-mx-4 -mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-none text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[160px] flex items-center group`}
         >
           {unit.imageUrl && (
             <div 
@@ -103,27 +103,17 @@ export default function LearnMobileTimeline({
           )}
           
           <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
-            <p className="text-white w-[60%] mb-5 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
+            <div className="flex justify-between items-start w-[60%] mb-1">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight break-words drop-shadow-sm">
+                {(() => {
+                  const titleStr = mounted ? getLocalizedField(unit, 'title', language) : unit.title;
+                  return titleStr.includes(':') ? titleStr.substring(titleStr.indexOf(':') + 1).trim() : titleStr;
+                })()}
+              </h2>
+            </div>
+            <p className="text-white w-[60%] mb-0 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
               {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
             </p>
-
-            <div className="w-full">
-              <div className="flex flex-col w-[65%]">
-                <div className={`flex justify-between text-xs font-bold text-white mb-1.5 uppercase tracking-wide drop-shadow-sm`}>
-                  <span>{getTranslation('auto.mastery_3', language)}</span>
-                  <span>{completedLevelsInUnit} / {maxLevelsInUnit}</span>
-                </div>
-                <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-[5px] overflow-hidden mb-1 shadow-inner`}>
-                  <div
-                    className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
-                    style={{ width: `${progressPercent}%` }}
-                  ></div>
-                </div>
-                <div className={`${unit.lightTextClass || 'text-white/80'} font-bold text-[10px] drop-shadow-sm`}>
-                  {getTranslation('auto.10_levels_lesson_mastery', language)}
-                </div>
-              </div>
-            </div>
           </div>
           <BannerUnitsButton 
             onClick={() => setIsUnitsModalOpen(true)} 
@@ -140,6 +130,23 @@ export default function LearnMobileTimeline({
               </div>
             </>
           )}
+        </div>
+
+        <div className="-mx-4 mb-6 bg-white shadow-[0_4px_10px_rgba(0,0,0,0.03)] flex flex-col">
+          <div className="flex justify-between items-center px-5 sm:px-6 py-2.5">
+            <span className="text-[11px] sm:text-xs font-extrabold text-slate-400 uppercase tracking-wider">
+              {getTranslation('auto.mastery_3', language)}
+            </span>
+            <span className="text-xs font-extrabold text-slate-700">
+              {completedLevelsInUnit} / {maxLevelsInUnit}
+            </span>
+          </div>
+          <div className="w-full bg-slate-100 h-[6px] shadow-inner">
+            <div
+              className={`h-full ${unit.colorClass} transition-all duration-1000`}
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
         </div>
 
         {mounted && (
