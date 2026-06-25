@@ -98,7 +98,7 @@ export default function LearnMobileTimeline({
         >
           <div
             onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-            className={`-mx-4 -mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-none text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[120px] max-h-[120px] flex items-center group`}
+            className={` -mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-xl text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[120px] max-h-[120px] flex items-center group`}
           >
             {unit.imageUrl && (
               <div
@@ -118,7 +118,7 @@ export default function LearnMobileTimeline({
                   })()}
                 </h2>
               </div>
-              <p className="text-white w-[60%] mb-0 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
+              <p className="text-white w-[70%] mb-0 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
                 {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
               </p>
             </div>
@@ -139,7 +139,7 @@ export default function LearnMobileTimeline({
             )}
           </div>
 
-          <div className="-mx-4 mb-6 bg-white shadow-[0_4px_10px_rgba(0,0,0,0.03)] flex flex-col">
+          <div className="-mx-4 mb-2 flex flex-col">
             <div className="flex justify-between items-center px-5 sm:px-6 py-2.5">
               <span className="text-[11px] sm:text-xs font-extrabold text-slate-400 uppercase tracking-wider">
                 {getTranslation('auto.mastery_3', language)}
@@ -163,7 +163,7 @@ export default function LearnMobileTimeline({
                     return (
                       <span
                         key={index}
-                        className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-xl transition-all duration-1000 ${isStarTouched
+                        className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-l transition-all duration-1000 ${isStarTouched
                           ? 'text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.8)] scale-110'
                           : 'text-slate-300 drop-shadow-md'
                           }`}
@@ -187,7 +187,7 @@ export default function LearnMobileTimeline({
             learnQuests.filter(q => !q.completed).length > 0 ? (
               <div
                 onClick={() => setIsQuestsModalOpen(true)}
-                className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
+                className="xl:hidden p-4 cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between -mx-4"
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
                   <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
