@@ -122,11 +122,11 @@ export default function LearnMobileTimeline({
                 {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
               </p>
             </div>
-            <BannerUnitsButton
+            {/* <BannerUnitsButton
               onClick={() => setIsUnitsModalOpen(true)}
               language={language}
               className="absolute bottom-0 right-0 z-20 rounded-tl-[15px] rounded-tr-none rounded-b-none border-b-0 border-r-0"
-            />
+            /> */}
             {!unit.imageUrl && (
               <>
                 <div className={`absolute -bottom-8 -left-8 opacity-10 drop-shadow-lg text-black rotate-[-15deg] pointer-events-none`}>
@@ -187,23 +187,23 @@ export default function LearnMobileTimeline({
             learnQuests.filter(q => !q.completed).length > 0 ? (
               <div
                 onClick={() => setIsQuestsModalOpen(true)}
-                className="xl:hidden p-4 cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between -mx-4"
+                className="xl:hidden p-2 cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between -mx-4 bg-[#f5f5f5]"
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
+                  <div className="w-10 h-10 flex items-center justify-center shrink-0">
                     <Target size={20} className="text-emerald-500" />
                   </div>
                   <div className="flex flex-col min-w-0">
-                    <span className="text-xs font-semibold text-slate-400">
+                    {/* <span className="text-xs font-semibold text-slate-400">
                       {getTranslation('auto.daily_quest', language)}
-                    </span>
-                    <span className="text-sm font-bold text-slate-700 truncate">
+                    </span> */}
+                    <span className="text-xs font-bold text-slate-500 truncate">
                       {getLocalizedField(learnQuests.filter(q => !q.completed)[0], 'title', language)}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
+                  <span className="text-xs font-bold text-slate-400 whitespace-nowrap">
                     {learnQuests.filter(q => !q.completed)[0].progress} / {learnQuests.filter(q => !q.completed)[0].target}
                   </span>
                   <ChevronRight size={18} className="text-slate-300 shrink-0" />
