@@ -431,7 +431,7 @@ export function SharedLessonCard({
           {/* Mastered badge */}
           {isMaxLevel && (
             <div
-              className={cn("absolute -top-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white ", badgeTextColor, badgeBorderColor)}
+              className={cn("absolute -top-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white ", badgeTextColor, badgeBorderColor)}
             >
               <Crown size={12} className={badgeTextColor} fill="currentColor" />
               <span className={badgeTextColor}>{getTranslation('auto.mastered', language)}</span>
@@ -441,7 +441,7 @@ export function SharedLessonCard({
           {/* Suggested badge (if any, matching desktop logic) */}
           {!isMaxLevel && isSuggested && (
             <div
-              className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-amber-100 text-amber-700 border-amber-200"
+              className="absolute -top-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-amber-100 text-amber-700 border-amber-200"
             >
               <Star size={10} fill="currentColor" />
               <span>{getTranslation('auto.suggested', language)}</span>
@@ -490,13 +490,13 @@ export function SharedLessonCard({
 
           {/* Progress bar + Button */}
           <div className="flex items-center justify-between w-full gap-4 flex-col">
-            <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2 w-full">
+            {/* <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2 w-full">
               <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
                 <span className="font-extrabold">{getTranslation('auto.mastery_6', language)}</span>
                 <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
               </div>
               {renderMobileProgressBar()}
-            </div>
+            </div> */}
 
             <Button
               variant={isMaxLevel ? "default" : "gamified"}

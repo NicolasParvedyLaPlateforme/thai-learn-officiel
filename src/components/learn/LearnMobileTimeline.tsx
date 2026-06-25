@@ -266,7 +266,7 @@ export default function LearnMobileTimeline({
             )
           )}
 
-          <div className="flex flex-col w-full mt-8 pl-2 pr-2 sm:pl-4 sm:pr-4">
+          <div className="flex flex-col w-full mt-12 pl-2 pr-2 sm:pl-4 sm:pr-4">
             <div className="flex flex-col relative w-full pb-8">
               {unitLessons.map((lesson, idx) => {
                 const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
@@ -280,57 +280,61 @@ export default function LearnMobileTimeline({
                 const isMaxLevel = level >= 10;
 
                 return (
-                  <MobileTimelineNodeLayout
-                    key={`mobile-node-${lesson.id}`}
-                    lessonId={lesson.id}
-                    index={idx}
-                    level={level}
-                    maxLevel={10}
-                    unitColorClass={unit.colorClass}
-                    unitTextClass={unit.textClass}
-                    unitShades={unit.shades}
-                    isReviewLocked={isReviewLocked}
-                    isMaxLevel={isMaxLevel}
-                    isReview={isBilan}
-                    onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'learn')}
-                    lesson={lesson}
-                    cardContent={
-                      <SharedLessonCard
-                        pathType="learn"
-                        lesson={lesson}
-                        level={level}
-                        unit={unit}
-                        language={language}
-                        isReviewLocked={isReviewLocked}
-                        suggestedLessonId={suggestedLessonId}
-                        isMobileLayout={true}
-                        index={idx}
-                        onClick={() => {
-                          if (isReviewLocked) {
-                            setLockedReviewModalOpen(true);
-                            return;
-                          }
-                          setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                          setModalLevel(null);
-                        }}
-                      />
-                    }
-                  />
+                  <div className="w-full" key={`mobile-node-${lesson.id}`}>
+                    <MobileTimelineNodeLayout
+
+                      lessonId={lesson.id}
+                      index={idx}
+                      level={level}
+                      maxLevel={10}
+                      unitColorClass={unit.colorClass}
+                      unitTextClass={unit.textClass}
+                      unitShades={unit.shades}
+                      isReviewLocked={isReviewLocked}
+                      isMaxLevel={isMaxLevel}
+                      isReview={isBilan}
+                      onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'learn')}
+                      lesson={lesson}
+                      cardContent={
+                        <SharedLessonCard
+                          pathType="learn"
+                          lesson={lesson}
+                          level={level}
+                          unit={unit}
+                          language={language}
+                          isReviewLocked={isReviewLocked}
+                          suggestedLessonId={suggestedLessonId}
+                          isMobileLayout={true}
+                          index={idx}
+                          onClick={() => {
+                            if (isReviewLocked) {
+                              setLockedReviewModalOpen(true);
+                              return;
+                            }
+                            setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                            setModalLevel(null);
+                          }}
+                        />
+                      }
+                    />
+                  </div>
                 );
               })}
             </div>
 
-            {nextUnit && (
-              <div className="w-full">
-                <NextUnitCard
-                  nextUnit={nextUnit}
-                  nextUnitIndex={activeUnitIndex + 1}
-                  language={language}
-                  handleUnitSelect={handleUnitSelect}
-                  isMobile={true}
-                />
-              </div>
-            )}
+            {
+              nextUnit && (
+                <div className="w-full">
+                  <NextUnitCard
+                    nextUnit={nextUnit}
+                    nextUnitIndex={activeUnitIndex + 1}
+                    language={language}
+                    handleUnitSelect={handleUnitSelect}
+                    isMobile={true}
+                  />
+                </div>
+              )
+            }
           </div>
         </motion.div>
       </main>
