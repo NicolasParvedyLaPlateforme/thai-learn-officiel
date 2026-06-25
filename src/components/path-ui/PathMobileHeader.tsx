@@ -33,9 +33,7 @@ export default function PathMobileHeader({
         {/* GAUCHE : Compte toujours pour 2 blocs (flex-1 assure 50% de l'espace dispo) */}
         <div className="flex-2 flex items-center justify-start z-10">
           {/* Slot 1 : PWA (Espace toujours réservé même si le composant renvoie null) */}
-          <div className="w-8 flex items-center justify-start mr-2">
-            {mounted && <PWAInstallButton />}
-          </div>
+
 
           {/* Slot 2 : Langue */}
           <div className="w-8 flex items-center justify-start">
@@ -47,6 +45,10 @@ export default function PathMobileHeader({
                 {language}
               </button>
             )}
+          </div>
+
+          <div className="w-8 flex items-center justify-start">
+            {mounted && <PWAInstallButton />}
           </div>
         </div>
 
