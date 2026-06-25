@@ -20,6 +20,7 @@ import QuestionArea from '@/components/lesson/QuestionArea';
 import Footer from '@/components/lesson/Footer';
 import { SentenceWithHints } from "@/components/learn/Hints";
 import { getEndlessReviewServer, getDictionaryForExerciseServer, getPhrasesForExerciseServer } from "@/actions/course";
+import { Button } from "@/components/ui/Button";
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -82,12 +83,10 @@ export default function ReviewPage() {
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {getTranslation('auto.you_must_complete_at_least_one', language)}
         </p>
-        <button
-          onClick={() => router.push('/practice')}
-          className="px-12 py-3 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest w-full max-w-sm"
-        >
+
+        <Button variant="indigoGamified" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push('/practice')}>
           {getTranslation('auto.back', language)}
-        </button>
+        </Button>
       </div>
     );
   }

@@ -17,6 +17,7 @@ import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { m as motion, AnimatePresence } from "motion/react";
 import Footer from "@/components/lesson/Footer";
 import { useLessonEngine } from "@/hooks/useLessonEngine";
+import { Button } from "@/components/ui/Button";
 
 export default function WritingPage() {
   const router = useRouter();
@@ -124,18 +125,16 @@ export default function WritingPage() {
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {getTranslation('auto.you_must_complete_at_least_one_11', language)}
         </p>
-        <button
-          onClick={() => {
-            if (hasLessonId) {
-              router.push(`/learn#lesson-${params?.get('lessonId')}`);
-            } else {
-              router.push('/practice');
-            }
-          }}
-          className="px-12 py-3 rounded-xl bg-emerald-500 border-b-4 border-emerald-700 text-white font-bold text-lg shadow-lg hover:bg-emerald-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest w-full max-w-sm"
-        >
+
+        <Button variant="gamified" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => {
+          if (hasLessonId) {
+            router.push(`/learn#lesson-${params?.get('lessonId')}`);
+          } else {
+            router.push('/practice');
+          }
+        }}>
           {getTranslation('auto.back', language)}
-        </button>
+        </Button>
       </div>
     );
   }
