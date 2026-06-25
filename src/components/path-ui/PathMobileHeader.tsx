@@ -55,7 +55,7 @@ export default function PathMobileHeader({
         {/* CENTRE : Statistiques (shrink-0 l'empêche de s'écraser) */}
         <div className="shrink-0 flex items-center justify-center z-0">
           {mounted && (
-            <div className='flex items-center gap-4 bg-slate-100 rounded-full px-4 py-1.5'>
+            <div className='flex items-center gap-4 bg-slate-100 rounded-full px-4 py-2.5'>
               <div className="flex items-center gap-1.5">
                 <Star size={16} className="text-amber-400 fill-amber-400" />
                 <Typography variant="small" className="text-slate-800 leading-none">{xp}</Typography>
