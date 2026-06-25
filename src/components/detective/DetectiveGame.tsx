@@ -63,7 +63,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
   useEffect(() => {
     let timeoutIds: NodeJS.Timeout[] = [];
-    
+
     const checkOrientation = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -84,7 +84,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
     const handleResize = () => {
       checkOrientation();
-      
+
       // Force layout recalculations during and after the mobile rotation animation
       // We must re-measure window dimensions because iOS updates them AFTER orientationchange
       timeoutIds.forEach(clearTimeout);
@@ -94,11 +94,11 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         setTimeout(checkOrientation, 800)
       ];
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
@@ -189,7 +189,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
       const isFirstTime = !completedLessons.includes(lessonId);
       const earnedXp = isFirstTime ? 50 : 20;
       const earnedStars = Math.max(0, 5 - Math.floor(mistakes / 2));
-      
+
       completeLesson(lessonId, earnedXp, 0, earnedStars);
       setXpAwarded(true);
     }
@@ -380,7 +380,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
             const dx = clickX - targetXPixel;
             const dy = clickY - targetYPixel;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            
+
             setDebugInfo({
               targetX: targetXPixel.toFixed(1),
               targetY: targetYPixel.toFixed(1),
@@ -405,47 +405,47 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
         >
           {/* Active Hitbox: perfectly aligns and relies on browser's native hit testing */}
           {currentObj && levelState === 'playing' && (
-             <>
-               {timerSeconds >= AUTO_HIGHLIGHT_TIME && !isMagnifierActive && (
-                 <div
-                   className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 animate-ping opacity-60 bg-amber-400"
-                   style={{
-                     left: `${currentObj.x}%`,
-                     top: `${currentObj.y}%`,
-                     width: `${currentObj.radius * 2.5}%`,
-                     paddingTop: `${currentObj.radius * 2.5}%`,
-                   }}
-                 />
-               )}
-               {timerSeconds >= AUTO_HIGHLIGHT_TIME && !isMagnifierActive && (
-                 <div
-                   className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 opacity-40 bg-amber-400 blur-sm"
-                   style={{
-                     left: `${currentObj.x}%`,
-                     top: `${currentObj.y}%`,
-                     width: `${currentObj.radius * 2.2}%`,
-                     paddingTop: `${currentObj.radius * 2.2}%`,
-                   }}
-                 />
-               )}
-               <div
-                 className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-crosshair z-10"
-                 style={{
-                   left: `${currentObj.x}%`,
-                   top: `${currentObj.y}%`,
-                   width: `${currentObj.radius * 2}%`,
-                   paddingTop: `${currentObj.radius * 2}%`,
-                 }}
-                 onPointerDown={(e) => {
-                   e.stopPropagation(); // Prevent the mistake handler from firing
-                   e.preventDefault();
-                   if (levelState === 'playing') {
-                     if (isMagnifierActive) setIsMagnifierActive(false);
-                     handleCorrect();
-                   }
-                 }}
-               />
-             </>
+            <>
+              {timerSeconds >= AUTO_HIGHLIGHT_TIME && !isMagnifierActive && (
+                <div
+                  className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 animate-ping opacity-60 bg-amber-400"
+                  style={{
+                    left: `${currentObj.x}%`,
+                    top: `${currentObj.y}%`,
+                    width: `${currentObj.radius * 2.5}%`,
+                    paddingTop: `${currentObj.radius * 2.5}%`,
+                  }}
+                />
+              )}
+              {timerSeconds >= AUTO_HIGHLIGHT_TIME && !isMagnifierActive && (
+                <div
+                  className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 opacity-40 bg-amber-400 blur-sm"
+                  style={{
+                    left: `${currentObj.x}%`,
+                    top: `${currentObj.y}%`,
+                    width: `${currentObj.radius * 2.2}%`,
+                    paddingTop: `${currentObj.radius * 2.2}%`,
+                  }}
+                />
+              )}
+              <div
+                className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-crosshair z-10"
+                style={{
+                  left: `${currentObj.x}%`,
+                  top: `${currentObj.y}%`,
+                  width: `${currentObj.radius * 2}%`,
+                  paddingTop: `${currentObj.radius * 2}%`,
+                }}
+                onPointerDown={(e) => {
+                  e.stopPropagation(); // Prevent the mistake handler from firing
+                  e.preventDefault();
+                  if (levelState === 'playing') {
+                    if (isMagnifierActive) setIsMagnifierActive(false);
+                    handleCorrect();
+                  }
+                }}
+              />
+            </>
           )}
 
           {foundObjects.map(obj => (
@@ -463,7 +463,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
           {/* Magnifier Overlay */}
           {isMagnifierActive && currentObj && levelState === 'playing' && (
-            <div 
+            <div
               className="absolute inset-0 pointer-events-none z-20 transition-opacity duration-500"
               style={{
                 background: `radial-gradient(circle at ${currentObj.x}% ${currentObj.y}%, transparent 0%, rgba(0,0,0,0.85) ${Math.max(12, currentObj.radius * 2.5)}%, rgba(0,0,0,0.95) 100%)`
@@ -533,13 +533,13 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
         {/* Center: Current Word */}
         <div className="flex-1 flex items-center justify-center gap-2 lg:gap-6 px-1 lg:px-2">
-          <button 
-            onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }} 
+          <button
+            onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
             className="w-8 h-8 lg:w-16 lg:h-16 bg-emerald-500 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-md lg:shadow-lg shrink-0 transition-transform active:scale-95 border lg:border-2 border-emerald-400"
           >
             <Volume2 className="w-4 h-4 lg:w-8 lg:h-8" />
           </button>
-          
+
           <div className="flex flex-col items-center justify-center min-w-[80px] lg:min-w-[200px]">
             <div className="text-lg lg:text-4xl font-bold font-thai text-slate-800 mb-0 lg:mb-1 tracking-wide">
               {currentObj.th}
@@ -564,11 +564,11 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
         {/* Right side: Magnifying Glass Bonus */}
         <div className="flex items-center justify-end w-[60px] lg:w-[120px] pr-1 lg:pr-2">
-          <button 
+          <button
             onClick={() => setIsMagnifierActive(!isMagnifierActive)}
             className={`relative w-8 h-8 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shadow-md lg:shadow-lg transition-all border lg:border-2 overflow-hidden
-              ${isMagnifierActive 
-                ? 'bg-amber-400 border-amber-300 text-amber-900 scale-95 shadow-inner' 
+              ${isMagnifierActive
+                ? 'bg-amber-400 border-amber-300 text-amber-900 scale-95 shadow-inner'
                 : 'bg-gradient-to-b from-[#4bc4e6] to-[#2c98b8] border-[#227b96] text-white hover:scale-105 hover:shadow-xl'
               }
             `}
@@ -595,13 +595,15 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
             <p className="text-xs text-slate-500"><strong>Détails OS :</strong></p>
             <p className="text-xs text-slate-500">clientY: {debugInfo.clientY} | rectTop: {debugInfo.rectTop}</p>
             <p className="text-xs text-slate-500">rectHeight: {debugInfo.rectHeight} | layoutHeight: {debugInfo.imgLayoutHeight}</p>
-            
-            <button 
+
+            <button
               onClick={() => setDebugInfo(null)}
               className="mt-4 w-full py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-xl"
             >
               Fermer la modale
             </button>
+
+            <Button variant="indigoGamified" onClick={() => setDebugInfo(null)}>Fermer la modale</Button>
           </div>
         </div>
       )}

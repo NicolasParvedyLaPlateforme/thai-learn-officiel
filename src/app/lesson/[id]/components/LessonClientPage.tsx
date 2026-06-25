@@ -1,17 +1,16 @@
 "use client";
 
 import { getTranslation } from "@/hooks/useTranslation";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useShallow } from 'zustand/react/shallow';
 import { useProgressStore } from "@/lib/store";
 import { getExercisesServer, getTrainingExercisesServer, getRevisionExercisesServer, getLessonData } from "@/actions/course";
-import { Exercise, Lesson, Word } from "@/types";
+import { Exercise, Word } from "@/types";
 import { getLevelSplit } from "@/lib/levelSplits";
-import { X, Check, Star, Crown, Volume2, HelpCircle, RotateCcw } from "lucide-react";
+import { HelpCircle, RotateCcw } from "lucide-react";
 import { playThaiTTS, preloadThaiVoices, preloadThaiAudio } from "@/lib/tts";
 import { m as motion, AnimatePresence } from "motion/react";
-import Image from "next/image";
 
 import { ErrorBoundary } from "@/components/providers/ErrorBoundary";
 
@@ -21,19 +20,17 @@ import SentenceBuilder from './SentenceBuilder';
 import PairMatch from "@/components/learn/PairMatch";
 import VirtualKeyboard from '../../../writing/components/VirtualKeyboard';
 import FreeTypingInput from './FreeTypingInput';
-import InstructionExample from '@/components/lesson/InstructionExample';
 import GlossaryModal from '@/components/lesson/GlossaryModal';
 import ResultScreen from '@/components/lesson/ResultScreen';
 
 import { Suspense } from "react";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
-import { SentenceWithHints } from "@/components/learn/Hints";
-import { TooltipHint } from "@/components/ui/TooltipHint";
 import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
 import InstructionBlock from "@/components/lesson/InstructionBlock";
 import Footer from "@/components/lesson/Footer";
 import QuestionArea from "@/components/lesson/QuestionArea";
 import { useLessonEngine } from "@/hooks/useLessonEngine";
+import { Button } from "@/components/ui/Button";
 
 const triggerConfetti = () => {
   import("canvas-confetti").then((mod) => {
@@ -238,7 +235,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     },
     onComplete: (totalMistakes) => {
       const mode = searchParams.get('mode');
-      
+
       let finalXp = 0;
       let wonCoin = false;
 
@@ -266,14 +263,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         finalXp = expected.xp;
         setEarnedXp(finalXp);
         const earnedStarsLocal = Math.max(0, 5 - totalMistakes);
-        
+
         if (isPart && partIndex !== null && totalParts !== null) {
-           useProgressStore.getState().completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStarsLocal, isBilan);
+          useProgressStore.getState().completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, earnedStarsLocal, isBilan);
         } else {
-           useProgressStore.getState().completeLesson(lesson.id, 0, currentLevel, earnedStarsLocal, isBilan);
+          useProgressStore.getState().completeLesson(lesson.id, 0, currentLevel, earnedStarsLocal, isBilan);
         }
       }
-      
+
       // Pass the wonCoin flag so we can display it later if needed (optional)
       // Since it's not a state, we might just rely on the UI or add a small state if we want to show it.
       // Note: we can't easily access initialTime and timeLeft inside this callback if they aren't in scope/up-to-date.
@@ -346,7 +343,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     const actualTotalParts = getLevelSplit(currentLevel, lesson);
     const partsKey = `${lesson.id}_level-${currentLevel}`;
     const completedParts = lessonPartsCompleted[partsKey] || [];
-    
+
     if (!isDev && !lesson.isReview && actualTotalParts > 1 && currentMode !== 'training' && currentMode !== 'revision') {
       const expectedPart = completedParts.length;
       if (partIndex !== null && partIndex > expectedPart) {
@@ -355,7 +352,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         return;
       }
     }
-    
+
     if (
       !exercisesGeneratedFor ||
       exercisesGeneratedFor.id !== lesson.id ||
@@ -535,9 +532,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
       setEarnedXp(expected.xp);
       setIsFinished(true);
       if (isPart && partIndex !== null && totalParts !== null) {
-         completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, 3, isBilan);
+        completeLessonPart(lesson.id, 0, currentLevel, partIndex, totalParts, 3, isBilan);
       } else {
-         completeLesson(lesson.id, 0, currentLevel, 3, isBilan);
+        completeLesson(lesson.id, 0, currentLevel, 3, isBilan);
       }
       triggerConfetti();
     }
@@ -636,18 +633,14 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             {getTranslation('auto.resume_lesson_desc', language) || 'Vous avez commencé ce niveau précédemment. Voulez-vous reprendre là où vous en étiez ?'}
           </p>
           <div className="flex flex-col w-full gap-3">
-            <button
-              onClick={handleResume}
-              className="w-full bg-amber-400 text-white font-extrabold rounded-2xl py-4 transition-all shadow-sm border-b-4 border-amber-500 active:translate-y-1 active:border-b-0 hover:bg-amber-300"
-            >
+
+            <Button variant="amberGamified" size="lg" onClick={handleResume}>
               {getTranslation('auto.resume_button', language) || 'Reprendre la partie'}
-            </button>
-            <button
-              onClick={handleRestart}
-              className="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-extrabold rounded-2xl py-4 transition-all"
-            >
+            </Button>
+
+            <Button variant="gamifiedSecondary" size="lg" onClick={handleRestart}>
               {getTranslation('auto.restart_button', language) || 'Recommencer à zéro'}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

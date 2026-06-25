@@ -3,6 +3,7 @@ import { useState } from "react";
 import { X, Star, Crown, Clock } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Exercise } from "@/types";
+import { Button } from "../ui/Button";
 
 interface HeaderProgressBarProps {
   lessonId: string;
@@ -76,25 +77,18 @@ export default function HeaderProgressBar({
             </p>
             <div className="flex flex-col gap-2 mt-2">
               {!mode && currentLevel > 0 && (
-                <button
-                  onClick={handleTrainInstead}
-                  className="w-full py-3.5 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-400 transition-colors shadow-sm mb-2"
-                >
-                  S'entraîner d'abord (+10 XP)
-                </button>
+                <Button variant="indigoGamified" size="lg" onClick={handleTrainInstead}>
+                  {getTranslation('auto.train_instead', language) || 'S\'entraîner d\'abord (+10 XP)'}
+                </Button>
               )}
-              <button
-                onClick={handleQuit}
-                className="w-full py-3.5 bg-rose-100 text-rose-600 font-bold rounded-xl hover:bg-rose-200 transition-colors"
-              >
+
+              <Button variant="dangerSoft" size="lg" onClick={handleQuit}>
                 {getTranslation('auto.quit', language)}
-              </button>
-              <button
-                onClick={() => setShowQuitConfirm(false)}
-                className="w-full py-3.5 bg-slate-100 text-slate-600 font-bold rounded-xl hover:bg-slate-200 transition-colors"
-              >
+              </Button>
+
+              <Button variant="flat" size="lg" onClick={() => setShowQuitConfirm(false)}>
                 {getTranslation('auto.cancel', language)}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -116,8 +110,8 @@ export default function HeaderProgressBar({
             {isReview && timeLeft !== undefined && timeLeft !== null && initialTime ? (
               <div
                 className={`h-full transition-all duration-1000 rounded-full ${timeLeft < 30 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.3)]' :
-                    timeLeft < 60 ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' :
-                      'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
+                  timeLeft < 60 ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' :
+                    'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
                   }`}
                 style={{ width: `${(timeLeft / initialTime) * 100}%` }}
               />
@@ -144,7 +138,7 @@ export default function HeaderProgressBar({
                   ))}
                 </div>
                 <div className="flex sm:hidden text-amber-400">
-                    <Star size={16} className="fill-current" />
+                  <Star size={16} className="fill-current" />
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -190,8 +184,8 @@ export default function HeaderProgressBar({
               <button
                 onClick={() => setShowRomanization(!showRomanization)}
                 className={`w-9 h-9 flex flex-col items-center justify-center rounded-xl font-bold border-2 transition-colors ${showRomanization
-                    ? "border-indigo-200 text-indigo-600 bg-indigo-50 hover:bg-indigo-100"
-                    : "border-slate-200 text-slate-400 bg-white hover:bg-slate-100"
+                  ? "border-indigo-200 text-indigo-600 bg-indigo-50 hover:bg-indigo-100"
+                  : "border-slate-200 text-slate-400 bg-white hover:bg-slate-100"
                   }`}
                 title={
                   showRomanization
