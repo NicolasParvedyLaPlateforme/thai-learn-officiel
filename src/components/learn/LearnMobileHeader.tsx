@@ -28,7 +28,7 @@ export default function LearnMobileHeader({
             className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors md:hidden"
           >
             <BookOpen size={18} className="text-emerald-600" />
-            <span className="font-extrabold text-slate-700 text-sm">{getTranslation('auto.units', language)}</span>
+            {/* <span className="font-extrabold text-slate-700 text-sm">{getTranslation('auto.units', language)}</span> */}
           </button>
         </div>
 

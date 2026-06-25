@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Download, X, Share, PlusSquare } from 'lucide-react';
-import { m as motion , AnimatePresence } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 import { createPortal } from 'react-dom';
 
 export default function PWAInstallButton() {
@@ -18,14 +18,14 @@ export default function PWAInstallButton() {
     setCurrentUrl(window.location.host);
 
     // Check if running as PWA (standalone)
-    const isPWA = window.matchMedia('(display-mode: standalone)').matches || 
-                  (window.navigator as any).standalone === true;
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone === true;
     setIsStandalone(isPWA);
 
     // iOS Detection
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isIOS = /iphone|ipad|ipod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    
+
     if (isIOS) {
       // Safari has "safari" but not "crios", "fxios", "opios", "edgios" or "brave"
       const isSafari = /safari/.test(userAgent) && !/crios|fxios|opios|edgios|duckduckgo|brave/.test(userAgent);
@@ -50,15 +50,15 @@ export default function PWAInstallButton() {
     if (deferredPrompt) {
       // Show the install prompt
       deferredPrompt.prompt();
-      
+
       // Wait for the user to respond to the prompt
       const { outcome } = await deferredPrompt.userChoice;
-      
+
       // We've used the prompt, and can't use it again, throw it away
       setDeferredPrompt(null);
       return;
     }
-    
+
     // If we don't have the prompt event, we can show a user instruction tooltip or alert
     if (iosBrowserType) {
       setShowIosGuide(true);
@@ -76,7 +76,7 @@ export default function PWAInstallButton() {
     <>
       <button
         onClick={handleInstallClick}
-        className="w-9 h-9 flex items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-colors md:hidden shrink-0"
+        className="w-9 h-9 flex items-center justify-center text-indigo-600 md:hidden shrink-0"
         title="Installer l'application"
       >
         <Download size={18} strokeWidth={2.5} />
@@ -93,13 +93,13 @@ export default function PWAInstallButton() {
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
                 className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl relative"
               >
-                <button 
+                <button
                   onClick={() => setShowIosGuide(false)}
                   className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-full p-2 transition-colors"
                 >
                   <X size={20} strokeWidth={2.5} />
                 </button>
-                
+
                 <div className="flex justify-center mb-6">
                   <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center">
                     <Download size={32} strokeWidth={2.5} />
@@ -107,7 +107,7 @@ export default function PWAInstallButton() {
                 </div>
 
                 <h3 className="text-xl font-bold text-center text-slate-800 mb-2">Installer ThaiLearn</h3>
-                
+
                 {iosBrowserType === 'safari' ? (
                   <div className="text-center text-slate-600 space-y-4 font-medium">
                     <p>Pour installer l&apos;application sur votre appareil :</p>
@@ -131,8 +131,8 @@ export default function PWAInstallButton() {
                     </div>
                   </div>
                 )}
-                
-                <button 
+
+                <button
                   onClick={() => setShowIosGuide(false)}
                   className="w-full mt-6 py-3 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors"
                 >
