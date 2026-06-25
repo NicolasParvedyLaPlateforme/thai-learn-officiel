@@ -98,7 +98,7 @@ export default function LearnMobileTimeline({
         >
           <div
             onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-            className={`-mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-xl text-white relative overflow-hidden cursor-pointer min-h-[120px] max-h-[120px] flex items-center group transition-all duration-150 shadow-[3px_0_0_0_rgba(0,0,0,0.1)] active:translate-x-[3px] active:shadow-none`}
+            className={` -mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-xl text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[120px] max-h-[120px] flex items-center group`}
           >
             {unit.imageUrl && (
               <div
