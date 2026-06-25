@@ -418,7 +418,7 @@ export function SharedLessonCard({
     return (
       <Card
         ref={cardRef as React.Ref<HTMLDivElement>}
-        className={cn(cardStyle, "flex flex-col rounded-[10px] p-0")}
+        className={cn(cardStyle, "flex flex-col rounded-[10px] p-0 bg-transparent")}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={(e) => {
@@ -427,11 +427,11 @@ export function SharedLessonCard({
         }}
       >
         {/* ── Header: Image Left, Title/Desc Right ──────────────────────────────── */}
-        <div className={cn("flex p-3 pt-[14px] gap-3 border-b border-slate-100 relative", index !== undefined && index % 2 !== 0 ? "flex-row-reverse" : "flex-row")}>
+        <div className={cn("flex p-3 pt-[14px] gap-3 border-b border-slate-100 relative bg-transparent border-b-emerald-600", index !== undefined && index % 2 !== 0 ? "flex-row-reverse" : "flex-row")}>
           {/* Mastered badge */}
           {isMaxLevel && (
             <div
-              className={cn("absolute -top-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white", badgeTextColor, badgeBorderColor)}
+              className={cn("absolute -top-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white ", badgeTextColor, badgeBorderColor)}
             >
               <Crown size={12} className={badgeTextColor} fill="currentColor" />
               <span className={badgeTextColor}>{getTranslation('auto.mastered', language)}</span>
@@ -449,17 +449,17 @@ export function SharedLessonCard({
           )}
 
           <div className="flex flex-col justify-center min-w-0 flex-1">
-            <Typography variant="h4" className="text-slate-800 text-sm sm:text-base font-bold leading-tight line-clamp-2">
+            <Typography variant="h4" className="text-slate-800 text-sm sm:text-base font-bold leading-tight line-clamp-2 text-center">
               {getLocalizedField(lesson, 'title', language)}
             </Typography>
-            <Typography variant="muted" className="text-slate-500 text-[11px] sm:text-xs leading-snug line-clamp-2 font-medium mt-1">
+            <Typography variant="muted" className="text-slate-500 text-[11px] sm:text-xs leading-snug line-clamp-2 font-medium mt-1 text-center">
               {renderDescription()}
             </Typography>
           </div>
         </div>
 
         {/* ── Body ─────────────────────────────────────────────────────────── */}
-        <div className="flex flex-col gap-2.5 px-3 pt-2.5 pb-3">
+        <div className="flex flex-col gap-2.5 px-3 pt-2.5 pb-3 bg-white rounded-b-[20px] ">
 
           {/* Rotating word / phrase strip – framer-motion animated */}
           {mobileItems.length > 0 && (
@@ -489,8 +489,8 @@ export function SharedLessonCard({
           )}
 
           {/* Progress bar + Button */}
-          <div className="flex items-center justify-between w-full gap-4">
-            <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2">
+          <div className="flex items-center justify-between w-full gap-4 flex-col">
+            <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2 w-full">
               <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
                 <span className="font-extrabold">{getTranslation('auto.mastery_6', language)}</span>
                 <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
@@ -501,7 +501,7 @@ export function SharedLessonCard({
             <Button
               variant={isMaxLevel ? "default" : "gamified"}
               size="sm"
-              className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white", dynamicColor, !isMaxLevel && borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+              className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white w-full", dynamicColor, !isMaxLevel && borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
               onClick={(e) => {
                 e.stopPropagation();
                 onClick();
