@@ -206,7 +206,7 @@ export default function LearnMobileTimeline({
                   <span className="text-xs font-bold text-slate-400 whitespace-nowrap">
                     {learnQuests.filter(q => !q.completed)[0].progress} / {learnQuests.filter(q => !q.completed)[0].target}
                   </span>
-                  <ChevronRight size={18} className="text-slate-300 shrink-0" />
+                  <ChevronRight size={18} className="text-slate-300 shrink-0 mr-1" />
                 </div>
               </div>
             ) : storyObjective ? (
@@ -293,6 +293,7 @@ export default function LearnMobileTimeline({
                     isMaxLevel={isMaxLevel}
                     isReview={isBilan}
                     onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'learn')}
+                    lesson={lesson}
                     cardContent={
                       <SharedLessonCard
                         pathType="learn"

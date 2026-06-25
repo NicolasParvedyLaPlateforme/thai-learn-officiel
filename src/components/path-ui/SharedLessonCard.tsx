@@ -448,26 +448,6 @@ export function SharedLessonCard({
             </div>
           )}
 
-          <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-[10px] overflow-hidden shrink-0">
-            {lesson.imageUrl ? (
-              <IconImage
-                src={lesson.imageUrl}
-                alt={lesson.title}
-                fill
-                className="object-cover"
-                sizes="80px"
-              />
-            ) : (
-              <div className={cn("w-full h-full", dynamicColor, "opacity-30")} />
-            )}
-            {/* Lock overlay */}
-            {isReviewLocked && (
-              <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px]">
-                <Crown size={24} className="text-white fill-white/50" />
-              </div>
-            )}
-          </div>
-
           <div className="flex flex-col justify-center min-w-0 flex-1">
             <Typography variant="h4" className="text-slate-800 text-sm sm:text-base font-bold leading-tight line-clamp-2">
               {getLocalizedField(lesson, 'title', language)}
