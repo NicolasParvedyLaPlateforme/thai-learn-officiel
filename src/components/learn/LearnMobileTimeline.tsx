@@ -139,9 +139,9 @@ export default function LearnMobileTimeline({
             )}
           </div>
 
-          <div className="-mx-4 mb-2 flex flex-col">
+          <div className="-mx-4 mb-1 mt-1 flex flex-col">
             <div className="flex justify-between items-center px-5 sm:px-6 py-2.5">
-              <span className="text-[11px] sm:text-xs font-extrabold text-slate-400 uppercase tracking-wider">
+              <span className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider">
                 {getTranslation('auto.mastery_3', language)}
               </span>
 
@@ -156,14 +156,14 @@ export default function LearnMobileTimeline({
 
                 {/* Conteneur des 5 étoiles, superposé par-dessus */}
                 <div className="absolute top-1/2 left-0 w-full h-0 z-10 pointer-events-none">
-                  {[20, 40, 60, 80, 100].map((threshold, index) => {
+                  {[100].map((threshold, index) => {
                     // L'étoile devient jaune si la progression a atteint ou dépassé son palier
                     const isStarTouched = progressPercent >= threshold;
 
                     return (
                       <span
                         key={index}
-                        className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-l transition-all duration-1000 ${isStarTouched
+                        className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-xs transition-all duration-1000 ${isStarTouched
                           ? 'text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.8)] scale-110'
                           : 'text-slate-300 drop-shadow-md'
                           }`}
@@ -177,7 +177,7 @@ export default function LearnMobileTimeline({
 
               </div>
 
-              <span className="text-xs font-extrabold text-slate-700">
+              <span className="text-xs font-100 text-slate-500">
                 {completedLevelsInUnit} / {maxLevelsInUnit}
               </span>
             </div>
