@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { m as motion } from "motion/react";
-import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown } from 'lucide-react';
+import { BookOpen, Star, Target, ChevronRight, CheckCircle, Lock, Play, Crown, Map } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
+import { useRouter } from 'next/navigation';
+import { useNextConversationObjective } from "@/hooks/useNextConversationObjective";
 import IconImage from '../ui/IconImage';
 import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { MobileTimelineNodeLayout } from '../path-ui/MobileTimelineNodeLayout';
@@ -29,6 +31,7 @@ interface AlphabetMobileTimelineProps {
   setModalLevel: (level: number | null) => void;
   maxLevelPerLesson?: number;
   nextUnit?: any;
+  setLockedReviewModalOpen: (open: boolean) => void;
 }
 
 export default function AlphabetMobileTimeline({
@@ -47,12 +50,16 @@ export default function AlphabetMobileTimeline({
   setSelectedLesson,
   setModalLevel,
   maxLevelPerLesson = 4,
-  nextUnit
+  nextUnit,
+  setLockedReviewModalOpen
 }: AlphabetMobileTimelineProps) {
+  const router = useRouter();
+  const storyObjective = useNextConversationObjective();
   const handleNodeClick = useMobileTimelineNodeClick({
     setSelectedLesson,
     setModalLevel,
-    maxLevelPerLesson
+    maxLevelPerLesson,
+    setLockedReviewModalOpen
   });
   const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => {
@@ -91,7 +98,7 @@ export default function AlphabetMobileTimeline({
         >
           <div
             onClick={(e) => { e.stopPropagation(); setIsUnitsModalOpen(true); }}
-            className={`-mx-4 -mt-2 mb-6 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-none text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[160px] flex items-center group`}
+            className={` -mt-2 mb-0 p-5 sm:p-6 pb-6 ${unit.colorClass} rounded-xl text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden cursor-pointer active:scale-[0.99] transition-transform min-h-[120px] max-h-[120px] flex items-center group`}
           >
             {unit.imageUrl && (
               <div
@@ -103,39 +110,18 @@ export default function AlphabetMobileTimeline({
             )}
 
             <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
-              <div className="flex justify-between items-start w-full mb-1">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight break-words pr-2 drop-shadow-sm">
-                  {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
+              <div className="flex justify-between items-start w-[60%] mb-1">
+                <h2 className="text-[20px] sm:text-3xl font-extrabold text-white tracking-tight break-words drop-shadow-sm">
+                  {(() => {
+                    const titleStr = mounted ? getLocalizedField(unit, 'title', language) : unit.title;
+                    return titleStr.includes(':') ? titleStr.substring(titleStr.indexOf(':') + 1).trim() : titleStr;
+                  })()}
                 </h2>
               </div>
-              <p className={`${unit.lightTextClass || 'text-white/90'} mb-5 font-medium text-sm sm:text-base leading-snug drop-shadow-sm`}>
+              <p className="text-white w-[70%] mb-0 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
                 {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
               </p>
-
-              <div className="w-full">
-                <div className="flex flex-col w-[65%]">
-                  <div className={`flex justify-between text-xs font-bold text-white mb-1.5 uppercase tracking-wide drop-shadow-sm`}>
-                    <span>{getTranslation('auto.mastery_13', language)}</span>
-                    <span>{completedLevelsInUnit} / {maxLevelsInUnit}</span>
-                  </div>
-                  <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-2.5 overflow-hidden mb-1 shadow-inner`}>
-                    <div
-                      className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
-                      style={{ width: `${progressPercent}%` }}
-                    ></div>
-                  </div>
-                  <div className={`text-[11px] ${unit.lightTextClass || 'text-white/80'} font-bold drop-shadow-sm`}>
-                    {(maxLevelPerLesson || 4) === 4 ? getTranslation('auto.4_levels_per_lesson_total_mas', language) : `${maxLevelPerLesson} ${getTranslation('auto.levels_per_lesson', language) || 'niveaux / leçon'}`}
-                  </div>
-                </div>
-              </div>
             </div>
-
-            <BannerUnitsButton
-              onClick={() => setIsUnitsModalOpen(true)}
-              language={language}
-              className="absolute bottom-4 right-4 z-20"
-            />
             {!unit.imageUrl && (
               <>
                 <div className={`absolute -bottom-8 -left-8 opacity-10 drop-shadow-lg text-black rotate-[-15deg] pointer-events-none`}>
@@ -148,98 +134,201 @@ export default function AlphabetMobileTimeline({
             )}
           </div>
 
-          {mounted && (
-            <div
-              onClick={() => setIsQuestsModalOpen(true)}
-              className="xl:hidden mt-6 w-full bg-white rounded-2xl border border-slate-100 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
-            >
-              <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
-                  <Target size={20} className="text-emerald-500" />
+          <div className="-mx-4 mb-1 mt-1 flex flex-col">
+            <div className="flex justify-between items-center px-5 sm:px-6 py-2.5">
+              <span className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider">
+                {getTranslation('auto.mastery_3', language)}
+              </span>
+
+              {/* Ajout de 'relative' ici pour permettre la superposition des étoiles */}
+              <div className="relative w-[60%] bg-slate-100 h-[6px] shadow-inner">
+
+                {/* Votre barre d'origine, totalement inchangée */}
+                <div
+                  className="h-full bg-gradient-to-r from-green-500 via-green-500 to-yellow-400 transition-all duration-1000"
+                  style={{ width: `${progressPercent}%` }}
+                />
+
+                {/* Conteneur des 5 étoiles, superposé par-dessus */}
+                <div className="absolute top-1/2 left-0 w-full h-0 z-10 pointer-events-none">
+                  {[100].map((threshold, index) => {
+                    // L'étoile devient jaune si la progression a atteint ou dépassé son palier
+                    const isStarTouched = progressPercent >= threshold;
+
+                    return (
+                      <span
+                        key={index}
+                        className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 text-xs transition-all duration-1000 ${isStarTouched
+                          ? 'text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.8)] scale-110'
+                          : 'text-slate-300 drop-shadow-md'
+                          }`}
+                        style={{ left: `${threshold}%` }}
+                      >
+                        ★
+                      </span>
+                    );
+                  })}
                 </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-xs font-semibold text-slate-400">
-                    {getTranslation('auto.daily_quest', language)}
-                  </span>
-                  {alphabetQuests.filter(q => !q.completed).length > 0 ? (
-                    <span className="text-sm font-bold text-slate-700 truncate">
+
+              </div>
+
+              <span className="text-xs font-100 text-slate-500">
+                {completedLevelsInUnit} / {maxLevelsInUnit}
+              </span>
+            </div>
+          </div>
+
+          {mounted && (
+            alphabetQuests.filter(q => !q.completed).length > 0 ? (
+              <div
+                onClick={() => setIsQuestsModalOpen(true)}
+                className="xl:hidden p-2 cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between -mx-4 bg-[#f5f5f5]"
+              >
+                <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
+                  <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                    <Target size={20} className="text-emerald-500" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs font-bold text-slate-500 truncate">
                       {getLocalizedField(alphabetQuests.filter(q => !q.completed)[0], 'title', language)}
                     </span>
-                  ) : (
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-xs font-bold text-slate-400 whitespace-nowrap">
+                    {alphabetQuests.filter(q => !q.completed)[0].progress} / {alphabetQuests.filter(q => !q.completed)[0].target}
+                  </span>
+                  <ChevronRight size={18} className="text-slate-300 shrink-0 mr-1" />
+                </div>
+              </div>
+            ) : storyObjective ? (
+              <div
+                onClick={() => setIsQuestsModalOpen(true)}
+                className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
+                    <Map size={20} className="text-blue-500" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs font-semibold text-slate-400">
+                      {getTranslation('auto.story_objective', language)}
+                    </span>
+                    <span className="text-sm font-bold text-slate-700 truncate">
+                      {storyObjective.type === 'vocab'
+                        ? getLocalizedField(storyObjective.lesson, 'title', language)
+                        : getLocalizedField(storyObjective.conversation, 'title', language)
+                      }
+                    </span>
+                  </div>
+                </div>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (storyObjective.type === 'vocab') {
+                      router.push(`/lesson/${storyObjective.lesson.id}?level=1`);
+                    } else {
+                      router.push(`/conversations/${storyObjective.conversation.id}${storyObjective.levelToComplete > 0 ? `?level=${storyObjective.levelToComplete}` : ''}`);
+                    }
+                  }}
+                  className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shrink-0 shadow-sm text-white hover:bg-emerald-600 transition-colors"
+                >
+                  <Play size={18} className="ml-1 fill-current" />
+                </div>
+              </div>
+            ) : (
+              <div
+                onClick={() => setIsQuestsModalOpen(true)}
+                className="xl:hidden mt-6 w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between"
+              >
+                <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
+                    <Target size={20} className="text-emerald-500" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs font-semibold text-slate-400">
+                      {getTranslation('auto.daily_quest', language)}
+                    </span>
                     <span className="text-sm font-bold text-emerald-600 truncate">
                       {getTranslation('auto.all_quests_completed', language)}
                     </span>
-                  )}
+                  </div>
                 </div>
               </div>
-              {alphabetQuests.filter(q => !q.completed).length > 0 && (
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
-                    {alphabetQuests.filter(q => !q.completed)[0].progress} / {alphabetQuests.filter(q => !q.completed)[0].target}
-                  </span>
-                  <ChevronRight size={18} className="text-slate-300 shrink-0" />
-                </div>
-              )}
-            </div>
+            )
           )}
 
-          <div className="flex flex-col w-full mt-8 pl-2 pr-2 sm:pl-4 sm:pr-4">
+          <div className="flex flex-col w-full mt-12 pl-2 pr-2 sm:pl-4 sm:pr-4">
             <div className="flex flex-col relative w-full pb-8">
               {unitLessons.map((lesson, idx) => {
                 const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
                 let isReviewLocked = false;
 
                 const isMaxLevel = level >= maxLevelPerLesson;
+                const isBilan = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
+
+                if (isBilan && mounted) {
+                  const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview && !l.id?.startsWith('bilan-') && !l.id?.includes('-bilan'));
+                  isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= maxLevelPerLesson);
+                }
+
 
                 return (
-                  <MobileTimelineNodeLayout
-                    key={`mobile-node-${lesson.id}`}
-                    lessonId={lesson.id}
-                    index={idx}
-                    level={level}
-                    maxLevel={4}
-                    unitColorClass={unit.colorClass}
-                    unitTextClass={unit.textClass}
-                    unitShades={unit.shades}
-                    isReviewLocked={isReviewLocked}
-                    isMaxLevel={isMaxLevel}
-                    showLevelProgress={true}
-                    onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'alphabet')}
-                    lesson={lesson}
-                    cardContent={
-                      <SharedLessonCard
-                        pathType="alphabet"
-                        lesson={lesson}
-                        level={level}
-                        maxLevelPerLesson={4}
-                        unit={unit}
-                        language={language}
-                        isReviewLocked={isReviewLocked}
-                        suggestedLessonId={suggestedLessonId}
-                        isMobileLayout={true}
-                        index={idx}
-                        onClick={() => {
-                          setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                          setModalLevel(null);
-                        }}
-                      />
-                    }
-                  />
-                )
+                  <div className="w-full" key={`mobile-node-${lesson.id}`}>
+                    <MobileTimelineNodeLayout
+                      lessonId={lesson.id}
+                      index={idx}
+                      level={level}
+                      maxLevel={maxLevelPerLesson}
+                      unitColorClass={unit.colorClass}
+                      unitTextClass={unit.textClass}
+                      unitShades={unit.shades}
+                      isReviewLocked={isReviewLocked}
+                      isMaxLevel={isMaxLevel}
+                      isReview={isBilan}
+                      onNodeClick={handleNodeClick(lesson, level, unit, isReviewLocked, 'alphabet')}
+                      lesson={lesson}
+                      cardContent={
+                        <SharedLessonCard
+                          pathType="alphabet"
+                          lesson={lesson}
+                          level={level}
+                          unit={unit}
+                          language={language}
+                          isReviewLocked={isReviewLocked}
+                          suggestedLessonId={suggestedLessonId}
+                          isMobileLayout={true}
+                          index={idx}
+                          maxLevelPerLesson={maxLevelPerLesson}
+                          onClick={() => {
+                            if (isReviewLocked) {
+                              setLockedReviewModalOpen(true);
+                              return;
+                            }
+                            setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                            setModalLevel(null);
+                          }}
+                        />
+                      }
+                    />
+                  </div>
+                );
               })}
             </div>
 
-            {nextUnit && (
-              <div className="w-full">
-                <NextUnitCard
-                  nextUnit={nextUnit}
-                  nextUnitIndex={activeUnitIndex + 1}
-                  language={language}
-                  handleUnitSelect={handleUnitSelect}
-                  isMobile={true}
-                />
-              </div>
-            )}
+            {
+              nextUnit && (
+                <div className="w-full">
+                  <NextUnitCard
+                    nextUnit={nextUnit}
+                    nextUnitIndex={activeUnitIndex + 1}
+                    language={language}
+                    handleUnitSelect={handleUnitSelect}
+                    isMobile={true}
+                  />
+                </div>
+              )
+            }
           </div>
         </motion.div>
       </main>
