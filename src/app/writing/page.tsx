@@ -18,6 +18,7 @@ import { m as motion, AnimatePresence } from "motion/react";
 import Footer from "@/components/lesson/Footer";
 import { useLessonEngine } from "@/hooks/useLessonEngine";
 import { Button } from "@/components/ui/Button";
+import { PlayAudioButton } from "@/components/ui/PlayAudioButton";
 
 export default function WritingPage() {
   const router = useRouter();
@@ -125,16 +126,6 @@ export default function WritingPage() {
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {getTranslation('auto.you_must_complete_at_least_one_11', language)}
         </p>
-        {/* 
-        <Button variant="gamified" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => {
-          if (hasLessonId) {
-            router.push(`/learn#lesson-${params?.get('lessonId')}`);
-          } else {
-            router.push('/practice');
-          }
-        }}>
-          {getTranslation('auto.back', language)}
-        </Button> */}
 
         <Button
           variant="flat"
@@ -249,13 +240,7 @@ export default function WritingPage() {
                             forceHideRomanization={currentExercise.forceHideRomanization}
                             rightElement={
                               !isChecking ? (
-                                <button
-                                  onClick={() => playThaiTTS(currentExercise.answer)}
-                                  className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0"
-                                  title={getTranslation('auto.listen_to_full_phrase', language)}
-                                >
-                                  <Volume2 size={24} strokeWidth={2.5} />
-                                </button>
+                                <PlayAudioButton text={currentExercise.answer} language={language} />
                               ) : undefined
                             }
                           />
@@ -276,13 +261,7 @@ export default function WritingPage() {
                               )}
                             </div>
                             {!isChecking && (
-                              <button
-                                onClick={() => playThaiTTS(currentExercise.answer)}
-                                className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0"
-                                title={getTranslation('auto.listen_to_full_phrase', language)}
-                              >
-                                <Volume2 size={24} strokeWidth={2.5} />
-                              </button>
+                              <PlayAudioButton text={currentExercise.answer} language={language} />
                             )}
                           </div>
                         )}
