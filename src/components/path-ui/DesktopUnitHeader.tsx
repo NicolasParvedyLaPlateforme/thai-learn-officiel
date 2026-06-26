@@ -2,6 +2,8 @@ import React from 'react';
 import { BookOpen, ChevronLeft } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
+import { Typography } from '../ui/Typography';
+import { Button } from '../ui/Button';
 
 interface DesktopUnitHeaderProps {
     unit: any;
@@ -42,13 +44,13 @@ export const DesktopUnitHeader: React.FC<DesktopUnitHeaderProps> = ({
 
             <div className="relative z-10 w-full md:w-[65%] lg:w-[60%] pr-4 md:pr-8">
                 <div className="flex justify-between items-start mb-2">
-                    <h2 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
+                    <Typography variant="h2" className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
                         {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
-                    </h2>
+                    </Typography>
                 </div>
-                <p className={`${unit.lightTextClass || 'text-white/90'} mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl`}>
+                <Typography variant="p" className={`${unit.lightTextClass || 'text-white/90'} mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl`}>
                     {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
-                </p>
+                </Typography>
 
                 <div className="flex items-center gap-6">
                     <div className="flex-1">
@@ -77,15 +79,17 @@ export const DesktopUnitHeader: React.FC<DesktopUnitHeaderProps> = ({
             )}
 
             <div className="absolute bottom-6 right-6 z-20 hidden md:block">
-                <button
+                <Button
+                    variant="ghost"
+                    size="xs"
                     onClick={(e) => { e.stopPropagation(); onOpenUnitsList(); }}
-                    className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-[1.25rem] shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px]"
+                    className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-[1.25rem] shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px] h-auto hover:bg-white"
                 >
                     <div className="flex items-center gap-3">
                         <div className={`w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100`}>
                             <BookOpen size={20} className={`text-slate-500`} />
                         </div>
-                        <div className="flex flex-col text-left">
+                        <div className="flex flex-col text-left whitespace-normal">
                             <span className="font-extrabold text-[15px] text-slate-800 tracking-tight leading-tight">
                                 {getTranslation('auto.course_units', language)}
                             </span>
@@ -97,7 +101,7 @@ export const DesktopUnitHeader: React.FC<DesktopUnitHeaderProps> = ({
                     <div className="w-8 h-8 ml-4 rounded-full bg-slate-50 group-hover:bg-slate-100 border border-slate-100 flex items-center justify-center transition-all">
                         <ChevronLeft size={16} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-0.5" />
                     </div>
-                </button>
+                </Button>
             </div>
         </div>
     );

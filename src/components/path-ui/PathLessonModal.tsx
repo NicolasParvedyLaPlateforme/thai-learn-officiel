@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
 import { useProgressStore } from "@/lib/store";
-import { buttonVariants } from '../ui/Button';
+import { Button, buttonVariants } from '../ui/Button';
+import { Typography } from '../ui/Typography';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
 import stepsLearn from "@/data/steps_metadata_learn.json";
@@ -161,27 +162,25 @@ export default function PathLessonModal({
         <>
           {pathType === 'learn' && selectedLesson.isCompleted && !isBilanLesson && (
             <div className="flex gap-3 mb-3">
-              <Link
-                href={`/writing?lessonId=${selectedLesson.lesson.id}`}
-                className={buttonVariants({ variant: 'flat', size: 'lg', className: "w-full rounded-xl" })}
-              >
-                <Pencil size={16} className="mr-2" />
-                {getTranslation('auto.writing', language)}
-              </Link>
+              <Button asChild variant="flat" size="lg" className="w-full rounded-xl">
+                <Link href={`/writing?lessonId=${selectedLesson.lesson.id}`}>
+                  <Pencil size={16} className="mr-2" />
+                  {getTranslation('auto.writing', language)}
+                </Link>
+              </Button>
             </div>
           )}
           <div className="flex items-center gap-2 w-full relative">
             {pathType === 'speak' && isBrave ? (
-              <button disabled className={buttonVariants({ variant: 'gamified', size: 'lg', className: "w-full rounded-xl opacity-50 cursor-not-allowed bg-slate-400 border-slate-500" })}>
+              <Button disabled variant="gamified" size="lg" className="w-full rounded-xl opacity-50 cursor-not-allowed bg-slate-400 border-slate-500">
                 {getTranslation('auto.unavailable_on_brave', language)}
-              </button>
+              </Button>
             ) : (
-              <Link
-                href={getStartLink()}
-                className={buttonVariants({ variant: 'gamified', size: 'lg', className: `w-full rounded-xl ${selectedLesson.unitColor} ${selectedLesson.unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500')}` })}
-              >
-                {isBilanLesson ? (language === 'en' ? 'Start Assessment' : 'Commencer le bilan') : getTranslation('auto.start_lesson', language)}
-              </Link>
+              <Button asChild variant="gamified" size="lg" className={`w-full rounded-xl ${selectedLesson.unitColor} ${selectedLesson.unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500')}`}>
+                <Link href={getStartLink()}>
+                  {isBilanLesson ? (language === 'en' ? 'Start Assessment' : 'Commencer le bilan') : getTranslation('auto.start_lesson', language)}
+                </Link>
+              </Button>
             )}
           </div>
         </>
@@ -201,23 +200,23 @@ export default function PathLessonModal({
 
       {pathType === 'speak' && (
         <div className="p-6 pt-5 pb-2 text-center flex flex-col items-center">
-          <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
+          <Typography variant="h3" className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
             {getLocalizedField(selectedLesson.lesson, 'title', language)}
-          </h3>
-          <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
+          </Typography>
+          <Typography variant="p" className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
             {getLocalizedField(selectedLesson.lesson, 'description', language)}
-          </p>
+          </Typography>
         </div>
       )}
 
       {pathType === 'alphabet' && (
         <div className="px-7 pt-2 flex flex-col">
-          <h3 className="text-2xl font-extrabold text-slate-800 mb-2 mt-4 text-center">
+          <Typography variant="h3" className="text-2xl font-extrabold text-slate-800 mb-2 mt-4 text-center">
             {getTranslation(selectedLesson.lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} {selectedLesson.lesson.id.split('-').pop()}
-          </h3>
-          <p className="text-sm font-medium text-slate-500 text-center mb-6">
+          </Typography>
+          <Typography variant="p" className="text-sm font-medium text-slate-500 text-center mb-6">
             {getTranslation('auto.level', language)} {modalLevel + 1}
-          </p>
+          </Typography>
         </div>
       )}
 
@@ -228,14 +227,14 @@ export default function PathLessonModal({
               <Clock size={16} className="text-amber-600 stroke-[2.5]" />
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-amber-800 font-bold text-[13px]">
+              <Typography as="span" className="text-amber-800 font-bold text-[13px]">
                 {language === 'en' ? 'Timed Assessment' : 'Évaluation chronométrée'}
-              </span>
-              <span className="text-amber-700 text-[12px] font-medium leading-snug">
+              </Typography>
+              <Typography as="span" className="text-amber-700 text-[12px] font-medium leading-snug">
                 {language === 'en'
                   ? `You have ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} to answer as many questions as possible. The further you get, the better your score!`
                   : `Vous avez ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} pour répondre à un maximum de questions. Plus vous allez loin, meilleur est votre score !`}
-              </span>
+              </Typography>
             </div>
           </div>
         )}

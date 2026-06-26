@@ -2,6 +2,7 @@ import React from 'react';
 import BannerUnitsButton from '../ui/BannerUnitsButton';
 import { getLocalizedField } from "@/hooks/useTranslation";
 import { useStickyBanner } from "@/hooks/useStickyBanner";
+import { Typography } from '../ui/Typography';
 
 interface DesktopStickyBannerProps {
   unit: any;
@@ -26,9 +27,9 @@ export default function DesktopStickyBanner({
         className={`absolute top-0 left-0 right-0 transition-all duration-300 ${unit.colorClass} shadow-md flex items-center justify-between p-4 px-8 hidden md:flex rounded-b-3xl ${showMiniBanner ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
       >
         <div className="flex items-center gap-4">
-          <h2 className="text-white font-extrabold text-lg drop-shadow-sm">
+          <Typography variant="h2" className="text-white font-extrabold text-lg drop-shadow-sm">
             {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
-          </h2>
+          </Typography>
         </div>
         <BannerUnitsButton 
           onClick={onOpenUnitsList} 

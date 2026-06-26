@@ -9,6 +9,8 @@ import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { MobileTimelineNodeLayout } from '../path-ui/MobileTimelineNodeLayout';
 import MobileStickyBanner from '../path-ui/MobileStickyBanner';
 import { useMobileTimelineNodeClick } from "@/hooks/useMobileTimelineNodeClick";
+import { Typography } from '../ui/Typography';
+import { Button } from '../ui/Button';
 
 interface BaseMobileTimelineProps {
     pathType: 'learn' | 'alphabet' | 'speak';
@@ -115,15 +117,15 @@ export default function BaseMobileTimeline({
                             </div>
                         )}
                         <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
-                            <h2 className="text-[20px] sm:text-3xl font-extrabold text-white tracking-tight break-words drop-shadow-sm">
+                            <Typography variant="h2" className="text-[20px] sm:text-3xl font-extrabold text-white tracking-tight break-words drop-shadow-sm">
                                 {(() => {
                                     const titleStr = mounted ? getLocalizedField(unit, 'title', language) : unit.title;
                                     return titleStr.includes(':') ? titleStr.substring(titleStr.indexOf(':') + 1).trim() : titleStr;
                                 })()}
-                            </h2>
-                            <p className="text-white w-[70%] mb-0 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
+                            </Typography>
+                            <Typography variant="p" className="text-white w-[70%] mb-0 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
                                 {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
-                            </p>
+                            </Typography>
                         </div>
                     </div>
 
@@ -182,7 +184,8 @@ export default function BaseMobileTimeline({
                                             : getLocalizedField(storyObjective.conversation, 'title', language)}
                                     </span>
                                 </div>
-                                <button
+                                <Button
+                                    size="icon"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         if (storyObjective.type === 'vocab') {
@@ -191,10 +194,10 @@ export default function BaseMobileTimeline({
                                             router.push(`/conversations/${storyObjective.conversation.id}${storyObjective.levelToComplete > 0 ? `?level=${storyObjective.levelToComplete}` : ''}`);
                                         }
                                     }}
-                                    className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0"
+                                    className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 hover:bg-emerald-600"
                                 >
                                     <Play size={18} className="ml-1 fill-current" />
-                                </button>
+                                </Button>
                             </div>
                         ) : null
                     )}
