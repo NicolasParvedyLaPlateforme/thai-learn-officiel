@@ -29,6 +29,7 @@ import PathTimelineLine from '../path-ui/PathTimelineLine';
 import { PathDecorations } from '../path-ui/PathDecorations';
 import { DesktopTimelineNodeLayout } from '../path-ui/DesktopTimelineNodeLayout';
 import { useActiveTimelineNode } from '@/hooks/useActiveTimelineNode';
+import { DesktopUnitHeader } from "../path-ui/DesktopUnitHeader";
 
 export default function LearnDesktopTimeline({
   unit,
@@ -62,79 +63,17 @@ export default function LearnDesktopTimeline({
       />
 
       <div className="flex flex-col gap-8 w-full relative">
-        <div
-          onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
-          className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer transition-transform min-h-[220px] flex items-center group`}
-        >
-          {unit.imageUrl && (
-            <div
-              className="absolute top-0 right-0 bottom-0 w-[80%] md:w-[70%] z-0 pointer-events-none overflow-hidden"
-              style={{ WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)', maskImage: 'linear-gradient(to right, transparent 0%, black 40%)' }}
-            >
-              <IconImage src={unit.imageUrl} alt={unit.title} fill className="object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105" priority />
-            </div>
-          )}
-
-          <div className="relative z-10 w-full md:w-[65%] lg:w-[60%] pr-4 md:pr-8">
-            <div className="flex justify-between items-start mb-2">
-              <h2 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
-                {getLocalizedField(unit, 'title', language)}
-              </h2>
-            </div>
-            <p className={`${unit.lightTextClass || 'text-white/90'} mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl`}>
-              {getLocalizedField(unit, 'description', language)}
-            </p>
-
-            <div className="flex items-center gap-6">
-              <div className="flex-1">
-                <div className={`flex flex-col`}>
-                  <div className={`text-sm text-white font-bold mb-2 flex justify-between uppercase tracking-wide drop-shadow-sm`}>
-                    <span>{getTranslation('auto.mastery_5', language)}</span>
-                    <span>{completedLevelsInUnit} / {maxLevelsInUnit} {getTranslation('auto.levels', language)}</span>
-                  </div>
-                  <div className={`w-full bg-black/20 backdrop-blur-sm rounded-full h-3 overflow-hidden shadow-inner mb-2`}>
-                    <div
-                      className={`bg-white h-full rounded-full transition-all duration-1000 origin-left`}
-                      style={{ width: `${progressPercent}%` }}
-                    ></div>
-                  </div>
-                  <div className={`text-[11px] ${unit.lightTextClass || 'text-white/80'} font-bold drop-shadow-sm`}>
-                    {getTranslation('auto.10_levels_per_lesson_total_mas', language)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {!unit.imageUrl && (
-            <div className={`absolute -bottom-10 -right-10 opacity-10 drop-shadow-2xl text-black rotate-[-15deg] pointer-events-none`}>
-              <BookOpen size={200} />
-            </div>
-          )}
-
-          <div className="absolute bottom-6 right-6 z-20 hidden md:block">
-            <button
-              onClick={(e) => { e.stopPropagation(); setShowDesktopUnitsList(true); }}
-              className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-[1.25rem] shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px]"
-            >
-              <div className="flex items-center gap-3">
-                <div className={`w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100`}>
-                  <BookOpen size={20} className={`text-slate-500`} />
-                </div>
-                <div className="flex flex-col text-left">
-                  <span className="font-extrabold text-[15px] text-slate-800 tracking-tight leading-tight">
-                    {getTranslation('auto.course_units', language)}
-                  </span>
-                  <span className="text-[11px] text-slate-500 font-medium">
-                    {getTranslation('auto.change_or_view_units', language)}
-                  </span>
-                </div>
-              </div>
-              <div className="w-8 h-8 ml-4 rounded-full bg-slate-50 group-hover:bg-slate-100 border border-slate-100 flex items-center justify-center transition-all">
-                <ChevronLeft size={16} className="text-slate-400 group-hover:text-slate-600 rotate-180 transition-transform group-hover:translate-x-0.5" />
-              </div>
-            </button>
-          </div>
-        </div>
+        <DesktopUnitHeader
+          unit={unit}
+          language={language}
+          completedLevels={completedLevelsInUnit}
+          maxLevels={maxLevelsInUnit}
+          progressPercent={progressPercent}
+          mounted={mounted}
+          masteryKey="auto.mastery_5"
+          levelsDescription={getTranslation('auto.10_levels_per_lesson_total_mas', language)}
+          onOpenUnitsList={() => setShowDesktopUnitsList(true)}
+        />
 
         <div className="flex flex-col w-full mt-10">
           <div className="flex flex-col relative w-full pb-8 md:pb-16">
