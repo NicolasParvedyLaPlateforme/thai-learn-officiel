@@ -4,6 +4,7 @@ import { getTranslation } from "@/hooks/useTranslation";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { PartNodeBubble } from './PartNodeBubble';
 import stepsMetadata from "@/data/steps_metadata_learn.json";
+import { PartSubNode } from './PartSubNode';
 
 interface LessonPathNodeProps {
   levelIndex: number;
@@ -122,9 +123,9 @@ export function LessonPathNode({
   // Distribute parts evenly from bottom (t=0.8, P1) to top (t=0.2, P(n))
   const partTValues = showPartNodes
     ? Array.from({ length: prevPartsTotal }, (_, i) => {
-        // t decreasing from 0.8 (P1, near levelIndex-1) to 0.2 (P(n), near levelIndex)
-        return 0.8 - i * (0.6 / (prevPartsTotal - 1 || 1));
-      })
+      // t decreasing from 0.8 (P1, near levelIndex-1) to 0.2 (P(n), near levelIndex)
+      return 0.8 - i * (0.6 / (prevPartsTotal - 1 || 1));
+    })
     : [];
 
   /**
@@ -137,12 +138,12 @@ export function LessonPathNode({
   const evalBezierXY = (t: number, isMobile: boolean): { x: number; y: number } => {
     const height = pathHeight; // use actual center-to-center distance
     const startX = 100 + (isMobile ? getMobileOffset(levelIndex) : getOffset(levelIndex));
-    const endX   = 100 + (isMobile ? getMobileOffset(prevLevelIndex) : getOffset(prevLevelIndex));
+    const endX = 100 + (isMobile ? getMobileOffset(prevLevelIndex) : getOffset(prevLevelIndex));
     const c1y = isMobile ? height * 0.8 : height * 0.5;
     const c2y = isMobile ? height * 0.2 : height * 0.5;
     const mt = 1 - t;
-    const bx = mt*mt*mt*startX + 3*mt*mt*t*startX + 3*mt*t*t*endX + t*t*t*endX;
-    const by = mt*mt*mt*0     + 3*mt*mt*t*c1y    + 3*mt*t*t*c2y   + t*t*t*height;
+    const bx = mt * mt * mt * startX + 3 * mt * mt * t * startX + 3 * mt * t * t * endX + t * t * t * endX;
+    const by = mt * mt * mt * 0 + 3 * mt * mt * t * c1y + 3 * mt * t * t * c2y + t * t * t * height;
     return { x: bx - 100, y: by };
   };
 
@@ -223,56 +224,44 @@ export function LessonPathNode({
         return (
           <React.Fragment key={`part-${levelIndex}-${partIdx}`}>
             {/* Desktop */}
-            <div
-              className="hidden lg:block absolute left-1/2 top-1/2 z-20"
-              style={{ transform: `translate(calc(-50% + ${dXY.x}px), calc(-50% + ${dXY.y}px))` }}
-            >
-              <div className="relative">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!isPartAccessible) return;
-                    setOpenPartBubble(openPartBubble === partIdx ? null : partIdx);
-                  }}
-                  disabled={!isPartAccessible}
-                  title={`Partie ${partIdx + 1}`}
-                  className={[
-                    'w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200',
-                    'border-[3px] shadow-lg font-black text-[11px] tracking-wide',
-                    !isPartAccessible
-                      ? 'bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed'
-                      : isPartCompleted
-                        ? `${unitColor} border-white text-white hover:scale-110 active:scale-95`
-                        : isNextPart
-                          ? `bg-white ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse`
-                          : 'bg-white border-slate-300 text-slate-400 hover:scale-105',
-                    openPartBubble === partIdx
-                      ? `scale-110 ring-2 ring-offset-2 ${unitColor.replace('bg-', 'ring-')}`
-                      : '',
-                  ].join(' ')}
-                >
-                  {isPartCompleted
-                    ? <CheckCircle2 size={18} className="stroke-[2.5]" />
-                    : <span>P{partIdx + 1}</span>
-                  }
-                </button>
+            <PartSubNode
+              isMobile={false}
+              partIdx={partIdx}
+              isPartAccessible={isPartAccessible}
+              isPartCompleted={isPartCompleted}
+              isNextPart={isNextPart}
+              positionX={dXY.x}
+              positionY={dXY.y}
+              unitColor={unitColor}
+              unitText={unitText}
+              lessonId={lessonId!}
+              levelIndex={prevLevelIndex}
+              totalParts={prevPartsTotal}
+              stepsCount={getStepsForPart(partIdx)}
+              isOpen={openPartBubble === partIdx}
+              onToggle={() => setOpenPartBubble(openPartBubble === partIdx ? null : partIdx)}
+              onClose={() => setOpenPartBubble(null)}
+            />
 
-                {openPartBubble === partIdx && isPartAccessible && (
-                  <PartNodeBubble
-                    lessonId={lessonId!}
-                    levelIndex={prevLevelIndex}
-                    partIndex={partIdx}
-                    totalParts={prevPartsTotal}
-                    stepsCount={getStepsForPart(partIdx)}
-                    isCompleted={isPartCompleted}
-                    unitColor={unitColor}
-                    unitText={unitText}
-                    nodeX={dXY.x}
-                    onClose={() => setOpenPartBubble(null)}
-                  />
-                )}
-              </div>
-            </div>
+            {/* Mobile */}
+            <PartSubNode
+              isMobile={true}
+              partIdx={partIdx}
+              isPartAccessible={isPartAccessible}
+              isPartCompleted={isPartCompleted}
+              isNextPart={isNextPart}
+              positionX={mXY.x}
+              positionY={mXY.y}
+              unitColor={unitColor}
+              unitText={unitText}
+              lessonId={lessonId!}
+              levelIndex={prevLevelIndex}
+              totalParts={prevPartsTotal}
+              stepsCount={getStepsForPart(partIdx)}
+              isOpen={openPartBubble === partIdx}
+              onToggle={() => setOpenPartBubble(openPartBubble === partIdx ? null : partIdx)}
+              onClose={() => setOpenPartBubble(null)}
+            />
 
             {/* Mobile */}
             <div
@@ -438,13 +427,13 @@ export function LessonPathNode({
               : 'hover:scale-[1.05] z-10',
             isMastery
               ? (isUnlockedMastery
-                  ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-b-[8px] border-amber-600 shadow-md text-white'
-                  : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm')
+                ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-b-[8px] border-amber-600 shadow-md text-white'
+                : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm')
               : (isCompleted
-                  ? `${unitColor} border-b-[8px] ${unitBorder} shadow-sm text-white`
-                  : isCurrent
-                    ? `bg-white border-[6px] border-b-[10px] ${unitColor.replace('bg-', 'border-')} shadow-md ${unitText}`
-                    : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm'),
+                ? `${unitColor} border-b-[8px] ${unitBorder} shadow-sm text-white`
+                : isCurrent
+                  ? `bg-white border-[6px] border-b-[10px] ${unitColor.replace('bg-', 'border-')} shadow-md ${unitText}`
+                  : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm'),
           ].join(' ')}
         >
           {isMastery ? (
