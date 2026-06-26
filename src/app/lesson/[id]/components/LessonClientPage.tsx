@@ -323,6 +323,36 @@ function LessonPageContent({ lesson }: { lesson: any }) {
 
 
 
+  const handleExercisesLoaded = (generated: any[], mode?: string | null) => {
+    if (!generated || generated.length === 0) {
+      console.error(`Exercises empty! ID: ${lesson.id}, Level: ${currentLevel}, partIndex: ${partIndex}, totalParts: ${totalParts}`);
+      window.location.reload();
+      return;
+    }
+    setInitialExercises(generated);
+    setEngineIndex(0);
+    setEngineMistakes(0);
+    setFailedDueToTime(false);
+    const isBilanLesson = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
+    if (isBilanLesson) {
+      const time = (currentLevel + 1) * 2 * 60;
+      setTimeLeft(time);
+      setInitialTime(time);
+    } else if (currentLevel === 10) {
+      const time = 20 * 60;
+      setTimeLeft(time);
+      setInitialTime(time);
+    } else {
+      setTimeLeft(null);
+      setInitialTime(null);
+    }
+    setStartTime(Date.now());
+    
+    const genFor: any = { id: lesson.id, level: currentLevel, partIndex };
+    if (mode) genFor.mode = mode;
+    setExercisesGeneratedFor(genFor);
+  };
+
   useEffect(() => {
     if (!_hasHydrated) return;
 
@@ -377,33 +407,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
         generatorPromise = getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null);
       }
 
-      generatorPromise.then(generated => {
-        if (!generated || generated.length === 0) {
-          console.error(`Exercises empty! ID: ${lesson.id}, Level: ${currentLevel}, partIndex: ${partIndex}, totalParts: ${totalParts}`);
-          window.location.reload();
-          return;
-        }
-        let finalExercises = generated;
-        setInitialExercises(finalExercises);
-        setEngineIndex(0);
-        setEngineMistakes(0);
-        setFailedDueToTime(false);
-        const isBilanLesson = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
-        if (isBilanLesson) {
-          const time = (currentLevel + 1) * 2 * 60;
-          setTimeLeft(time);
-          setInitialTime(time);
-        } else if (currentLevel === 10) {
-          const time = 20 * 60;
-          setTimeLeft(time);
-          setInitialTime(time);
-        } else {
-          setTimeLeft(null);
-          setInitialTime(null);
-        }
-        setStartTime(Date.now());
-        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
-      }).catch(e => {
+      generatorPromise.then(generated => handleExercisesLoaded(generated, currentMode)).catch(e => {
         console.error("Failed to load exercises (likely cache mismatch):", e);
         window.location.reload();
       });
@@ -486,36 +490,12 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     setShowExerciseUI(false);
 
     preloadThaiVoices();
-    getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null).then(generated => {
-      if (!generated || generated.length === 0) {
-        console.error(`Exercises empty! ID: ${lesson.id}, Level: ${currentLevel}, partIndex: ${partIndex}, totalParts: ${totalParts}`);
+    getExercisesServer(lesson.id, currentLevel, language, isPart ? partIndex : null, isPart ? totalParts : null)
+      .then(generated => handleExercisesLoaded(generated))
+      .catch(e => {
+        console.error("Failed to load exercises (likely cache mismatch):", e);
         window.location.reload();
-        return;
-      }
-      let finalExercises = generated;
-      setInitialExercises(finalExercises);
-      setEngineIndex(0);
-      setEngineMistakes(0);
-      setFailedDueToTime(false);
-      const isBilanLesson = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
-      if (isBilanLesson) {
-        const time = (currentLevel + 1) * 2 * 60;
-        setTimeLeft(time);
-        setInitialTime(time);
-      } else if (currentLevel === 10) {
-        const time = 20 * 60;
-        setTimeLeft(time);
-        setInitialTime(time);
-      } else {
-        setTimeLeft(null);
-        setInitialTime(null);
-      }
-      setStartTime(Date.now());
-      setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex });
-    }).catch(e => {
-      console.error("Failed to load exercises (likely cache mismatch):", e);
-      window.location.reload();
-    });
+      });
   };
 
   useEffect(() => {

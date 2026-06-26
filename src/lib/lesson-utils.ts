@@ -20,3 +20,35 @@ export function calculateLessonLevelAndStars(
   
   return { newLevel, newStars: currentStars };
 }
+
+export function computeUnits(baseUnits: any[], lessons: any[]) {
+    const computedUnits = [];
+    let currentStartIndex = 0;
+
+    for (let i = 0; i < baseUnits.length; i++) {
+      const baseUnit = baseUnits[i];
+      let endIndex = currentStartIndex;
+
+      for (let j = currentStartIndex; j < lessons.length; j++) {
+        const title = lessons[j].title || "";
+        const titleEn = lessons[j].titleEn || "";
+        if (title.toLowerCase().includes("bilan") || titleEn.toLowerCase().includes("review")) {
+          endIndex = j + 1;
+          break;
+        }
+      }
+
+      if (endIndex === currentStartIndex && currentStartIndex < lessons.length) {
+        endIndex = lessons.length;
+      }
+
+      computedUnits.push({
+        ...baseUnit,
+        startIndex: currentStartIndex,
+        endIndex: endIndex
+      });
+
+      currentStartIndex = endIndex;
+    }
+    return computedUnits;
+}

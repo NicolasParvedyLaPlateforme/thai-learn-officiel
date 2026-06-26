@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { useProgressStore } from "@/lib/store";
+import { computeUnits } from "@/lib/lesson-utils";
 import BASE_UNITS from "@/data/speak_units.json";
 import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 
@@ -21,35 +22,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
   const data = { lessons: lightweightLessons };
 
   const UNITS = useMemo(() => {
-    const computedUnits = [];
-    let currentStartIndex = 0;
-
-    for (let i = 0; i < BASE_UNITS.length; i++) {
-      const baseUnit = BASE_UNITS[i];
-      let endIndex = currentStartIndex;
-
-      for (let j = currentStartIndex; j < data.lessons.length; j++) {
-        const title = data.lessons[j].title || "";
-        const titleEn = data.lessons[j].titleEn || "";
-        if (title.toLowerCase().includes("bilan") || titleEn.toLowerCase().includes("review")) {
-          endIndex = j + 1;
-          break;
-        }
-      }
-
-      if (endIndex === currentStartIndex && currentStartIndex < data.lessons.length) {
-        endIndex = data.lessons.length;
-      }
-
-      computedUnits.push({
-        ...baseUnit,
-        startIndex: currentStartIndex,
-        endIndex: endIndex
-      });
-
-      currentStartIndex = endIndex;
-    }
-    return computedUnits;
+    return computeUnits(BASE_UNITS, data.lessons);
   }, [lightweightLessons, data.lessons.length]);
 
   const { dailyQuests } = useProgressStore();
