@@ -23,6 +23,7 @@ import { getEndlessReviewServer, getDictionaryForExerciseServer, getPhrasesForEx
 import { Button } from "@/components/ui/Button";
 import EmptyLessonState from "@/components/lesson/EmptyLessonState";
 import PracticeHeader from "@/components/lesson/PracticeHeader";
+import ExerciseLayout from "@/components/lesson/ExerciseLayout";
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -190,117 +191,103 @@ export default function ReviewPage() {
   })();
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-[#FAFAFA] font-sans text-slate-800 overflow-hidden relative">
-      <AnimatePresence mode="wait">
-        {!showExerciseUI ? (
-          <LoadingScreen
-            key="loading-screen"
-            isLoadingData={!isDataLoaded}
-            onReady={() => setShowExerciseUI(true)}
-          />
-        ) : (
-          <motion.div
-            key="exercise-ui"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="flex-1 flex flex-col h-full w-full absolute inset-0"
-          >
-            {/* Header / Progress bar */}
-            <PracticeHeader
-              progress={progress}
-              title={getTranslation('auto.review_9', language)}
-              onClose={() => router.push('/practice')}
-              colorClass="bg-indigo-500"
-              shadowClass="shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-            />
+    <ExerciseLayout
+      isDataLoaded={isDataLoaded}
+      showExerciseUI={showExerciseUI}
+      onReady={() => setShowExerciseUI(true)}
+    >
+      {/* Header / Progress bar */}
+      <PracticeHeader
+        progress={progress}
+        title={getTranslation('auto.review_9', language)}
+        onClose={() => router.push('/practice')}
+        colorClass="bg-indigo-500"
+        shadowClass="shadow-[0_0_8px_rgba(99,102,241,0.3)]"
+      />
 
-            {/* Main Exercise Area */}
-            <main className="flex-1 flex flex-col w-full relative">
-              <AnimatePresence mode="wait">
-                {currentExercise && (
-                  <motion.div
-                    key={currentExercise.id}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex flex-col items-center md:justify-center md:overflow-y-auto hide-scrollbar"
-                  >
-                    {/* Scrollable Upper Area */}
-                    <motion.div
-                      className={`flex flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col justify-center hide-scrollbar`}
-                    >
-                      <QuestionArea
-                        currentExercise={{
-                          ...currentExercise,
-                          hideHints: !reviewConfig.showWordHints,
-                          disableTooltips: !reviewConfig.showWordHints,
-                        }}
-                        lesson={{ words: allWords, phrases: allPhrases } as any}
-                        language={language}
-                        showRomanization={true}
-                        isChecking={isChecking}
-                        selectedAnswer={selectedAnswer}
-                      />
-                    </motion.div>
+      {/* Main Exercise Area */}
+      <main className="flex-1 flex flex-col w-full relative">
+        <AnimatePresence mode="wait">
+          {currentExercise && (
+            <motion.div
+              key={currentExercise.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 flex flex-col items-center md:justify-center md:overflow-y-auto hide-scrollbar"
+            >
+              {/* Scrollable Upper Area */}
+              <motion.div
+                className={`flex flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col justify-center hide-scrollbar`}
+              >
+                <QuestionArea
+                  currentExercise={{
+                    ...currentExercise,
+                    hideHints: !reviewConfig.showWordHints,
+                    disableTooltips: !reviewConfig.showWordHints,
+                  }}
+                  lesson={{ words: allWords, phrases: allPhrases } as any}
+                  language={language}
+                  showRomanization={true}
+                  isChecking={isChecking}
+                  selectedAnswer={selectedAnswer}
+                />
+              </motion.div>
 
-                    {/* Exercise Options (Fixed at bottom on Mobile) */}
-                    <motion.div
-                      className={`flex shrink-0 md:shrink-0 bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
-                    >
-                      <div className="w-full relative">
-                        {currentExercise.type === 'word-match' ? (
-                          <WordMatch
-                            exercise={currentExercise}
-                            selected={selectedAnswer as string}
-                            onChange={setSelectedAnswer}
-                            disabled={isChecking}
-                            onAutoCheck={(val) => handleCheck(val)}
-                          />
-                        ) : currentExercise.type === 'sentence-builder' ? (
-                          <SentenceBuilder
-                            exercise={currentExercise}
-                            selected={selectedAnswer as string[] || []}
-                            onChange={setSelectedAnswer}
-                            disabled={isChecking}
-                            onAutoCheck={(val) => handleCheck(val)}
-                          />
-                        ) : currentExercise.type === "free-typing" ? (
-                          <FreeTypingInput
-                            exercise={currentExercise}
-                            selected={selectedAnswer as string}
-                            onChange={setSelectedAnswer}
-                            disabled={isChecking}
-                          />
-                        ) : currentExercise.type === "writing" ? (
-                          <VirtualKeyboard
-                            exercise={currentExercise}
-                            selected={selectedAnswer as string[] || []}
-                            onChange={setSelectedAnswer}
-                            disabled={isChecking}
-                            onAutoCheck={(val) => handleCheck(val)}
-                          />
-                        ) : null}
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </main>
+              {/* Exercise Options (Fixed at bottom on Mobile) */}
+              <motion.div
+                className={`flex shrink-0 md:shrink-0 bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
+              >
+                <div className="w-full relative">
+                  {currentExercise.type === 'word-match' ? (
+                    <WordMatch
+                      exercise={currentExercise}
+                      selected={selectedAnswer as string}
+                      onChange={setSelectedAnswer}
+                      disabled={isChecking}
+                      onAutoCheck={(val) => handleCheck(val)}
+                    />
+                  ) : currentExercise.type === 'sentence-builder' ? (
+                    <SentenceBuilder
+                      exercise={currentExercise}
+                      selected={selectedAnswer as string[] || []}
+                      onChange={setSelectedAnswer}
+                      disabled={isChecking}
+                      onAutoCheck={(val) => handleCheck(val)}
+                    />
+                  ) : currentExercise.type === "free-typing" ? (
+                    <FreeTypingInput
+                      exercise={currentExercise}
+                      selected={selectedAnswer as string}
+                      onChange={setSelectedAnswer}
+                      disabled={isChecking}
+                    />
+                  ) : currentExercise.type === "writing" ? (
+                    <VirtualKeyboard
+                      exercise={currentExercise}
+                      selected={selectedAnswer as string[] || []}
+                      onChange={setSelectedAnswer}
+                      disabled={isChecking}
+                      onAutoCheck={(val) => handleCheck(val)}
+                    />
+                  ) : null}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
 
-            <Footer
-              currentExercise={currentExercise!}
-              isChecking={isChecking}
-              isCorrect={isCorrect}
-              language={language}
-              selectedAnswer={selectedAnswer}
-              showFooter={showFooter}
-              handleCheck={handleCheck}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+      <Footer
+        currentExercise={currentExercise!}
+        isChecking={isChecking}
+        isCorrect={isCorrect}
+        language={language}
+        selectedAnswer={selectedAnswer}
+        showFooter={showFooter}
+        handleCheck={handleCheck}
+      />
+    </ExerciseLayout>
   );
 }
