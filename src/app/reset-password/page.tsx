@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Lock, ArrowRight, ChevronLeft } from "lucide-react";
+import { IconInput } from "@/components/ui/IconInput";
 import { useTranslation } from "@/hooks/useTranslation";
 
 function ResetPasswordForm() {
@@ -103,37 +104,27 @@ function ResetPasswordForm() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.new_password')}</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                  <input
-                    type="password"
-                    required
-                    disabled={!token}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all disabled:bg-slate-50 disabled:text-slate-400"
-                    placeholder="••••••••"
-                  />
-                </div>
-              </div>
+              <IconInput
+                icon={Lock}
+                label={t('auth.new_password')}
+                type="password"
+                required
+                disabled={!token}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.confirm_password')}</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                  <input
-                    type="password"
-                    required
-                    disabled={!token}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all disabled:bg-slate-50 disabled:text-slate-400"
-                    placeholder="••••••••"
-                  />
-                </div>
-              </div>
+              <IconInput
+                icon={Lock}
+                label={t('auth.confirm_password')}
+                type="password"
+                required
+                disabled={!token}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="••••••••"
+              />
 
               <button
                 type="submit"

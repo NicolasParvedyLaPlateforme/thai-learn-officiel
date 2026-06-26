@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, ArrowLeft, ChevronLeft } from "lucide-react";
+import { IconInput } from "@/components/ui/IconInput";
 import { useTranslation } from "@/hooks/useTranslation";
 
 export default function ForgotPasswordPage() {
@@ -75,20 +76,15 @@ export default function ForgotPasswordPage() {
 
         {status !== "success" && (
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">{t('auth.email_label')}</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-                  placeholder={t('auth.email_placeholder')}
-                />
-              </div>
-            </div>
+            <IconInput
+              icon={Mail}
+              label={t('auth.email_label')}
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={t('auth.email_placeholder')}
+            />
 
             <button
               type="submit"
