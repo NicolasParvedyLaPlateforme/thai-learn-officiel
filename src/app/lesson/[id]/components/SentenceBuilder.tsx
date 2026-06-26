@@ -17,7 +17,7 @@ interface Props {
 export default React.memo(function SentenceBuilder({ exercise, selected, onChange, disabled, onAutoCheck }: Props) {
   const language = useProgressStore(state => state.language);
   const [showHint, setShowHint] = useState(false);
-  
+
   const handleSelect = (wordTh: string) => {
     if (disabled) return;
     const newSelected = [...selected, wordTh];
@@ -27,18 +27,18 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
 
     // Auto-check logic
     if (exercise.correctComponents) {
-        if (exercise.isFillInBlank) {
-           if (newSelected.length === 1 && onAutoCheck) {
-               onAutoCheck(newSelected);
-           }
-        } else {
-           const expectedCount = exercise.correctComponents.filter(c => c !== 'w_dots').length;
-           if (newSelected.length === expectedCount) {
-                if (onAutoCheck) {
-                    onAutoCheck(newSelected);
-                }
-           }
+      if (exercise.isFillInBlank) {
+        if (newSelected.length === 1 && onAutoCheck) {
+          onAutoCheck(newSelected);
         }
+      } else {
+        const expectedCount = exercise.correctComponents.filter(c => c !== 'w_dots').length;
+        if (newSelected.length === expectedCount) {
+          if (onAutoCheck) {
+            onAutoCheck(newSelected);
+          }
+        }
+      }
     }
   };
 
@@ -88,7 +88,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto">
-      
+
       {/* Target area (Answer) */}
       <div className={`min-h-[120px] border-y-2 border-slate-200 py-4 flex flex-col gap-2 items-center justify-center relative`}>
         <div className="flex flex-wrap gap-2 items-center justify-center min-h-[64px] sm:min-h-[80px]">
@@ -98,57 +98,57 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
           {(() => {
             const items = [];
             if (exercise.isFillInBlank && exercise.correctComponents && exercise.blankIndex !== undefined) {
-               for (let i = 0; i < exercise.correctComponents.length; i++) {
-                   if (exercise.correctComponents[i] === 'w_dots') {
-                     items.push(
-                       <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
-                         <span className="leading-none text-2xl sm:text-3xl">...</span>
-                       </div>
-                     );
-                     continue;
-                   }
+              for (let i = 0; i < exercise.correctComponents.length; i++) {
+                if (exercise.correctComponents[i] === 'w_dots') {
+                  items.push(
+                    <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
+                      <span className="leading-none text-2xl sm:text-3xl">...</span>
+                    </div>
+                  );
+                  continue;
+                }
 
-                   if (i === exercise.blankIndex) {
-                       if (selected.length > 0) {
-                           const word = selected[0];
-                           const expectedWordId = exercise.correctComponents[i];
-                           const expectedWord = exercise.options.find(o => o.id === expectedWordId)?.th;
-                           const isCorrect = word === expectedWord;
-                           const showColors = exercise.hideColors ? disabled : (exercise.blindMode ? disabled : true);
+                if (i === exercise.blankIndex) {
+                  if (selected.length > 0) {
+                    const word = selected[0];
+                    const expectedWordId = exercise.correctComponents[i];
+                    const expectedWord = exercise.options.find(o => o.id === expectedWordId)?.th;
+                    const isCorrect = word === expectedWord;
+                    const showColors = exercise.hideColors ? disabled : (exercise.blindMode ? disabled : true);
 
-                           let textColorClass = "text-slate-700";
-                           let borderColorClass = "border-slate-200";
-                           if (showColors) {
-                             textColorClass = isCorrect ? "text-emerald-600" : "text-rose-500";
-                             borderColorClass = isCorrect ? "border-slate-200" : "border-rose-300";
-                           }
+                    let textColorClass = "text-slate-700";
+                    let borderColorClass = "border-slate-200";
+                    if (showColors) {
+                      textColorClass = isCorrect ? "text-emerald-600" : "text-rose-500";
+                      borderColorClass = isCorrect ? "border-slate-200" : "border-rose-300";
+                    }
 
-                           items.push(
-                             <button
-                               key={`sel-${i}`}
-                               onClick={() => handleRemove(0)}
-                               disabled={disabled}
-                               className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium ${textColorClass} ${borderColorClass} shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
-                             >
-                               <span className="leading-none text-2xl sm:text-3xl">{word}</span>
-                             </button>
-                           );
-                       } else {
-                           items.push(
-                              <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
-                                <span className="leading-none text-xl sm:text-2xl opacity-50 font-sans">___</span>
-                              </div>
-                           );
-                       }
-                   } else {
-                       const text = exercise.prefilledComponents ? exercise.prefilledComponents[i] : exercise.correctComponents[i];
-                       items.push(
-                           <div key={`fixed-${i}`} className="bg-slate-100 text-slate-500 text-center border-2 border-slate-200 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16 pointer-events-none">
-                             <span className="leading-none text-2xl sm:text-3xl">{text}</span>
-                           </div>
-                       );
-                   }
-               }
+                    items.push(
+                      <button
+                        key={`sel-${i}`}
+                        onClick={() => handleRemove(0)}
+                        disabled={disabled}
+                        className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium ${textColorClass} ${borderColorClass} shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
+                      >
+                        <span className="leading-none text-2xl sm:text-3xl">{word}</span>
+                      </button>
+                    );
+                  } else {
+                    items.push(
+                      <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
+                        <span className="leading-none text-xl sm:text-2xl opacity-50 font-sans">___</span>
+                      </div>
+                    );
+                  }
+                } else {
+                  const text = exercise.prefilledComponents ? exercise.prefilledComponents[i] : exercise.correctComponents[i];
+                  items.push(
+                    <div key={`fixed-${i}`} className="bg-slate-100 text-slate-500 text-center border-2 border-slate-200 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16 pointer-events-none">
+                      <span className="leading-none text-2xl sm:text-3xl">{text}</span>
+                    </div>
+                  );
+                }
+              }
             } else if (exercise.correctComponents) {
               let selIdx = 0;
               for (let i = 0; i < exercise.correctComponents.length; i++) {
@@ -164,14 +164,14 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                   const expectedWord = exercise.options.find(o => o.id === expectedWordId)?.th;
                   const isCorrect = word === expectedWord;
                   const showColors = exercise.hideColors ? disabled : (exercise.blindMode ? disabled : true);
-                  
+
                   let textColorClass = "text-slate-700";
                   let borderColorClass = "border-slate-200";
                   if (showColors) {
                     textColorClass = isCorrect ? "text-emerald-600" : "text-rose-500";
                     borderColorClass = isCorrect ? "border-slate-200" : "border-rose-300";
                   }
-                  
+
                   const removeIdx = selIdx;
                   items.push(
                     <button
@@ -191,46 +191,46 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                 const word = selected[selIdx];
                 const removeIdx = selIdx;
                 items.push(
-                   <button
+                  <button
                     key={`extra-${selIdx}`}
                     onClick={() => handleRemove(removeIdx)}
                     disabled={disabled}
                     className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium text-slate-700 border-slate-200 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
                   >
                     <span className="leading-none text-2xl sm:text-3xl">{word}</span>
-                   </button>
+                  </button>
                 );
                 selIdx++;
               }
             } else {
-               // Fallback if no correct components
-               selected.forEach((word, idx) => {
-                 items.push(
-                    <button
-                      key={`sel-${idx}`}
-                      onClick={() => handleRemove(idx)}
-                      disabled={disabled}
-                      className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium text-slate-700 border-slate-200 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
-                    >
-                      <span className="leading-none text-2xl sm:text-3xl">{word}</span>
-                    </button>
-                 );
-               });
+              // Fallback if no correct components
+              selected.forEach((word, idx) => {
+                items.push(
+                  <button
+                    key={`sel-${idx}`}
+                    onClick={() => handleRemove(idx)}
+                    disabled={disabled}
+                    className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium text-slate-700 border-slate-200 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
+                  >
+                    <span className="leading-none text-2xl sm:text-3xl">{word}</span>
+                  </button>
+                );
+              });
             }
             return items;
           })()}
-          
+
           {/* Hint System */}
           {!disabled && selected.length < (exercise.correctComponents ? exercise.correctComponents.filter(c => c !== 'w_dots').length : 0) && (
             <div className="relative inline-flex items-center ml-2">
               {showHint ? (
-                <div 
+                <div
                   className="bg-amber-100 border-2 border-amber-300 text-amber-800 rounded-xl px-3 py-2 flex flex-col items-center justify-center cursor-pointer shadow-sm animate-pulse-once"
                   onClick={() => playThaiTTS(nextHintLetter)}
                   title={getTranslation('auto.next_character_hint', language)}
                 >
-                   <span className="font-thai text-xl">{nextHintLetter}</span>
-                   <span className="text-xs font-semibold mt-0.5">{nextHintPronunciation}</span>
+                  <span className="font-thai text-xl">{nextHintLetter}</span>
+                  <span className="text-xs font-semibold mt-0.5">{nextHintPronunciation}</span>
                 </div>
               ) : (
                 <button
@@ -261,8 +261,8 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
               disabled={disabled || isUsed}
               className={`
                 rounded-xl text-center font-medium font-thai select-none transition-all flex items-center justify-center px-4 sm:px-5 min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16
-                ${!isUsed 
-                  ? 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2' 
+                ${!isUsed
+                  ? 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2'
                   : 'bg-slate-100 border-2 border-slate-100 text-transparent pointer-events-none'}
               `}
             >
