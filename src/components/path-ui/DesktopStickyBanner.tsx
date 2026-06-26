@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import BannerUnitsButton from '../ui/BannerUnitsButton';
 import { getLocalizedField } from "@/hooks/useTranslation";
+import { useStickyBanner } from "@/hooks/useStickyBanner";
 
 interface DesktopStickyBannerProps {
   unit: any;
@@ -17,30 +18,7 @@ export default function DesktopStickyBanner({
   onOpenUnitsList,
   scrollThreshold = 350
 }: DesktopStickyBannerProps) {
-  const [showMiniBanner, setShowMiniBanner] = useState(false);
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    
-    const handleScroll = () => {
-      if (!mounted) return;
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > scrollThreshold) {
-        if (currentScrollY < lastScrollY) {
-          setShowMiniBanner(true);
-        } else {
-          setShowMiniBanner(false);
-        }
-      } else {
-        setShowMiniBanner(false);
-      }
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [mounted, scrollThreshold]);
+  const showMiniBanner = useStickyBanner({ mounted, scrollThreshold, direction: 'up' });
 
   return (
     <div className="sticky top-[1px] z-[60] w-full h-0">
