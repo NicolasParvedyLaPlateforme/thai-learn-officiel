@@ -15,7 +15,7 @@ import PathLayout from '../path-ui/PathLayout';
 const SpeakLessonModal = dynamic(() => import('./SpeakLessonModal'), { ssr: false });
 const SpeakUnitsModal = dynamic(() => import('./SpeakUnitsModal'), { ssr: false });
 const SpeakQuestsModal = dynamic(() => import('./SpeakQuestsModal'), { ssr: false });
-const SpeakLockedReviewModal = dynamic(() => import('./SpeakLockedReviewModal'), { ssr: false });
+const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
 
 export default function SpeakClientPage({ lightweightLessons }: { lightweightLessons: any[] }) {
   const data = { lessons: lightweightLessons };
@@ -73,7 +73,7 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
       renderLessonModal={(props) => <SpeakLessonModal {...props} />}
       renderUnitsModal={(props) => <SpeakUnitsModal {...props} />}
       renderQuestsModal={(props) => <SpeakQuestsModal {...props} />}
-      renderLockedReviewModal={(props) => <SpeakLockedReviewModal {...props} />}
+      renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}
     />
   );
 }

@@ -2,13 +2,13 @@ import { Lock } from 'lucide-react';
 import { AnimatePresence, m as motion } from 'motion/react';
 import { getTranslation } from "@/hooks/useTranslation";
 
-interface SpeakLockedReviewModalProps {
+interface LockedReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   language: string;
 }
 
-export default function SpeakLockedReviewModal({ isOpen, onClose, language }: SpeakLockedReviewModalProps) {
+export default function LockedReviewModal({ isOpen, onClose, language }: LockedReviewModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (

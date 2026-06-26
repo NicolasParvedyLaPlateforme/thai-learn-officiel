@@ -15,7 +15,7 @@ import PathLayout from '../path-ui/PathLayout';
 const LearnLessonModal = dynamic(() => import('./LearnLessonModal'), { ssr: false });
 const LearnUnitsModal = dynamic(() => import('./LearnUnitsModal'), { ssr: false });
 const LearnQuestsModal = dynamic(() => import('./LearnQuestsModal'), { ssr: false });
-const LearnLockedReviewModal = dynamic(() => import('./LearnLockedReviewModal'), { ssr: false });
+const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
 
 export default function LearnClientPage({ lightweightLessons }: { lightweightLessons: any[] }) {
   const data = { lessons: lightweightLessons };
@@ -73,7 +73,7 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       renderLessonModal={(props) => <LearnLessonModal {...props} />}
       renderUnitsModal={(props) => <LearnUnitsModal {...props} />}
       renderQuestsModal={(props) => <LearnQuestsModal {...props} />}
-      renderLockedReviewModal={(props) => <LearnLockedReviewModal {...props} />}
+      renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}
     />
   );
 }
