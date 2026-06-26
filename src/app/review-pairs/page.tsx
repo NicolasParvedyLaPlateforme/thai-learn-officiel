@@ -16,6 +16,7 @@ import { getEndlessPairMatchingServer } from "@/actions/course";
 
 import Footer from '@/components/lesson/Footer';
 import { Button } from "@/components/ui/Button";
+import EmptyLessonState from "@/components/lesson/EmptyLessonState";
 
 export default function ReviewPairsPage() {
   const router = useRouter();
@@ -62,26 +63,7 @@ export default function ReviewPairsPage() {
   if (!mounted) return null;
 
   if (completedLessons.length === 0) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FAFAFA] font-sans">
-        <h1 className="text-3xl font-extrabold text-slate-800 mb-4 text-center">
-          {getTranslation('auto.no_completed_lessons', language)}
-        </h1>
-        <p className="text-slate-500 mb-8 text-center text-lg font-medium">
-          {getTranslation('auto.you_must_complete_at_least_one', language)}
-        </p>
-
-        <Button
-          variant="flat"
-          size="lg"
-          className="flex-1 text-lg uppercase tracking-widest gap-2"
-          onClick={() => router.push(`/practice`)}
-        >
-          <LogOut size={20} className="rotate-180" />
-          {getTranslation('auto.back', language)}
-        </Button>
-      </div>
-    );
+    return <EmptyLessonState language={language} />;
   }
 
   const isDataLoaded = exercises.length > 0;
