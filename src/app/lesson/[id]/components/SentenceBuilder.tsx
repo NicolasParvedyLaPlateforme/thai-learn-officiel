@@ -5,6 +5,7 @@ import { THAI_ALPHABET } from "@/data/alphabet-data";
 import React, { useState } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
+import { WordTile } from "@/components/ui/WordTile";
 
 interface Props {
   exercise: Exercise;
@@ -100,11 +101,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
             if (exercise.isFillInBlank && exercise.correctComponents && exercise.blankIndex !== undefined) {
               for (let i = 0; i < exercise.correctComponents.length; i++) {
                 if (exercise.correctComponents[i] === 'w_dots') {
-                  items.push(
-                    <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
-                      <span className="leading-none text-2xl sm:text-3xl">...</span>
-                    </div>
-                  );
+                  items.push(<WordTile key={`fixed-${i}`} variant="dots" />);
                   continue;
                 }
 
@@ -115,73 +112,47 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                     const expectedWord = exercise.options.find(o => o.id === expectedWordId)?.th;
                     const isCorrect = word === expectedWord;
                     const showColors = exercise.hideColors ? disabled : (exercise.blindMode ? disabled : true);
-
-                    let textColorClass = "text-slate-700";
-                    let borderColorClass = "border-slate-200";
-                    if (showColors) {
-                      textColorClass = isCorrect ? "text-emerald-600" : "text-rose-500";
-                      borderColorClass = isCorrect ? "border-slate-200" : "border-rose-300";
-                    }
+                    const status = showColors ? (isCorrect ? 'correct' : 'incorrect') : 'default';
 
                     items.push(
-                      <button
+                      <WordTile
                         key={`sel-${i}`}
+                        text={word}
                         onClick={() => handleRemove(0)}
                         disabled={disabled}
-                        className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium ${textColorClass} ${borderColorClass} shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
-                      >
-                        <span className="leading-none text-2xl sm:text-3xl">{word}</span>
-                      </button>
+                        status={status}
+                      />
                     );
                   } else {
-                    items.push(
-                      <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
-                        <span className="leading-none text-xl sm:text-2xl opacity-50 font-sans">___</span>
-                      </div>
-                    );
+                    items.push(<WordTile key={`fixed-${i}`} variant="blank" />);
                   }
                 } else {
                   const text = exercise.prefilledComponents ? exercise.prefilledComponents[i] : exercise.correctComponents[i];
-                  items.push(
-                    <div key={`fixed-${i}`} className="bg-slate-100 text-slate-500 text-center border-2 border-slate-200 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16 pointer-events-none">
-                      <span className="leading-none text-2xl sm:text-3xl">{text}</span>
-                    </div>
-                  );
+                  items.push(<WordTile key={`fixed-${i}`} variant="filled" text={text} />);
                 }
               }
             } else if (exercise.correctComponents) {
               let selIdx = 0;
               for (let i = 0; i < exercise.correctComponents.length; i++) {
                 if (exercise.correctComponents[i] === 'w_dots') {
-                  items.push(
-                    <div key={`fixed-${i}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16">
-                      <span className="leading-none text-2xl sm:text-3xl">...</span>
-                    </div>
-                  );
+                  items.push(<WordTile key={`fixed-${i}`} variant="dots" />);
                 } else if (selIdx < selected.length) {
                   const word = selected[selIdx];
                   const expectedWordId = exercise.correctComponents[i];
                   const expectedWord = exercise.options.find(o => o.id === expectedWordId)?.th;
                   const isCorrect = word === expectedWord;
                   const showColors = exercise.hideColors ? disabled : (exercise.blindMode ? disabled : true);
-
-                  let textColorClass = "text-slate-700";
-                  let borderColorClass = "border-slate-200";
-                  if (showColors) {
-                    textColorClass = isCorrect ? "text-emerald-600" : "text-rose-500";
-                    borderColorClass = isCorrect ? "border-slate-200" : "border-rose-300";
-                  }
-
+                  const status = showColors ? (isCorrect ? 'correct' : 'incorrect') : 'default';
                   const removeIdx = selIdx;
+
                   items.push(
-                    <button
+                    <WordTile
                       key={`sel-${i}`}
+                      text={word}
                       onClick={() => handleRemove(removeIdx)}
                       disabled={disabled}
-                      className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium ${textColorClass} ${borderColorClass} shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
-                    >
-                      <span className="leading-none text-2xl sm:text-3xl">{word}</span>
-                    </button>
+                      status={status}
+                    />
                   );
                   selIdx++;
                 }
@@ -191,14 +162,12 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                 const word = selected[selIdx];
                 const removeIdx = selIdx;
                 items.push(
-                  <button
+                  <WordTile
                     key={`extra-${selIdx}`}
+                    text={word}
                     onClick={() => handleRemove(removeIdx)}
                     disabled={disabled}
-                    className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium text-slate-700 border-slate-200 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
-                  >
-                    <span className="leading-none text-2xl sm:text-3xl">{word}</span>
-                  </button>
+                  />
                 );
                 selIdx++;
               }
@@ -206,14 +175,12 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
               // Fallback if no correct components
               selected.forEach((word, idx) => {
                 items.push(
-                  <button
+                  <WordTile
                     key={`sel-${idx}`}
+                    text={word}
                     onClick={() => handleRemove(idx)}
                     disabled={disabled}
-                    className={`bg-white text-center border-2 border-b-4 rounded-xl font-medium text-slate-700 border-slate-200 shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16`}
-                  >
-                    <span className="leading-none text-2xl sm:text-3xl">{word}</span>
-                  </button>
+                  />
                 );
               });
             }
@@ -255,19 +222,14 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
             usedCounts[opt.th]--;
           }
           return (
-            <button
+            <WordTile
               key={`opt-${idx}`}
+              text={opt.th}
               onClick={() => handleSelect(opt.th)}
               disabled={disabled || isUsed}
-              className={`
-                rounded-xl text-center font-medium font-thai select-none transition-all flex items-center justify-center px-4 sm:px-5 min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-16
-                ${!isUsed
-                  ? 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2'
-                  : 'bg-slate-100 border-2 border-slate-100 text-transparent pointer-events-none'}
-              `}
-            >
-              <span className="leading-none text-xl sm:text-2xl">{opt.th}</span>
-            </button>
+              // Pour la banque de mots, on écrase les styles quand le mot est déjà utilisé
+              className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5'}
+            />
           );
         })}
       </div>

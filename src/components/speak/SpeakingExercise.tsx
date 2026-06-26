@@ -342,7 +342,7 @@ export function SpeakingExercise({
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
          setStatus('idle');
       }
-      
+
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
          const utterance = new SpeechSynthesisUtterance(currentItem.th);
