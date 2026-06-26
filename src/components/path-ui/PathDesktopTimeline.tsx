@@ -3,10 +3,18 @@ import { BookOpen, Star, CheckCircle, Lock, Play, Crown, ChevronLeft } from 'luc
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
 import React, { useState, useEffect } from 'react';
-import BannerUnitsButton from '../ui/BannerUnitsButton';
 import DesktopStickyBanner from '../path-ui/DesktopStickyBanner';
+import { SharedLessonCard } from '../path-ui/SharedLessonCard';
+import { NextUnitCard } from './NextUnitCard';
+import PathTimelineLine from '../path-ui/PathTimelineLine';
+import { PathDecorations } from '../path-ui/PathDecorations';
+import { DesktopTimelineNodeLayout } from '../path-ui/DesktopTimelineNodeLayout';
+import { useActiveTimelineNode } from '@/hooks/useActiveTimelineNode';
+import { DesktopUnitHeader } from "../path-ui/DesktopUnitHeader";
+import { formatCombiningChar } from "@/lib/alphabet-utils";
 
-interface LearnDesktopTimelineProps {
+interface PathDesktopTimelineProps {
+  pathType: 'learn' | 'speak' | 'alphabet';
   unit: any;
   unitLessons: any[];
   activeUnitIndex: number;
@@ -17,21 +25,15 @@ interface LearnDesktopTimelineProps {
   mounted: boolean;
   handleUnitSelect: (index: number) => void;
   setShowDesktopUnitsList: (open: boolean) => void;
+  setSelectedLesson: (data: any) => void;
   setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
-  setSelectedLesson: (data: any) => void;
+  maxLevelPerLesson?: number;
   nextUnit?: any;
 }
 
-import { SharedLessonCard } from '../path-ui/SharedLessonCard';
-import { NextUnitCard } from './NextUnitCard';
-import PathTimelineLine from '../path-ui/PathTimelineLine';
-import { PathDecorations } from '../path-ui/PathDecorations';
-import { DesktopTimelineNodeLayout } from '../path-ui/DesktopTimelineNodeLayout';
-import { useActiveTimelineNode } from '@/hooks/useActiveTimelineNode';
-import { DesktopUnitHeader } from "../path-ui/DesktopUnitHeader";
-
-export default function LearnDesktopTimeline({
+export default function PathDesktopTimeline({
+  pathType,
   unit,
   unitLessons,
   activeUnitIndex,
@@ -45,13 +47,25 @@ export default function LearnDesktopTimeline({
   setSelectedLesson,
   setModalLevel,
   setLockedReviewModalOpen,
+  maxLevelPerLesson = 10,
   nextUnit
-}: LearnDesktopTimelineProps) {
-  const maxLevelsInUnit = unitLessons.length * 10;
-  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc, l) => acc + (lessonLevels[l.id] || 0), 0) : 0;
+}: PathDesktopTimelineProps) {
+  const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
+  const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
 
   const [activeCenteredLessonId, setActiveCenteredLessonId] = useActiveTimelineNode(unitLessons.length > 0 ? unitLessons[0].id : null);
+
+  let masteryKey = 'auto.mastery_5';
+  let levelsDescription = '';
+  if (pathType === 'alphabet') {
+    masteryKey = 'auto.mastery_13';
+    levelsDescription = getTranslation('auto.4_levels_per_letter_total_mast', language);
+  } else if (pathType === 'speak') {
+    levelsDescription = maxLevelPerLesson === 5 ? getTranslation('auto.5_levels_per_lesson_total_mas', language) : `${maxLevelPerLesson} ${getTranslation('auto.levels', language)}`;
+  } else {
+    levelsDescription = getTranslation('auto.10_levels_per_lesson_total_mas', language);
+  }
 
   return (
     <div key={`desktop-unit-${unit.id}`} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
@@ -70,8 +84,8 @@ export default function LearnDesktopTimeline({
           maxLevels={maxLevelsInUnit}
           progressPercent={progressPercent}
           mounted={mounted}
-          masteryKey="auto.mastery_5"
-          levelsDescription={getTranslation('auto.10_levels_per_lesson_total_mas', language)}
+          masteryKey={masteryKey}
+          levelsDescription={levelsDescription}
           onOpenUnitsList={() => setShowDesktopUnitsList(true)}
         />
 
@@ -79,15 +93,27 @@ export default function LearnDesktopTimeline({
           <div className="flex flex-col relative w-full pb-8 md:pb-16">
             {unitLessons.map((lesson, idx) => {
               const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
+              const isMaxLevel = level >= maxLevelPerLesson;
               const isBilan = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
               let isReviewLocked = false;
-              if (isBilan && mounted) {
+              if (isBilan && mounted && pathType !== 'alphabet') {
                 const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview && !l.id?.startsWith('bilan-') && !l.id?.includes('-bilan'));
                 isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
               }
-
-              const isMaxLevel = level >= 10;
               const isLeft = idx % 2 === 0;
+
+              const onNodeClick = (e?: React.MouseEvent) => {
+                if (e) e.stopPropagation();
+                if (isReviewLocked) {
+                  setLockedReviewModalOpen(true);
+                  return;
+                }
+                setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
+                const storageKey = pathType === 'speak' ? `last_speak_level_${lesson.id}` : pathType === 'alphabet' ? `last_alphabet_level_${lesson.id}` : `last_level_${lesson.id}`;
+                const saved = localStorage.getItem(storageKey);
+                setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                setShowDesktopUnitsList(false);
+              };
 
               return (
                 <motion.div
@@ -98,29 +124,21 @@ export default function LearnDesktopTimeline({
                   transition={{ duration: 0.4, delay: idx * 0.1, ease: "easeOut" }}
                   className={`relative w-full flex ${isLeft ? 'justify-start' : 'justify-end'} scroll-mt-24 z-10 mb-16 group/node`}
                 >
-                  <PathTimelineLine level={level} maxLevel={10} colorClass={unit.colorClass} isDesktop={true} />
+                  <PathTimelineLine level={level} maxLevel={maxLevelPerLesson} colorClass={unit.colorClass} isDesktop={true} />
                   <PathDecorations index={idx} isDesktop={true} />
                   <DesktopTimelineNodeLayout
                     isLeft={isLeft}
                     cardContent={
                       <SharedLessonCard
-                        pathType="learn"
+                        pathType={pathType}
                         lesson={lesson}
                         level={level}
+                        maxLevelPerLesson={maxLevelPerLesson}
                         unit={unit}
                         language={language}
                         isReviewLocked={isReviewLocked}
                         suggestedLessonId={suggestedLessonId}
-                        onClick={() => {
-                          if (isReviewLocked) {
-                            setLockedReviewModalOpen(true);
-                            return;
-                          }
-                          setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                          const saved = localStorage.getItem(`last_level_${lesson.id}`);
-                          setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                          setShowDesktopUnitsList(false);
-                        }}
+                        onClick={onNodeClick}
                       />
                     }
                     centerNode={
@@ -131,21 +149,22 @@ export default function LearnDesktopTimeline({
                           </div>
                         )}
                         <div
-                          className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden bg-white shadow-md hover:scale-105 active:scale-95 cursor-pointer
-                        ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' : isReviewLocked ? 'bg-slate-100 text-slate-300 border-white' : level >= 8 ? unit.shades.l4 + ' border-white' : level >= 6 ? unit.shades.l3 + ' border-white' : level >= 3 ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white' : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (isReviewLocked) {
-                              setLockedReviewModalOpen(true);
-                              return;
-                            }
-                            setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                            const saved = localStorage.getItem(`last_level_${lesson.id}`);
-                            setModalLevel(saved !== null ? parseInt(saved, 10) : null);
-                            setShowDesktopUnitsList(false);
-                          }}
+                          className={`relative ${pathType === 'alphabet' ? 'w-20 h-20 text-2xl font-thai' : 'w-16 h-16 md:w-20 md:h-20'} rounded-full flex items-center justify-center border-[6px] transition-transform overflow-hidden bg-white shadow-md hover:scale-105 active:scale-95 cursor-pointer
+                        ${isMaxLevel ? unit.colorClass + ' text-white border-white shadow-[0_0_20px_rgba(16,185,129,0.3)]' : isReviewLocked ? 'bg-slate-100 text-slate-300 border-white' : level >= (maxLevelPerLesson * 0.8) ? unit.shades.l4 + ' border-white' : level >= (maxLevelPerLesson * 0.6) ? unit.shades.l3 + ' border-white' : level >= (maxLevelPerLesson * 0.3) ? unit.shades.l2 + ' border-white' : level >= 1 ? unit.shades.l1 + ' border-white' : 'bg-white ' + unit.textClass + ' border-slate-200'}`}
+                          onClick={onNodeClick}
                         >
-                          {(lesson as any).imageUrl ? (
+                          {pathType === 'alphabet' ? (
+                            <>
+                               <div className={`flex items-center justify-center ${level === 0 && suggestedLessonId !== lesson.id ? 'opacity-50' : ''} ${isMaxLevel ? 'opacity-30' : ''}`}>
+                                  {lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
+                               </div>
+                               {isMaxLevel && (
+                                  <div className="absolute inset-0 z-20 flex items-center justify-center">
+                                     <CheckCircle size={36} className="stroke-[3] text-white" />
+                                  </div>
+                               )}
+                            </>
+                          ) : (lesson as any).imageUrl ? (
                             <>
                               <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className={`object-cover ${level === 0 && suggestedLessonId !== lesson.id ? 'grayscale opacity-70' : ''} ${isReviewLocked ? 'opacity-30 grayscale' : ''}`} sizes="(max-width: 768px) 4rem, 5rem" />
                               {isMaxLevel && <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20"><CheckCircle size={32} className="stroke-[3] text-white" /></div>}
@@ -159,7 +178,9 @@ export default function LearnDesktopTimeline({
                     }
                     isImageActive={activeCenteredLessonId === lesson.id}
                     imageNode={
-                      (lesson as any).imageUrl ? (
+                      pathType === 'alphabet' ? (
+                        <IconImage src={lesson.imageUrl || "/images/letters.svg"} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
+                      ) : (lesson as any).imageUrl ? (
                         <IconImage src={(lesson as any).imageUrl} alt={lesson.title} fill className="object-cover" sizes="(max-width: 768px) 200px, 500px" />
                       ) : undefined
                     }

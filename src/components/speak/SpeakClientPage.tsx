@@ -8,13 +8,13 @@ import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 
 import dynamic from 'next/dynamic';
 
-import SpeakMobileTimeline from './SpeakMobileTimeline';
-import SpeakDesktopTimeline from './SpeakDesktopTimeline';
+import PathMobileTimeline from '../path-ui/PathMobileTimeline';
+import PathDesktopTimeline from '../path-ui/PathDesktopTimeline';
 import { DesktopLessonLevelsView } from '../learn/DesktopLessonLevelsView';
 import PathLayout from '../path-ui/PathLayout';
 
-const SpeakLessonModal = dynamic(() => import('./SpeakLessonModal'), { ssr: false });
-const SpeakUnitsModal = dynamic(() => import('./SpeakUnitsModal'), { ssr: false });
+const PathLessonModal = dynamic(() => import('../path-ui/PathLessonModal'), { ssr: false });
+const UnitsModal = dynamic(() => import('../modals/UnitsModal'), { ssr: false });
 const QuestsModal = dynamic(() => import('../modals/QuestsModal'), { ssr: false });
 const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
 
@@ -40,11 +40,11 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
       maxLevelPerLesson={5}
-      renderMobileTimeline={(props) => <SpeakMobileTimeline {...props} speakQuests={speakQuests} />}
-      renderDesktopTimeline={(props) => <SpeakDesktopTimeline {...props} maxLevelPerLesson={5} />}
+      renderMobileTimeline={(props) => <PathMobileTimeline {...props} pathType="speak" quests={speakQuests} maxLevelPerLesson={5} />}
+      renderDesktopTimeline={(props) => <PathDesktopTimeline {...props} pathType="speak" maxLevelPerLesson={5} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="speak" maxLevelPerLesson={5} />}
-      renderLessonModal={(props) => <SpeakLessonModal {...props} />}
-      renderUnitsModal={(props) => <SpeakUnitsModal {...props} />}
+      renderLessonModal={(props) => <PathLessonModal {...props} pathType="speak" maxLevelPerLesson={5} />}
+      renderUnitsModal={(props) => <UnitsModal {...props} />}
       renderQuestsModal={(props) => <QuestsModal category="speak" {...props} />}
       renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}
     />

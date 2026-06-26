@@ -8,13 +8,13 @@ import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 
 import dynamic from 'next/dynamic';
 
-import LearnMobileTimeline from './LearnMobileTimeline';
-import LearnDesktopTimeline from './LearnDesktopTimeline';
+import PathMobileTimeline from '../path-ui/PathMobileTimeline';
+import PathDesktopTimeline from '../path-ui/PathDesktopTimeline';
 import { DesktopLessonLevelsView } from './DesktopLessonLevelsView';
 import PathLayout from '../path-ui/PathLayout';
 
-const LearnLessonModal = dynamic(() => import('./LearnLessonModal'), { ssr: false });
-const LearnUnitsModal = dynamic(() => import('./LearnUnitsModal'), { ssr: false });
+const PathLessonModal = dynamic(() => import('../path-ui/PathLessonModal'), { ssr: false });
+const UnitsModal = dynamic(() => import('../modals/UnitsModal'), { ssr: false });
 const QuestsModal = dynamic(() => import('../modals/QuestsModal'), { ssr: false });
 const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
 
@@ -40,11 +40,11 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
       maxLevelPerLesson={10}
-      renderMobileTimeline={(props) => <LearnMobileTimeline {...props} learnQuests={learnQuests} />}
-      renderDesktopTimeline={(props) => <LearnDesktopTimeline {...props} />}
+      renderMobileTimeline={(props) => <PathMobileTimeline {...props} pathType="learn" quests={learnQuests} />}
+      renderDesktopTimeline={(props) => <PathDesktopTimeline {...props} pathType="learn" maxLevelPerLesson={10} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="learn" />}
-      renderLessonModal={(props) => <LearnLessonModal {...props} />}
-      renderUnitsModal={(props) => <LearnUnitsModal {...props} />}
+      renderLessonModal={(props) => <PathLessonModal {...props} pathType="learn" maxLevelPerLesson={10} />}
+      renderUnitsModal={(props) => <UnitsModal {...props} />}
       renderQuestsModal={(props) => <QuestsModal {...props} />}
       renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}
     />

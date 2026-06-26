@@ -1,8 +1,9 @@
 import React from 'react';
-import BaseMobileTimeline from '../path-ui/BaseMobileTimeline'; // Assure-toi que le chemin est bon
+import BaseMobileTimeline from './BaseMobileTimeline';
 import { NextUnitCard } from './NextUnitCard';
 
-interface LearnMobileTimelineProps {
+interface PathMobileTimelineProps {
+  pathType: 'learn' | 'alphabet' | 'speak';
   unit: any;
   unitLessons: any[];
   activeUnitIndex: number;
@@ -10,8 +11,7 @@ interface LearnMobileTimelineProps {
   language: string;
   lessonLevels: Record<string, number>;
   suggestedLessonId: string | null;
-  globalSuggestedLesson?: any;
-  learnQuests: any[];
+  quests: any[];
   mounted: boolean;
   handleUnitSelect: (index: number) => void;
   setIsUnitsModalOpen: (open: boolean) => void;
@@ -19,25 +19,31 @@ interface LearnMobileTimelineProps {
   setSelectedLesson: (data: any) => void;
   setModalLevel: (level: number | null) => void;
   setLockedReviewModalOpen: (open: boolean) => void;
+  maxLevelPerLesson?: number;
   nextUnit?: any;
 }
 
-export default function LearnMobileTimeline(props: LearnMobileTimelineProps) {
+export default function PathMobileTimeline({
+  pathType,
+  quests,
+  maxLevelPerLesson = 10,
+  ...baseProps
+}: PathMobileTimelineProps) {
   return (
     <BaseMobileTimeline
-      pathType="learn"
-      maxLevelPerLesson={10}
-      quests={props.learnQuests} // On mappe "learnQuests" sur la prop générique "quests"
-      {...props}
+      pathType={pathType}
+      quests={quests}
+      maxLevelPerLesson={maxLevelPerLesson}
+      reviewUnlockLevel={4}
+      {...baseProps}
     >
-      {/* C'est ici qu'on utilise le "children" pour ajouter l'élément spécifique à ce parcours */}
-      {props.nextUnit && (
+      {baseProps.nextUnit && (
         <div className="w-full">
           <NextUnitCard
-            nextUnit={props.nextUnit}
-            nextUnitIndex={props.activeUnitIndex + 1}
-            language={props.language}
-            handleUnitSelect={props.handleUnitSelect}
+            nextUnit={baseProps.nextUnit}
+            nextUnitIndex={baseProps.activeUnitIndex + 1}
+            language={baseProps.language}
+            handleUnitSelect={baseProps.handleUnitSelect}
             isMobile={true}
           />
         </div>
