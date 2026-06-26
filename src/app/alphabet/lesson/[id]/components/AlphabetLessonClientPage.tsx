@@ -23,6 +23,7 @@ import ResultScreen from "@/components/lesson/ResultScreen";
 import { triggerConfetti } from "@/lib/confetti";
 import { AlphabetExerciseOption } from "./AlphabetExerciseOption";
 import { ExerciseOptionsGrid } from "./ExerciseOptionsGrid";
+import { QuestionContainer } from "./QuestionContainer";
 
 function AlphabetLessonContent() {
   const params = useParams();
@@ -259,17 +260,14 @@ function AlphabetLessonContent() {
 
     if (currentExercise.type === 'phonetic-match') {
       return (
-        <div className="flex-1 flex flex-col items-center w-full max-w-lg mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 text-center">
-            {getTranslation('auto.which_letter_matches_this_soun', language)}
-          </h2>
-
-          <div className="flex items-center gap-4 bg-white p-8 rounded-3xl shadow-sm border-2 border-slate-100 mb-10 w-full justify-center text-center flex-col">
+        <QuestionContainer
+          title={getTranslation('auto.which_letter_matches_this_soun', language)}
+          prompt={
             <div className="text-4xl md:text-5xl font-bold text-indigo-600 flex items-center flex-wrap justify-center font-sans tracking-wide">
               <ColoredPhonetic phonetic={currentExercise.phonetic} />
             </div>
-          </div>
-
+          }
+        >
           <ExerciseOptionsGrid
             options={currentExercise.options}
             selectedOption={selectedOption}
@@ -281,26 +279,23 @@ function AlphabetLessonContent() {
               handleCheck(opt);
             }}
           />
-        </div>
+        </QuestionContainer>
       );
     }
 
     if (currentExercise.type === 'audio-match') {
       return (
-        <div className="flex-1 flex flex-col items-center w-full max-w-lg mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 text-center">
-            {getTranslation('auto.listen_and_select_the_correct', language)}
-          </h2>
-
-          <div className="flex items-center gap-4 bg-white p-8 rounded-3xl shadow-sm border-2 border-slate-100 mb-10 w-full justify-center text-center flex-col">
+        <QuestionContainer
+          title={getTranslation('auto.listen_and_select_the_correct', language)}
+          prompt={
             <button
               onClick={() => playThaiTTS(currentExercise.item.exampleWord)}
               className="w-24 h-24 bg-sky-500 rounded-full flex items-center justify-center text-white shadow-lg transition-transform hover:scale-105 active:scale-95 hover:bg-sky-400"
             >
               <Volume2 size={48} />
             </button>
-          </div>
-
+          }
+        >
           <ExerciseOptionsGrid
             options={currentExercise.options}
             selectedOption={selectedOption}
@@ -312,7 +307,7 @@ function AlphabetLessonContent() {
               handleCheck(opt);
             }}
           />
-        </div>
+        </QuestionContainer>
       );
     }
 
