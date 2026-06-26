@@ -4,12 +4,13 @@ import { DailyQuestsWidget } from '../widgets/DailyQuestsWidget';
 import { ConversationObjectiveWidget } from '../widgets/ConversationObjectiveWidget';
 import { LeaderboardWidget } from '../widgets/LeaderboardWidget';
 
-interface SpeakQuestsModalProps {
+export interface QuestsModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  category?: 'learn' | 'speak' | 'alphabet';
 }
 
-export default function SpeakQuestsModal({ isOpen, onOpenChange }: SpeakQuestsModalProps) {
+export default function QuestsModal({ isOpen, onOpenChange, category }: QuestsModalProps) {
   return (
     <Drawer.Root open={isOpen} onOpenChange={onOpenChange}>
       <Drawer.Portal>
@@ -29,7 +30,7 @@ export default function SpeakQuestsModal({ isOpen, onOpenChange }: SpeakQuestsMo
           </button>
 
           <div className="p-4 md:p-6 pb-12 overflow-y-auto flex flex-col gap-4 md:gap-6">
-            <DailyQuestsWidget category="speak" />
+            <DailyQuestsWidget category={category} />
             <ConversationObjectiveWidget />
             <LeaderboardWidget />
           </div>
