@@ -22,6 +22,7 @@ import { useLessonEngine } from '@/hooks/useLessonEngine';
 import ResultScreen from "@/components/lesson/ResultScreen";
 import { triggerConfetti } from "@/lib/confetti";
 import { AlphabetExerciseOption } from "./AlphabetExerciseOption";
+import { ExerciseOptionsGrid } from "./ExerciseOptionsGrid";
 
 function AlphabetLessonContent() {
   const params = useParams();
@@ -269,24 +270,17 @@ function AlphabetLessonContent() {
             </div>
           </div>
 
-          <div className={`w-full grid gap-3 md:gap-4 ${currentExercise.options.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
-            {currentExercise.options.map((opt, i) => (
-              <AlphabetExerciseOption
-                key={i}
-                opt={opt}
-                isSelected={selectedOption?.letter === opt.letter}
-                isCorrectState={isCorrect}
-                language={language}
-                onClick={() => {
-                  if (isCorrect === null) {
-                    setSelectedOption(opt);
-                    playThaiTTS(opt.exampleWord);
-                    handleCheck(opt);
-                  }
-                }}
-              />
-            ))}
-          </div>
+          <ExerciseOptionsGrid
+            options={currentExercise.options}
+            selectedOption={selectedOption}
+            isCorrectState={isCorrect}
+            language={language}
+            onOptionSelect={(opt) => {
+              setSelectedOption(opt);
+              playThaiTTS(opt.exampleWord);
+              handleCheck(opt);
+            }}
+          />
         </div>
       );
     }
@@ -307,24 +301,17 @@ function AlphabetLessonContent() {
             </button>
           </div>
 
-          <div className={`w-full grid gap-3 md:gap-4 ${currentExercise.options.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
-            {currentExercise.options.map((opt, i) => (
-              <AlphabetExerciseOption
-                key={i}
-                opt={opt}
-                isSelected={selectedOption?.letter === opt.letter}
-                isCorrectState={isCorrect}
-                language={language}
-                onClick={() => {
-                  if (isCorrect === null) {
-                    setSelectedOption(opt);
-                    playThaiTTS(opt.exampleWord);
-                    handleCheck(opt);
-                  }
-                }}
-              />
-            ))}
-          </div>
+          <ExerciseOptionsGrid
+            options={currentExercise.options}
+            selectedOption={selectedOption}
+            isCorrectState={isCorrect}
+            language={language}
+            onOptionSelect={(opt) => {
+              setSelectedOption(opt);
+              playThaiTTS(opt.exampleWord);
+              handleCheck(opt);
+            }}
+          />
         </div>
       );
     }
@@ -412,24 +399,17 @@ function AlphabetLessonContent() {
           </div>
         </div>
 
-        <div className={`w-full grid gap-3 md:gap-4 ${currentExercise.options.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
-          {currentExercise.options.map((opt, i) => (
-            <AlphabetExerciseOption
-              key={i}
-              opt={opt}
-              isSelected={selectedOption?.letter === opt.letter}
-              isCorrectState={isCorrect}
-              language={language}
-              onClick={() => {
-                if (isCorrect === null) {
-                  setSelectedOption(opt);
-                  playThaiTTS(opt.exampleWord);
-                  handleCheck(opt);
-                }
-              }}
-            />
-          ))}
-        </div>
+        <ExerciseOptionsGrid
+          options={currentExercise.options}
+          selectedOption={selectedOption}
+          isCorrectState={isCorrect}
+          language={language}
+          onOptionSelect={(opt) => {
+            setSelectedOption(opt);
+            playThaiTTS(opt.exampleWord);
+            handleCheck(opt);
+          }}
+        />
       </div>
     );
   };
