@@ -11,30 +11,10 @@ import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
 import IconImage from '../ui/IconImage';
+import { getAliases } from "@/lib/vocabulary-utils";
 
 const normalizeThai = (str: string) => {
    return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
-};
-
-const getAliases = (word: string): string[] => {
-   const aliases: Record<string, string[]> = {
-      'ฉัน': ['ชั้น'],
-      'เขา': ['เค้า'],
-      'ไหม': ['มั้ย', 'มั๊ย'],
-      'หรือ': ['หรอ', 'เหรอ'],
-      'หรือเปล่า': ['รึเปล่า', 'ป่าว'],
-      'เปล่า': ['ป่าว'],
-      'อย่างไร': ['ยังไง'],
-      'เท่าไร': ['เท่าไหร่'],
-      'ทำไม': ['ทําไม'],
-      'ก็': ['ก้อ'],
-      'หนึ่ง': ['นึง'],
-      'ค่ะ': ['คะ', 'คา', 'ค่า', 'ขะ', 'ข่า'],
-      'คะ': ['ค่ะ', 'ค้า', 'ขะ', 'คา'],
-      'ครับ': ['คับ', 'ครัช', 'ฮะ'],
-      'อะไร': ['อัลไล']
-   };
-   return aliases[word] || [];
 };
 
 const replaceNumbersWithThai = (text: string) => {

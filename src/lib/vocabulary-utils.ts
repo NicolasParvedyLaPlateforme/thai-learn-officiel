@@ -76,3 +76,24 @@ export function getRequiredLessonsForConv(convDialogs: { th: string }[]): Requir
 
   return Array.from(lessonMap.values());
 }
+
+export const getAliases = (word: string): string[] => {
+   const aliases: Record<string, string[]> = {
+      'ฉัน': ['ชั้น'],
+      'เขา': ['เค้า'],
+      'ไหม': ['มั้ย', 'มั๊ย'],
+      'หรือ': ['หรอ', 'เหรอ'],
+      'หรือเปล่า': ['รึเปล่า', 'ป่าว'],
+      'เปล่า': ['ป่าว'],
+      'อย่างไร': ['ยังไง'],
+      'เท่าไร': ['เท่าไหร่'],
+      'ทำไม': ['ทําไม'],
+      'ก็': ['ก้อ'],
+      'หนึ่ง': ['นึง'],
+      'ค่ะ': ['คะ', 'คา', 'ค่า', 'ขะ', 'ข่า'],
+      'คะ': ['ค่ะ', 'ค้า', 'ขะ', 'คา'],
+      'ครับ': ['คับ', 'ครัช', 'ฮะ'],
+      'อะไร': ['อัลไล']
+   };
+   return aliases[word] || [];
+};
