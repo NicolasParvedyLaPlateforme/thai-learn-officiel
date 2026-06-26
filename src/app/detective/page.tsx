@@ -13,6 +13,7 @@ import DETECTIVE_CATEGORIES from "@/data/detective_categories.json";
 import { useIsPWA } from "@/hooks/use-pwa";
 import { DetectiveLevel } from "@/types";
 import { MobileHeaderMenu } from "@/components/layout/MobileHeaderMenu";
+import PathMobileHeader from '@/components/path-ui/PathMobileHeader';
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
 import { HeaderActions } from "@/components/layout/HeaderActions";
 
@@ -65,35 +66,35 @@ export default function DetectivePage() {
       {/* LEFT PANEL : Categories or Levels List */}
       <div className={`w-full md:w-[60%] lg:w-[65%] flex flex-col h-full shrink-0 transition-transform duration-300 md:border-r border-slate-200 bg-white ${mobileView !== 'categories_list' && mobileView !== 'category' ? 'max-md:-translate-x-full max-md:hidden' : ''} ${mobileView === 'level' ? 'max-md:hidden' : ''}`}>
 
-        {/* Mobile Header (hide on md) */}
-        <header className="bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[3.75rem] md:hidden shrink-0 border-b border-slate-100">
-          <div className="flex items-center justify-between w-full h-full px-4 gap-2">
-            <div className="flex items-center gap-3">
-              {mobileView === 'category' && (
-                <button
-                  onClick={() => { setSelectedCategoryId(null); setSelectedLevelId(null); }}
-                  className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shadow-sm"
-                >
-                  <ArrowLeft size={20} />
-                </button>
-              )}
-              {mobileView === 'categories_list' && (
-                <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-sm md:hidden">
-                  <Search size={20} />
-                </div>
-              )}
-              <h1 className="text-xl font-extrabold text-slate-800 tracking-tight md:hidden">
-                {mobileView === 'categories_list' ? (getTranslation('auto.detective', language)) : (selectedCategory ? getLocalizedField(selectedCategory, '', language) : '')}
-              </h1>
-            </div>
+        {/* Mobile Top Header */}
+        <PathMobileHeader
+          showHeader={true}
+          mounted={mounted}
+          language={language}
+          setIsUnitsModalOpen={() => {}}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          pathType="learn"
+        />
 
-            <HeaderActions
-              language={language}
-              setIsMobileMenuOpen={setIsMobileMenuOpen}
-              showPWAButton={mobileView === 'categories_list'} // ou 'categories_list'
-            />
-          </div>
-        </header>
+        {/* Mobile Sub-Header for Navigation */}
+        <div className="md:hidden flex items-center gap-3 px-4 py-3 shrink-0 border-b border-slate-100 bg-white">
+          {mobileView === 'category' && (
+            <button
+              onClick={() => { setSelectedCategoryId(null); setSelectedLevelId(null); }}
+              className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shadow-sm"
+            >
+              <ArrowLeft size={20} />
+            </button>
+          )}
+          {mobileView === 'categories_list' && (
+            <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-sm">
+              <Search size={20} />
+            </div>
+          )}
+          <h1 className="text-xl font-extrabold text-slate-800 tracking-tight">
+            {mobileView === 'categories_list' ? (getTranslation('auto.detective', language)) : (selectedCategory ? getLocalizedField(selectedCategory, '', language) : '')}
+          </h1>
+        </div>
 
         <MobileHeaderMenu
           isOpen={isMobileMenuOpen}

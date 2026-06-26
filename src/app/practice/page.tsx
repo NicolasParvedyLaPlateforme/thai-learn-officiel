@@ -1,6 +1,7 @@
 'use client';
 
 import { getTranslation } from "@/hooks/useTranslation";
+import PathMobileHeader from '@/components/path-ui/PathMobileHeader';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { m as motion, AnimatePresence } from "motion/react";
@@ -63,24 +64,24 @@ export default function PracticePage() {
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-20">
 
       {/* Mobile Top Header */}
-      <header className="bg-[#FAFAFA]/95 backdrop-blur-sm z-50 h-[3.75rem] md:hidden">
-        <div className="flex items-center justify-between w-full h-full px-4 md:px-8 gap-2 sm:gap-6">
-          <div className="flex items-center gap-3">
-            <Link href="/learn" className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-sm md:hidden">
-              <BookOpen size={20} />
-            </Link>
-            <h1 className="text-xl font-extrabold text-slate-800 tracking-tight md:hidden">
-              {getTranslation('auto.practice', language)}
-            </h1>
-          </div>
+      <PathMobileHeader
+        showHeader={true}
+        mounted={mounted}
+        language={language}
+        setIsUnitsModalOpen={() => {}}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+        pathType="learn" // default for practice
+      />
 
-          <HeaderActions
-            language={language}
-            setIsMobileMenuOpen={setIsMobileMenuOpen}
-          // showPWAButton est "true" par défaut, hideLanguageOnDesktop est "true" par défaut
-          />
-        </div>
-      </header>
+      {/* Mobile Sub-Header for Navigation */}
+      <div className="md:hidden flex items-center gap-3 px-4 py-3 shrink-0 border-b border-slate-100 bg-white">
+        <Link href="/learn" className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-sm">
+          <BookOpen size={20} />
+        </Link>
+        <h1 className="text-xl font-extrabold text-slate-800 tracking-tight">
+          {getTranslation('auto.practice', language)}
+        </h1>
+      </div>
 
       <MobileHeaderMenu
         isOpen={isMobileMenuOpen}
