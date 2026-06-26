@@ -10,7 +10,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
-import { getAliases, replaceNumbersWithThai } from "@/lib/vocabulary-utils";
+import { getAliases, replaceNumbersWithThai, getTargetWords } from "@/lib/vocabulary-utils";
 import { WordTile } from "@/components/ui/WordTile";
 
 const normalizeThai = (str: string) => {
@@ -45,18 +45,7 @@ export function SpeakingExercise({
    const requiredAccuracy = speakingConfig.requiredAccuracy || 50;
 
    // Derive target components
-   const targetWords = useMemo(() => {
-      if (!currentItem) return [];
-      if ('components' in currentItem) { // Phrase
-         return currentItem.components.map(id => {
-            if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
-            const w = dictionary.find(d => d.id === id);
-            return w || { id, th: '???', fr: '', phonetic: '' } as Word;
-         });
-      } else { // Single Word
-         return [currentItem as Word];
-      }
-   }, [currentItem, dictionary]);
+   const targetWords = useMemo(() => getTargetWords(currentItem, dictionary), [currentItem, dictionary]);
 
    const orderedIndices = useMemo(() => {
       return Array.from({ length: targetWords.length }, (_, i) => i);

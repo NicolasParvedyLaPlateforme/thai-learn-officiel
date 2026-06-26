@@ -1,4 +1,5 @@
 import courseData from "@/data/course.json";
+import { Word, Phrase } from "@/types";
 
 export interface RequiredVocabLesson {
   lessonId: string;
@@ -110,4 +111,17 @@ export const replaceNumbersWithThai = (text: string) => {
       res = res.replace(re, map[num]);
    }
    return res;
+};
+
+export const getTargetWords = (currentItem: Word | Phrase | null | undefined, dictionary: Word[]): Word[] => {
+   if (!currentItem) return [];
+   if ('components' in currentItem) { // Phrase
+      return currentItem.components.map(id => {
+         if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
+         const w = dictionary.find(d => d.id === id);
+         return w || { id, th: '???', fr: '', phonetic: '' } as Word;
+      });
+   } else { // Single Word
+      return [currentItem as Word];
+   }
 };

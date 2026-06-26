@@ -10,7 +10,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
-import { getAliases, replaceNumbersWithThai } from "@/lib/vocabulary-utils";
+import { getAliases, replaceNumbersWithThai, getTargetWords } from "@/lib/vocabulary-utils";
 
 const normalizeThai = (str: string) => {
    return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
@@ -74,13 +74,7 @@ export function SpeakBuildPhraseExercise({
    }, [lockedPhraseId, phrases]);
 
    // Build target components for locked phrase
-   const targetWords = useMemo(() => {
-      if (!lockedPhrase) return [];
-      return lockedPhrase.components.map(id => {
-         if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
-         return dictionary.find(d => d.id === id) || { id, th: '???', fr: '', phonetic: '' } as Word;
-      });
-   }, [lockedPhrase, dictionary]);
+   const targetWords = useMemo(() => getTargetWords(lockedPhrase, dictionary), [lockedPhrase, dictionary]);
 
    // Generate options
    useEffect(() => {

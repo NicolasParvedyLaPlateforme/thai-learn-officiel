@@ -11,7 +11,7 @@ import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
 import { MessageSquare, RefreshCw, HelpCircle } from "lucide-react";
-import { getAliases, replaceNumbersWithThai } from "@/lib/vocabulary-utils";
+import { getAliases, replaceNumbersWithThai, getTargetWords } from "@/lib/vocabulary-utils";
 import IconImage from '../ui/IconImage';
 
 const normalizeThai = (str: string) => {
@@ -57,18 +57,7 @@ export function SpeakConversationExercise({
    const activeItemRef = useRef<HTMLDivElement>(null);
 
    // Derive target components
-   const targetWords = useMemo(() => {
-      if (!currentItem) return [];
-      if ('components' in currentItem) { // Phrase
-         return currentItem.components.map(id => {
-            if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
-            const w = dictionary.find(d => d.id === id);
-            return w || { id, th: '???', fr: '', phonetic: '' } as Word;
-         });
-      } else { // Single Word
-         return [currentItem as Word];
-      }
-   }, [currentItem, dictionary]);
+   const targetWords = useMemo(() => getTargetWords(currentItem, dictionary), [currentItem, dictionary]);
 
    const [placedIndices, setPlacedIndices] = useState<number[]>([]);
    const [placedScores, setPlacedScores] = useState<Record<number, number>>({});
