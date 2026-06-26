@@ -162,12 +162,13 @@ export default function PathLessonModal({
         <>
           {pathType === 'learn' && selectedLesson.isCompleted && !isBilanLesson && (
             <div className="flex gap-3 mb-3 w-full">
-              <Button asChild variant="flat" size="lg" className="w-full">
-                <Link href={`/writing?lessonId=${selectedLesson.lesson.id}`}>
-                  <Pencil size={16} className="mr-2" />
-                  {getTranslation('auto.writing', language)}
-                </Link>
-              </Button>
+              <Link 
+                href={`/writing?lessonId=${selectedLesson.lesson.id}`}
+                className={buttonVariants({ variant: "flat", size: "lg", className: "w-full" })}
+              >
+                <Pencil size={16} className="mr-2" />
+                {getTranslation('auto.writing', language)}
+              </Link>
             </div>
           )}
           <div className="flex items-center gap-2 w-full relative">
@@ -176,11 +177,12 @@ export default function PathLessonModal({
                 {getTranslation('auto.unavailable_on_brave', language)}
               </Button>
             ) : (
-              <Button asChild variant={getGamifiedVariant(selectedLesson.unitColor)} size="lg" className="w-full">
-                <Link href={getStartLink()}>
-                  {isBilanLesson ? (language === 'en' ? 'Start Assessment' : 'Commencer le bilan') : getTranslation('auto.start_lesson', language)}
-                </Link>
-              </Button>
+              <Link 
+                href={getStartLink()}
+                className={buttonVariants({ variant: getGamifiedVariant(selectedLesson.unitColor), size: "lg", className: "w-full" })}
+              >
+                {isBilanLesson ? (language === 'en' ? 'Start Assessment' : 'Commencer le bilan') : getTranslation('auto.start_lesson', language)}
+              </Link>
             )}
           </div>
         </>
