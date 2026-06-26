@@ -7,6 +7,7 @@ import { Lesson } from "@/types";
 import { useProgressStore } from "@/lib/store";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
+import { AnimatedStars } from "@/components/ui/AnimatedStars";
 
 interface ResultScreenProps {
   lesson: Lesson;
@@ -118,25 +119,7 @@ export default function ResultScreen({
       <div className="text-emerald-500 mb-2">
         <Check size={80} className="mx-auto" />
       </div>
-      <div className="flex gap-2 mb-6">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ scale: 0, rotate: -45 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.2 + i * 0.1, type: "spring", stiffness: 200 }}
-          >
-            <Star
-              size={48}
-              className={
-                i < earnedStars
-                  ? "fill-amber-400 text-amber-500"
-                  : "fill-slate-200 text-slate-300 drop-shadow-sm"
-              }
-            />
-          </motion.div>
-        ))}
-      </div>
+      <AnimatedStars earnedStars={earnedStars} />
       <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight drop-shadow-sm text-center mb-2 px-4">
         {mode === 'training'
           ? "Entraînement terminé !"
