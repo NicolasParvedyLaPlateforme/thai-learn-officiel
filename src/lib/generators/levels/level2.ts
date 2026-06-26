@@ -1,5 +1,5 @@
 import { Exercise, Word, Phrase } from "@/types";
-import { shuffle } from '../utils';
+import { shuffle, getRandomDistractorMode } from '../utils';
 import { buildWordMatch, buildFillInTheBlank, buildSentenceBuilder } from '../builders';
 import { getExerciseTranslation } from '@/lib/translation-utils';
 
@@ -7,14 +7,8 @@ export function generateLevel2(validLessonWords: Word[], lessonPhrases: Phrase[]
   let wmExercises: Exercise[] = [];
   
   validLessonWords.forEach(word => {
-    const rand = Math.random();
-    let mode: 'random' | 'misspelled' | 'reverse' = 'random';
-    if (rand < 0.33) mode = 'random';
-    else if (rand < 0.66) mode = 'misspelled';
-    else mode = 'reverse';
-    
     wmExercises.push(buildWordMatch(word, language, {
-      distractorMode: mode,
+      distractorMode: getRandomDistractorMode(),
       numDistractors: 3,
       maxMistakes: 2,
       validLessonWords,

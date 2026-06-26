@@ -179,3 +179,10 @@ export function generateMisspelledWords(word: Word, count: number): {id: string,
   }
   return res;
 }
+
+export function getRandomDistractorMode(): 'random' | 'misspelled' | 'reverse' {
+  const rand = Math.random();
+  if (rand < 0.33) return 'random';
+  if (rand < 0.66) return 'misspelled';
+  return 'reverse';
+}

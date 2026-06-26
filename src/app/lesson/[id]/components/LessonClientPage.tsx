@@ -348,8 +348,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
     }
     setStartTime(Date.now());
     
-    const genFor: any = { id: lesson.id, level: currentLevel, partIndex };
-    if (mode) genFor.mode = mode;
+    const genFor: any = { id: lesson.id, level: currentLevel, partIndex, mode: mode ?? null };
     setExercisesGeneratedFor(genFor);
   };
 
