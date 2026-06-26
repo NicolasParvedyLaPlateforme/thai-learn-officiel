@@ -140,7 +140,7 @@ export function SpeakBuildPhraseExercise({
       }
    }, [lockedPhraseId, step, phrases, completedPhraseIds, dictionary, targetWords]);
 
-   const handlePhraseFinish = () => {
+   function handlePhraseFinish() {
       setStatus('success');
       SpeechRecognition.stopListening();
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
@@ -152,9 +152,9 @@ export function SpeakBuildPhraseExercise({
          setMistakes(0);
          resetListeningContext();
       }, 1500);
-   };
+   }
 
-   const evaluateTranscript = (text: string) => {
+   function evaluateTranscript(text: string) {
       if (!text || options.length === 0) return;
 
       let remainingTranscript = normalizeThai(replaceNumbersWithThai(text));
@@ -252,9 +252,9 @@ export function SpeakBuildPhraseExercise({
             }
          }
       }
-   };
+   }
 
-   const resetListeningContext = (autoStart = false) => {
+   function resetListeningContext(autoStart = false) {
       resetTranscript();
       setSpokenHistory("");
       setStatus('idle');
@@ -269,7 +269,7 @@ export function SpeakBuildPhraseExercise({
       evaluateTranscript(currentFullTranscript);
    }, [currentFullTranscript, status]);
 
-   const stopAndEvaluate = () => {
+   function stopAndEvaluate() {
       SpeechRecognition.stopListening();
       setStatus('evaluating');
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
@@ -299,7 +299,7 @@ export function SpeakBuildPhraseExercise({
       return () => { SpeechRecognition.abortListening(); };
    }, []);
 
-   const startListening = (clearHistory = true) => {
+   function startListening(clearHistory = true) {
       stopTTS();
       SpeechRecognition.abortListening();
       if (!clearHistory && transcript) setSpokenHistory(currentFullTranscript + " ");
@@ -307,9 +307,9 @@ export function SpeakBuildPhraseExercise({
       resetTranscript();
       setStatus('listening');
       SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
-   };
+   }
 
-   const playTTS = (wordTh: string) => {
+   function playTTS(wordTh: string) {
       if (status === 'listening' || status === 'evaluating') {
          SpeechRecognition.abortListening();
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);

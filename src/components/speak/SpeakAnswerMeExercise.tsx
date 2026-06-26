@@ -106,7 +106,7 @@ export function SpeakAnswerMeExercise({
 
    const currentFullTranscript = (spokenHistory + " " + transcript).trim();
 
-   const playTTS = () => {
+   function playTTS() {
       if (!promptItem?.th) return;
       if (status === 'listening' || status === 'evaluating') {
          SpeechRecognition.abortListening();
@@ -123,9 +123,9 @@ export function SpeakAnswerMeExercise({
       } else {
          playThaiTTS(promptItem.th);
       }
-   };
+   }
 
-   const startListening = () => {
+   function startListening() {
       stopTTS();
       SpeechRecognition.abortListening();
       setSpokenHistory("");
@@ -152,7 +152,7 @@ export function SpeakAnswerMeExercise({
       }, 1000);
    }, [transcript, status]);
 
-   const handleSilenceCutoff = () => {
+   function handleSilenceCutoff() {
       SpeechRecognition.stopListening();
       setTimeout(() => SpeechRecognition.abortListening(), 50);
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
@@ -163,9 +163,9 @@ export function SpeakAnswerMeExercise({
       setTimeout(() => {
          evaluateTranscription();
       }, 100);
-   };
+   }
 
-   const evaluateTranscription = () => {
+   function evaluateTranscription() {
       if (!currentFullTranscript) {
          setStatus('idle');
          return;

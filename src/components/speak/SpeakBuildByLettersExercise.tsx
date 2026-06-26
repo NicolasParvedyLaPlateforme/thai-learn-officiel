@@ -307,7 +307,7 @@ export function SpeakBuildByLettersExercise({
       };
    }, [status, micAttempts]);
 
-   const startMic = async () => {
+   async function startMic() {
       if (!browserSupportsSpeechRecognition) {
          alert("Speech recognition not supported");
          return;
@@ -321,14 +321,14 @@ export function SpeakBuildByLettersExercise({
       } catch (e) {
          console.error(e);
       }
-   };
+   }
 
-   const stopMic = () => {
+   function stopMic() {
       SpeechRecognition.stopListening();
       if (status === 'listening') setStatus('evaluating');
-   };
+   }
 
-   const playTTS = (text: string) => {
+   function playTTS(text: string) {
       if (status === 'listening' || status === 'evaluating') {
          stopMic();
          setStatus('idle');
@@ -341,9 +341,9 @@ export function SpeakBuildByLettersExercise({
       } else {
          playThaiTTS(text);
       }
-   };
+   }
 
-   const toggleMic = () => {
+   function toggleMic() {
       if (status === 'listening') {
          stopMic();
       } else {
