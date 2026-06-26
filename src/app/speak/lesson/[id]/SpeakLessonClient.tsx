@@ -15,34 +15,28 @@ import SpeakResultScreen from './SpeakResultScreen';
 import speakDialogues from "@/data/speak_dialogues.json";
 import speakAnswerMe from "@/data/speak_answer_me.json";
 import { Button } from "@/components/ui/Button";
+import { triggerConfetti } from "@/lib/confetti";
 
-const triggerConfetti = () => {
-  import("canvas-confetti").then((mod) => {
-    const confetti = mod.default;
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-  });
-};
-
-export default function SpeakLessonClient({ 
-  lessonId, 
-  level, 
-  vocabulary, 
+export default function SpeakLessonClient({
+  lessonId,
+  level,
+  vocabulary,
   dictionary,
   lessonTitle
-}: { 
-  lessonId: string, 
-  level: number, 
-  vocabulary: (Word | Phrase)[], 
+}: {
+  lessonId: string,
+  level: number,
+  vocabulary: (Word | Phrase)[],
   dictionary: Word[],
-  lessonTitle: string 
+  lessonTitle: string
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const limitTo8 = mode === 'training' || mode === 'revision';
-  
+
   const { language, completeSpeakLesson, addXp, getExpectedXp, inProgressLessons, saveInProgressLesson } = useProgressStore();
-  
+
   // Base states
   const [mounted, setMounted] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
@@ -51,7 +45,7 @@ export default function SpeakLessonClient({
   const [showResumePrompt, setShowResumePrompt] = useState(false);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTimeSec, setElapsedTimeSec] = useState<number | undefined>(undefined);
-  
+
   // Level 1 specific states
   const [exercises, setExercises] = useState(limitTo8 ? vocabulary.slice(0, 8) : vocabulary);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -61,7 +55,7 @@ export default function SpeakLessonClient({
   // Level 2 specific states
   const [dialogue, setDialogue] = useState<DialogueLine[]>([]);
   const [totalScorePercentage, setTotalScorePercentage] = useState(0);
-  
+
   // Level 3 specific states
   const [answerMeData, setAnswerMeData] = useState<any[]>([]);
 
@@ -87,48 +81,48 @@ export default function SpeakLessonClient({
       }).filter((d: any) => d.phraseData);
       if (limitTo8) populated = populated.slice(0, 8);
       setDialogue(populated);
-      
+
       // Restore state if exists
       const savedState = inProgressLessons[storageKey];
       if (savedState) {
-         setCurrentIndex(savedState.currentIndex || 0);
-         setTotalScorePercentage(savedState.mistakes || 0);
+        setCurrentIndex(savedState.currentIndex || 0);
+        setTotalScorePercentage(savedState.mistakes || 0);
       }
     } else if (isLevel3) {
       let answerData = (speakAnswerMe as any).exercises[lessonId] || [];
       if (limitTo8) answerData = answerData.slice(0, 8);
       const savedState = inProgressLessons[storageKey];
       if (savedState) {
-         const currentExercises = (savedState.exercises && savedState.exercises.length > 0) 
-            ? savedState.exercises 
-            : answerData;
-            
-         if (savedState.currentIndex < currentExercises.length) {
-            setAnswerMeData(currentExercises);
-            setCurrentIndex(savedState.currentIndex || 0);
-            setTotalScorePercentage(savedState.mistakes || 0);
-         } else {
-            setAnswerMeData(answerData);
-            setCurrentIndex(0);
-            setTotalScorePercentage(0);
-            saveInProgressLesson(storageKey, null);
-         }
+        const currentExercises = (savedState.exercises && savedState.exercises.length > 0)
+          ? savedState.exercises
+          : answerData;
+
+        if (savedState.currentIndex < currentExercises.length) {
+          setAnswerMeData(currentExercises);
+          setCurrentIndex(savedState.currentIndex || 0);
+          setTotalScorePercentage(savedState.mistakes || 0);
+        } else {
+          setAnswerMeData(answerData);
+          setCurrentIndex(0);
+          setTotalScorePercentage(0);
+          saveInProgressLesson(storageKey, null);
+        }
       } else {
-         setAnswerMeData(answerData);
+        setAnswerMeData(answerData);
       }
     } else if (isLevel4 || isLevel5) {
       let phrases = vocabulary.filter(v => 'components' in v) as Phrase[];
       if (limitTo8) phrases = phrases.slice(0, 8);
       setLevel4Phrases(phrases);
-      
+
       const savedState = inProgressLessons[storageKey];
       if (savedState) {
-         setCompletedLevel4PhraseIds(savedState.completedPhraseIds || []);
-         setCurrentIndex(savedState.currentIndex || 0);
-         setTotalScorePercentage(savedState.mistakes || 0);
-         if (savedState.completedPhraseIds && savedState.completedPhraseIds.length > 0) {
-            setShowResumePrompt(true);
-         }
+        setCompletedLevel4PhraseIds(savedState.completedPhraseIds || []);
+        setCurrentIndex(savedState.currentIndex || 0);
+        setTotalScorePercentage(savedState.mistakes || 0);
+        if (savedState.completedPhraseIds && savedState.completedPhraseIds.length > 0) {
+          setShowResumePrompt(true);
+        }
       }
     }
     setStartTime(Date.now());
@@ -141,7 +135,7 @@ export default function SpeakLessonClient({
     setEarnedXp(finalEarnedXp);
     completeSpeakLesson(lessonId, finalEarnedXp, level - 1, finalStars);
     if (isLevel2 || isLevel3 || isLevel4 || isLevel5) {
-       saveInProgressLesson(storageKey, null);
+      saveInProgressLesson(storageKey, null);
     }
     setIsFinished(true);
     triggerConfetti();
@@ -156,27 +150,27 @@ export default function SpeakLessonClient({
   const handleNextLevel4And5 = (phraseId: string, mistakesCount: number, isAbandoned?: boolean) => {
     let newCompleted = completedLevel4PhraseIds;
     if (!isAbandoned) {
-       newCompleted = [...completedLevel4PhraseIds, phraseId];
-       setCompletedLevel4PhraseIds(newCompleted);
+      newCompleted = [...completedLevel4PhraseIds, phraseId];
+      setCompletedLevel4PhraseIds(newCompleted);
     }
-    
+
     const newTotalMistakes = totalScorePercentage + mistakesCount;
     setTotalScorePercentage(newTotalMistakes);
-    
+
     saveInProgressLesson(storageKey, {
-       exercises: [],
-       currentIndex: 0,
-       timeLeft: null,
-       initialTime: null,
-       lastUpdated: Date.now(),
-       completedPhraseIds: newCompleted,
-       mistakes: newTotalMistakes
+      exercises: [],
+      currentIndex: 0,
+      timeLeft: null,
+      initialTime: null,
+      lastUpdated: Date.now(),
+      completedPhraseIds: newCompleted,
+      mistakes: newTotalMistakes
     });
 
     if (newCompleted.length >= 3 || newCompleted.length >= level4Phrases.length) {
-       const earnedStars = Math.max(0, 5 - Math.floor(newTotalMistakes / 3));
-       const expected = getExpectedXp(`speak_${lessonId}`, level - 1, false);
-       handleComplete(isLevel5 ? 300 : (expected.xp || 150), earnedStars);
+      const earnedStars = Math.max(0, 5 - Math.floor(newTotalMistakes / 3));
+      const expected = getExpectedXp(`speak_${lessonId}`, level - 1, false);
+      handleComplete(isLevel5 ? 300 : (expected.xp || 150), earnedStars);
     }
   };
 
@@ -187,7 +181,7 @@ export default function SpeakLessonClient({
     } else if (!isAbandoned) {
       setExercises(prev => [...prev, prev[currentIndex]]);
     }
-    
+
     const newLength = exercises.length + (isSuccess || isAbandoned ? 0 : 1);
     if (currentIndex + 1 < newLength) {
       setCurrentIndex(prev => prev + 1);
@@ -200,16 +194,16 @@ export default function SpeakLessonClient({
   const handleNextLevel2And3 = (isSuccess: boolean, isAbandoned?: boolean, partialScore: number = 0) => {
     const newTotalScore = totalScorePercentage + partialScore;
     setTotalScorePercentage(newTotalScore);
-    
+
     let maxLen = isLevel2 ? dialogue.length : answerMeData.length;
     let newAnswerMeData = answerMeData;
-    
+
     if (!isSuccess && !isAbandoned && isLevel3) {
       newAnswerMeData = [...answerMeData, answerMeData[currentIndex]];
       setAnswerMeData(newAnswerMeData);
       maxLen += 1;
     }
-    
+
     if (currentIndex + 1 < maxLen) {
       setCurrentIndex(prev => prev + 1);
       saveInProgressLesson(storageKey, {
@@ -226,7 +220,7 @@ export default function SpeakLessonClient({
       const averagePercentage = newTotalScore / maxLen;
       const calculatedXp = Math.round((averagePercentage / 100) * maxPossibleXP);
       const finalStars = Math.round((averagePercentage / 100) * 5);
-      
+
       handleComplete(calculatedXp, finalStars);
     }
   };
@@ -258,17 +252,17 @@ export default function SpeakLessonClient({
     } else {
       saveInProgressLesson(storageKey, null);
       if (isLevel2) {
-         setCurrentIndex(0);
-         setTotalScorePercentage(0);
+        setCurrentIndex(0);
+        setTotalScorePercentage(0);
       } else if (isLevel3) {
-         const answerData = (speakAnswerMe as any).exercises[lessonId] || [];
-         setAnswerMeData(answerData);
-         setCurrentIndex(0);
-         setTotalScorePercentage(0);
+        const answerData = (speakAnswerMe as any).exercises[lessonId] || [];
+        setAnswerMeData(answerData);
+        setCurrentIndex(0);
+        setTotalScorePercentage(0);
       } else if (isLevel4 || isLevel5) {
-         setCompletedLevel4PhraseIds([]);
-         setCurrentIndex(0);
-         setTotalScorePercentage(0);
+        setCompletedLevel4PhraseIds([]);
+        setCurrentIndex(0);
+        setTotalScorePercentage(0);
       }
     }
     setShowResumePrompt(false);
@@ -320,7 +314,7 @@ export default function SpeakLessonClient({
 
   if (isFinished) {
     return (
-      <SpeakResultScreen 
+      <SpeakResultScreen
         lessonId={lessonId}
         currentLevel={level - 1}
         earnedStars={isLevel4 || isLevel5 ? Math.max(0, 5 - Math.floor(totalScorePercentage / 3)) : (isLevel2 || isLevel3 ? Math.round((totalScorePercentage / currentLength / 100) * 5) : earnedStars)}
@@ -336,7 +330,7 @@ export default function SpeakLessonClient({
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
       <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white sticky top-0 z-50">
         <div className="flex items-center gap-3 sm:gap-6 w-full max-w-3xl mx-auto h-full px-4 flex-1">
-          <button 
+          <button
             onClick={() => setShowQuitConfirm(true)}
             className="text-slate-400 hover:text-rose-500 transition-colors"
           >
@@ -348,8 +342,8 @@ export default function SpeakLessonClient({
           </div>
 
           <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">
-            <div 
-              className="bg-orange-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.3)]" 
+            <div
+              className="bg-orange-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.3)]"
               style={{ width: `${progressPercent}%` }}
             ></div>
           </div>
@@ -398,7 +392,7 @@ export default function SpeakLessonClient({
           </div>
         </div>
       </header>
-      
+
       <main className="flex-1 max-w-3xl w-full mx-auto p-4 md:p-8 flex flex-col justify-center">
         {isLevel4 ? (
           <SpeakBuildPhraseExercise
@@ -434,11 +428,11 @@ export default function SpeakLessonClient({
             onNext={handleNextLevel2And3}
           />
         ) : (
-          <SpeakingExercise 
-            vocabulary={exercises} 
-            dictionary={dictionary} 
+          <SpeakingExercise
+            vocabulary={exercises}
+            dictionary={dictionary}
             currentIndex={currentIndex}
-            onNext={handleNextLevel1} 
+            onNext={handleNextLevel1}
             onLoseStar={handleLoseStar}
           />
         )}
@@ -460,7 +454,7 @@ export default function SpeakLessonClient({
                 : (getTranslation('auto.your_progress_will_be_lost', language) || 'Votre progression sera perdue.')}
             </p>
             <div className="flex flex-col gap-3 w-full">
-              <Button 
+              <Button
                 onClick={handleQuitEarly}
                 variant="danger"
                 size="lg"
@@ -468,7 +462,7 @@ export default function SpeakLessonClient({
               >
                 {getTranslation('auto.quit', language) || 'Quitter'}
               </Button>
-              <Button 
+              <Button
                 onClick={() => setShowQuitConfirm(false)}
                 variant="outline"
                 size="lg"

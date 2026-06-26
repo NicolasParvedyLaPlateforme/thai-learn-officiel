@@ -97,7 +97,7 @@ export function MobileTimelineNodeLayout({
         onClick={onNodeClick}
       >
 
-        <div className={` w-15 h-15 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden ${getShadeClass()}`}>
+        <div className={` w-17 h-17 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden ${getShadeClass()}`}>
           {centerIcon()}
         </div>
         {showLevelProgress && !isMaxLevel && level > 0 && (

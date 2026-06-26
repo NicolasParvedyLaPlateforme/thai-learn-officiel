@@ -31,13 +31,7 @@ import Footer from "@/components/lesson/Footer";
 import QuestionArea from "@/components/lesson/QuestionArea";
 import { useLessonEngine } from "@/hooks/useLessonEngine";
 import { Button } from "@/components/ui/Button";
-
-const triggerConfetti = () => {
-  import("canvas-confetti").then((mod) => {
-    const confetti = mod.default;
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-  });
-};
+import { triggerConfetti } from "@/lib/confetti";
 
 const getInstructionKey = (ex: Exercise | undefined) => {
   if (!ex) return null;

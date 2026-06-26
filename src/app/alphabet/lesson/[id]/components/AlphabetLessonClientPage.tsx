@@ -20,13 +20,7 @@ import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
 import Footer from "@/components/lesson/Footer";
 import { useLessonEngine } from '@/hooks/useLessonEngine';
 import ResultScreen from "@/components/lesson/ResultScreen";
-
-const triggerConfetti = () => {
-  import("canvas-confetti").then((mod) => {
-    const confetti = mod.default;
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-  });
-};
+import { triggerConfetti } from "@/lib/confetti";
 
 function AlphabetLessonContent() {
   const params = useParams();
@@ -159,7 +153,7 @@ function AlphabetLessonContent() {
 
       preloadThaiVoices();
       const isRevision = searchParams.get('mode') === 'revision';
-      
+
       if (isRevision) {
         import("@/actions/course").then(({ getAlphabetRevisionExercisesServer }) => {
           getAlphabetRevisionExercisesServer(lesson.id, language).then(generated => {
@@ -174,7 +168,7 @@ function AlphabetLessonContent() {
           const mode = searchParams.get('mode');
           let finalEx = generated;
           if (mode === 'training') {
-             finalEx = generated.slice(0, 8);
+            finalEx = generated.slice(0, 8);
           }
           setInitialExercises(finalEx as unknown as AlphabetExercise[]);
           setStartTime(Date.now());
@@ -222,14 +216,14 @@ function AlphabetLessonContent() {
     }
   };
 
-// ... Inside AlphabetLessonContent, replace the isFinished check:
+  // ... Inside AlphabetLessonContent, replace the isFinished check:
 
   if (isFinished && exercisesGeneratedFor?.level === currentLevel) {
     const isLastConsonant = lesson && consonants.length > 0 && lesson.id === consonants[consonants.length - 1].id;
     const isLastVowel = lesson && vowels.length > 0 && lesson.id === vowels[vowels.length - 1].id;
     const isEndOfUnit = isLastConsonant || isLastVowel;
     const nextUnitIndex = isEndOfUnit ? (isLastConsonant ? 1 : -1) : -1;
-    
+
     return (
       <ResultScreen
         lesson={lesson as any}
