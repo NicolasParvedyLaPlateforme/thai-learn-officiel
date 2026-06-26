@@ -19,6 +19,7 @@ import Footer from "@/components/lesson/Footer";
 import { useLessonEngine } from "@/hooks/useLessonEngine";
 import { Button } from "@/components/ui/Button";
 import { PlayAudioButton } from "@/components/ui/PlayAudioButton";
+import ExerciseHeader from "@/components/lesson/ExerciseHeader";
 
 export default function WritingPage() {
   const router = useRouter();
@@ -178,35 +179,21 @@ export default function WritingPage() {
             className="flex-1 flex flex-col h-full w-full absolute inset-0"
           >
             {/* Header */}
-            <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white">
-              <div className="flex items-center gap-6 w-full max-w-2xl mx-auto h-full px-4 flex-1">
-                <button onClick={() => {
-                  if (hasLessonId) {
-                    router.push(`/learn#lesson-${params?.get('lessonId')}`);
-                  } else {
-                    router.push('/practice');
-                  }
-                }} className="text-slate-400 hover:text-slate-600 transition-colors">
-                  <X size={24} strokeWidth={2.5} />
-                </button>
-                <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                  <div
-                    className="bg-emerald-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.3)]"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                {!currentExercise?.forceHideRomanization && (
-                  <button
-                    onClick={() => setShowRomanization(!showRomanization)}
-                    className={`mr-2 w-9 h-9 flex flex-col items-center justify-center rounded-xl font-bold border-2 transition-colors ${showRomanization ? "border-indigo-200 text-indigo-600 bg-indigo-50 hover:bg-indigo-100" : "border-slate-200 text-slate-400 bg-white hover:bg-slate-100"}`}
-                    title={showRomanization ? (getTranslation('auto.hide_pronunciation', language)) : (getTranslation('auto.show_pronunciation', language))}
-                  >
-                    <span className="text-xs font-mono">{showRomanization ? 'aA' : 'ก'}</span>
-                  </button>
-                )}
-                <div className="font-bold text-slate-400">{getTranslation('auto.writing_12', language)}</div>
-              </div>
-            </header>
+            <ExerciseHeader
+              progress={progress}
+              onClose={() => {
+                if (hasLessonId) {
+                  router.push(`/learn#lesson-${params?.get('lessonId')}`);
+                } else {
+                  router.push('/practice');
+                }
+              }}
+              showRomanization={showRomanization}
+              onToggleRomanization={() => setShowRomanization(!showRomanization)}
+              forceHideRomanization={currentExercise?.forceHideRomanization}
+              title={getTranslation('auto.writing_12', language)}
+              language={language}
+            />
 
             {/* Main Area */}
             <main className="flex-1 overflow-y-auto hide-scrollbar flex flex-col items-center py-2 sm:py-6 md:py-12 px-4 w-full">
