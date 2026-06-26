@@ -12,7 +12,7 @@ export default function PathTimelineLine({ level, maxLevel, colorClass, isDeskto
   const strokeWidth = isDesktop ? 10 : 8;
   const containerClasses = isDesktop
     ? 'absolute top-1/2 left-1/2 w-[24px] -translate-x-1/2 h-[calc(100%+6rem)] -z-10'
-    : 'absolute top-3 left-[1.8rem] sm:left-[1.8rem] w-[20px] -translate-x-1/2 h-[calc(60%+3.5rem)] -z-10';
+    : 'absolute top-3 left-[2rem] sm:left-[2em] w-[20px] -translate-x-1/2 h-[calc(60%+3.5rem)] -z-10';
 
   const colorText = colorClass.replace('bg-', 'text-');
 
