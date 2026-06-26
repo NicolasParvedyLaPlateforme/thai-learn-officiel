@@ -93,4 +93,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+const getGamifiedVariant = (colorClass?: string): any => {
+  if (!colorClass) return 'gamified';
+  if (colorClass.includes('emerald')) return 'gamified';
+  if (colorClass.includes('blue')) return 'blueGamified';
+  if (colorClass.includes('amber')) return 'amberGamified';
+  if (colorClass.includes('indigo')) return 'indigoGamified';
+  if (colorClass.includes('purple')) return 'purpleGamified';
+  if (colorClass.includes('orange')) return 'orangeGamified';
+  if (colorClass.includes('fuchsia')) return 'fuchsiaGamified';
+  if (colorClass.includes('zinc')) return 'darkGamified';
+  if (colorClass.includes('rose')) return 'dangerGamified';
+  return 'gamified';
+};
+
+export { Button, buttonVariants, getGamifiedVariant }

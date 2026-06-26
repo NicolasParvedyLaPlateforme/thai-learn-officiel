@@ -2,7 +2,7 @@ import { m as motion } from "motion/react";
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
 import { Typography } from '../ui/Typography';
-import { Button } from '../ui/Button';
+import { Button, getGamifiedVariant } from '../ui/Button';
 
 interface NextUnitCardProps {
   nextUnit: any;
@@ -13,20 +13,6 @@ interface NextUnitCardProps {
 }
 
 import { ChevronsDown } from 'lucide-react';
-
-const getGamifiedVariant = (colorClass: string): any => {
-  if (!colorClass) return 'gamified';
-  if (colorClass.includes('emerald')) return 'gamified';
-  if (colorClass.includes('blue')) return 'blueGamified';
-  if (colorClass.includes('amber')) return 'amberGamified';
-  if (colorClass.includes('indigo')) return 'indigoGamified';
-  if (colorClass.includes('purple')) return 'purpleGamified';
-  if (colorClass.includes('orange')) return 'orangeGamified';
-  if (colorClass.includes('fuchsia')) return 'fuchsiaGamified';
-  if (colorClass.includes('zinc')) return 'darkGamified';
-  if (colorClass.includes('rose')) return 'dangerGamified';
-  return 'gamified';
-};
 
 export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSelect, isMobile = false }: NextUnitCardProps) {
   if (!nextUnit) return null;

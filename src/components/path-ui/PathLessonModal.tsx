@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
 import { useProgressStore } from "@/lib/store";
-import { Button, buttonVariants } from '../ui/Button';
+import { Button, buttonVariants, getGamifiedVariant } from '../ui/Button';
 import { Typography } from '../ui/Typography';
 import SharedLessonModal from '../ui/SharedLessonModal';
 import { LessonDetailsStats } from '../path-ui/LessonDetailsStats';
@@ -13,20 +13,6 @@ import stepsSpeak from "@/data/steps_metadata_speak.json";
 import stepsAlphabet from "@/data/steps_metadata_alphabet.json";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { LessonPartsSelector } from '../learn/LessonPartsSelector';
-
-const getGamifiedVariant = (colorClass: string): any => {
-  if (!colorClass) return 'gamified';
-  if (colorClass.includes('emerald')) return 'gamified';
-  if (colorClass.includes('blue')) return 'blueGamified';
-  if (colorClass.includes('amber')) return 'amberGamified';
-  if (colorClass.includes('indigo')) return 'indigoGamified';
-  if (colorClass.includes('purple')) return 'purpleGamified';
-  if (colorClass.includes('orange')) return 'orangeGamified';
-  if (colorClass.includes('fuchsia')) return 'fuchsiaGamified';
-  if (colorClass.includes('zinc')) return 'darkGamified';
-  if (colorClass.includes('rose')) return 'dangerGamified';
-  return 'gamified';
-};
 
 interface PathLessonModalProps {
   pathType: 'learn' | 'speak' | 'alphabet';
