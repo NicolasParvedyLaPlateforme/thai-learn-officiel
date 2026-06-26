@@ -9,6 +9,7 @@ import { Check } from 'lucide-react';
 import { getVocabularyServer, getLightweightLessons } from "@/actions/course";
 import { Button } from "../ui/Button";
 import { ResponsiveModal } from "../ui/ResponsiveModal";
+import CheckboxOption from "../ui/CheckboxOption";
 
 export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const router = useRouter();
@@ -171,9 +172,12 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
         </h3>
 
         <label className="flex items-start gap-4 cursor-pointer group">
-          <div className={`mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${hideThai ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 group-hover:border-emerald-400'}`}>
-            {hideThai && <Check size={16} strokeWidth={3} />}
-          </div>
+          <CheckboxOption
+            checked={hideThai}
+            onChange={setHideThai}
+            title={getTranslation('auto.hide_thai_translation', language)}
+            description={getTranslation('auto.do_not_display_the_thai_charac', language)}
+          />
           <div>
             <div className="font-bold text-slate-700">{getTranslation('auto.hide_thai_translation', language)}</div>
             <div className="text-sm text-slate-500">{getTranslation('auto.do_not_display_the_thai_charac', language)}</div>
@@ -182,9 +186,12 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
         </label>
 
         <label className="flex items-start gap-4 cursor-pointer group">
-          <div className={`mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${hideTranslation ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 group-hover:border-emerald-400'}`}>
-            {hideTranslation && <Check size={16} strokeWidth={3} />}
-          </div>
+          <CheckboxOption
+            checked={hideTranslation}
+            onChange={setHideTranslation}
+            title={getTranslation('auto.hide_standard_translation', language)}
+            description={getTranslation('auto.only_show_the_phonetic_spellin', language)}
+          />
           <div>
             <div className="font-bold text-slate-700">{getTranslation('auto.hide_standard_translation', language)}</div>
             <div className="text-sm text-slate-500">{getTranslation('auto.only_show_the_phonetic_spellin', language)}</div>
@@ -193,9 +200,12 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
         </label>
 
         <label className="flex items-start gap-4 cursor-pointer group">
-          <div className={`mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${disableDictionaryClick ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 group-hover:border-emerald-400'}`}>
-            {disableDictionaryClick && <Check size={16} strokeWidth={3} />}
-          </div>
+          <CheckboxOption
+            checked={disableDictionaryClick}
+            onChange={setDisableDictionaryClick}
+            title={getTranslation('auto.disable_hint_clicks', language)}
+            description={getTranslation('auto.prevent_clicking_on_a_phrase_p', language)}
+          />
           <div>
             <div className="font-bold text-slate-700">{getTranslation('auto.disable_hint_clicks', language)}</div>
             <div className="text-sm text-slate-500">{getTranslation('auto.prevent_clicking_on_a_phrase_p', language)}</div>
@@ -204,9 +214,12 @@ export function WritingConfigModal({ isOpen, onClose }: { isOpen: boolean, onClo
         </label>
 
         <label className="flex items-start gap-4 cursor-pointer group">
-          <div className={`mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${hideCharacterHints ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 group-hover:border-emerald-400'}`}>
-            {hideCharacterHints && <Check size={16} strokeWidth={3} />}
-          </div>
+          <CheckboxOption
+            checked={hideCharacterHints}
+            onChange={setHideCharacterHints}
+            title={getTranslation('auto.hide_character_tips', language)}
+            description={getTranslation('auto.hide_the_informative_bulb_tips', language)}
+          />
           <div>
             <div className="font-bold text-slate-700">{getTranslation('auto.hide_character_tips', language)}</div>
             <div className="text-sm text-slate-500">{getTranslation('auto.hide_the_informative_bulb_tips', language)}</div>
