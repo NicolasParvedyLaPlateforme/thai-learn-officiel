@@ -10,6 +10,7 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
+import { WordTile } from "@/components/ui/WordTile";
 
 const normalizeThai = (str: string) => {
    return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
@@ -395,34 +396,33 @@ export function SpeakingExercise({
                const isPlaced = placedIndices.includes(index);
 
                if (word.id === 'w_dots') {
-                  return (
-                     <div key={`fixed-${index}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-14">
-                        <span className="leading-none text-2xl sm:text-3xl">...</span>
-                     </div>
-                  );
+                  return <WordTile key={`fixed-${index}`} variant="dots" className="!h-14" />;
                }
 
                if (isPlaced) {
                   const score = placedScores[index];
-                  let colorClass = "text-emerald-700 border-emerald-300 bg-emerald-50";
-                  if (score < 50) colorClass = "text-red-700 border-red-300 bg-red-50";
-                  else if (score < 100) colorClass = "text-amber-700 border-amber-300 bg-amber-50";
+                  let wordStatus: 'perfect' | 'good' | 'bad' = 'perfect';
+                  if (score < 50) wordStatus = 'bad';
+                  else if (score < 100) wordStatus = 'good';
 
                   return (
-                     <motion.div
-                        layoutId={`word-${index}`}
+                     <WordTile
                         key={`placed-${index}`}
-                        className={`flex flex-col items-center justify-center px-4 py-2 border-2 rounded-xl shadow-sm font-thai min-w-[4rem] h-14 ${colorClass}`}
-                     >
-                        <span className="text-3xl font-medium leading-none">{word.th}</span>
-                        {score < 100 && <span className="text-[10px] font-bold mt-1 opacity-80">{score}%</span>}
-                     </motion.div>
+                        layoutId={`word-${index}`}
+                        variant="scored"
+                        status={wordStatus}
+                        score={score}
+                        text={word.th}
+                        className="!h-14 !min-w-[4rem]"
+                     />
                   );
                } else {
                   return (
-                     <div key={`empty-${index}`} className="border-2 border-dashed border-slate-300 bg-transparent rounded-xl px-4 py-2 flex items-center justify-center min-w-[4rem] h-14">
-                        <span className="text-2xl text-slate-400 font-medium">...</span>
-                     </div>
+                     <WordTile
+                        key={`empty-${index}`}
+                        variant="dots"
+                        className="!h-14 !min-w-[4rem]"
+                     />
                   );
                }
             })}
@@ -432,18 +432,18 @@ export function SpeakingExercise({
          <div className="w-full max-w-2xl flex flex-wrap gap-3 items-center justify-center mb-10 min-h-[4rem]">
             {orderedIndices.map((originalIndex) => {
                const word = targetWords[originalIndex];
-               if (word.id === 'w_dots') return null; // Do not render dots in options
+               if (word.id === 'w_dots') return null;
 
                const isPlaced = placedIndices.includes(originalIndex);
                if (!isPlaced) {
                   return (
-                     <motion.div
-                        layoutId={`word-${originalIndex}`}
+                     <WordTile
                         key={`bank-${originalIndex}`}
-                        className="bg-white text-slate-700 border-2 border-slate-200 border-b-4 rounded-xl px-4 py-2 shadow-sm font-thai flex items-center justify-center min-w-[4rem] h-14"
-                     >
-                        <span className="text-3xl font-medium leading-none">{word.th}</span>
-                     </motion.div>
+                        layoutId={`word-${originalIndex}`}
+                        variant="bank"
+                        text={word.th}
+                        className="!h-14 !min-w-[4rem]"
+                     />
                   );
                }
                return <div key={`bank-empty-${originalIndex}`} className="min-w-[4rem] h-14" />; // Placeholder to keep spacing
