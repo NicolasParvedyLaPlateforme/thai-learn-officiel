@@ -22,6 +22,7 @@ import { SentenceWithHints } from "@/components/learn/Hints";
 import { getEndlessReviewServer, getDictionaryForExerciseServer, getPhrasesForExerciseServer } from "@/actions/course";
 import { Button } from "@/components/ui/Button";
 import EmptyLessonState from "@/components/lesson/EmptyLessonState";
+import PracticeHeader from "@/components/lesson/PracticeHeader";
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -206,20 +207,13 @@ export default function ReviewPage() {
             className="flex-1 flex flex-col h-full w-full absolute inset-0"
           >
             {/* Header / Progress bar */}
-            <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white">
-              <div className="flex items-center gap-6 w-full max-w-2xl mx-auto h-full px-4 flex-1">
-                <button onClick={() => router.push('/practice')} className="text-slate-400 hover:text-slate-600 transition-colors">
-                  <X size={24} strokeWidth={2.5} />
-                </button>
-                <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-                  <div
-                    className="bg-indigo-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <div className="font-bold text-slate-400">{getTranslation('auto.review_9', language)}</div>
-              </div>
-            </header>
+            <PracticeHeader
+              progress={progress}
+              title={getTranslation('auto.review_9', language)}
+              onClose={() => router.push('/practice')}
+              colorClass="bg-indigo-500"
+              shadowClass="shadow-[0_0_8px_rgba(99,102,241,0.3)]"
+            />
 
             {/* Main Exercise Area */}
             <main className="flex-1 flex flex-col w-full relative">
