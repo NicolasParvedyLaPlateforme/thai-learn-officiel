@@ -6,6 +6,7 @@ import { useProgressStore } from "@/lib/store";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, AlertCircle, Save, LogOut, ChevronLeft } from "lucide-react";
+import { SubmitButton } from "@/components/ui/SubmitButton";
 import { useTranslation } from "@/hooks/useTranslation";
 
 function ProfilePageContent() {
@@ -276,17 +277,9 @@ function ProfilePageContent() {
             </div>
 
             <div className="pt-2 flex justify-end">
-              <button
-                type="submit"
-                disabled={pseudoStatus === "loading"}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-xl transition-all flex items-center gap-2"
-              >
-                {pseudoStatus === "loading" ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                ) : (
-                  <><Save size={18} /> {t('auth.save_changes')}</>
-                )}
-              </button>
+              <SubmitButton isLoading={pseudoStatus === "loading"} className="py-2 px-6">
+                <Save size={18} /> {t('auth.save_changes')}
+              </SubmitButton>
             </div>
           </form>
         </div>
@@ -344,17 +337,9 @@ function ProfilePageContent() {
             </div>
 
             <div className="pt-2 flex justify-end">
-              <button
-                type="submit"
-                disabled={passwordStatus === "loading"}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-xl transition-all flex items-center gap-2"
-              >
-                {passwordStatus === "loading" ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                ) : (
-                  <><Save size={18} /> {t('auth.save_changes')}</>
-                )}
-              </button>
+              <SubmitButton isLoading={passwordStatus === "loading"} className="py-2 px-6">
+                <Save size={18} /> {t('auth.save_changes')}
+              </SubmitButton>
             </div>
           </form>
         </div>

@@ -10,7 +10,6 @@ import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
-import { useAudioVolume } from "@/hooks/useAudioVolume";
 import { getAliases, replaceNumbersWithThai } from "@/lib/vocabulary-utils";
 
 const normalizeThai = (str: string) => {

@@ -10,7 +10,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
-import { MessageSquare, RefreshCw, HelpCircle, ArrowRight } from "lucide-react";
+import { MessageSquare, RefreshCw, HelpCircle } from "lucide-react";
 import { getAliases, replaceNumbersWithThai } from "@/lib/vocabulary-utils";
 import IconImage from '../ui/IconImage';
 
