@@ -14,6 +14,20 @@ interface NextUnitCardProps {
 
 import { ChevronsDown } from 'lucide-react';
 
+const getGamifiedVariant = (colorClass: string): any => {
+  if (!colorClass) return 'gamified';
+  if (colorClass.includes('emerald')) return 'gamified';
+  if (colorClass.includes('blue')) return 'blueGamified';
+  if (colorClass.includes('amber')) return 'amberGamified';
+  if (colorClass.includes('indigo')) return 'indigoGamified';
+  if (colorClass.includes('purple')) return 'purpleGamified';
+  if (colorClass.includes('orange')) return 'orangeGamified';
+  if (colorClass.includes('fuchsia')) return 'fuchsiaGamified';
+  if (colorClass.includes('zinc')) return 'darkGamified';
+  if (colorClass.includes('rose')) return 'dangerGamified';
+  return 'gamified';
+};
+
 export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSelect, isMobile = false }: NextUnitCardProps) {
   if (!nextUnit) return null;
 
@@ -34,22 +48,23 @@ export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSele
       <div className={`w-full h-full bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden flex ${isMobile ? 'flex-col-reverse' : 'flex-row'} items-stretch transition-shadow duration-300 group-hover:shadow-lg`}>
         {/* Content Side */}
       <div className={`flex flex-col justify-center p-8 sm:p-10 ${isMobile ? 'w-full' : 'w-1/2'} gap-4 z-10 bg-white`}>
-        <Typography as="span" className="text-xs sm:text-sm font-black uppercase tracking-widest text-indigo-500">
+        <Typography variant="overline">
           {getTranslation('auto.go_to_next_unit', language) || "Aller à l'unité suivante"}
         </Typography>
-        <Typography variant="h3" className="text-2xl sm:text-[32px] font-extrabold text-slate-800 leading-tight">
+        <Typography variant="h3-hero">
           {getLocalizedField(nextUnit, 'title', language)}
         </Typography>
-        <Typography variant="p" className="text-slate-500 text-sm sm:text-base font-medium">
+        <Typography variant="p-hero">
           {getLocalizedField(nextUnit, 'description', language)}
         </Typography>
         <div className="mt-4">
           <Button
+            variant={getGamifiedVariant(nextUnit.colorClass)}
+            size="xl"
             onClick={(e) => {
               e.stopPropagation();
               handleUnitSelect(nextUnitIndex);
             }}
-            className={`px-8 py-6 rounded-2xl text-white font-bold text-lg shadow-sm transition-all active:translate-y-[4px] active:border-b-0 ${nextUnit.colorClass || 'bg-emerald-500'} ${nextUnit.borderClass ? `border-b-[4px] ${nextUnit.borderClass}` : 'border-b-[4px] border-emerald-600'} ${nextUnit.hoverClass || 'hover:bg-emerald-400'}`}
           >
             {getTranslation('auto.start_unit', language) || "Commencer l'unité"}
           </Button>

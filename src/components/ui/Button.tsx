@@ -43,13 +43,17 @@ const buttonVariants = cva(
         flat: "bg-slate-50 border border-slate-200 text-slate-500 hover:bg-slate-100 active:scale-95 shadow-none",
         chipIndigo: "bg-indigo-50 text-indigo-500 hover:text-indigo-600 hover:bg-indigo-100 active:scale-95 shadow-none font-bold",
         chipSlate: "bg-slate-100 text-slate-500 hover:text-slate-600 hover:bg-slate-200 active:scale-95 shadow-none font-bold",
+        "glass-menu": "bg-white/80 backdrop-blur-lg border border-white/60 shadow-lg transition-all duration-300 hover:bg-white !justify-between",
       },
       size: {
         default: "h-12 px-6 py-2",
         xs: "h-auto rounded-md px-2 py-1 text-xs",
         sm: "h-9 rounded-xl px-4",
         lg: "h-14 rounded-2xl px-8 text-base font-bold",
+        xl: "h-auto py-6 rounded-2xl px-8 text-lg font-bold",
         icon: "h-12 w-12",
+        "icon-sm": "h-10 w-10 rounded-full",
+        "glass": "min-w-[240px] p-3.5 pr-4 rounded-[1.25rem] h-auto text-left",
       },
     },
     compoundVariants: gamifiedVariants.map((variant) => ({

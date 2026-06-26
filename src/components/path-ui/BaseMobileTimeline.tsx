@@ -117,13 +117,13 @@ export default function BaseMobileTimeline({
                             </div>
                         )}
                         <div className="relative z-10 w-[80%] sm:w-[70%] flex flex-col items-start text-left">
-                            <Typography variant="h2" className="text-[20px] sm:text-3xl font-extrabold text-white tracking-tight break-words drop-shadow-sm">
+                            <Typography variant="timeline-unit-title">
                                 {(() => {
                                     const titleStr = mounted ? getLocalizedField(unit, 'title', language) : unit.title;
                                     return titleStr.includes(':') ? titleStr.substring(titleStr.indexOf(':') + 1).trim() : titleStr;
                                 })()}
                             </Typography>
-                            <Typography variant="p" className="text-white w-[70%] mb-0 font-medium text-sm sm:text-base leading-snug drop-shadow-sm">
+                            <Typography variant="timeline-unit-desc">
                                 {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
                             </Typography>
                         </div>
@@ -185,7 +185,7 @@ export default function BaseMobileTimeline({
                                     </span>
                                 </div>
                                 <Button
-                                    size="icon"
+                                    size="icon-sm"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         if (storyObjective.type === 'vocab') {
@@ -194,7 +194,6 @@ export default function BaseMobileTimeline({
                                             router.push(`/conversations/${storyObjective.conversation.id}${storyObjective.levelToComplete > 0 ? `?level=${storyObjective.levelToComplete}` : ''}`);
                                         }
                                     }}
-                                    className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 hover:bg-emerald-600"
                                 >
                                     <Play size={18} className="ml-1 fill-current" />
                                 </Button>

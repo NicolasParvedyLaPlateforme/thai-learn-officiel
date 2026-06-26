@@ -14,6 +14,20 @@ import stepsAlphabet from "@/data/steps_metadata_alphabet.json";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { LessonPartsSelector } from '../learn/LessonPartsSelector';
 
+const getGamifiedVariant = (colorClass: string): any => {
+  if (!colorClass) return 'gamified';
+  if (colorClass.includes('emerald')) return 'gamified';
+  if (colorClass.includes('blue')) return 'blueGamified';
+  if (colorClass.includes('amber')) return 'amberGamified';
+  if (colorClass.includes('indigo')) return 'indigoGamified';
+  if (colorClass.includes('purple')) return 'purpleGamified';
+  if (colorClass.includes('orange')) return 'orangeGamified';
+  if (colorClass.includes('fuchsia')) return 'fuchsiaGamified';
+  if (colorClass.includes('zinc')) return 'darkGamified';
+  if (colorClass.includes('rose')) return 'dangerGamified';
+  return 'gamified';
+};
+
 interface PathLessonModalProps {
   pathType: 'learn' | 'speak' | 'alphabet';
   isOpen: boolean;
@@ -161,8 +175,8 @@ export default function PathLessonModal({
       footer={
         <>
           {pathType === 'learn' && selectedLesson.isCompleted && !isBilanLesson && (
-            <div className="flex gap-3 mb-3">
-              <Button asChild variant="flat" size="lg" className="w-full rounded-xl">
+            <div className="flex gap-3 mb-3 w-full">
+              <Button asChild variant="flat" size="lg" className="w-full">
                 <Link href={`/writing?lessonId=${selectedLesson.lesson.id}`}>
                   <Pencil size={16} className="mr-2" />
                   {getTranslation('auto.writing', language)}
@@ -172,11 +186,11 @@ export default function PathLessonModal({
           )}
           <div className="flex items-center gap-2 w-full relative">
             {pathType === 'speak' && isBrave ? (
-              <Button disabled variant="gamified" size="lg" className="w-full rounded-xl opacity-50 cursor-not-allowed bg-slate-400 border-slate-500">
+              <Button disabled variant="gamified" size="lg" className="w-full">
                 {getTranslation('auto.unavailable_on_brave', language)}
               </Button>
             ) : (
-              <Button asChild variant="gamified" size="lg" className={`w-full rounded-xl ${selectedLesson.unitColor} ${selectedLesson.unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500')}`}>
+              <Button asChild variant={getGamifiedVariant(selectedLesson.unitColor)} size="lg" className="w-full">
                 <Link href={getStartLink()}>
                   {isBilanLesson ? (language === 'en' ? 'Start Assessment' : 'Commencer le bilan') : getTranslation('auto.start_lesson', language)}
                 </Link>
@@ -200,10 +214,10 @@ export default function PathLessonModal({
 
       {pathType === 'speak' && (
         <div className="p-6 pt-5 pb-2 text-center flex flex-col items-center">
-          <Typography variant="h3" className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight font-sans tracking-tight">
+          <Typography variant="h3-modal">
             {getLocalizedField(selectedLesson.lesson, 'title', language)}
           </Typography>
-          <Typography variant="p" className="text-slate-500 text-sm leading-relaxed mb-6 font-medium">
+          <Typography variant="p-modal">
             {getLocalizedField(selectedLesson.lesson, 'description', language)}
           </Typography>
         </div>
@@ -211,10 +225,10 @@ export default function PathLessonModal({
 
       {pathType === 'alphabet' && (
         <div className="px-7 pt-2 flex flex-col">
-          <Typography variant="h3" className="text-2xl font-extrabold text-slate-800 mb-2 mt-4 text-center">
+          <Typography variant="h3-modal-center">
             {getTranslation(selectedLesson.lesson.type === 'consonant' ? 'auto.consonants' : 'auto.vowels', language)} {selectedLesson.lesson.id.split('-').pop()}
           </Typography>
-          <Typography variant="p" className="text-sm font-medium text-slate-500 text-center mb-6">
+          <Typography variant="p-modal-center">
             {getTranslation('auto.level', language)} {modalLevel + 1}
           </Typography>
         </div>
@@ -227,10 +241,10 @@ export default function PathLessonModal({
               <Clock size={16} className="text-amber-600 stroke-[2.5]" />
             </div>
             <div className="flex flex-col gap-1">
-              <Typography as="span" className="text-amber-800 font-bold text-[13px]">
+              <Typography variant="alert-title">
                 {language === 'en' ? 'Timed Assessment' : 'Évaluation chronométrée'}
               </Typography>
-              <Typography as="span" className="text-amber-700 text-[12px] font-medium leading-snug">
+              <Typography variant="alert-desc">
                 {language === 'en'
                   ? `You have ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} to answer as many questions as possible. The further you get, the better your score!`
                   : `Vous avez ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} pour répondre à un maximum de questions. Plus vous allez loin, meilleur est votre score !`}

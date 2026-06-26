@@ -44,11 +44,11 @@ export const DesktopUnitHeader: React.FC<DesktopUnitHeaderProps> = ({
 
             <div className="relative z-10 w-full md:w-[65%] lg:w-[60%] pr-4 md:pr-8">
                 <div className="flex justify-between items-start mb-2">
-                    <Typography variant="h2" className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
+                    <Typography variant="h2-hero-banner">
                         {mounted ? getLocalizedField(unit, 'title', language) : unit.title}
                     </Typography>
                 </div>
-                <Typography variant="p" className={`${unit.lightTextClass || 'text-white/90'} mb-8 font-medium text-lg leading-snug drop-shadow-sm max-w-xl`}>
+                <Typography variant="p-hero-banner" className={unit.lightTextClass || 'text-white/90'}>
                     {mounted ? getLocalizedField(unit, 'description', language) : unit.description}
                 </Typography>
 
@@ -80,10 +80,9 @@ export const DesktopUnitHeader: React.FC<DesktopUnitHeaderProps> = ({
 
             <div className="absolute bottom-6 right-6 z-20 hidden md:block">
                 <Button
-                    variant="ghost"
-                    size="xs"
+                    variant="glass-menu"
+                    size="glass"
                     onClick={(e) => { e.stopPropagation(); onOpenUnitsList(); }}
-                    className="flex items-center justify-between p-3.5 pr-4 bg-white/80 backdrop-blur-lg border border-white/60 rounded-[1.25rem] shadow-lg transition-all duration-300 group cursor-pointer min-w-[240px] h-auto hover:bg-white"
                 >
                     <div className="flex items-center gap-3">
                         <div className={`w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100`}>
