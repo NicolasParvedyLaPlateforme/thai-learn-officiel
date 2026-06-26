@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
 import { m as motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
-import { Star, Gift, ChevronRight, Home, RotateCcw } from 'lucide-react';
+import { Star, Gift, ChevronRight, Home, RotateCcw, LogOut } from 'lucide-react';
 import { getTranslation } from "@/hooks/useTranslation";
 import { Button } from '@/components/ui/Button';
 
@@ -153,7 +153,6 @@ export default function RewardClient() {
               >
                 {nextUrl && (
                   <Button variant="gamified" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push(nextUrl)}>
-                    <RotateCcw size={20} />
                     <span className="uppercase tracking-widest">{nextLabel || getTranslation('auto.continue', language)}</span>
                   </Button>
                 )}
@@ -167,7 +166,7 @@ export default function RewardClient() {
                   )}
 
                   <Button variant="outline" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push(`/${category === 'learn' ? 'learn' : category}`)}>
-                    <RotateCcw size={20} />
+                    <LogOut size={20} className="rotate-180" />
                     <span className="uppercase tracking-widest">{getTranslation('auto.back', language)}</span>
                   </Button>
                 </div>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
 import { Exercise, CourseData, Word } from "@/types";
-import { X, Check, Play } from 'lucide-react';
+import { X, Check, Play, LogOut } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from "@/lib/tts";
 import { m as motion, AnimatePresence } from "motion/react";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
@@ -15,6 +15,7 @@ import PairMatch from "@/components/learn/PairMatch";
 import { getEndlessPairMatchingServer } from "@/actions/course";
 
 import Footer from '@/components/lesson/Footer';
+import { Button } from "@/components/ui/Button";
 
 export default function ReviewPairsPage() {
   const router = useRouter();
@@ -69,12 +70,16 @@ export default function ReviewPairsPage() {
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {getTranslation('auto.you_must_complete_at_least_one', language)}
         </p>
-        <button
-          onClick={() => router.push('/practice')}
-          className="px-12 py-3 rounded-xl bg-fuchsia-500 border-b-4 border-fuchsia-700 text-white font-bold text-lg shadow-lg hover:bg-fuchsia-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest w-full max-w-sm"
+
+        <Button
+          variant="flat"
+          size="lg"
+          className="flex-1 text-lg uppercase tracking-widest gap-2"
+          onClick={() => router.push(`/practice`)}
         >
+          <LogOut size={20} className="rotate-180" />
           {getTranslation('auto.back', language)}
-        </button>
+        </Button>
       </div>
     );
   }

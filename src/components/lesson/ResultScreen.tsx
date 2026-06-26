@@ -99,12 +99,15 @@ export default function ResultScreen({
             <RotateCcw size={20} />
             {getTranslation('auto.retry', language)}
           </button>
-          <button
-            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet' : 'learn'}#lesson-${lesson.id}`, language === "en" ? "Back" : "Accueil")}
-            className="px-8 py-3 flex-1 rounded-xl bg-slate-200 border-b-4 border-slate-300 text-slate-500 font-bold text-lg shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
-          >
+
+          <Button
+            variant="flat"
+            size="lg"
+            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet' : 'learn'}#lesson-${lesson.id}`, getTranslation('auto.back', language))}>
+            <LogOut size={20} className="rotate-180" />
             {getTranslation('auto.back', language)}
-          </button>
+          </Button>
         </div>
       </div>
     );

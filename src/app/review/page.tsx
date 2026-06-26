@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
 import type { ReviewOptions } from "@/lib/generators";
 import { Exercise, CourseData, Word } from "@/types";
-import { X, Check, Settings, Play } from 'lucide-react';
+import { X, Check, Settings, Play, LogOut } from 'lucide-react';
 import { playThaiTTS, preloadThaiVoices } from "@/lib/tts";
 import { m as motion, AnimatePresence } from "motion/react";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
@@ -84,8 +84,14 @@ export default function ReviewPage() {
           {getTranslation('auto.you_must_complete_at_least_one', language)}
         </p>
 
-        <Button variant="indigoGamified" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push('/practice')}>
-          {getTranslation('auto.back', language)}
+        <Button
+          variant="flat"
+          size="lg"
+          className="flex-1 text-lg uppercase tracking-widest gap-2"
+          onClick={() => router.push(`/practice`)}
+        >
+          <LogOut size={20} className="rotate-180" />
+          {getTranslation('auto.back', language) || "Retour"}
         </Button>
       </div>
     );

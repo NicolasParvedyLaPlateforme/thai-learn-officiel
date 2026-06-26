@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
 import { Exercise, CourseData, Word } from "@/types";
-import { X, Check, Volume2 } from 'lucide-react';
+import { X, Check, Volume2, LogOut } from 'lucide-react';
 import { playThaiTTS } from "@/lib/tts";
 
 import { getCharacterHint } from "@/data/phonetic-mapper";
@@ -125,7 +125,7 @@ export default function WritingPage() {
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
           {getTranslation('auto.you_must_complete_at_least_one_11', language)}
         </p>
-
+        {/* 
         <Button variant="gamified" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => {
           if (hasLessonId) {
             router.push(`/learn#lesson-${params?.get('lessonId')}`);
@@ -133,6 +133,21 @@ export default function WritingPage() {
             router.push('/practice');
           }
         }}>
+          {getTranslation('auto.back', language)}
+        </Button> */}
+
+        <Button
+          variant="flat"
+          size="lg"
+          className="flex-1 text-lg uppercase tracking-widest gap-2"
+          onClick={() => {
+            if (hasLessonId) {
+              router.push(`/learn#lesson-${params?.get('lessonId')}`);
+            } else {
+              router.push('/practice');
+            }
+          }}>
+          <LogOut size={20} className="rotate-180" />
           {getTranslation('auto.back', language)}
         </Button>
       </div>
