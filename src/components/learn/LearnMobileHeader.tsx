@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PWAInstallButton from '../ui/PWAInstallButton';
 import { getTranslation } from "@/hooks/useTranslation";
 import { useProgressStore } from "@/lib/store";
+import { HeaderActions } from '../layout/HeaderActions';
 
 interface LearnMobileHeaderProps {
   showHeader: boolean;
@@ -32,35 +33,11 @@ export default function LearnMobileHeader({
           </button>
         </div>
 
-        <div className="flex items-center gap-2">
-          {mounted && <PWAInstallButton />}
-          {mounted && (
-            <button
-              onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
-              className="flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase"
-            >
-              {language}
-            </button>
-          )}
-
-          {mounted && (
-            <div className="flex items-center gap-2 relative">
-              <Link
-                href="/profile"
-                className="flex items-center justify-center p-2 bg-indigo-50 text-indigo-500 rounded-xl hover:bg-indigo-100 transition-colors"
-              >
-                <User size={18} />
-              </Link>
-
-              <button
-                onClick={() => setIsMobileMenuOpen(true)}
-                className="flex items-center justify-center p-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors"
-              >
-                <Menu size={20} />
-              </button>
-            </div>
-          )}
-        </div>
+        <HeaderActions
+          language={language}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          hideLanguageOnDesktop={false} // On désactive le md:hidden
+        />
       </div>
     </header>
   );
