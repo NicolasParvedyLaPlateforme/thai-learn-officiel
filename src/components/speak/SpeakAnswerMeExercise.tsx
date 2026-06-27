@@ -7,6 +7,10 @@ import { useProgressStore } from "@/lib/store";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { ColoredPhonetic } from '../learn/ColoredPhonetic';
+import { Button } from "@/components/ui/Button";
+import { MicButton } from "@/components/ui/MicButton";
+import { IconButton } from "@/components/ui/IconButton";
 import levenshtein from 'fast-levenshtein';
 
 interface SpeakAnswerMeData {
@@ -292,13 +296,14 @@ export function SpeakAnswerMeExercise({
                {promptItem.th}
             </h2>
             <div className="flex items-center justify-center gap-3 mt-3">
-               <button
+               <IconButton
+                  size="sm"
                   onClick={playTTS}
-                  className="w-8 h-8 bg-slate-100 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50 rounded-full flex items-center justify-center transition-colors shrink-0"
+                  className="text-slate-500 hover:text-indigo-500 hover:bg-indigo-50 shrink-0"
                   title="Écouter"
                >
                   <Play size={16} className="ml-0.5" />
-               </button>
+               </IconButton>
             </div>
          </div>
 
@@ -329,50 +334,30 @@ export function SpeakAnswerMeExercise({
          {/* Action Area */}
          <div className="fixed bottom-0 left-0 right-0 p-6 pb-8 bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/90 to-transparent flex flex-col items-center gap-3 z-50 pointer-events-none">
             <div className="relative flex items-center justify-center w-full h-24 pointer-events-auto">
-               {status !== 'listening' && status !== 'success' && status !== 'failed' && (
-                  <button
-                     onClick={startListening}
-                     className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
-                  >
-                     {status === 'evaluating' ? (
-                        <Loader2 size={32} className="animate-spin" />
-                     ) : (
-                        <Mic size={32} className="group-hover:scale-110 transition-transform" />
-                     )}
-                  </button>
-               )}
-
-               {status === 'success' && (
-                  <div className="w-20 h-20 bg-emerald-500/50 text-white rounded-full flex items-center justify-center z-10 opacity-60 cursor-not-allowed">
-                     <Mic size={32} />
-                  </div>
-               )}
+               <MicButton
+                  status={status}
+                  onClick={() => {
+                     if (status === 'listening') {
+                        SpeechRecognition.stopListening();
+                        setTimeout(() => SpeechRecognition.abortListening(), 50);
+                        handleSilenceCutoff();
+                     } else if (status !== 'success' && status !== 'failed') {
+                        startListening();
+                     }
+                  }}
+               />
 
                {status === 'listening' && (
-                  <>
-                     <motion.div
-                        key="listening"
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                        className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
-                     >
-                        <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
-                           <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
-                           <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language) || 'Parlez...'}</span>}</span>
-                        </span>
-                     </motion.div>
-
-                     <button
-                        onClick={() => {
-                           SpeechRecognition.stopListening();
-                           setTimeout(() => SpeechRecognition.abortListening(), 50);
-                           handleSilenceCutoff();
-                        }}
-                        className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] active:shadow-[0_0px_0_rgb(225,29,72)] active:translate-y-2 transition-all group z-10"
-                        title="Stop"
-                     >
-                        <Square size={32} className="fill-current group-hover:scale-110 transition-transform" />
-                     </button>
-                  </>
+                  <motion.div
+                     key="listening"
+                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                     className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
+                  >
+                     <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
+                        <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
+                        <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language) || 'Parlez...'}</span>}</span>
+                     </span>
+                  </motion.div>
                )}
             </div>
          </div>
@@ -405,12 +390,14 @@ export function SpeakAnswerMeExercise({
                         </div>
                      </div>
 
-                     <button
+                     <Button
+                        variant="dangerGamified"
+                        size="lg"
                         onClick={handleNext}
-                        className="w-full sm:w-auto px-12 py-3 rounded-xl border-b-4 font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest bg-rose-500 border-rose-700 text-white hover:bg-rose-400"
+                        className="w-full sm:w-auto text-lg uppercase tracking-widest px-12"
                      >
                         {getTranslation('auto.continue', language) || 'Continuer'}
-                     </button>
+                     </Button>
                   </div>
                </motion.footer>
             )}

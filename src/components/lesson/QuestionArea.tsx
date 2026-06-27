@@ -1,10 +1,11 @@
 import IconImage from "@/components/ui/IconImage";
-import { useEffect } from "react";
-import { Exercise, Lesson, Word } from "@/types";
+import React, { useMemo, useEffect } from 'react';
+import { Word, Exercise, Lesson } from "@/types";
 import { SentenceWithHints } from "@/components/learn/Hints";
 import { playThaiTTS } from "@/lib/tts";
 import { m as motion } from "motion/react";
 import { useTranslation } from "@/hooks/useTranslation";
+import { IconButton } from "@/components/ui/IconButton";
 
 interface QuestionAreaProps {
   currentExercise: Exercise;
@@ -255,9 +256,10 @@ export default function QuestionArea({
                     isReverse={currentExercise.reverse}
                     currentThaiWordForAudio={currentThaiWordForAudio}
                     rightElement={
-                      <button
+                      <IconButton
+                        size="sm"
                         onClick={() => playThaiTTS(currentExercise.answer)}
-                        className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0 ml-2"
+                        className="text-emerald-500 hover:text-emerald-600 hover:bg-emerald-100 bg-emerald-50 shrink-0 ml-2"
                         title={t('exercise.listen')}
                       >
                         <svg
@@ -274,7 +276,7 @@ export default function QuestionArea({
                           <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                           <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
                         </svg>
-                      </button>
+                      </IconButton>
                     }
                   />
                 </div>

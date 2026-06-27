@@ -5,6 +5,7 @@ import { playThaiTTS } from "@/lib/tts";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { THAI_ALPHABET } from "@/data/alphabet-data";
 import { Volume2, Image as ImageIcon, Type, Sparkles } from 'lucide-react';
+import { OptionCardButton } from "@/components/ui/OptionCardButton";
 
 interface Props {
   exercise: Exercise;
@@ -205,7 +206,7 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
             );
 
           return (
-            <button
+            <OptionCardButton
               key={opt.id}
               onClick={() => {
                 if (!disabled) {
@@ -219,12 +220,16 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                 }
               }}
               disabled={disabled || isLocalError}
+              isDense={isDense}
+              isSelected={isSelected}
+              isError={isLocalError || (isFailedState && !isActualAnswer)}
+              isSuccess={isFailedState && isActualAnswer}
+              activeColorClass={isSelected ? "bg-indigo-50 border-indigo-500 text-indigo-700 border-b-2 translate-y-0.5 shadow-[inset_0_0_0_1px_rgba(99,102,241,0.2)]" : undefined}
               className={`
-                relative rounded-2xl border-2 text-center transition-all flex flex-col items-center justify-center
-                ${isDense ? 'p-2 sm:p-3 min-h-[50px] sm:min-h-[60px]' : 'p-3 sm:p-5 min-h-[60px] sm:min-h-[80px]'}
-                ${buttonClass}
-                ${disabled && !isSelected && !isLocalError && !isFailedState ? 'opacity-50' : ''}
-                ${(disabled || isLocalError) ? 'cursor-default' : 'cursor-pointer'}
+                ${isFailedState && !isActualAnswer ? 'opacity-70 translate-y-0.5 border-b-2' : ''}
+                ${isFailedState && isActualAnswer ? 'border-emerald-500 text-emerald-700 border-b-4 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.2)]' : ''}
+                ${!isFailedState && !isSelected && !isLocalError ? 'border-b-4 hover:bg-slate-50 active:border-b-2 active:translate-y-0.5' : ''}
+                ${isLocalError ? 'opacity-50 translate-y-0.5 border-b-2' : ''}
               `}
             >
               <div className="w-full flex items-center justify-center relative">
@@ -234,7 +239,7 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                      : (isDense ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl')
                  } ${textClass}`}>{displayValue}</span>
               </div>
-            </button>
+            </OptionCardButton>
           );
         })}
       </div>

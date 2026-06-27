@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { getTranslation } from "@/hooks/useTranslation";
 import React, { useState, useEffect, useRef, useMemo } from 'react';
@@ -9,16 +9,13 @@ import { stopTTS, playThaiTTS } from "@/lib/tts";
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
-import { MicButton } from "@/components/ui/MicButton";
-import { IconButton } from "@/components/ui/IconButton";
-import { Button } from "@/components/ui/Button";
 import { m as motion, AnimatePresence } from "motion/react";
 import { getWritingClustersAndGroups } from "@/lib/generators";
 import { THAI_ALPHABET, AlphabetItem } from "@/data/alphabet-data";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 
 const normalizeThai = (str: string) => {
-   return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
+   return str.replace(/[\s\.\?!,Ó╣å;]/g, '').toLowerCase();
 };
 
 const shuffle = <T,>(array: T[]): T[] => {
@@ -44,9 +41,9 @@ const getLetterSpokenName = (char: string): string => {
 const getLetterTTSName = (char: string): string => {
    const data = getLetterData(char);
    if (data) {
-      if (data.type === 'vowel' && data.exampleWord.includes('สระ')) {
+      if (data.type === 'vowel' && data.exampleWord.includes('Ó©¬Ó©úÓ©░')) {
          // Force exact separated pronunciation for vowels so iOS doesn't shorten them
-         return "สะ ระ " + data.exampleWord.replace('สระ', '').trim();
+         return "Ó©¬Ó©░ Ó©úÓ©░ " + data.exampleWord.replace('Ó©¬Ó©úÓ©░', '').trim();
       }
       return data.exampleWord;
    }
@@ -200,32 +197,32 @@ export function SpeakBuildByLettersExercise({
 
                // Fallback: Dictation engines often spell rare letters phonetically.
                const DICTATION_ALIASES: Record<string, string[]> = {
-                  'ณ': ['นอเนน', 'เนน', 'นอเณร', 'โนน', 'โนนี่', 'โดเนอะ', 'โนเน'],
-                  'ญ': ['ยอหยิง', 'ยอหญิง', 'หยิง'],
-                  'ฒ': ['ทอผู้เฒ่า', 'ทอพูเทา', 'พูเทา', 'ผู้เฒ่า'],
-                  'ฬ': ['ลอจุลา', 'จุลา'],
-                  'ฆ': ['คอระคัง', 'ระคัง'],
-                  'ฌ': ['ชอเชอ', 'เชอ'],
-                  'ฎ': ['ดอชะดา', 'ชะดา'],
-                  'ฏ': ['ตอปะตัก', 'ปะตัก'],
-                  'ฐ': ['ถอสันทาน', 'สันทาน'],
-                  'ฑ': ['ทอมนโท', 'มนโท'],
-                  'ธ': ['ทอทง', 'ทง'],
-                  'า': ['อา', 'อ้า', 'อ๋า', 'ซาร่าอา'],
-                  'ะ': ['อะ', 'อ๊ะ', 'ซาร่าอะ'],
-                  'ิ': ['อิ', 'อิ๊', 'ซาร่าอิ'],
-                  'ี': ['อี', 'อี๊', 'ซาร่าอี'],
-                  'ึ': ['อึ', 'อึ๊', 'ซาร่าอึ'],
-                  'ื': ['อือ', 'อื๊อ', 'ซาร่าอือ'],
-                  'ุ': ['อุ', 'อุ๊', 'ซาร่าอุ'],
-                  'ู': ['อู', 'อู๊', 'ซาร่าอู'],
-                  'เ': ['เอ', 'ซาร่าเอ'],
-                  'แ': ['แอ', 'ซาร่าแอ'],
-                  'โ': ['โอ', 'ซาร่าโอ'],
-                  'ใ': ['ไม้ม้วน', 'ไมม้วน', 'ม้วน'],
-                  'ไ': ['ไม้มลาย', 'ไมมลาย', 'มลาย'],
-                  'ั': ['ไม้หันอากาศ', 'ไมหันอากาศ', 'หันอากาศ'],
-                  '์': ['การันต์', 'การัน', 'ไม้ทัณฑฆาต', 'ทัณฑฆาต']
+                  'Ó©ô': ['Ó©ÖÓ©¡Ó╣ÇÓ©ÖÓ©Ö', 'Ó╣ÇÓ©ÖÓ©Ö', 'Ó©ÖÓ©¡Ó╣ÇÓ©ôÓ©ú', 'Ó╣éÓ©ÖÓ©Ö', 'Ó╣éÓ©ÖÓ©ÖÓ©ÁÓ╣ê', 'Ó╣éÓ©öÓ╣ÇÓ©ÖÓ©¡Ó©░', 'Ó╣éÓ©ÖÓ╣ÇÓ©Ö'],
+                  'Ó©ì': ['Ó©óÓ©¡Ó©½Ó©óÓ©┤Ó©ç', 'Ó©óÓ©¡Ó©½Ó©ìÓ©┤Ó©ç', 'Ó©½Ó©óÓ©┤Ó©ç'],
+                  'Ó©Æ': ['Ó©ùÓ©¡Ó©£Ó©╣Ó╣ëÓ╣ÇÓ©ÆÓ╣êÓ©▓', 'Ó©ùÓ©¡Ó©×Ó©╣Ó╣ÇÓ©ùÓ©▓', 'Ó©×Ó©╣Ó╣ÇÓ©ùÓ©▓', 'Ó©£Ó©╣Ó╣ëÓ╣ÇÓ©ÆÓ╣êÓ©▓'],
+                  'Ó©¼': ['Ó©ÑÓ©¡Ó©êÓ©©Ó©ÑÓ©▓', 'Ó©êÓ©©Ó©ÑÓ©▓'],
+                  'Ó©å': ['Ó©äÓ©¡Ó©úÓ©░Ó©äÓ©▒Ó©ç', 'Ó©úÓ©░Ó©äÓ©▒Ó©ç'],
+                  'Ó©î': ['Ó©èÓ©¡Ó╣ÇÓ©èÓ©¡', 'Ó╣ÇÓ©èÓ©¡'],
+                  'Ó©Ä': ['Ó©öÓ©¡Ó©èÓ©░Ó©öÓ©▓', 'Ó©èÓ©░Ó©öÓ©▓'],
+                  'Ó©Å': ['Ó©òÓ©¡Ó©øÓ©░Ó©òÓ©▒Ó©ü', 'Ó©øÓ©░Ó©òÓ©▒Ó©ü'],
+                  'Ó©É': ['Ó©ûÓ©¡Ó©¬Ó©▒Ó©ÖÓ©ùÓ©▓Ó©Ö', 'Ó©¬Ó©▒Ó©ÖÓ©ùÓ©▓Ó©Ö'],
+                  'Ó©æ': ['Ó©ùÓ©¡Ó©íÓ©ÖÓ╣éÓ©ù', 'Ó©íÓ©ÖÓ╣éÓ©ù'],
+                  'Ó©ÿ': ['Ó©ùÓ©¡Ó©ùÓ©ç', 'Ó©ùÓ©ç'],
+                  'Ó©▓': ['Ó©¡Ó©▓', 'Ó©¡Ó╣ëÓ©▓', 'Ó©¡Ó╣ïÓ©▓', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©▓'],
+                  'Ó©░': ['Ó©¡Ó©░', 'Ó©¡Ó╣èÓ©░', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©░'],
+                  'Ó©┤': ['Ó©¡Ó©┤', 'Ó©¡Ó©┤Ó╣è', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©┤'],
+                  'Ó©Á': ['Ó©¡Ó©Á', 'Ó©¡Ó©ÁÓ╣è', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©Á'],
+                  'Ó©Â': ['Ó©¡Ó©Â', 'Ó©¡Ó©ÂÓ╣è', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©Â'],
+                  'Ó©À': ['Ó©¡Ó©ÀÓ©¡', 'Ó©¡Ó©ÀÓ╣èÓ©¡', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©ÀÓ©¡'],
+                  'Ó©©': ['Ó©¡Ó©©', 'Ó©¡Ó©©Ó╣è', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©©'],
+                  'Ó©╣': ['Ó©¡Ó©╣', 'Ó©¡Ó©╣Ó╣è', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó©¡Ó©╣'],
+                  'Ó╣Ç': ['Ó╣ÇÓ©¡', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó╣ÇÓ©¡'],
+                  'Ó╣ü': ['Ó╣üÓ©¡', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó╣üÓ©¡'],
+                  'Ó╣é': ['Ó╣éÓ©¡', 'Ó©ïÓ©▓Ó©úÓ╣êÓ©▓Ó╣éÓ©¡'],
+                  'Ó╣â': ['Ó╣äÓ©íÓ╣ëÓ©íÓ╣ëÓ©ºÓ©Ö', 'Ó╣äÓ©íÓ©íÓ╣ëÓ©ºÓ©Ö', 'Ó©íÓ╣ëÓ©ºÓ©Ö'],
+                  'Ó╣ä': ['Ó╣äÓ©íÓ╣ëÓ©íÓ©ÑÓ©▓Ó©ó', 'Ó╣äÓ©íÓ©íÓ©ÑÓ©▓Ó©ó', 'Ó©íÓ©ÑÓ©▓Ó©ó'],
+                  'Ó©▒': ['Ó╣äÓ©íÓ╣ëÓ©½Ó©▒Ó©ÖÓ©¡Ó©▓Ó©üÓ©▓Ó©¿', 'Ó╣äÓ©íÓ©½Ó©▒Ó©ÖÓ©¡Ó©▓Ó©üÓ©▓Ó©¿', 'Ó©½Ó©▒Ó©ÖÓ©¡Ó©▓Ó©üÓ©▓Ó©¿'],
+                  'Ó╣î': ['Ó©üÓ©▓Ó©úÓ©▒Ó©ÖÓ©òÓ╣î', 'Ó©üÓ©▓Ó©úÓ©▒Ó©Ö', 'Ó╣äÓ©íÓ╣ëÓ©ùÓ©▒Ó©ôÓ©æÓ©åÓ©▓Ó©ò', 'Ó©ùÓ©▒Ó©ôÓ©æÓ©åÓ©▓Ó©ò']
                };
 
                // Instant match if the speech API correctly recognized and returned the Thai character itself!
@@ -248,7 +245,7 @@ export function SpeakBuildByLettersExercise({
             let highestSim = 0;
 
             // Leniency rule: If the expected char scores at least 70%, we assume the user intended to say it.
-            // This fixes dictation engines frequently confusing long/short vowels (e.g. สระอา vs สระอะ) in isolation.
+            // This fixes dictation engines frequently confusing long/short vowels (e.g. Ó©¬Ó©úÓ©░Ó©¡Ó©▓ vs Ó©¬Ó©úÓ©░Ó©¡Ó©░) in isolation.
             if (expectedSim >= 70) {
                matchedOptionIndex = expectedIndex;
                highestSim = expectedSim;
@@ -501,12 +498,7 @@ export function SpeakBuildByLettersExercise({
          {/* Microphone Button at the bottom */}
          {(status !== 'success' || !lockedPhraseId) && (!lockedPhraseId || step < targetChars.length) && (
             <div className="flex flex-col items-center mt-auto pt-12 pb-8">
-               <MicButton
-                  status={status}
-                  onClick={toggleMic}
-               />
-
-               <div className="mb-6 min-h-[3rem] text-center px-4 w-full max-w-md mt-6">
+               <div className="mb-6 min-h-[3rem] text-center px-4 w-full max-w-md">
                   {status === 'listening' ? (
                      <p className="text-lg text-slate-600 font-medium">
                         {spokenHistory || getTranslation('auto.listening', language)}

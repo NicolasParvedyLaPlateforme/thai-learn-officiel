@@ -6,6 +6,8 @@ import { Word, Phrase } from "@/types";
 import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square, Trash2, Zap } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
+import { MicButton } from "@/components/ui/MicButton";
+import { IconButton } from "@/components/ui/IconButton";
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
@@ -431,55 +433,38 @@ export function SpeakingExercise({
 
                {/* Center Area */}
                <div className="absolute -top-14 left-1/2 -translate-x-1/2 flex items-center justify-center">
-                  <button
+                  <IconButton
                      onClick={() => setIsAutoMicEnabled(!isAutoMicEnabled)}
-                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm ${isAutoMicEnabled ? 'bg-emerald-100 text-emerald-600 border border-emerald-300' : 'bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200'}`}
+                     size="md"
+                     className={`shadow-sm ${isAutoMicEnabled ? 'bg-emerald-100 text-emerald-600 border border-emerald-300' : 'bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200'}`}
                      title={isAutoMicEnabled ? 'Désactiver le micro automatique' : 'Activer le micro automatique'}
                   >
                      <Zap size={20} className={isAutoMicEnabled ? 'fill-emerald-500' : ''} />
-                  </button>
+                  </IconButton>
                </div>
 
-               {status !== 'listening' && status !== 'success' && (
-                  <button
-                     onClick={() => startListening(false)}
-                     className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
-                  >
-                     {status === 'evaluating' ? (
-                        <Loader2 size={32} className="animate-spin" />
-                     ) : (
-                        <Mic size={32} className="group-hover:scale-110 transition-transform" />
-                     )}
-                  </button>
-               )}
-
-               {status === 'success' && (
-                  <div className="w-20 h-20 bg-emerald-500/50 text-white rounded-full flex items-center justify-center z-10 opacity-60 cursor-not-allowed">
-                     <Mic size={32} />
-                  </div>
-               )}
+               <MicButton
+                  status={status}
+                  onClick={() => {
+                     if (status === 'listening') {
+                        stopAndEvaluate();
+                     } else if (status !== 'success') {
+                        startListening(false);
+                     }
+                  }}
+               />
 
                {status === 'listening' && (
-                  <>
-                     <motion.div
-                        key="listening"
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                        className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
-                     >
-                        <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
-                           <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
-                           <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
-                        </span>
-                     </motion.div>
-
-                     <button
-                        onClick={stopAndEvaluate}
-                        className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] active:shadow-[0_0px_0_rgb(225,29,72)] active:translate-y-2 transition-all group z-10"
-                        title="Stop"
-                     >
-                        <Square size={32} className="fill-current group-hover:scale-110 transition-transform" />
-                     </button>
-                  </>
+                  <motion.div
+                     key="listening"
+                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                     className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
+                  >
+                     <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
+                        <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
+                        <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
+                     </span>
+                  </motion.div>
                )}
 
                {/* Right Area (Absolute) */}

@@ -1,4 +1,4 @@
-import { getTranslation } from "@/hooks/useTranslation";
+import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { Exercise } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
 import { THAI_ALPHABET } from "@/data/alphabet-data";
@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
 import { WordTile } from "@/components/ui/WordTile";
+import { IconButton } from "@/components/ui/IconButton";
 
 interface Props {
   exercise: Exercise;
@@ -200,13 +201,14 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                   <span className="text-xs font-semibold mt-0.5">{nextHintPronunciation}</span>
                 </div>
               ) : (
-                <button
+                <IconButton
+                  size="md"
                   onClick={() => setShowHint(true)}
-                  className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600 flex items-center justify-center transition-colors"
+                  className="bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600"
                   title={getTranslation('auto.show_hint_23', language)}
                 >
                   <HelpCircle size={20} />
-                </button>
+                </IconButton>
               )}
             </div>
           )}

@@ -8,7 +8,10 @@ import { useProgressStore } from "@/lib/store";
 import { getAlphabetLessons, AlphabetExercise, AlphabetLessonDef, formatCombiningChar } from "@/lib/alphabet-utils";
 import { AlphabetItem } from "@/data/alphabet-data";
 import { getAlphabetExercisesServer } from "@/actions/course";
-import { X, Check, Star, Volume2, HelpCircle, Info, RotateCcw } from 'lucide-react';
+import { Volume2, Info, ArrowRight, HeartPulse, Sparkles, LogOut, Check, X, HelpCircle, Trophy, RotateCcw } from 'lucide-react';
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
+import { NextButton } from "@/components/ui/NextButton";
 import { playThaiTTS, preloadThaiVoices } from "@/lib/tts";
 import { m as motion, AnimatePresence } from "motion/react";
 import { ColoredPhonetic } from "@/components/learn/ColoredPhonetic";
@@ -288,12 +291,14 @@ function AlphabetLessonContent() {
         <QuestionContainer
           title={getTranslation('auto.listen_and_select_the_correct', language)}
           prompt={
-            <button
+            <IconButton
+              size="lg"
+              variant="solid"
               onClick={() => playThaiTTS(currentExercise.item.exampleWord)}
-              className="w-24 h-24 bg-sky-500 rounded-full flex items-center justify-center text-white shadow-lg transition-transform hover:scale-105 active:scale-95 hover:bg-sky-400"
+              className="w-24 h-24 bg-sky-500 rounded-full text-white shadow-lg hover:scale-105 hover:bg-sky-400"
             >
               <Volume2 size={48} />
-            </button>
+            </IconButton>
           }
         >
           <ExerciseOptionsGrid
@@ -335,25 +340,27 @@ function AlphabetLessonContent() {
                 {i < parts.length - 1 && blank}
               </span>
             ))}
-            <button
+            <IconButton
+              size="sm"
               onClick={() => playThaiTTS(currentExercise.targetText)}
-              className="ml-4 p-2 text-slate-400 hover:text-indigo-500 hover:bg-slate-100 rounded-full transition-colors flex-shrink-0"
+              className="ml-4 text-slate-400 hover:text-indigo-500 hover:bg-slate-100 shrink-0"
             >
               <Volume2 size={24} />
-            </button>
+            </IconButton>
           </div>
 
           <div className="mt-4 flex flex-col items-center w-full">
             <div className="text-slate-500 font-medium text-lg flex items-center justify-center gap-2 flex-wrap">
               <ColoredPhonetic phonetic={currentExercise.phonetic} />
               <span>— {currentExercise.targetTranslation}</span>
-              <button
+              <IconButton
+                size="sm"
                 onClick={() => setShowHint(!showHint)}
-                className={`ml-1 md:ml-2 p-1.5 rounded-full transition-colors ${showHint ? 'bg-indigo-100 text-indigo-600' : 'text-slate-400 hover:text-indigo-500 hover:bg-slate-100'}`}
+                className={`ml-1 md:ml-2 ${showHint ? 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200' : 'text-slate-400 hover:text-indigo-500 hover:bg-slate-100'}`}
                 title={getTranslation('auto.show_hint_24', language)}
               >
                 <HelpCircle size={20} />
-              </button>
+              </IconButton>
             </div>
 
             <AnimatePresence>

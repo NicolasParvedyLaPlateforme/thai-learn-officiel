@@ -1,9 +1,10 @@
 import { getTranslation } from "@/hooks/useTranslation";
 import { useState } from "react";
-import { X, Star, Crown, Clock } from "lucide-react";
+import { X, Star, Crown, Clock, BookOpen } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Exercise } from "@/types";
 import { Button } from "../ui/Button";
+import { IconButton } from "../ui/IconButton";
 
 interface HeaderProgressBarProps {
   lessonId: string;
@@ -95,12 +96,12 @@ export default function HeaderProgressBar({
       )}
       <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white">
         <div className="flex items-center gap-3 sm:gap-6 w-full max-w-3xl mx-auto h-full px-4 flex-1">
-          <button
+          <IconButton
             onClick={() => setShowQuitConfirm(true)}
-            className="text-slate-400 hover:text-slate-600 transition-colors"
+            size="md"
           >
             <X size={24} strokeWidth={2.5} />
-          </button>
+          </IconButton>
 
           <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
             {mode === 'training' ? "Entraînement" : mode === 'revision' ? "Révision" : `${getTranslation('auto.lvl', language)} ${currentLevel + 1}`}
@@ -200,12 +201,10 @@ export default function HeaderProgressBar({
             )}
 
             {!isReview && setShowInfoModal && (
-              <button
+              <IconButton
                 onClick={() => setShowInfoModal(true)}
-                className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
-                title={
-                  getTranslation('auto.vocabulary_list', language)
-                }
+                size="sm"
+                title={getTranslation('auto.vocabulary_list', language)}
               >
                 <svg
                   width="20"
@@ -221,7 +220,7 @@ export default function HeaderProgressBar({
                   <line x1="12" y1="16" x2="12" y2="12"></line>
                   <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-              </button>
+              </IconButton>
             )}
           </div>
         </div>
