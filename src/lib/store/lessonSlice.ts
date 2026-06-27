@@ -2,6 +2,7 @@ import { StateCreator } from 'zustand';
 import { ProgressState } from "./types";
 import { calculateExpectedXp } from '../xp-utils';
 import { calculateLessonLevelAndStars } from '../lesson-utils';
+import { completeLessonAction, syncXpAction } from '@/actions/secureProgress';
 
 const getLocalDateString = (date: Date = new Date()) => {
   const y = date.getFullYear();
@@ -138,7 +139,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     }
 
     const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, actualPlayedLevel, isBilan, false, isFullLongLevel);
-    const finalXp = lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp);
+    const finalXp = isFromParts ? 0 : (lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp));
 
     const { newLevel, newStars } = calculateLessonLevelAndStars(currentLevel, playedLevel, earnedStars, state.lessonStars[lessonId]);
 
@@ -199,6 +200,15 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     }
     get().progressQuest(type, 'xp', finalXp);
     get().triggerForceSync();
+
+    if (typeof window !== 'undefined' && !isFromParts) {
+      completeLessonAction(lessonId, actualPlayedLevel, isBilan, false, isFullLongLevel, null, earnedStars)
+        .then(res => {
+          if (res.success && res.data) {
+            set({ xp: res.data.totalXp });
+          }
+        }).catch(console.error);
+    }
   },
 
   completeLessonPart: (lessonId: string, fallbackXp: number, playedLevel: number, partIndex: number, totalParts: number, earnedStars: number = 3, isBilan: boolean = false) => {
@@ -251,6 +261,15 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     }
     get().triggerForceSync();
 
+    if (typeof window !== 'undefined') {
+      completeLessonAction(lessonId, playedLevel, isBilan, true, false, partIndex, earnedStars)
+        .then(res => {
+          if (res.success && res.data) {
+            set({ xp: res.data.totalXp });
+          }
+        }).catch(console.error);
+    }
+
     const updatedState = get();
     const updatedCompletedParts = updatedState.lessonPartsCompleted[partsKey] || [];
     if (updatedCompletedParts.length >= totalParts) {
@@ -302,6 +321,15 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
       get().progressQuest('speak', 'perfect_lesson', 1);
     }
     get().triggerForceSync();
+
+    if (typeof window !== 'undefined') {
+      completeLessonAction(`speak_${lessonId}`, actualPlayedLevel, false, false, false, null, earnedStars)
+        .then(res => {
+          if (res.success && res.data) {
+            set({ xp: res.data.totalXp });
+          }
+        }).catch(console.error);
+    }
   },
 
   unlockLessonManual: (lessonId: string) => set((state: ProgressState) => ({

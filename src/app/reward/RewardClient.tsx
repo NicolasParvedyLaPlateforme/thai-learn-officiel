@@ -8,6 +8,7 @@ import confetti from 'canvas-confetti';
 import { Star, Gift, ChevronRight, Home, RotateCcw, LogOut } from 'lucide-react';
 import { getTranslation } from "@/hooks/useTranslation";
 import { Button } from '@/components/ui/Button';
+import { openGiftAction } from "@/actions/secureProgress";
 
 export default function RewardClient() {
   const searchParams = useSearchParams();
@@ -25,7 +26,7 @@ export default function RewardClient() {
   // We don't auto-redirect immediately in case they want to see the error state, but 
   // here we just use the fallback in handleOpen.
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
     if (step !== 'intro') return;
 
     const giftsAvailable = unopenedGifts?.[category] || 0;
@@ -36,7 +37,21 @@ export default function RewardClient() {
 
     setStep('opening');
 
-    // Animate shaking
+    try {
+      // Si nous sommes en ligne (on tente l'action serveur en premier)
+      const serverResult = await openGiftAction(category);
+      if (serverResult.success && serverResult.data) {
+        setReward({ xp: serverResult.data.addedXp, coins: serverResult.data.addedCoins });
+        useProgressStore.getState().applyGiftResult(category, serverResult.data.addedXp, serverResult.data.addedCoins, serverResult.data.totalXp, serverResult.data.totalCoins);
+        setStep('opened');
+        triggerConfetti();
+        return;
+      }
+    } catch (e) {
+      // Ignorer l'erreur et tomber dans le mode hors-ligne
+    }
+
+    // Mode hors-ligne / Visiteur
     setTimeout(() => {
       const result = claimGift(category);
       if (result) {
@@ -44,7 +59,6 @@ export default function RewardClient() {
         setStep('opened');
         triggerConfetti();
       } else {
-        // Fallback if no gift available during opening
         router.push(nextUrl || '/learn');
       }
     }, 600);

@@ -2,6 +2,7 @@ import { StateCreator } from 'zustand';
 import { ProgressState, QuestsState, DailyQuest } from "./types";
 import questsConfig from "@/data/quests.json";
 import { generateNetworkSignature } from '../security';
+import { claimQuestAction } from '@/actions/secureProgress';
 
 const getLocalDateString = (date: Date = new Date()) => {
   const y = date.getFullYear();
@@ -41,39 +42,58 @@ export const createQuestSlice: StateCreator<ProgressState, [], [], any> = (set, 
   dailyQuests: null,
   questsDate: null,
 
-  progressQuest: (category: 'learn' | 'alphabet' | 'speak', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => set((state: ProgressState) => {
-    if (!state.dailyQuests) return state;
-    const questsForCategory = state.dailyQuests[category] || [];
-    
-    let newGiftsCount = 0;
+  progressQuest: (category: 'learn' | 'alphabet' | 'speak', type: 'lessons' | 'review' | 'perfect_lesson' | 'xp', amount: number) => {
+    let completedQuestIds: string[] = [];
 
-    const updatedQuestsForCategory = questsForCategory.map((quest) => {
-      if (quest.type === type && !quest.completed) {
-        const newProgress = Math.min(quest.progress + amount, quest.target);
-        const completed = newProgress >= quest.target;
-        if (completed) newGiftsCount++;
-        return { ...quest, progress: newProgress, completed };
-      }
-      return quest;
+    set((state: ProgressState) => {
+      if (!state.dailyQuests) return state;
+      const questsForCategory = state.dailyQuests[category] || [];
+      
+      let newGiftsCount = 0;
+
+      const updatedQuestsForCategory = questsForCategory.map((quest) => {
+        if (quest.type === type && !quest.completed) {
+          const newProgress = Math.min(quest.progress + amount, quest.target);
+          const completed = newProgress >= quest.target;
+          if (completed) newGiftsCount++;
+          return { ...quest, progress: newProgress, completed };
+        }
+        return quest;
+      });
+
+      const newlyCompletedQuests = updatedQuestsForCategory.filter(
+        (q, i) => q.completed && !questsForCategory[i].completed
+      );
+      const earnedXp = newlyCompletedQuests.reduce((acc, q) => acc + q.rewardXp, 0);
+      completedQuestIds = newlyCompletedQuests.map(q => q.id);
+
+      return {
+        dailyQuests: {
+          ...state.dailyQuests,
+          [category]: updatedQuestsForCategory,
+        },
+        xp: state.xp + earnedXp,
+        unopenedGifts: {
+          ...state.unopenedGifts,
+          [category]: (state.unopenedGifts?.[category] || 0) + newGiftsCount
+        }
+      };
     });
 
-    const newlyCompletedQuests = updatedQuestsForCategory.filter(
-      (q, i) => q.completed && !questsForCategory[i].completed
-    );
-    const earnedXp = newlyCompletedQuests.reduce((acc, q) => acc + q.rewardXp, 0);
+    if (typeof window !== 'undefined' && completedQuestIds.length > 0) {
+      // S'assurer que le SyncProgress local est bien appelé pour sauvegarder l'état "completed: true" dans dailyQuests
+      get().triggerForceSync();
 
-    return {
-      dailyQuests: {
-        ...state.dailyQuests,
-        [category]: updatedQuestsForCategory,
-      },
-      xp: state.xp + earnedXp,
-      unopenedGifts: {
-        ...state.unopenedGifts,
-        [category]: (state.unopenedGifts?.[category] || 0) + newGiftsCount
-      }
-    };
-  }),
+      // Puis on réclame sur le serveur pour avoir l'XP de manière définitive
+      claimQuestAction(category, completedQuestIds).then(res => {
+        if (res.success && res.data) {
+           // L'UI a déjà été mise à jour de manière optimiste.
+           // On synchronise juste au cas où.
+           set({ xp: res.data.totalXp });
+        }
+      }).catch(console.error);
+    }
+  },
 
   checkAndGenerateQuests: () => set((state: ProgressState) => {
     const today = getLocalDateString();

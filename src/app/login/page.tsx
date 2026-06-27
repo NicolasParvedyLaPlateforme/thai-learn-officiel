@@ -7,6 +7,7 @@ import Link from "next/link";
 import { LogIn, UserPlus, ChevronLeft } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/Button";
+import { useProgressStore } from "@/lib/store";
 
 export default function LoginPage() {
   const { t, language } = useTranslation();
@@ -38,10 +39,11 @@ export default function LoginPage() {
       }
     } else {
       try {
+        const initialProgress = useProgressStore.getState();
         const res = await fetch("/api/auth/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password, language }),
+          body: JSON.stringify({ name, email, password, language, initialProgress }),
         });
 
         const data = await res.json();

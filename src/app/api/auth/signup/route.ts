@@ -6,7 +6,7 @@ import { sendVerificationEmail } from "@/lib/mail";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password, language } = await req.json();
+    const { name, email, password, language, initialProgress } = await req.json();
 
     if (!email || !password || !name) {
       return NextResponse.json({ message: "Email et mot de passe requis" }, { status: 400 });
@@ -27,12 +27,26 @@ export async function POST(req: Request) {
     const randomDigits = Math.floor(10000 + Math.random() * 90000);
     const generatedPseudo = `${pseudoBase}-${randomDigits}`;
 
+    let userXp = 0;
+    let userCoins = 0;
+    let userProgressData = {};
+
+    if (initialProgress) {
+      const { xp, goldCoins, ...restProgress } = initialProgress;
+      userXp = xp || 0;
+      userCoins = goldCoins || 0;
+      userProgressData = restProgress || {};
+    }
+
     const user = await prisma.user.create({
       data: {
         name: baseName,
         pseudo: generatedPseudo,
         email,
         password: hashedPassword,
+        xp: userXp,
+        goldCoins: userCoins,
+        progressData: userProgressData,
       }
     });
 

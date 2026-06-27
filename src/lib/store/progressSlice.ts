@@ -1,6 +1,7 @@
 import { StateCreator } from 'zustand';
 import { ProgressState } from "./types";
 import { generateNetworkSignature } from '../security';
+import { syncXpAction } from '@/actions/secureProgress';
 
 const getLocalDateString = (date: Date = new Date()) => {
   const y = date.getFullYear();
@@ -42,9 +43,21 @@ export const createProgressSlice: StateCreator<ProgressState, [], [], any> = (se
       goldCoins: s.goldCoins + coinsAmount
     }));
     
-    get().triggerForceSync();
+    // On ne force plus la synchronisation ici pour ne pas écraser les données serveur
+    // get().triggerForceSync();
 
     return { xp: xpAmount, coins: coinsAmount };
+  },
+
+  applyGiftResult: (category: 'learn' | 'alphabet' | 'speak', xpAmount: number, coinsAmount: number, totalXp: number, totalCoins: number) => {
+    set((s: ProgressState) => ({
+      unopenedGifts: {
+        ...s.unopenedGifts,
+        [category]: Math.max(0, (s.unopenedGifts?.[category] || 0) - 1)
+      },
+      xp: totalXp,
+      goldCoins: totalCoins
+    }));
   },
 
   recordActivity: () => set((state: ProgressState) => {
@@ -74,23 +87,15 @@ export const createProgressSlice: StateCreator<ProgressState, [], [], any> = (se
     };
   }),
 
-  addXp: (amount: number) => {
+  addXp: (amount: number, category: 'learn' | 'alphabet' | 'speak' = 'learn') => {
     set((state: ProgressState) => ({ xp: state.xp + amount }));
     get().recordActivity();
-    get().progressQuest('learn', 'xp', amount);
+    get().progressQuest(category, 'xp', amount);
 
     if (typeof window !== 'undefined' && amount > 0) {
-      const payload = { xpAmount: amount };
-      const timestamp = Date.now();
-      const signature = generateNetworkSignature(payload, timestamp);
-      
-      fetch('/api/user/sync-stats', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ payload, timestamp, signature })
-      }).then(res => res.json()).then(data => {
-        if (data.success && data.newXp !== undefined) {
-          set({ xp: data.newXp });
+      syncXpAction(amount).then(res => {
+        if (res.success && res.data) {
+          set({ xp: res.data.totalXp });
         }
       }).catch(console.error);
     }

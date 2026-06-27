@@ -41,17 +41,29 @@ export async function saveProgress(data: any, timestamp?: number, signature?: st
       restProgress.lastSyncTimestamp = timestamp;
     }
 
+    const currentUser = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { progressData: true }
+    });
+    const currentProgressData = (currentUser?.progressData as any) || {};
+
+    const updateData: any = {
+      currentStreak: currentStreak || 0,
+      longestStreak: longestStreak || 0,
+      lastActiveDate: lastActiveDate || null,
+      lastConversionMonth: lastConversionMonth || null,
+      progressData: {
+        ...currentProgressData,
+        ...restProgress,
+      },
+    };
+
+    if (xp !== undefined) updateData.xp = xp;
+    if (goldCoins !== undefined) updateData.goldCoins = goldCoins;
+
     await prisma.user.update({
       where: { email: session.user.email },
-      data: {
-        xp: xp !== undefined ? xp : 0,
-        currentStreak: currentStreak || 0,
-        longestStreak: longestStreak || 0,
-        lastActiveDate: lastActiveDate || null,
-        goldCoins: goldCoins || 0,
-        lastConversionMonth: lastConversionMonth || null,
-        progressData: restProgress,
-      },
+      data: updateData,
     });
 
     return { success: true };

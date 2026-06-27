@@ -60,170 +60,8 @@ export default function SyncProgress() {
              }
           }
           
-          const isDbEmpty = dbState.xp === 0 && (!dbState.completedLessons || dbState.completedLessons.length === 0);
-          const hasLocalProgress = localState.xp > 0 || localState.completedLessons.length > 0;
           const userEmail = session?.user?.email || null;
-
-          if (isDbEmpty && hasLocalProgress) {
-            console.log("Nouveau compte détecté : Conservation de la progression locale pour l'envoyer en base de données.");
-            useProgressStore.getState().setLastMergedEmail(userEmail);
-          } else if (hasLocalProgress && localState.lastMergedEmail !== userEmail) {
-            console.log("Fusion des données locales (invité) avec le compte existant...");
-            
-            const mergedLessonLevels: Record<string, number> = { ...(dbState.lessonLevels || {}) };
-            for (const key in localState.lessonLevels) {
-              mergedLessonLevels[key] = Math.max(localState.lessonLevels[key] || 0, mergedLessonLevels[key] || 0);
-            }
-
-            const mergedLessonStars: Record<string, number[]> = { ...(dbState.lessonStars || {}) };
-            for (const key in localState.lessonStars) {
-              if (!mergedLessonStars[key]) mergedLessonStars[key] = [...localState.lessonStars[key]];
-              else {
-                mergedLessonStars[key] = mergedLessonStars[key].map((s, i) => Math.max(s || 0, localState.lessonStars[key][i] || 0));
-              }
-            }
-
-            const mergedSpeakLessonLevels: Record<string, number> = { ...(dbState.speakLessonLevels || {}) };
-            for (const key in localState.speakLessonLevels) {
-              mergedSpeakLessonLevels[key] = Math.max(localState.speakLessonLevels[key] || 0, mergedSpeakLessonLevels[key] || 0);
-            }
-
-            const mergedSpeakLessonStars: Record<string, number[]> = { ...(dbState.speakLessonStars || {}) };
-            for (const key in localState.speakLessonStars) {
-              if (!mergedSpeakLessonStars[key]) mergedSpeakLessonStars[key] = [...localState.speakLessonStars[key]];
-              else {
-                mergedSpeakLessonStars[key] = mergedSpeakLessonStars[key].map((s, i) => Math.max(s || 0, localState.speakLessonStars[key][i] || 0));
-              }
-            }
-
-            const mergedCompletedConversations: Record<string, number> = { ...(dbState.completedConversations || {}) };
-            for (const key in localState.completedConversations) {
-               mergedCompletedConversations[key] = Math.max(localState.completedConversations[key] || -1, mergedCompletedConversations[key] || -1);
-            }
-
-            const mergedConversationStars: Record<string, number[]> = { ...(dbState.conversationStars || {}) };
-            for (const key in localState.conversationStars) {
-               if (!mergedConversationStars[key]) mergedConversationStars[key] = [...localState.conversationStars[key]];
-               else {
-                 mergedConversationStars[key] = mergedConversationStars[key].map((s, i) => Math.max(s || 0, localState.conversationStars[key][i] || 0));
-               }
-            }
-
-            const mergedLessonPartsCompleted: Record<string, number[]> = { ...(dbState.lessonPartsCompleted || {}) };
-            for (const key in localState.lessonPartsCompleted) {
-              if (!mergedLessonPartsCompleted[key]) {
-                mergedLessonPartsCompleted[key] = [...localState.lessonPartsCompleted[key]];
-              } else {
-                mergedLessonPartsCompleted[key] = Array.from(new Set([...mergedLessonPartsCompleted[key], ...localState.lessonPartsCompleted[key]]));
-              }
-            }
-
-            const mergedState = {
-              ...dbState,
-              xp: (dbState.xp || 0) + (localState.xp || 0), // Addition seulement la première fois !
-              goldCoins: (dbState.goldCoins || 0) + (localState.goldCoins || 0),
-              currentStreak: Math.max(dbState.currentStreak || 0, localState.currentStreak || 0),
-              longestStreak: Math.max(dbState.longestStreak || 0, localState.longestStreak || 0),
-              lastConversionMonth: localState.lastConversionMonth || dbState.lastConversionMonth,
-              lastActiveDate: localState.lastActiveDate || dbState.lastActiveDate,
-              completedLessons: Array.from(new Set([...(dbState.completedLessons || []), ...(localState.completedLessons || [])])),
-              unlockedLessons: Array.from(new Set([...(dbState.unlockedLessons || []), ...(localState.unlockedLessons || [])])),
-              completedToday: dbState.questsDate === localState.questsDate 
-                ? Array.from(new Set([...(dbState.completedToday || []), ...(localState.completedToday || [])]))
-                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.completedToday : dbState.completedToday),
-              seenAlphabets: Array.from(new Set([...(dbState.seenAlphabets || []), ...(localState.seenAlphabets || [])])),
-              lessonLevels: mergedLessonLevels,
-              lessonStars: mergedLessonStars,
-              speakCompletedLessons: Array.from(new Set([...(dbState.speakCompletedLessons || []), ...(localState.speakCompletedLessons || [])])),
-              speakLessonLevels: mergedSpeakLessonLevels,
-              speakLessonStars: mergedSpeakLessonStars,
-              completedConversations: mergedCompletedConversations,
-              conversationStars: mergedConversationStars,
-              dailyQuests: dbState.questsDate === localState.questsDate 
-                ? (localState.dailyQuests || dbState.dailyQuests)
-                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.dailyQuests : dbState.dailyQuests),
-              questsDate: (localState.questsDate || "") > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
-              reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
-              inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
-              lessonPartsCompleted: mergedLessonPartsCompleted,
-              lastMergedEmail: userEmail,
-            };
-
-            useProgressStore.setState(mergedState);
-          } else if (hasLocalProgress && localState.lastMergedEmail === userEmail) {
-            console.log("Mise à jour depuis la DB (pas de double addition de l'XP)...");
-            
-            // On ne fait PAS d'addition d'XP ici. On prend juste le max pour préserver le jeu hors-ligne après connexion
-            const mergedLessonLevels: Record<string, number> = { ...(dbState.lessonLevels || {}) };
-            for (const key in localState.lessonLevels) {
-              mergedLessonLevels[key] = Math.max(localState.lessonLevels[key] || 0, mergedLessonLevels[key] || 0);
-            }
-
-            const mergedLessonStars: Record<string, number[]> = { ...(dbState.lessonStars || {}) };
-            for (const key in localState.lessonStars) {
-              if (!mergedLessonStars[key]) mergedLessonStars[key] = [...localState.lessonStars[key]];
-              else {
-                mergedLessonStars[key] = mergedLessonStars[key].map((s, i) => Math.max(s || 0, localState.lessonStars[key][i] || 0));
-              }
-            }
-
-            const mergedSpeakLessonLevels: Record<string, number> = { ...(dbState.speakLessonLevels || {}) };
-            for (const key in localState.speakLessonLevels) {
-              mergedSpeakLessonLevels[key] = Math.max(localState.speakLessonLevels[key] || 0, mergedSpeakLessonLevels[key] || 0);
-            }
-
-            const mergedSpeakLessonStars: Record<string, number[]> = { ...(dbState.speakLessonStars || {}) };
-            for (const key in localState.speakLessonStars) {
-              if (!mergedSpeakLessonStars[key]) mergedSpeakLessonStars[key] = [...localState.speakLessonStars[key]];
-              else {
-                mergedSpeakLessonStars[key] = mergedSpeakLessonStars[key].map((s, i) => Math.max(s || 0, localState.speakLessonStars[key][i] || 0));
-              }
-            }
-
-            const mergedLessonPartsCompleted: Record<string, number[]> = { ...(dbState.lessonPartsCompleted || {}) };
-            for (const key in localState.lessonPartsCompleted) {
-              if (!mergedLessonPartsCompleted[key]) {
-                mergedLessonPartsCompleted[key] = [...localState.lessonPartsCompleted[key]];
-              } else {
-                mergedLessonPartsCompleted[key] = Array.from(new Set([...mergedLessonPartsCompleted[key], ...localState.lessonPartsCompleted[key]]));
-              }
-            }
-
-            const safeState = {
-              ...dbState,
-              xp: Math.max(dbState.xp || 0, localState.xp || 0), // MAX, pas d'addition
-              goldCoins: Math.max(dbState.goldCoins || 0, localState.goldCoins || 0), // MAX
-              currentStreak: Math.max(dbState.currentStreak || 0, localState.currentStreak || 0),
-              longestStreak: Math.max(dbState.longestStreak || 0, localState.longestStreak || 0),
-              lastConversionMonth: localState.lastConversionMonth || dbState.lastConversionMonth,
-              lastActiveDate: localState.lastActiveDate || dbState.lastActiveDate,
-              completedLessons: Array.from(new Set([...(dbState.completedLessons || []), ...(localState.completedLessons || [])])),
-              unlockedLessons: Array.from(new Set([...(dbState.unlockedLessons || []), ...(localState.unlockedLessons || [])])),
-              completedToday: dbState.questsDate === localState.questsDate 
-                ? Array.from(new Set([...(dbState.completedToday || []), ...(localState.completedToday || [])]))
-                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.completedToday : dbState.completedToday),
-              seenAlphabets: Array.from(new Set([...(dbState.seenAlphabets || []), ...(localState.seenAlphabets || [])])),
-              lessonLevels: mergedLessonLevels,
-              lessonStars: mergedLessonStars,
-              speakCompletedLessons: Array.from(new Set([...(dbState.speakCompletedLessons || []), ...(localState.speakCompletedLessons || [])])),
-              speakLessonLevels: mergedSpeakLessonLevels,
-              speakLessonStars: mergedSpeakLessonStars,
-              completedConversations: { ...(dbState.completedConversations || {}), ...(localState.completedConversations || {}) },
-              conversationStars: { ...(dbState.conversationStars || {}), ...(localState.conversationStars || {}) },
-              dailyQuests: dbState.questsDate === localState.questsDate 
-                ? (localState.dailyQuests || dbState.dailyQuests)
-                : ((localState.questsDate || "") > (dbState.questsDate || "") ? localState.dailyQuests : dbState.dailyQuests),
-              questsDate: (localState.questsDate || "") > (dbState.questsDate || "") ? localState.questsDate : dbState.questsDate,
-              reviewStats: { ...(dbState.reviewStats || {}), ...(localState.reviewStats || {}) },
-              inProgressLessons: { ...(dbState.inProgressLessons || {}), ...(localState.inProgressLessons || {}) },
-              lessonPartsCompleted: mergedLessonPartsCompleted,
-              lastMergedEmail: userEmail,
-            };
-
-            useProgressStore.setState(safeState);
-          } else {
-            useProgressStore.setState({ ...dbState, lastMergedEmail: userEmail });
-          }
+          useProgressStore.setState({ ...dbState, lastMergedEmail: userEmail });
         }
         isInitialSyncDone.current = true;
       }
@@ -243,8 +81,6 @@ export default function SyncProgress() {
       const state = useProgressStore.getState();
       
       const dataToSave = {
-        xp: state.xp,
-        goldCoins: state.goldCoins,
         lastConversionMonth: state.lastConversionMonth,
         currentStreak: state.currentStreak,
         longestStreak: state.longestStreak,
@@ -266,6 +102,7 @@ export default function SyncProgress() {
         completedToday: state.completedToday,
         inProgressLessons: state.inProgressLessons,
         lessonPartsCompleted: state.lessonPartsCompleted,
+        unopenedGifts: state.unopenedGifts,
       };
 
       const timestamp = Date.now();
@@ -288,8 +125,6 @@ export default function SyncProgress() {
   }, [
     status,
     store.forceSyncTrigger,
-    store.xp,
-    store.goldCoins,
     store.lastConversionMonth,
     store.currentStreak,
     store.completedLessons,
@@ -306,7 +141,8 @@ export default function SyncProgress() {
     store.questsDate,
     store.completedToday,
     store.inProgressLessons,
-    store.lessonPartsCompleted
+    store.lessonPartsCompleted,
+    store.unopenedGifts
   ]);
 
   return null;
