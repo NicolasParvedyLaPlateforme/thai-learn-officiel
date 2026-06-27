@@ -120,12 +120,13 @@ export function LessonPathNode({
   // Don't show parts for the mastery node itself, unless it has parts (usually it doesn't).
   const showPartNodes = !isMastery && lessonId != null && currentPartsTotal > 1;
 
-  // Distribute parts evenly from bottom (t=0.8, P1) to top (t=0.2, P(n))
+  // Distribute parts evenly from bottom (t=0) to top (t=1). 
+  // P1 is at highest t (closest to 1), P(n) is at lowest t (closest to 0).
   const partTValues = showPartNodes
     ? Array.from({ length: currentPartsTotal }, (_, i) => {
-      // t decreasing from 0.8 (P1, near prevLevelIndex) to 0.2 (P(n), near levelIndex)
-      return 0.8 - i * (0.6 / (currentPartsTotal - 1 || 1));
-    })
+        // Equal spacing between t=1 (top) and t=0 (bottom)
+        return 1 - ((i + 1) / (currentPartsTotal + 1));
+      })
     : [];
 
   /**
