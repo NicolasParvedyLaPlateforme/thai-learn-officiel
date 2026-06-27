@@ -108,23 +108,23 @@ export function LessonPathNode({
   // P(n) (i=n-1): t ≈ 0.25 (near top = near levelIndex).
 
   const prevLevelIndex = levelIndex - 1;
-  const prevPartsTotal = (lesson && levelIndex > 0) ? getLevelSplit(prevLevelIndex, lesson) : 1;
-  const prevPartsKey = `${lessonId}_level-${prevLevelIndex}`;
-  const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
-  // prevLevel is accessible if we've at least started it
-  const isPrevLevelAccessible = levelIndex > 0 && prevLevelIndex <= currentProgress;
-  // prevLevel is fully done once we've reached levelIndex
-  const isPrevLevelCompleted = levelIndex <= currentProgress;
-
-  // showPartNodes: display parts of levelIndex-1 in this slot's path.
-  // Allowed even on the mastery slot (shows parts of the last numbered level).
-  const showPartNodes = levelIndex > 0 && lessonId != null && prevPartsTotal > 1;
+  const currentPartsTotal = lesson ? getLevelSplit(levelIndex, lesson) : 1;
+  const currentPartsKey = `${lessonId}_level-${levelIndex}`;
+  const currentCompletedParts = lessonPartsCompleted?.[currentPartsKey] || [];
+  
+  // A part is accessible if the previous level is fully completed.
+  // Wait, if levelIndex === 0, prev level doesn't exist, so it's always accessible.
+  const isPartAccessible = levelIndex === 0 ? true : levelIndex <= currentProgress;
+  
+  // showPartNodes: display parts of levelIndex in this slot's path.
+  // Don't show parts for the mastery node itself, unless it has parts (usually it doesn't).
+  const showPartNodes = !isMastery && lessonId != null && currentPartsTotal > 1;
 
   // Distribute parts evenly from bottom (t=0.8, P1) to top (t=0.2, P(n))
   const partTValues = showPartNodes
-    ? Array.from({ length: prevPartsTotal }, (_, i) => {
-      // t decreasing from 0.8 (P1, near levelIndex-1) to 0.2 (P(n), near levelIndex)
-      return 0.8 - i * (0.6 / (prevPartsTotal - 1 || 1));
+    ? Array.from({ length: currentPartsTotal }, (_, i) => {
+      // t decreasing from 0.8 (P1, near prevLevelIndex) to 0.2 (P(n), near levelIndex)
+      return 0.8 - i * (0.6 / (currentPartsTotal - 1 || 1));
     })
     : [];
 
@@ -144,7 +144,7 @@ export function LessonPathNode({
   };
 
   const getStepsForPart = (partIdx: number): number => {
-    return (stepsMetadata as any)?.[lessonId || '']?.[prevLevelIndex]?.[`part_${partIdx}`] || 0;
+    return (stepsMetadata as any)?.[lessonId || '']?.[levelIndex]?.[`part_${partIdx}`] || 0;
   };
 
   return (
@@ -157,10 +157,10 @@ export function LessonPathNode({
       {/* ── SVG connection lines have been removed per user request ── */}
 
       {/* ── Part sub-nodes (P1, P2, P3…) placed along the path ── */}
-      {showPartNodes && isPrevLevelAccessible && partTValues.map((t, partIdx) => {
-        const isPartCompleted = prevCompletedParts.includes(partIdx);
-        const isNextPart = !isPrevLevelCompleted && prevCompletedParts.length === partIdx;
-        const isPartAccessible = isPrevLevelCompleted || partIdx <= prevCompletedParts.length;
+      {showPartNodes && isPartAccessible && partTValues.map((t, partIdx) => {
+        const isPartCompleted = currentCompletedParts.includes(partIdx);
+        const isNextPart = !isCompleted && currentCompletedParts.length === partIdx;
+        const canAccessPart = isCompleted || partIdx <= currentCompletedParts.length;
 
         const dXY = evalLinearXY(t, false); // desktop
         const mXY = evalLinearXY(t, true);  // mobile
@@ -171,16 +171,17 @@ export function LessonPathNode({
             <PartSubNode
               isMobile={false}
               partIdx={partIdx}
-              isPartAccessible={isPartAccessible}
+              isPartAccessible={canAccessPart}
               isPartCompleted={isPartCompleted}
               isNextPart={isNextPart}
               positionX={dXY.x}
               positionY={dXY.y}
               unitColor={unitColor}
+              unitBorder={unitBorder}
               unitText={unitText}
               lessonId={lessonId!}
-              levelIndex={prevLevelIndex}
-              totalParts={prevPartsTotal}
+              levelIndex={levelIndex}
+              totalParts={currentPartsTotal}
               stepsCount={getStepsForPart(partIdx)}
               isOpen={openPartBubble === partIdx}
               onToggle={() => setOpenPartBubble(openPartBubble === partIdx ? null : partIdx)}
@@ -191,73 +192,22 @@ export function LessonPathNode({
             <PartSubNode
               isMobile={true}
               partIdx={partIdx}
-              isPartAccessible={isPartAccessible}
+              isPartAccessible={canAccessPart}
               isPartCompleted={isPartCompleted}
               isNextPart={isNextPart}
               positionX={mXY.x}
               positionY={mXY.y}
               unitColor={unitColor}
+              unitBorder={unitBorder}
               unitText={unitText}
               lessonId={lessonId!}
-              levelIndex={prevLevelIndex}
-              totalParts={prevPartsTotal}
+              levelIndex={levelIndex}
+              totalParts={currentPartsTotal}
               stepsCount={getStepsForPart(partIdx)}
               isOpen={openPartBubble === partIdx}
               onToggle={() => setOpenPartBubble(openPartBubble === partIdx ? null : partIdx)}
               onClose={() => setOpenPartBubble(null)}
             />
-
-            {/* Mobile */}
-            <div
-              className="flex lg:hidden absolute left-1/2 top-1/2 z-20"
-              style={{ transform: `translate(calc(-50% + ${mXY.x}px), calc(-50% + ${mXY.y}px))` }}
-            >
-              <div className="relative">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!isPartAccessible) return;
-                    setOpenPartBubble(openPartBubble === partIdx ? null : partIdx);
-                  }}
-                  disabled={!isPartAccessible}
-                  title={`Partie ${partIdx + 1}`}
-                  className={[
-                    'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200',
-                    'border-[3px] shadow-lg font-black text-[11px] tracking-wide',
-                    !isPartAccessible
-                      ? 'bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed'
-                      : isPartCompleted
-                        ? `${unitColor} border-white text-white hover:scale-110 active:scale-95`
-                        : isNextPart
-                          ? `bg-white ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse`
-                          : 'bg-white border-slate-300 text-slate-400 hover:scale-105',
-                    openPartBubble === partIdx
-                      ? `scale-110 ring-2 ring-offset-2 ${unitColor.replace('bg-', 'ring-')}`
-                      : '',
-                  ].join(' ')}
-                >
-                  {isPartCompleted
-                    ? <CheckCircle2 size={16} className="stroke-[2.5]" />
-                    : <span>P{partIdx + 1}</span>
-                  }
-                </button>
-
-                {openPartBubble === partIdx && isPartAccessible && (
-                  <PartNodeBubble
-                    lessonId={lessonId!}
-                    levelIndex={prevLevelIndex}
-                    partIndex={partIdx}
-                    totalParts={prevPartsTotal}
-                    stepsCount={getStepsForPart(partIdx)}
-                    isCompleted={isPartCompleted}
-                    unitColor={unitColor}
-                    unitText={unitText}
-                    nodeX={mXY.x}
-                    onClose={() => setOpenPartBubble(null)}
-                  />
-                )}
-              </div>
-            </div>
           </React.Fragment>
         );
       })}
@@ -280,7 +230,7 @@ export function LessonPathNode({
       >
         {/* Objective Images */}
         {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
-          <div className={`absolute top-1/2 -translate-y-1/2 w-28 md:w-48 z-0 transition-all duration-500 ease-out
+          <div className={`absolute top-1/2 -translate-y-1/2 w-32 md:w-56 lg:w-72 z-0 transition-all duration-500 ease-out
             ${isAccessible ? 'opacity-100' : 'opacity-50 grayscale blur-[1px]'}
             ${getOffset(levelIndex) < 0 ? 'left-full ml-6 md:ml-12' : 'right-full mr-6 md:mr-12'}
           `}>

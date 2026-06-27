@@ -11,6 +11,7 @@ interface PartSubNodeProps {
     positionX: number;
     positionY: number;
     unitColor: string;
+    unitBorder?: string;
     unitText: string;
     lessonId: string;
     levelIndex: number;
@@ -30,6 +31,7 @@ export function PartSubNode({
     positionX,
     positionY,
     unitColor,
+    unitBorder = "border-slate-300",
     unitText,
     lessonId,
     levelIndex,
@@ -43,18 +45,18 @@ export function PartSubNode({
         ? "flex lg:hidden absolute left-1/2 top-1/2 z-20"
         : "hidden lg:block absolute left-1/2 top-1/2 z-20";
 
-    const btnSizeClass = isMobile ? "w-[58px] h-[58px]" : "w-[72px] h-[72px]";
-    const iconSize = isMobile ? 24 : 28;
+    const btnSizeClass = isMobile ? "w-[64px] h-[64px]" : "w-[80px] h-[80px]";
+    const iconSize = isMobile ? 28 : 32;
 
     const btnStateClass = !isPartAccessible
-        ? "bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed"
+        ? "bg-slate-100 border-b-[6px] border-slate-200 text-slate-300 cursor-not-allowed"
         : isPartCompleted
-            ? `${unitColor} border-white text-white hover:scale-110 active:scale-95`
+            ? `${unitColor} border-b-[6px] ${unitBorder} text-white hover:scale-110 active:scale-95`
             : isNextPart
-                ? `bg-white ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse`
-                : "bg-white border-slate-300 text-slate-400 hover:scale-105";
+                ? `bg-white border-[4px] border-b-[6px] ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse`
+                : "bg-white border-b-[6px] border-slate-300 text-slate-400 hover:scale-105";
 
-    const btnActiveClass = isOpen ? `scale-110 ring-2 ring-offset-2 ${unitColor.replace('bg-', 'ring-')}` : "";
+    const btnActiveClass = isOpen ? `scale-110 ring-[3px] ring-offset-[2px] ${unitColor.replace('bg-', 'ring-')}` : "";
 
     return (
         <div

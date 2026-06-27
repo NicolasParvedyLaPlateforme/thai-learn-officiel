@@ -61,22 +61,15 @@ export function LessonPathMap({
    * of the last level (levelIndex-1 = maxLevel-1).
    */
   const getSlotHeight = (index: number): number => {
-    if (index === 0) return BASE_SLOT_HEIGHT; // No path below level 0
-    const prevParts = lesson ? getLevelSplit(index - 1, lesson) : 1;
-    const extra = prevParts > 1 ? (prevParts - 1) * EXTRA_PER_PART : 0;
+    const parts = lesson ? getLevelSplit(index, lesson) : 1;
+    const extra = parts > 1 ? (parts - 1) * EXTRA_PER_PART : 0;
     return BASE_SLOT_HEIGHT + extra;
   };
 
-  /**
-   * Actual pixel distance between center of levelIndex node and center of (levelIndex-1) node.
-   * Each slot div's center is at height/2, so:
-   *   dist = slotHeight(index)/2 + slotHeight(index-1)/2
-   *
-   * This is used as the SVG height for the connecting path, ensuring the path
-   * ends exactly at the previous node's center (no overshoot / tail).
-   */
   const getPathHeight = (index: number): number => {
-    if (index <= 0) return 0;
+    if (index === 0) {
+      return getSlotHeight(0) / 2 + BASE_SLOT_HEIGHT / 2;
+    }
     return getSlotHeight(index) / 2 + getSlotHeight(index - 1) / 2;
   };
 
