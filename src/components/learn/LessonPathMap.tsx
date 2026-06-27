@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ChevronLeft } from 'lucide-react';
-import { LessonPathMobileNav } from './LessonPathMobileNav';
+import { ChevronLeft, X } from 'lucide-react';
 import { LessonPathNode } from './LessonPathNode';
 import { getLevelSplit } from '@/lib/levelSplits';
 
@@ -22,6 +21,7 @@ interface LessonPathMapProps {
   initialScrollLevel?: number;
   onReady?: () => void;
   onBack?: () => void;
+  isLeft?: boolean;
 }
 
 /** Base slot height in px */
@@ -45,9 +45,10 @@ export function LessonPathMap({
   suggestionType,
   initialScrollLevel,
   onReady,
-  onBack
+  onBack,
+  isLeft
 }: LessonPathMapProps) {
-  const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
+  const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i);
 
   const effectiveCurrent = currentProgress > maxLevel ? maxLevel : currentProgress;
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : effectiveCurrent;
@@ -84,7 +85,7 @@ export function LessonPathMap({
   };
 
   const getMobileOffset = (index: number) => {
-    return index % 2 === 0 ? -95 : 95;
+    return index % 2 === 0 ? -70 : 70;
   };
 
   const getImageNameForLevel = (index: number) => {
@@ -103,18 +104,8 @@ export function LessonPathMap({
     }
   };
 
-  /**
-   * Generate a cubic bezier SVG path.
-   * The SVG top is at top-1/2 of the slot (= this node's center, y=0).
-   * The path ends at y=pathHeight = the previous node's center.
-   */
   const generatePath = (index: number, isMobile: boolean) => {
-    const height = getPathHeight(index);
-    const startX = 100 + (isMobile ? getMobileOffset(index) : getOffset(index));
-    const endX   = 100 + (isMobile ? getMobileOffset(index - 1) : getOffset(index - 1));
-    const c1y = isMobile ? height * 0.8 : height * 0.5;
-    const c2y = isMobile ? height * 0.2 : height * 0.5;
-    return `M ${startX} 0 C ${startX} ${c1y}, ${endX} ${c2y}, ${endX} ${height}`;
+    return "";
   };
 
   const currentLevelRef = useRef<HTMLDivElement | null>(null);
@@ -154,6 +145,24 @@ export function LessonPathMap({
   }, [activeMobileLevel]);
 
   useEffect(() => {
+    if (currentProgress >= maxLevel) {
+      setIsReady(true);
+      onReady?.();
+      return;
+    }
+
+    if (targetScrollLevel !== null && !isClickScrolling.current) {
+      // Small delay to let the framer-motion accordion open first
+      const timeoutId = setTimeout(() => {
+        const el = document.getElementById(`path-level-${targetScrollLevel}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 150);
+      
+      return () => clearTimeout(timeoutId);
+    }
+    
     if (currentLevelRef.current) {
       setTimeout(() => {
         currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
@@ -244,11 +253,14 @@ export function LessonPathMap({
   const isUnlockedMastery = currentProgress >= maxLevel;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh]">
-      {/* Floating Back Button (Desktop) */}
+    <div className="flex flex-col items-center justify-start w-full relative pt-12 pb-0">
+      {/* Ligne de connexion verticale depuis la carte */}
+      <div className={`absolute top-0 left-1/2 w-[6px] md:w-[8px] h-12 -translate-x-1/2 z-0 rounded-b-full ${unitColor}`} />
+
+      {/* Floating Back Button */}
       {typeof document !== 'undefined' && createPortal(
         <div 
-          className={`hidden lg:block fixed bottom-6 lg:bottom-10 left-6 lg:left-10 z-[100] transition-all duration-500 ease-out ${menuVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
+          className={`fixed bottom-6 lg:bottom-10 right-6 lg:right-10 z-[100] transition-all duration-500 ease-out ${menuVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
         >
           {onBack && (
             <button
@@ -256,30 +268,15 @@ export function LessonPathMap({
                 e.stopPropagation();
                 onBack();
               }}
-              className={`w-12 h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 ${unitColor} text-white`}
+              className={`px-6 py-3 lg:px-8 lg:py-4 rounded-full flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-105 active:scale-95 ${unitColor} text-white font-bold text-sm lg:text-base`}
             >
-              <ChevronLeft size={28} />
+              <span>Réduire</span>
+              <X size={24} />
             </button>
           )}
         </div>,
         document.body
       )}
-
-      {/* Horizontal Navigation Bar (Mobile) */}
-      <LessonPathMobileNav
-        nodes={nodes}
-        maxLevel={maxLevel}
-        currentProgress={currentProgress}
-        activeMobileLevel={activeMobileLevel}
-        setActiveMobileLevel={setActiveMobileLevel}
-        unitColor={unitColor}
-        isUnlockedMastery={isUnlockedMastery}
-        menuVisible={menuVisible}
-        carouselRef={carouselRef}
-        isClickScrolling={isClickScrolling}
-        scrollEndTimer={scrollEndTimer}
-        onBack={onBack}
-      />
 
       {nodes.map((levelIndex) => (
         <LessonPathNode

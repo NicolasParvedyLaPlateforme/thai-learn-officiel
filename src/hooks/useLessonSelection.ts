@@ -14,7 +14,6 @@ export function useLessonSelection() {
         } catch (e) {
           console.warn('history.replaceState failed:', e);
         }
-        setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0);
       } else if (lessonData === null && selectedLesson !== null) {
         _setSelectedLesson(null);
         try {
@@ -22,7 +21,6 @@ export function useLessonSelection() {
         } catch (e) {
           console.warn('history.replaceState failed:', e);
         }
-        setTimeout(() => window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' }), 0);
       } else {
         _setSelectedLesson(lessonData);
         if (lessonData) {

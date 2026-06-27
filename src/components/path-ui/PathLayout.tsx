@@ -88,7 +88,16 @@ export default function PathLayout({
   const [modalLevel, setModalLevel] = useState<number | null>(null);
 
   const showHeader = useScrollHeader(50);
-  
+  const [hasAutoSelected, setHasAutoSelected] = useState(false);
+
+  const { selectedLesson, setSelectedLesson } = useLessonSelection();
+
+  // We need to put useActiveUnit here, but wait, useLessonHashRouting needs setActiveUnitIndex which is returned by useActiveUnit.
+  // And useActiveUnit needs setLastActiveUnitIndex which is defined earlier.
+  // Let's reorder carefully.
+
+
+
   const { activeUnitIndex, handleUnitSelect, setActiveUnitIndex } = useActiveUnit(
     mounted,
     units,
@@ -98,8 +107,6 @@ export default function PathLayout({
     lastActiveUnitIndex,
     setLastActiveUnitIndex
   );
-
-  const { selectedLesson, setSelectedLesson } = useLessonSelection();
 
   const isProcessingHash = useLessonHashRouting(
     lessons,
@@ -112,6 +119,32 @@ export default function PathLayout({
     setMounted,
     autoDetectLanguage
   );
+
+  useEffect(() => {
+    if (mounted && !isProcessingHash && !selectedLesson && !hasAutoSelected) {
+      setHasAutoSelected(true);
+      let toSelect = null;
+      if (suggestedLessonId) {
+        toSelect = lessons.find(l => l.id === suggestedLessonId);
+      } else {
+        toSelect = lessons.find(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+      }
+      if (toSelect) {
+        const lessonIndex = lessons.indexOf(toSelect);
+        const unit = units.find(u => u.startIndex <= lessonIndex && u.endIndex > lessonIndex);
+        if (unit) {
+          setSelectedLesson({
+            lesson: toSelect,
+            isCompleted: (lessonLevels[toSelect.id] || 0) >= maxLevelPerLesson,
+            unitColor: unit.colorClass,
+            unitBorder: unit.borderClass,
+            unitText: unit.textClass,
+            unitHover: unit.hoverClass
+          });
+        }
+      }
+    }
+  }, [mounted, isProcessingHash, selectedLesson, hasAutoSelected, lessons, units, lessonLevels, maxLevelPerLesson, suggestedLessonId, setSelectedLesson]);
 
   const activeUnit = units[activeUnitIndex];
   const pageTitleKey = pathType === 'alphabet' ? 'sidebar.alphabet' : pathType === 'speak' ? 'sidebar.speaking' : 'sidebar.vocabulary';
@@ -139,40 +172,15 @@ export default function PathLayout({
       {/* Main Content (Mobile Only) */}
       {!mounted || isProcessingHash ? (
         <PathMobileSkeleton />
-      ) : (() => {
-        if (selectedLesson && renderLessonLevelsView) {
-          return (
-            <div className="md:hidden flex flex-col w-full px-4 mt-2 pb-32">
-              {renderLessonLevelsView({
-                lessonData: selectedLesson,
-                unitTitle: activeUnit ? (activeUnit.title || activeUnit.titleEn) : undefined,
-                modalLevel,
-                setModalLevel: (lvl: number | null) => {
-                  setModalLevel(lvl);
-                  if (lvl !== null) {
-                    localStorage.setItem(`last_level_${selectedLesson.lesson.id}`, lvl.toString());
-                  }
-                },
-                onBack: () => {
-                  setSelectedLesson(null);
-                  setModalLevel(null);
-                },
-                language,
-                lessonLevels,
-                lessonStars,
-                maxLevelPerLesson
-              })}
-            </div>
-          );
-        }
-
-        return renderMobileTimeline({
+      ) : (
+        renderMobileTimeline({
           unit: activeUnit,
           unitLessons: pathType === 'alphabet' ? activeUnit?.lessons : lessons.slice(activeUnit?.startIndex, activeUnit?.endIndex),
           activeUnitIndex,
           totalUnits: units.length,
           language,
           lessonLevels,
+          lessonStars,
           suggestedLessonId,
           globalSuggestedLesson: suggestedLessonId ? lessons.find((l: any) => l.id === suggestedLessonId) : null,
           quests,
@@ -181,11 +189,13 @@ export default function PathLayout({
           setIsUnitsModalOpen,
           setIsQuestsModalOpen,
           setSelectedLesson,
+          selectedLesson,
+          modalLevel,
           setModalLevel,
           setLockedReviewModalOpen,
           nextUnit: activeUnitIndex < units.length - 1 ? units[activeUnitIndex + 1] : undefined
-        });
-      })()}
+        })
+      )}
 
       {/* Desktop Main Content */}
       <div className="hidden md:block">
@@ -198,47 +208,27 @@ export default function PathLayout({
               setShowDesktopUnitsList(false);
             }}
           >
-            <div className={`flex-1 flex justify-center w-full pt-8 pb-32 ${!selectedLesson ? 'px-6 lg:px-8 pr-8 xl:pr-12' : ''}`}>
-              <div className={`flex flex-col gap-10 w-full ${!selectedLesson ? 'max-w-4xl' : ''}`}>
-                {(() => {
-                  if (selectedLesson && renderLessonLevelsView) {
-                    return renderLessonLevelsView({
-                      lessonData: selectedLesson,
-                      unitTitle: activeUnit ? (activeUnit.title || activeUnit.titleEn) : undefined,
-                      modalLevel,
-                      setModalLevel: (lvl: number | null) => {
-                        setModalLevel(lvl);
-                        if (lvl !== null) {
-                          localStorage.setItem(`last_level_${selectedLesson.lesson.id}`, lvl.toString());
-                        }
-                      },
-                      onBack: () => {
-                        setSelectedLesson(null);
-                        setShowDesktopUnitsList(false);
-                      },
-                      language,
-                      lessonLevels,
-                      lessonStars,
-                      maxLevelPerLesson
-                    });
-                  }
-                  return renderDesktopTimeline({
-                    unit: activeUnit,
-                    unitLessons: pathType === 'alphabet' ? activeUnit?.lessons : lessons.slice(activeUnit?.startIndex, activeUnit?.endIndex),
-                    activeUnitIndex,
-                    totalUnits: units.length,
-                    language,
-                    lessonLevels,
-                    suggestedLessonId,
-                    mounted,
-                    handleUnitSelect,
-                    setShowDesktopUnitsList,
-                    setSelectedLesson,
-                    setModalLevel,
-                    setLockedReviewModalOpen,
-                    nextUnit: activeUnitIndex < units.length - 1 ? units[activeUnitIndex + 1] : undefined
-                  });
-                })()}
+            <div className={`flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12`}>
+              <div className={`flex flex-col gap-10 w-full max-w-4xl`}>
+                {renderDesktopTimeline({
+                  unit: activeUnit,
+                  unitLessons: pathType === 'alphabet' ? activeUnit?.lessons : lessons.slice(activeUnit?.startIndex, activeUnit?.endIndex),
+                  activeUnitIndex,
+                  totalUnits: units.length,
+                  language,
+                  lessonLevels,
+                  lessonStars,
+                  suggestedLessonId,
+                  mounted,
+                  handleUnitSelect,
+                  setShowDesktopUnitsList,
+                  setSelectedLesson,
+                  selectedLesson,
+                  modalLevel,
+                  setModalLevel,
+                  setLockedReviewModalOpen,
+                  nextUnit: activeUnitIndex < units.length - 1 ? units[activeUnitIndex + 1] : undefined
+                })}
               </div>
             </div>
 
@@ -255,14 +245,7 @@ export default function PathLayout({
               mounted={mounted}
               maxLevelPerLesson={maxLevelPerLesson}
               suggestionType={pathType}
-              selectedLesson={selectedLesson}
-              onCloseLesson={() => setSelectedLesson(null)}
-              modalLevel={modalLevel}
-              setModalLevel={setModalLevel}
-              lessonStars={lessonStars}
-              resetLessonLevel={resetLessonLevel}
-              reviewStats={reviewStats}
-              questsCategory={pathType}
+              questsCategory={pathType as any}
             />
           </div>
         )}

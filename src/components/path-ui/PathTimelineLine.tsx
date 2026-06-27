@@ -5,13 +5,14 @@ interface PathTimelineLineProps {
   maxLevel: number;
   colorClass: string;
   isDesktop?: boolean;
+  isLeft?: boolean;
 }
 
-export default function PathTimelineLine({ level, maxLevel, colorClass, isDesktop = false }: PathTimelineLineProps) {
+export default function PathTimelineLine({ level, maxLevel, colorClass, isDesktop = false, isLeft }: PathTimelineLineProps) {
   const progress = Math.min(1, Math.max(0, level / maxLevel));
   const strokeWidth = isDesktop ? 10 : 8;
   const containerClasses = isDesktop
-    ? 'absolute top-1/2 left-1/2 w-[24px] -translate-x-1/2 h-[calc(100%+6rem)] -z-10'
+    ? `absolute top-1/2 ${isLeft === true ? 'left-1/4' : isLeft === false ? 'left-3/4' : 'left-1/2'} w-[24px] -translate-x-1/2 h-full -z-10`
     : 'absolute top-3 left-[2rem] sm:left-[2em] w-[20px] -translate-x-1/2 h-[calc(60%+3.5rem)] -z-10';
 
   const colorText = colorClass.replace('bg-', 'text-');

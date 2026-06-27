@@ -129,33 +129,23 @@ export function LessonPathNode({
     : [];
 
   /**
-   * Evaluate the bezier path at t and return the CSS transform offset
+   * Evaluate the linear path at t and return the CSS transform offset
    * from the slot center to place the part node.
    *
-   * SVG: top-1/2 → y=0 is at this node's center. y=pathHeight is at prev node's center.
-   * CSS transform from slot center: offsetY = bezierY (positive = downward).
+   * t=0 is this node (y=0), t=1 is prev node (y=-pathHeight).
    */
-  const evalBezierXY = (t: number, isMobile: boolean): { x: number; y: number } => {
-    const height = pathHeight; // use actual center-to-center distance
-    const startX = 100 + (isMobile ? getMobileOffset(levelIndex) : getOffset(levelIndex));
-    const endX = 100 + (isMobile ? getMobileOffset(prevLevelIndex) : getOffset(prevLevelIndex));
-    const c1y = isMobile ? height * 0.8 : height * 0.5;
-    const c2y = isMobile ? height * 0.2 : height * 0.5;
-    const mt = 1 - t;
-    const bx = mt * mt * mt * startX + 3 * mt * mt * t * startX + 3 * mt * t * t * endX + t * t * t * endX;
-    const by = mt * mt * mt * 0 + 3 * mt * mt * t * c1y + 3 * mt * t * t * c2y + t * t * t * height;
-    return { x: bx - 100, y: by };
+  const evalLinearXY = (t: number, isMobile: boolean): { x: number; y: number } => {
+    const height = pathHeight;
+    const startX = isMobile ? getMobileOffset(levelIndex) : getOffset(levelIndex);
+    const endX = isMobile ? getMobileOffset(prevLevelIndex) : getOffset(prevLevelIndex);
+    const x = startX + t * (endX - startX);
+    const y = -height * t;
+    return { x, y };
   };
 
   const getStepsForPart = (partIdx: number): number => {
     return (stepsMetadata as any)?.[lessonId || '']?.[prevLevelIndex]?.[`part_${partIdx}`] || 0;
   };
-
-  // Whether to suppress the thick bezier track (replaced by part circles + dashed line)
-  const suppressTrack = showPartNodes;
-
-  // SVG height = pathHeight (center-to-center distance), not slotHeight
-  const svgH = pathHeight;
 
   return (
     <div
@@ -164,53 +154,7 @@ export function LessonPathNode({
       style={{ height: `${slotHeight}px` }}
       id={`path-level-${levelIndex}`}
     >
-      {/* ── Connection Line (hidden when part circles replace it) ── */}
-      {levelIndex > 0 && !suppressTrack && (
-        <>
-          {/* Desktop SVG */}
-          <svg
-            className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${svgH}px` }}
-          >
-            <path d={generatePath(levelIndex, false)} fill="none" stroke="currentColor"
-              className={strokeClass} strokeWidth="22" strokeLinecap="round" />
-            <path d={generatePath(levelIndex, false)} fill="none" stroke="rgba(255,255,255,0.2)"
-              strokeWidth="8" strokeLinecap="round" />
-          </svg>
-          {/* Mobile SVG */}
-          <svg
-            className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${svgH}px` }}
-          >
-            <path d={generatePath(levelIndex, true)} fill="none" stroke="currentColor"
-              className={strokeClass} strokeWidth="22" strokeLinecap="round" />
-            <path d={generatePath(levelIndex, true)} fill="none" stroke="rgba(255,255,255,0.2)"
-              strokeWidth="8" strokeLinecap="round" />
-          </svg>
-        </>
-      )}
-
-      {/* ── Thin connector lines between part circles when track is hidden ── */}
-      {suppressTrack && levelIndex > 0 && (
-        <>
-          {/* Desktop dashed connector */}
-          <svg
-            className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${svgH}px` }}
-          >
-            <path d={generatePath(levelIndex, false)} fill="none" stroke="currentColor"
-              className={strokeClass} strokeWidth="8" strokeLinecap="round" strokeDasharray="6 6" opacity="0.35" />
-          </svg>
-          {/* Mobile dashed connector */}
-          <svg
-            className="block lg:hidden absolute top-1/2 left-1/2 -translate-x-1/2 w-[200px] overflow-visible z-0 pointer-events-none"
-            style={{ height: `${svgH}px` }}
-          >
-            <path d={generatePath(levelIndex, true)} fill="none" stroke="currentColor"
-              className={strokeClass} strokeWidth="8" strokeLinecap="round" strokeDasharray="6 6" opacity="0.35" />
-          </svg>
-        </>
-      )}
+      {/* ── SVG connection lines have been removed per user request ── */}
 
       {/* ── Part sub-nodes (P1, P2, P3…) placed along the path ── */}
       {showPartNodes && isPrevLevelAccessible && partTValues.map((t, partIdx) => {
@@ -218,8 +162,8 @@ export function LessonPathNode({
         const isNextPart = !isPrevLevelCompleted && prevCompletedParts.length === partIdx;
         const isPartAccessible = isPrevLevelCompleted || partIdx <= prevCompletedParts.length;
 
-        const dXY = evalBezierXY(t, false); // desktop
-        const mXY = evalBezierXY(t, true);  // mobile
+        const dXY = evalLinearXY(t, false); // desktop
+        const mXY = evalLinearXY(t, true);  // mobile
 
         return (
           <React.Fragment key={`part-${levelIndex}-${partIdx}`}>
@@ -336,39 +280,19 @@ export function LessonPathNode({
       >
         {/* Objective Images */}
         {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
-          <>
-            <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-72 xl:w-80 z-0 transition-all duration-500 ease-out 
-              ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-              ${getOffset(levelIndex) < 0 ? 'left-full ml-32' : 'right-full mr-32'}
-              ${activeMobileLevel !== levelIndex && getOffset(levelIndex) < 0 ? '-translate-x-8' : ''}
-              ${activeMobileLevel !== levelIndex && getOffset(levelIndex) >= 0 ? 'translate-x-8' : ''}
-            `}>
-              <div className={`bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-2 shadow-sm mb-3 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-sm md:text-base text-center transition-all duration-500 ${!isAccessible ? 'opacity-60' : ''}`}>
-                {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
-              </div>
-              <img
-                src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`}
-                alt="Objectif du niveau"
-                className={`w-full h-auto drop-shadow-2xl rounded-3xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`}
-              />
+          <div className={`absolute top-1/2 -translate-y-1/2 w-28 md:w-48 z-0 transition-all duration-500 ease-out
+            ${isAccessible ? 'opacity-100' : 'opacity-50 grayscale blur-[1px]'}
+            ${getOffset(levelIndex) < 0 ? 'left-full ml-6 md:ml-12' : 'right-full mr-6 md:mr-12'}
+          `}>
+            <div className={`hidden md:block bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm mb-2 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-xs md:text-sm text-center transition-all duration-500`}>
+              {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
             </div>
-
-            <div className={`block lg:hidden absolute top-1/2 -translate-y-1/2 w-40 z-0 transition-all duration-500 ease-out 
-              ${activeMobileLevel === levelIndex ? 'opacity-100 translate-x-0' : 'opacity-0 pointer-events-none'}
-              ${getMobileOffset(levelIndex) < 0 ? 'left-full ml-12' : 'right-full mr-12'}
-              ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) < 0 ? '-translate-x-12' : ''}
-              ${activeMobileLevel !== levelIndex && getMobileOffset(levelIndex) > 0 ? 'translate-x-12' : ''}
-            `}>
-              <div className={`bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm mb-2 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-[11px] text-center transition-all duration-500 ${!isAccessible ? 'opacity-60' : ''}`}>
-                {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
-              </div>
-              <img
-                src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`}
-                alt="Objectif du niveau"
-                className={`w-full h-auto drop-shadow-xl transition-all duration-500 ${!isAccessible ? 'grayscale-[0.8] opacity-60 blur-[1px]' : ''}`}
-              />
-            </div>
-          </>
+            <img
+              src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`}
+              alt="Objectif du niveau"
+              className="w-full h-auto drop-shadow-xl hover:scale-105 transition-transform duration-300"
+            />
+          </div>
         )}
 
         {isCurrent && (

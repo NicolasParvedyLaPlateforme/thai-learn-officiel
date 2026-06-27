@@ -11,6 +11,9 @@ import MobileStickyBanner from '../path-ui/MobileStickyBanner';
 import { useMobileTimelineNodeClick } from "@/hooks/useMobileTimelineNodeClick";
 import { Typography } from '../ui/Typography';
 import { Button } from '../ui/Button';
+import { LessonPathMap } from '../learn/LessonPathMap';
+import { AnimatePresence } from 'framer-motion';
+import { useProgressStore } from "@/lib/store";
 
 interface BaseMobileTimelineProps {
     pathType: 'learn' | 'alphabet' | 'speak';
@@ -29,6 +32,9 @@ interface BaseMobileTimelineProps {
     setSelectedLesson: (data: any) => void;
     setModalLevel: (level: number | null) => void;
     setLockedReviewModalOpen: (open: boolean) => void;
+    selectedLesson?: any;
+    modalLevel?: number | null;
+    lessonStars?: Record<string, number[]>;
     maxLevelPerLesson?: number;
     reviewUnlockLevel?: number;
     nextUnit?: any;
@@ -52,6 +58,9 @@ export default function BaseMobileTimeline({
     setSelectedLesson,
     setModalLevel,
     setLockedReviewModalOpen,
+    selectedLesson,
+    modalLevel,
+    lessonStars,
     maxLevelPerLesson = 10,
     reviewUnlockLevel = 4,
     nextUnit,
@@ -60,19 +69,48 @@ export default function BaseMobileTimeline({
     const router = useRouter();
     const storyObjective = useNextConversationObjective();
 
-    const handleNodeClick = useMobileTimelineNodeClick({
-        setSelectedLesson,
-        setModalLevel,
-        setLockedReviewModalOpen,
-        maxLevelPerLesson
-    });
-
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
+    const [expandedLessons, setExpandedLessons] = React.useState<Set<string>>(new Set());
+
+    React.useEffect(() => {
+        if (selectedLesson && expandedLessons.size === 0) {
+            setExpandedLessons(new Set([selectedLesson.lesson.id]));
+        }
+    }, [selectedLesson]);
+
     const completedLevelsInUnit = mounted
         ? unitLessons.reduce((acc, l) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson), 0)
         : 0;
     const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
     const activeQuests = quests.filter(q => !q.completed);
+
+    const handleNodeClick = (lesson: any, level: number, unit: any, isReviewLocked: boolean, pathType: string) => (e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
+        if (isReviewLocked) {
+            setLockedReviewModalOpen(true);
+            return;
+        }
+
+        const isCurrentlyExpanded = expandedLessons.has(lesson.id);
+
+        setExpandedLessons(prev => {
+            const next = new Set(prev);
+            if (next.has(lesson.id)) {
+                next.delete(lesson.id);
+            } else {
+                next.add(lesson.id);
+            }
+            return next;
+        });
+
+        if (isCurrentlyExpanded) {
+            if (selectedLesson?.lesson.id === lesson.id) {
+                setSelectedLesson(null);
+            }
+        } else {
+            setSelectedLesson({ lesson, isCompleted: level >= maxLevelPerLesson, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass });
+        }
+    };
 
     return (
         <>
@@ -241,16 +279,49 @@ export default function BaseMobileTimeline({
                                                     isMobileLayout={true}
                                                     index={idx}
                                                     maxLevelPerLesson={maxLevelPerLesson}
-                                                    onClick={() => {
-                                                        if (isReviewLocked) {
-                                                            setLockedReviewModalOpen(true);
-                                                            return;
-                                                        }
-                                                        setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass });
-                                                    }}
+                                                    onClick={handleNodeClick(lesson, level, unit, isReviewLocked, pathType)}
                                                 />
                                             }
                                         />
+
+                                        <AnimatePresence>
+                                            {expandedLessons.has(lesson.id) && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: 'auto', opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                                    className="w-full overflow-hidden flex flex-col items-center mt-6 relative"
+                                                >
+                                                    <div className="w-full relative">
+                                                        <LessonPathMap
+                                                            maxLevel={maxLevelPerLesson}
+                                                            currentProgress={level}
+                                                            modalLevel={modalLevel ?? null}
+                                                            setModalLevel={setModalLevel}
+                                                            earnedStarsArray={lessonStars?.[lesson.id] || Array(maxLevelPerLesson + 1).fill(0)}
+                                                            unitColor={unit.colorClass}
+                                                            unitBorder={unit.borderClass}
+                                                            unitText={unit.textClass}
+                                                            language={language}
+                                                            lessonId={lesson.id}
+                                                            lesson={lesson}
+                                                            lessonPartsCompleted={useProgressStore.getState().lessonPartsCompleted}
+                                                            suggestionType={pathType}
+                                                            initialScrollLevel={selectedLesson?.initialScrollLevel}
+                                                            onReady={() => {}}
+                                                            onBack={() => {
+                                                                setExpandedLessons(prev => {
+                                                                    const next = new Set(prev);
+                                                                    next.delete(lesson.id);
+                                                                    return next;
+                                                                });
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
                                     </div>
                                 );
                             })}
