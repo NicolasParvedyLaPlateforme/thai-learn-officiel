@@ -1,5 +1,5 @@
 import { getLessonData } from "@/actions/course";
-import LessonClientPage from "./components/LessonClientPage";
+import LessonClientPage from "@/components/lesson/LessonClientPage";
 
 export const dynamic = 'force-dynamic';
 

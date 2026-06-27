@@ -17,61 +17,83 @@ export function useLessonHashRouting(
   const [isProcessingHash, setIsProcessingHash] = useState(true);
 
   useIsomorphicLayoutEffect(() => {
+    if (!isProcessingHash) return;
+    
     const hash = window.location.hash;
     if (hash && hash.startsWith('#lesson-')) {
       try {
         const baseId = hash.substring(1).replace('lesson-', '');
 
-        const foundLesson = lessons.find(l => l.id === baseId);
+        if (!lessons || !Array.isArray(lessons)) return;
+        
+        const foundLesson = lessons.find(l => l && l.id === baseId);
         if (foundLesson) {
-          const isCompleted = completedLessons.includes(baseId);
+          const isCompleted = (completedLessons && Array.isArray(completedLessons)) ? completedLessons.includes(baseId) : false;
 
           let unitIndex = -1;
           if (pathType === 'learn' || pathType === 'speak') {
-            const targetIdx = lessons.findIndex(l => l.id === baseId);
-            unitIndex = units.findIndex(u => targetIdx >= u.startIndex && targetIdx < u.endIndex);
+            const targetIdx = lessons.findIndex(l => l && l.id === baseId);
+            if (units && Array.isArray(units)) {
+              unitIndex = units.findIndex(u => u && targetIdx >= (u.startIndex ?? 0) && targetIdx < (u.endIndex ?? 0));
+            }
           } else if (pathType === 'alphabet') {
-            unitIndex = units.findIndex(u => u.lessons?.some((l: any) => l.id === baseId));
+            if (units && Array.isArray(units)) {
+              unitIndex = units.findIndex(u => u?.lessons?.some((l: any) => l?.id === baseId));
+            }
           }
 
-          if (unitIndex !== -1) {
+          if (unitIndex !== -1 && units && units[unitIndex]) {
             const unit = units[unitIndex];
-            const lastLvlStr = localStorage.getItem(`last_level_${baseId}`);
-            const parsedLastLvl = lastLvlStr !== null ? parseInt(lastLvlStr, 10) : undefined;
+            
+            let parsedLastLvl = undefined;
+            try {
+              const lastLvlStr = localStorage.getItem(`last_level_${baseId}`);
+              parsedLastLvl = lastLvlStr !== null && !isNaN(parseInt(lastLvlStr, 10)) ? parseInt(lastLvlStr, 10) : undefined;
+            } catch (storageErr) {
+              console.warn("Could not read localStorage for last level:", storageErr);
+            }
 
             setSelectedLesson({
               lesson: foundLesson,
               isCompleted,
-              unitColor: unit.colorClass,
-              unitBorder: unit.borderClass,
-              unitText: unit.textClass,
-              unitHover: unit.hoverClass,
+              unitColor: unit.colorClass || 'bg-emerald-500',
+              unitBorder: unit.borderClass || 'border-emerald-600',
+              unitText: unit.textClass || 'text-emerald-500',
+              unitHover: unit.hoverClass || 'hover:bg-emerald-50',
               initialScrollLevel: parsedLastLvl
             });
             setActiveUnitIndex(unitIndex);
 
-            if (parsedLastLvl !== undefined && window.innerWidth >= 1280) {
+            if (parsedLastLvl !== undefined && typeof window !== 'undefined' && window.innerWidth >= 1280) {
               setModalLevel(parsedLastLvl);
             }
           }
         }
 
         setTimeout(() => {
-          const isDesktop = window.innerWidth >= 768;
-          const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
+          try {
+            const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
+            
+            // We use standard ID selection but catch any CSS syntax errors just in case
+            let el: Element | null = null;
+            try {
+               const targetId = isDesktop ? `#desktop-lesson-${baseId}` : `#mobile-lesson-${baseId}`;
+               el = document.querySelector(targetId);
+               if (!el) el = document.querySelector(hash);
+            } catch (queryErr) {
+               console.warn("Invalid selector format for lesson hash scrolling", queryErr);
+            }
 
-          let el = document.querySelector(targetId);
-          if (!el) {
-            el = document.querySelector(hash);
-          }
-
-          if (el) {
-            const y = el.getBoundingClientRect().top + window.scrollY - 100;
-            window.scrollTo({ top: y, behavior: 'smooth' });
+            if (el) {
+              const y = el.getBoundingClientRect().top + window.scrollY - 100;
+              window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+          } catch (scrollErr) {
+            console.error("Scroll error:", scrollErr);
           }
         }, 50);
       } catch (e) {
-        console.error(e);
+        console.error("Error inside useLessonHashRouting:", e);
       }
     }
 

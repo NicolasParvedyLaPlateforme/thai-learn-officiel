@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import Loading from '../loading';
+import Loading from '@/app/alphabet/loading';
 
 const AlphabetClientPage = dynamic(() => import('./AlphabetClientPage'), {
   ssr: false,

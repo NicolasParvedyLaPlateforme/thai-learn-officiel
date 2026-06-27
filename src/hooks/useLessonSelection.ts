@@ -5,20 +5,36 @@ export function useLessonSelection() {
   const scrollPositionRef = useRef<number>(0);
 
   const setSelectedLesson = useCallback((lessonData: any) => {
-    if (lessonData !== null && selectedLesson === null) {
-      scrollPositionRef.current = window.scrollY;
-      _setSelectedLesson(lessonData);
-      window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
-      setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0);
-    } else if (lessonData === null && selectedLesson !== null) {
-      _setSelectedLesson(null);
-      window.history.replaceState(null, '', window.location.pathname);
-      setTimeout(() => window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' }), 0);
-    } else {
-      _setSelectedLesson(lessonData);
-      if (lessonData) {
-        window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
+    try {
+      if (lessonData !== null && selectedLesson === null) {
+        scrollPositionRef.current = typeof window !== 'undefined' ? window.scrollY : 0;
+        _setSelectedLesson(lessonData);
+        try {
+          window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
+        } catch (e) {
+          console.warn('history.replaceState failed:', e);
+        }
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), 0);
+      } else if (lessonData === null && selectedLesson !== null) {
+        _setSelectedLesson(null);
+        try {
+          window.history.replaceState(null, '', window.location.pathname);
+        } catch (e) {
+          console.warn('history.replaceState failed:', e);
+        }
+        setTimeout(() => window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' }), 0);
+      } else {
+        _setSelectedLesson(lessonData);
+        if (lessonData) {
+          try {
+            window.history.replaceState(null, '', `#lesson-${lessonData.lesson.id}`);
+          } catch (e) {
+            console.warn('history.replaceState failed:', e);
+          }
+        }
       }
+    } catch (err) {
+      console.error('Error inside setSelectedLesson callback:', err);
     }
   }, [selectedLesson]);
 

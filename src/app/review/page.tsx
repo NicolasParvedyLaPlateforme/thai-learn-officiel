@@ -12,10 +12,10 @@ import { m as motion, AnimatePresence } from "motion/react";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 
 // Exercise Components
-import WordMatch from '../lesson/[id]/components/WordMatch';
-import SentenceBuilder from '../lesson/[id]/components/SentenceBuilder';
-import FreeTypingInput from '../lesson/[id]/components/FreeTypingInput';
-import VirtualKeyboard from '../writing/components/VirtualKeyboard';
+import WordMatch from '@/components/lesson/WordMatch';
+import SentenceBuilder from '@/components/lesson/SentenceBuilder';
+import FreeTypingInput from '@/components/lesson/FreeTypingInput';
+import VirtualKeyboard from '@/components/writing/VirtualKeyboard';
 import QuestionArea from '@/components/lesson/QuestionArea';
 import Footer from '@/components/lesson/Footer';
 import { SentenceWithHints } from "@/components/learn/Hints";

@@ -18,7 +18,7 @@ import { ErrorBoundary } from "@/components/providers/ErrorBoundary";
 import WordMatch from './WordMatch';
 import SentenceBuilder from './SentenceBuilder';
 import PairMatch from "@/components/learn/PairMatch";
-import VirtualKeyboard from '../../../writing/components/VirtualKeyboard';
+import VirtualKeyboard from '@/components/writing/VirtualKeyboard';
 import FreeTypingInput from './FreeTypingInput';
 import GlossaryModal from '@/components/lesson/GlossaryModal';
 import ResultScreen from '@/components/lesson/ResultScreen';

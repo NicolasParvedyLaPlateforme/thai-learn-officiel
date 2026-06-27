@@ -1,4 +1,4 @@
-import AlphabetClientWrapper from "./components/AlphabetClientWrapper";
+import AlphabetClientWrapper from "@/components/alphabet/AlphabetClientWrapper";
 import { getLightweightLessons } from "@/actions/course";
 
 export default async function AlphabetPage() {

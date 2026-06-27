@@ -9,7 +9,7 @@ import { X, Check, Volume2, LogOut } from 'lucide-react';
 import { playThaiTTS } from "@/lib/tts";
 
 import { getCharacterHint } from "@/data/phonetic-mapper";
-import VirtualKeyboard from "./components/VirtualKeyboard";
+import VirtualKeyboard from "@/components/writing/VirtualKeyboard";
 import { SentenceWithHints } from "@/components/learn/Hints";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { getWritingExercisesServer, getDictionaryForExerciseServer, getPhrasesForExerciseServer } from "@/actions/course";
