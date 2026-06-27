@@ -1,4 +1,4 @@
-import { AlphabetItem } from "@/data/alphabet-data";
+import { AlphabetItem } from "@/types";
 import { getLocalizedField } from "@/hooks/useTranslation";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 

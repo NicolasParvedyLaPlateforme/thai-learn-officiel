@@ -1,21 +1,4 @@
-export interface AlphabetItem {
-  letter: string;
-  type: 'consonant' | 'vowel';
-  consonantClass?: 'low' | 'mid' | 'high';
-  exampleWord: string;
-  exampleTranslation: string;
-  exampleTranslationEn?: string;
-  pronunciation: string; // The pronunciation of the example word, e.g. "ko kai"
-  mnemonicHintFr?: string;
-  mnemonicHintEn?: string;
-  mnemonicHintDe?: string;
-  mnemonicHintEs?: string;
-  mnemonicHintIt?: string;
-  exampleTranslationDe?: string;
-  exampleTranslationEs?: string;
-  exampleTranslationIt?: string;
-  mnemonicEmoji?: string;
-}
+import { AlphabetItem } from "@/types";
 
 export const THAI_ALPHABET: AlphabetItem[] = [
   // Consonants (Selection of most common ones for a start, but we can list all 44)

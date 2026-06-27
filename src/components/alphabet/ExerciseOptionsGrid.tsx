@@ -1,4 +1,4 @@
-import { AlphabetItem } from "@/data/alphabet-data";
+import { AlphabetItem } from "@/types";
 import { AlphabetExerciseOption } from "./AlphabetExerciseOption";
 
 interface ExerciseOptionsGridProps {

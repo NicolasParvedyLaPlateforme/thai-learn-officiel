@@ -1,5 +1,5 @@
-import { THAI_ALPHABET, AlphabetItem } from '@/data/alphabet-data';
-import { Word, Phrase } from "@/types";
+import { THAI_ALPHABET } from '@/data/alphabet-data';
+import { Word, Phrase, AlphabetItem, AlphabetLessonDef, AlphabetExerciseType, AlphabetExercise } from "@/types";
 import { getLocalizedField } from "@/hooks/useTranslation";
 
 export function formatCombiningChar(charStr: string): string {
@@ -16,15 +16,6 @@ export function formatCombiningChar(charStr: string): string {
   }
   
   return charStr;
-}
-
-export interface AlphabetLessonDef {
-  id: string; // 'c-1'
-  title: string;
-  titleEn: string;
-  type: 'consonant' | 'vowel';
-  items: AlphabetItem[];
-  imageUrl?: string;
 }
 
 export function getAlphabetLessons(): { consonants: AlphabetLessonDef[], vowels: AlphabetLessonDef[] } {
@@ -50,20 +41,6 @@ export function getAlphabetLessons(): { consonants: AlphabetLessonDef[], vowels:
     consonants: createLessons(consonants, 'c', 'consonant', 'Consonnes', 'Consonants'),
     vowels: createLessons(vowels, 'v', 'vowel', 'Voyelles', 'Vowels')
   };
-}
-
-export type AlphabetExerciseType = 'intro' | 'word-match' | 'phrase-match' | 'review' | 'phonetic-match' | 'audio-match';
-
-export interface AlphabetExercise {
-  id: string;
-  type: AlphabetExerciseType;
-  item: AlphabetItem;
-  options: AlphabetItem[]; // For choices
-  targetText: string; // The phrase or word
-  targetTranslation: string; // FR/EN translation
-  letterToPick: string; // The correct answer
-  phonetic: string;
-  explanation?: string;
 }
 
 export function generateAlphabetExercises(lessonDef: AlphabetLessonDef, level: number, language: string, allWords: Word[], allPhrases: Phrase[]): AlphabetExercise[] {

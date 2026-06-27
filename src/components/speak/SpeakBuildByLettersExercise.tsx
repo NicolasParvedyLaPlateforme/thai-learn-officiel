@@ -14,7 +14,8 @@ import { IconButton } from "@/components/ui/IconButton";
 import { Button } from "@/components/ui/Button";
 import { m as motion, AnimatePresence } from "motion/react";
 import { getWritingClustersAndGroups } from "@/lib/generators";
-import { THAI_ALPHABET, AlphabetItem } from "@/data/alphabet-data";
+import { THAI_ALPHABET } from "@/data/alphabet-data";
+import { AlphabetItem } from "@/types";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 
 const normalizeThai = (str: string) => {
