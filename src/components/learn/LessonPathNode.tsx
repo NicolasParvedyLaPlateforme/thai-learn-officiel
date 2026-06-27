@@ -233,7 +233,7 @@ export function LessonPathNode({
         {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
           <div className={`absolute top-1/2 -translate-y-1/2 w-32 md:w-56 lg:w-72 z-0 transition-all duration-500 ease-out
             ${isAccessible ? 'opacity-100' : 'opacity-50 grayscale blur-[1px]'}
-            ${getOffset(levelIndex) < 0 ? 'left-full ml-6 md:ml-12' : 'right-full mr-6 md:mr-12'}
+            ${getOffset(levelIndex) < 0 ? 'left-full ml-10 md:ml-20 lg:ml-28' : 'right-full mr-10 md:mr-20 lg:mr-28'}
           `}>
             <div className={`hidden md:block bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm mb-2 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-xs md:text-sm text-center transition-all duration-500`}>
               {getTranslation(`levelTitle.${levelIndex + 1}`, language)}

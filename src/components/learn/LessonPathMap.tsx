@@ -61,6 +61,9 @@ export function LessonPathMap({
    * of the last level (levelIndex-1 = maxLevel-1).
    */
   const getSlotHeight = (index: number): number => {
+    if (index === maxLevel) {
+      return BASE_SLOT_HEIGHT * 0.6; // Less space before mastery node
+    }
     const parts = lesson ? getLevelSplit(index, lesson) : 1;
     const extra = parts > 1 ? (parts - 1) * EXTRA_PER_PART : 0;
     return BASE_SLOT_HEIGHT + extra;
@@ -74,10 +77,12 @@ export function LessonPathMap({
   };
 
   const getOffset = (index: number) => {
+    if (index === maxLevel) return 0;
     return index % 2 === 0 ? -120 : 120;
   };
 
   const getMobileOffset = (index: number) => {
+    if (index === maxLevel) return 0;
     return index % 2 === 0 ? -70 : 70;
   };
 

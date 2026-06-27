@@ -196,7 +196,7 @@ export default function PathDesktopTimeline({
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                        className="w-full overflow-hidden flex flex-col items-center mt-8 relative"
+                        className="w-full overflow-hidden flex flex-col items-center pt-[60px] relative"
                       >
                         <div className="w-full relative">
                           <LessonPathMap
