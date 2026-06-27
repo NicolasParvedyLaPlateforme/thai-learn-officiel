@@ -72,11 +72,30 @@ export default function BaseMobileTimeline({
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
     const [expandedLessons, setExpandedLessons] = React.useState<Set<string>>(new Set());
 
+    const [hasAutoExpanded, setHasAutoExpanded] = React.useState(false);
+
     React.useEffect(() => {
-        if (selectedLesson && expandedLessons.size === 0) {
-            setExpandedLessons(new Set([selectedLesson.lesson.id]));
+        if (mounted && !hasAutoExpanded) {
+            setHasAutoExpanded(true);
+            let toExpand = null;
+            if (suggestedLessonId) {
+                toExpand = unitLessons.find(l => l.id === suggestedLessonId);
+            } else {
+                toExpand = unitLessons.find(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+            }
+            if (toExpand) {
+                setExpandedLessons(new Set([toExpand.id]));
+                
+                // Scroll to the card
+                setTimeout(() => {
+                    const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
+                    if (cardEl) {
+                        cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 500);
+            }
         }
-    }, [selectedLesson]);
+    }, [mounted, hasAutoExpanded, suggestedLessonId, unitLessons, lessonLevels, maxLevelPerLesson]);
 
     const completedLevelsInUnit = mounted
         ? unitLessons.reduce((acc, l) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson), 0)
@@ -241,7 +260,7 @@ export default function BaseMobileTimeline({
 
                     {/* Timeline Nodes */}
                     <div className="flex flex-col w-full mt-12 pl-2 pr-2 sm:pl-4 sm:pr-4">
-                        <div className="flex flex-col relative w-full pb-8">
+                        <div className="flex flex-col relative w-full pb-2">
                             {unitLessons.map((lesson, idx) => {
                                 const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
                                 const isBilan = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
@@ -291,7 +310,7 @@ export default function BaseMobileTimeline({
                                                     animate={{ height: 'auto', opacity: 1 }}
                                                     exit={{ height: 0, opacity: 0 }}
                                                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                                                    className="w-full overflow-hidden flex flex-col items-center mt-6 relative"
+                                                    className="w-full overflow-hidden flex flex-col items-center pt-[60px] relative"
                                                 >
                                                     <div className="w-full relative">
                                                         <LessonPathMap

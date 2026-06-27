@@ -62,7 +62,7 @@ export function LessonPathMap({
    */
   const getSlotHeight = (index: number): number => {
     if (index === maxLevel) {
-      return BASE_SLOT_HEIGHT * 0.6; // Less space before mastery node
+      return BASE_SLOT_HEIGHT * 0.2; // Significantly less space before mastery node
     }
     const parts = lesson ? getLevelSplit(index, lesson) : 1;
     const extra = parts > 1 ? (parts - 1) * EXTRA_PER_PART : 0;
@@ -253,26 +253,7 @@ export function LessonPathMap({
   return (
     <div className="flex flex-col items-center justify-start w-full relative pt-12 pb-0">
 
-      {/* Floating Back Button */}
-      {typeof document !== 'undefined' && createPortal(
-        <div 
-          className={`fixed bottom-6 lg:bottom-10 right-6 lg:right-10 z-[100] transition-all duration-500 ease-out ${menuVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
-        >
-          {onBack && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onBack();
-              }}
-              className={`px-6 py-3 lg:px-8 lg:py-4 rounded-full flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-105 active:scale-95 ${unitColor} text-white font-bold text-sm lg:text-base`}
-            >
-              <span>Réduire</span>
-              <X size={24} />
-            </button>
-          )}
-        </div>,
-        document.body
-      )}
+      {/* Floating Back Button removed as requested */}
 
       {nodes.map((levelIndex) => (
         <LessonPathNode

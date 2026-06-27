@@ -49,12 +49,12 @@ export function PartSubNode({
     const iconSize = isMobile ? 28 : 32;
 
     const btnStateClass = !isPartAccessible
-        ? "bg-slate-100 border-b-[6px] border-slate-200 text-slate-300 cursor-not-allowed"
+        ? "bg-slate-100 border-b-[6px] border-slate-200 text-slate-300 cursor-not-allowed opacity-60 grayscale"
         : isPartCompleted
             ? `${unitColor} border-b-[6px] ${unitBorder} text-white hover:scale-110 active:scale-95`
             : isNextPart
-                ? `bg-white border-[4px] border-b-[6px] ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse`
-                : "bg-white border-b-[6px] border-slate-300 text-slate-400 hover:scale-105";
+                ? `bg-white border-[4px] border-b-[6px] ${unitColor.replace('bg-', 'border-')} ${unitText} hover:scale-110 animate-pulse ring-4 ring-emerald-100 ring-offset-2`
+                : "bg-slate-100 border-b-[6px] border-slate-200 text-slate-400 hover:scale-105 opacity-60";
 
     const btnActiveClass = isOpen ? `scale-110 ring-[3px] ring-offset-[2px] ${unitColor.replace('bg-', 'ring-')}` : "";
 

@@ -77,11 +77,30 @@ export default function PathDesktopTimeline({
 
   const [expandedLessons, setExpandedLessons] = useState<Set<string>>(new Set());
 
+  const [hasAutoExpanded, setHasAutoExpanded] = useState(false);
+
   useEffect(() => {
-    if (selectedLesson && expandedLessons.size === 0) {
-      setExpandedLessons(new Set([selectedLesson.lesson.id]));
+    if (mounted && !hasAutoExpanded) {
+      setHasAutoExpanded(true);
+      let toExpand = null;
+      if (suggestedLessonId) {
+        toExpand = unitLessons.find(l => l.id === suggestedLessonId);
+      } else {
+        toExpand = unitLessons.find(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+      }
+      if (toExpand) {
+        setExpandedLessons(new Set([toExpand.id]));
+        
+        // Scroll to the card
+        setTimeout(() => {
+          const cardEl = document.getElementById(`lesson-card-${toExpand.id}`);
+          if (cardEl) {
+            cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 500);
+      }
     }
-  }, [selectedLesson]);
+  }, [mounted, hasAutoExpanded, suggestedLessonId, unitLessons, lessonLevels, maxLevelPerLesson]);
 
   return (
     <div key={`desktop-unit-${unit.id}`} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
@@ -112,7 +131,7 @@ export default function PathDesktopTimeline({
         />
 
         <div className="flex flex-col w-full mt-10">
-          <div className="flex flex-col relative w-full pb-8 md:pb-16">
+          <div className="flex flex-col relative w-full pb-4 md:pb-8">
             {unitLessons.map((lesson, idx) => {
               const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
               const isMaxLevel = level >= maxLevelPerLesson;
@@ -157,7 +176,7 @@ export default function PathDesktopTimeline({
               };
 
               return (
-                <div key={`desktop-node-${lesson.id}`} className="w-full relative">
+                <div id={`desktop-node-${lesson.id}`} key={`desktop-node-${lesson.id}`} className="w-full relative">
                   <div className="w-full relative">
                     <MobileTimelineNodeLayout
                       lessonId={lesson.id}

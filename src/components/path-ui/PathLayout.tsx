@@ -123,28 +123,10 @@ export default function PathLayout({
   useEffect(() => {
     if (mounted && !isProcessingHash && !selectedLesson && !hasAutoSelected) {
       setHasAutoSelected(true);
-      let toSelect = null;
-      if (suggestedLessonId) {
-        toSelect = lessons.find(l => l.id === suggestedLessonId);
-      } else {
-        toSelect = lessons.find(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
-      }
-      if (toSelect) {
-        const lessonIndex = lessons.indexOf(toSelect);
-        const unit = units.find(u => u.startIndex <= lessonIndex && u.endIndex > lessonIndex);
-        if (unit) {
-          setSelectedLesson({
-            lesson: toSelect,
-            isCompleted: (lessonLevels[toSelect.id] || 0) >= maxLevelPerLesson,
-            unitColor: unit.colorClass,
-            unitBorder: unit.borderClass,
-            unitText: unit.textClass,
-            unitHover: unit.hoverClass
-          });
-        }
-      }
+      // Removed setSelectedLesson here so that the sidebar/modal doesn't open automatically on page load.
+      // Auto-expansion of the timeline will be handled by the timeline components based on suggestedLessonId.
     }
-  }, [mounted, isProcessingHash, selectedLesson, hasAutoSelected, lessons, units, lessonLevels, maxLevelPerLesson, suggestedLessonId, setSelectedLesson]);
+  }, [mounted, isProcessingHash, selectedLesson, hasAutoSelected]);
 
   const activeUnit = units[activeUnitIndex];
   const pageTitleKey = pathType === 'alphabet' ? 'sidebar.alphabet' : pathType === 'speak' ? 'sidebar.speaking' : 'sidebar.vocabulary';
