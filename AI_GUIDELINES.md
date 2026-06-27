@@ -60,6 +60,14 @@ L'application est divisée en sections principales, chacune accessible via son U
 
 ---
 
+## 🔒 GESTION DE LA PROGRESSION ET DE L'XP (NOUVELLE ARCHITECTURE)
+
+- **Source de Vérité = Serveur :** L'XP, les pièces d'or (goldCoins) et les récompenses de cadeaux ne doivent **JAMAIS** être calculés de manière finale côté client (Zustand/localStorage). Le client effectue des mises à jour optimistes (UI immédiate), mais l'état réel et sécurisé est géré par les **Server Actions** dans `src/actions/secureProgress.ts`.
+- **Incrémentations Atomiques :** Lors de l'ajout d'XP ou d'or dans la base de données, il faut **TOUJOURS** utiliser l'incrémentation atomique de PostgreSQL (`{ increment: amount }`). Il ne faut jamais lire la valeur, l'additionner puis la sauvegarder pour éviter les conflits et écrasements ("Race Conditions").
+- **Synchronisation JSON (`SyncProgress`) :** La sauvegarde périodique de l'état `progressData` (données annexes) via `saveProgress` doit **systématiquement fusionner (merge)** les données avec ce qui est déjà en base de données. Ne jamais écraser la totalité du JSON, pour ne pas perdre des données (comme les `unopenedGifts`).
+
+---
+
 ## 🚨 RÈGLES STRICTES ET INTERDITS
 
 ### 1. Fichiers de données (Intouchables 🚫)
