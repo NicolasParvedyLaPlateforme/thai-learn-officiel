@@ -102,9 +102,9 @@ export default function ResultScreen({
           </button>
 
           <Button
-            variant="flat"
+            variant="retour"
             size="lg"
-            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            className="flex-1 text-lg gap-2"
             onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet' : 'learn'}#lesson-${lesson.id}`, getTranslation('auto.back', language))}>
             <LogOut size={20} className="rotate-180" />
             {getTranslation('auto.back', language)}
@@ -220,9 +220,9 @@ export default function ResultScreen({
 
         <div className="flex flex-row gap-4 w-full">
           <Button
-            variant={mode === 'training' ? "gamified" : "flat"}
+            variant={mode === 'training' ? "gamified" : "retour"}
             size="lg"
-            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            className="flex-1 text-lg gap-2"
             onClick={() => {
               if (mode === 'training') {
                 const partStr = searchParams.get("part");

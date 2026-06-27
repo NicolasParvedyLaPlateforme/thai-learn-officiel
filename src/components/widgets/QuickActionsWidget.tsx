@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useProgressStore } from "@/lib/store";
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
+import { ActionCardButton } from "@/components/ui/ActionCardButton";
 import { Zap, Play, RotateCcw, Target, Crown, ChevronLeft } from 'lucide-react';
 import { m as motion, AnimatePresence } from "motion/react";
 import { useRouter } from 'next/navigation';
@@ -378,6 +379,7 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop', pa
         </div>
 
         {/* Bouton Suivant */}
+        {/* Bouton Suivant */}
         <button 
           onClick={handleSuivant}
           className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-[14px] transition-all cursor-pointer ${isUnitCompleted ? 'bg-slate-100 text-slate-400' : `${unitColorClass} text-white ${unitHoverClass} hover:scale-[1.02] active:scale-95 shadow-sm`}`}
@@ -405,42 +407,36 @@ export function QuickActionsWidget({ lightweightLessons, variant = 'desktop', pa
         
         <div className="flex gap-3">
           {/* BOUTON ENTRAINEMENT */}
-          <button 
+          {/* BOUTON ENTRAINEMENT */}
+          <ActionCardButton
             onClick={handleEntrainement}
             disabled={!nextLesson}
-            className={`flex-1 relative rounded-[16px] p-3 flex flex-col items-center justify-center gap-1.5 transition-all group/btn
-              ${nextLesson 
-                ? 'bg-white border-2 border-slate-200 text-slate-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 active:scale-95 cursor-pointer' 
-                : 'bg-slate-50 border-2 border-slate-100 text-slate-400 cursor-not-allowed opacity-50'}`}
-          >
-            <Target size={20} className={nextLesson ? "text-blue-500" : "text-slate-400"} />
-            <span className="font-bold text-[13px]">{getTranslation('auto.training', language) || "Entraînement"}</span>
-
-            {/* Bulle Tooltip */}
-            <div className="absolute -top-16 left-0 bg-white border-2 border-slate-100 text-slate-600 text-[13px] font-bold px-4 py-3 rounded-2xl opacity-0 group-hover/btn:opacity-100 transition-all pointer-events-none shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-20 w-[220px] text-center leading-snug">
-              <span className="text-amber-500 font-extrabold">+10 XP</span> • {getTranslation('auto.chance_win_coins', language) || "1 chance sur 5 de gagner 1 à 3 pièces ! 🪙"}
-              <div className="absolute -bottom-2 left-[30%] -translate-x-1/2 w-3.5 h-3.5 bg-white border-b-2 border-r-2 border-slate-100 rotate-45"></div>
-            </div>
-          </button>
+            icon={<Target size={20} />}
+            label={getTranslation('auto.training', language) || "Entraînement"}
+            activeColorClass="hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600"
+            activeIconColorClass="text-blue-500"
+            tooltip={
+              <>
+                <span className="text-amber-500 font-extrabold">+10 XP</span> • {getTranslation('auto.chance_win_coins', language) || "1 chance sur 5 de gagner 1 à 3 pièces ! 🪙"}
+              </>
+            }
+          />
 
           {/* BOUTON REVISION */}
-          <button 
+          <ActionCardButton
             onClick={handleRevision}
             disabled={!randomMasteredLesson}
-            className={`flex-1 relative rounded-[16px] p-3 flex flex-col items-center justify-center gap-1.5 transition-all group/btn
-              ${randomMasteredLesson 
-                ? 'bg-white border-2 border-slate-200 text-slate-700 hover:border-purple-400 hover:bg-purple-50 hover:text-purple-600 active:scale-95 cursor-pointer' 
-                : 'bg-slate-50 border-2 border-slate-100 text-slate-400 cursor-not-allowed opacity-50'}`}
-          >
-            <RotateCcw size={20} className={randomMasteredLesson ? "text-purple-500" : "text-slate-400"} />
-            <span className="font-bold text-[13px]">{getTranslation('auto.review_action', language) || "Réviser"}</span>
-
-            {/* Bulle Tooltip */}
-            <div className="absolute -top-16 right-0 bg-white border-2 border-slate-100 text-slate-600 text-[13px] font-bold px-4 py-3 rounded-2xl opacity-0 group-hover/btn:opacity-100 transition-all pointer-events-none shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-20 w-[220px] text-center leading-snug">
-              <span className="text-amber-500 font-extrabold">+50 XP</span> • {getTranslation('auto.chance_win_coins', language) || "1 chance sur 5 de gagner 1 à 3 pièces ! 🪙"}
-              <div className="absolute -bottom-2 right-[30%] translate-x-1/2 w-3.5 h-3.5 bg-white border-b-2 border-r-2 border-slate-100 rotate-45"></div>
-            </div>
-          </button>
+            icon={<RotateCcw size={20} />}
+            label={getTranslation('auto.review_action', language) || "Réviser"}
+            activeColorClass="hover:border-purple-400 hover:bg-purple-50 hover:text-purple-600"
+            activeIconColorClass="text-purple-500"
+            tooltip={
+              <>
+                <span className="text-amber-500 font-extrabold">+50 XP</span> • {getTranslation('auto.chance_win_coins', language) || "1 chance sur 5 de gagner 1 à 3 pièces ! 🪙"}
+              </>
+            }
+            className="[&>div:last-child]:right-0 [&>div:last-child]:left-auto [&>div:last-child>div]:right-[30%] [&>div:last-child>div]:left-auto [&>div:last-child>div]:translate-x-1/2"
+          />
         </div>
 
         {/* BOUTON SUIVANT */}

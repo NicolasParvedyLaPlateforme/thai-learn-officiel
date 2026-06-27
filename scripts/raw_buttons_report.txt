@@ -1,0 +1,162 @@
+C:\xampp\htdocs\thai-learn-officiel\src\app\alphabet\lesson\[id]\components\AlphabetExerciseOption.tsx:36: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\alphabet\lesson\[id]\components\AlphabetLessonClientPage.tsx:291: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\alphabet\lesson\[id]\components\AlphabetLessonClientPage.tsx:338: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\alphabet\lesson\[id]\components\AlphabetLessonClientPage.tsx:350: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\page.tsx:124: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\page.tsx:224: <button onClick={() => { setSelectedStoryId(null); setSelectedConvId(null); }} className="hover:text-slate-600 transition-colors">
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\page.tsx:438: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\page.tsx:462: <button onClick={handlePlayExcerpt} className="bg-white/95 backdrop-blur text-slate-800 text-sm font-bold px-6 py-3 rounded-2xl flex items-center gap-2 shadow-xl hover:scale-105 active:scale-95 transition-all">
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:568: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:654: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:696: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:709: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:720: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:730: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:770: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:809: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:852: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:878: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:900: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\conversations\[id]\components\ConversationClientPage.tsx:928: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\detective\page.tsx:82: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\detective\page.tsx:183: <button onClick={() => { setSelectedCategoryId(null); setSelectedLevelId(null); }} className="hover:text-slate-600 transition-colors">
+C:\xampp\htdocs\thai-learn-officiel\src\app\detective\page.tsx:323: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\forgot-password\page.tsx:89: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\global-error.tsx:15: <button onClick={() => reset()}>Try again</button>
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\FreeTypingInput.tsx:64: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\FreeTypingInput.tsx:73: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\FreeTypingInput.tsx:99: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\FreeTypingInput.tsx:110: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\LessonClientPage.tsx:775: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\SentenceBuilder.tsx:203: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\WordMatch.tsx:106: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\WordMatch.tsx:120: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\WordMatch.tsx:131: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\WordMatch.tsx:142: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\lesson\[id]\components\WordMatch.tsx:208: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\login\page.tsx:134: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\login\page.tsx:151: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\practice\page.tsx:122: <button onClick={() => setReviewConfigModalOpen(true)} className="group flex flex-col bg-white border-2 border-slate-200 rounded-3xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-indigo-300 active:translate-y-0 active:shadow-md transition-all duration-300 text-left w-full h-full">
+C:\xampp\htdocs\thai-learn-officiel\src\app\practice\page.tsx:200: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\practice\page.tsx:246: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\profile\page.tsx:205: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\profile\page.tsx:228: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\profile\page.tsx:349: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\profile\page.tsx:376: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\profile\page.tsx:382: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\profile\page.tsx:408: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\profile\page.tsx:418: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\reset-password\page.tsx:129: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\speak\lesson\[id]\SpeakLessonClient.tsx:333: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\speaking\page.tsx:56: <button onClick={() => router.push('/practice')} className="px-6 py-3 bg-orange-500 text-white rounded-xl font-bold hover:bg-orange-600 transition-colors">
+C:\xampp\htdocs\thai-learn-officiel\src\app\speaking\page.tsx:66: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\writing\components\VirtualKeyboard.tsx:165: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\writing\components\VirtualKeyboard.tsx:191: <button
+C:\xampp\htdocs\thai-learn-officiel\src\app\writing\components\VirtualKeyboard.tsx:211: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveDevMode.tsx:186: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveDevMode.tsx:308: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveDevMode.tsx:315: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveDevMode.tsx:321: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveGame.tsx:536: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveGame.tsx:556: <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveGame.tsx:567: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\detective\DetectiveGame.tsx:599: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarLeft.tsx:91: <button onClick={() => setMobileSidebarOpen(false)} className="absolute top-4 right-4 p-2 text-slate-500 hover:bg-slate-200 rounded-lg">
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarLeft.tsx:102: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarLeft.tsx:232: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarLeft.tsx:245: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarLeft.tsx:274: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarLeft.tsx:309: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarRight.tsx:312: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarRight.tsx:329: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarRight.tsx:445: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\DesktopSidebarRight.tsx:503: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\HeaderActions.tsx:41: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\layout\HeaderActions.tsx:57: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\Hints.tsx:70: <button onClick={(e) => {
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\Hints.tsx:114: <button onClick={(e) => {
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\Hints.tsx:133: <button onClick={(e) => { e.stopPropagation(); setToneAnalyzerModalWord(tooltipTranslation); }} className="p-1 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mx-1" title={language === 'en' ? 'Analyze Tone' : 'Analyser le Ton'}>
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\Hints.tsx:160: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\LessonPartsSelector.tsx:133: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\LessonPartsSelector.tsx:150: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\LessonPathMap.tsx:254: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\LessonPathMobileNav.tsx:41: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\LessonPathMobileNav.tsx:64: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\LessonPathNode.tsx:272: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\LessonPathNode.tsx:413: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\learn\PartSubNode.tsx:65: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\ExerciseHeader.tsx:26: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\ExerciseHeader.tsx:40: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\GlossaryModal.tsx:77: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\GlossaryModal.tsx:92: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\HeaderProgressBar.tsx:98: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\HeaderProgressBar.tsx:184: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\HeaderProgressBar.tsx:203: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\InstructionBlock.tsx:104: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\PracticeHeader.tsx:21: <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\QuestionArea.tsx:258: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\lesson\ResultScreen.tsx:96: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\LanguageSelectorModal.tsx:63: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\LockedReviewModal.tsx:38: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\QuestsModal.tsx:25: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\SpeakingConfigModal.tsx:78: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\SpeakingConfigModal.tsx:103: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\SpeakingConfigModal.tsx:109: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\SpeakingConfigModal.tsx:115: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\SpeakingConfigModal.tsx:121: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\UnitsModal.tsx:37: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\modals\UnitsModal.tsx:48: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\path-ui\PathMobileHeader.tsx:41: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\path-ui\PathMobileHeader.tsx:83: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\path-ui\SharedLessonCard.tsx:366: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\path-ui\SharedLessonCard.tsx:372: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakAnswerMeExercise.tsx:295: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakAnswerMeExercise.tsx:333: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakAnswerMeExercise.tsx:364: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakAnswerMeExercise.tsx:408: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakBuildByLettersExercise.tsx:430: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakBuildByLettersExercise.tsx:519: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakBuildPhraseExercise.tsx:422: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakBuildPhraseExercise.tsx:431: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakBuildPhraseExercise.tsx:453: <button onClick={stopAndEvaluate} className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] transition-all">
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakConversationExercise.tsx:372: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakConversationExercise.tsx:390: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakConversationExercise.tsx:417: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakingExercise.tsx:339: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakingExercise.tsx:422: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakingExercise.tsx:434: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakingExercise.tsx:444: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakingExercise.tsx:475: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\speak\SpeakingExercise.tsx:488: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:288: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:314: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:346: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:352: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:362: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:383: <button onClick={resetSearch} className="px-5 py-2 md:px-6 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-xs md:text-sm font-bold transition-colors">
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:411: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:420: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:436: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\tone-analyzer\ToneAnalyzerContent.tsx:456: <button onClick={() => setShowMobileExplanation(false)} className="p-1 hover:bg-white/10 rounded-full text-indigo-200 hover:text-white transition-colors"><X size={16}/></button>
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\BannerUnitsButton.tsx:13: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\ButtonConfetti.tsx:9: <button className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition ${className}`}>
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\PlayAudioButton.tsx:13: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\PWAInstallButton.tsx:77: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\PWAInstallButton.tsx:96: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\PWAInstallButton.tsx:135: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\ResponsiveModal.tsx:35: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\SubmitButton.tsx:10: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\VocabularySelector.tsx:38: <button onClick={onSelectAll} disabled={isLoading} className="text-xs font-bold text-indigo-500 hover:text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md disabled:opacity-50">
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\VocabularySelector.tsx:41: <button onClick={onDeselectAll} disabled={isLoading} className="text-xs font-bold text-slate-500 hover:text-slate-600 bg-slate-100 px-2 py-1 rounded-md disabled:opacity-50">
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\VocabularySelector.tsx:59: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\ui\WordTile.tsx:97: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\DailyQuestsWidget.tsx:49: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:248: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:270: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:287: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:308: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:353: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:364: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:381: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:408: <button
+C:\xampp\htdocs\thai-learn-officiel\src\components\widgets\QuickActionsWidget.tsx:427: <button

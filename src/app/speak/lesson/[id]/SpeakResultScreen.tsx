@@ -88,9 +88,9 @@ export default function SpeakResultScreen({
         )}
         <div className="flex flex-row gap-4 w-full">
           <Button
-            variant="flat"
+            variant="retour"
             size="lg"
-            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            className="flex-1 text-lg gap-2"
             onClick={() => router.push(`/speak#lesson-${lessonId}`)}
           >
             <LogOut size={20} className="rotate-180" />

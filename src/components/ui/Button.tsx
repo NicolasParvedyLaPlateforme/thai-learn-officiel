@@ -15,6 +15,7 @@ const gamifiedVariants = [
   "fuchsiaGamified",
   "darkGamified",
   "gamifiedSecondary",
+  "validation",
 ] as const
 
 const buttonVariants = cva(
@@ -40,6 +41,8 @@ const buttonVariants = cva(
         fuchsiaGamified: "bg-fuchsia-500 text-white border-b-4 border-fuchsia-700 active:border-b-0 active:translate-y-1 hover:bg-fuchsia-400",
         darkGamified: "bg-zinc-900 text-white border-b-4 border-zinc-950 active:border-b-0 active:translate-y-1 hover:bg-zinc-800 shadow-lg",
         gamifiedSecondary: "bg-slate-100 text-slate-700 border-b-4 border-slate-200 active:border-b-0 active:translate-y-1 hover:bg-slate-200 hover:border-slate-300",
+        validation: "bg-emerald-500 text-white border-b-4 border-emerald-600 active:border-b-0 active:translate-y-1 hover:bg-emerald-400",
+        retour: "bg-slate-50 border-2 border-slate-200 text-slate-500 hover:bg-slate-100 active:scale-95 shadow-none font-bold uppercase tracking-widest",
         flat: "bg-slate-50 border border-slate-200 text-slate-500 hover:bg-slate-100 active:scale-95 shadow-none",
         chipIndigo: "bg-indigo-50 text-indigo-500 hover:text-indigo-600 hover:bg-indigo-100 active:scale-95 shadow-none font-bold",
         chipSlate: "bg-slate-100 text-slate-500 hover:text-slate-600 hover:bg-slate-200 active:scale-95 shadow-none font-bold",
@@ -108,3 +111,4 @@ const getGamifiedVariant = (colorClass?: string): any => {
 };
 
 export { Button, buttonVariants, getGamifiedVariant }
+
