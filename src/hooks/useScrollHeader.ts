@@ -5,7 +5,12 @@ export function useScrollHeader(threshold: number = 50) {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
+    const mountTime = Date.now();
+
     const handleScroll = () => {
+      // Ignore programmatic scrolling on initial load
+      if (Date.now() - mountTime < 1500) return;
+
       const currentScrollY = window.scrollY;
       if (currentScrollY <= 0) {
         setShowHeader(true);

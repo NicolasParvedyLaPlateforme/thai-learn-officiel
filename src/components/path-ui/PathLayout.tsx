@@ -133,17 +133,15 @@ export default function PathLayout({
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
-      {!selectedLesson && (
-        <PathMobileHeader
-          showHeader={showHeader}
-          mounted={mounted}
-          language={language}
-          setIsUnitsModalOpen={setIsUnitsModalOpen}
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-          pageTitleKey={pageTitleKey}
-          pathType={pathType}
-        />
-      )}
+      <PathMobileHeader
+        showHeader={showHeader}
+        mounted={mounted}
+        language={language}
+        setIsUnitsModalOpen={setIsUnitsModalOpen}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+        pageTitleKey={pageTitleKey}
+        pathType={pathType}
+      />
 
       <MobileHeaderMenu
         isOpen={isMobileMenuOpen}
