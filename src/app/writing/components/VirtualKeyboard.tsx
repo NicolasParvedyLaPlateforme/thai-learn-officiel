@@ -4,6 +4,7 @@ import { Exercise } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
 import { Delete, Volume2 } from 'lucide-react';
 import { formatCombiningChar } from "@/lib/alphabet-utils";
+import { Button } from "@/components/ui/Button";
 import { useProgressStore } from "@/lib/store";
 
 interface Props {
@@ -162,8 +163,9 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
             )}
           </div>
           {exercise.type === 'writing' && exercise.blindMode && exercise.correctComponents && !isChecking && (
-            <button 
-              className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
+            <Button 
+              variant="outline"
+              className="flex items-center justify-center gap-1 bg-indigo-50 border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
               onClick={() => {
                 if (selected.length < exercise.correctComponents!.length) {
                   playThaiTTS(exercise.correctComponents![selected.length]);
@@ -175,7 +177,7 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
             >
               <Volume2 size={24} strokeWidth={2.5} />
               <span className="font-bold text-lg leading-none">A</span>
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -188,18 +190,19 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
           let btnClass = 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2';
           
           return (
-            <button
+            <Button
+              variant="outline"
               key={`key-${opt.idx}`}
               onClick={() => handleSelect(opt.th)}
               disabled={disabled}
               className={`
                 rounded-xl font-medium font-thai select-none transition-all
                 text-4xl sm:text-5xl flex items-center justify-center h-16 sm:h-20
-                ${btnClass}
+                ${btnClass} border-none
               `}
             >
               <span className="leading-none pt-1">{displayStr}</span>
-            </button>
+            </Button>
           );
         })}
 
@@ -208,19 +211,20 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
         ))}
 
         {/* Backspace Button */}
-        <button
+        <Button
+          variant="outline"
           onClick={handleBackspace}
           disabled={disabled || selected.length === 0}
           className={`
             rounded-xl font-medium select-none transition-all
-            flex items-center justify-center h-16 sm:h-20
+            flex items-center justify-center h-16 sm:h-20 border-none p-0
             ${(!disabled && selected.length > 0)
               ? 'bg-slate-200 border-2 border-b-4 border-slate-300 text-slate-700 hover:bg-slate-300 cursor-pointer active:translate-y-0.5 active:border-b-2' 
               : 'bg-slate-100 border-2 border-slate-100 text-slate-300 pointer-events-none'}
           `}
         >
           <Delete size={32} />
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -5,12 +5,13 @@ import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { DetectiveLevel, DetectiveObject } from "@/types";
 import { useProgressStore } from "@/lib/store";
-import { Volume2, Search, CheckCircle2, Maximize, Minimize, ChevronLeft, Menu, Star, Eye } from 'lucide-react';
+import { RotateCcw, Volume2, Search, ArrowLeft, Star, Eye, Info, X, CheckCircle2, ChevronLeft } from 'lucide-react';
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
 import Link from 'next/link';
 import Image from 'next/image';
 import { playThaiTTS } from "@/lib/tts";
 import detectiveData from "@/data/detective.json";
-import { Button } from "@/components/ui/Button";
 
 interface Props {
   level: DetectiveLevel;
@@ -533,12 +534,13 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
         {/* Center: Current Word */}
         <div className="flex-1 flex items-center justify-center gap-2 lg:gap-6 px-1 lg:px-2">
-          <button
+          <IconButton
+            size="lg"
             onClick={(e) => { e.stopPropagation(); playThaiTTS(currentObj.th); }}
-            className="w-8 h-8 lg:w-16 lg:h-16 bg-emerald-500 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-md lg:shadow-lg shrink-0 transition-transform active:scale-95 border lg:border-2 border-emerald-400"
+            className="w-8 h-8 lg:w-16 lg:h-16 bg-emerald-500 hover:bg-emerald-600 text-white shadow-md lg:shadow-lg shrink-0 border lg:border-2 border-emerald-400"
           >
             <Volume2 className="w-4 h-4 lg:w-8 lg:h-8" />
-          </button>
+          </IconButton>
 
           <div className="flex flex-col items-center justify-center min-w-[80px] lg:min-w-[200px]">
             <div className="text-lg lg:text-4xl font-bold font-thai text-slate-800 mb-0 lg:mb-1 tracking-wide">
@@ -553,9 +555,14 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
                     {getLocalizedField(currentObj, '', language)}
                   </span>
                 ) : (
-                  <button onClick={() => setIsTranslationRevealed(true)} className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-[9px] lg:text-sm font-bold transition-colors shadow-sm active:scale-95">
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsTranslationRevealed(true)} 
+                    className="flex items-center gap-1 lg:gap-1.5 px-2 py-0.5 lg:px-4 lg:py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-[9px] lg:text-sm font-bold border-none shadow-sm"
+                  >
                     <Eye className="w-3 h-3 lg:w-4 lg:h-4" /> {getTranslation('auto.show_hint', language)}
-                  </button>
+                  </Button>
                 )
               )}
             </div>
@@ -564,11 +571,12 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
 
         {/* Right side: Magnifying Glass Bonus */}
         <div className="flex items-center justify-end w-[60px] lg:w-[120px] pr-1 lg:pr-2">
-          <button
+          <IconButton
+            size="lg"
             onClick={() => setIsMagnifierActive(!isMagnifierActive)}
-            className={`relative w-8 h-8 lg:w-16 lg:h-16 rounded-full flex items-center justify-center shadow-md lg:shadow-lg transition-all border lg:border-2 overflow-hidden
+            className={`relative w-8 h-8 lg:w-16 lg:h-16 shadow-md lg:shadow-lg border lg:border-2 overflow-hidden
               ${isMagnifierActive
-                ? 'bg-amber-400 border-amber-300 text-amber-900 scale-95 shadow-inner'
+                ? 'bg-amber-400 hover:bg-amber-400 border-amber-300 text-amber-900 scale-95 shadow-inner'
                 : 'bg-gradient-to-b from-[#4bc4e6] to-[#2c98b8] border-[#227b96] text-white hover:scale-105 hover:shadow-xl'
               }
             `}
@@ -576,7 +584,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
             <Search className={`w-4 h-4 lg:w-8 lg:h-8 relative z-10 ${isMagnifierActive ? 'drop-shadow-sm' : 'drop-shadow-md'}`} />
             {/* Shine effect */}
             {!isMagnifierActive && <div className="absolute inset-0 z-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-50"></div>}
-          </button>
+          </IconButton>
         </div>
       </div>
 
@@ -596,12 +604,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
             <p className="text-xs text-slate-500">clientY: {debugInfo.clientY} | rectTop: {debugInfo.rectTop}</p>
             <p className="text-xs text-slate-500">rectHeight: {debugInfo.rectHeight} | layoutHeight: {debugInfo.imgLayoutHeight}</p>
 
-            <button
-              onClick={() => setDebugInfo(null)}
-              className="mt-4 w-full py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-xl"
-            >
-              Fermer la modale
-            </button>
+
 
             <Button variant="indigoGamified" onClick={() => setDebugInfo(null)}>Fermer la modale</Button>
           </div>

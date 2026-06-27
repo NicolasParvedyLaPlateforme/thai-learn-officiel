@@ -1,5 +1,6 @@
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import React, { useState, useMemo } from 'react';
+import { Button } from "@/components/ui/Button";
 import { Exercise } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
@@ -104,7 +105,7 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                {getTranslation('auto.only_one_letter_differentiates', language)}
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
-                <button
+                <Button
                   onClick={() => {
                      if (!showHint1) handleHintClick();
                      setShowHint1(true);
@@ -116,9 +117,9 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                    <span className="hidden sm:inline">
                       {showHint1 ? (getTranslation('auto.replay_sound', language)) : (getTranslation('auto.hint_1', language))}
                    </span>
-                </button>
+                </Button>
 
-                <button
+                <Button
                   onClick={() => {
                      if (!showHint2) handleHintClick();
                      setShowHint2(true);
@@ -127,9 +128,9 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                 >
                    {!showHint2 && <ImageIcon size={16} />} 
                    {showHint2 ? <span className="text-xl leading-none">{diffAnalysis.matchedLetter.mnemonicEmoji || '?'}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_2', language)}</span>}
-                </button>
+                </Button>
 
-                <button
+                <Button
                   onClick={() => {
                      if (!showHint3) handleHintClick();
                      setShowHint3(true);
@@ -138,9 +139,9 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                 >
                    {!showHint3 && <Type size={16} />} 
                    {showHint3 ? <span>{diffAnalysis.matchedLetter.pronunciation}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
-                </button>
+                </Button>
                 
-                <button
+                <Button
                   onClick={() => setShowColor(!showColor)}
                   className={`px-3 py-1.5 rounded-xl text-sm font-bold border-2 transition-all flex items-center gap-2 min-h-[36px] ${showColor ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
                   title={getTranslation('auto.highlight_differences', language)}
@@ -149,7 +150,7 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                    <span className="hidden sm:inline">
                       {showColor ? (getTranslation('auto.colors_on', language)) : (getTranslation('auto.reveal_differences', language))}
                    </span>
-                </button>
+                </Button>
             </div>
             {hintsUsedCount >= 3 && (
                <div className="text-xs font-bold text-rose-500 animate-pulse mt-1 drop-shadow-sm bg-rose-50 px-2 py-1 rounded-md border border-rose-100">

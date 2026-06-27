@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LogIn, UserPlus, ChevronLeft } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
+import { Button } from "@/components/ui/Button";
 
 export default function LoginPage() {
   const { t, language } = useTranslation();
@@ -131,10 +132,10 @@ export default function LoginPage() {
             />
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 mt-6 disabled:opacity-70"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 mt-6 disabled:opacity-70 border-none"
           >
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -143,7 +144,7 @@ export default function LoginPage() {
             ) : (
               <><UserPlus className="w-5 h-5" /> {t('auth.signup')}</>
             )}
-          </button>
+          </Button>
         </form>
 
         <div className="mt-6 text-center text-sm text-slate-600">
@@ -154,7 +155,7 @@ export default function LoginPage() {
               setIsLogin(!isLogin);
               setError("");
             }}
-            className="text-indigo-600 font-semibold hover:underline"
+            className="text-indigo-600 font-semibold hover:underline ml-1"
           >
             {isLogin ? t('auth.signup') : t('auth.login')}
           </button>

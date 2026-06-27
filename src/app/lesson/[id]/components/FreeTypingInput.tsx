@@ -7,6 +7,7 @@ import { playThaiTTS } from "@/lib/tts";
 
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
 
 interface Props {
   exercise: Exercise;
@@ -61,17 +62,19 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
               autoFocus
               dir="ltr"
             />
-            <button
+            <IconButton
+              size="lg"
               onClick={() => setShowVirtual(!showVirtual)}
               className={`absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-2xl transition-all ${showVirtual ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-100'}`}
               title={getTranslation('auto.toggle_virtual_keyboard', language)}
             >
               <Keyboard size={24} />
-            </button>
+            </IconButton>
           </div>
           {exercise.type === 'writing' && exercise.blindMode && exercise.correctComponents && !isChecking && (
-            <button
-              className="flex items-center justify-center gap-1 bg-emerald-50 border border-emerald-100 text-emerald-600 p-3 sm:px-5 sm:py-3.5 rounded-2xl sm:text-sm font-semibold hover:bg-emerald-100 transition-colors flex-shrink-0 self-stretch"
+            <Button
+              variant="outline"
+              className="flex items-center justify-center gap-1 bg-emerald-50 border-emerald-100 text-emerald-600 p-3 sm:px-5 sm:py-3.5 rounded-2xl sm:text-sm font-semibold hover:bg-emerald-100 transition-colors flex-shrink-0 self-stretch"
               onClick={() => {
                 const selLen = selected.replace(/\s+/g, '').length;
                 const fullText = exercise.correctComponents!.join('');
@@ -86,7 +89,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
             >
               <Volume2 size={24} strokeWidth={2.5} />
               <span className="font-bold text-lg leading-none">A</span>
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -96,24 +99,26 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
           {vKeys.map((k, i) => {
             const displayStr = formatCombiningChar(k);
             return (
-              <button
+              <Button
                 key={i}
+                variant="outline"
                 onClick={() => handleVKeyClick(k)}
                 disabled={disabled}
-                className="w-12 h-12 sm:w-14 sm:h-14 bg-white border border-slate-200 shadow-sm rounded-2xl text-2xl sm:text-3xl font-thai text-slate-700 hover:bg-slate-50 hover:border-emerald-200 hover:shadow-md active:scale-95 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-12 h-12 sm:w-14 sm:h-14 bg-white border-slate-200 shadow-sm rounded-2xl text-2xl sm:text-3xl font-thai text-slate-700 hover:bg-slate-50 hover:border-emerald-200 hover:shadow-md transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed p-0"
               >
                 {displayStr}
-              </button>
+              </Button>
             )
           })}
 
-          <button
+          <IconButton
+            size="lg"
             onClick={handleBackspace}
             disabled={disabled || selected.length === 0}
-            className="w-12 h-12 sm:w-14 sm:h-14 bg-rose-50 border border-rose-100 shadow-sm text-rose-500 rounded-2xl hover:bg-rose-100 hover:border-rose-200 hover:shadow-md active:scale-95 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-12 h-12 sm:w-14 sm:h-14 bg-rose-50 border-rose-100 shadow-sm text-rose-500 rounded-2xl hover:bg-rose-100 hover:border-rose-200 hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed border"
           >
             <Delete size={20} className="sm:w-6 sm:h-6" />
-          </button>
+          </IconButton>
         </div>
       )}
     </div>

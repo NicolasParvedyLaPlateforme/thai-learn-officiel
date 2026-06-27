@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, MouseEvent, useEffect } from 'react';
 import { DetectiveLevel, DetectiveObject } from "@/types";
+import { Button } from "@/components/ui/Button";
 import Image from 'next/image';
 
 interface Props {
@@ -183,12 +184,12 @@ export default function DetectiveDevMode({ level }: Props) {
           <h2 className="font-bold">Outil Détective</h2>
           <p className="text-sm text-slate-300">Cliquez et glissez pour créer une zone</p>
         </div>
-        <button
+        <Button
           onClick={generateJson}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold transition-colors"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 font-bold"
         >
           Générer JSON
-        </button>
+        </Button>
       </div>
 
       <div className="w-full bg-slate-200 shadow-inner flex-1 flex items-center justify-center overflow-hidden min-h-0 rounded-xl">
@@ -305,25 +306,27 @@ export default function DetectiveDevMode({ level }: Props) {
             </div>
 
             <div className="mt-6 flex justify-between">
-              <button
+              <Button
+                variant="ghost"
                 onClick={deleteObject}
-                className="text-rose-500 font-bold px-4 py-2 hover:bg-rose-50 rounded-lg transition-colors"
+                className="text-rose-500 font-bold px-4 py-2 hover:bg-rose-50 hover:text-rose-600"
               >
                 Supprimer
-              </button>
+              </Button>
               <div className="flex gap-2">
-                <button
+                <Button
+                  variant="ghost"
                   onClick={closeModal}
-                  className="text-slate-500 font-bold px-4 py-2 hover:bg-slate-50 rounded-lg transition-colors"
+                  className="text-slate-500 font-bold px-4 py-2 hover:bg-slate-50"
                 >
                   Annuler
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={saveObject}
-                  className="bg-emerald-500 text-white font-bold px-4 py-2 hover:bg-emerald-600 rounded-lg transition-colors"
+                  className="bg-emerald-500 text-white font-bold px-4 py-2 hover:bg-emerald-600"
                 >
                   Valider
-                </button>
+                </Button>
               </div>
             </div>
           </div>

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { User, Menu } from "lucide-react";
 import { useProgressStore } from "@/lib/store";
 import PWAInstallButton from "@/components/ui/PWAInstallButton";
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
 
 interface HeaderActionsProps {
     language: string;
@@ -38,13 +40,14 @@ export function HeaderActions({
         <div className="flex items-center gap-2">
             {showPWAButton && <PWAInstallButton />}
 
-            <button
+            <Button
+                variant="outline"
                 onClick={() => useProgressStore.getState().setShowLanguageModal(true)}
-                className={`flex items-center justify-center px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 transition-colors uppercase ${hideLanguageOnDesktop ? "md:hidden" : ""
+                className={`px-4 py-2 rounded-full bg-slate-100 text-slate-500 font-extrabold text-sm hover:bg-slate-200 uppercase border-none ${hideLanguageOnDesktop ? "md:hidden" : ""
                     }`}
             >
                 {language}
-            </button>
+            </Button>
 
             <div className="flex items-center gap-2 relative">
                 <Link
@@ -54,12 +57,13 @@ export function HeaderActions({
                     <User size={18} />
                 </Link>
 
-                <button
+                <IconButton
+                    size="md"
                     onClick={() => setIsMobileMenuOpen(true)}
-                    className="flex items-center justify-center p-2 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors"
+                    className="bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200"
                 >
                     <Menu size={20} />
-                </button>
+                </IconButton>
             </div>
         </div>
     );

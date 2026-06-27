@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Lock, ArrowRight, ChevronLeft } from "lucide-react";
 import { IconInput } from "@/components/ui/IconInput";
 import { useTranslation } from "@/hooks/useTranslation";
+import { Button } from "@/components/ui/Button";
 
 function ResetPasswordForm() {
   const { t } = useTranslation();
@@ -126,17 +127,17 @@ function ResetPasswordForm() {
                 placeholder="••••••••"
               />
 
-              <button
+              <Button
                 type="submit"
                 disabled={status === "loading" || !token || !password || !confirmPassword}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 mt-6 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 mt-6 disabled:opacity-70 disabled:cursor-not-allowed border-none"
               >
                 {status === "loading" ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   t('auth.update_password')
                 )}
-              </button>
+              </Button>
             </form>
           </>
         )}

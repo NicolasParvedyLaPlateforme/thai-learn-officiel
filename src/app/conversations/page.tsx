@@ -4,10 +4,12 @@ import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import IconImage from "@/components/ui/IconImage";
+import { BookOpen, Star, Lock, ChevronRight, Check, ArrowLeft, Volume2, MapPin, MessageCircle, Ear, Search, Brain, Target, Compass, Play, X, Book, Image as ImageIcon, Clock, Users, Menu } from 'lucide-react';
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
 import { m as motion, AnimatePresence } from "motion/react";
 import { useProgressStore } from "@/lib/store";
 import PWAInstallButton from "@/components/ui/PWAInstallButton";
-import { ArrowLeft, MessageCircle, Star, BookOpen, Info, ChevronRight, Play, X, Book, Image as ImageIcon, Lock, Check, Clock, Users, Volume2, MapPin, User, Menu } from 'lucide-react';
 import conversationsData from "@/data/conversations.json";
 import CONVERSATION_UNITS from "@/data/conversation_units.json";
 import { useIsPWA } from "@/hooks/use-pwa";
@@ -121,12 +123,13 @@ export default function ConversationsPage() {
                 {/* Mobile Sub-Header for Navigation */}
                 <div className="md:hidden flex items-center gap-3 px-4 py-3 shrink-0 border-b border-slate-100 bg-white">
                     {mobileView === 'story' && (
-                        <button
+                        <IconButton
+                            size="md"
                             onClick={() => { setSelectedStoryId(null); setSelectedConvId(null); }}
-                            className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 shadow-sm"
+                            className="bg-slate-100 text-slate-600 shadow-sm"
                         >
                             <ArrowLeft size={20} />
-                        </button>
+                        </IconButton>
                     )}
                     {mobileView === 'stories_list' && (
                         <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-sm">
@@ -220,9 +223,9 @@ export default function ConversationsPage() {
                         <div className="flex flex-col h-full bg-[#fdfdfd]">
                             {/* Desktop Breadcrumb & Story Header */}
                             <div className="p-4 md:p-8 shrink-0 md:border-b border-slate-100 bg-white shadow-[0_4px_20px_-15px_rgba(0,0,0,0.1)] relative z-10">
-                                <div className="hidden md:flex items-center gap-2 text-sm font-bold text-slate-400 mb-6">
-                                    <button onClick={() => { setSelectedStoryId(null); setSelectedConvId(null); }} className="hover:text-slate-600 transition-colors">
-                                        {getTranslation('auto.stories', language)}
+                                <div className="flex items-center gap-3">
+                                    <button onClick={() => { setSelectedStoryId(null); setSelectedConvId(null); }} className="hover:text-slate-600 transition-colors p-1">
+                                        <ArrowLeft size={24} />
                                     </button>
                                     <ChevronRight size={16} />
                                     <span className="text-slate-700">{getLocalizedField(selectedStory, '', language)}</span>
@@ -435,12 +438,13 @@ export default function ConversationsPage() {
                     <div className="flex flex-col h-full overflow-y-auto">
                         {/* Detail Header (Mobile has back button) */}
                         <div className="md:hidden h-[3.75rem] flex items-center px-4 bg-white/80 backdrop-blur sticky top-0 z-50 border-b border-slate-100 shrink-0">
-                            <button
+                            <IconButton
+                                size="md"
                                 onClick={() => setSelectedConvId(null)}
-                                className="w-10 h-10 -ml-2 mr-2 bg-slate-100 rounded-full flex justify-center items-center text-slate-600"
+                                className="-ml-2 mr-2 bg-slate-100 text-slate-600"
                             >
                                 <ArrowLeft size={20} />
-                            </button>
+                            </IconButton>
                             <h2 className="text-lg font-extrabold text-slate-800 truncate">
                                 {getLocalizedField(selectedConv, 'title', language)}
                             </h2>
@@ -459,10 +463,14 @@ export default function ConversationsPage() {
 
                                 {/* Play excerpt button overlay */}
                                 <div className="absolute inset-0 flex items-center justify-center bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onClick={handlePlayExcerpt} className="bg-white/95 backdrop-blur text-slate-800 text-sm font-bold px-6 py-3 rounded-2xl flex items-center gap-2 shadow-xl hover:scale-105 active:scale-95 transition-all">
+                                    <Button 
+                                        variant="outline"
+                                        onClick={handlePlayExcerpt} 
+                                        className="bg-white/95 backdrop-blur text-slate-800 text-sm font-bold px-6 py-3 shadow-xl hover:scale-105 active:scale-95 border-none"
+                                    >
                                         <Volume2 size={18} className="text-emerald-500" />
                                         {getTranslation('auto.play_an_excerpt', language)}
-                                    </button>
+                                    </Button>
                                 </div>
 
                                 {/* Mock location tag */}

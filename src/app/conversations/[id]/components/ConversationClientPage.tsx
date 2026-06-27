@@ -13,6 +13,8 @@ import speakersConfig from "@/data/speakers.json";
 import { getVocabularyServer } from "@/actions/course";
 import { Word } from "@/types";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
 import { m as motion, AnimatePresence } from "motion/react";
 
 // Helper to shuffle an array
@@ -565,13 +567,14 @@ function ConversationContent() {
                     : (getTranslation('auto.listen_to_the_conversation_to', language))
               }
             </p>
-            <button 
+            <Button
+              size="lg"
               onClick={startInteraction}
-              className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-2xl w-full border-b-4 border-orange-700 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2 text-lg"
+              className="w-full text-lg font-bold py-4 px-8"
             >
               <Play size={24} className="fill-white" />
               {getTranslation('auto.start', language)}
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="flex flex-col gap-4 mb-32">
@@ -651,12 +654,13 @@ function ConversationContent() {
                     
                     {/* Replay button next to the bubble during review mode */}
                     {isFinished && (
-                      <button 
+                      <IconButton 
+                         size="md"
                          onClick={() => playThaiTTS(dialog.th)}
-                         className={`absolute ${isRight ? '-left-12' : '-right-12'} top-6 p-2 text-slate-400 hover:text-orange-500 hover:bg-orange-50 rounded-full transition-colors`}
+                         className={`absolute ${isRight ? '-left-12' : '-right-12'} top-6 text-slate-400 hover:text-orange-500 hover:bg-orange-50 bg-transparent shadow-none border-none`}
                       >
                          <Volume2 size={24} />
-                      </button>
+                      </IconButton>
                     )}
                     
                     {/* Phonetics and translation (shown when finished) */}
@@ -693,52 +697,56 @@ function ConversationContent() {
                     {getTranslation('auto.need_a_hint', language)}
                  </div>
                  <div className="flex w-full overflow-x-auto pb-1 items-center justify-center gap-1.5 sm:gap-2 mt-0.5">
-                     <button
+                     <Button
+                       variant="outline"
                        onClick={() => {
                           attemptApplyHintCost(1);
                           playThaiTTS(hintWord.th);
                        }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[1] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[1] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         <Volume2 size={16} /> 
                         <span className="hidden sm:inline">
                            {hintsUsed[1] ? (getTranslation('auto.replay', language)) : (getTranslation('auto.hint_1', language))}
                         </span>
-                     </button>
+                     </Button>
 
-                     <button
+                     <Button
+                       variant="outline"
                        onClick={() => {
                           attemptApplyHintCost(2);
                           setIsImageModalOpen(true);
                         }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] min-w-[70px] ${hintsUsed[2] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] min-w-[70px] ${hintsUsed[2] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         <ImageIcon size={16} />
                         <span className="hidden sm:inline">{hintsUsed[2] ? (getTranslation('auto.image', language)) : (getTranslation('auto.hint_2', language))}</span>
-                     </button>
+                     </Button>
 
-                     <button
+                     <Button
+                       variant="outline"
                        onClick={() => {
                           attemptApplyHintCost(3);
                        }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[3] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[3] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         {!hintsUsed[3] && <Type size={16} />} 
                         {hintsUsed[3] ? <span>{getLocalizedField(hintWord, '', language)}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
-                     </button>
+                     </Button>
                      
-                     <button
+                     <Button
+                       variant="outline"
                        onClick={() => {
                           attemptApplyHintCost(4);
                        }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 transition-all flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[4] ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[4] ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
                        title={getTranslation('auto.highlight_differences', language)}
                      >
                         <Sparkles size={16} />
                         <span className="hidden sm:inline">
                            {hintsUsed[4] ? (getTranslation('auto.focus_on', language)) : (getTranslation('auto.hint_4', language))}
                         </span>
-                     </button>
+                     </Button>
                  </div>
               </div>
             )}
@@ -806,13 +814,15 @@ function ConversationContent() {
               <Home size={24} />
             </Link>
             {!isInteractive && (
-              <button 
+              <Button 
+                variant="outline"
+                size="lg"
                 onClick={startNormalConversation}
-                className="flex-[1] bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center gap-2"
+                className="flex-[1] bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-4 px-6 border-b-4 active:border-b-2 active:translate-y-0.5"
               >
                 <RotateCcw size={24} />
                 <span className="hidden sm:inline">{getTranslation('auto.listen_again', language)}</span>
-              </button>
+              </Button>
             )}
             {!isInteractive && (
               <Link 
@@ -849,13 +859,15 @@ function ConversationContent() {
                   );
                 } else {
                   return (
-                    <button 
+                    <Button 
+                      variant="outline"
+                      size="lg"
                       onClick={restartInteraction}
-                      className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 border-slate-400 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center gap-2"
+                      className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 border-slate-400"
                     >
                       <RotateCcw size={20} />
                       {getTranslation('auto.retry', language)} (Score: {stars} / ★★★)
-                    </button>
+                    </Button>
                   );
                 }
               } else if (isLevel2) {
@@ -875,13 +887,15 @@ function ConversationContent() {
                   );
                 } else {
                   return (
-                    <button 
+                    <Button 
+                      variant="outline"
+                      size="lg"
                       onClick={restartInteraction}
-                      className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 border-slate-400 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center gap-2"
+                      className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 border-slate-400"
                     >
                       <RotateCcw size={20} />
                       {getTranslation('auto.retry', language)} (Score: {stars} / ★★★)
-                    </button>
+                    </Button>
                   );
                 }
               } else if (isLevel3) {
@@ -897,13 +911,15 @@ function ConversationContent() {
                   );
                 } else {
                   return (
-                    <button 
+                    <Button 
+                      variant="outline"
+                      size="lg"
                       onClick={restartInteraction}
-                      className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 rounded-2xl border-b-4 border-slate-400 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center gap-2"
+                      className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 border-slate-400"
                     >
                       <RotateCcw size={20} />
                       {getTranslation('auto.retry', language)} (Score: {stars} / ★★★★)
-                    </button>
+                    </Button>
                   );
                 }
               }
@@ -925,12 +941,13 @@ function ConversationContent() {
             className="bg-white p-6 rounded-3xl shadow-2xl max-w-sm w-full animate-in zoom-in-95 duration-200 relative flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <button 
+            <IconButton 
+              size="md"
               onClick={() => setIsImageModalOpen(false)}
-              className="absolute top-4 right-4 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition-colors"
+              className="absolute top-4 right-4 text-slate-500 bg-slate-100 hover:bg-slate-200"
             >
               <X size={20} />
-            </button>
+            </IconButton>
             <div className="w-48 h-48 relative mb-4 mt-2">
                <IconImage src={hintWord.imageUrl || `/images/w_w_${hintWord.id}.svg`} alt="Hint Image" fill className="object-contain" />
             </div>
