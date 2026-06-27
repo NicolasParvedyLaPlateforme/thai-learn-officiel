@@ -254,8 +254,6 @@ export function LessonPathMap({
 
   return (
     <div className="flex flex-col items-center justify-start w-full relative pt-12 pb-0">
-      {/* Ligne de connexion verticale depuis la carte */}
-      <div className={`absolute top-0 left-1/2 w-[6px] md:w-[8px] h-12 -translate-x-1/2 z-0 rounded-b-full ${unitColor}`} />
 
       {/* Floating Back Button */}
       {typeof document !== 'undefined' && createPortal(

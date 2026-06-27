@@ -246,6 +246,12 @@ export default function PathLayout({
               maxLevelPerLesson={maxLevelPerLesson}
               suggestionType={pathType}
               questsCategory={pathType as any}
+              selectedLesson={selectedLesson}
+              modalLevel={modalLevel}
+              setModalLevel={setModalLevel}
+              lessonStars={lessonStars}
+              resetLessonLevel={resetLessonLevel}
+              onCloseLesson={() => setSelectedLesson(null)}
             />
           </div>
         )}

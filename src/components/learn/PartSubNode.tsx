@@ -43,8 +43,8 @@ export function PartSubNode({
         ? "flex lg:hidden absolute left-1/2 top-1/2 z-20"
         : "hidden lg:block absolute left-1/2 top-1/2 z-20";
 
-    const btnSizeClass = isMobile ? "w-10 h-10" : "w-11 h-11";
-    const iconSize = isMobile ? 16 : 18;
+    const btnSizeClass = isMobile ? "w-[58px] h-[58px]" : "w-[72px] h-[72px]";
+    const iconSize = isMobile ? 24 : 28;
 
     const btnStateClass = !isPartAccessible
         ? "bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed"
@@ -73,7 +73,7 @@ export function PartSubNode({
                     className={[
                         btnSizeClass,
                         'rounded-full flex items-center justify-center transition-all duration-200',
-                        'border-[3px] shadow-lg font-black text-[11px] tracking-wide',
+                        'border-[3px] shadow-lg font-black text-sm md:text-base tracking-wide',
                         btnStateClass,
                         btnActiveClass,
                     ].join(' ')}
