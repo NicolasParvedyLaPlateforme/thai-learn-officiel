@@ -28,7 +28,14 @@ export const createProgressSlice: StateCreator<ProgressState, [], [], any> = (se
     if (giftsAvailable <= 0) return null;
 
     const r1 = Math.random();
-    const xpAmount = Math.floor(20 + Math.pow(r1, 2) * 280); 
+    let xpAmount = 20;
+    if (r1 < 0.60) {
+      xpAmount = Math.floor(20 + Math.random() * 30); // 20-49 XP (60%)
+    } else if (r1 < 0.90) {
+      xpAmount = Math.floor(50 + Math.random() * 100); // 50-149 XP (30%)
+    } else {
+      xpAmount = Math.floor(150 + Math.random() * 150); // 150-299 XP (10%)
+    }
     
     const r2 = Math.random();
     const getsCoins = r2 < 0.20;
