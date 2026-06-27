@@ -1,327 +1,40 @@
 'use client';
 
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
-import React, { useEffect, useState, useRef, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import IconImage from "@/components/ui/IconImage";
 import { useParams, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Play, RotateCcw, Volume2, Star, MessageCircle, Check, X, Home, Image as ImageIcon, Type, Sparkles } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
-import { playThaiTTS, playThaiTTSAsync } from "@/lib/tts";
-import conversationsData from "@/data/conversations.json";
+import { playThaiTTS } from "@/lib/tts";
 import speakersConfig from "@/data/speakers.json";
-import { getVocabularyServer } from "@/actions/course";
-import { Word } from "@/types";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { m as motion, AnimatePresence } from "motion/react";
-
-// Helper to shuffle an array
-function shuffleArray<T>(array: T[]): T[] {
-  const newArr = [...array];
-  for (let i = newArr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-  }
-  return newArr;
-}
+import { useConversationLogic } from "@/hooks/useConversationLogic";
 
 function ConversationContent() {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const level = searchParams.get('level');
-  const isLevel1 = level === '1';
-  const isLevel2 = level === '2';
-  const isLevel3 = level === '3';
-  const isInteractive = isLevel1 || isLevel2 || isLevel3;
 
   const { language, addXp, showRomanization, completedLessons, completeConversation } = useProgressStore();
-  const [mounted, setMounted] = useState(false);
-  const [allWords, setAllWords] = useState<Word[]>([]);
-  
-  const conversation = conversationsData.conversations.find(c => c.id === id);
-  
-  // States for normal playback / review playback
-  const [currentLineIndex, setCurrentLineIndex] = useState(-1);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
-  
-  // Scoring and Hints
-  const [stars, setStars] = useState(5);
-  const [hintsUsed, setHintsUsed] = useState<{ [key: number]: boolean }>({});
-  const [hintWord, setHintWord] = useState<Word | null>(null);
-  
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [lostStarAnimation, setLostStarAnimation] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
-  const lastScrollY = useRef(0);
-  const prevStarsRef = useRef(stars);
 
-  // Level 1 and 2 specific states
-  // We advance the conversation step by step.
-  const [stepIndex, setStepIndex] = useState(0); 
-  const [choices, setChoices] = useState<any[]>([]);
-  const [selectedChoiceId, setSelectedChoiceId] = useState<number | null>(null);
-  const [isChoiceCorrect, setIsChoiceCorrect] = useState<boolean | null>(null);
+  const { state, actions } = useConversationLogic(
+    id,
+    level,
+    completedLessons,
+    language,
+    addXp,
+    completeConversation,
+    searchParams
+  );
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY.current + 10) {
-        setShowHeader(false);
-      } else if (currentScrollY < lastScrollY.current - 10) {
-        setShowHeader(true);
-      }
-      lastScrollY.current = currentScrollY;
-    };
+  if (!state.mounted) return null;
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    // Only hide the header automatically when these specific properties change (state transition)
-    // we want to still allow the user to show it by scrolling up.ok
-    if (hasStarted && !isFinished) {
-      setShowHeader(false);
-    }
-  }, [stepIndex, currentLineIndex]);
-
-  useEffect(() => {
-    if (stars < prevStarsRef.current) {
-      setLostStarAnimation(true);
-      setShowHeader(true);
-      setTimeout(() => setLostStarAnimation(false), 1200);
-    }
-    prevStarsRef.current = stars;
-  }, [stars]);
-  const [targetWord, setTargetWord] = useState<Word | null>(null); // For level 2
-
-  const [warnings, setWarnings] = useState<number[]>([]);
-
-  const [showExerciseUI, setShowExerciseUI] = useState(false);
-
-  // We use a ref to track if we should continue playing (handles component unmount or stop)
-  const isPlayingRef = useRef(false);
-  const endOfMessagesRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-    getVocabularyServer('all', completedLessons).then(words => {
-      setAllWords(words as Word[]);
-    });
-    return () => {
-      isPlayingRef.current = false;
-    };
-  }, [completedLessons]);
-
-  // Auto-scroll effect
-  useEffect(() => {
-    // Determine timeout based on whether we are showing choices so rendering can catch up
-    setTimeout(() => {
-      const messages = document.querySelectorAll('.message-bubble');
-      if (messages.length > 0) {
-        if (choices && choices.length > 0) {
-          // When choices are visible, we want to ensure the target message (previous speaker) is at the top/center
-          const targetIndex = Math.max(0, messages.length - 2);
-          const yOffset = -70; // Account for the sticky header
-          const element = messages[targetIndex];
-          if (element) {
-            const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-            window.scrollTo({top: y, behavior: 'smooth'});
-          }
-        } else {
-          // Normal chatting
-          const lastElement = messages[messages.length - 1];
-          const rect = lastElement.getBoundingClientRect();
-          // Only scroll if the element is near or below the bottom of the viewport
-          if (rect.bottom > window.innerHeight - 150) {
-              lastElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
-        }
-      }
-    }, 150);
-  }, [currentLineIndex, stepIndex, isFinished, choices]);
-
-  // Set up choices whenever we land on a "guess" step in level 1 or 2
-  useEffect(() => {
-    if (!mounted || !conversation || !isInteractive || isFinished) return;
-    
-    // In Level 1, every odd index is a "guess" step. In Level 2 and Level 3, every index is a "guess" step.
-    const isGuessStep = isLevel1 ? (stepIndex % 2 !== 0) : true;
-    
-    if (stepIndex < conversation.dialogs.length && isGuessStep) {
-      const correctDialog = conversation.dialogs[stepIndex];
-      setHintsUsed({});
-      
-      if (isLevel1 || isLevel3) {
-        // Find a hint word from the correct sentence
-        const segmenter = new Intl.Segmenter('th', { granularity: 'word' });
-        const allSegmentsRaw = Array.from(segmenter.segment(correctDialog.th));
-        const wordsInDialog = allSegmentsRaw.map(s => s.segment);
-        const validWords = allWords.filter(w => wordsInDialog.includes(w.th) && w.th.length > 1);
-        const hw = validWords.length > 0 ? validWords[Math.floor(Math.random() * validWords.length)] : null;
-        setHintWord(hw);
-
-        // Get all possible dialogs as distractor pool
-        // Exclude the correct one
-        const allDialogs = conversationsData.conversations.flatMap(c => c.dialogs);
-        const distractors = allDialogs.filter(d => d.th !== correctDialog.th);
-        
-        const shuffledDistractors = shuffleArray(distractors).slice(0, 2); // get 2 random wrong options
-        
-        const computeSegmentsAndVisible = (text: string, isCorrect: boolean) => {
-          const segs = Array.from(segmenter.segment(text)).map(s => s.segment);
-          let visIdx = -1;
-          if (isCorrect && hw) {
-            visIdx = segs.findIndex(s => s === hw.th);
-          } else {
-             // pick a random word segment (length > 1) to remain visible for hint 4
-             const wordIndices = segs.map((s, i) => s.length > 1 ? i : -1).filter(i => i !== -1);
-             if (wordIndices.length > 0) visIdx = wordIndices[Math.floor(Math.random() * wordIndices.length)];
-             else visIdx = Math.floor(Math.random() * segs.length);
-          }
-          return { segments: segs, visibleSegmentIndex: visIdx };
-        };
-
-        const correctData = computeSegmentsAndVisible(correctDialog.th, true);
-
-        const options = [
-          { id: 0, text: correctDialog.th, phonetic: correctDialog.phonetic, correct: true, segments: correctData.segments, visibleSegmentIndex: correctData.visibleSegmentIndex },
-          ...shuffledDistractors.map((d, i) => {
-            const dData = computeSegmentsAndVisible(d.th, false);
-            return {
-              id: i + 1,
-              text: d.th,
-              phonetic: d.phonetic,
-              correct: false,
-              segments: dData.segments,
-              visibleSegmentIndex: dData.visibleSegmentIndex
-             };
-          })
-        ];
-        
-        setChoices(shuffleArray(options));
-        setSelectedChoiceId(null);
-        setIsChoiceCorrect(null);
-      } else if (isLevel2) {
-        if (allWords.length === 0) return; // Wait until loaded
-        
-        // Extract real words using Intl.Segmenter
-        const segmenter = new Intl.Segmenter('th', { granularity: 'word' });
-        const segments = Array.from(segmenter.segment(correctDialog.th));
-        const wordsInDialog = segments.map(s => s.segment);
-        
-        const validWords = allWords.filter(w => wordsInDialog.includes(w.th) && w.th.length > 1);
-        
-        if (validWords.length > 0) {
-          const target = validWords[Math.floor(Math.random() * validWords.length)];
-          setTargetWord(target);
-          
-          const distractors = allWords.filter(w => w.th !== target.th);
-          const shuffledDistractors = shuffleArray(distractors).slice(0, 2);
-          
-          const options = [
-            { id: 0, text: target.th, translation: getLocalizedField(target, '', language), phonetic: target.phonetic, correct: true },
-            ...shuffledDistractors.map((d, i) => ({
-              id: i + 1,
-              text: d.th,
-              translation: getLocalizedField(d, '', language),
-              phonetic: d.phonetic,
-              correct: false
-            }))
-          ];
-          
-          setChoices(shuffleArray(options));
-          setSelectedChoiceId(null);
-          setIsChoiceCorrect(null);
-        } else {
-          setTargetWord(null);
-          setChoices([]);
-        }
-      }
-    }
-  }, [stepIndex, mounted, conversation, isLevel1, isLevel2, isLevel3, isInteractive, isFinished, language, allWords]);
-
-  // Handle auto-playing logic for Level 1 and Level 2 auto-skipping
-  useEffect(() => {
-    if (!mounted || !conversation || !isInteractive || isFinished || !hasStarted) return;
-    
-    const playCurrentStep = async () => {
-      // Level 1 auto-plays even steps.
-      if (isLevel1 && stepIndex < conversation.dialogs.length && stepIndex % 2 === 0) {
-        setIsPlaying(true);
-        setCurrentLineIndex(stepIndex);
-        
-        await playThaiTTSAsync(conversation.dialogs[stepIndex].th);
-        
-        setIsPlaying(false);
-        // Advance to next step (which will be a guess step)
-        if (mounted) {
-          setStepIndex(s => s + 1);
-        }
-      } else if (isLevel2 && stepIndex < conversation.dialogs.length) {
-        if (allWords.length === 0) return;
-        const segmenter = new Intl.Segmenter('th', { granularity: 'word' });
-        const wordsInDialog = Array.from(segmenter.segment(conversation.dialogs[stepIndex].th)).map(s => s.segment);
-        const validWords = allWords.filter(w => wordsInDialog.includes(w.th) && w.th.length > 1);
-        
-        if (validWords.length === 0) {
-          setWarnings(prev => [...new Set([...prev, stepIndex])]);
-          
-          setIsPlaying(true);
-          setCurrentLineIndex(stepIndex);
-          
-          await playThaiTTSAsync(conversation.dialogs[stepIndex].th);
-          
-          setIsPlaying(false);
-          if (mounted) {
-            setStepIndex(s => s + 1);
-          }
-        }
-      } else if (stepIndex >= conversation.dialogs.length) {
-        // Conversation fully built, finish without auto-replay
-        setIsFinished(true);
-        
-        const isSuccess = !isInteractive || ((isLevel1 || isLevel2 || isLevel3) && stars >= 3);
-        const isTrueSuccessLv3 = isLevel3 && stars >= 4;
-        const passedInteractive = (isLevel1 && stars >= 3) || (isLevel2 && stars >= 3) || isTrueSuccessLv3;
-
-        if (!isInteractive || passedInteractive) {
-          addXp(10);
-          let completionLvl = 0;
-          if (isLevel1) completionLvl = 1;
-          if (isLevel2) completionLvl = 2;
-          if (isLevel3) completionLvl = 3;
-          let earnedStars = isInteractive ? stars : 3;
-          completeConversation(conversation.id, completionLvl, earnedStars);
-        }
-      }
-    };
-    
-    playCurrentStep();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepIndex, hasStarted, isInteractive, mounted, allWords]);
-
-  useEffect(() => {
-    if (searchParams.get("dev") === "validate" && conversation && !isFinished && mounted) {
-      setIsFinished(true);
-      hasStarted || setHasStarted(true);
-      setCurrentLineIndex(conversation.dialogs.length);
-      addXp(10);
-      let completionLvl = 0;
-      if (isLevel1) completionLvl = 1;
-      if (isLevel2) completionLvl = 2;
-      if (isLevel3) completionLvl = 3;
-      completeConversation(conversation.id, completionLvl, 5); // 5 stars dev skip!
-    }
-  }, [searchParams, conversation?.id, isFinished, isLevel1, isLevel2, isLevel3, mounted, addXp, completeConversation, hasStarted]);
-
-  if (!mounted) return null;
-
-  if (!conversation) {
+  if (!state.conversation) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center font-sans text-slate-800">
         <div className="text-center">
@@ -334,137 +47,15 @@ function ConversationContent() {
     );
   }
 
-  const startReviewPlayback = async () => {
-    setIsPlaying(true);
-    setCurrentLineIndex(0);
-    isPlayingRef.current = true;
-    
-    for (let i = 0; i < conversation.dialogs.length; i++) {
-      if (!isPlayingRef.current) break;
-      setCurrentLineIndex(i);
-      await playThaiTTSAsync(conversation.dialogs[i].th);
-      
-      // Small pause between lines
-      if (isPlayingRef.current && i < conversation.dialogs.length - 1) {
-        await new Promise(r => setTimeout(r, 600));
-      }
-    }
-    
-    if (isPlayingRef.current) {
-      setIsPlaying(false);
-      setIsFinished(true);
-      setCurrentLineIndex(conversation.dialogs.length);
-      addXp(10);
-      completeConversation(conversation.id, 0);
-    }
-  };
-
-  const startNormalConversation = async () => {
-    setHasStarted(true);
-    setIsPlaying(true);
-    setIsFinished(false);
-    setCurrentLineIndex(0);
-    isPlayingRef.current = true;
-    
-    for (let i = 0; i < conversation.dialogs.length; i++) {
-      if (!isPlayingRef.current) break;
-      setCurrentLineIndex(i);
-      await playThaiTTSAsync(conversation.dialogs[i].th);
-      
-      if (isPlayingRef.current && i < conversation.dialogs.length - 1) {
-        await new Promise(r => setTimeout(r, 600));
-      }
-    }
-    
-    if (isPlayingRef.current) {
-      setIsPlaying(false);
-      setIsFinished(true);
-      setCurrentLineIndex(conversation.dialogs.length);
-      addXp(10);
-      completeConversation(conversation.id, 0);
-    }
-  };
-
-  const startInteraction = () => {
-    if (isLevel1) {
-      setHasStarted(true);
-      setStepIndex(0);
-    } else if (isLevel2) {
-      setHasStarted(true);
-      setStepIndex(0);
-    } else if (isLevel3) {
-      setHasStarted(true);
-      setStepIndex(0);
-    } else {
-      startNormalConversation();
-    }
-  }
-
-  const restartInteraction = () => {
-    setStars(5);
-    setIsFinished(false);
-    setCurrentLineIndex(0);
-    setStepIndex(0);
-    setChoices([]);
-    setHintsUsed({});
-    setHintWord(null);
-    setSelectedChoiceId(null);
-    setIsChoiceCorrect(null);
-    setIsPlaying(false);
-    isPlayingRef.current = false;
-  }
-
-  const handleChoiceSelect = async (choice: any) => {
-    if (isChoiceCorrect !== null) return; // Prevent multiple clicks
-    
-    setSelectedChoiceId(choice.id);
-    setIsChoiceCorrect(choice.correct);
-    
-    if (choice.correct) {
-      // Play the correct answer audio
-      setIsPlaying(true);
-      setCurrentLineIndex(stepIndex);
-      
-      const correctDialog = conversation!.dialogs[stepIndex];
-      const textToPlay = (isLevel1 || isLevel3) ? choice.text : correctDialog.th;
-      
-      await playThaiTTSAsync(textToPlay);
-      
-      setIsPlaying(false);
-      setStepIndex(s => s + 1);
-    } else {
-      setStars(s => Math.max(0, s - 1));
-      // Play error sound or just reset after a short delay
-      setTimeout(() => {
-        setIsChoiceCorrect(null);
-        setSelectedChoiceId(null);
-      }, 1000);
-    }
-  };
-
-  const attemptApplyHintCost = (hintNum: number) => {
-    if (!hintsUsed[hintNum]) {
-       const previouslyUsedHintCount = Object.keys(hintsUsed).length;
-       setHintsUsed(prev => ({ ...prev, [hintNum]: true }));
-       // Deduct a star for every 2 hints used (so when the count reaches 2, 4, etc.)
-       const newCount = previouslyUsedHintCount + 1;
-       if (newCount % 2 === 0) {
-         setStars(s => Math.max(0, s - 1));
-       }
-    }
-  };
-
-  const isDataLoaded = mounted && !!conversation && (isLevel2 ? allWords.length > 0 : true);
-
   return (
     // We need pb-[350px] or more so that we can always scroll the last message to the top of the screen when the choices menu is open.
     <div className="min-h-[100dvh] bg-[#FAFAFA] font-sans text-slate-800 pb-[350px]">
       <AnimatePresence mode="wait">
-        {!showExerciseUI ? (
+        {!state.showExerciseUI ? (
           <LoadingScreen 
             key="loading-screen"
-            isLoadingData={!isDataLoaded} 
-            onReady={() => setShowExerciseUI(true)} 
+            isLoadingData={!state.isDataLoaded} 
+            onReady={() => actions.setShowExerciseUI(true)} 
           />
         ) : (
           <motion.div
@@ -476,7 +67,7 @@ function ConversationContent() {
           >
       <motion.header 
         initial={{ y: 0 }}
-        animate={{ y: showHeader ? 0 : '-100%' }}
+        animate={{ y: state.showHeader ? 0 : '-100%' }}
         transition={{ duration: 0.3, ease: "easeOut" }}
         className="bg-white border-b border-slate-200 px-4 h-16 flex items-center justify-between shadow-sm fixed top-0 left-0 right-0 z-50"
       >
@@ -489,18 +80,18 @@ function ConversationContent() {
               <div 
                 className="h-full bg-orange-500 transition-all duration-300"
                 style={{ 
-                  width: `${Math.max(5, ((isLevel1 && !isFinished ? stepIndex : currentLineIndex) / conversation.dialogs.length) * 100)}%` 
+                  width: `${Math.max(5, ((state.isLevel1 && !state.isFinished ? state.stepIndex : state.currentLineIndex) / state.conversation.dialogs.length) * 100)}%` 
                 }}
               ></div>
             </div>
           </div>
-          {(isLevel1 || isLevel2 || isLevel3) && (
+          {state.isInteractive && (
             <div className="flex items-center gap-1.5 z-10 relative">
                {Array.from({ length: 5 }).map((_, i) => (
                  <div key={i} className="relative w-6 h-6 flex items-center justify-center">
                     <Star size={24} className="fill-slate-200 text-slate-200 absolute inset-0" />
                     <AnimatePresence>
-                      {i < stars ? (
+                      {i < state.stars ? (
                          <motion.div
                            key={`star-${i}`}
                            initial={{ scale: 1, opacity: 1 }}
@@ -519,7 +110,7 @@ function ConversationContent() {
                       ) : null}
                     </AnimatePresence>
                     <AnimatePresence>
-                      {(lostStarAnimation && i === stars) ? (
+                      {(state.lostStarAnimation && i === state.stars) ? (
                         <motion.div 
                           key={`minus-${i}`}
                           className="absolute pointer-events-none z-50 text-red-500 font-black text-sm"
@@ -542,15 +133,15 @@ function ConversationContent() {
       <main className="max-w-xl mx-auto px-4 mt-24 flex flex-col gap-6">
         <div className="text-center mb-4 transition-all duration-300">
             <h1 className="text-2xl font-black text-slate-800">
-                {getLocalizedField(conversation, 'title', language)}
+                {getLocalizedField(state.conversation, 'title', language)}
             </h1>
         </div>
 
-        {!hasStarted ? (
+        {!state.hasStarted ? (
           <div className="flex flex-col items-center justify-center mt-8 gap-6 bg-white p-6 sm:p-8 rounded-3xl border-2 border-slate-200 shadow-sm">
-            {conversation.imageUrl ? (
+            {state.conversation.imageUrl ? (
               <div className="relative w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-sm border border-slate-100">
-                <IconImage src={conversation.imageUrl} alt={conversation.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 36rem" priority />
+                <IconImage src={state.conversation.imageUrl} alt={state.conversation.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 36rem" priority />
               </div>
             ) : (
               <div className="bg-orange-100 text-orange-500 p-6 rounded-full">
@@ -558,18 +149,18 @@ function ConversationContent() {
               </div>
             )}
             <p className="text-center text-slate-600 font-medium">
-              {isLevel1 
+              {state.isLevel1 
                 ? (getTranslation('auto.complete_the_conversation_by_c', language))
-                : isLevel2
+                : state.isLevel2
                   ? (getTranslation('auto.complete_the_sentences_by_choo', language))
-                  : isLevel3
+                  : state.isLevel3
                     ? (getTranslation('auto.complete_the_sentences_by_choo_17', language))
                     : (getTranslation('auto.listen_to_the_conversation_to', language))
               }
             </p>
             <Button
               size="lg"
-              onClick={startInteraction}
+              onClick={actions.startInteraction}
               className="w-full text-lg font-bold py-4 px-8"
             >
               <Play size={24} className="fill-white" />
@@ -578,9 +169,9 @@ function ConversationContent() {
           </div>
         ) : (
           <div className="flex flex-col gap-4 mb-32">
-            {conversation.dialogs.map((dialog, index) => {
+            {state.conversation.dialogs.map((dialog: any, index: number) => {
               // Hide lines that haven't been reached yet
-              const isVisible = isInteractive && !isFinished ? index <= stepIndex : index <= currentLineIndex || isFinished;
+              const isVisible = state.isInteractive && !state.isFinished ? index <= state.stepIndex : index <= state.currentLineIndex || state.isFinished;
               if (!isVisible) return null;
               
               const speakerInfo = (speakersConfig as any)[dialog.speaker] || {
@@ -593,10 +184,10 @@ function ConversationContent() {
               const isRight = speakerInfo.position === 'right';
               
               // In Level 1, 2 and 3, if this is the current guess step, we show a waiting bubble or blank
-              const isGuessingThisLine = !isFinished && index === stepIndex && 
-                (isLevel3 || (isLevel2 && !warnings.includes(index)) || (isLevel1 && index % 2 !== 0));
+              const isGuessingThisLine = !state.isFinished && index === state.stepIndex && 
+                (state.isLevel3 || (state.isLevel2 && !state.warnings.includes(index)) || (state.isLevel1 && index % 2 !== 0));
               
-              const isActive = (index === currentLineIndex && isPlaying);
+              const isActive = (index === state.currentLineIndex && state.isPlaying);
               
               return (
                 <div 
@@ -634,7 +225,7 @@ function ConversationContent() {
                       `}
                     >
                       {isGuessingThisLine ? (
-                        (isLevel1 || isLevel3) ? (
+                        (state.isLevel1 || state.isLevel3) ? (
                           <div className="flex items-center gap-1.5 py-2 px-1">
                             <div className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                             <div className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -642,7 +233,7 @@ function ConversationContent() {
                           </div>
                         ) : (
                           <div className="text-2xl font-medium font-thai leading-relaxed">
-                            {targetWord ? dialog.th.replace(targetWord.th, '______') : '______'}
+                            {state.targetWord ? dialog.th.replace(state.targetWord.th, '______') : '______'}
                           </div>
                         )
                       ) : (
@@ -653,7 +244,7 @@ function ConversationContent() {
                     </div>
                     
                     {/* Replay button next to the bubble during review mode */}
-                    {isFinished && (
+                    {state.isFinished && (
                       <IconButton 
                          size="md"
                          onClick={() => playThaiTTS(dialog.th)}
@@ -664,9 +255,9 @@ function ConversationContent() {
                     )}
                     
                     {/* Phonetics and translation (shown when finished) */}
-                    {(isFinished || (!isInteractive && index < currentLineIndex) || (isInteractive && index < stepIndex) || warnings.includes(index)) && !isGuessingThisLine && (
+                    {(state.isFinished || (!state.isInteractive && index < state.currentLineIndex) || (state.isInteractive && index < state.stepIndex) || state.warnings.includes(index)) && !isGuessingThisLine && (
                       <div className={`px-2 flex flex-col gap-1 ${isRight ? 'text-right' : 'text-left'}`}>
-                        {warnings.includes(index) && (
+                        {state.warnings.includes(index) && (
                           <span className="text-xs font-bold text-red-500 bg-red-50 p-1 rounded inline-block w-fit mb-1">
                             ⚠️ {getTranslation('auto.no_exact_word_found_in_course', language)}
                           </span>
@@ -683,14 +274,14 @@ function ConversationContent() {
             })}
           </div>
         )}
-        <div ref={endOfMessagesRef} className={`transition-all ${choices.length > 0 ? 'h-[280px] sm:h-[320px]' : 'h-32 sm:h-48'}`} />
+        <div ref={state.endOfMessagesRef} className={`transition-all ${state.choices.length > 0 ? 'h-[280px] sm:h-[320px]' : 'h-32 sm:h-48'}`} />
       </main>
 
       {/* Choices overlay for level 1, 2 and 3 */}
-      {hasStarted && isInteractive && !isFinished && (isLevel2 || isLevel3 || stepIndex % 2 !== 0) && choices.length > 0 && (
+      {state.hasStarted && state.isInteractive && !state.isFinished && (state.isLevel2 || state.isLevel3 || state.stepIndex % 2 !== 0) && state.choices.length > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-2 sm:p-3 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)] z-40 animate-in slide-in-from-bottom-full duration-300">
           <div className="max-w-2xl mx-auto flex flex-col gap-1.5 sm:gap-2">
-            {(isLevel1 || isLevel3) && hintWord && (
+            {(state.isLevel1 || state.isLevel3) && state.hintWord && (
               <div className="w-full mb-2 bg-indigo-50/50 rounded-2xl p-2 sm:p-3 border border-indigo-100 flex flex-col items-center gap-2">
                  <div className="text-[11px] sm:text-xs font-bold text-indigo-800 flex items-center gap-1.5 text-center">
                     <Sparkles size={14} />
@@ -700,51 +291,51 @@ function ConversationContent() {
                      <Button
                        variant="outline"
                        onClick={() => {
-                          attemptApplyHintCost(1);
-                          playThaiTTS(hintWord.th);
+                          actions.attemptApplyHintCost(1);
+                          if (state.hintWord) playThaiTTS(state.hintWord.th);
                        }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[1] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${state.hintsUsed[1] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         <Volume2 size={16} /> 
                         <span className="hidden sm:inline">
-                           {hintsUsed[1] ? (getTranslation('auto.replay', language)) : (getTranslation('auto.hint_1', language))}
+                           {state.hintsUsed[1] ? (getTranslation('auto.replay', language)) : (getTranslation('auto.hint_1', language))}
                         </span>
                      </Button>
 
                      <Button
                        variant="outline"
                        onClick={() => {
-                          attemptApplyHintCost(2);
-                          setIsImageModalOpen(true);
+                          actions.attemptApplyHintCost(2);
+                          actions.setIsImageModalOpen(true);
                         }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] min-w-[70px] ${hintsUsed[2] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] min-w-[70px] ${state.hintsUsed[2] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
                         <ImageIcon size={16} />
-                        <span className="hidden sm:inline">{hintsUsed[2] ? (getTranslation('auto.image', language)) : (getTranslation('auto.hint_2', language))}</span>
+                        <span className="hidden sm:inline">{state.hintsUsed[2] ? (getTranslation('auto.image', language)) : (getTranslation('auto.hint_2', language))}</span>
                      </Button>
 
                      <Button
                        variant="outline"
                        onClick={() => {
-                          attemptApplyHintCost(3);
+                          actions.attemptApplyHintCost(3);
                        }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[3] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${state.hintsUsed[3] ? 'bg-white border-indigo-200 text-indigo-600' : 'bg-indigo-100 border-indigo-200 text-indigo-500 hover:bg-indigo-200 hover:border-indigo-300'}`}
                      >
-                        {!hintsUsed[3] && <Type size={16} />} 
-                        {hintsUsed[3] ? <span>{getLocalizedField(hintWord, '', language)}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
+                        {!state.hintsUsed[3] && <Type size={16} />} 
+                        {state.hintsUsed[3] ? <span>{getLocalizedField(state.hintWord, '', language)}</span> : <span className="hidden sm:inline">{getTranslation('auto.hint_3', language)}</span>}
                      </Button>
                      
                      <Button
                        variant="outline"
                        onClick={() => {
-                          attemptApplyHintCost(4);
+                          actions.attemptApplyHintCost(4);
                        }}
-                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${hintsUsed[4] ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
+                       className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold border-2 flex items-center justify-center gap-1.5 min-h-[36px] ${state.hintsUsed[4] ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-700' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'}`}
                        title={getTranslation('auto.highlight_differences', language)}
                      >
                         <Sparkles size={16} />
                         <span className="hidden sm:inline">
-                           {hintsUsed[4] ? (getTranslation('auto.focus_on', language)) : (getTranslation('auto.hint_4', language))}
+                           {state.hintsUsed[4] ? (getTranslation('auto.focus_on', language)) : (getTranslation('auto.hint_4', language))}
                         </span>
                      </Button>
                  </div>
@@ -755,15 +346,14 @@ function ConversationContent() {
                   {getTranslation('auto.choose_the_correct_response', language)}
                </h3>
             </div>
-            {choices.map((choice) => {
-              const isSelected = selectedChoiceId === choice.id;
-              const isCorrect = choice.correct;
-              const isWrongStatus = isSelected && isChoiceCorrect === false;
-              const isCorrectStatus = isSelected && isChoiceCorrect === true;
+            {state.choices.map((choice: any) => {
+              const isSelected = state.selectedChoiceId === choice.id;
+              const isWrongStatus = isSelected && state.isChoiceCorrect === false;
+              const isCorrectStatus = isSelected && state.isChoiceCorrect === true;
               
               let cardStyle = "bg-white border-slate-200 hover:border-orange-300 hover:bg-orange-50 text-slate-800";
-              if (isLevel2) cardStyle = "bg-white border-slate-200 hover:border-purple-300 hover:bg-purple-50 text-slate-800";
-              if (isLevel3) cardStyle = "bg-white border-slate-200 hover:border-blue-300 hover:bg-blue-50 text-slate-800";
+              if (state.isLevel2) cardStyle = "bg-white border-slate-200 hover:border-purple-300 hover:bg-purple-50 text-slate-800";
+              if (state.isLevel3) cardStyle = "bg-white border-slate-200 hover:border-blue-300 hover:bg-blue-50 text-slate-800";
               
               if (isWrongStatus) {
                 cardStyle = "bg-red-50 border-red-400 text-red-900";
@@ -772,13 +362,13 @@ function ConversationContent() {
               }
 
               // Hint 4 rendering
-              const applyHint4 = hintsUsed[4] && choice.segments;
+              const applyHint4 = state.hintsUsed[4] && choice.segments;
               
               return (
                 <button
                   key={choice.id}
-                  onClick={() => handleChoiceSelect(choice)}
-                  disabled={isChoiceCorrect !== null}
+                  onClick={() => actions.handleChoiceSelect(choice)}
+                  disabled={state.isChoiceCorrect !== null}
                   className={`w-full text-left px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border-2 border-b-4 active:border-b-2 active:translate-y-0.5 transition-all relative ${cardStyle}`}
                 >
                   <div className="font-thai text-lg sm:text-xl font-medium leading-tight pr-6">
@@ -790,9 +380,9 @@ function ConversationContent() {
                         <span>{choice.text}</span>
                      )}
                   </div>
-                  {isLevel1 && showRomanization && <div className="text-xs sm:text-sm font-medium opacity-80 mt-0.5">{choice.phonetic}</div>}
-                  {isLevel2 && <div className="text-xs sm:text-sm font-medium opacity-80 text-slate-500 mt-0.5">{choice.translation} {showRomanization ? `• ${choice.phonetic}` : ''}</div>}
-                  {isLevel3 && showRomanization && <div className="text-xs sm:text-sm font-medium opacity-80 mt-0.5">{choice.phonetic}</div>}
+                  {state.isLevel1 && showRomanization && <div className="text-xs sm:text-sm font-medium opacity-80 mt-0.5">{choice.phonetic}</div>}
+                  {state.isLevel2 && <div className="text-xs sm:text-sm font-medium opacity-80 text-slate-500 mt-0.5">{choice.translation} {showRomanization ? `• ${choice.phonetic}` : ''}</div>}
+                  {state.isLevel3 && showRomanization && <div className="text-xs sm:text-sm font-medium opacity-80 mt-0.5">{choice.phonetic}</div>}
                   
                   {isWrongStatus && <X size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500" />}
                   {isCorrectStatus && <Check size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500" />}
@@ -804,7 +394,7 @@ function ConversationContent() {
       )}
 
       {/* Footer controls when finished */}
-      {isFinished && (
+      {state.isFinished && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)] z-40 animate-in slide-in-from-bottom-full duration-300">
           <div className="max-w-2xl mx-auto flex gap-4">
             <Link
@@ -813,20 +403,20 @@ function ConversationContent() {
             >
               <Home size={24} />
             </Link>
-            {!isInteractive && (
+            {!state.isInteractive && (
               <Button 
                 variant="outline"
                 size="lg"
-                onClick={startNormalConversation}
+                onClick={actions.startNormalConversation}
                 className="flex-[1] bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-4 px-6 border-b-4 active:border-b-2 active:translate-y-0.5"
               >
                 <RotateCcw size={24} />
                 <span className="hidden sm:inline">{getTranslation('auto.listen_again', language)}</span>
               </Button>
             )}
-            {!isInteractive && (
+            {!state.isInteractive && (
               <Link 
-                href={`/conversations/${conversation.id}?level=1`}
+                href={`/conversations/${state.conversation.id}?level=1`}
                 className="flex-[2] bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-2xl border-b-4 border-orange-700 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center group"
               >
                 <span className="flex items-center gap-2">
@@ -838,15 +428,15 @@ function ConversationContent() {
               </Link>
             )}
             
-            {isInteractive && (() => {
-              const passedLv12 = (isLevel1 || isLevel2) && stars >= 3;
-              const passedLv3 = isLevel3 && stars >= 4;
+            {state.isInteractive && (() => {
+              const passedLv12 = (state.isLevel1 || state.isLevel2) && state.stars >= 3;
+              const passedLv3 = state.isLevel3 && state.stars >= 4;
               
-              if (isLevel1) {
+              if (state.isLevel1) {
                 if (passedLv12) {
                   return (
                     <Link 
-                      href={`/conversations/${conversation.id}?level=2`}
+                      href={`/conversations/${state.conversation.id}?level=2`}
                       className="flex-[2] bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-2xl border-b-4 border-purple-700 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center group"
                     >
                       <span className="flex items-center gap-2">
@@ -862,19 +452,19 @@ function ConversationContent() {
                     <Button 
                       variant="outline"
                       size="lg"
-                      onClick={restartInteraction}
+                      onClick={actions.restartInteraction}
                       className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 border-slate-400"
                     >
                       <RotateCcw size={20} />
-                      {getTranslation('auto.retry', language)} (Score: {stars} / ★★★)
+                      {getTranslation('auto.retry', language)} (Score: {state.stars} / ★★★)
                     </Button>
                   );
                 }
-              } else if (isLevel2) {
+              } else if (state.isLevel2) {
                 if (passedLv12) {
                   return (
                     <Link 
-                      href={`/conversations/${conversation.id}?level=3`}
+                      href={`/conversations/${state.conversation.id}?level=3`}
                       className="flex-[2] bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 px-6 rounded-2xl border-b-4 border-purple-700 active:border-b-2 active:translate-y-0.5 transition-all flex items-center justify-center text-center group"
                     >
                       <span className="flex items-center gap-2">
@@ -890,15 +480,15 @@ function ConversationContent() {
                     <Button 
                       variant="outline"
                       size="lg"
-                      onClick={restartInteraction}
+                      onClick={actions.restartInteraction}
                       className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 border-slate-400"
                     >
                       <RotateCcw size={20} />
-                      {getTranslation('auto.retry', language)} (Score: {stars} / ★★★)
+                      {getTranslation('auto.retry', language)} (Score: {state.stars} / ★★★)
                     </Button>
                   );
                 }
-              } else if (isLevel3) {
+              } else if (state.isLevel3) {
                 if (passedLv3) {
                   return (
                     <Link 
@@ -914,11 +504,11 @@ function ConversationContent() {
                     <Button 
                       variant="outline"
                       size="lg"
-                      onClick={restartInteraction}
+                      onClick={actions.restartInteraction}
                       className="flex-[2] bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 border-slate-400"
                     >
                       <RotateCcw size={20} />
-                      {getTranslation('auto.retry', language)} (Score: {stars} / ★★★★)
+                      {getTranslation('auto.retry', language)} (Score: {state.stars} / ★★★★)
                     </Button>
                   );
                 }
@@ -932,10 +522,10 @@ function ConversationContent() {
         </AnimatePresence>
 
       {/* Image Modal for Hint 2 */}
-      {isImageModalOpen && hintWord && (
+      {state.isImageModalOpen && state.hintWord && (
         <div 
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setIsImageModalOpen(false)}
+          onClick={() => actions.setIsImageModalOpen(false)}
         >
           <div 
             className="bg-white p-6 rounded-3xl shadow-2xl max-w-sm w-full animate-in zoom-in-95 duration-200 relative flex flex-col items-center"
@@ -943,13 +533,13 @@ function ConversationContent() {
           >
             <IconButton 
               size="md"
-              onClick={() => setIsImageModalOpen(false)}
+              onClick={() => actions.setIsImageModalOpen(false)}
               className="absolute top-4 right-4 text-slate-500 bg-slate-100 hover:bg-slate-200"
             >
               <X size={20} />
             </IconButton>
             <div className="w-48 h-48 relative mb-4 mt-2">
-               <IconImage src={hintWord.imageUrl || `/images/w_w_${hintWord.id}.svg`} alt="Hint Image" fill className="object-contain" />
+               <IconImage src={state.hintWord.imageUrl || `/images/w_w_${state.hintWord.id}.svg`} alt="Hint Image" fill className="object-contain" />
             </div>
             <p className="text-sm font-bold text-slate-400 mt-2">{getTranslation('auto.tap_anywhere_to_close', language)}</p>
           </div>
@@ -972,4 +562,3 @@ export default function ConversationExercisePage() {
     </Suspense>
   )
 }
-
