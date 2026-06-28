@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default React.memo(function MissingLetter({ exercise, selected, onChange, disabled, onAutoCheck, isChecking, isCorrect, language = 'fr', onAddMistake }: Props) {
-  
+
   // Remplacer le tiret par la lettre sélectionnée, ou le laisser tel quel
   const displayText = useMemo(() => {
     if (!exercise.missingLetterText) return "";
@@ -48,7 +48,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
             </span>
           ))}
         </div>
-        
+
         {/* Hint for missing letter (Phonetic & Audio) */}
         <div className="flex flex-col items-center gap-2 mt-2">
           {exercise.showPhoneticHint !== false && exercise.targetLetterPhonetic && (
@@ -91,8 +91,9 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
                   isError={isWrong}
                   disabled={disabled}
                   onClick={() => handleSelect(opt.id)}
+                  className="w-full h-full "
                 >
-                  <div className="w-full h-full flex items-center justify-center relative pb-1">
+                  <div className="flex items-center justify-center relative pb-1">
                     <span className="font-thai text-4xl leading-none font-normal w-full block text-center">{opt.th}</span>
                   </div>
                 </OptionCardButton>
