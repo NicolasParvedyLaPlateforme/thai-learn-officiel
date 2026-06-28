@@ -44,13 +44,83 @@ export function PartNodeBubble({
   };
 
   const href = getHref();
-  const showRight = nodeX <= 0;
+  
+  let placement = 'right';
+
+  if (partIndex !== 'full') {
+    const angle = 360 / totalParts;
+    const midAngle = (partIndex * angle) - 90 + (angle / 2);
+    const normalized = (midAngle + 360) % 360; // 0 is right, 90 is bottom, 180 is left, 270 is top
+    
+    if (normalized >= 45 && normalized <= 135) {
+      placement = 'bottom';
+    } else if (normalized >= 225 && normalized <= 315) {
+      placement = 'top';
+    } else if (normalized > 135 && normalized < 225) {
+      // Wants left
+      if (nodeX < 0) {
+        placement = normalized < 180 ? 'bottom' : 'top';
+      } else {
+        placement = 'left';
+      }
+    } else {
+      // Wants right
+      if (nodeX > 0) {
+        placement = normalized > 270 || normalized < 0 ? 'top' : 'bottom';
+      } else {
+        placement = 'right';
+      }
+    }
+  } else {
+    placement = nodeX <= 0 ? 'right' : 'left';
+  }
+
+  let positionClasses = '';
+  let arrowClasses = '';
+  let arrowStyle: React.CSSProperties = {};
+
+  let xOffset = 0;
+  let yOffset = 0;
+  
+  if (partIndex !== 'full') {
+    const angle = 360 / totalParts;
+    const midAngle = (partIndex * angle) - 90 + (angle / 2);
+    const normalized = (midAngle + 360) % 360;
+    
+    // Calculate precise arrow offset using trig (radius ~45px for the pizza slices)
+    xOffset = Math.cos(normalized * Math.PI / 180) * 45;
+    yOffset = Math.sin(normalized * Math.PI / 180) * 45;
+  }
+
+  switch (placement) {
+    case 'bottom':
+      positionClasses = 'top-full mt-3 lg:mt-5 left-1/2 -translate-x-1/2';
+      arrowClasses = '-top-[6px] border-b-0 border-r-0';
+      arrowStyle = { left: `calc(50% + ${xOffset}px)`, transform: 'translateX(-50%) rotate(45deg)' };
+      break;
+    case 'top':
+      positionClasses = 'bottom-full mb-3 lg:mb-5 left-1/2 -translate-x-1/2';
+      arrowClasses = '-bottom-[6px] border-t-0 border-l-0';
+      arrowStyle = { left: `calc(50% + ${xOffset}px)`, transform: 'translateX(-50%) rotate(45deg)' };
+      break;
+    case 'left':
+      positionClasses = 'right-full mr-3 lg:mr-5 top-1/2 -translate-y-1/2';
+      arrowClasses = '-right-[6px] border-b-0 border-l-0';
+      arrowStyle = { top: `calc(50% + ${yOffset}px)`, transform: 'translateY(-50%) rotate(45deg)' };
+      break;
+    case 'right':
+    default:
+      positionClasses = 'left-full ml-3 lg:ml-5 top-1/2 -translate-y-1/2';
+      arrowClasses = '-left-[6px] border-t-0 border-r-0';
+      arrowStyle = { top: `calc(50% + ${yOffset}px)`, transform: 'translateY(-50%) rotate(45deg)' };
+      break;
+  }
 
   return (
     <div
       className={[
-        'absolute z-50 top-1/2 -translate-y-1/2',
-        showRight ? 'left-[calc(100%+12px)] lg:left-[calc(100%+24px)]' : 'right-[calc(100%+12px)] lg:right-[calc(100%+24px)]',
+        'absolute z-50',
+        positionClasses,
         'w-[180px]',
         'bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-slate-100',
         'flex flex-col gap-3 p-3.5',
@@ -60,11 +130,10 @@ export function PartNodeBubble({
       {/* Pointer arrow */}
       <div
         className={[
-          'absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rotate-45 border border-slate-100',
-          showRight
-            ? '-left-[7px] border-t-0 border-r-0'
-            : '-right-[7px] border-b-0 border-l-0',
+          'absolute w-3 h-3 bg-white border border-slate-100',
+          arrowClasses,
         ].join(' ')}
+        style={arrowStyle}
       />
 
       {/* Header */}

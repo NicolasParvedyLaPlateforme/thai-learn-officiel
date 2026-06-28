@@ -133,8 +133,13 @@ export function LessonPathNode({
   return (
     <div
       ref={containerRef}
-      className="relative w-full flex items-center justify-center"
-      style={{ height: `${slotHeight}px` }}
+      className={`relative w-full flex items-center justify-center ${
+        levelIndex === maxLevel 
+          ? 'h-[160px] md:h-[240px] mb-[80px]' 
+          : levelIndex === 0 
+            ? 'h-[290px]' 
+            : 'h-[290px] md:h-[420px]'
+      }`}
       id={`path-level-${levelIndex}`}
     >
       {/* ── SVG connection lines have been removed per user request ── */}
@@ -158,7 +163,7 @@ export function LessonPathNode({
         {/* Objective Images */}
         {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
           <div className={`absolute top-1/2 -translate-y-1/2 w-32 md:w-56 lg:w-72 z-0 transition-all duration-500 ease-out
-            ${isAccessible ? 'opacity-100' : 'opacity-50 grayscale blur-[1px]'}
+            ${activeMobileLevel === levelIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
             ${getOffset(levelIndex) < 0 ? 'left-full ml-10 md:ml-20 lg:ml-28' : 'right-full mr-10 md:mr-20 lg:mr-28'}
           `}>
             <div className={`hidden md:block bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm mb-2 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-xs md:text-sm text-center transition-all duration-500`}>
@@ -197,19 +202,7 @@ export function LessonPathNode({
           </div>
         )}
 
-        {/* Steps Indicator (flag) */}
-        {(!isMastery && isAccessible && currentLevelParts > 0) && (
-          <>
-            <div className={`hidden lg:flex absolute top-1/2 -translate-y-1/2 ${getOffset(levelIndex) < 0 ? 'left-[calc(100%+16px)]' : 'right-[calc(100%+16px)]'} items-center justify-center bg-white px-3 py-2 rounded-2xl shadow-md border-2 border-slate-100 gap-2 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-20 whitespace-nowrap`}>
-              <Flag size={16} className={unitColor.replace('bg-', 'text-')} />
-              <span className="text-sm font-black text-slate-700">{completedStepsCount}/{currentLevelParts}</span>
-            </div>
-            <div className={`flex lg:hidden absolute -bottom-4 left-1/2 -translate-x-1/2 items-center justify-center bg-white px-2.5 py-1 rounded-xl shadow-md border-2 border-slate-100 gap-1.5 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-30 whitespace-nowrap`}>
-              <Flag size={14} className={unitColor.replace('bg-', 'text-')} />
-              <span className="text-[11px] font-black text-slate-700">{completedStepsCount}/{currentLevelParts}</span>
-            </div>
-          </>
-        )}
+        {/* Steps Indicator (flag) was here, removed because PartNodeBubble already displays it */}
 
         {(!isMastery && currentPartsTotal > 1) ? (
           <div
