@@ -1,33 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export function useScrollHeader(threshold: number = 50) {
   const [showHeader, setShowHeader] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const mountTime = Date.now();
+    let mountTime = Date.now();
+    
+    // Set initial scroll
+    if (typeof window !== 'undefined') {
+      lastScrollY.current = window.scrollY;
+    }
 
     const handleScroll = () => {
-      // Ignore programmatic scrolling on initial load
-      if (Date.now() - mountTime < 1500) return;
+      if (Date.now() - mountTime < 500) return; // Reduced ignore time to 500ms
 
       const currentScrollY = window.scrollY;
+      
       if (currentScrollY <= 0) {
         setShowHeader(true);
-        setLastScrollY(0);
+        lastScrollY.current = 0;
         return;
       }
-      if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+      
+      if (currentScrollY > lastScrollY.current && currentScrollY > threshold) {
         setShowHeader(false);
-      } else if (currentScrollY < lastScrollY) {
+      } else if (currentScrollY < lastScrollY.current) {
         setShowHeader(true);
       }
-      setLastScrollY(currentScrollY);
+      
+      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, threshold]);
+  }, [threshold]);
 
   return showHeader;
 }
