@@ -56,7 +56,8 @@ export function useActiveUnit(
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
     
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Use 'auto' instead of 'smooth' so it doesn't conflict with the timeline's auto-scroll to the active lesson.
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   return { activeUnitIndex, setActiveUnitIndex, handleUnitSelect };
