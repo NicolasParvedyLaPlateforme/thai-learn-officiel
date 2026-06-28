@@ -77,4 +77,7 @@ export interface Exercise {
   targetLetter?: string;
   targetLetterPhonetic?: string;
   showPhoneticHint?: boolean;
+  originalWord?: string;
+  missingIndex?: number;
+  placeholderType?: 'normal' | 'above' | 'below';
 }

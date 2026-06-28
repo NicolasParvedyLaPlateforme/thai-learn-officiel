@@ -24,7 +24,17 @@ export function buildMissingLetter(
   const targetChar = availableInWord[Math.floor(Math.random() * availableInWord.length)];
   
   // Replace the first occurrence with '_'
+  const missingIndex = word.th.indexOf(targetChar.letter);
   const missingLetterText = word.th.replace(targetChar.letter, '_');
+  
+  const aboveVowels = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ', '๋', '้', '๊', '่'];
+  const belowVowels = ['ุ', 'ู'];
+  let placeholderType: 'normal' | 'above' | 'below' = 'normal';
+  if (aboveVowels.includes(targetChar.letter)) {
+    placeholderType = 'above';
+  } else if (belowVowels.includes(targetChar.letter)) {
+    placeholderType = 'below';
+  }
   
   let possibleDistractors = candidates.filter(c => c.letter !== targetChar.letter);
   possibleDistractors = shuffle(possibleDistractors).slice(0, numDistractors);
@@ -41,6 +51,9 @@ export function buildMissingLetter(
     answer: targetChar.letter, // The answer is the letter itself! (for auto-checking)
     options: finalOptions,
     missingLetterText,
+    originalWord: word.th,
+    missingIndex,
+    placeholderType,
     targetLetter: targetChar.letter,
     targetLetterPhonetic: targetChar.pronunciation,
     showPhoneticHint: true,

@@ -21,13 +21,80 @@ interface Props {
 export default React.memo(function MissingLetter({ exercise, selected, onChange, disabled, onAutoCheck, isChecking, isCorrect, language = 'fr', onAddMistake }: Props) {
 
   // Remplacer le tiret par la lettre sélectionnée, ou le laisser tel quel
-  const displayText = useMemo(() => {
-    if (!exercise.missingLetterText) return "";
-    if (selected) {
-      return exercise.missingLetterText.replace('_', selected);
+  const renderText = () => {
+    let { originalWord, missingIndex, placeholderType } = exercise;
+
+    // Retro-compatibility: compute missing properties if they are not in the DB
+    if (originalWord === undefined || missingIndex === undefined) {
+      if (exercise.missingLetterText && exercise.answer) {
+        missingIndex = exercise.missingLetterText.indexOf('_');
+        originalWord = exercise.missingLetterText.replace('_', exercise.answer);
+
+        const aboveVowels = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ', '๋', '้', '๊', '่'];
+        const belowVowels = ['ุ', 'ู'];
+        if (aboveVowels.includes(exercise.answer)) {
+          placeholderType = 'above';
+        } else if (belowVowels.includes(exercise.answer)) {
+          placeholderType = 'below';
+        } else {
+          placeholderType = 'normal';
+        }
+      }
     }
-    return exercise.missingLetterText;
-  }, [exercise.missingLetterText, selected]);
+
+    if (!originalWord || missingIndex === undefined || missingIndex === -1) {
+      // Ultimate Fallback
+      return (
+        <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center">
+          {(exercise.missingLetterText || "").split('').map((char, index) => (
+            <span key={index} className={char === '_' ? 'text-amber-500 mx-1' : (char === selected ? 'text-amber-500 font-bold animate-in zoom-in duration-300' : '')}>
+              {selected && char === '_' ? selected : char}
+            </span>
+          ))}
+        </div>
+      );
+    }
+
+    const beforeBase = originalWord.substring(0, Math.max(0, missingIndex - 1));
+    const baseChar = missingIndex > 0 ? originalWord[missingIndex - 1] : '';
+    const afterMissing = originalWord.substring(missingIndex + 1);
+
+    const isCombining = placeholderType === 'above' || placeholderType === 'below';
+
+    if (isCombining) {
+      return (
+        <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px]">
+          <span>{beforeBase}</span>
+          <span className="relative inline-block">
+            {baseChar}
+            {!selected && placeholderType === 'above' && (
+              <span className="absolute top-4 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full" />
+            )}
+            {!selected && placeholderType === 'below' && (
+              <span className="absolute bottom-3 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full" />
+            )}
+            {selected && (
+              <span className="text-amber-500">{selected}</span>
+            )}
+          </span>
+          <span>{afterMissing}</span>
+        </div>
+      );
+    }
+
+    // Normal non-combining rendering (like consonants, or front/back vowels)
+    return (
+      <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center">
+        <span>{originalWord.substring(0, missingIndex)}</span>
+        {!selected ? (
+          <span className="text-amber-500 mx-1">_</span>
+        ) : (
+          <span className="text-amber-500 font-bold animate-in zoom-in duration-300">{selected}</span>
+        )}
+        <span>{afterMissing}</span>
+      </div>
+    );
+  };
 
   const handleSelect = (val: string) => {
     if (disabled) return;
@@ -41,13 +108,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
     <div className="w-full flex flex-col items-center">
       {/* Display Text */}
       <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
-        <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center">
-          {displayText.split('').map((char, index) => (
-            <span key={index} className={char === '_' ? 'text-slate-300 mx-1' : (char === selected ? 'text-amber-500 font-bold animate-in zoom-in duration-300' : '')}>
-              {char}
-            </span>
-          ))}
-        </div>
+        {renderText()}
 
         {/* Hint for missing letter (Phonetic & Audio) */}
         <div className="flex flex-col items-center gap-2 mt-2">
