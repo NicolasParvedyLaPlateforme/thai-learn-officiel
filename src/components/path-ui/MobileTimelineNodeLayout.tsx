@@ -91,7 +91,10 @@ export function MobileTimelineNodeLayout({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
-      className="relative flex flex-col items-center w-full z-10 mb-8 sm:mb-10 gap-3 sm:gap-4"
+      style={{ zIndex: 100 - index }}
+      className={cn("relative flex flex-col items-center w-full gap-3 sm:gap-4",
+        index === 0 ? "mt-0" : "mt-16 sm:mt-16"
+      )}
     >
       {/* Lesson Card */}
       <div className="w-full min-w-0 z-10">

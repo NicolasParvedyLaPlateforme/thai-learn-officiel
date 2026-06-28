@@ -252,7 +252,7 @@ export default function PathDesktopTimeline({
                           language={language}
                           isReviewLocked={isReviewLocked}
                           suggestedLessonId={suggestedLessonId}
-                          isMobileLayout={true}
+                          isMobileLayout={false}
                           onClick={onNodeClick}
                         />
                       }

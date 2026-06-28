@@ -49,10 +49,86 @@ export function SharedLessonCard({
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
   const [isHovered, setIsHovered] = useState(false);
 
+  const [scrollIndex, setScrollIndex] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const hasUnlockedWords = level >= 1;
   const hasUnlockedPhrases = pathType === 'speak' ? level >= 1 : level >= 2;
+
+  // Build the list of items to rotate, respecting unlock conditions
+  const getMobileItems = useCallback(() => {
+    if (pathType === 'alphabet') {
+      if (!hasUnlockedWords) return [];
+      return (lesson.items || [])
+        .filter((i: any) => i.letter)
+        .map((i: any) => ({ thai: formatCombiningChar(i.letter), translation: i.pronunciation || '', isPhrase: false }));
+    }
+    if (pathType === 'speak') {
+      if (!hasUnlockedPhrases) return [];
+      return (lesson.phrases || [])
+        .filter((p: any) => p.th !== '...' && p.phonetic !== '...')
+        .map((p: any) => ({ thai: p.th || p.phonetic, translation: getLocalizedField(p, '', language), isPhrase: true }));
+    }
+    // 'learn': show words from level 1, add phrases from level 2
+    const words = hasUnlockedWords
+      ? (lesson.words || [])
+        .filter((w: any) => w.th !== '...' && w.phonetic !== '...')
+        .map((w: any) => ({ thai: w.th || w.phonetic, translation: getLocalizedField(w, '', language), isPhrase: false }))
+      : [];
+    const phrases = hasUnlockedPhrases
+      ? (lesson.phrases || [])
+        .filter((p: any) => p.th !== '...' && p.phonetic !== '...')
+        .map((p: any) => ({ thai: p.th || p.phonetic, translation: getLocalizedField(p, '', language), isPhrase: true }))
+      : [];
+    // interleave
+    const result: typeof words = [];
+    const maxLen = Math.max(words.length, phrases.length);
+    for (let i = 0; i < maxLen; i++) {
+      if (i < words.length) result.push(words[i]);
+      if (i < phrases.length) result.push(phrases[i]);
+    }
+    return result;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathType, lesson, language, hasUnlockedWords, hasUnlockedPhrases]);
+
+  const mobileItems = getMobileItems();
+
+  // Start scrolling interval if visible
+  useEffect(() => {
+    if (mobileItems.length <= 1) return;
+    const el = cardRef.current;
+    if (!el) return;
+
+    const start = () => {
+      if (intervalRef.current) return;
+      intervalRef.current = setInterval(() => {
+        setScrollIndex(prev => (prev + 1) % mobileItems.length);
+      }, 3000);
+    };
+    const stop = () => {
+      if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobileLayout, mobileItems.length, lesson.id]);
 
 
   // ── Shared derived values ─────────────────────────────────────────────────
@@ -115,22 +191,22 @@ export function SharedLessonCard({
   const overlayColor = badgeTheme.bgOverlay; // semi-opaque color overlay on image for text
 
   const isStarted = level > 0 && !isMaxLevel;
-    if (pathType === 'alphabet') {
-      return (
-        <>
-          {/* Left: Letters box */}
-          {isMobileLayout && (
-            <div className="w-[84px] h-[84px] sm:w-[96px] sm:h-[96px] rounded-2xl overflow-hidden shrink-0 relative bg-slate-50 border border-slate-100 flex items-center justify-center text-3xl font-thai text-slate-600">
-              <div className="flex flex-wrap items-center justify-center p-2 leading-none gap-1">
-                {lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
-              </div>
-              {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px]"><Star size={28} className="text-white fill-white/50" /></div>}
+  if (pathType === 'alphabet') {
+    return (
+      <>
+        {/* Left: Letters box */}
+        {isMobileLayout && (
+          <div className="w-[84px] h-[84px] sm:w-[96px] sm:h-[96px] rounded-2xl overflow-hidden shrink-0 relative bg-slate-50 border border-slate-100 flex items-center justify-center text-3xl font-thai text-slate-600">
+            <div className="flex flex-wrap items-center justify-center p-2 leading-none gap-1">
+              {lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
             </div>
-          )}
+            {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px]"><Star size={28} className="text-white fill-white/50" /></div>}
+          </div>
+        )}
 
-          {/* Right: Letters List */}
-          <div className="flex-1 min-w-0 bg-slate-50/50 rounded-2xl p-2 flex flex-col cursor-default border border-slate-100" onClick={(e) => e.stopPropagation()}>
-            <div className="flex bg-slate-100/50 p-1 rounded-xl w-full mb-1 justify-center">
+        {/* Right: Letters List */}
+        <div className="flex-1 min-w-0 bg-slate-50/50 rounded-2xl p-2 flex flex-col cursor-default border border-slate-100" onClick={(e) => e.stopPropagation()}>
+          <div className="flex bg-slate-100/50 p-1 rounded-xl w-full mb-1 justify-center">
             <button
               onClick={() => setActiveTab('words')}
               className={cn("flex-1 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold rounded-lg transition-all", activeTab === 'words' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700')}
@@ -185,7 +261,8 @@ export function SharedLessonCard({
       ref={cardRef as React.Ref<HTMLDivElement>}
       className={cn("relative p-4 sm:p-6 flex flex-row items-center gap-4 sm:gap-6 rounded-[2rem] bg-white cursor-pointer shadow-sm hover:shadow-md transition-shadow group overflow-visible",
         !isMaxLevel ? "border-0" : "border border-slate-200",
-        isReviewLocked ? "opacity-50 pointer-events-none" : ""
+        isReviewLocked ? "opacity-50 pointer-events-none" : "",
+        isMobileLayout ? "pb-10" : ""
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -196,9 +273,9 @@ export function SharedLessonCard({
     >
       {/* SVG Segmented Border (Only if not mastered and not 0 levels) */}
       {!isMaxLevel && maxLevelPerLesson > 0 && (
-        <SegmentedProgressBorder 
-          maxLevel={maxLevelPerLesson} 
-          currentLevel={displayLevel} 
+        <SegmentedProgressBorder
+          maxLevel={maxLevelPerLesson}
+          currentLevel={displayLevel}
           colorClass={textDynamicColor}
           radius={32} // 32px for rounded-[2rem]
         />
@@ -206,15 +283,15 @@ export function SharedLessonCard({
 
       {/* Badges (Top Centered) */}
       {isMaxLevel ? (
-        <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
+        <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-100 font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
           <CheckCircle size={14} /> {getTranslation('auto.mastered', language)}
         </Badge>
       ) : isSuggested ? (
-        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
+        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-100 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
           {getTranslation('auto.in_progress', language) || "En cours"}
         </Badge>
       ) : displayLevel > 0 ? (
-        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
+        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-100 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
           {getTranslation('auto.in_progress', language) || "En cours"}
         </Badge>
       ) : null}
@@ -232,34 +309,46 @@ export function SharedLessonCard({
 
       {/* Middle: Content */}
       <div className="flex flex-col items-start text-left flex-1 min-w-0 z-10 py-1">
-        <Typography variant="h3" className="w-full text-base sm:text-lg lg:text-xl font-bold text-slate-800 line-clamp-1">
+        <Typography variant="h3" className="w-full text-base sm:text-lg lg:text-xl font-bold text-slate-800">
           {getLocalizedField(lesson, 'title', language)}
         </Typography>
-        <Typography variant="muted" className="mt-0.5 w-full text-xs sm:text-sm text-slate-500 line-clamp-2 pr-2">
+        <Typography variant="muted" className="mt-0.5 w-full text-xs sm:text-sm text-slate-500 pr-2">
           {renderDescription()}
         </Typography>
-        
+
         {/* Phonetic / preview block */}
-        {pathType === 'learn' && hasUnlockedWords && lesson.words?.[0] && (
-          <div className="flex items-center gap-2 mt-2 text-sm">
-            <span className={cn("font-thai font-bold", textDynamicColor)}>{lesson.words[0].th || lesson.words[0].phonetic}</span>
-            <span className="text-slate-400">{getLocalizedField(lesson.words[0], '', language)}</span>
-          </div>
-        )}
-        {pathType === 'speak' && hasUnlockedPhrases && lesson.phrases?.[0] && (
-          <div className="flex items-center gap-2 mt-2 text-sm">
-            <span className={cn("font-thai font-bold", textDynamicColor)}>{lesson.phrases[0].th || lesson.phrases[0].phonetic}</span>
-            <span className="text-slate-400">{getLocalizedField(lesson.phrases[0], '', language)}</span>
+        {mobileItems.length > 0 && (
+          <div className="flex items-center mt-2 overflow-hidden relative w-full" style={{ height: '1.5rem' }}>
+            <AnimatePresence mode="wait">
+              <m.div
+                key={scrollIndex}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.3 }}
+                className="absolute flex items-center gap-2 w-full min-w-0 left-0"
+              >
+                <span className={cn("font-thai text-sm font-bold leading-none truncate shrink-0", textDynamicColor)}>
+                  {mobileItems[scrollIndex]?.thai}
+                </span>
+                <span className="text-slate-400 text-xs truncate min-w-0">
+                  {mobileItems[scrollIndex]?.translation}
+                </span>
+              </m.div>
+            </AnimatePresence>
           </div>
         )}
       </div>
 
-      {/* Right: Button */}
-      <div className="shrink-0 z-10 ml-auto flex flex-col items-end gap-1">
+      {/* Button */}
+      <div className={cn("shrink-0 z-10 flex flex-col items-end gap-1 z-100",
+        isMobileLayout ? "absolute -bottom-5 left-1/2 -translate-x-1/2 w-3/4 max-w-[200px]" : "ml-auto"
+      )}>
         <Button
           variant={isMaxLevel ? "outline" : "gamified"}
-          size="lg"
-          className={cn("px-6 shadow-sm transition-all duration-200 min-w-[140px] justify-center flex items-center gap-2", 
+          size={isMobileLayout ? "default" : "lg"}
+          className={cn("px-4 sm:px-6 shadow-sm transition-all duration-200 justify-center flex items-center gap-2 w-full",
+            !isMobileLayout && "sm:min-w-[140px]",
             isMaxLevel ? "border-2 text-slate-700 bg-white hover:bg-slate-50" : cn("text-white", dynamicColor, borderDynamicColor, hoverDynamicColor)
           )}
           onClick={(e) => {
