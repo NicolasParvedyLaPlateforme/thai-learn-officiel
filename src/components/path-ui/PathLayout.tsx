@@ -139,7 +139,7 @@ export default function PathLayout({
   const pageTitleKey = pathType === 'alphabet' ? 'sidebar.alphabet' : pathType === 'speak' ? 'sidebar.speaking' : 'sidebar.vocabulary';
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
+    <div className="min-h-screen overflow-x-hidden bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
       <PathMobileHeader
         showHeader={showHeader}
         mounted={mounted}
