@@ -81,4 +81,5 @@ export interface Exercise {
   missingIndex?: number;
   placeholderType?: 'normal' | 'above' | 'below';
   targetSound?: string;
+  targetSoundKey?: string;
 }

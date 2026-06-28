@@ -436,5 +436,13 @@
   "auto.complete_level_prefix": "Complete Level",
   "auto.levels_per_lesson": "levels / lesson",
   "auto.next": "Next",
-  "auto.train_instead": "Practice (+10 XP)"
+  "auto.train_instead": "Practice (+10 XP)",
+  "auto.sound.mai_han_a_kat": "short a",
+  "auto.sound.mai_ek": "Low tone",
+  "auto.sound.mai_tho": "Falling tone",
+  "auto.sound.mai_tri": "High tone",
+  "auto.sound.mai_chattawa": "Rising tone",
+  "auto.sound.mai_tai_khu": "Shortener",
+  "auto.sound.karan": "Silent",
+  "auto.sound.rue___ri": "rue / ri"
 }

@@ -436,5 +436,13 @@
   "auto.complete_level_prefix": "Level abschließen",
   "auto.levels_per_lesson": "Level / Lektion",
   "auto.next": "Weiter",
-  "auto.train_instead": "Üben (+10 XP)"
+  "auto.train_instead": "Üben (+10 XP)",
+  "auto.sound.mai_han_a_kat": "a (kurz)",
+  "auto.sound.mai_ek": "Tiefer Ton",
+  "auto.sound.mai_tho": "Fallender Ton",
+  "auto.sound.mai_tri": "Hoher Ton",
+  "auto.sound.mai_chattawa": "Steigender Ton",
+  "auto.sound.mai_tai_khu": "Verkürzung",
+  "auto.sound.karan": "Stumm",
+  "auto.sound.rue___ri": "rue / ri"
 }

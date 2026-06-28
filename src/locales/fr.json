@@ -436,5 +436,13 @@
   "auto.complete_level_prefix": "Terminer Niveau",
   "auto.levels_per_lesson": "niveaux / leçon",
   "auto.next": "Suivant",
-  "auto.train_instead": "S'entraîner (+10 XP)"
+  "auto.train_instead": "S'entraîner (+10 XP)",
+  "auto.sound.mai_han_a_kat": "a (court)",
+  "auto.sound.mai_ek": "Ton bas",
+  "auto.sound.mai_tho": "Ton descendant",
+  "auto.sound.mai_tri": "Ton haut",
+  "auto.sound.mai_chattawa": "Ton ascendant",
+  "auto.sound.mai_tai_khu": "Raccourcissement",
+  "auto.sound.karan": "Silencieux",
+  "auto.sound.rue___ri": "rue / ri"
 }
