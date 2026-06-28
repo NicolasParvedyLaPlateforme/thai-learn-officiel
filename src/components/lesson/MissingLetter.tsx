@@ -87,7 +87,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
       <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center">
         <span>{originalWord.substring(0, missingIndex)}</span>
         {!selected ? (
-          <span className="text-amber-500 mx-1">_</span>
+          <span className="text-amber-500 mx-1 relative -top-5">_</span>
         ) : (
           <span className="text-amber-500 font-bold animate-in zoom-in duration-300">{selected}</span>
         )}
