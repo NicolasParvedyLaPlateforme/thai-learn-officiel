@@ -108,9 +108,14 @@ export default function PathDesktopTimeline({
         
         // Scroll to the card instantly (no cleanup so it's guaranteed to run)
         setTimeout(() => {
-            const cardEl = document.getElementById(`lesson-card-${toExpand?.id}`);
-            if (cardEl) {
-                cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+            const circleEl = document.getElementById(`mobile-node-circle-${toExpand?.id}`);
+            if (circleEl) {
+                circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+            } else {
+                const nodeEl = document.getElementById(`desktop-node-${toExpand?.id}`);
+                if (nodeEl) {
+                    nodeEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                }
             }
         }, 100);
     }

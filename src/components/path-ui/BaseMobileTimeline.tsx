@@ -102,9 +102,14 @@ export default function BaseMobileTimeline({
             
             // Scroll to the card instantly (no cleanup so it's guaranteed to run)
             setTimeout(() => {
-                const cardEl = document.getElementById(`mobile-lesson-${toExpand?.id}`);
-                if (cardEl) {
-                    cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                const circleEl = document.getElementById(`mobile-node-circle-${toExpand?.id}`);
+                if (circleEl) {
+                    circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                } else {
+                    const cardEl = document.getElementById(`mobile-lesson-${toExpand?.id}`);
+                    if (cardEl) {
+                        cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                    }
                 }
             }, 100);
         }
@@ -142,11 +147,18 @@ export default function BaseMobileTimeline({
             return;
         }
 
-        const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
-        if (cardEl) {
+        const circleEl = document.getElementById(`mobile-node-circle-${lesson.id}`);
+        if (circleEl) {
             setTimeout(() => {
-                cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                circleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
+        } else {
+            const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
+            if (cardEl) {
+                setTimeout(() => {
+                    cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
         }
 
         if (!isCurrentlyExpanded) {

@@ -100,6 +100,7 @@ export function MobileTimelineNodeLayout({
 
         {/* Compact Timeline Node */}
         <div
+          id={`mobile-node-circle-${lessonId}`}
           className="relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all"
           onClick={onNodeClick}
         >
