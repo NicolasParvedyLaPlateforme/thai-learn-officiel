@@ -5,6 +5,7 @@ import { shuffle } from '../utils';
 
 export interface MissingLetterOptions {
   numDistractors: number;
+  targetType?: 'consonant' | 'vowel';
 }
 
 export function buildMissingLetter(
@@ -12,24 +13,24 @@ export function buildMissingLetter(
   language: string,
   options: MissingLetterOptions
 ): Exercise | null {
-  const { numDistractors } = options;
+  const { numDistractors, targetType = 'consonant' } = options;
   
-  const consonants = THAI_ALPHABET.filter(i => i.type === 'consonant');
+  const candidates = THAI_ALPHABET.filter(i => i.type === targetType);
   
-  const availableConsonantsInWord = consonants.filter(c => word.th.includes(c.letter));
+  const availableInWord = candidates.filter(c => word.th.includes(c.letter));
   
-  if (availableConsonantsInWord.length === 0) return null;
+  if (availableInWord.length === 0) return null;
   
-  const targetConsonant = availableConsonantsInWord[Math.floor(Math.random() * availableConsonantsInWord.length)];
+  const targetChar = availableInWord[Math.floor(Math.random() * availableInWord.length)];
   
-  // Replace the first occurrence of the consonant with '_'
-  const missingLetterText = word.th.replace(targetConsonant.letter, '_');
+  // Replace the first occurrence with '_'
+  const missingLetterText = word.th.replace(targetChar.letter, '_');
   
-  let possibleDistractors = consonants.filter(c => c.letter !== targetConsonant.letter);
+  let possibleDistractors = candidates.filter(c => c.letter !== targetChar.letter);
   possibleDistractors = shuffle(possibleDistractors).slice(0, numDistractors);
   
   const finalOptions = shuffle([
-    { id: targetConsonant.letter, th: targetConsonant.letter, fr: '', phonetic: targetConsonant.pronunciation },
+    { id: targetChar.letter, th: targetChar.letter, fr: '', phonetic: targetChar.pronunciation },
     ...possibleDistractors.map(d => ({ id: d.letter, th: d.letter, fr: '', phonetic: d.pronunciation }))
   ]);
 
@@ -37,11 +38,11 @@ export function buildMissingLetter(
     id: `missing-letter-${word.id}-${Date.now()}-${Math.random()}`,
     type: 'missing-letter',
     question: getExerciseTranslation(word, language),
-    answer: targetConsonant.letter, // The answer is the letter itself! (for auto-checking)
+    answer: targetChar.letter, // The answer is the letter itself! (for auto-checking)
     options: finalOptions,
     missingLetterText,
-    targetLetter: targetConsonant.letter,
-    targetLetterPhonetic: targetConsonant.pronunciation,
+    targetLetter: targetChar.letter,
+    targetLetterPhonetic: targetChar.pronunciation,
     showPhoneticHint: true,
     imageUrl: word.imageUrl,
     maxMistakes: 1

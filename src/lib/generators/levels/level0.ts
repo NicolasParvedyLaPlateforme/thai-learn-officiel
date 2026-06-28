@@ -15,9 +15,14 @@ export function generateLevel0(validLessonWords: Word[], globalWords: Word[], la
       pool: globalWords
     }));
     
-    const missingLetterEx = buildMissingLetter(word, language, { numDistractors: 1 });
+    const missingLetterEx = buildMissingLetter(word, language, { numDistractors: 1, targetType: 'consonant' });
     if (missingLetterEx) {
       exercises.push(missingLetterEx);
+    }
+    
+    const missingLetterVowelEx = buildMissingLetter(word, language, { numDistractors: 1, targetType: 'vowel' });
+    if (missingLetterVowelEx) {
+      exercises.push(missingLetterVowelEx);
     }
     
     exercises.push(buildWordMatch(word, language, {
