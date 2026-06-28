@@ -4,6 +4,7 @@ import { Volume2 } from 'lucide-react';
 import { playThaiTTS } from '@/lib/tts';
 import { OptionCardButton } from '../ui/OptionCardButton';
 import { m, AnimatePresence } from 'framer-motion';
+import { getTranslation } from '@/hooks/useTranslation';
 
 interface Props {
   exercise: Exercise;
@@ -29,11 +30,27 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
 
   const isWrong = isChecking && isCorrect === false;
 
+  let displayQuestion = exercise.question;
+  if (displayQuestion) {
+    const match = displayQuestion.match(/(?:«\s*|"\s*)(.+?)(?:\s*»|\s*")/);
+    if (match) {
+      const sound = match[1];
+      if (sound && !sound.includes('sara')) {
+         const keyPart = sound.replace(/[\s-]/g, '_').toLowerCase();
+         const targetSoundKey = `auto.sound.${keyPart}`;
+         const translatedSound = getTranslation(targetSoundKey, language);
+         if (translatedSound && translatedSound !== targetSoundKey) {
+            displayQuestion = displayQuestion.replace(sound, translatedSound);
+         }
+      }
+    }
+  }
+
   return (
     <div className="w-full flex flex-col items-center">
       {/* Question */}
       <h2 className="text-xl md:text-2xl font-bold text-slate-800 text-center mb-8">
-        {exercise.question}
+        {displayQuestion}
       </h2>
 
       {/* Display Word */}
