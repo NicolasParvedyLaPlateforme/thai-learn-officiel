@@ -43,6 +43,7 @@ export function LessonPathMap({
   lessonPartsCompleted,
   suggestionType,
   initialScrollLevel,
+  disableAutoScroll,
   onReady,
   onBack,
   isLeft
@@ -145,10 +146,14 @@ export function LessonPathMap({
     if (targetScrollLevel !== null && !isClickScrolling.current) {
       // Small delay to let the framer-motion accordion open first
       const timeoutId = setTimeout(() => {
-        const el = document.getElementById(`path-level-${lessonId}-${targetScrollLevel}`);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const el = currentLevelRef.current;
+        if (el && el.offsetParent !== null) {
+          if (!disableAutoScroll) {
+            el.scrollIntoView({ behavior: 'auto', block: 'center' });
+          }
         }
+        setIsReady(true);
+        onReady?.();
       }, 450);
       
       return () => clearTimeout(timeoutId);
@@ -156,7 +161,11 @@ export function LessonPathMap({
     
     if (currentLevelRef.current) {
       setTimeout(() => {
-        currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        if (currentLevelRef.current && currentLevelRef.current.offsetParent !== null) {
+          if (!disableAutoScroll) {
+            currentLevelRef.current.scrollIntoView({ block: 'center', behavior: 'auto' });
+          }
+        }
         setTimeout(() => {
           setIsReady(true);
           onReady?.();

@@ -59,6 +59,41 @@ export default function SyncProgress() {
                 saveProgress(dbState);
              }
           }
+
+          // Patch: Auto-validate missing parts for fully completed levels
+          let partsFixMigrated = false;
+          if (dbState.lessonLevels) {
+            Object.keys(dbState.lessonLevels).forEach(lessonId => {
+              const maxLevelCompleted = dbState.lessonLevels[lessonId];
+              for (let level = 0; level < maxLevelCompleted; level++) {
+                const partsKey = `${lessonId}_level-${level}`;
+                
+                if (!dbState.lessonPartsCompleted) {
+                  dbState.lessonPartsCompleted = {};
+                }
+                
+                const currentParts = dbState.lessonPartsCompleted[partsKey] || [];
+                const neededParts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                let changed = false;
+                
+                for (const p of neededParts) {
+                  if (!currentParts.includes(p)) {
+                    currentParts.push(p);
+                    changed = true;
+                  }
+                }
+                
+                if (changed) {
+                  dbState.lessonPartsCompleted[partsKey] = currentParts;
+                  partsFixMigrated = true;
+                }
+              }
+            });
+          }
+
+          if (partsFixMigrated) {
+            saveProgress(dbState);
+          }
           
           const userEmail = session?.user?.email || null;
           useProgressStore.setState({ ...dbState, lastMergedEmail: userEmail });
