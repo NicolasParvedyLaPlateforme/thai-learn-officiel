@@ -41,8 +41,15 @@ export function useGlobalSuggestedLesson(providedLearnLessons?: any[]): Suggeste
           const currentLevel = lessonLevels[lastPlayedLessonId] || 0;
           if (currentLevel < maxLevel) {
              suggestionFromLastPlayed = { id: lastPlayedLessonId, type: lastPlayedLessonType };
-          } else if (currentIndex + 1 < list.length) {
-             suggestionFromLastPlayed = { id: list[currentIndex + 1].id, type: lastPlayedLessonType };
+          } else {
+             // Find the next incomplete lesson starting from currentIndex + 1
+             for (let i = currentIndex + 1; i < list.length; i++) {
+                const nextLessonLevel = lessonLevels[list[i].id] || 0;
+                if (nextLessonLevel < maxLevel) {
+                   suggestionFromLastPlayed = { id: list[i].id, type: lastPlayedLessonType };
+                   break;
+                }
+             }
           }
        }
     }
