@@ -68,7 +68,7 @@ export function LessonPathNode({
 
   useEffect(() => {
     if (selectedAction === null) return;
-    const handler = (e: MouseEvent) => {
+    const handler = (e: Event) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setSelectedAction(null);
       }

@@ -13,51 +13,9 @@ import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { AnimatePresence, m, useInView } from 'framer-motion';
 
 // ───────────────────────────────────────────────────────────────────────────────
-// Module-level scroll coordinator
-// Ensures only the card CLOSEST to the viewport centre rotates at any time.
+// Scrolling handled locally via IntersectionObserver in the component
 // ───────────────────────────────────────────────────────────────────────────────
-type CardEntry = { el: HTMLElement; activate: () => void; deactivate: () => void };
-const _cards = new Map<string, CardEntry>();
-let _rafId: number | null = null;
-let _activeId: string | null = null;
 
-function _pickNearest() {
-  if (_cards.size === 0) return;
-  const mid = window.innerHeight / 2;
-  let bestId = '';
-  let bestDist = Infinity;
-  _cards.forEach(({ el }, id) => {
-    const r = el.getBoundingClientRect();
-    const d = Math.abs(r.top + r.height / 2 - mid);
-    if (d < bestDist) { bestDist = d; bestId = id; }
-  });
-  if (bestId === _activeId) return;
-  _activeId = bestId;
-  _cards.forEach(({ activate, deactivate }, id) =>
-    id === bestId ? activate() : deactivate()
-  );
-}
-
-function _onScroll() {
-  if (_rafId !== null) return;
-  _rafId = requestAnimationFrame(() => { _pickNearest(); _rafId = null; });
-}
-
-function registerCard(id: string, entry: CardEntry) {
-  const wasEmpty = _cards.size === 0;
-  _cards.set(id, entry);
-  if (wasEmpty && typeof window !== 'undefined')
-    window.addEventListener('scroll', _onScroll, { passive: true });
-  // run once on mount to immediately set the right winner
-  if (typeof window !== 'undefined') _pickNearest();
-}
-
-function unregisterCard(id: string) {
-  _cards.delete(id);
-  if (_cards.size === 0 && typeof window !== 'undefined')
-    window.removeEventListener('scroll', _onScroll);
-}
-// ───────────────────────────────────────────────────────────────────────────────
 
 
 interface SharedLessonCardProps {
@@ -137,7 +95,7 @@ export function SharedLessonCard({
 
   const mobileItems = getMobileItems();
 
-  // Register with the module-level scroll coordinator
+  // Start scrolling interval if visible
   useEffect(() => {
     if (!isMobileLayout || mobileItems.length <= 1) return;
     const el = cardRef.current;
@@ -153,9 +111,21 @@ export function SharedLessonCard({
       if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
     };
 
-    registerCard(lesson.id, { el, activate: start, deactivate: stop });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+
     return () => {
-      unregisterCard(lesson.id);
+      observer.disconnect();
       stop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -431,7 +401,7 @@ export function SharedLessonCard({
           {/* Mastered badge */}
           {isMaxLevel && (
             <div
-              className={cn(" -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white ", badgeTextColor, badgeBorderColor)}
+              className={cn("z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white ", badgeTextColor, badgeBorderColor)}
             >
               <Crown size={12} className={badgeTextColor} fill="currentColor" />
               <span className={badgeTextColor}>{getTranslation('auto.mastered', language)}</span>
@@ -441,7 +411,7 @@ export function SharedLessonCard({
           {/* Suggested badge (if any, matching desktop logic) */}
           {!isMaxLevel && isSuggested && (
             <div
-              className=" -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-amber-100 text-amber-700 border-amber-200"
+              className="z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-amber-100 text-amber-700 border-amber-200"
             >
               <Star size={10} fill="currentColor" />
               <span>{getTranslation('auto.suggested', language)}</span>

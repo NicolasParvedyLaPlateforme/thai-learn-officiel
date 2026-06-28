@@ -6,6 +6,7 @@ interface PathTimelineLineProps {
   colorClass: string;
   isDesktop?: boolean;
   isLeft?: boolean;
+  isHorizontal?: boolean;
 }
 
 export default function PathTimelineLine({ level, maxLevel, colorClass, isDesktop = false, isLeft, isHorizontal = false }: PathTimelineLineProps) {
