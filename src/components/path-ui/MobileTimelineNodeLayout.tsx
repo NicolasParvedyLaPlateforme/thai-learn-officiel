@@ -98,26 +98,6 @@ export function MobileTimelineNodeLayout({
         {cardContent}
       </div>
 
-      {/* Container for Icon and Horizontal Line */}
-      <div className="relative flex flex-row items-center justify-center w-full mt-2">
-        <PathTimelineLine level={level} maxLevel={maxLevel} colorClass={unitColorClass} isDesktop={false} isHorizontal={true} />
-
-        {/* Compact Timeline Node */}
-        <div
-          id={`${prefix}-node-circle-${lessonId}`}
-          className="relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all"
-          onClick={onNodeClick}
-        >
-          <div className={`w-17 h-17 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-[4px] relative z-10 shadow-sm overflow-hidden ${getShadeClass()}`}>
-            {centerIcon()}
-          </div>
-          {showLevelProgress && !isMaxLevel && level > 0 && (
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-2 py-0.5 rounded-md shadow-sm border border-slate-100 flex items-center justify-center gap-1 z-20">
-              <span className={`text-[10px] font-black ${unitTextClass}`}>{level}/{maxLevel}</span>
-            </div>
-          )}
-        </div>
-      </div>
     </m.div>
   );
 }
