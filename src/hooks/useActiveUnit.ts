@@ -50,6 +50,12 @@ export function useActiveUnit(
   const handleUnitSelect = (index: number) => {
     setActiveUnitIndex(index);
     setLastActiveUnitIndex(index);
+    
+    // Clean hash from URL when changing units
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

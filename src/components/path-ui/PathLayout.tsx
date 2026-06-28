@@ -92,6 +92,13 @@ export default function PathLayout({
 
   const { selectedLesson, setSelectedLesson } = useLessonSelection();
 
+  useEffect(() => {
+    if (selectedLesson?.lesson?.id && modalLevel !== null) {
+      const storageKey = pathType === 'speak' ? `last_speak_level_${selectedLesson.lesson.id}` : pathType === 'alphabet' ? `last_alphabet_level_${selectedLesson.lesson.id}` : `last_level_${selectedLesson.lesson.id}`;
+      localStorage.setItem(storageKey, modalLevel.toString());
+    }
+  }, [modalLevel, selectedLesson, pathType]);
+
   // We need to put useActiveUnit here, but wait, useLessonHashRouting needs setActiveUnitIndex which is returned by useActiveUnit.
   // And useActiveUnit needs setLastActiveUnitIndex which is defined earlier.
   // Let's reorder carefully.
