@@ -283,6 +283,7 @@ export default function PathDesktopTimeline({
                             lessonPartsCompleted={useProgressStore.getState().lessonPartsCompleted}
                             suggestionType={pathType}
                             initialScrollLevel={selectedLesson?.initialScrollLevel}
+                            disableAutoScroll={!isInitializingScroll}
                             onReady={() => {}}
                             onBack={() => {
                               setExpandedLessons(prev => {

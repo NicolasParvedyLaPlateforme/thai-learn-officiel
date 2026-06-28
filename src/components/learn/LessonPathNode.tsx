@@ -145,7 +145,7 @@ export function LessonPathNode({
             ? 'h-[160px] md:h-[240px] mb-[80px]'
             : 'h-[160px] md:h-[240px] mb-[80px]'
         } ${isCurrent ? `${unitColor.replace(/\d+/, '100')} rounded-2xl md:rounded-3xl` : ''}`}
-      id={`path-level-${levelIndex}`}
+      id={`path-level-${lessonId}-${levelIndex}`}
     >
       {/* ── SVG connection lines have been removed per user request ── */}
 

@@ -19,6 +19,7 @@ interface LessonPathMapProps {
   lessonPartsCompleted?: Record<string, number[]>;
   suggestionType?: string;
   initialScrollLevel?: number;
+  disableAutoScroll?: boolean;
   onReady?: () => void;
   onBack?: () => void;
   isLeft?: boolean;
@@ -144,7 +145,7 @@ export function LessonPathMap({
     if (targetScrollLevel !== null && !isClickScrolling.current) {
       // Small delay to let the framer-motion accordion open first
       const timeoutId = setTimeout(() => {
-        const el = document.getElementById(`path-level-${targetScrollLevel}`);
+        const el = document.getElementById(`path-level-${lessonId}-${targetScrollLevel}`);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -153,7 +154,7 @@ export function LessonPathMap({
       return () => clearTimeout(timeoutId);
     }
     
-    if (currentLevelRef.current && !disableAutoScroll) {
+    if (currentLevelRef.current) {
       setTimeout(() => {
         currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
         setTimeout(() => {
