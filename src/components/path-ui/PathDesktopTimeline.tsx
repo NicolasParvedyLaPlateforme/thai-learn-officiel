@@ -108,7 +108,7 @@ export default function PathDesktopTimeline({
         
         // Scroll to the card instantly (no cleanup so it's guaranteed to run)
         setTimeout(() => {
-            const circleEl = document.getElementById(`mobile-node-circle-${toExpand?.id}`);
+            const circleEl = document.getElementById(`desktop-node-circle-${toExpand?.id}`);
             if (circleEl) {
                 circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
             } else {
@@ -209,7 +209,7 @@ export default function PathDesktopTimeline({
                 setShowDesktopUnitsList(false);
                 
                 if (isMaxLevel || isCurrentlyExpanded) {
-                  const circleEl = document.getElementById(`mobile-node-circle-${lesson.id}`);
+                  const circleEl = document.getElementById(`desktop-node-circle-${lesson.id}`);
                   if (circleEl) {
                       setTimeout(() => {
                           circleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -241,6 +241,7 @@ export default function PathDesktopTimeline({
                       isReview={isBilan}
                       onNodeClick={onNodeClick}
                       lesson={lesson}
+                      isDesktopLayout={true}
                       cardContent={
                         <SharedLessonCard
                           pathType={pathType}

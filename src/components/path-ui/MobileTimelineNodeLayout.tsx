@@ -21,6 +21,7 @@ interface MobileTimelineNodeLayoutProps {
   cardContent: ReactNode;
   showLevelProgress?: boolean;
   lesson: any;
+  isDesktopLayout?: boolean;
 }
 
 export function MobileTimelineNodeLayout({
@@ -37,7 +38,8 @@ export function MobileTimelineNodeLayout({
   onNodeClick,
   cardContent,
   showLevelProgress = false,
-  lesson
+  lesson,
+  isDesktopLayout = false
 }: MobileTimelineNodeLayoutProps) {
   const getShadeClass = () => {
     if (isMaxLevel) return `${unitColorClass} text-white border-white shadow-[0_0_15px_rgba(16,185,129,0.3)]`;
@@ -80,10 +82,12 @@ export function MobileTimelineNodeLayout({
     )
   }
 
+  const prefix = isDesktopLayout ? 'desktop' : 'mobile';
+
   return (
     <m.div
-      id={`mobile-lesson-${lessonId}`}
-      key={`mobile-node-${lessonId}`}
+      id={`${prefix}-lesson-${lessonId}`}
+      key={`${prefix}-node-${lessonId}`}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
@@ -100,7 +104,7 @@ export function MobileTimelineNodeLayout({
 
         {/* Compact Timeline Node */}
         <div
-          id={`mobile-node-circle-${lessonId}`}
+          id={`${prefix}-node-circle-${lessonId}`}
           className="relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all"
           onClick={onNodeClick}
         >
