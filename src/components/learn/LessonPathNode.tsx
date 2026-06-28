@@ -185,7 +185,7 @@ export function LessonPathNode({
 
         {/* Stars Arc */}
         {(isCompleted && !isMastery) && (
-          <div className="absolute top-1/2 left-1/2 w-44 h-44 md:w-56 md:h-56 pointer-events-none z-30 -ml-4" style={{ transform: 'translate(-50%, -50%)' }}>
+          <div className="absolute top-1/2 left-1/2 w-44 h-44 md:w-56 md:h-56 pointer-events-none z-30 -ml-3" style={{ transform: 'translate(-50%, -50%)' }}>
             {[...Array(5)].map((_, i) => {
               const angleDeg = -90 + (i - 2) * 35;
               const earned = earnedStars >= i + 1;

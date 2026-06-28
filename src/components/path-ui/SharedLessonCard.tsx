@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { getLocalizedField, getTranslation } from "@/hooks/useTranslation";
-import { CheckCircle, Crown, Star, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle, Crown, Star, ChevronDown } from 'lucide-react';
 import IconImage from '../ui/IconImage';
 import { Card } from "@/components/ui/Card";
 import { Typography } from "@/components/ui/Typography";
@@ -30,7 +30,6 @@ interface SharedLessonCardProps {
   onClick: () => void;
   maxLevelPerLesson?: number;
   isMobileLayout?: boolean;
-  isExpanded?: boolean;
   index?: number;
 }
 
@@ -45,7 +44,6 @@ export function SharedLessonCard({
   onClick,
   maxLevelPerLesson = 10,
   isMobileLayout = false,
-  isExpanded = false,
   index
 }: SharedLessonCardProps) {
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
@@ -146,13 +144,11 @@ export function SharedLessonCard({
       ? !hasUnlockedPhrases
       : false;
 
-  const buttonText = isExpanded
-    ? getTranslation('auto.reduce', language) || "Réduire"
-    : level === 0
-      ? getTranslation('auto.start_learning', language)
-      : isMaxLevel
-        ? getTranslation('auto.review', language)
-        : getTranslation('auto.continue', language);
+  const buttonText = level === 0
+    ? getTranslation('auto.start_learning', language)
+    : isMaxLevel
+      ? getTranslation('auto.review', language)
+      : getTranslation('auto.continue', language);
 
   const getDynamicColorClass = () => {
     if (unit.bgClass) return unit.bgClass;
@@ -209,8 +205,8 @@ export function SharedLessonCard({
   return (
     <Card
       ref={cardRef as React.Ref<HTMLDivElement>}
-      className={cn("relative p-4 sm:p-6 flex flex-row items-center gap-4 sm:gap-6 rounded-[2rem] bg-white cursor-pointer shadow-sm hover:shadow-md transition-shadow group overflow-visible",
-        !isMaxLevel ? "border-0" : "border border-slate-200",
+      className={cn("relative p-4 sm:p-6 flex flex-row items-center gap-4 sm:gap-6 rounded-[2rem] bg-white cursor-pointer hover:shadow-md transition-shadow group overflow-visible",
+        !isMaxLevel ? "border-0" : "border border-slate-200 shadow-none",
         isReviewLocked ? "opacity-50 pointer-events-none" : "",
         isMobileLayout ? "pb-10" : ""
       )}
@@ -297,9 +293,9 @@ export function SharedLessonCard({
         <Button
           variant={isMaxLevel ? "outline" : "gamified"}
           size={isMobileLayout ? "default" : "lg"}
-          className={cn("px-4 sm:px-6 shadow-sm transition-all duration-200 justify-center flex items-center gap-2 w-full",
+          className={cn("px-4 sm:px-6 shadow-sm transition-all duration-200 justify-center flex items-center gap-2 w-full cursor-pointer",
             !isMobileLayout && "sm:min-w-[140px]",
-            isMaxLevel ? "border-2 text-slate-700 bg-white hover:bg-slate-50" : cn("text-white", dynamicColor, borderDynamicColor, hoverDynamicColor)
+            isMaxLevel ? "border-2 text-slate-700 bg-white hover:bg-slate-50 shadow-none" : cn("text-white", dynamicColor, borderDynamicColor, hoverDynamicColor)
           )}
           onClick={(e) => {
             e.stopPropagation();
@@ -307,7 +303,7 @@ export function SharedLessonCard({
           }}
         >
           {buttonText}
-          {!isMaxLevel && (isExpanded ? <ChevronUp size={18} className="stroke-[3]" /> : <ChevronDown size={18} className="stroke-[3]" />)}
+          {!isMaxLevel && <ChevronDown size={18} className="stroke-[3]" />}
         </Button>
       </div>
 
