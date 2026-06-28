@@ -435,5 +435,8 @@
   "auto.complete_base_conversation": "Completa la Conversazione Base",
   "auto.complete_level_prefix": "Completa il Livello",
   "auto.levels_per_lesson": "livelli / lezione",
-  "auto.next": "Avanti"
+  "auto.next": "Avanti",
+  "auto": {
+    "train_instead": "Esercitati (+10 XP)"
+  }
 }

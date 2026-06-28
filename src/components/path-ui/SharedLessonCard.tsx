@@ -31,6 +31,7 @@ interface SharedLessonCardProps {
   maxLevelPerLesson?: number;
   isMobileLayout?: boolean;
   index?: number;
+  isExpanded?: boolean;
 }
 
 export function SharedLessonCard({
@@ -44,7 +45,8 @@ export function SharedLessonCard({
   onClick,
   maxLevelPerLesson = 10,
   isMobileLayout = false,
-  index
+  index,
+  isExpanded = false
 }: SharedLessonCardProps) {
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
   const [isHovered, setIsHovered] = useState(false);
@@ -303,7 +305,7 @@ export function SharedLessonCard({
           }}
         >
           {buttonText}
-          {!isMaxLevel && <ChevronDown size={18} className="stroke-[3]" />}
+          {!isMaxLevel && <ChevronDown size={18} className={cn("stroke-[3] transition-transform duration-300", isExpanded && "rotate-180")} />}
         </Button>
       </div>
 
