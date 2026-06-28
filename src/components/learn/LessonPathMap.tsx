@@ -148,19 +148,19 @@ export function LessonPathMap({
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-      }, 150);
+      }, 450);
       
       return () => clearTimeout(timeoutId);
     }
     
-    if (currentLevelRef.current) {
+    if (currentLevelRef.current && !disableAutoScroll) {
       setTimeout(() => {
-        currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
+        currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
         setTimeout(() => {
           setIsReady(true);
           onReady?.();
         }, 50);
-      }, 10);
+      }, 450);
     } else {
       setIsReady(true);
       onReady?.();

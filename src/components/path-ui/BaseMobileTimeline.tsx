@@ -144,25 +144,27 @@ export default function BaseMobileTimeline({
             if (selectedLesson?.lesson.id === lesson.id) {
                 setSelectedLesson(null);
             }
-            return;
         }
-
-        const circleEl = document.getElementById(`mobile-node-circle-${lesson.id}`);
-        if (circleEl) {
-            setTimeout(() => {
-                circleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
-        } else {
-            const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
-            if (cardEl) {
-                setTimeout(() => {
-                    cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-            }
-        }
-
+        
         if (!isCurrentlyExpanded) {
             setSelectedLesson({ lesson, isCompleted: level >= maxLevelPerLesson, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass });
+        }
+        
+        const isCompleted = level >= maxLevelPerLesson;
+        if (isCompleted || isCurrentlyExpanded) {
+            const circleEl = document.getElementById(`mobile-node-circle-${lesson.id}`);
+            if (circleEl) {
+                setTimeout(() => {
+                    circleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            } else {
+                const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
+                if (cardEl) {
+                    setTimeout(() => {
+                        cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            }
         }
     };
 

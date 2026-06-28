@@ -207,6 +207,22 @@ export default function PathDesktopTimeline({
                 }
 
                 setShowDesktopUnitsList(false);
+                
+                if (isMaxLevel || isCurrentlyExpanded) {
+                  const circleEl = document.getElementById(`mobile-node-circle-${lesson.id}`);
+                  if (circleEl) {
+                      setTimeout(() => {
+                          circleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 100);
+                  } else {
+                      const nodeEl = document.getElementById(`desktop-node-${lesson.id}`);
+                      if (nodeEl) {
+                          setTimeout(() => {
+                              nodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          }, 100);
+                      }
+                  }
+                }
               };
 
               return (
