@@ -137,9 +137,9 @@ export function LessonPathNode({
         levelIndex === maxLevel 
           ? 'h-[160px] md:h-[240px] mb-[80px]' 
           : levelIndex === currentProgress
-            ? 'h-[200px] md:h-[260px] mb-[40px] md:mb-[60px]'
+            ? 'h-[180px] md:h-[220px] mb-[60px] md:mb-[80px]'
             : levelIndex === 0 
-              ? 'h-[290px]' 
+              ? 'h-[180px] md:h-[220px]' 
               : 'h-[290px] md:h-[420px]'
       } ${isCurrent ? `${unitColor.replace(/\d+/, '100')} rounded-2xl md:rounded-3xl` : ''}`}
       id={`path-level-${levelIndex}`}

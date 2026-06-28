@@ -243,7 +243,7 @@ export function LessonPathMap({
   const isUnlockedMastery = currentProgress >= maxLevel;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative pt-2 md:pt-6">
+    <div className="flex flex-col items-center justify-start w-full relative pt-2 md:pt-6 pb-4 md:pb-12">
 
 
       {nodes.filter(levelIndex => levelIndex <= currentProgress).map((levelIndex) => (
