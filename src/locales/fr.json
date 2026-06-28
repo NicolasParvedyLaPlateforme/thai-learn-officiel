@@ -436,7 +436,5 @@
   "auto.complete_level_prefix": "Terminer Niveau",
   "auto.levels_per_lesson": "niveaux / leçon",
   "auto.next": "Suivant",
-  "auto": {
-    "train_instead": "S'entraîner (+10 XP)"
-  }
+  "auto.train_instead": "S'entraîner (+10 XP)"
 }

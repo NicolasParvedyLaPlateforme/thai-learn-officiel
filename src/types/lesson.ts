@@ -48,7 +48,7 @@ export interface CourseData {
   lessons: Lesson[];
 }
 
-export type ExerciseType = 'word-match' | 'sentence-builder' | 'writing' | 'intro' | 'pair-matching' | 'free-typing';
+export type ExerciseType = 'word-match' | 'sentence-builder' | 'writing' | 'intro' | 'pair-matching' | 'free-typing' | 'missing-letter';
 
 export interface Exercise {
   id: string;
@@ -73,4 +73,8 @@ export interface Exercise {
   blankIndex?: number;
   blankHint?: string;
   prefilledComponents?: string[];
+  missingLetterText?: string;
+  targetLetter?: string;
+  targetLetterPhonetic?: string;
+  showPhoneticHint?: boolean;
 }

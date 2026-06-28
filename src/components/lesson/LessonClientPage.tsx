@@ -13,6 +13,7 @@ import SentenceBuilder from './SentenceBuilder';
 import PairMatch from "@/components/learn/PairMatch";
 import VirtualKeyboard from '@/components/writing/VirtualKeyboard';
 import FreeTypingInput from './FreeTypingInput';
+import MissingLetter from './MissingLetter';
 import GlossaryModal from '@/components/lesson/GlossaryModal';
 import ResultScreen from '@/components/lesson/ResultScreen';
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
@@ -250,6 +251,18 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                               selected={(state.selectedAnswer as string) || ""}
                               onChange={actions.setSelectedAnswer as any}
                               disabled={state.isChecking}
+                            />
+                          ) : state.currentExercise?.type === "missing-letter" ? (
+                            <MissingLetter
+                              exercise={state.currentExercise as Exercise}
+                              selected={state.selectedAnswer as string}
+                              onChange={actions.setSelectedAnswer}
+                              disabled={state.isChecking}
+                              isChecking={state.isChecking}
+                              isCorrect={state.isCorrect}
+                              onAutoCheck={(val) => actions.handleCheck(val)}
+                              language={state.language}
+                              onAddMistake={() => actions.setMistakes((m: number) => m + 1)}
                             />
                           ) : state.currentExercise && (
                             <SentenceBuilder

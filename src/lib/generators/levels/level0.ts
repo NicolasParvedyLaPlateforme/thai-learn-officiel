@@ -1,5 +1,5 @@
 import { Exercise, Word } from "@/types";
-import { buildIntro, buildWordMatch } from '../builders';
+import { buildIntro, buildWordMatch, buildMissingLetter } from '../builders';
 
 export function generateLevel0(validLessonWords: Word[], globalWords: Word[], language: string): Exercise[] {
   let exercises: Exercise[] = [];
@@ -14,6 +14,11 @@ export function generateLevel0(validLessonWords: Word[], globalWords: Word[], la
       validLessonWords,
       pool: globalWords
     }));
+    
+    const missingLetterEx = buildMissingLetter(word, language, { numDistractors: 1 });
+    if (missingLetterEx) {
+      exercises.push(missingLetterEx);
+    }
     
     exercises.push(buildWordMatch(word, language, {
       distractorMode: 'random',

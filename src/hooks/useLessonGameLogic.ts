@@ -153,7 +153,7 @@ export function useLessonGameLogic(lesson: any) {
     },
     evaluateAnswer: (ex, answerToCheck) => {
       let correct = false;
-      if (ex.type === "word-match") {
+      if (ex.type === "word-match" || ex.type === "missing-letter") {
         correct = answerToCheck === ex.answer;
       } else if (ex.type === "sentence-builder") {
         if (ex.isFillInBlank && ex.correctComponents && ex.blankIndex !== undefined) {

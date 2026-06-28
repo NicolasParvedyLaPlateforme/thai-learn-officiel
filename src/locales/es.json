@@ -434,7 +434,5 @@
   "auto.complete_level_prefix": "Completar Nivel",
   "auto.levels_per_lesson": "niveles / lección",
   "auto.next": "Siguiente",
-  "auto": {
-    "train_instead": "Practicar (+10 XP)"
-  }
+  "auto.train_instead": "Practicar (+10 XP)"
 }
