@@ -23,7 +23,7 @@ export default function MobileStickyBanner({
 
   return (
     <div 
-      className={`fixed top-0 left-0 right-0 z-[60] transition-transform duration-300 ${unit.colorClass} shadow-md flex items-center justify-between p-3 px-4 md:hidden ${showMiniBanner ? 'translate-y-0' : '-translate-y-full'}`}
+      className={`fixed top-0 left-0 right-0 z-[200] transition-transform duration-300 ${unit.colorClass} shadow-md flex items-center justify-between p-3 px-4 md:hidden ${showMiniBanner ? 'translate-y-0' : '-translate-y-full'}`}
     >
       <div className="flex items-center gap-2">
         <Typography variant="sticky-banner-mobile">
