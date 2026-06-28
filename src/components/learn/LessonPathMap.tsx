@@ -243,9 +243,8 @@ export function LessonPathMap({
   const isUnlockedMastery = currentProgress >= maxLevel;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative pt-12 pb-0">
+    <div className="flex flex-col items-center justify-start w-full relative pt-2 md:pt-6">
 
-      {/* Floating Back Button removed as requested */}
 
       {nodes.filter(levelIndex => levelIndex <= currentProgress).map((levelIndex) => (
         <LessonPathNode

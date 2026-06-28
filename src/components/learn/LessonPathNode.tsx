@@ -133,13 +133,15 @@ export function LessonPathNode({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full flex items-center justify-center ${
+      className={`relative w-[94%] md:w-[98%] max-w-6xl mx-auto flex items-center justify-center transition-colors duration-500 ${
         levelIndex === maxLevel 
           ? 'h-[160px] md:h-[240px] mb-[80px]' 
-          : levelIndex === 0 
-            ? 'h-[290px]' 
-            : 'h-[290px] md:h-[420px]'
-      }`}
+          : levelIndex === currentProgress
+            ? 'h-[200px] md:h-[260px] mb-[40px] md:mb-[60px]'
+            : levelIndex === 0 
+              ? 'h-[290px]' 
+              : 'h-[290px] md:h-[420px]'
+      } ${isCurrent ? `${unitColor.replace(/\d+/, '100')} rounded-2xl md:rounded-3xl` : ''}`}
       id={`path-level-${levelIndex}`}
     >
       {/* ── SVG connection lines have been removed per user request ── */}
@@ -176,23 +178,19 @@ export function LessonPathNode({
             />
           </div>
         )}
-
-        {isCurrent && (
-          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-52 md:h-52 rounded-full ${unitColor} opacity-15 animate-pulse pointer-events-none z-0`} />
-        )}
+        {/* Halo background removed per user request, moved to container */}
 
         {/* Stars Arc */}
         {(isCompleted && !isMastery) && (
-          <div className="absolute top-1/2 left-1/2 w-full h-full pointer-events-none z-30" style={{ transform: 'translate(-50%, -50%)' }}>
+          <div className="absolute top-1/2 left-1/2 w-44 h-44 md:w-56 md:h-56 pointer-events-none z-30" style={{ transform: 'translate(-50%, -50%)' }}>
             {[...Array(5)].map((_, i) => {
-              const angleRad = ((-90 + (i - 2) * 35) * Math.PI) / 180;
-              const radius = 72;
-              const x = Math.cos(angleRad) * radius;
-              const y = Math.sin(angleRad) * radius;
+              const angleDeg = -90 + (i - 2) * 35;
               const earned = earnedStars >= i + 1;
               return (
-                <div key={i} className="absolute left-1/2 top-1/2" style={{ transform: `translate(-50%, -50%) translate(${x}px, ${y}px)` }}>
-                  <Star size={22} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-white stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
+                <div key={i} className="absolute left-1/2 top-1/2 w-full h-full" style={{ transform: `translate(-50%, -50%) rotate(${angleDeg}deg)` }}>
+                  <div className="absolute top-0 left-1/2" style={{ transform: `translate(-50%, -50%) rotate(${-angleDeg}deg)` }}>
+                    <Star size={26} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-white stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
+                  </div>
                 </div>
               );
             })}
@@ -214,9 +212,9 @@ export function LessonPathNode({
                 e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
               }
             }}
-            className={`relative w-28 h-28 md:w-36 md:h-36 transition-all duration-300 group
-              ${isAccessible ? 'cursor-pointer' : 'cursor-not-allowed opacity-80'}
-              ${isSelected ? 'scale-110' : 'hover:scale-105'}
+            className={`relative w-36 h-36 md:w-48 md:h-48 transition-all duration-300 group
+              ${isAccessible ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-80'}
+              ${isSelected ? 'scale-110' : ''}
             `}
           >
             <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-xl overflow-visible">
@@ -353,7 +351,7 @@ export function LessonPathNode({
             }}
             disabled={!isAccessible}
             className={[
-              'w-[96px] h-[96px] rounded-full flex items-center justify-center transition-all duration-300 relative group',
+              'w-28 h-28 md:w-36 md:h-36 rounded-full flex items-center justify-center transition-all duration-300 relative group',
               isSelected
                 ? `scale-110 ring-[4px] ring-offset-[3px] shadow-xl z-20 ${unitColor.replace('bg-', 'ring-')}`
                 : 'hover:scale-[1.05] z-10',
