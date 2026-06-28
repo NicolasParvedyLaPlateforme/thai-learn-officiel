@@ -87,13 +87,13 @@ export function MobileTimelineNodeLayout({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
-      className="relative flex flex-row items-center w-full scroll-mt-24 z-10 mb-16 sm:mb-12 group gap-3 sm:gap-4"
+      className="relative flex flex-row items-center w-full z-10 mb-4 sm:mb-4  gap-3 sm:gap-4"
     >
       <PathTimelineLine level={level} maxLevel={maxLevel} colorClass={unitColorClass} isDesktop={false} />
 
       {/* Compact Timeline Node */}
       <div
-        className="relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all -top-20"
+        className="relative shrink-0 z-10 cursor-pointer hover:scale-105 active:scale-95 transition-all "
         onClick={onNodeClick}
       >
 

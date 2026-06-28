@@ -114,11 +114,11 @@ export function LessonPathNode({
   const getExpectedXpForPart = (partIdx: number | 'full') => {
     const isPlayingPart = partIdx !== 'full' && currentPartsTotal > 1;
     const { xp } = getExpectedXp(
-      lessonIdForXp || '', 
-      levelIndex, 
-      !!isBilanLesson, 
-      isPlayingPart, 
-      !isPlayingPart && (levelIndex === 7 || levelIndex === 8), 
+      lessonIdForXp || '',
+      levelIndex,
+      !!isBilanLesson,
+      isPlayingPart,
+      !isPlayingPart && (levelIndex === 7 || levelIndex === 8),
       partIdx === 'full' ? 0 : partIdx
     );
     return xp;
@@ -133,15 +133,14 @@ export function LessonPathNode({
   return (
     <div
       ref={containerRef}
-      className={`relative w-[94%] md:w-[98%] max-w-6xl mx-auto flex items-center justify-center transition-colors duration-500 ${
-        levelIndex === maxLevel 
-          ? 'h-[160px] md:h-[240px] mb-[80px]' 
-          : levelIndex === currentProgress
-            ? 'h-[180px] md:h-[220px] mb-[60px] md:mb-[80px]'
-            : levelIndex === 0 
-              ? 'h-[180px] md:h-[220px]' 
-              : 'h-[290px] md:h-[420px]'
-      } ${isCurrent ? `${unitColor.replace(/\d+/, '100')} rounded-2xl md:rounded-3xl` : ''}`}
+      className={`relative w-[94%] md:w-[98%] max-w-6xl mx-auto flex items-center justify-center transition-colors duration-500 mb-10 mt-5 pt-5 pb-5 ${levelIndex === maxLevel
+        ? 'h-[160px] md:h-[240px] mb-[80px]'
+        : levelIndex === currentProgress
+          ? 'h-[160px] md:h-[240px] mb-[160px]'
+          : levelIndex === 0
+            ? 'h-[160px] md:h-[240px] mb-[80px]'
+            : 'h-[160px] md:h-[240px] mb-[80px]'
+        } ${isCurrent ? `${unitColor.replace(/\d+/, '100')} rounded-2xl md:rounded-3xl` : ''}`}
       id={`path-level-${levelIndex}`}
     >
       {/* ── SVG connection lines have been removed per user request ── */}
@@ -182,7 +181,7 @@ export function LessonPathNode({
 
         {/* Stars Arc */}
         {(isCompleted && !isMastery) && (
-          <div className="absolute top-1/2 left-1/2 w-44 h-44 md:w-56 md:h-56 pointer-events-none z-30" style={{ transform: 'translate(-50%, -50%)' }}>
+          <div className="absolute top-1/2 left-1/2 w-44 h-44 md:w-56 md:h-56 pointer-events-none z-30 -ml-4" style={{ transform: 'translate(-50%, -50%)' }}>
             {[...Array(5)].map((_, i) => {
               const angleDeg = -90 + (i - 2) * 35;
               const earned = earnedStars >= i + 1;
@@ -221,23 +220,23 @@ export function LessonPathNode({
               {Array.from({ length: currentPartsTotal }).map((_, i) => {
                 const isLevelFullyCompleted = isCompleted;
                 const isLevelLocked = !isAccessible;
-                
+
                 const isPartCompleted = currentCompletedParts.includes(i);
                 const isSelectedPart = !isLevelFullyCompleted && !isLevelLocked && i === currentCompletedParts.length;
                 const isAccessibleSlice = !isLevelLocked && i <= currentCompletedParts.length;
-                
+
                 const angle = 360 / currentPartsTotal;
                 const startAngle = i * angle - 90;
                 const endAngle = (i + 1) * angle - 90;
-                
+
                 const x1 = 50 + 48 * Math.cos(Math.PI * startAngle / 180);
                 const y1 = 50 + 48 * Math.sin(Math.PI * startAngle / 180);
                 const x2 = 50 + 48 * Math.cos(Math.PI * endAngle / 180);
                 const y2 = 50 + 48 * Math.sin(Math.PI * endAngle / 180);
                 const largeArc = angle > 180 ? 1 : 0;
-                
+
                 const pathData = `M 50 50 L ${x1} ${y1} A 48 48 0 ${largeArc} 1 ${x2} ${y2} Z`;
-                
+
                 const midAngle = startAngle + angle / 2;
                 const textR = 30;
                 const tx = 50 + textR * Math.cos(Math.PI * midAngle / 180);
@@ -262,8 +261,8 @@ export function LessonPathNode({
                 }
 
                 return (
-                  <g 
-                    key={i} 
+                  <g
+                    key={i}
                     className={`transition-all duration-300 ${(isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-25'}`}
                     style={isCurrentlySelected ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
                     onClick={(e) => {
@@ -280,15 +279,15 @@ export function LessonPathNode({
                   </g>
                 );
               })}
-              
-              <circle cx="50" cy="50" r="18" 
-                className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} stroke-white stroke-[3] transition-colors ${isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`} 
+
+              <circle cx="50" cy="50" r="18"
+                className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} stroke-white stroke-[3] transition-colors ${isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   if (isCompleted) setSelectedAction('full');
                 }}
               />
-              <text x="50" y="50" textAnchor="middle" dominantBaseline="central" 
+              <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
                 className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
                 ENTIER
               </text>
@@ -299,12 +298,12 @@ export function LessonPathNode({
               let tx = 50;
               let ty = 50;
               let midAngle = -90;
-              
+
               const nextPart = currentCompletedParts.length;
               const angle = 360 / currentPartsTotal;
               const startAngle = nextPart * angle - 90;
               midAngle = startAngle + angle / 2;
-              const tooltipR = 64; 
+              const tooltipR = 64;
               tx = 50 + tooltipR * Math.cos(Math.PI * midAngle / 180);
               ty = 50 + tooltipR * Math.sin(Math.PI * midAngle / 180);
 
@@ -316,7 +315,7 @@ export function LessonPathNode({
               const ptrY = cy * (scale + 2);
 
               return (
-                <div 
+                <div
                   className="absolute z-20 pointer-events-none drop-shadow-md"
                   style={{
                     left: `${tx}%`,
@@ -325,7 +324,7 @@ export function LessonPathNode({
                 >
                   <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -50%)' }}>
                     <div className="animate-bounce flex items-center justify-center relative">
-                      <div 
+                      <div
                         className="absolute w-2.5 h-2.5 bg-[#10B981] rounded-[1px]"
                         style={{
                           transform: `translate(${ptrX}px, ${ptrY}px) rotate(45deg)`

@@ -427,11 +427,11 @@ export function SharedLessonCard({
         }}
       >
         {/* ── Header: Image Left, Title/Desc Right ──────────────────────────────── */}
-        <div className={cn("flex p-3 pt-[14px] gap-3 border-b border-slate-100 relative bg-transparent border-b-emerald-600", index !== undefined && index % 2 !== 0 ? "flex-row-reverse" : "flex-row")}>
+        <div className={cn("flex p-3 pt-[14px] gap-3 border-b border-slate-100 relative bg-transparent border-b-emerald-600 items-center flex-col")}>
           {/* Mastered badge */}
           {isMaxLevel && (
             <div
-              className={cn("absolute -top-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white ", badgeTextColor, badgeBorderColor)}
+              className={cn(" -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-white ", badgeTextColor, badgeBorderColor)}
             >
               <Crown size={12} className={badgeTextColor} fill="currentColor" />
               <span className={badgeTextColor}>{getTranslation('auto.mastered', language)}</span>
@@ -441,7 +441,7 @@ export function SharedLessonCard({
           {/* Suggested badge (if any, matching desktop logic) */}
           {!isMaxLevel && isSuggested && (
             <div
-              className="absolute -top-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-amber-100 text-amber-700 border-amber-200"
+              className=" -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full shadow-sm font-bold text-[10px] border bg-amber-100 text-amber-700 border-amber-200"
             >
               <Star size={10} fill="currentColor" />
               <span>{getTranslation('auto.suggested', language)}</span>
