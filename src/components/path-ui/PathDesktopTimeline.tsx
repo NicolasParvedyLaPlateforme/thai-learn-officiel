@@ -208,20 +208,18 @@ export default function PathDesktopTimeline({
 
                 setShowDesktopUnitsList(false);
                 
-                if (isMaxLevel || isCurrentlyExpanded) {
-                  const circleEl = document.getElementById(`desktop-node-circle-${lesson.id}`);
-                  if (circleEl) {
-                      setTimeout(() => {
-                          circleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      }, 100);
-                  } else {
-                      const nodeEl = document.getElementById(`desktop-node-${lesson.id}`);
-                      if (nodeEl) {
-                          setTimeout(() => {
-                              nodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                          }, 100);
+                if (!isCurrentlyExpanded) {
+                  setTimeout(() => {
+                      const levelEl = document.getElementById(`path-level-${lesson.id}-${level}`);
+                      if (levelEl) {
+                          levelEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      } else {
+                          const nodeEl = document.getElementById(`desktop-lesson-${lesson.id}`);
+                          if (nodeEl) {
+                              nodeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
                       }
-                  }
+                  }, 300);
                 }
               };
 

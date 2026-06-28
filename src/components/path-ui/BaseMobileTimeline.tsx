@@ -151,20 +151,18 @@ export default function BaseMobileTimeline({
         }
         
         const isCompleted = level >= maxLevelPerLesson;
-        if (isCompleted || isCurrentlyExpanded) {
-            const circleEl = document.getElementById(`mobile-node-circle-${lesson.id}`);
-            if (circleEl) {
-                setTimeout(() => {
-                    circleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-            } else {
-                const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
-                if (cardEl) {
-                    setTimeout(() => {
-                        cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
+        if (!isCurrentlyExpanded) {
+            setTimeout(() => {
+                const levelEl = document.getElementById(`path-level-${lesson.id}-${level}`);
+                if (levelEl) {
+                    levelEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
+                    if (cardEl) {
+                        cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 }
-            }
+            }, 300);
         }
     };
 
