@@ -56,8 +56,12 @@ export function useActiveUnit(
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
     
-    // Use 'auto' instead of 'smooth' so it doesn't conflict with the timeline's auto-scroll to the active lesson.
+    // Force stop iOS momentum scroll which blocks programmatic scrolling
+    document.body.style.overflow = 'hidden';
     window.scrollTo({ top: 0, behavior: 'auto' });
+    setTimeout(() => {
+      document.body.style.overflow = '';
+    }, 50);
   };
 
   return { activeUnitIndex, setActiveUnitIndex, handleUnitSelect };
