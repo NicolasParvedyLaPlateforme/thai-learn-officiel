@@ -191,60 +191,6 @@ export function SharedLessonCard({
   const overlayColor = badgeTheme.bgOverlay; // semi-opaque color overlay on image for text
 
   const isStarted = level > 0 && !isMaxLevel;
-  if (pathType === 'alphabet') {
-    return (
-      <>
-        {/* Left: Letters box */}
-        {isMobileLayout && (
-          <div className="w-[84px] h-[84px] sm:w-[96px] sm:h-[96px] rounded-2xl overflow-hidden shrink-0 relative bg-slate-50 border border-slate-100 flex items-center justify-center text-3xl font-thai text-slate-600">
-            <div className="flex flex-wrap items-center justify-center p-2 leading-none gap-1">
-              {lesson.items?.map((i: any) => formatCombiningChar(i.letter)).join('')}
-            </div>
-            {isReviewLocked && <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px]"><Star size={28} className="text-white fill-white/50" /></div>}
-          </div>
-        )}
-
-        {/* Right: Letters List */}
-        <div className="flex-1 min-w-0 bg-slate-50/50 rounded-2xl p-2 flex flex-col cursor-default border border-slate-100" onClick={(e) => e.stopPropagation()}>
-          <div className="flex bg-slate-100/50 p-1 rounded-xl w-full mb-1 justify-center">
-            <button
-              onClick={() => setActiveTab('words')}
-              className={cn("flex-1 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold rounded-lg transition-all", activeTab === 'words' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700')}
-            >
-              {getTranslation('auto.words', language) || "Mots"}
-            </button>
-            <button
-              onClick={() => setActiveTab('phrases')}
-              className={cn("flex-1 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold rounded-lg transition-all", activeTab === 'phrases' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700')}
-            >
-              {getTranslation('auto.phrases', language) || "Phrases"}
-            </button>
-          </div>
-          <div className="flex flex-col gap-1 sm:gap-2 px-1 sm:px-2 pb-1 sm:pb-2 min-h-[50px] max-h-[85px] sm:max-h-[120px] overflow-y-auto hide-scrollbar">
-            {showBlockedMessage ? (
-              <span className="text-[10px] sm:text-sm font-medium leading-tight text-slate-400 italic text-center mt-2 px-1">
-                {activeTab === 'words' ? (getTranslation('auto.unlock_levels_for_words', language) || "Débloquez plus de niveaux pour voir les mots.") : (getTranslation('auto.unlock_levels_for_phrases', language) || "Débloquez plus de niveaux pour voir les phrases.")}
-              </span>
-            ) : activeTab === 'words' ? (
-              lesson.words?.filter((w: any) => w.th !== '...' && w.phonetic !== '...').map((w: any, i: number) => (
-                <div key={i} className="flex justify-between items-center text-[11px] sm:text-sm border-b border-slate-100 last:border-0 pb-0.5 sm:pb-1.5 last:pb-0 shrink-0">
-                  <span className="font-medium text-slate-700 pr-1 font-thai text-sm sm:text-base">{w.th || w.phonetic}</span>
-                  <span className="text-slate-400 truncate text-right">{getLocalizedField(w, '', language)}</span>
-                </div>
-              ))
-            ) : (
-              lesson.phrases?.filter((p: any) => p.th !== '...' && p.phonetic !== '...').map((p: any, i: number) => (
-                <div key={i} className="flex flex-col text-[11px] sm:text-sm border-b border-slate-100 last:border-0 pb-0.5 sm:pb-1.5 last:pb-0 shrink-0">
-                  <span className="font-medium text-slate-700 truncate font-thai text-sm sm:text-base">{p.th || p.phonetic}</span>
-                  <span className="text-slate-400 truncate text-[10px] sm:text-xs">{getLocalizedField(p, '', language)}</span>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </>
-    );
-  };
 
   const renderDescription = () => {
     if (pathType === 'alphabet') {
