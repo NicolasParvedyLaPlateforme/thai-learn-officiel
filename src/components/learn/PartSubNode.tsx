@@ -17,6 +17,7 @@ interface PartSubNodeProps {
     levelIndex: number;
     totalParts: number;
     stepsCount: number;
+    expectedXp?: number;
     isOpen: boolean;
     onToggle: () => void;
     onClose: () => void;
@@ -37,6 +38,7 @@ export function PartSubNode({
     levelIndex,
     totalParts,
     stepsCount,
+    expectedXp = 10,
     isOpen,
     onToggle,
     onClose
@@ -94,6 +96,7 @@ export function PartSubNode({
                         partIndex={partIdx}
                         totalParts={totalParts}
                         stepsCount={stepsCount}
+                        expectedXp={expectedXp}
                         isCompleted={isPartCompleted}
                         unitColor={unitColor}
                         unitText={unitText}

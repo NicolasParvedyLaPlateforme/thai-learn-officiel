@@ -2,7 +2,7 @@ import { m as motion, AnimatePresence } from "motion/react";
 import { BookOpen, Star, CheckCircle, Lock, Play, Crown, ChevronLeft } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import IconImage from '../ui/IconImage';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DesktopStickyBanner from '../path-ui/DesktopStickyBanner';
 import { SharedLessonCard } from '../path-ui/SharedLessonCard';
 import { NextUnitCard } from './NextUnitCard';
@@ -76,34 +76,67 @@ export default function PathDesktopTimeline({
   }
 
   const [expandedLessons, setExpandedLessons] = useState<Set<string>>(new Set());
-
-  const [hasAutoExpanded, setHasAutoExpanded] = useState(false);
+  const [isInitializingScroll, setIsInitializingScroll] = useState(true);
+  const lastExpandedUnitRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (mounted && !hasAutoExpanded) {
-      setHasAutoExpanded(true);
-      let toExpand = null;
-      if (suggestedLessonId) {
+    if (!mounted) return;
+    
+    if (lastExpandedUnitRef.current === unit.id) {
+        // Already expanded for this unit, ensure loading is off
+        setIsInitializingScroll(false);
+        return;
+    }
+
+    lastExpandedUnitRef.current = unit.id;
+    setIsInitializingScroll(true);
+
+    let toExpand = null;
+    if (suggestedLessonId) {
         toExpand = unitLessons.find(l => l.id === suggestedLessonId);
-      } else {
+    }
+    if (!toExpand) {
         toExpand = unitLessons.find(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
-      }
-      if (toExpand) {
+    }
+
+    if (toExpand) {
         setExpandedLessons(new Set([toExpand.id]));
         
-        // Scroll to the card
-        setTimeout(() => {
-          const cardEl = document.getElementById(`lesson-card-${toExpand.id}`);
-          if (cardEl) {
-            cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 500);
-      }
+        // Scroll to the card instantly
+        const timeoutId1 = setTimeout(() => {
+            const cardEl = document.getElementById(`lesson-card-${toExpand.id}`);
+            if (cardEl) {
+                cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+            }
+            const timeoutId2 = setTimeout(() => setIsInitializingScroll(false), 50);
+            return () => clearTimeout(timeoutId2);
+        }, 100);
+        
+        return () => clearTimeout(timeoutId1);
+    } else {
+        setIsInitializingScroll(false);
     }
-  }, [mounted, hasAutoExpanded, suggestedLessonId, unitLessons, lessonLevels, maxLevelPerLesson]);
+  }, [mounted, unit.id, suggestedLessonId, unitLessons, lessonLevels, maxLevelPerLesson]);
+
+  useEffect(() => {
+    if (isInitializingScroll) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isInitializingScroll]);
 
   return (
     <div key={`desktop-unit-${unit.id}`} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
+      {mounted && isInitializingScroll && (
+        <div
+          className="absolute inset-0 z-[60] bg-slate-50 flex flex-col items-center justify-center backdrop-blur-md"
+        >
+          <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin opacity-50" />
+        </div>
+      )}
+
       <DesktopStickyBanner
         unit={unit}
         language={language}

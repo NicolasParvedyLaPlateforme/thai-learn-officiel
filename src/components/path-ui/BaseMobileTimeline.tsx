@@ -1,5 +1,5 @@
 import React from 'react';
-import { m as motion } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 import { BookOpen, Star, Target, ChevronRight, Play, Map } from 'lucide-react';
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { useRouter } from 'next/navigation';
@@ -12,7 +12,6 @@ import { useMobileTimelineNodeClick } from "@/hooks/useMobileTimelineNodeClick";
 import { Typography } from '../ui/Typography';
 import { Button } from '../ui/Button';
 import { LessonPathMap } from '../learn/LessonPathMap';
-import { AnimatePresence } from 'framer-motion';
 import { useProgressStore } from "@/lib/store";
 
 interface BaseMobileTimelineProps {
@@ -71,31 +70,56 @@ export default function BaseMobileTimeline({
 
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
     const [expandedLessons, setExpandedLessons] = React.useState<Set<string>>(new Set());
-
-    const [hasAutoExpanded, setHasAutoExpanded] = React.useState(false);
+    const [isInitializingScroll, setIsInitializingScroll] = React.useState(true);
+    const lastExpandedUnitRef = React.useRef<string | null>(null);
 
     React.useEffect(() => {
-        if (mounted && !hasAutoExpanded) {
-            setHasAutoExpanded(true);
-            let toExpand = null;
-            if (suggestedLessonId) {
-                toExpand = unitLessons.find(l => l.id === suggestedLessonId);
-            } else {
-                toExpand = unitLessons.find(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
-            }
-            if (toExpand) {
-                setExpandedLessons(new Set([toExpand.id]));
-                
-                // Scroll to the card
-                setTimeout(() => {
-                    const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
-                    if (cardEl) {
-                        cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }, 500);
-            }
+        if (!mounted) return;
+        
+        if (lastExpandedUnitRef.current === unit.id) {
+            // Already expanded for this unit, ensure loading is off
+            setIsInitializingScroll(false);
+            return;
         }
-    }, [mounted, hasAutoExpanded, suggestedLessonId, unitLessons, lessonLevels, maxLevelPerLesson]);
+
+        lastExpandedUnitRef.current = unit.id;
+        setIsInitializingScroll(true);
+
+        let toExpand = null;
+        if (suggestedLessonId) {
+            toExpand = unitLessons.find(l => l.id === suggestedLessonId);
+        }
+        if (!toExpand) {
+            toExpand = unitLessons.find(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+        }
+
+        if (toExpand) {
+            setExpandedLessons(new Set([toExpand.id]));
+            
+            // Scroll to the card instantly
+            const timeoutId1 = setTimeout(() => {
+                const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
+                if (cardEl) {
+                    cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                }
+                const timeoutId2 = setTimeout(() => setIsInitializingScroll(false), 50);
+                return () => clearTimeout(timeoutId2);
+            }, 100);
+            
+            return () => clearTimeout(timeoutId1);
+        } else {
+            setIsInitializingScroll(false);
+        }
+    }, [mounted, unit.id, suggestedLessonId, unitLessons, lessonLevels, maxLevelPerLesson]);
+
+    React.useEffect(() => {
+        if (isInitializingScroll) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isInitializingScroll]);
 
     const completedLevelsInUnit = mounted
         ? unitLessons.reduce((acc, l) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson), 0)
@@ -139,6 +163,14 @@ export default function BaseMobileTimeline({
                 mounted={mounted}
                 onOpenUnitsList={() => setIsUnitsModalOpen(true)}
             />
+
+            {mounted && isInitializingScroll && (
+                <div
+                    className="fixed inset-x-0 top-[3.75rem] bottom-16 z-[60] bg-slate-50 flex flex-col items-center justify-center backdrop-blur-md"
+                >
+                    <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin opacity-50" />
+                </div>
+            )}
 
             <main className="max-w-2xl mx-auto px-4 mt-2 flex flex-col gap-8 md:hidden">
                 <motion.div
