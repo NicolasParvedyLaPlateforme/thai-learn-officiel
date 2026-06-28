@@ -248,14 +248,29 @@ export function LessonPathNode({
                 const tx = 50 + textR * Math.cos(Math.PI * midAngle / 180);
                 const ty = 50 + textR * Math.sin(Math.PI * midAngle / 180);
 
-                const baseColorClass = "fill-slate-100";
-                const colorClass = isSelectedPart ? `${unitText} fill-current` : baseColorClass;
+                const isCurrentlySelected = selectedAction === i;
+                const isFullSelected = selectedAction === 'full';
+
+                let colorClass = "fill-slate-100";
+                let textClass = "fill-slate-400";
+
+                if (isCurrentlySelected) {
+                  colorClass = `${unitText} fill-current`;
+                  textClass = "fill-white";
+                } else if (isFullSelected) {
+                  colorClass = `${unitText} fill-current opacity-40`;
+                  textClass = "fill-white opacity-90";
+                } else {
+                  if (isPartCompleted) {
+                    textClass = "fill-slate-300";
+                  }
+                }
 
                 return (
                   <g 
                     key={i} 
-                    className={`transition-transform duration-300 ${(isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-50'}`}
-                    style={isSelectedPart ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
+                    className={`transition-all duration-300 ${(isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-50'}`}
+                    style={isCurrentlySelected ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) {
@@ -263,8 +278,8 @@ export function LessonPathNode({
                       }
                     }}
                   >
-                    <path d={pathData} className={`${colorClass} stroke-white stroke-[3]`} />
-                    <text x={tx} y={ty} textAnchor="middle" dominantBaseline="central" className={`text-[8px] font-black ${isSelectedPart ? 'fill-white' : (isPartCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
+                    <path d={pathData} className={`${colorClass} stroke-white stroke-[3] transition-colors duration-300`} />
+                    <text x={tx} y={ty} textAnchor="middle" dominantBaseline="central" className={`text-[8px] font-black transition-colors duration-300 ${textClass}`}>
                       P{i + 1}
                     </text>
                   </g>
