@@ -3,8 +3,10 @@ import { Star, Lock, Crown, Flag, CheckCircle2 } from 'lucide-react';
 import { getTranslation } from "@/hooks/useTranslation";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { PartNodeBubble } from './PartNodeBubble';
-import stepsMetadata from "@/data/steps_metadata_learn.json";
-import { PartSubNode } from './PartSubNode';
+import { useProgressStore } from "@/lib/store";
+import stepsMetadataLearn from "@/data/steps_metadata_learn.json";
+import stepsMetadataAlphabet from "@/data/steps_metadata_alphabet.json";
+import stepsMetadataSpeak from "@/data/steps_metadata_speak.json";
 
 interface LessonPathNodeProps {
   levelIndex: number;
@@ -61,19 +63,19 @@ export function LessonPathNode({
   slotHeight,
   pathHeight,
 }: LessonPathNodeProps) {
-  const [openPartBubble, setOpenPartBubble] = useState<number | null>(null);
+  const [selectedAction, setSelectedAction] = useState<number | 'full' | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (openPartBubble === null) return;
+    if (selectedAction === null) return;
     const handler = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setOpenPartBubble(null);
+        setSelectedAction(null);
       }
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, [openPartBubble]);
+  }, [selectedAction]);
 
   // ── Current node state ──
   const isMastery = levelIndex === maxLevel;
@@ -82,7 +84,7 @@ export function LessonPathNode({
   const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
   const isCompleted = isMastery ? earnedStarsMastery > 0 : levelIndex < currentProgress;
   const isCurrent = !isMastery && levelIndex === currentProgress;
-  const isSelected = modalLevel === levelIndex;
+  const isSelected = selectedAction !== null;
   const earnedStars = earnedStarsArray[levelIndex] || 0;
 
   // Step counter uses parts of the CURRENT level (for the flag indicator)
@@ -95,57 +97,37 @@ export function LessonPathNode({
     ? unitColor.replace('bg-', 'text-')
     : 'text-slate-200';
 
-  // ── Part sub-nodes: parts of (levelIndex - 1) drawn in this slot's path ──
-  //
-  // Layout: nodes rendered top→bottom as [maxLevel, ..., 1, 0].
-  // The path in slot(levelIndex) connects levelIndex (top) → levelIndex-1 (bottom).
-  // To progress FROM levelIndex-1 TO levelIndex, the user must complete parts of levelIndex-1.
-  // So we display parts of levelIndex-1 along the path inside slot(levelIndex).
-  //
-  // P1 goes near levelIndex-1 (bottom of path), P(n) near levelIndex (top of path).
-  // t=0 → top of path (levelIndex's node), t=1 → bottom (levelIndex-1's node).
-  // P1 (i=0): t ≈ 0.75 (near bottom = near levelIndex-1).
-  // P(n) (i=n-1): t ≈ 0.25 (near top = near levelIndex).
-
-  const prevLevelIndex = levelIndex - 1;
   const currentPartsTotal = lesson ? getLevelSplit(levelIndex, lesson) : 1;
   const currentPartsKey = `${lessonId}_level-${levelIndex}`;
   const currentCompletedParts = lessonPartsCompleted?.[currentPartsKey] || [];
-  
-  // A part is accessible if the previous level is fully completed.
-  // Wait, if levelIndex === 0, prev level doesn't exist, so it's always accessible.
-  const isPartAccessible = levelIndex === 0 ? true : levelIndex <= currentProgress;
-  
-  // showPartNodes: display parts of levelIndex in this slot's path.
-  // Don't show parts for the mastery node itself, unless it has parts (usually it doesn't).
-  const showPartNodes = !isMastery && lessonId != null && currentPartsTotal > 1;
 
-  // Distribute parts evenly from bottom (t=0) to top (t=1). 
-  // P1 is at highest t (closest to 1), P(n) is at lowest t (closest to 0).
-  const partTValues = showPartNodes
-    ? Array.from({ length: currentPartsTotal }, (_, i) => {
-        // Equal spacing between t=1 (top) and t=0 (bottom)
-        return 1 - ((i + 1) / (currentPartsTotal + 1));
-      })
-    : [];
-
-  /**
-   * Evaluate the linear path at t and return the CSS transform offset
-   * from the slot center to place the part node.
-   *
-   * t=0 is this node (y=0), t=1 is prev node (y=-pathHeight).
-   */
-  const evalLinearXY = (t: number, isMobile: boolean): { x: number; y: number } => {
-    const height = pathHeight;
-    const startX = isMobile ? getMobileOffset(levelIndex) : getOffset(levelIndex);
-    const endX = isMobile ? getMobileOffset(prevLevelIndex) : getOffset(prevLevelIndex);
-    const x = startX + t * (endX - startX);
-    const y = -height * t;
-    return { x, y };
+  const getStepsData = () => {
+    if (suggestionType === 'alphabet') return stepsMetadataAlphabet;
+    if (suggestionType === 'speak') return stepsMetadataSpeak;
+    return stepsMetadataLearn;
   };
 
-  const getStepsForPart = (partIdx: number): number => {
-    return (stepsMetadata as any)?.[lessonId || '']?.[levelIndex]?.[`part_${partIdx}`] || 0;
+  const { getExpectedXp } = useProgressStore.getState();
+  const lessonIdForXp = suggestionType === 'speak' ? `speak_${lessonId}` : suggestionType === 'alphabet' ? `alphabet_${lessonId}` : lessonId;
+  const isBilanLesson = lesson?.isReview || lesson?.id?.startsWith('bilan-') || lesson?.id?.includes('-bilan') || lesson?.title?.toLowerCase().includes('bilan');
+
+  const getExpectedXpForPart = (partIdx: number | 'full') => {
+    const isPlayingPart = partIdx !== 'full' && currentPartsTotal > 1;
+    const { xp } = getExpectedXp(
+      lessonIdForXp || '', 
+      levelIndex, 
+      !!isBilanLesson, 
+      isPlayingPart, 
+      !isPlayingPart && (levelIndex === 7 || levelIndex === 8), 
+      partIdx === 'full' ? 0 : partIdx
+    );
+    return xp;
+  };
+
+  const getStepsForPart = (partIdx: number | 'full') => {
+    const stepsData = getStepsData();
+    const key = partIdx === 'full' ? 'full' : `part_${partIdx}`;
+    return (stepsData as any)?.[lessonId || '']?.[levelIndex]?.[key] || 0;
   };
 
   return (
@@ -156,62 +138,6 @@ export function LessonPathNode({
       id={`path-level-${levelIndex}`}
     >
       {/* ── SVG connection lines have been removed per user request ── */}
-
-      {/* ── Part sub-nodes (P1, P2, P3…) placed along the path ── */}
-      {showPartNodes && isPartAccessible && partTValues.map((t, partIdx) => {
-        const isPartCompleted = currentCompletedParts.includes(partIdx);
-        const isNextPart = !isCompleted && currentCompletedParts.length === partIdx;
-        const canAccessPart = isCompleted || partIdx <= currentCompletedParts.length;
-
-        const dXY = evalLinearXY(t, false); // desktop
-        const mXY = evalLinearXY(t, true);  // mobile
-
-        return (
-          <React.Fragment key={`part-${levelIndex}-${partIdx}`}>
-            {/* Desktop */}
-            <PartSubNode
-              isMobile={false}
-              partIdx={partIdx}
-              isPartAccessible={canAccessPart}
-              isPartCompleted={isPartCompleted}
-              isNextPart={isNextPart}
-              positionX={dXY.x}
-              positionY={dXY.y}
-              unitColor={unitColor}
-              unitBorder={unitBorder}
-              unitText={unitText}
-              lessonId={lessonId!}
-              levelIndex={levelIndex}
-              totalParts={currentPartsTotal}
-              stepsCount={getStepsForPart(partIdx)}
-              isOpen={openPartBubble === partIdx}
-              onToggle={() => setOpenPartBubble(openPartBubble === partIdx ? null : partIdx)}
-              onClose={() => setOpenPartBubble(null)}
-            />
-
-            {/* Mobile */}
-            <PartSubNode
-              isMobile={true}
-              partIdx={partIdx}
-              isPartAccessible={canAccessPart}
-              isPartCompleted={isPartCompleted}
-              isNextPart={isNextPart}
-              positionX={mXY.x}
-              positionY={mXY.y}
-              unitColor={unitColor}
-              unitBorder={unitBorder}
-              unitText={unitText}
-              lessonId={lessonId!}
-              levelIndex={levelIndex}
-              totalParts={currentPartsTotal}
-              stepsCount={getStepsForPart(partIdx)}
-              isOpen={openPartBubble === partIdx}
-              onToggle={() => setOpenPartBubble(openPartBubble === partIdx ? null : partIdx)}
-              onClose={() => setOpenPartBubble(null)}
-            />
-          </React.Fragment>
-        );
-      })}
 
       {/* ── Main node ── */}
       <div
@@ -285,48 +211,192 @@ export function LessonPathNode({
           </>
         )}
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpenPartBubble(null);
-            if (isAccessible) {
-              setModalLevel(levelIndex);
-              e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
-            }
-          }}
-          disabled={!isAccessible}
-          className={[
-            'w-[96px] h-[96px] rounded-full flex items-center justify-center transition-all duration-300 relative group',
-            isSelected
-              ? `scale-110 ring-[4px] ring-offset-[3px] shadow-xl z-20 ${unitColor.replace('bg-', 'ring-')}`
-              : 'hover:scale-[1.05] z-10',
-            isMastery
-              ? (isUnlockedMastery
-                ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-b-[8px] border-amber-600 shadow-md text-white'
-                : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm')
-              : (isCompleted
-                ? `${unitColor} border-b-[8px] ${unitBorder} shadow-sm text-white`
-                : isCurrent
-                  ? `bg-white border-[6px] border-b-[10px] ${unitColor.replace('bg-', 'border-')} shadow-md ${unitText}`
-                  : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm'),
-          ].join(' ')}
-        >
-          {isMastery ? (
-            <Crown size={44} className="fill-current stroke-[2] drop-shadow-sm" />
-          ) : isCompleted ? (
-            <span className="font-black text-4xl drop-shadow-sm text-white">{levelIndex + 1}</span>
-          ) : isCurrent ? (
-            <span className={`font-black text-4xl drop-shadow-sm ${unitText}`}>{levelIndex + 1}</span>
-          ) : (
-            <Lock size={36} className="stroke-[2.5]" />
-          )}
-        </button>
+        {(!isMastery && currentPartsTotal > 1) ? (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isAccessible) {
+                if (isCompleted || currentCompletedParts.length === currentPartsTotal) {
+                  setSelectedAction('full');
+                } else {
+                  setSelectedAction(currentCompletedParts.length);
+                }
+                e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+              }
+            }}
+            className={`relative w-28 h-28 md:w-36 md:h-36 transition-all duration-300 group
+              ${isAccessible ? 'cursor-pointer' : 'cursor-not-allowed opacity-80'}
+              ${isSelected ? 'scale-110' : 'hover:scale-105'}
+            `}
+          >
+            <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-xl overflow-visible">
+              {Array.from({ length: currentPartsTotal }).map((_, i) => {
+                const isLevelFullyCompleted = isCompleted;
+                const isLevelLocked = !isAccessible;
+                
+                const isPartCompleted = currentCompletedParts.includes(i);
+                const isSelectedPart = !isLevelFullyCompleted && !isLevelLocked && i === currentCompletedParts.length;
+                const isAccessibleSlice = !isLevelLocked && i <= currentCompletedParts.length;
+                
+                const angle = 360 / currentPartsTotal;
+                const startAngle = i * angle - 90;
+                const endAngle = (i + 1) * angle - 90;
+                
+                const x1 = 50 + 48 * Math.cos(Math.PI * startAngle / 180);
+                const y1 = 50 + 48 * Math.sin(Math.PI * startAngle / 180);
+                const x2 = 50 + 48 * Math.cos(Math.PI * endAngle / 180);
+                const y2 = 50 + 48 * Math.sin(Math.PI * endAngle / 180);
+                const largeArc = angle > 180 ? 1 : 0;
+                
+                const pathData = `M 50 50 L ${x1} ${y1} A 48 48 0 ${largeArc} 1 ${x2} ${y2} Z`;
+                
+                const midAngle = startAngle + angle / 2;
+                const textR = 30;
+                const tx = 50 + textR * Math.cos(Math.PI * midAngle / 180);
+                const ty = 50 + textR * Math.sin(Math.PI * midAngle / 180);
+
+                const baseColorClass = "fill-slate-100";
+                const colorClass = isSelectedPart ? `${unitText} fill-current` : baseColorClass;
+
+                return (
+                  <g 
+                    key={i} 
+                    className={`transition-transform duration-300 ${(isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-50'}`}
+                    style={isSelectedPart ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) {
+                        setSelectedAction(i);
+                      }
+                    }}
+                  >
+                    <path d={pathData} className={`${colorClass} stroke-white stroke-[3]`} />
+                    <text x={tx} y={ty} textAnchor="middle" dominantBaseline="central" className={`text-[8px] font-black ${isSelectedPart ? 'fill-white' : (isPartCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
+                      P{i + 1}
+                    </text>
+                  </g>
+                );
+              })}
+              
+              <circle cx="50" cy="50" r="18" 
+                className={`${isCompleted ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-white'} stroke-white stroke-[3] transition-colors ${isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`} 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (isCompleted) setSelectedAction('full');
+                }}
+              />
+              <text x="50" y="50" textAnchor="middle" dominantBaseline="central" 
+                className={`text-[6.5px] font-black pointer-events-none ${isCompleted ? 'fill-white' : (isAccessible ? 'fill-slate-800' : 'fill-slate-400')}`}>
+                ENTIER
+              </text>
+            </svg>
+
+            {/* Tooltip La Suite */}
+            {!isCompleted && isAccessible && (() => {
+              let tx = 50;
+              let ty = 50;
+              let midAngle = -90;
+              
+              const nextPart = currentCompletedParts.length;
+              const angle = 360 / currentPartsTotal;
+              const startAngle = nextPart * angle - 90;
+              midAngle = startAngle + angle / 2;
+              const tooltipR = 64; 
+              tx = 50 + tooltipR * Math.cos(Math.PI * midAngle / 180);
+              ty = 50 + tooltipR * Math.sin(Math.PI * midAngle / 180);
+
+              const theta = (midAngle + 180) * Math.PI / 180;
+              const cx = Math.cos(theta);
+              const cy = Math.sin(theta);
+              const scale = Math.min(28 / Math.max(Math.abs(cx), 0.001), 10 / Math.max(Math.abs(cy), 0.001));
+              const ptrX = cx * (scale + 2);
+              const ptrY = cy * (scale + 2);
+
+              return (
+                <div 
+                  className="absolute z-20 pointer-events-none drop-shadow-md"
+                  style={{
+                    left: `${tx}%`,
+                    top: `${ty}%`
+                  }}
+                >
+                  <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -50%)' }}>
+                    <div className="animate-bounce flex items-center justify-center relative">
+                      <div 
+                        className="absolute w-2.5 h-2.5 bg-[#10B981] rounded-[1px]"
+                        style={{
+                          transform: `translate(${ptrX}px, ${ptrY}px) rotate(45deg)`
+                        }}
+                      />
+                      <div className="relative z-10 bg-[#10B981] text-white font-black text-[9px] uppercase px-2.5 py-1 rounded-md tracking-wider whitespace-nowrap shadow-sm">
+                        La Suite
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        ) : (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isAccessible) {
+                setSelectedAction('full');
+                e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+              }
+            }}
+            disabled={!isAccessible}
+            className={[
+              'w-[96px] h-[96px] rounded-full flex items-center justify-center transition-all duration-300 relative group',
+              isSelected
+                ? `scale-110 ring-[4px] ring-offset-[3px] shadow-xl z-20 ${unitColor.replace('bg-', 'ring-')}`
+                : 'hover:scale-[1.05] z-10',
+              isMastery
+                ? (isUnlockedMastery
+                  ? 'bg-gradient-to-br from-amber-300 to-amber-500 border-b-[8px] border-amber-600 shadow-md text-white'
+                  : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm')
+                : (isCompleted
+                  ? `${unitColor} border-b-[8px] ${unitBorder} shadow-sm text-white`
+                  : isCurrent
+                    ? `bg-white border-[6px] border-b-[10px] ${unitColor.replace('bg-', 'border-')} shadow-md ${unitText}`
+                    : 'bg-slate-100 border-b-[8px] border-slate-200 text-slate-300 shadow-sm'),
+            ].join(' ')}
+          >
+            {isMastery ? (
+              <Crown size={44} className="fill-current stroke-[2] drop-shadow-sm" />
+            ) : isCompleted ? (
+              <span className="font-black text-4xl drop-shadow-sm text-white">{levelIndex + 1}</span>
+            ) : isCurrent ? (
+              <span className={`font-black text-4xl drop-shadow-sm ${unitText}`}>{levelIndex + 1}</span>
+            ) : (
+              <Lock size={36} className="stroke-[2.5]" />
+            )}
+          </button>
+        )}
 
         {isMastery && isAccessible && (
           <div className={`absolute -bottom-6 flex items-center justify-center bg-white px-3 py-1.5 rounded-full shadow-md border border-slate-200 gap-1.5 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-20`}>
             <Crown size={14} className="fill-amber-400 stroke-amber-500 stroke-[1.5]" />
             <span className="text-xs font-black text-slate-600">{earnedStarsMastery}/5</span>
           </div>
+        )}
+
+        {selectedAction !== null && (
+          <PartNodeBubble
+            lessonId={lessonId || ''}
+            levelIndex={levelIndex}
+            partIndex={selectedAction}
+            totalParts={currentPartsTotal}
+            stepsCount={getStepsForPart(selectedAction)}
+            expectedXp={getExpectedXpForPart(selectedAction)}
+            isCompleted={selectedAction === 'full' ? isCompleted : currentCompletedParts.includes(selectedAction)}
+            unitColor={unitColor}
+            unitText={unitText}
+            nodeX={getOffset(levelIndex)}
+            onClose={() => setSelectedAction(null)}
+            suggestionType={suggestionType}
+          />
         )}
       </div>
     </div>

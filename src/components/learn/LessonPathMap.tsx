@@ -26,8 +26,6 @@ interface LessonPathMapProps {
 
 /** Base slot height in px */
 const BASE_SLOT_HEIGHT = 290;
-/** Extra height per additional part (beyond 1) in the connecting segment */
-const EXTRA_PER_PART = 100;
 
 export function LessonPathMap({
   maxLevel,
@@ -55,18 +53,12 @@ export function LessonPathMap({
 
   /**
    * Compute the div height for a given slot.
-   * The slot for levelIndex displays parts of levelIndex-1 along its path.
-   * Extra height is based on partsOf(levelIndex-1).
-   * Note: mastery slot (index === maxLevel) ALSO gets extra height for parts
-   * of the last level (levelIndex-1 = maxLevel-1).
    */
   const getSlotHeight = (index: number): number => {
     if (index === maxLevel) {
       return BASE_SLOT_HEIGHT * 0.2; // Significantly less space before mastery node
     }
-    const parts = lesson ? getLevelSplit(index, lesson) : 1;
-    const extra = parts > 1 ? (parts - 1) * EXTRA_PER_PART : 0;
-    return BASE_SLOT_HEIGHT + extra;
+    return BASE_SLOT_HEIGHT;
   };
 
   const getPathHeight = (index: number): number => {
