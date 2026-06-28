@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { getLocalizedField, getTranslation } from "@/hooks/useTranslation";
-import { CheckCircle, Crown, Star } from 'lucide-react';
+import { CheckCircle, Crown, Star, ChevronDown } from 'lucide-react';
 import IconImage from '../ui/IconImage';
 import { Card } from "@/components/ui/Card";
 import { Typography } from "@/components/ui/Typography";
@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { AnimatePresence, m, useInView } from 'framer-motion';
+import { SegmentedProgressBorder } from './SegmentedProgressBorder';
 
 // ───────────────────────────────────────────────────────────────────────────────
 // Scrolling handled locally via IntersectionObserver in the component
@@ -388,7 +389,7 @@ export function SharedLessonCard({
     return (
       <Card
         ref={cardRef as React.Ref<HTMLDivElement>}
-        className={cn(cardStyle, "flex flex-col rounded-[10px] p-0 bg-transparent")}
+        className={cn(cardStyle, "relative flex flex-col rounded-[20px] p-0 bg-transparent border-0 overflow-visible")}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={(e) => {
@@ -396,8 +397,18 @@ export function SharedLessonCard({
           onClick();
         }}
       >
+        {/* SVG Segmented Border (Only if not mastered and not 0 levels) */}
+        {!isMaxLevel && maxLevelPerLesson > 0 && (
+          <SegmentedProgressBorder 
+            maxLevel={maxLevelPerLesson} 
+            currentLevel={displayLevel} 
+            colorClass={textDynamicColor}
+            radius={20} // 20px for rounded-[20px]
+          />
+        )}
+
         {/* ── Header: Image Left, Title/Desc Right ──────────────────────────────── */}
-        <div className={cn("flex p-3 pt-[14px] gap-3 border-b border-slate-100 relative bg-transparent border-b-emerald-600 items-center flex-col")}>
+        <div className={cn("flex p-3 pt-[14px] gap-3 border-b border-slate-100 relative bg-transparent items-center flex-col z-10")}>
           {/* Mastered badge */}
           {isMaxLevel && (
             <div
@@ -459,25 +470,21 @@ export function SharedLessonCard({
           )}
 
           {/* Progress bar + Button */}
-          <div className="flex items-center justify-between w-full gap-4 flex-col">
-            {/* <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-2 w-full">
-              <div className="flex justify-between text-[10px] sm:text-[11px] uppercase font-bold tracking-wider text-slate-400">
-                <span className="font-extrabold">{getTranslation('auto.mastery_6', language)}</span>
-                <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
-              </div>
-              {renderMobileProgressBar()}
-            </div> */}
-
+          <div className="flex items-center justify-between w-full gap-4 flex-col z-10 mt-1">
             <Button
-              variant={isMaxLevel ? "default" : "gamified"}
+              variant={isMaxLevel ? "outline" : "gamified"}
               size="sm"
-              className={cn("shrink-0 px-4 sm:px-6 shadow-none text-white w-full", dynamicColor, !isMaxLevel && borderDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
+              className={cn("shrink-0 px-4 sm:px-6 shadow-sm w-full transition-all duration-200 flex items-center justify-center gap-2", 
+                isMaxLevel ? "border-2 text-slate-700 bg-white hover:bg-slate-50" : cn("text-white", dynamicColor, borderDynamicColor, hoverDynamicColor),
+                isReviewLocked ? 'opacity-50 pointer-events-none' : ''
+              )}
               onClick={(e) => {
                 e.stopPropagation();
                 onClick();
               }}
             >
               {buttonText}
+              {!isMaxLevel && <ChevronDown size={18} className="stroke-[3]" />}
             </Button>
           </div>
         </div>
@@ -486,12 +493,15 @@ export function SharedLessonCard({
   }
 
   // ─────────────────────────────────────────────────────────────────────────────
-  // DESKTOP LAYOUT (unchanged)
+  // DESKTOP LAYOUT (redesigned horizontal)
   // ─────────────────────────────────────────────────────────────────────────────
   return (
     <Card
       ref={cardRef as React.Ref<HTMLDivElement>}
-      className={cn(cardStyle, "p-6 flex flex-col gap-4 rounded-[2rem]")}
+      className={cn("relative p-4 sm:p-6 flex flex-row items-center gap-4 sm:gap-6 rounded-[2rem] bg-white cursor-pointer shadow-sm hover:shadow-md transition-shadow group overflow-visible",
+        !isMaxLevel ? "border-0" : "border border-slate-200",
+        isReviewLocked ? "opacity-50 pointer-events-none" : ""
+      )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={(e) => {
@@ -499,54 +509,83 @@ export function SharedLessonCard({
         onClick();
       }}
     >
-      {/* Header & Badges */}
-      <div className="flex justify-between items-start w-full">
-        <div className="flex flex-col items-start text-left flex-1 pr-4 overflow-hidden w-full">
-          <Typography variant="h3" className="w-full">
-            {getLocalizedField(lesson, 'title', language)}
-          </Typography>
-          <Typography variant="muted" className="mt-1 w-full">
-            {renderDescription()}
-          </Typography>
-        </div>
+      {/* SVG Segmented Border (Only if not mastered and not 0 levels) */}
+      {!isMaxLevel && maxLevelPerLesson > 0 && (
+        <SegmentedProgressBorder 
+          maxLevel={maxLevelPerLesson} 
+          currentLevel={displayLevel} 
+          colorClass={textDynamicColor}
+          radius={32} // 32px for rounded-[2rem]
+        />
+      )}
 
-        {/* Badges */}
-        {isMaxLevel ? (
-          <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
-            <CheckCircle size={14} /> {getTranslation('auto.mastered', language)}
-          </Badge>
-        ) : isSuggested ? (
-          <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-amber-200 shrink-0">
-            <Star size={12} fill="currentColor" /> {getTranslation('auto.suggested', language)}
-          </Badge>
-        ) : null}
+      {/* Badges (Top Centered) */}
+      {isMaxLevel ? (
+        <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
+          <CheckCircle size={14} /> {getTranslation('auto.mastered', language)}
+        </Badge>
+      ) : isSuggested ? (
+        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
+          {getTranslation('auto.in_progress', language) || "En cours"}
+        </Badge>
+      ) : displayLevel > 0 ? (
+        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-10 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
+          {getTranslation('auto.in_progress', language) || "En cours"}
+        </Badge>
+      ) : null}
+
+      {/* Left: Circular Image Icon */}
+      {lesson.imageUrl ? (
+        <div className="w-[64px] h-[64px] sm:w-[84px] sm:h-[84px] rounded-full overflow-hidden shrink-0 relative bg-slate-50 border-[3px] border-slate-100 flex items-center justify-center z-10 shadow-sm group-hover:scale-105 transition-transform duration-300">
+          <IconImage src={lesson.imageUrl} alt={lesson.title} fill className="object-cover" sizes="84px" />
+        </div>
+      ) : (
+        <div className={cn("w-[64px] h-[64px] sm:w-[84px] sm:h-[84px] rounded-full shrink-0 relative flex items-center justify-center z-10 shadow-sm border-[3px] border-white group-hover:scale-105 transition-transform duration-300", badgeBgColor, badgeTextColor)}>
+          <span className="font-thai text-3xl font-bold">{lesson.items?.[0]?.letter?.[0] || lesson.title?.[0]}</span>
+        </div>
+      )}
+
+      {/* Middle: Content */}
+      <div className="flex flex-col items-start text-left flex-1 min-w-0 z-10 py-1">
+        <Typography variant="h3" className="w-full text-base sm:text-lg lg:text-xl font-bold text-slate-800 line-clamp-1">
+          {getLocalizedField(lesson, 'title', language)}
+        </Typography>
+        <Typography variant="muted" className="mt-0.5 w-full text-xs sm:text-sm text-slate-500 line-clamp-2 pr-2">
+          {renderDescription()}
+        </Typography>
+        
+        {/* Phonetic / preview block */}
+        {pathType === 'learn' && hasUnlockedWords && lesson.words?.[0] && (
+          <div className="flex items-center gap-2 mt-2 text-sm">
+            <span className={cn("font-thai font-bold", textDynamicColor)}>{lesson.words[0].th || lesson.words[0].phonetic}</span>
+            <span className="text-slate-400">{getLocalizedField(lesson.words[0], '', language)}</span>
+          </div>
+        )}
+        {pathType === 'speak' && hasUnlockedPhrases && lesson.phrases?.[0] && (
+          <div className="flex items-center gap-2 mt-2 text-sm">
+            <span className={cn("font-thai font-bold", textDynamicColor)}>{lesson.phrases[0].th || lesson.phrases[0].phonetic}</span>
+            <span className="text-slate-400">{getLocalizedField(lesson.phrases[0], '', language)}</span>
+          </div>
+        )}
       </div>
 
-      <div className="w-full flex flex-col gap-1 mt-1">
-        <div className="flex justify-between text-xs font-bold tracking-wider uppercase px-1">
-          <span className="text-slate-400">{getTranslation('auto.mastery_6', language)}</span>
-          <span className={cn(textDynamicColor, "font-black")}>{displayLevel}/{maxLevelPerLesson}</span>
-        </div>
-        <div className="px-1">
-          {renderDesktopProgressBar()}
-        </div>
+      {/* Right: Button */}
+      <div className="shrink-0 z-10 ml-auto flex flex-col items-end gap-1">
+        <Button
+          variant={isMaxLevel ? "outline" : "gamified"}
+          size="lg"
+          className={cn("px-6 shadow-sm transition-all duration-200 min-w-[140px] justify-center flex items-center gap-2", 
+            isMaxLevel ? "border-2 text-slate-700 bg-white hover:bg-slate-50" : cn("text-white", dynamicColor, borderDynamicColor, hoverDynamicColor)
+          )}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick();
+          }}
+        >
+          {buttonText}
+          {!isMaxLevel && <ChevronDown size={18} className="stroke-[3]" />}
+        </Button>
       </div>
-
-      <div className="flex flex-row gap-4 w-full items-stretch mt-1">
-        {renderMiddleSection()}
-      </div>
-
-      <Button
-        variant={isMaxLevel ? "default" : "gamified"}
-        size="lg"
-        className={cn("w-full mt-2 shadow-none text-white cursor-pointer transition-colors duration-200", dynamicColor, !isMaxLevel && borderDynamicColor, hoverDynamicColor, isReviewLocked ? 'opacity-50 pointer-events-none' : '')}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick();
-        }}
-      >
-        {buttonText}
-      </Button>
 
     </Card>
   );
