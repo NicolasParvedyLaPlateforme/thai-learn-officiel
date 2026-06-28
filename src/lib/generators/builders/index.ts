@@ -6,3 +6,4 @@ export * from './pair-matching-builder';
 export * from './phrase-match-builder';
 export * from './free-typing-builder';
 export * from './missing-letter-builder';
+export * from './sound-to-letter-builder';

@@ -14,6 +14,7 @@ import PairMatch from "@/components/learn/PairMatch";
 import VirtualKeyboard from '@/components/writing/VirtualKeyboard';
 import FreeTypingInput from './FreeTypingInput';
 import MissingLetter from './MissingLetter';
+import SoundToLetter from './SoundToLetter';
 import GlossaryModal from '@/components/lesson/GlossaryModal';
 import ResultScreen from '@/components/lesson/ResultScreen';
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
@@ -191,9 +192,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                   <motion.div
                     animate={{ opacity: state.isExiting ? 0 : 1, y: 0, scale: 1 }}
                     transition={{ duration: state.isExiting ? 0.15 : 0.3, delay: state.isExiting ? 0 : 0.1 }}
-                    className={`${state.showInstruction || state.showHelpModal || state.currentExercise?.type === "pair-matching" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${state.isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
+                    className={`${state.showInstruction || state.showHelpModal || state.currentExercise?.type === "pair-matching" || state.currentExercise?.type === "sound-to-letter" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${state.isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
                   >
-                    {state.currentExercise?.type !== "pair-matching" && (
+                    {state.currentExercise?.type !== "pair-matching" && state.currentExercise?.type !== "sound-to-letter" && (
                       <QuestionArea
                         currentExercise={state.currentExercise as Exercise}
                         lesson={lesson}
@@ -210,7 +211,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={state.isExiting ? { opacity: 0 } : { opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: state.isExiting ? 0.15 : 0.3, delay: state.isExiting ? 0 : 0.3 }}
-                    className={`${state.showInstruction || state.showHelpModal ? "hidden" : "flex"} ${state.currentExercise?.type === "pair-matching" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
+                    className={`${state.showInstruction || state.showHelpModal ? "hidden" : "flex"} ${state.currentExercise?.type === "pair-matching" || state.currentExercise?.type === "sound-to-letter" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
                   >
                     <div className="w-full relative">
                       <ErrorBoundary>
@@ -254,6 +255,18 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                             />
                           ) : state.currentExercise?.type === "missing-letter" ? (
                             <MissingLetter
+                              exercise={state.currentExercise as Exercise}
+                              selected={state.selectedAnswer as string}
+                              onChange={actions.setSelectedAnswer}
+                              disabled={state.isChecking}
+                              isChecking={state.isChecking}
+                              isCorrect={state.isCorrect}
+                              onAutoCheck={(val) => actions.handleCheck(val)}
+                              language={state.language}
+                              onAddMistake={() => actions.setMistakes((m: number) => m + 1)}
+                            />
+                          ) : state.currentExercise?.type === "sound-to-letter" ? (
+                            <SoundToLetter
                               exercise={state.currentExercise as Exercise}
                               selected={state.selectedAnswer as string}
                               onChange={actions.setSelectedAnswer}

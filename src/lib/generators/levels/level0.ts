@@ -1,5 +1,5 @@
 import { Exercise, Word } from "@/types";
-import { buildIntro, buildWordMatch, buildMissingLetter } from '../builders';
+import { buildIntro, buildWordMatch, buildMissingLetter, buildSoundToLetter } from '../builders';
 
 export function generateLevel0(validLessonWords: Word[], globalWords: Word[], language: string): Exercise[] {
   let exercises: Exercise[] = [];
@@ -23,6 +23,11 @@ export function generateLevel0(validLessonWords: Word[], globalWords: Word[], la
     const missingLetterVowelEx = buildMissingLetter(word, language, { numDistractors: 1, targetType: 'vowel' });
     if (missingLetterVowelEx) {
       exercises.push(missingLetterVowelEx);
+    }
+    
+    const soundToLetterVowelEx = buildSoundToLetter(word, language, { numDistractors: 1, targetType: 'vowel' });
+    if (soundToLetterVowelEx) {
+      exercises.push(soundToLetterVowelEx);
     }
     
     exercises.push(buildWordMatch(word, language, {
