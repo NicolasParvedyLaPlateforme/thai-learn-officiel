@@ -348,6 +348,7 @@ export default function BaseMobileTimeline({
                                                     isReviewLocked={isReviewLocked}
                                                     suggestedLessonId={suggestedLessonId}
                                                     isMobileLayout={true}
+                                                    isExpanded={expandedLessons.has(lesson.id)}
                                                     index={idx}
                                                     maxLevelPerLesson={maxLevelPerLesson}
                                                     onClick={handleNodeClick(lesson, level, unit, isReviewLocked, pathType)}

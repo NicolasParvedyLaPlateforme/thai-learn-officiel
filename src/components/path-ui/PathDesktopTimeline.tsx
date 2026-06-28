@@ -253,6 +253,7 @@ export default function PathDesktopTimeline({
                           isReviewLocked={isReviewLocked}
                           suggestedLessonId={suggestedLessonId}
                           isMobileLayout={false}
+                          isExpanded={expandedLessons.has(lesson.id)}
                           onClick={onNodeClick}
                         />
                       }

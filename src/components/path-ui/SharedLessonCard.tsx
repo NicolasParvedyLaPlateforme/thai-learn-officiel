@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { getLocalizedField, getTranslation } from "@/hooks/useTranslation";
-import { CheckCircle, Crown, Star, ChevronDown } from 'lucide-react';
+import { CheckCircle, Crown, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import IconImage from '../ui/IconImage';
 import { Card } from "@/components/ui/Card";
 import { Typography } from "@/components/ui/Typography";
@@ -30,6 +30,7 @@ interface SharedLessonCardProps {
   onClick: () => void;
   maxLevelPerLesson?: number;
   isMobileLayout?: boolean;
+  isExpanded?: boolean;
   index?: number;
 }
 
@@ -44,6 +45,7 @@ export function SharedLessonCard({
   onClick,
   maxLevelPerLesson = 10,
   isMobileLayout = false,
+  isExpanded = false,
   index
 }: SharedLessonCardProps) {
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
@@ -144,11 +146,13 @@ export function SharedLessonCard({
       ? !hasUnlockedPhrases
       : false;
 
-  const buttonText = level === 0
-    ? getTranslation('auto.start_learning', language)
-    : isMaxLevel
-      ? getTranslation('auto.review', language)
-      : getTranslation('auto.continue', language);
+  const buttonText = isExpanded
+    ? getTranslation('auto.reduce', language) || "Réduire"
+    : level === 0
+      ? getTranslation('auto.start_learning', language)
+      : isMaxLevel
+        ? getTranslation('auto.review', language)
+        : getTranslation('auto.continue', language);
 
   const getDynamicColorClass = () => {
     if (unit.bgClass) return unit.bgClass;
@@ -303,7 +307,7 @@ export function SharedLessonCard({
           }}
         >
           {buttonText}
-          {!isMaxLevel && <ChevronDown size={18} className="stroke-[3]" />}
+          {!isMaxLevel && (isExpanded ? <ChevronUp size={18} className="stroke-[3]" /> : <ChevronDown size={18} className="stroke-[3]" />)}
         </Button>
       </div>
 
