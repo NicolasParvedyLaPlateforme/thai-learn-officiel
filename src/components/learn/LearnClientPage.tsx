@@ -40,8 +40,8 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
       maxLevelPerLesson={10}
-      renderMobileTimeline={(props) => <PathMobileTimeline {...props} pathType="learn" quests={learnQuests} />}
-      renderDesktopTimeline={(props) => <PathDesktopTimeline {...props} pathType="learn" maxLevelPerLesson={10} />}
+      renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="learn" quests={learnQuests} />}
+      renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="learn" maxLevelPerLesson={10} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="learn" />}
       renderLessonModal={(props) => <PathLessonModal {...props} pathType="learn" maxLevelPerLesson={10} />}
       renderUnitsModal={(props) => <UnitsModal {...props} />}

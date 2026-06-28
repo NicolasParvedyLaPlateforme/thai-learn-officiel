@@ -71,19 +71,23 @@ export default function BaseMobileTimeline({
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
     const [expandedLessons, setExpandedLessons] = React.useState<Set<string>>(new Set());
     const [isInitializingScroll, setIsInitializingScroll] = React.useState(true);
-    const lastExpandedUnitRef = React.useRef<string | null>(null);
+    const hasInitializedScrollRef = React.useRef(false);
 
+    // Guaranteed fog dismissal after 800ms
     React.useEffect(() => {
         if (!mounted) return;
-        
-        if (lastExpandedUnitRef.current === unit.id) {
-            // Already expanded for this unit, ensure loading is off
-            setIsInitializingScroll(false);
-            return;
-        }
+        const fallbackTimer = setTimeout(() => setIsInitializingScroll(false), 800);
+        return () => clearTimeout(fallbackTimer);
+    }, [mounted]);
 
-        lastExpandedUnitRef.current = unit.id;
-        setIsInitializingScroll(true);
+    // Scroll logic that only runs once
+    React.useEffect(() => {
+        if (!mounted || hasInitializedScrollRef.current) return;
+        
+        // Wait until unitLessons has data (if it's empty on first mount)
+        if (!unitLessons || unitLessons.length === 0) return;
+
+        hasInitializedScrollRef.current = true;
 
         let toExpand = null;
         if (suggestedLessonId) {
@@ -96,30 +100,15 @@ export default function BaseMobileTimeline({
         if (toExpand) {
             setExpandedLessons(new Set([toExpand.id]));
             
-            // Scroll to the card instantly
-            const timeoutId1 = setTimeout(() => {
-                const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
+            // Scroll to the card instantly (no cleanup so it's guaranteed to run)
+            setTimeout(() => {
+                const cardEl = document.getElementById(`mobile-lesson-${toExpand?.id}`);
                 if (cardEl) {
                     cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
                 }
-                const timeoutId2 = setTimeout(() => setIsInitializingScroll(false), 50);
-                return () => clearTimeout(timeoutId2);
             }, 100);
-            
-            return () => clearTimeout(timeoutId1);
-        } else {
-            setIsInitializingScroll(false);
         }
-    }, [mounted, unit.id, suggestedLessonId, unitLessons, lessonLevels, maxLevelPerLesson]);
-
-    React.useEffect(() => {
-        if (isInitializingScroll) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [isInitializingScroll]);
+    }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
 
     const completedLevelsInUnit = mounted
         ? unitLessons.reduce((acc, l) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson), 0)
@@ -150,7 +139,17 @@ export default function BaseMobileTimeline({
             if (selectedLesson?.lesson.id === lesson.id) {
                 setSelectedLesson(null);
             }
-        } else {
+            return;
+        }
+
+        const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
+        if (cardEl) {
+            setTimeout(() => {
+                cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        if (!isCurrentlyExpanded) {
             setSelectedLesson({ lesson, isCompleted: level >= maxLevelPerLesson, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass });
         }
     };
@@ -164,13 +163,20 @@ export default function BaseMobileTimeline({
                 onOpenUnitsList={() => setIsUnitsModalOpen(true)}
             />
 
-            {mounted && isInitializingScroll && (
-                <div
-                    className="fixed inset-x-0 top-[3.75rem] bottom-16 z-[60] bg-slate-50 flex flex-col items-center justify-center backdrop-blur-md"
-                >
-                    <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin opacity-50" />
-                </div>
-            )}
+            <AnimatePresence>
+                {mounted && isInitializingScroll && (
+                    <motion.div
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        className="fixed inset-x-0 top-[3.75rem] bottom-16 z-[60] bg-slate-50/90 flex flex-col items-center justify-center backdrop-blur-md touch-none"
+                        onWheel={(e) => e.preventDefault()}
+                        onTouchMove={(e) => e.preventDefault()}
+                    >
+                        <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin opacity-80" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             <main className="max-w-2xl mx-auto px-4 mt-2 flex flex-col gap-8 md:hidden">
                 <motion.div

@@ -154,6 +154,7 @@ export default function PathLayout({
         <PathMobileSkeleton />
       ) : (
         renderMobileTimeline({
+          key: activeUnit?.id,
           unit: activeUnit,
           unitLessons: pathType === 'alphabet' ? activeUnit?.lessons : lessons.slice(activeUnit?.startIndex, activeUnit?.endIndex),
           activeUnitIndex,
@@ -191,6 +192,7 @@ export default function PathLayout({
             <div className={`flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12`}>
               <div className={`flex flex-col gap-10 w-full max-w-4xl`}>
                 {renderDesktopTimeline({
+                  key: activeUnit?.id,
                   unit: activeUnit,
                   unitLessons: pathType === 'alphabet' ? activeUnit?.lessons : lessons.slice(activeUnit?.startIndex, activeUnit?.endIndex),
                   activeUnitIndex,

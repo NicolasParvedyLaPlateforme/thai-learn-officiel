@@ -40,8 +40,8 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
       maxLevelPerLesson={5}
-      renderMobileTimeline={(props) => <PathMobileTimeline {...props} pathType="speak" quests={speakQuests} maxLevelPerLesson={5} />}
-      renderDesktopTimeline={(props) => <PathDesktopTimeline {...props} pathType="speak" maxLevelPerLesson={5} />}
+      renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="speak" quests={speakQuests} maxLevelPerLesson={5} />}
+      renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="speak" maxLevelPerLesson={5} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="speak" maxLevelPerLesson={5} />}
       renderLessonModal={(props) => <PathLessonModal {...props} pathType="speak" maxLevelPerLesson={5} />}
       renderUnitsModal={(props) => <UnitsModal {...props} />}
