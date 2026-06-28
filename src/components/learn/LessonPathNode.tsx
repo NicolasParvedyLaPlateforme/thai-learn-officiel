@@ -178,10 +178,7 @@ export function LessonPathNode({
         )}
 
         {isCurrent && (
-          <div className={`absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-xl font-bold text-xs text-white ${unitColor} whitespace-nowrap shadow-md animate-bounce z-40`}>
-            {getTranslation('auto.in_progress', language)}
-            <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 ${unitColor}`} />
-          </div>
+          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-52 md:h-52 rounded-full ${unitColor} opacity-15 animate-pulse pointer-events-none z-0`} />
         )}
 
         {/* Stars Arc */}
@@ -269,7 +266,7 @@ export function LessonPathNode({
                 return (
                   <g 
                     key={i} 
-                    className={`transition-all duration-300 ${(isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-50'}`}
+                    className={`transition-all duration-300 ${(isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-25'}`}
                     style={isCurrentlySelected ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -287,14 +284,14 @@ export function LessonPathNode({
               })}
               
               <circle cx="50" cy="50" r="18" 
-                className={`${isCompleted ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-white'} stroke-white stroke-[3] transition-colors ${isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`} 
+                className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} stroke-white stroke-[3] transition-colors ${isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`} 
                 onClick={(e) => {
                   e.stopPropagation();
                   if (isCompleted) setSelectedAction('full');
                 }}
               />
               <text x="50" y="50" textAnchor="middle" dominantBaseline="central" 
-                className={`text-[6.5px] font-black pointer-events-none ${isCompleted ? 'fill-white' : (isAccessible ? 'fill-slate-800' : 'fill-slate-400')}`}>
+                className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
                 ENTIER
               </text>
             </svg>

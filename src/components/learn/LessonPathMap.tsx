@@ -247,7 +247,7 @@ export function LessonPathMap({
 
       {/* Floating Back Button removed as requested */}
 
-      {nodes.map((levelIndex) => (
+      {nodes.filter(levelIndex => levelIndex <= currentProgress).map((levelIndex) => (
         <LessonPathNode
           key={levelIndex}
           levelIndex={levelIndex}
