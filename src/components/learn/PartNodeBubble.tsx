@@ -119,7 +119,7 @@ export function PartNodeBubble({
   return (
     <div
       className={[
-        'absolute z-50',
+        'absolute z-[100]',
         positionClasses,
         'w-[180px]',
         'bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-slate-100',

@@ -74,7 +74,11 @@ export function LessonPathNode({
       }
     };
     document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener('touchstart', handler);
+    return () => {
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('touchstart', handler);
+    };
   }, [selectedAction]);
 
   // ── Current node state ──
@@ -316,7 +320,7 @@ export function LessonPathNode({
 
               return (
                 <div
-                  className="absolute z-20 pointer-events-none drop-shadow-md"
+                  className="absolute z-[100] pointer-events-none drop-shadow-md"
                   style={{
                     left: `${tx}%`,
                     top: `${ty}%`
