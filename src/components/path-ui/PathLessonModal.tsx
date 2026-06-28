@@ -89,7 +89,7 @@ export default function PathLessonModal({
     totalParts = getLevelSplit(modalLevel, selectedLesson.lesson);
     const partsKey = `${selectedLesson.lesson.id}_level-${modalLevel}`;
     completedParts = lessonPartsCompleted[partsKey] || [];
-    isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
+    isLevelFullyCompleted = totalParts > 1 ? completedParts.length >= totalParts : currentProgress > modalLevel;
   }
 
   const isPlayingPart = totalParts > 1 && !playFullLevel;

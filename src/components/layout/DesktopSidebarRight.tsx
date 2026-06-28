@@ -137,7 +137,7 @@ export function DesktopSidebarRight({
       const completedParts = lessonPartsCompleted[partsKey] || [];
       const currentProgress = lessonLevels[selectedLesson.lesson.id] || 0;
       
-      const isLevelFullyCompleted = currentProgress > modalLevel || completedParts.length >= totalParts;
+      const isLevelFullyCompleted = totalParts > 1 ? completedParts.length >= totalParts : currentProgress > modalLevel;
       const showSlices = totalParts > 1 && !playFullLevel;
 
       const nextUncompletedPart = completedParts.length < totalParts ? completedParts.length : 0;
