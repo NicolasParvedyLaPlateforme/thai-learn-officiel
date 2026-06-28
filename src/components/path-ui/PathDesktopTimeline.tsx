@@ -129,7 +129,7 @@ export default function PathDesktopTimeline({
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="absolute inset-0 z-[150] bg-slate-50/90 flex flex-col items-center justify-center backdrop-blur-md touch-none"
+            className="fixed inset-0 z-[150] bg-slate-50/90 flex flex-col items-center justify-center backdrop-blur-md touch-none"
             onWheel={(e) => e.preventDefault()}
             onTouchMove={(e) => e.preventDefault()}
           >
