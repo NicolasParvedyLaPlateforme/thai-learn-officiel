@@ -84,26 +84,49 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
 
     if (isCombining) {
       const hasUpperVowel = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ'].some(v => baseChar.includes(v));
-      const abovePlaceholderClass = hasUpperVowel 
+      const abovePlaceholderClass = hasUpperVowel
         ? "absolute top-0 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full"
         : "absolute top-4 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full";
 
       return (
         <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px]">
           <span>{beforeBase}</span>
-          <span className="relative">
-            {baseChar}
-            {!selected && placeholderType === 'above' && (
-              <span className={abovePlaceholderClass} />
+
+          <span className="relative flex items-center justify-center">
+            {selected ? (
+              // L'astuce de superposition commence ici
+              <span className="relative inline-block animate-in zoom-in duration-300">
+
+                {/* 1. Calque de base (Invisible) : Garde la vraie largeur/hauteur dans le DOM */}
+                <span className="opacity-0 select-none pointer-events-none block">
+                  {baseChar}{selected}{afterMissing}
+                </span>
+
+                {/* 2. Calque du dessous (Orange) : Tout le bloc est orange */}
+                <span className="absolute top-0 left-0 text-amber-500 pointer-events-none block whitespace-nowrap">
+                  {baseChar}{selected}{afterMissing}
+                </span>
+
+                {/* 3. Calque du dessus (Gris) : On affiche le bloc SANS le "selected". 
+                       Le gris va recouvrir le orange, sauf à l'endroit précis de la lettre trouvée ! */}
+                <span className="absolute top-0 left-0 text-slate-800 pointer-events-none block whitespace-nowrap">
+                  {baseChar}{afterMissing}
+                </span>
+
+              </span>
+            ) : (
+              <>
+                <span className="text-slate-800 relative z-10">{baseChar}{afterMissing}</span>
+                {placeholderType === 'above' && (
+                  <span className={abovePlaceholderClass} />
+                )}
+                {placeholderType === 'below' && (
+                  <span className="absolute bottom-3 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full" />
+                )}
+              </>
             )}
-            {!selected && placeholderType === 'below' && (
-              <span className="absolute bottom-3 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full" />
-            )}
-            {selected && (
-              <span className="text-amber-500">{selected}</span>
-            )}
-            {afterMissing}
           </span>
+
           <span>{afterBase}</span>
         </div>
       );
@@ -134,7 +157,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
   return (
     <div className="w-full flex flex-col items-center">
       {/* Display Text */}
-      <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
+      <div className="w-full max-w-2xl mx-auto mb-16 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
         {renderText()}
 
         {/* Hint for missing letter (Phonetic & Audio) */}
