@@ -47,6 +47,7 @@ const buttonVariants = cva(
         chipIndigo: "bg-indigo-50 text-indigo-500 hover:text-indigo-600 hover:bg-indigo-100 active:scale-95 shadow-none font-bold",
         chipSlate: "bg-slate-100 text-slate-500 hover:text-slate-600 hover:bg-slate-200 active:scale-95 shadow-none font-bold",
         "glass-menu": "bg-white/80 backdrop-blur-lg border border-white/60 shadow-lg transition-all duration-300 hover:bg-white !justify-between",
+        keyboard: "button-sketch !w-full !h-auto min-h-[60px] sm:min-h-[80px]",
       },
       size: {
         default: "h-12 px-6 py-2",

@@ -92,7 +92,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
     <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto">
 
       {/* Target area (Answer) */}
-      <div className={`min-h-[120px] border border-slate-200 bg-white/50 backdrop-blur-sm shadow-sm rounded-3xl py-4 px-2 flex flex-col gap-2 items-center justify-center relative`}>
+      <div className={`min-h-[120px] border border-slate-200 bg-white/50 backdrop-blur-sm shadow-sm rounded-3xl py-4 px-2 flex flex-col gap-2 items-center justify-center relative mb-10`}>
         <div className="flex flex-wrap gap-2 items-center justify-center min-h-[64px] sm:min-h-[80px]">
           {selected.length === 0 && !exercise.isFillInBlank && (
             <span className="text-slate-400 p-2 font-medium">{getTranslation('auto.build_the_sentence_here', language)}</span>
@@ -189,7 +189,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
           })()}
 
           {/* Hint System */}
-          {!disabled && selected.length < (exercise.correctComponents ? exercise.correctComponents.filter(c => c !== 'w_dots').length : 0) && (
+          {/* {!disabled && selected.length < (exercise.correctComponents ? exercise.correctComponents.filter(c => c !== 'w_dots').length : 0) && (
             <div className="relative inline-flex items-center ml-2">
               {showHint ? (
                 <div
@@ -211,7 +211,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                 </IconButton>
               )}
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -230,7 +230,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
               onClick={() => handleSelect(opt.th)}
               disabled={disabled || isUsed}
               // Pour la banque de mots, on écrase les styles quand le mot est déjà utilisé
-              className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5'}
+              className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none ' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5  w-[45%]'}
             />
           );
         })}

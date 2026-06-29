@@ -207,8 +207,9 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
             );
 
           return (
-            <OptionCardButton
+            <Button
               key={opt.id}
+              variant="keyboard"
               onClick={() => {
                 if (!disabled) {
                   if (!exercise.reverse) {
@@ -221,20 +222,16 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
                 }
               }}
               disabled={disabled || isLocalError}
-              isDense={isDense}
-              isSelected={isSelected}
-              isError={isLocalError || (isFailedState && !isActualAnswer)}
-              isSuccess={isFailedState && isActualAnswer}
-              className={isFailedState && !isActualAnswer ? "opacity-70 translate-y-[2px] border-b-2" : ""}
+              className={`!w-full !h-auto min-h-[60px] sm:min-h-[80px] p-3 sm:p-5 flex-col ${isFailedState && !isActualAnswer ? "opacity-70" : ""} ${isSelected ? "border-b-0 translate-y-1" : ""}`}
             >
               <div className="w-full flex items-center justify-center relative">
-                 <span className={`${!exercise.reverse ? 'font-thai' : ''} font-semibold sm:font-normal ${
+                 <span className={`${!exercise.reverse ? 'font-thai' : ''} font-normal ${
                    exercise.reverse 
-                     ? (isDense ? 'text-base sm:text-lg' : 'text-lg sm:text-xl')
-                     : (isDense ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl')
+                     ? (isDense ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl')
+                     : (isDense ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl')
                  } ${textClass}`}>{displayValue}</span>
               </div>
-            </OptionCardButton>
+            </Button>
           );
         })}
       </div>

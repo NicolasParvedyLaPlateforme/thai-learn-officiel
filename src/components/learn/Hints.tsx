@@ -95,7 +95,7 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
   );
 
   const mainContent = (
-    <span className={`flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-6 leading-tight font-extrabold tracking-tight pt-2 pb-6 relative ${isReverse ? 'text-3xl md:text-5xl text-slate-800' : 'text-2xl md:text-3xl text-slate-800'}`}>
+    <span className={`flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-6 leading-tight font-normal tracking-tight pt-2 pb-6 relative ${isReverse ? 'text-4xl md:text-6xl text-slate-800' : 'text-4xl md:text-5xl text-slate-800'}`}>
       {exactMatch ? (
         shouldShowPhonetic ? (
           <span className="inline-flex flex-col items-center justify-center text-center relative group">
@@ -155,50 +155,6 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
         )}
       </div>
 
-      {!hideHints && isSentence && (
-        <div className="w-full relative flex flex-col items-center z-[110]">
-          <button 
-            onClick={() => setIsVocabOpen(!isVocabOpen)}
-            className="flex flex-row items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-xs font-bold uppercase tracking-wide transition-colors border-2 border-slate-200 focus:outline-none shrink-0"
-          >
-            {getTranslation('auto.useful_vocabulary', language)}
-            {isVocabOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-          </button>
-          
-          <AnimatePresence>
-            {isVocabOpen && (
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-10 w-[90vw] max-w-sm sm:max-w-md md:max-w-xl text-sm text-slate-500 bg-white/95 backdrop-blur-md p-4 rounded-xl border-2 border-slate-200 shadow-xl z-[110]"
-              >
-                <div className="flex flex-wrap justify-center gap-x-4 gap-y-3">
-                  {exerciseOptions.map((w, i) => (
-                    <TooltipHint 
-                      key={i}
-                      className="inline-flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded border border-slate-200 shadow-sm transition-transform hover:scale-105 active:scale-95 cursor-pointer"
-                      tooltipContent={
-                        (!forceHideRomanization && showRomanization || isChecking) ? (
-                          <><span className="text-slate-500 font-medium">{getTranslation('auto.pronunciation', language)}</span> <span className="font-bold text-base"><ColoredPhonetic phonetic={w.phonetic} /></span></>
-                        ) : (
-                          <span className="font-thai text-lg text-slate-800">{w.th}</span>
-                        )
-                      }
-                      audioText={w.th}
-                    >
-                      <span className="font-thai text-lg md:text-xl text-emerald-600 font-semibold">{w.th}</span> 
-                      <span className="text-slate-400">=</span> 
-                      <span className="italic">{getLocalizedField(w, '', language)}</span>
-                    </TooltipHint>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      )}
     </div>
   );
 }

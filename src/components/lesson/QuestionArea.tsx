@@ -153,12 +153,7 @@ export default function QuestionArea({
               currentExercise.type === "writing"
               ? "flex"
               : "hidden"
-            } ${currentExercise.type === "sentence-builder" ||
-              currentExercise.type === "free-typing" ||
-              currentExercise.type === "writing"
-              ? "w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-2xl text-5xl md:text-4xl"
-              : "w-40 h-40 sm:w-48 sm:h-48 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-3xl text-7xl md:text-5xl"
-            } mx-auto items-center justify-center relative flex-shrink-0 ${imageUrl
+            } w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-[2rem] text-7xl md:text-8xl mx-auto items-center justify-center relative flex-shrink-0 ${imageUrl
               ? "bg-transparent overflow-visible"
               : "bg-emerald-50 shadow-sm border border-emerald-100 overflow-hidden"
             }`}
@@ -185,7 +180,7 @@ export default function QuestionArea({
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="flex-1 mt-2 md:mt-0 flex flex-col items-center w-full"
+          className="flex-1 mt-2 md:mt-0 flex flex-col items-center w-full mb-8 sm:mb-12"
         >
           <div className="relative w-full text-center mt-2 md:mt-0">
             {currentExercise.type === "intro" ? (
@@ -281,7 +276,7 @@ export default function QuestionArea({
                   />
                 </div>
                 {currentExercise.blankHint && (
-                  <p className="text-xl text-emerald-600 font-medium pb-2 text-center mt-[-10px] md:mt-[-20px]">
+                  <p className="text-xl text-slate-500 font-medium pb-2 text-center mt-[-10px] md:mt-[-20px]">
                     {currentExercise.blankHint}
                   </p>
                 )}

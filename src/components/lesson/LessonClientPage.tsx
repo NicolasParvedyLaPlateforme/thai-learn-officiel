@@ -125,6 +125,8 @@ function LessonPageContent({ lesson }: { lesson: any }) {
               isReview={lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan') || state.currentLevel === 10}
               timeLeft={state.timeLeft}
               initialTime={state.initialTime}
+              showHelpButton={!(state.showInstruction || state.showHelpModal) && !!state.instructionKey}
+              onShowHelp={() => actions.setShowHelpModal(true)}
             />
 
             {/* Main Exercise Area */}
@@ -169,24 +171,6 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                         unhideInstruction={actions.unhideInstruction}
                         setAcknowledgedInstructions={actions.setAcknowledgedInstructions}
                       />
-                    </motion.div>
-                  )}
-
-                  {/* Help Button - Above Exercise */}
-                  {!(state.showInstruction || state.showHelpModal) && state.instructionKey && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.05 }}
-                      className="w-full max-w-3xl px-4 pt-4 md:pt-6 flex justify-end shrink-0">
-                      <button
-                        onClick={() => actions.setShowHelpModal(true)}
-                        className="text-slate-500 hover:text-amber-600 transition-colors bg-white rounded-full py-1.5 px-3 shadow-sm border border-slate-200 flex items-center gap-1.5 text-sm font-bold active:scale-95"
-                        title={getTranslation('auto.help_instructions', state.language)}
-                      >
-                        <HelpCircle size={18} strokeWidth={2.5} />
-                        {getTranslation('auto.help', state.language)}
-                      </button>
                     </motion.div>
                   )}
 
