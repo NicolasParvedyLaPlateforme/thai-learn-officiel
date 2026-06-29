@@ -93,7 +93,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
         <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px]">
           <span>{beforeBase}</span>
 
-          <span className="relative inline-flex items-center justify-center min-w-[1em]">
+          <span className="relative inline-flex items-center justify-center ">
 
             {selected ? (
               // ÉTAT TROUVÉ : Si c'est un cluster complexe (2ème voyelle/ton), on le laisse en gris (sans coloration).
@@ -155,7 +155,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
   return (
     <div className="w-full flex flex-col items-center">
       {/* Display Text */}
-      <div className="w-full max-w-2xl mx-auto mb-16 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
+      <div className="w-full max-w-2xl mx-auto mb-20 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
         {renderText()}
 
         {/* Hint for missing letter (Phonetic & Audio) */}
