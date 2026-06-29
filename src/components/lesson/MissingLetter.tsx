@@ -55,20 +55,46 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
       );
     }
 
-    const beforeBase = originalWord.substring(0, Math.max(0, missingIndex - 1));
-    const baseChar = missingIndex > 0 ? originalWord[missingIndex - 1] : '';
-    const afterMissing = originalWord.substring(missingIndex + 1);
+    let clusterStartIndex = missingIndex > 0 ? missingIndex - 1 : 0;
+    while (clusterStartIndex >= 0) {
+      const charCode = originalWord.charCodeAt(clusterStartIndex);
+      // Thai consonants: 0x0E01 to 0x0E2E
+      if (charCode >= 0x0E01 && charCode <= 0x0E2E) {
+        break;
+      }
+      clusterStartIndex--;
+    }
+    if (clusterStartIndex < 0) clusterStartIndex = Math.max(0, missingIndex - 1);
+
+    let clusterEndIndex = missingIndex + 1;
+    while (clusterEndIndex < originalWord.length) {
+      const charCode = originalWord.charCodeAt(clusterEndIndex);
+      if (charCode >= 0x0E01 && charCode <= 0x0E2E) {
+        break;
+      }
+      clusterEndIndex++;
+    }
+
+    const beforeBase = originalWord.substring(0, clusterStartIndex);
+    const baseChar = originalWord.substring(clusterStartIndex, missingIndex);
+    const afterMissing = originalWord.substring(missingIndex + 1, clusterEndIndex);
+    const afterBase = originalWord.substring(clusterEndIndex);
 
     const isCombining = placeholderType === 'above' || placeholderType === 'below';
 
     if (isCombining) {
+      const hasUpperVowel = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ'].some(v => baseChar.includes(v));
+      const abovePlaceholderClass = hasUpperVowel 
+        ? "absolute top-0 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full"
+        : "absolute top-4 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full";
+
       return (
         <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px]">
           <span>{beforeBase}</span>
-          <span className="relative inline-block">
+          <span className="relative">
             {baseChar}
             {!selected && placeholderType === 'above' && (
-              <span className="absolute top-4 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full" />
+              <span className={abovePlaceholderClass} />
             )}
             {!selected && placeholderType === 'below' && (
               <span className="absolute bottom-3 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full" />
@@ -76,8 +102,9 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
             {selected && (
               <span className="text-amber-500">{selected}</span>
             )}
+            {afterMissing}
           </span>
-          <span>{afterMissing}</span>
+          <span>{afterBase}</span>
         </div>
       );
     }
