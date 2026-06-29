@@ -74,15 +74,16 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
   }
 
   return (
-    <div className="w-full flex flex-col items-center">
-      {/* Question */}
-      <h2 className="text-xl md:text-2xl font-bold text-slate-800 text-center mb-8">
-        {displayQuestionNode}
-      </h2>
+    <div className="w-full h-full flex flex-col">
+      <div className="flex-1 flex flex-col items-center justify-center w-full">
+        {/* Question */}
+        <h2 className="text-xl md:text-2xl font-bold text-slate-800 text-center mb-8">
+          {displayQuestionNode}
+        </h2>
 
-      {/* Display Word */}
-      <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
-        <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center flex items-center justify-center">
+        {/* Display Word */}
+        <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
+          <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center flex items-center justify-center">
           {exercise.originalWord}
         </div>
         
@@ -100,9 +101,10 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
           </div>
         )}
       </div>
-
+      </div>
+      
       {/* Options */}
-      <div className="w-full max-w-2xl mx-auto">
+      <div className="w-full max-w-2xl mx-auto mt-auto">
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <AnimatePresence>
             {exercise.options.map((opt: any, index: number) => {

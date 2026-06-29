@@ -118,7 +118,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
         ) : (
           <span className="text-amber-500 font-bold animate-in zoom-in duration-300">{selected}</span>
         )}
-        <span>{afterMissing}</span>
+        <span>{originalWord.substring(missingIndex + 1)}</span>
       </div>
     );
   };

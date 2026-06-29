@@ -215,7 +215,7 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                     transition={{ duration: state.isExiting ? 0.15 : 0.3, delay: state.isExiting ? 0 : 0.3 }}
                     className={`${state.showInstruction || state.showHelpModal ? "hidden" : "flex"} ${state.currentExercise?.type === "pair-matching" || state.currentExercise?.type === "sound-to-letter" || state.currentExercise?.type === "true-false" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
                   >
-                    <div className={cn("w-full relative", state.currentExercise?.type === "true-false" && "h-full")}>
+                    <div className={cn("w-full relative", (state.currentExercise?.type === "true-false" || state.currentExercise?.type === "sound-to-letter") && "h-full")}>
                       <ErrorBoundary>
                         {state.currentExercise?.type === "intro" ? null : state.currentExercise?.type === "word-match" ? (
                             <WordMatch
@@ -311,15 +311,40 @@ function LessonPageContent({ lesson }: { lesson: any }) {
             </main>
 
             {/* Footer Actions */}
-            <Footer
-              currentExercise={state.currentExercise as Exercise}
-              isChecking={state.isChecking}
-              isCorrect={state.isCorrect}
-              language={state.language}
-              selectedAnswer={state.selectedAnswer}
-              showFooter={state.showFooter}
-              handleCheck={actions.handleCheck}
-            />
+            {(() => {
+              let customCorrectAnswer = undefined;
+              if (state.currentExercise?.type === "true-false") {
+                const ex = state.currentExercise;
+                if (!ex.isCorrectSpelling && ex.originalWord && ex.displayWord) {
+                  const orig = Array.from(ex.originalWord);
+                  const disp = Array.from(ex.displayWord);
+                  customCorrectAnswer = (
+                    <div className="flex text-3xl font-thai mt-1">
+                      {orig.map((char, idx) => (
+                        <span key={idx} className={char !== disp[idx] ? "text-amber-500 font-bold" : ""}>
+                          {char}
+                        </span>
+                      ))}
+                    </div>
+                  );
+                } else if (ex.originalWord) {
+                  customCorrectAnswer = <div className="text-3xl font-thai mt-1">{ex.originalWord}</div>;
+                }
+              }
+
+              return (
+                <Footer
+                  currentExercise={state.currentExercise as Exercise}
+                  isChecking={state.isChecking}
+                  isCorrect={state.isCorrect}
+                  language={state.language}
+                  selectedAnswer={state.selectedAnswer}
+                  showFooter={state.showFooter}
+                  handleCheck={actions.handleCheck}
+                  customCorrectAnswer={customCorrectAnswer}
+                />
+              );
+            })()}
           </motion.div>
         )}
       </AnimatePresence>

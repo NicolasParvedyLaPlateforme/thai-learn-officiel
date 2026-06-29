@@ -20,7 +20,7 @@ const allConsonants = THAI_ALPHABET.filter(a => a.type === 'consonant').map(a =>
 const allVowels = THAI_ALPHABET.filter(a => a.type === 'vowel').map(a => a.letter);
 
 export function buildTrueFalseSpelling(word: Word, language: string, config: TrueFalseConfig): Exercise {
-  const isCorrectSpelling = Math.random() < 0.5;
+  const isCorrectSpelling = Math.random() < 0.4;
   let displayWord = word.th;
 
   if (!isCorrectSpelling) {
