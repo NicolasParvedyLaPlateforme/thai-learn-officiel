@@ -1,5 +1,6 @@
 import { Exercise, Word } from "@/types";
 import { SIMILAR_CONSONANTS, SIMILAR_VOWELS, THAI_ALPHABET } from "@/data/alphabet-data";
+import { getExerciseTranslation } from '@/lib/translation-utils';
 
 export interface TrueFalseConfig {
   mode: 'random-replace' | 'misplaced-consonant' | 'misplaced-vowel' | 'similar-consonant' | 'similar-vowel';
@@ -149,6 +150,8 @@ export function buildTrueFalseSpelling(word: Word, language: string, config: Tru
     options: [],
     originalWord: word.th,
     displayWord,
-    isCorrectSpelling
+    isCorrectSpelling,
+    phonetic: word.phonetic,
+    translation: getExerciseTranslation(word, language)
   };
 }

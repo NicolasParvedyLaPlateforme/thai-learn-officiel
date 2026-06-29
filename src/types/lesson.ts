@@ -84,4 +84,6 @@ export interface Exercise {
   targetSoundKey?: string;
   displayWord?: string;
   isCorrectSpelling?: boolean;
+  phonetic?: string;
+  translation?: string;
 }

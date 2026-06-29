@@ -1,8 +1,9 @@
+import { playThaiTTS } from "@/lib/tts";
 import { getTranslation } from "@/hooks/useTranslation";
 import React from 'react';
 import { Exercise } from "@/types";
 import { m } from "framer-motion";
-import { Check, X } from 'lucide-react';
+import { Check, X, Volume2 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -13,13 +14,17 @@ interface Props {
   isChecking?: boolean;
   isCorrect?: boolean | null;
   language?: string;
+  onAutoCheck?: (val: string) => void;
 }
 
-export default React.memo(function TrueFalse({ exercise, selected, onChange, disabled, isChecking, isCorrect, language = 'fr' }: Props) {
+export default React.memo(function TrueFalse({ exercise, selected, onChange, disabled, isChecking, isCorrect, language = 'fr', onAutoCheck }: Props) {
   
   const handleSelect = (val: string) => {
     if (!disabled) {
       onChange(val);
+      if (onAutoCheck) {
+        onAutoCheck(val);
+      }
     }
   };
 
@@ -46,10 +51,21 @@ export default React.memo(function TrueFalse({ exercise, selected, onChange, dis
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto w-full">
       {/* Header */}
-      <div className="mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-800 text-center">
+      <div className="mb-8 text-center flex flex-col items-center gap-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-800">
           {getTranslation(exercise.question, language)}
         </h2>
+        
+        {(exercise.translation || exercise.phonetic) && (
+          <div className="flex flex-col items-center gap-1 text-slate-600">
+            {exercise.translation && (
+              <span className="text-xl font-medium">{exercise.translation}</span>
+            )}
+            {exercise.phonetic && (
+              <span className="text-lg opacity-80">[{exercise.phonetic}]</span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Word Display */}
@@ -58,11 +74,20 @@ export default React.memo(function TrueFalse({ exercise, selected, onChange, dis
           key={exercise.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white px-12 py-8 rounded-3xl shadow-sm border border-slate-100 text-center"
+          className="bg-white px-12 py-8 rounded-3xl shadow-sm border border-slate-100 text-center relative flex flex-col items-center justify-center gap-4 min-w-[200px]"
         >
           <div className="text-7xl md:text-8xl font-thai text-slate-800 leading-tight">
             {exercise.displayWord || exercise.originalWord || "???"}
           </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              playThaiTTS(exercise.originalWord || "");
+            }}
+            className="text-amber-500 hover:text-amber-600 hover:bg-amber-50 p-2 rounded-full transition-colors"
+          >
+            <Volume2 size={32} strokeWidth={2.5} />
+          </button>
         </m.div>
       </div>
 
