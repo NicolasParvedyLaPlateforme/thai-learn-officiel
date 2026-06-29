@@ -1,5 +1,5 @@
 import { Exercise, Word } from "@/types";
-import { buildIntro, buildWordMatch, buildMissingLetter, buildSoundToLetter } from '../builders';
+import { buildIntro, buildWordMatch, buildMissingLetter, buildSoundToLetter, buildTrueFalseSpelling } from '../builders';
 
 export function generateLevel0(validLessonWords: Word[], globalWords: Word[], language: string): Exercise[] {
   let exercises: Exercise[] = [];
@@ -50,6 +50,13 @@ export function generateLevel0(validLessonWords: Word[], globalWords: Word[], la
       validLessonWords,
       pool: globalWords
     }));
+
+    // Add True/False exercises
+    exercises.push(buildTrueFalseSpelling(word, language, { mode: 'random-replace' }));
+    exercises.push(buildTrueFalseSpelling(word, language, { mode: 'misplaced-consonant' }));
+    exercises.push(buildTrueFalseSpelling(word, language, { mode: 'misplaced-vowel' }));
+    exercises.push(buildTrueFalseSpelling(word, language, { mode: 'similar-consonant' }));
+    exercises.push(buildTrueFalseSpelling(word, language, { mode: 'similar-vowel' }));
   });
   
   return exercises;

@@ -15,6 +15,7 @@ import VirtualKeyboard from '@/components/writing/VirtualKeyboard';
 import FreeTypingInput from './FreeTypingInput';
 import MissingLetter from './MissingLetter';
 import SoundToLetter from './SoundToLetter';
+import TrueFalse from './TrueFalse';
 import GlossaryModal from '@/components/lesson/GlossaryModal';
 import ResultScreen from '@/components/lesson/ResultScreen';
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
@@ -276,6 +277,16 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                               onAutoCheck={(val) => actions.handleCheck(val)}
                               language={state.language}
                               onAddMistake={() => actions.setMistakes((m: number) => m + 1)}
+                            />
+                          ) : state.currentExercise?.type === "true-false" ? (
+                            <TrueFalse
+                              exercise={state.currentExercise as Exercise}
+                              selected={state.selectedAnswer as string}
+                              onChange={actions.setSelectedAnswer}
+                              disabled={state.isChecking}
+                              isChecking={state.isChecking}
+                              isCorrect={state.isCorrect}
+                              language={state.language}
                             />
                           ) : state.currentExercise && (
                             <SentenceBuilder
