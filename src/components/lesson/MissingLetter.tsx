@@ -83,48 +83,61 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
     const isCombining = placeholderType === 'above' || placeholderType === 'below';
 
     if (isCombining) {
+      // Vérifie si la base contient déjà une voyelle haute
       const hasUpperVowel = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ'].some(v => baseChar.includes(v));
-      const abovePlaceholderClass = hasUpperVowel
-        ? "absolute top-0 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full"
-        : "absolute top-4 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full";
 
       return (
         <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px]">
           <span>{beforeBase}</span>
 
-          <span className="relative flex items-center justify-center">
+          <span className="relative inline-flex items-center justify-center min-w-[1em]">
+
             {selected ? (
-              // L'astuce de superposition commence ici
-              <span className="relative inline-block animate-in zoom-in duration-300">
-
-                {/* 1. Calque de base (Invisible) : Garde la vraie largeur/hauteur dans le DOM */}
-                <span className="opacity-0 select-none pointer-events-none block">
-                  {baseChar}{selected}{afterMissing}
-                </span>
-
-                {/* 2. Calque du dessous (Orange) : Tout le bloc est orange */}
-                <span className="absolute top-0 left-0 text-amber-500 pointer-events-none block whitespace-nowrap">
-                  {baseChar}{selected}{afterMissing}
-                </span>
-
-                {/* 3. Calque du dessus (Gris) : On affiche le bloc SANS le "selected". 
-                       Le gris va recouvrir le orange, sauf à l'endroit précis de la lettre trouvée ! */}
-                <span className="absolute top-0 left-0 text-slate-800 pointer-events-none block whitespace-nowrap">
-                  {baseChar}{afterMissing}
-                </span>
-
+              // 1. ÉTAT TROUVÉ : On affiche simplement la syllabe complète en orange.
+              <span className="text-amber-500 animate-in zoom-in duration-300">
+                {baseChar}{selected}{afterMissing}
               </span>
             ) : (
+              // 2. ÉTAT VIDE
               <>
-                <span className="text-slate-800 relative z-10">{baseChar}{afterMissing}</span>
+                {/* La consonne de base (visible) */}
+                <span className="text-slate-800 z-10">
+                  {baseChar}
+                  {/* Si c'est une voyelle basse manquante, le ton reste attaché à la consonne normalement */}
+                  {placeholderType !== 'above' && afterMissing}
+                </span>
+
+                {/* Placement si la lettre manquante va au-dessus (ex: sara ii) */}
                 {placeholderType === 'above' && (
-                  <span className={abovePlaceholderClass} />
+                  <>
+                    {/* Le trait orange à sa place (bien mis avec -top-1 et -top-4) */}
+                    <span
+                      className={`absolute left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20 ${hasUpperVowel ? '-top-4' : 'top-5'
+                        }`}
+                    />
+
+                    {/* Le ton lévitant avec alignement horizontal naturel réparé */}
+                    {afterMissing && (
+                      <span
+                        className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center"
+                        style={{ transform: hasUpperVowel ? 'translateY(-0.7em)' : 'translateY(-0.35em)' }}
+                      >
+                        {/* ASTUCE : On utilise une copie transparente de la consonne.
+                            Le navigateur alignera le ton parfaitement à droite sur sa barre verticale ! */}
+                        <span className="text-transparent">{baseChar}</span>
+                        <span className="text-slate-800">{afterMissing}</span>
+                      </span>
+                    )}
+                  </>
                 )}
+
+                {/* Placement si la lettre manquante va en-dessous (ex: sara u) */}
                 {placeholderType === 'below' && (
-                  <span className="absolute bottom-3 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full" />
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20" />
                 )}
               </>
             )}
+
           </span>
 
           <span>{afterBase}</span>
