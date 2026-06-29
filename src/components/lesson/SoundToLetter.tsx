@@ -31,17 +31,44 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
   const isWrong = isChecking && isCorrect === false;
 
   let displayQuestion = exercise.question;
+  let displayQuestionNode: React.ReactNode = displayQuestion;
   if (displayQuestion) {
     const match = displayQuestion.match(/(?:«\s*|"\s*)(.+?)(?:\s*»|\s*")/);
     if (match) {
       const sound = match[1];
+      let translatedSoundStr = sound;
       if (sound && !sound.includes('sara')) {
          const keyPart = sound.replace(/[\s-]/g, '_').toLowerCase();
          const targetSoundKey = `auto.sound.${keyPart}`;
          const translatedSound = getTranslation(targetSoundKey, language);
          if (translatedSound && translatedSound !== targetSoundKey) {
-            displayQuestion = displayQuestion.replace(sound, translatedSound);
+            translatedSoundStr = translatedSound;
+            displayQuestion = displayQuestion.replace(sound, translatedSoundStr);
          }
+      }
+      
+      let highlightedSound: React.ReactNode = translatedSoundStr;
+      const highlightMatch = translatedSoundStr.match(/^([^ɔ\s]+)(ɔ.*)/);
+      if (highlightMatch) {
+         highlightedSound = (
+           <>
+             <span className="text-amber-500 font-extrabold">{highlightMatch[1]}</span>
+             {highlightMatch[2]}
+           </>
+         );
+      }
+
+      const parts = displayQuestion.split(translatedSoundStr);
+      if (parts.length === 2) {
+         displayQuestionNode = (
+           <>
+             {parts[0]}
+             {highlightedSound}
+             {parts[1]}
+           </>
+         );
+      } else {
+         displayQuestionNode = displayQuestion;
       }
     }
   }
@@ -50,7 +77,7 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
     <div className="w-full flex flex-col items-center">
       {/* Question */}
       <h2 className="text-xl md:text-2xl font-bold text-slate-800 text-center mb-8">
-        {displayQuestion}
+        {displayQuestionNode}
       </h2>
 
       {/* Display Word */}

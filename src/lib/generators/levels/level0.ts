@@ -30,6 +30,11 @@ export function generateLevel0(validLessonWords: Word[], globalWords: Word[], la
       exercises.push(soundToLetterVowelEx);
     }
     
+    const soundToLetterConsonantEx = buildSoundToLetter(word, language, { numDistractors: 1, targetType: 'consonant' });
+    if (soundToLetterConsonantEx) {
+      exercises.push(soundToLetterConsonantEx);
+    }
+    
     exercises.push(buildWordMatch(word, language, {
       distractorMode: 'random',
       numDistractors: 3,
