@@ -93,14 +93,13 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
           <span className="relative inline-flex items-center justify-center min-w-[1em]">
 
             {selected ? (
-              // 1. ÉTAT TROUVÉ : On affiche simplement la syllabe complète en orange.
+              // 1. ÉTAT TROUVÉ
               <span className="text-amber-500 animate-in zoom-in duration-300">
                 {baseChar}{selected}{afterMissing}
               </span>
             ) : (
               // 2. ÉTAT VIDE
               <>
-                {/* La consonne de base (visible) */}
                 <span className="text-slate-800 z-10">
                   {baseChar}
                   {/* Si c'est une voyelle basse manquante, le ton reste attaché à la consonne normalement */}
@@ -110,20 +109,20 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
                 {/* Placement si la lettre manquante va au-dessus (ex: sara ii) */}
                 {placeholderType === 'above' && (
                   <>
-                    {/* Le trait orange à sa place (bien mis avec -top-1 et -top-4) */}
                     <span
                       className={`absolute left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20 ${hasUpperVowel ? '-top-4' : 'top-5'
                         }`}
                     />
 
-                    {/* Le ton lévitant avec alignement horizontal naturel réparé */}
+                    {/* Le ton lévitant avec fix spécifique pour Safari/iOS */}
                     {afterMissing && (
                       <span
-                        className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center"
-                        style={{ transform: hasUpperVowel ? 'translateY(-0.7em)' : 'translateY(-0.35em)' }}
+                        className="absolute top-0 left-0 w-full h-full z-30 pointer-events-none flex items-center justify-center whitespace-nowrap"
+                        style={{
+                          transform: hasUpperVowel ? 'translateY(-0.7em)' : 'translateY(-0.35em)',
+                          WebkitTransform: hasUpperVowel ? 'translateY(-0.7em)' : 'translateY(-0.35em)' // Sécurité pour les anciens moteurs iOS
+                        }}
                       >
-                        {/* ASTUCE : On utilise une copie transparente de la consonne.
-                            Le navigateur alignera le ton parfaitement à droite sur sa barre verticale ! */}
                         <span className="text-transparent">{baseChar}</span>
                         <span className="text-slate-800">{afterMissing}</span>
                       </span>
