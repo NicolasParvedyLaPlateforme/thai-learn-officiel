@@ -83,8 +83,11 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
     const isCombining = placeholderType === 'above' || placeholderType === 'below';
 
     if (isCombining) {
-      // Vérifie si la base contient déjà une voyelle haute
       const hasUpperVowel = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ'].some(v => baseChar.includes(v));
+
+      // On considère qu'on cherche une "2ème voyelle / ton" s'il y a un afterMissing 
+      // ou si la base contient déjà une voyelle haute.
+      const isComplexCluster = afterMissing.length > 0 || hasUpperVowel;
 
       return (
         <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px]">
@@ -93,44 +96,27 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
           <span className="relative inline-flex items-center justify-center min-w-[1em]">
 
             {selected ? (
-              // 1. ÉTAT TROUVÉ
-              <span className="text-amber-500 animate-in zoom-in duration-300">
+              // ÉTAT TROUVÉ : Si c'est un cluster complexe (2ème voyelle/ton), on le laisse en gris (sans coloration).
+              // Sinon (voyelle simple), on peut le laisser en orange.
+              <span className={`animate-in zoom-in duration-300 ${isComplexCluster ? 'text-slate-800' : 'text-amber-500'}`}>
                 {baseChar}{selected}{afterMissing}
               </span>
             ) : (
-              // 2. ÉTAT VIDE
+              // ÉTAT VIDE : Méthode 100% native. Pas de texte flottant ou invisible.
               <>
                 <span className="text-slate-800 z-10">
-                  {baseChar}
-                  {/* Si c'est une voyelle basse manquante, le ton reste attaché à la consonne normalement */}
-                  {placeholderType !== 'above' && afterMissing}
+                  {baseChar}{afterMissing}
                 </span>
 
-                {/* Placement si la lettre manquante va au-dessus (ex: sara ii) */}
+                {/* Tiret pour la voyelle manquante au-dessus */}
                 {placeholderType === 'above' && (
-                  <>
-                    <span
-                      className={`absolute left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20 ${hasUpperVowel ? '-top-4' : 'top-5'
-                        }`}
-                    />
-
-                    {/* Le ton lévitant avec fix spécifique pour Safari/iOS */}
-                    {afterMissing && (
-                      <span
-                        className="absolute top-0 left-0 w-full h-full z-30 pointer-events-none flex items-center justify-center whitespace-nowrap"
-                        style={{
-                          transform: hasUpperVowel ? 'translateY(-0.7em)' : 'translateY(-0.35em)',
-                          WebkitTransform: hasUpperVowel ? 'translateY(-0.7em)' : 'translateY(-0.35em)' // Sécurité pour les anciens moteurs iOS
-                        }}
-                      >
-                        <span className="text-transparent">{baseChar}</span>
-                        <span className="text-slate-800">{afterMissing}</span>
-                      </span>
-                    )}
-                  </>
+                  <span
+                    className={`absolute left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20 ${hasUpperVowel ? '-top-4' : 'top-4'
+                      }`}
+                  />
                 )}
 
-                {/* Placement si la lettre manquante va en-dessous (ex: sara u) */}
+                {/* Tiret pour la voyelle manquante en-dessous */}
                 {placeholderType === 'below' && (
                   <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20" />
                 )}
