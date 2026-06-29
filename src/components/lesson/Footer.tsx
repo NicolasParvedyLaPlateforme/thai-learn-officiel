@@ -51,12 +51,12 @@ export default function Footer({
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "100%", opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[110px] py-4 md:py-0 border-t items-center justify-center flex transition-colors duration-300 z-50 ${
+          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[110px] py-4 md:py-0 border-t-2 items-center justify-center flex transition-all duration-300 z-50 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.05)] ${
             isChecking
               ? isCorrect
-                ? "bg-emerald-50/90 backdrop-blur-md border-emerald-100"
-                : "bg-rose-50/90 backdrop-blur-md border-rose-100 shadow-[0_-10px_40px_rgba(244,63,94,0.05)]"
-              : "bg-white/95 backdrop-blur-md border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]"
+                ? "border-emerald-200"
+                : "border-rose-200"
+              : "border-slate-100"
           }`}
         >
           <div className="w-full max-w-3xl px-6 flex sm:flex-row flex-col items-center justify-between gap-6">

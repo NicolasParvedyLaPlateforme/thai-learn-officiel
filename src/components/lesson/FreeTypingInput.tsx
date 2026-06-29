@@ -104,7 +104,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
                 variant="outline"
                 onClick={() => handleVKeyClick(k)}
                 disabled={disabled}
-                className="w-12 h-12 sm:w-14 sm:h-14 bg-white border-slate-200 shadow-sm rounded-2xl text-2xl sm:text-3xl font-thai text-slate-700 hover:bg-slate-50 hover:border-emerald-200 hover:shadow-md transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed p-0"
+                className="w-12 h-12 sm:w-14 sm:h-14 bg-white border-2 border-slate-200 border-b-4 shadow-sm rounded-2xl text-2xl sm:text-3xl font-thai text-slate-700 hover:bg-slate-50 hover:border-emerald-200 hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-2 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed p-0"
               >
                 {displayStr}
               </Button>
@@ -115,7 +115,7 @@ export default React.memo(function FreeTypingInput({ exercise, selected, onChang
             size="lg"
             onClick={handleBackspace}
             disabled={disabled || selected.length === 0}
-            className="w-12 h-12 sm:w-14 sm:h-14 bg-rose-50 border-rose-100 shadow-sm text-rose-500 rounded-2xl hover:bg-rose-100 hover:border-rose-200 hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed border"
+            className="w-12 h-12 sm:w-14 sm:h-14 bg-rose-50 border-2 border-rose-200 border-b-4 shadow-sm text-rose-500 rounded-2xl hover:bg-rose-100 hover:border-rose-300 hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center p-0"
           >
             <Delete size={20} className="sm:w-6 sm:h-6" />
           </IconButton>

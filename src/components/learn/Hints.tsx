@@ -95,7 +95,7 @@ export function SentenceWithHints({text, dictionary, phrases, isSentence, exerci
   );
 
   const mainContent = (
-    <span className={`flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-6 leading-relaxed font-medium pt-2 pb-6 relative ${isReverse ? 'text-3xl md:text-5xl text-slate-700' : 'text-xl md:text-2xl'}`}>
+    <span className={`flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-6 leading-tight font-extrabold tracking-tight pt-2 pb-6 relative ${isReverse ? 'text-3xl md:text-5xl text-slate-800' : 'text-2xl md:text-3xl text-slate-800'}`}>
       {exactMatch ? (
         shouldShowPhonetic ? (
           <span className="inline-flex flex-col items-center justify-center text-center relative group">

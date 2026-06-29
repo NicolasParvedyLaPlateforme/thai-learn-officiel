@@ -92,7 +92,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
     <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto">
 
       {/* Target area (Answer) */}
-      <div className={`min-h-[120px] border-y-2 border-slate-200 py-4 flex flex-col gap-2 items-center justify-center relative`}>
+      <div className={`min-h-[120px] border border-slate-200 bg-white/50 backdrop-blur-sm shadow-sm rounded-3xl py-4 px-2 flex flex-col gap-2 items-center justify-center relative`}>
         <div className="flex flex-wrap gap-2 items-center justify-center min-h-[64px] sm:min-h-[80px]">
           {selected.length === 0 && !exercise.isFillInBlank && (
             <span className="text-slate-400 p-2 font-medium">{getTranslation('auto.build_the_sentence_here', language)}</span>

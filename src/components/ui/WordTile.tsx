@@ -22,7 +22,7 @@ export const WordTile: React.FC<WordTileProps> = ({
     className = '',
     layoutId
 }) => {
-    const baseClasses = "rounded-xl font-medium flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-14 md:h-16 px-2 sm:px-3 font-thai";
+    const baseClasses = "rounded-2xl font-medium flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-14 md:h-16 px-2 sm:px-3 font-thai";
 
     if (variant === 'dots') {
         return (
@@ -88,6 +88,7 @@ export const WordTile: React.FC<WordTileProps> = ({
 
     if (status === 'correct') {
         textColorClass = "text-emerald-600";
+        borderColorClass = "border-emerald-500 border-b-emerald-500 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.2)]";
     } else if (status === 'incorrect') {
         textColorClass = "text-rose-500";
         borderColorClass = "border-rose-300";
@@ -97,7 +98,7 @@ export const WordTile: React.FC<WordTileProps> = ({
         <button
             onClick={onClick}
             disabled={disabled}
-            className={`bg-white text-center border-2 border-b-4 ${textColorClass} ${borderColorClass} shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0.5 active:border-b-2 ${baseClasses} ${disabled ? 'opacity-70 cursor-not-allowed hover:translate-y-0' : ''} ${className}`}
+            className={`bg-white text-center border-2 border-b-4 ${textColorClass} ${borderColorClass} shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-2 ${baseClasses} ${disabled ? 'opacity-70 cursor-not-allowed hover:translate-y-0 active:translate-y-0 active:border-b-4' : ''} ${className}`}
         >
             <span className="leading-none text-2xl sm:text-3xl">{text}</span>
         </button>

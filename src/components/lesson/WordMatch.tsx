@@ -225,13 +225,7 @@ export default React.memo(function WordMatch({ exercise, selected, onChange, dis
               isSelected={isSelected}
               isError={isLocalError || (isFailedState && !isActualAnswer)}
               isSuccess={isFailedState && isActualAnswer}
-              activeColorClass={isSelected ? "bg-indigo-50 border-indigo-500 text-indigo-700 border-b-2 translate-y-0.5 shadow-[inset_0_0_0_1px_rgba(99,102,241,0.2)]" : undefined}
-              className={`
-                ${isFailedState && !isActualAnswer ? 'opacity-70 translate-y-0.5 border-b-2' : ''}
-                ${isFailedState && isActualAnswer ? 'border-emerald-500 text-emerald-700 border-b-4 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.2)]' : ''}
-                ${!isFailedState && !isSelected && !isLocalError ? 'border-b-4 hover:bg-slate-50 active:border-b-2 active:translate-y-0.5' : ''}
-                ${isLocalError ? 'opacity-50 translate-y-0.5 border-b-2' : ''}
-              `}
+              className={isFailedState && !isActualAnswer ? "opacity-70 translate-y-[2px] border-b-2" : ""}
             >
               <div className="w-full flex items-center justify-center relative">
                  <span className={`${!exercise.reverse ? 'font-thai' : ''} font-semibold sm:font-normal ${

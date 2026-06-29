@@ -82,7 +82,7 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
         </h2>
 
         {/* Display Word */}
-        <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-2xl p-6 border-2 border-slate-100 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
+        <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
           <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center flex items-center justify-center">
           {exercise.originalWord}
         </div>

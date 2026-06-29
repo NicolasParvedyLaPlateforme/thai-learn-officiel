@@ -33,19 +33,19 @@ export default React.memo(function TrueFalse({ exercise, selected, onChange, dis
     
     if (isChecking && isSelected) {
       return isCorrect 
-        ? "border-green-500 bg-green-50 text-green-700 shadow-green-100" 
-        : "border-red-500 bg-red-50 text-red-700 shadow-red-100";
+        ? "border-emerald-500 border-b-emerald-500 bg-emerald-50 text-emerald-700 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.2)]" 
+        : "border-rose-300 bg-rose-50 text-rose-500";
     }
 
     if (isChecking && exercise.answer === val) {
-       return "border-green-500 bg-green-50 text-green-700 shadow-green-100";
+       return "border-emerald-500 border-b-emerald-500 bg-emerald-50 text-emerald-700 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.2)]";
     }
     
     if (isSelected) {
-      return "border-blue-500 bg-blue-50 text-blue-700 ring-2 ring-blue-500/20";
+      return "border-indigo-500 border-b-indigo-500 bg-indigo-50 text-indigo-700 shadow-[inset_0_0_0_1px_rgba(99,102,241,0.2)]";
     }
     
-    return "border-slate-200 hover:border-blue-300 hover:bg-slate-50 text-slate-700 shadow-sm";
+    return "border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm";
   };
 
   return (
@@ -97,16 +97,16 @@ export default React.memo(function TrueFalse({ exercise, selected, onChange, dis
           onClick={() => handleSelect('true')}
           disabled={disabled}
           className={cn(
-            "relative p-6 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-3",
-            "active:scale-[0.98]",
+            "relative p-6 rounded-2xl border-2 border-b-4 transition-all duration-200 flex flex-col items-center justify-center gap-3",
+            "hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-2",
             getButtonClass('true')
           )}
         >
           <div className={cn(
             "p-3 rounded-full",
-            selected === 'true' && !isChecking ? "bg-blue-100 text-blue-600" :
-            isChecking && exercise.answer === 'true' ? "bg-green-100 text-green-600" :
-            isChecking && selected === 'true' && exercise.answer !== 'true' ? "bg-red-100 text-red-600" :
+            selected === 'true' && !isChecking ? "bg-indigo-100 text-indigo-600" :
+            isChecking && exercise.answer === 'true' ? "bg-emerald-100 text-emerald-600" :
+            isChecking && selected === 'true' && exercise.answer !== 'true' ? "bg-rose-100 text-rose-600" :
             "bg-slate-100 text-slate-400"
           )}>
             <Check size={32} strokeWidth={3} />
@@ -120,16 +120,16 @@ export default React.memo(function TrueFalse({ exercise, selected, onChange, dis
           onClick={() => handleSelect('false')}
           disabled={disabled}
           className={cn(
-            "relative p-6 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center justify-center gap-3",
-            "active:scale-[0.98]",
+            "relative p-6 rounded-2xl border-2 border-b-4 transition-all duration-200 flex flex-col items-center justify-center gap-3",
+            "hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-2",
             getButtonClass('false')
           )}
         >
           <div className={cn(
             "p-3 rounded-full",
-            selected === 'false' && !isChecking ? "bg-blue-100 text-blue-600" :
-            isChecking && exercise.answer === 'false' ? "bg-green-100 text-green-600" :
-            isChecking && selected === 'false' && exercise.answer !== 'false' ? "bg-red-100 text-red-600" :
+            selected === 'false' && !isChecking ? "bg-indigo-100 text-indigo-600" :
+            isChecking && exercise.answer === 'false' ? "bg-emerald-100 text-emerald-600" :
+            isChecking && selected === 'false' && exercise.answer !== 'false' ? "bg-rose-100 text-rose-600" :
             "bg-slate-100 text-slate-400"
           )}>
             <X size={32} strokeWidth={3} />
