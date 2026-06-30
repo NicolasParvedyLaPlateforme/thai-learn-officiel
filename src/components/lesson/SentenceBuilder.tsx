@@ -7,6 +7,8 @@ import { HelpCircle } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
 import { WordTile } from "@/components/ui/WordTile";
 import { IconButton } from "@/components/ui/IconButton";
+import { Button } from "../ui";
+import { cn } from "@/lib/utils";
 
 interface Props {
   exercise: Exercise;
@@ -230,8 +232,9 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
               onClick={() => handleSelect(opt.th)}
               disabled={disabled || isUsed}
               // Pour la banque de mots, on écrase les styles quand le mot est déjà utilisé
-              className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none ' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5  w-[45%]'}
+              className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none ' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5 '}
             />
+
           );
         })}
       </div>

@@ -95,12 +95,12 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
   );
 
   const mainContent = (
-    <span className={`flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-6 leading-tight font-normal tracking-tight pt-2 pb-6 relative ${isReverse ? 'text-4xl md:text-6xl text-slate-800 font-[Cursive] ' : 'text-4xl md:text-5xl text-slate-800 font-[Cursive]'}`}>
+    <span className={`flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-6 leading-tight font-normal tracking-tight pt-2 pb-6 relative ${isReverse ? 'text-4xl md:text-6xl text-slate-800 font-[Comic Sans MS] ' : 'text-4xl md:text-5xl text-slate-800 font-[Comic Sans MS]'}`}>
       {exactMatch ? (
         shouldShowPhonetic ? (
-          <span className="inline-flex flex-col items-center justify-center text-center relative group font-[Cursive]">
+          <span className="inline-flex flex-col items-center justify-center text-center relative group font-[Comic Sans MS]">
             {innerText}
-            <span className="text-sm md:text-base font-medium tracking-wide mt-1 text-center w-full font-[Cursive]">[<ColoredPhonetic phonetic={exactMatch.phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />]</span>
+            <span className="text-sm md:text-base font-medium tracking-wide mt-1 text-center w-full font-[Comic Sans MS]">[<ColoredPhonetic phonetic={exactMatch.phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />]</span>
           </span>
         ) : (
           innerText

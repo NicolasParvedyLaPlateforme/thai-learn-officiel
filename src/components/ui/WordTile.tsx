@@ -22,7 +22,7 @@ export const WordTile: React.FC<WordTileProps> = ({
     className = '',
     layoutId
 }) => {
-    const baseClasses = "rounded-2xl font-medium flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-14 md:h-16 px-2 sm:px-3 font-thai";
+    const baseClasses = "rounded-2xl font-medium flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-12 sm:h-14 md:h-16 px-2 sm:px-3 font-thai border-2 border-slate-200";
 
     if (variant === 'dots') {
         return (
