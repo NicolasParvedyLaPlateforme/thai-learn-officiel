@@ -51,7 +51,7 @@ export default function Footer({
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "100%", opacity: 0 }}
           transition={{ type: "tween", ease: "easeOut", duration: 0.25 }}
-          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[110px] py-4 md:py-0 border-t-2 items-center justify-center flex transition-all duration-300 z-50 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.05)] ${isChecking
+          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[110px] py-4 md:py-0 border-t-2 items-center justify-center flex transition-colors duration-300 z-50 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.05)] ${isChecking
             ? isCorrect
               ? "border-emerald-200"
               : "border-rose-200"

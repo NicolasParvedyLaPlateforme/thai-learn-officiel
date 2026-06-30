@@ -98,7 +98,7 @@ export const WordTile: React.FC<WordTileProps> = ({
         <button
             onClick={onClick}
             disabled={disabled}
-            className={`button-sketch ${textColorClass} ${borderColorClass} ${baseClasses} ${disabled ? 'opacity-70 cursor-not-allowed' : ''} ${className}`}
+            className={` ${textColorClass} ${borderColorClass} ${baseClasses} ${disabled ? 'opacity-70 cursor-not-allowed' : ''} ${className}`}
         >
             <span className="leading-none text-2xl sm:text-3xl">{text}</span>
         </button>
