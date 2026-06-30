@@ -4,7 +4,7 @@ import { Volume2 } from 'lucide-react';
 import { playThaiTTS } from "@/lib/tts";
 import { getTranslation } from "@/hooks/useTranslation";
 import { Exercise } from "@/types";
-import { cn } from "@/lib/utils"; // Assure-toi que le chemin d'import est correct
+import { cn } from "@/lib/utils";
 import { Button } from '../ui';
 
 interface Props {
@@ -38,7 +38,6 @@ export default React.memo(function TrueFalse({
     }
   };
 
-  // Utilisation des variantes de ton composant Button
   const getButtonVariant = (val: string) => {
     const isSelected = selected === val;
 
@@ -61,43 +60,48 @@ export default React.memo(function TrueFalse({
     <div className="flex flex-col h-full max-w-2xl mx-auto w-full px-4 py-6">
 
       {/* Header : Question et traductions */}
-      <div className="mb-10 text-center flex flex-col items-center gap-3">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-800">
+      <div className="mb-8 text-center flex flex-col items-center gap-3">
+        {/* Titre forcé sur une seule ligne avec whitespace-nowrap */}
+        <h2 className="text-3xl md:text-3xl font-semibold text-slate-800">
           {getTranslation(exercise.question, language)}
         </h2>
 
-        {(exercise.translation || exercise.phonetic) && (
-          <div className="flex flex-col items-center gap-1 mt-2 text-slate-600">
-            {exercise.translation && (
-              <span className="text-xl font-medium">{exercise.translation}</span>
-            )}
-            {exercise.phonetic && (
-              <span className="text-lg opacity-80">[{exercise.phonetic}]</span>
-            )}
-          </div>
-        )}
+
       </div>
 
       {/* Word Display : Carte centrale */}
       <div className="flex-1 flex flex-col items-center justify-center mb-12">
+        {(exercise.translation || exercise.phonetic) && (
+          <div className="flex flex-col items-center gap-1 mt-1 text-slate-600 mb-10">
+            {exercise.translation && (
+              <span className="text-3xl text-slate-700">{exercise.translation}</span>
+            )}
+            {exercise.phonetic && (
+              <span className="text-base text-slate-500 font-light">[{exercise.phonetic}]</span>
+            )}
+          </div>
+        )}
         <m.div
           key={exercise.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white px-12 py-10 rounded-3xl shadow-sm border border-slate-100 text-center relative flex flex-col items-center justify-center gap-6 min-w-[240px] md:min-w-[320px]"
+          // Design de la carte ajusté (arrondi, padding)
+          className="bg-white px-10 py-12 rounded-[2rem] shadow-sm border border-slate-100 text-center relative flex flex-col items-center justify-center gap-10 w-full min-w-[280px] max-w-[360px]"
         >
-          <div className="text-7xl md:text-8xl font-thai text-slate-800 leading-tight">
+          <div className="text-7xl md:text-8xl font-thai text-slate-900 leading-none">
             {exercise.displayWord || exercise.originalWord || "???"}
           </div>
+
+          {/* Nouveau design du bouton son (fond plein, icône foncée et remplie) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               playThaiTTS(exercise.originalWord || "");
             }}
-            className="text-amber-500 hover:text-amber-600 hover:bg-amber-50 p-3 rounded-full transition-colors flex items-center justify-center"
+            className="bg-[#E3B873] hover:bg-[#d6a964] text-slate-900 w-14 h-14 rounded-full transition-transform active:scale-95 flex items-center justify-center"
             aria-label="Écouter la prononciation"
           >
-            <Volume2 size={32} strokeWidth={2.5} />
+            <Volume2 size={26} strokeWidth={2} fill="currentColor" />
           </button>
         </m.div>
       </div>
