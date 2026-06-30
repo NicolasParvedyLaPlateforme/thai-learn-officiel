@@ -45,42 +45,7 @@ export function PartNodeBubble({
 
   const href = getHref();
   
-  let placement = 'right';
-
-  if (partIndex !== 'full') {
-    const angle = 360 / totalParts;
-    const midAngle = (partIndex * angle) - 90 + (angle / 2);
-    const normalized = (midAngle + 360) % 360; // 0 is right, 90 is bottom, 180 is left, 270 is top
-    
-    if (normalized >= 45 && normalized <= 135) {
-      placement = 'bottom';
-    } else if (normalized >= 225 && normalized <= 315) {
-      placement = 'top';
-    } else if (normalized > 135 && normalized < 225) {
-      // Wants left
-      if (nodeX < 0) {
-        placement = normalized < 180 ? 'bottom' : 'top';
-      } else {
-        placement = 'left';
-      }
-    } else {
-      // Wants right
-      if (nodeX > 0) {
-        placement = normalized > 270 || normalized < 0 ? 'top' : 'bottom';
-      } else {
-        placement = 'right';
-      }
-    }
-  } else {
-    placement = nodeX <= 0 ? 'right' : 'left';
-  }
-
-  let positionClasses = '';
-  let arrowClasses = '';
-  let arrowStyle: React.CSSProperties = {};
-
   let xOffset = 0;
-  let yOffset = 0;
   
   if (partIndex !== 'full') {
     const angle = 360 / totalParts;
@@ -89,42 +54,35 @@ export function PartNodeBubble({
     
     // Calculate precise arrow offset using trig (radius ~45px for the pizza slices)
     xOffset = Math.cos(normalized * Math.PI / 180) * 45;
-    yOffset = Math.sin(normalized * Math.PI / 180) * 45;
   }
 
-  switch (placement) {
-    case 'bottom':
-      positionClasses = 'top-full mt-3 lg:mt-5 left-1/2 -translate-x-1/2';
-      arrowClasses = '-top-[6px] border-b-0 border-r-0';
-      arrowStyle = { left: `calc(50% + ${xOffset}px)`, transform: 'translateX(-50%) rotate(45deg)' };
-      break;
-    case 'top':
-      positionClasses = 'bottom-full mb-3 lg:mb-5 left-1/2 -translate-x-1/2';
-      arrowClasses = '-bottom-[6px] border-t-0 border-l-0';
-      arrowStyle = { left: `calc(50% + ${xOffset}px)`, transform: 'translateX(-50%) rotate(45deg)' };
-      break;
-    case 'left':
-      positionClasses = 'right-full mr-3 lg:mr-5 top-1/2 -translate-y-1/2';
-      arrowClasses = '-right-[6px] border-b-0 border-l-0';
-      arrowStyle = { top: `calc(50% + ${yOffset}px)`, transform: 'translateY(-50%) rotate(45deg)' };
-      break;
-    case 'right':
-    default:
-      positionClasses = 'left-full ml-3 lg:ml-5 top-1/2 -translate-y-1/2';
-      arrowClasses = '-left-[6px] border-t-0 border-r-0';
-      arrowStyle = { top: `calc(50% + ${yOffset}px)`, transform: 'translateY(-50%) rotate(45deg)' };
-      break;
+  // Prevent horizontal overflow on mobile by shifting the bubble if node is near edges
+  let translateXPercentage = 50;
+  if (nodeX > 30) {
+    translateXPercentage = 75;
+  } else if (nodeX < -30) {
+    translateXPercentage = 25;
   }
+
+  const positionClasses = 'top-full mt-3 lg:mt-4 left-1/2';
+  const positionStyle: React.CSSProperties = { transform: `translateX(-${translateXPercentage}%)` };
+
+  const arrowClasses = '-top-[6px] border-b-0 border-r-0';
+  const arrowStyle: React.CSSProperties = { 
+    left: `calc(${translateXPercentage}% + ${xOffset}px)`, 
+    transform: 'translateX(-50%) rotate(45deg)' 
+  };
 
   return (
     <div
       className={[
         'absolute z-[100]',
         positionClasses,
-        'w-[180px]',
-        'bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-slate-100',
-        'flex flex-col gap-3 p-3.5',
+        'w-max max-w-[calc(100vw-32px)]',
+        'bg-white rounded-[24px] shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-slate-100',
+        'flex flex-row items-center gap-3 md:gap-4 p-2.5 pr-3 md:p-3 md:pr-4',
       ].join(' ')}
+      style={positionStyle}
       onClick={(e) => e.stopPropagation()}
     >
       {/* Pointer arrow */}
@@ -137,29 +95,29 @@ export function PartNodeBubble({
       />
 
       {/* Header */}
-      <div className="flex items-center gap-2.5">
-        <div className={`w-7 h-7 rounded-full ${unitColor} flex items-center justify-center shrink-0`}>
+      <div className="flex items-center gap-2 md:gap-2.5 shrink-0">
+        <div className={`w-8 h-8 md:w-9 md:h-9 rounded-full ${unitColor} flex items-center justify-center shrink-0`}>
           {isCompleted
-            ? <CheckCircle2 size={14} className="text-white stroke-[2.5]" />
-            : <Play size={10} className="text-white fill-current ml-0.5" />
+            ? <CheckCircle2 size={16} className="text-white stroke-[2.5]" />
+            : <Play size={12} className="text-white fill-current ml-0.5" />
           }
         </div>
-        <span className={`text-[13px] font-extrabold ${unitText} leading-tight`}>
+        <span className={`text-[14px] md:text-[15px] font-extrabold ${unitText} leading-tight whitespace-nowrap`}>
           {partIndex === 'full' ? `Niveau ${levelIndex + 1}` : `Partie ${(partIndex as number) + 1}`}
         </span>
       </div>
 
       {/* Stats */}
-      <div className="flex items-center gap-3 px-0.5">
+      <div className="flex items-center gap-3 px-1 md:px-2 shrink-0">
         {stepsCount > 0 && (
-          <div className="flex items-center gap-1.5">
-            <Flag size={12} className="text-slate-400 shrink-0" />
-            <span className="text-[11px] font-bold text-slate-500">{stepsCount}</span>
+          <div className="flex items-center gap-1 md:gap-1.5">
+            <Flag size={14} className="text-slate-400 shrink-0" />
+            <span className="text-[13px] md:text-[14px] font-bold text-slate-500">{stepsCount}</span>
           </div>
         )}
-        <div className="flex items-center gap-1.5">
-          <Star size={12} className="text-amber-400 fill-amber-400 shrink-0" />
-          <span className="text-[11px] font-bold text-amber-500">+{expectedXp} XP</span>
+        <div className="flex items-center gap-1 md:gap-1.5">
+          <Star size={14} className="text-amber-400 fill-amber-400 shrink-0" />
+          <span className="text-[13px] md:text-[14px] font-bold text-amber-500">+{expectedXp} XP</span>
         </div>
       </div>
 
@@ -169,9 +127,9 @@ export function PartNodeBubble({
         onClick={onClose}
         className={buttonVariants({
           variant: 'gamified',
-          size: 'sm',
+          size: 'default',
           className: [
-            'w-full rounded-xl text-[12px] justify-center',
+            'h-9 md:h-10 rounded-[14px] text-[13px] md:text-[14px] px-4 md:px-6 min-w-[90px] md:min-w-[100px] justify-center ml-auto shrink-0',
             unitColor,
             unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500'),
           ].join(' '),

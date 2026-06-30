@@ -145,11 +145,11 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
   );
 
   return (
-    <div className="flex flex-col-reverse md:flex-col gap-4 md:gap-8 relative items-center w-full">
-      <div className="relative inline-flex items-center">
+    <div className="flex flex-col-reverse md:flex-col gap-4 md:gap-8 relative items-center w-full ">
+      <div className="relative inline-flex items-center flex-col">
         {tooltipWrappedContent}
         {rightElement && (
-          <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 inline-flex items-center shrink-0">
+          <span className="left-full ml-3 top-1/2 -translate-y-1/2 inline-flex items-center shrink-0">
             {rightElement}
           </span>
         )}

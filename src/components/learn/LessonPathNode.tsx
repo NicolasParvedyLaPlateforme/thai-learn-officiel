@@ -434,13 +434,20 @@ export function LessonPathNode({
 
         {/* Tooltip Blocage for non-part nodes (mastery, etc) */}
         {currentPartsTotal <= 1 && blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 && (
-          <div className="absolute z-[100] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
-            <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -180%)' }}>
-              <div className="animate-bounce flex flex-col items-center justify-center relative">
-                <div className="relative z-10 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
+          <div className="absolute z-[1000] pointer-events-none drop-shadow-md mt-5" style={{ left: '50%', top: '50%' }}>
+            {/* Changement du translate : on descend la bulle (40%) au lieu de la monter (-180%) */}
+            <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, 40%)' }}>
+              {/* L'animation bounce a été retirée ici */}
+              <div className="flex flex-col items-center justify-center relative">
+
+                {/* La flèche est maintenant placée AU-DESSUS du texte et pointe vers le haut */}
+                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-transparent border-b-indigo-500 mb-[-1px]"></div>
+
+                {/* Le corps de la bulle */}
+                <div className="relative z-1000 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
                   Le niveau {blockedByLevel + 1} est débloqué qu'après l'accomplissement du niveau {blockedByLevel - 3} en entier
                 </div>
-                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-indigo-500 mt-[-1px]"></div>
+
               </div>
             </div>
           </div>
