@@ -285,7 +285,7 @@ export function LessonPathMap({
     <div className="flex flex-col items-center justify-start w-full relative pt-2 md:pt-6 pb-4 md:pb-12">
 
 
-      {nodes.filter(levelIndex => levelIndex <= currentProgress).map((levelIndex) => (
+      {nodes.filter(levelIndex => levelIndex <= (blockedByLevel !== null ? blockedByLevel : currentProgress)).map((levelIndex) => (
         <LessonPathNode
           key={levelIndex}
           levelIndex={levelIndex}

@@ -278,11 +278,11 @@ export function LessonPathNode({
                 return (
                   <g
                     key={i}
-                    className={`transition-all duration-300 ${(isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-25'}`}
+                    className={`transition-all duration-300 ${!isLevelLocked && (isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) ? 'cursor-pointer hover:scale-105' : 'cursor-not-allowed opacity-25'}`}
                     style={isCurrentlySelected ? { transform: `scale(1.05)`, transformOrigin: '50px 50px' } : {}}
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice) {
+                      if (!isLevelLocked && (isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice)) {
                         setSelectedAction(i);
                       }
                     }}
@@ -296,10 +296,10 @@ export function LessonPathNode({
               })}
 
               <circle cx="50" cy="50" r="18"
-                className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} stroke-white stroke-[3] transition-colors ${isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`}
+                className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} ${blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 ? 'stroke-orange-500 animate-pulse stroke-[4]' : 'stroke-white stroke-[3]'} transition-colors ${isAccessible && isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`}
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (isCompleted) setSelectedAction('full');
+                  if (isAccessible && isCompleted) setSelectedAction('full');
                 }}
               />
               <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
@@ -355,15 +355,15 @@ export function LessonPathNode({
             })()}
             
             {/* Tooltip Blocage */}
-            {isBlockedByFullLevel && blockedByLevel === levelIndex && (() => {
+            {blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 && (() => {
               return (
                 <div className="absolute z-[100] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
                   <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -200%)' }}>
                     <div className="animate-bounce flex flex-col items-center justify-center relative">
-                      <div className="relative z-10 bg-rose-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px]">
-                        Complétez le niveau entier précédent pour débloquer la suite
+                      <div className="relative z-10 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
+                        Le niveau {blockedByLevel + 1} est débloqué qu'après l'accomplissement du niveau {blockedByLevel - 3} en entier
                       </div>
-                      <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-rose-500 mt-[-1px]"></div>
+                      <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-indigo-500 mt-[-1px]"></div>
                     </div>
                   </div>
                 </div>
@@ -426,14 +426,14 @@ export function LessonPathNode({
         )}
 
         {/* Tooltip Blocage for non-part nodes (mastery, etc) */}
-        {currentPartsTotal <= 1 && isBlockedByFullLevel && blockedByLevel === levelIndex && (
+        {currentPartsTotal <= 1 && blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 && (
           <div className="absolute z-[100] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
             <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -180%)' }}>
               <div className="animate-bounce flex flex-col items-center justify-center relative">
-                <div className="relative z-10 bg-rose-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px]">
-                  Complétez le niveau entier précédent
+                <div className="relative z-10 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
+                  Le niveau {blockedByLevel + 1} est débloqué qu'après l'accomplissement du niveau {blockedByLevel - 3} en entier
                 </div>
-                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-rose-500 mt-[-1px]"></div>
+                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-indigo-500 mt-[-1px]"></div>
               </div>
             </div>
           </div>
