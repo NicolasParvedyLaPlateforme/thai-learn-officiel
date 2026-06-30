@@ -147,13 +147,13 @@ export default function QuestionArea({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
           className={`${currentExercise.type === "intro" ||
-              currentExercise.type === "word-match" ||
-              currentExercise.type === "sentence-builder" ||
-              currentExercise.type === "free-typing" ||
-              currentExercise.type === "writing"
-              ? "flex"
-              : "hidden"
-            } w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-[2rem] text-7xl md:text-8xl mx-auto items-center justify-center relative flex-shrink-0 ${imageUrl
+            currentExercise.type === "word-match" ||
+            currentExercise.type === "sentence-builder" ||
+            currentExercise.type === "free-typing" ||
+            currentExercise.type === "writing"
+            ? "flex"
+            : "hidden"
+            } w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-64 lg:h-64 rounded-[2rem] text-7xl md:text-8xl mx-auto items-center justify-center relative flex-shrink-0 ${imageUrl
               ? "bg-transparent overflow-visible"
               : "bg-emerald-50 shadow-sm border border-emerald-100 overflow-hidden"
             }`}
