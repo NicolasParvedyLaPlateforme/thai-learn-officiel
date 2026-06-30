@@ -35,6 +35,9 @@ interface LessonPathNodeProps {
   slotHeight: number;
   /** Actual center-to-center distance to previous node (for SVG path height) */
   pathHeight: number;
+  blockedByLevel?: number | null;
+  isReminderTarget?: boolean;
+  currentFullLevels?: number[];
 }
 
 export function LessonPathNode({
@@ -62,6 +65,9 @@ export function LessonPathNode({
   generatePath,
   slotHeight,
   pathHeight,
+  blockedByLevel,
+  isReminderTarget,
+  currentFullLevels,
 }: LessonPathNodeProps) {
   const [selectedAction, setSelectedAction] = useState<number | 'full' | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -82,14 +88,19 @@ export function LessonPathNode({
   }, [selectedAction]);
 
   // ── Current node state ──
+  const isBlockedByFullLevel = blockedByLevel !== undefined && blockedByLevel !== null && levelIndex >= blockedByLevel;
   const isMastery = levelIndex === maxLevel;
   const isUnlockedMastery = currentProgress >= maxLevel;
-  const earnedStarsMastery = earnedStarsArray[maxLevel] || 0;
-  const isAccessible = isMastery ? isUnlockedMastery : levelIndex <= currentProgress;
+  
+  const isAccessible = (isMastery ? isUnlockedMastery : levelIndex <= currentProgress) && !isBlockedByFullLevel;
+  
+  const isCompletedFullLevel = currentFullLevels ? currentFullLevels.includes(levelIndex) : false;
+  
+  const earnedStarsMastery = (isCompletedFullLevel && levelIndex === maxLevel) ? (earnedStarsArray[maxLevel] || 0) : 0;
   const isCompleted = isMastery ? earnedStarsMastery > 0 : levelIndex < currentProgress;
-  const isCurrent = !isMastery && levelIndex === currentProgress;
+  const isCurrent = !isMastery && levelIndex === currentProgress && !isBlockedByFullLevel;
   const isSelected = selectedAction !== null;
-  const earnedStars = earnedStarsArray[levelIndex] || 0;
+  const earnedStars = isCompletedFullLevel ? (earnedStarsArray[levelIndex] || 0) : 0;
 
   // Step counter uses parts of the CURRENT level (for the flag indicator)
   const currentLevelParts = lesson ? getLevelSplit(levelIndex, lesson) : 1;
@@ -342,6 +353,39 @@ export function LessonPathNode({
                 </div>
               );
             })()}
+            
+            {/* Tooltip Blocage */}
+            {isBlockedByFullLevel && blockedByLevel === levelIndex && (() => {
+              return (
+                <div className="absolute z-[100] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
+                  <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -200%)' }}>
+                    <div className="animate-bounce flex flex-col items-center justify-center relative">
+                      <div className="relative z-10 bg-rose-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px]">
+                        Complétez le niveau entier précédent pour débloquer la suite
+                      </div>
+                      <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-rose-500 mt-[-1px]"></div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Tooltip Reminder */}
+            {isReminderTarget && levelIndex === targetScrollLevel && (() => {
+              return (
+                <div className="absolute z-[100] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
+                  <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -220%)' }}>
+                    <div className="animate-bounce flex flex-col items-center justify-center relative">
+                      <div className="relative z-10 bg-amber-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px] whitespace-pre-wrap leading-tight">
+                        Petit rappel ?
+                        <br/><span className="text-amber-100 font-black">+50 XP bonus</span>
+                      </div>
+                      <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-amber-500 mt-[-1px]"></div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         ) : (
           <button
@@ -379,6 +423,35 @@ export function LessonPathNode({
               <Lock size={36} className="stroke-[2.5]" />
             )}
           </button>
+        )}
+
+        {/* Tooltip Blocage for non-part nodes (mastery, etc) */}
+        {currentPartsTotal <= 1 && isBlockedByFullLevel && blockedByLevel === levelIndex && (
+          <div className="absolute z-[100] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
+            <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -180%)' }}>
+              <div className="animate-bounce flex flex-col items-center justify-center relative">
+                <div className="relative z-10 bg-rose-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px]">
+                  Complétez le niveau entier précédent
+                </div>
+                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-rose-500 mt-[-1px]"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Tooltip Reminder for non-part nodes */}
+        {currentPartsTotal <= 1 && isReminderTarget && levelIndex === targetScrollLevel && (
+          <div className="absolute z-[100] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
+            <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -200%)' }}>
+              <div className="animate-bounce flex flex-col items-center justify-center relative">
+                <div className="relative z-10 bg-amber-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px] whitespace-pre-wrap leading-tight">
+                  Petit rappel ?
+                  <br/><span className="text-amber-100 font-black">+50 XP bonus</span>
+                </div>
+                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-amber-500 mt-[-1px]"></div>
+              </div>
+            </div>
+          </div>
         )}
 
         {isMastery && isAccessible && (

@@ -22,6 +22,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
   lessonLevels: {},
   lessonPartsCompleted: {},
   lessonStars: {},
+  fullLevelsCompleted: {},
   speakCompletedLessons: [],
   speakLessonLevels: {},
   speakLessonStars: {},
@@ -139,7 +140,18 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     }
 
     const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, actualPlayedLevel, isBilan, false, isFullLongLevel);
-    const finalXp = isFromParts ? 0 : (lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp));
+    
+    let bonusXp = 0;
+    if (!isFromParts && typeof window !== 'undefined') {
+       const reminderLevelStr = localStorage.getItem('recommendedReminderLevel');
+       if (reminderLevelStr && parseInt(reminderLevelStr) === actualPlayedLevel) {
+           bonusXp = 50;
+           // Generate a new random reminder level between 0 and 9
+           localStorage.setItem('recommendedReminderLevel', Math.floor(Math.random() * 10).toString());
+       }
+    }
+    
+    const finalXp = (isFromParts ? 0 : (lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp))) + bonusXp;
 
     const { newLevel, newStars } = calculateLessonLevelAndStars(currentLevel, playedLevel, earnedStars, state.lessonStars[lessonId]);
 
@@ -161,6 +173,14 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
       const newPartsForKey = isFromParts
         ? (state.lessonPartsCompleted[partsKey] || [0])
         : [0];
+        
+      const newFullLevelsCompleted = { ...state.fullLevelsCompleted };
+      if (!isFromParts) {
+        const currentFullLevels = newFullLevelsCompleted[lessonId] || [];
+        if (!currentFullLevels.includes(actualPlayedLevel)) {
+           newFullLevelsCompleted[lessonId] = [...currentFullLevels, actualPlayedLevel];
+        }
+      }
       
       return {
         completedLessons: state.completedLessons.includes(lessonId) 
@@ -179,6 +199,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
           ...state.lessonStars,
           [lessonId]: newStars
         },
+        fullLevelsCompleted: newFullLevelsCompleted,
         xp: state.xp + finalXp,
         lastPlayedLessonId: lessonId,
         lastPlayedLessonType: type
@@ -379,6 +400,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     lessonLevels: {}, 
     lessonPartsCompleted: {},
     lessonStars: {}, 
+    fullLevelsCompleted: {},
     speakCompletedLessons: [], 
     speakLessonLevels: {}, 
     speakLessonStars: {}, 

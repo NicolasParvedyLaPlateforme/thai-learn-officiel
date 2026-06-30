@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { ChevronLeft, X } from 'lucide-react';
 import { LessonPathNode } from './LessonPathNode';
 import { getLevelSplit } from '@/lib/levelSplits';
+import { useProgressStore } from "@/lib/store";
 
 interface LessonPathMapProps {
   maxLevel: number;
@@ -50,8 +51,36 @@ export function LessonPathMap({
 }: LessonPathMapProps) {
   const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i);
 
-  const effectiveCurrent = currentProgress > maxLevel ? maxLevel : currentProgress;
-  const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : effectiveCurrent;
+  const fullLevelsCompleted = useProgressStore(state => state.fullLevelsCompleted);
+  const currentFullLevels = lessonId ? (fullLevelsCompleted[lessonId] || []) : [];
+
+  let calculatedTarget = currentProgress > maxLevel ? maxLevel : currentProgress;
+  let blockedByLevel: number | null = null;
+  let isReminder = false;
+  
+  for (let i = 4; i <= currentProgress; i++) {
+     if (i <= maxLevel && !currentFullLevels.includes(i - 4)) {
+         calculatedTarget = i - 4;
+         blockedByLevel = i;
+         break;
+     }
+  }
+  
+  if (currentProgress >= maxLevel && blockedByLevel === null) {
+      if (typeof window !== 'undefined') {
+          let reminderLevelStr = localStorage.getItem('recommendedReminderLevel');
+          if (!reminderLevelStr) {
+              reminderLevelStr = Math.floor(Math.random() * maxLevel).toString();
+              localStorage.setItem('recommendedReminderLevel', reminderLevelStr);
+          }
+          calculatedTarget = parseInt(reminderLevelStr);
+          isReminder = true;
+      } else {
+          calculatedTarget = 0;
+      }
+  }
+
+  const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
 
   /**
    * Compute the div height for a given slot.
@@ -283,6 +312,9 @@ export function LessonPathMap({
           generatePath={generatePath}
           slotHeight={getSlotHeight(levelIndex)}
           pathHeight={getPathHeight(levelIndex)}
+          blockedByLevel={blockedByLevel}
+          isReminderTarget={isReminder && levelIndex === calculatedTarget}
+          currentFullLevels={currentFullLevels}
         />
       ))}
     </div>

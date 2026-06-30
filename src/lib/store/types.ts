@@ -103,6 +103,7 @@ export interface ProgressState {
   speakCompletedLessons: string[];
   speakLessonLevels: Record<string, number>;
   speakLessonStars: Record<string, number[]>;
+  fullLevelsCompleted: Record<string, number[]>;
   completeSpeakLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number) => void;
   hiddenInstructions: string[];
   hideInstruction: (key: string) => void;

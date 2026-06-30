@@ -137,6 +137,7 @@ export default function SyncProgress() {
         completedToday: state.completedToday,
         inProgressLessons: state.inProgressLessons,
         lessonPartsCompleted: state.lessonPartsCompleted,
+        fullLevelsCompleted: state.fullLevelsCompleted,
         unopenedGifts: state.unopenedGifts,
       };
 
@@ -177,6 +178,7 @@ export default function SyncProgress() {
     store.completedToday,
     store.inProgressLessons,
     store.lessonPartsCompleted,
+    store.fullLevelsCompleted,
     store.unopenedGifts
   ]);
 
