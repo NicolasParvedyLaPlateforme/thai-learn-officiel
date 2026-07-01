@@ -92,22 +92,24 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center w-full">
 
-        {/* Carte : mot thaï + icône son émeraude */}
-        <div className="w-full max-w-2xl mx-auto mb-4 bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
-          <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center flex items-center justify-center">
+        {/* Carte : mot thaï uniquement */}
+        <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl p-8 border border-slate-200 flex items-center justify-center shadow-sm">
+          <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center">
             {exercise.originalWord}
           </div>
+        </div>
 
-          {/* Icône son — style émeraude unifié */}
-          {exercise.targetLetter && (
-            <button
-              onClick={() => playThaiTTS(exercise.targetLetter!)}
-              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 w-12 h-12 rounded-full flex items-center justify-center transition-colors"
-              aria-label={getTranslation('exercise.listen', language)}
-            >
+        {/* Pill : icône son dans fond blanc arrondi */}
+        {exercise.targetLetter && (
+          <button
+            onClick={() => playThaiTTS(exercise.targetLetter!)}
+            className="mt-5 inline-flex items-center gap-2 bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm hover:bg-slate-50 transition-colors"
+            aria-label={getTranslation('exercise.listen', language)}
+          >
+            <div className="bg-emerald-50 text-emerald-600 p-2.5 rounded-full shrink-0">
               <svg
-                width="22"
-                height="22"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -119,18 +121,18 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
               </svg>
-            </button>
-          )}
-        </div>
+            </div>
+          </button>
+        )}
 
         {/* Consigne */}
-        <h2 className="text-xl font-semibold text-slate-800 text-center mb-6 px-4 max-w-sm leading-snug">
+        <h2 className="text-xl font-semibold text-slate-800 text-center mt-5 px-4 max-w-sm leading-snug">
           {displayQuestionNode}
         </h2>
       </div>
 
       {/* Options */}
-      <div className="w-full max-w-2xl mx-auto mt-auto">
+      <div className="w-full max-w-2xl mx-auto mt-auto px-4 pb-4">
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <AnimatePresence>
             {exercise.options.map((opt: any, index: number) => {
