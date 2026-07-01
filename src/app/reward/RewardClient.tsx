@@ -171,6 +171,12 @@ export default function RewardClient() {
                   </Button>
                 )}
 
+
+                <Button variant="outline" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push(`/${category === 'learn' ? 'learn' : category}`)}>
+                  <LogOut size={20} className="rotate-180" />
+                  <span className="uppercase tracking-widest ml-2">{getTranslation('auto.back', language)}</span>
+                </Button>
+
                 <div className="flex gap-3 w-full">
                   {replayUrl && (
                     <Button variant="outline" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push(replayUrl)}>
@@ -179,10 +185,6 @@ export default function RewardClient() {
                     </Button>
                   )}
 
-                  <Button variant="outline" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push(`/${category === 'learn' ? 'learn' : category}`)}>
-                    <LogOut size={20} className="rotate-180" />
-                    <span className="uppercase tracking-widest ml-2">{getTranslation('auto.back', language)}</span>
-                  </Button>
                 </div>
               </motion.div>
             </motion.div>

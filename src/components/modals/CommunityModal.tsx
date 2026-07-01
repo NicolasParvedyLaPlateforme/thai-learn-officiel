@@ -11,12 +11,12 @@ import { Button } from "@/components/ui/Button";
 
 export function CommunityModal() {
   const pathname = usePathname();
-  const { 
-    hasSeenCommunityModal, 
-    setHasSeenCommunityModal, 
-    showCommunityModal, 
+  const {
+    hasSeenCommunityModal,
+    setHasSeenCommunityModal,
+    showCommunityModal,
     setShowCommunityModal,
-    language 
+    language
   } = useProgressStore();
 
   const [dontShowAgain, setDontShowAgain] = useState(false);
@@ -47,13 +47,15 @@ export function CommunityModal() {
   return (
     <AnimatePresence>
       {showCommunityModal && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+          className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[100] flex items-center justify-center p-4 z-10000!
+          
+          "
         >
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -76,7 +78,7 @@ export function CommunityModal() {
                     </Typography>
                   </div>
                 </div>
-                <Button 
+                <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleClose}
@@ -85,31 +87,31 @@ export function CommunityModal() {
                   <X size={20} />
                 </Button>
               </div>
-              
+
               <div className="p-6 space-y-4">
                 <Typography>
-                  {isFr 
-                    ? "Bienvenue ! Cette application est actuellement en cours de développement. Elle est entièrement gratuite et créée pour aider la communauté à apprendre le thaï." 
+                  {isFr
+                    ? "Bienvenue ! Cette application est actuellement en cours de développement. Elle est entièrement gratuite et créée pour aider la communauté à apprendre le thaï."
                     : "Welcome! This application is currently in development. It is completely free and created to help the community learn Thai."}
                 </Typography>
                 <Typography>
-                  {isFr 
+                  {isFr
                     ? "Puisque nous sommes toujours en phase de création, il est possible que vous rencontriez quelques erreurs dans les exercices ou les traductions."
                     : "Since we are still building it, you might find some errors in the exercises or translations."}
                 </Typography>
-                
+
                 <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-100">
                   <Typography variant="small" className="text-slate-800 font-bold mb-2 block">
                     {isFr ? "Vos retours sont précieux" : "Your feedback is valuable"}
                   </Typography>
                   <Typography variant="small" className="mb-3 block text-slate-600">
-                    {isFr 
+                    {isFr
                       ? "N'hésitez pas à faire vos retours, signaler des bugs, ou suggérer des améliorations sur notre fil Reddit :"
                       : "Feel free to share feedback, report bugs, or suggest improvements on our Reddit thread:"}
                   </Typography>
-                  <a 
-                    href="https://www.reddit.com/r/learnthai/comments/1t8plhg/la_d%C3%A9termination_paie_malgr%C3%A9_la_critique/" 
-                    target="_blank" 
+                  <a
+                    href="https://www.reddit.com/r/learnthai/comments/1t8plhg/la_d%C3%A9termination_paie_malgr%C3%A9_la_critique/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-bold text-sm bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-lg transition-colors border border-emerald-100"
                   >
@@ -120,8 +122,8 @@ export function CommunityModal() {
 
                 <label className="flex items-center gap-3 cursor-pointer mt-4">
                   <div className="relative flex items-center">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       className="peer sr-only"
                       checked={dontShowAgain}
                       onChange={(e) => setDontShowAgain(e.target.checked)}
@@ -136,9 +138,9 @@ export function CommunityModal() {
                   </span>
                 </label>
               </div>
-              
+
               <div className="p-6 pt-0">
-                <Button 
+                <Button
                   onClick={handleClose}
                   size="lg"
                   className="w-full bg-slate-800 text-white hover:bg-slate-700"
