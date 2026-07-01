@@ -3,21 +3,28 @@ import { useState, useEffect } from "react";
 import { Drawer } from "vaul";
 import { Lesson } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
+import { HelpCircle } from "lucide-react";
 
 interface GlossaryModalProps {
   lesson: Lesson;
   language: string;
   showRomanization: boolean;
+  setShowRomanization?: (val: boolean) => void;
   isOpen: boolean;
   onClose: () => void;
+  showHelpButton?: boolean;
+  onShowHelp?: () => void;
 }
 
 export default function GlossaryModal({
   lesson,
   language,
   showRomanization,
+  setShowRomanization,
   isOpen,
   onClose,
+  showHelpButton,
+  onShowHelp,
 }: GlossaryModalProps) {
   const [isMobile, setIsMobile] = useState(true);
 
@@ -28,8 +35,48 @@ export default function GlossaryModal({
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  /** Barre d'actions (Romanisation + Aide) affichée avant le vocabulaire */
+  const actionBar = (setShowRomanization || showHelpButton) ? (
+    <div className="flex items-center gap-2 mb-4">
+      {/* Bouton Romanisation */}
+      {setShowRomanization && (
+        <button
+          onClick={() => setShowRomanization(!showRomanization)}
+          className={`flex-1 flex items-center justify-center gap-2 h-11 rounded-2xl border font-semibold text-sm transition-all active:scale-95 outline-none ${
+            showRomanization
+              ? "bg-indigo-50 border-indigo-200 text-indigo-600"
+              : "bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700"
+          }`}
+          title={showRomanization ? getTranslation('auto.hide_pronunciation', language) : getTranslation('auto.show_pronunciation', language)}
+        >
+          <span className="text-lg font-bold leading-none select-none">
+            {showRomanization ? "aA" : "ก"}
+          </span>
+          <span className="text-sm">
+            {showRomanization ? getTranslation('auto.hide_pronunciation', language) : getTranslation('auto.show_pronunciation', language)}
+          </span>
+        </button>
+      )}
+
+      {/* Bouton Aide */}
+      {showHelpButton && onShowHelp && (
+        <button
+          onClick={() => { onShowHelp(); onClose(); }}
+          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-2xl border border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-700 font-semibold text-sm transition-all active:scale-95 outline-none"
+          title={getTranslation('auto.help_instructions', language)}
+        >
+          <HelpCircle strokeWidth={2.5} className="w-4 h-4" />
+          <span>{getTranslation('auto.help_instructions', language)}</span>
+        </button>
+      )}
+    </div>
+  ) : null;
+
   const content = (
     <div className="max-w-3xl mx-auto space-y-4">
+      {/* Boutons Romanisation + Aide */}
+      {actionBar}
+
       {lesson.words.map((word) => (
         <div
           key={word.id}

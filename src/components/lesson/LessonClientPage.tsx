@@ -137,6 +137,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                 lesson={lesson}
                 language={state.language}
                 showRomanization={state.showRomanization}
+                setShowRomanization={actions.setShowRomanization}
+                showHelpButton={!(state.showInstruction || state.showHelpModal) && !!state.instructionKey && !state.currentExercise?.forceHideRomanization}
+                onShowHelp={() => actions.setShowHelpModal(true)}
                 onClose={() => actions.setShowInfoModal(false)}
               />
 
