@@ -175,13 +175,13 @@ export default function RewardClient() {
                   {replayUrl && (
                     <Button variant="outline" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push(replayUrl)}>
                       <RotateCcw size={20} />
-                      <span className="uppercase tracking-widest">{getTranslation('auto.retry', language)}</span>
+                      <span className="uppercase tracking-widest ml-2">{getTranslation('auto.retry', language)}</span>
                     </Button>
                   )}
 
                   <Button variant="outline" size="lg" className="w-full rounded-xl uppercase tracking-widest" onClick={() => router.push(`/${category === 'learn' ? 'learn' : category}`)}>
                     <LogOut size={20} className="rotate-180" />
-                    <span className="uppercase tracking-widest">{getTranslation('auto.back', language)}</span>
+                    <span className="uppercase tracking-widest ml-2">{getTranslation('auto.back', language)}</span>
                   </Button>
                 </div>
               </motion.div>
