@@ -89,11 +89,13 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
   }
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="flex-1 flex flex-col items-center justify-center w-full">
+    <div className="w-full h-full flex flex-col px-4">
+
+      {/* Contenu principal : carte en haut */}
+      <div className="flex flex-col items-center pt-6 gap-6 w-full max-w-2xl mx-auto">
 
         {/* Carte : mot thaï uniquement */}
-        <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl p-8 border border-slate-200 flex items-center justify-center shadow-sm">
+        <div className="w-full bg-white rounded-3xl p-8 border border-slate-200 flex items-center justify-center shadow-sm">
           <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center">
             {exercise.originalWord}
           </div>
@@ -103,7 +105,7 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
         {exercise.targetLetter && (
           <button
             onClick={() => playThaiTTS(exercise.targetLetter!)}
-            className="mt-5 inline-flex items-center gap-2 bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm hover:bg-slate-50 transition-colors"
+            className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm hover:bg-slate-50 transition-colors"
             aria-label={getTranslation('exercise.listen', language)}
           >
             <div className="bg-emerald-50 text-emerald-600 p-2.5 rounded-full shrink-0">
@@ -126,13 +128,13 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
         )}
 
         {/* Consigne */}
-        <h2 className="text-xl font-semibold text-slate-800 text-center mt-5 px-4 max-w-sm leading-snug">
+        <h2 className="text-xl font-semibold text-slate-800 text-center px-4 max-w-sm leading-snug">
           {displayQuestionNode}
         </h2>
       </div>
 
-      {/* Options */}
-      <div className="w-full max-w-2xl mx-auto mt-auto px-4 pb-4">
+      {/* Options — collées en bas au-dessus du Footer */}
+      <div className="mt-auto w-full max-w-2xl mx-auto pb-[110px]">
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <AnimatePresence>
             {exercise.options.map((opt: any, index: number) => {

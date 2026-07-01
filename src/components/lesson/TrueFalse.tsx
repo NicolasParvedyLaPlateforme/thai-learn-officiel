@@ -53,10 +53,10 @@ export default React.memo(function TrueFalse({
   };
 
   return (
-    <div className="flex flex-col h-full max-w-2xl mx-auto w-full px-4 py-6">
+    <div className="flex flex-col h-full w-full max-w-2xl mx-auto px-4">
 
-      {/* Zone centrale : carte + pill traduction + consigne */}
-      <div className="flex-1 flex flex-col items-center justify-center gap-5">
+      {/* Contenu principal : carte en haut, éléments empilés */}
+      <div className="flex flex-col items-center pt-6 gap-6">
 
         {/* Carte : mot thaï */}
         <m.div
@@ -70,7 +70,7 @@ export default React.memo(function TrueFalse({
           </div>
         </m.div>
 
-        {/* Pill : mot français + icône son côte à côte */}
+        {/* Pill : mot français + phonétique + icône son */}
         {(exercise.translation || exercise.phonetic) && (
           <button
             onClick={() => playThaiTTS(exercise.originalWord || "")}
@@ -109,8 +109,8 @@ export default React.memo(function TrueFalse({
         </h2>
       </div>
 
-      {/* Boutons Vrai/Faux — collés en bas, même style OptionCardButton */}
-      <div className="mt-auto grid grid-cols-2 gap-3 max-w-sm mx-auto w-full pb-2">
+      {/* Boutons Vrai/Faux — fixés en bas, au-dessus du Footer (min-h ~100px) */}
+      <div className="mt-auto grid grid-cols-2 gap-3 max-w-sm mx-auto w-full pb-[110px]">
         {(['true', 'false'] as const).map((val) => {
           const { isSelected, isSuccess, isError } = getState(val);
           return (

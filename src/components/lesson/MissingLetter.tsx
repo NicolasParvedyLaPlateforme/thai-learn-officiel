@@ -166,10 +166,10 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
   })();
 
   return (
-    <div className="w-full h-full flex flex-col items-center px-4 py-4">
+    <div className="w-full h-full flex flex-col items-center px-4">
 
-      {/* Zone centrale : carte + icône + traduction + consigne */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-sm gap-4">
+      {/* Contenu principal : carte en haut, éléments empilés */}
+      <div className="flex flex-col items-center pt-6 gap-6 w-full max-w-sm lg:mt-20 mt-[40%]">
 
         {/* Carte : mot avec la lettre manquante + indice phonétique */}
         <div className="w-full bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
@@ -212,13 +212,13 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
         )}
 
         {/* Consigne traduite */}
-        <h2 className="text-xl font-semibold text-slate-800 text-center leading-snug px-4 max-w-xs">
+        <h2 className="text-xl font-semibold text-slate-800 text-center leading-snug px-4 ">
           {getTranslation(instructionKey, language)}
         </h2>
       </div>
 
-      {/* Options */}
-      <div className="w-full max-w-md mx-auto grid grid-cols-2 gap-3 sm:gap-4 mt-4 pb-2">
+      {/* Options — collées en bas au-dessus du Footer */}
+      <div className="mt-auto w-full max-w-md mx-auto grid grid-cols-2 gap-3 sm:gap-4 lg:pb-[40px]">
         <AnimatePresence mode="popLayout">
           {exercise.options.map((opt: any, index: number) => {
             const isSelected = selected === opt.id;
