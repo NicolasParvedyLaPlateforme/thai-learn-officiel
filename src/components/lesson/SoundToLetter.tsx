@@ -32,44 +32,60 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
 
   let displayQuestion = exercise.question;
   let displayQuestionNode: React.ReactNode = displayQuestion;
-  if (displayQuestion) {
-    const match = displayQuestion.match(/(?:«\s*|"\s*)(.+?)(?:\s*»|\s*")/);
-    if (match) {
-      const sound = match[1];
-      let translatedSoundStr = sound;
-      if (sound && !sound.includes('sara')) {
-         const keyPart = sound.replace(/[\s-]/g, '_').toLowerCase();
-         const targetSoundKey = `auto.sound.${keyPart}`;
-         const translatedSound = getTranslation(targetSoundKey, language);
-         if (translatedSound && translatedSound !== targetSoundKey) {
-            translatedSoundStr = translatedSound;
-            displayQuestion = displayQuestion.replace(sound, translatedSoundStr);
-         }
-      }
-      
-      let highlightedSound: React.ReactNode = translatedSoundStr;
-      const highlightMatch = translatedSoundStr.match(/^([^ɔ\s]+)(ɔ.*)/);
-      if (highlightMatch) {
-         highlightedSound = (
-           <>
-             <span className="text-amber-500 font-extrabold">{highlightMatch[1]}</span>
-             {highlightMatch[2]}
-           </>
-         );
-      }
 
-      const parts = displayQuestion.split(translatedSoundStr);
-      if (parts.length === 2) {
-         displayQuestionNode = (
-           <>
-             {parts[0]}
-             {highlightedSound}
-             {parts[1]}
-           </>
-         );
-      } else {
-         displayQuestionNode = displayQuestion;
+  if (displayQuestion) {
+    // 1. Extraction propre du son (on capture ce qu'il y a entre les guillemets)
+    const soundMatch = displayQuestion.match(/(?:«\s*|"\s*)(.+?)(?:\s*»|\s*")/);
+    // 2. Extraction du mot thaï
+    const thaiMatch = displayQuestion.match(/[\u0e00-\u0e7f]+/);
+
+    const sound = soundMatch ? soundMatch[1] : '';
+    const thaiWord = thaiMatch ? thaiMatch[0] : '';
+
+    let translatedSoundStr = sound;
+    if (sound && !sound.includes('sara')) {
+      const keyPart = sound.replace(/[\s-]/g, '_').toLowerCase();
+      const targetSoundKey = `auto.sound.${keyPart}`;
+      const translatedSound = getTranslation(targetSoundKey, language);
+      if (translatedSound && translatedSound !== targetSoundKey) {
+        translatedSoundStr = translatedSound;
       }
+    }
+
+    // Classe de mise en valeur (Orange, plus gros et gras)
+    const highlightClass = "text-orange-500 text-xl font-bold inline-block mx-1";
+
+    if (thaiWord && sound) {
+      // Pour éviter les faux-positifs avec split(), on crée un pattern qui cible le son entouré de ses guillemets
+      const soundPattern = new RegExp(`(?:«\\s*|"\\s*)${sound}(?:\\s*»|\\s*")`);
+
+      // On découpe la question d'origine en utilisant le mot thaï comme premier repère
+      const indexThai = displayQuestion.indexOf(thaiWord);
+      const beforeThai = displayQuestion.substring(0, indexThai);
+      const remainder = displayQuestion.substring(indexThai + thaiWord.length);
+
+      // Dans le reste de la chaîne, on cherche le pattern du son avec ses guillemets
+      const soundLocation = remainder.match(soundPattern);
+
+      if (soundLocation && soundLocation.index !== undefined) {
+        const beforeSound = remainder.substring(0, soundLocation.index);
+        const afterSound = remainder.substring(soundLocation.index + soundLocation[0].length);
+
+        displayQuestionNode = (
+          <>
+            {beforeThai}
+            <span className={highlightClass}>{thaiWord}</span>
+            {beforeSound}
+            {/* On réintègre les guillemets originaux autour du son stylisé si souhaité, ou non */}
+            « <span className={highlightClass}>{translatedSoundStr}</span> »
+            {afterSound}
+          </>
+        );
+      }
+    }
+
+    if (!displayQuestionNode) {
+      displayQuestionNode = displayQuestion;
     }
   }
 
@@ -84,32 +100,32 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
         {/* Display Word */}
         <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
           <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center flex items-center justify-center">
-          {exercise.originalWord}
-        </div>
-        
-        {/* Play target sound button */}
-        {exercise.targetLetter && (
-          <div className="flex flex-col items-center gap-2 mt-4">
-            <button
-              onClick={() => playThaiTTS(exercise.targetLetter!)}
-              className="w-12 h-12 rounded-full bg-indigo-50 text-indigo-500 hover:bg-indigo-100 flex items-center justify-center transition-colors border border-indigo-100 shadow-sm"
-              aria-label="Écouter le son"
-            >
-              <Volume2 size={24} />
-            </button>
-            <span className="text-sm font-medium text-slate-400">Écouter</span>
+            {exercise.originalWord}
           </div>
-        )}
+
+          {/* Play target sound button */}
+          {exercise.targetLetter && (
+            <div className="flex flex-col items-center gap-2 mt-4">
+              <button
+                onClick={() => playThaiTTS(exercise.targetLetter!)}
+                className="w-12 h-12 rounded-full bg-indigo-50 text-indigo-500 hover:bg-indigo-100 flex items-center justify-center transition-colors border border-indigo-100 shadow-sm"
+                aria-label="Écouter le son"
+              >
+                <Volume2 size={24} />
+              </button>
+              <span className="text-sm font-medium text-slate-400">Écouter</span>
+            </div>
+          )}
+        </div>
       </div>
-      </div>
-      
+
       {/* Options */}
       <div className="w-full max-w-2xl mx-auto mt-auto">
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <AnimatePresence>
             {exercise.options.map((opt: any, index: number) => {
               const isSelected = selected === opt.id;
-              
+
               return (
                 <m.div
                   key={opt.id}
