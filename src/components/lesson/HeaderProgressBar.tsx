@@ -98,118 +98,109 @@ export default function HeaderProgressBar({
           </div>
         </div>
       )}
-      <header className="flex flex-col shrink-0 bg-transparent pt-2 pb-2 sm:pt-4">
-        <div className="h-12 flex items-center justify-between w-full max-w-3xl mx-auto px-4">
-          <IconButton
-            onClick={() => setShowQuitConfirm(true)}
-            size="md"
-          >
-            <ArrowLeft size={24} strokeWidth={2.5} />
-          </IconButton>
 
-          <div className="flex items-center gap-1 sm:gap-2 ml-auto text-sm sm:text-base whitespace-nowrap overflow-hidden">
-            {mode === 'training' || mode === 'revision' ? null : customTitle ? (
-              customTitle
-            ) : currentLevel < 9 && !isReview ? (
-              <span className="flex items-center text-slate-400 font-semibold tracking-wide">
-                <div className="flex text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className={i < earnedStars ? "fill-current" : "text-slate-200 fill-slate-200"}
-                    />
-                  ))}
-                </div>
-              </span>
-            ) : (
-              <span className="flex items-center text-amber-500">
-                <Crown size={18} className="fill-current stroke-[2.5]" />
-              </span>
+      {/* Header transparent */}
+      <header className="w-full bg-transparent shrink-0">
+        {/* On utilise flex-wrap sur mobile pour permettre le passage à la ligne, et h-auto sur mobile / h-20 sur desktop */}
+        <div className="w-full max-w-5xl mx-auto px-4 py-3 md:h-20 flex flex-wrap md:flex-nowrap items-center justify-between gap-y-3 gap-x-2 md:gap-x-6">
+
+          {/* 1. BOUTON RETOUR (Reste toujours à gauche) */}
+          <div className="flex items-center order-1">
+            <IconButton
+              onClick={() => setShowQuitConfirm(true)}
+              size="md"
+              className="text-slate-400 hover:text-slate-600 transition-colors bg-transparent border-none"
+            >
+              <ArrowLeft size={24} strokeWidth={2.5} />
+            </IconButton>
+          </div>
+
+          {/* 3. ACTIONS ET BADGES */}
+          <div className="flex items-center gap-1 sm:gap-2 order-2 md:order-3">
+
+            {/* Badge d'étoiles ou couronne */}
+            {mode !== 'training' && mode !== 'revision' && !isReview && (
+              <div className="flex items-center h-9 md:h-10 px-2.5 md:px-3 bg-white border border-slate-100 shadow-sm rounded-xl text-xs md:text-sm font-bold mr-1 md:mr-2">
+                {customTitle ? (
+                  customTitle
+                ) : currentLevel < 9 ? (
+                  <div className="flex text-amber-400 gap-0.5 items-center">
+                    <Star size={15} className="fill-current" />
+                    <span className="text-slate-600 ml-1">{earnedStars}</span>
+                  </div>
+                ) : (
+                  <Crown size={15} className="text-amber-500 fill-current" />
+                )}
+              </div>
             )}
 
-            <span className="bg-slate-200/60 text-slate-600 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-semibold shrink-0 ml-1 flex items-center gap-1.5 tabular-nums">
-              {isReview && timeLeft !== undefined && timeLeft !== null ? (
-                <>
-                  <Clock size={14} className={timeLeft < 30 ? "text-red-500" : "text-slate-400"} />
-                  <span className={timeLeft < 30 ? "text-red-500 font-bold" : ""}>
-                    {Math.floor(timeLeft / 60).toString().padStart(2, '0')}:{(timeLeft % 60).toString().padStart(2, '0')}
-                  </span>
-                </>
-              ) : (
-                `${currentIndex + 1} / ${exercisesLength}`
-              )}
-            </span>
-
-            {showHelpButton && onShowHelp && (
+            {/* {showHelpButton && onShowHelp && (
               <button
                 onClick={onShowHelp}
-                className="flex text-slate-500 hover:text-amber-600 transition-colors bg-transparent items-center gap-1.5 text-sm sm:text-base font-bold active:scale-95 ml-1 sm:ml-2 px-1"
+                className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-100 transition-all bg-transparent rounded-xl outline-none"
                 title={getTranslation('auto.help_instructions', language)}
               >
-                <HelpCircle size={22} strokeWidth={2.5} className="sm:w-[24px] sm:h-[24px]" />
-                <span className="hidden sm:inline">{getTranslation('auto.help', language)}</span>
+                <HelpCircle strokeWidth={2.5} className="w-[20px] h-[20px] md:w-[22px] md:h-[22px]" />
               </button>
-            )}
-
+            )} */}
+            {/* 
             {!isReview && setShowRomanization && !currentExercise?.forceHideRomanization && (
               <button
                 onClick={() => setShowRomanization(!showRomanization)}
-                className={`w-10 h-10 flex flex-col items-center justify-center font-bold transition-colors bg-transparent border-none ${showRomanization
-                  ? "text-indigo-600 hover:text-indigo-700"
-                  : "text-slate-400 hover:text-slate-500"
+                className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center font-bold border transition-all rounded-xl outline-none ${showRomanization
+                    ? "text-indigo-600 bg-white border-slate-100 shadow-sm"
+                    : "text-slate-400 border-transparent hover:text-slate-600 hover:bg-white hover:border-slate-100 hover:shadow-sm"
                   }`}
-                title={
-                  showRomanization
-                    ? getTranslation('auto.hide_pronunciation', language)
-                    : getTranslation('auto.show_pronunciation', language)
-                }
+                title={showRomanization ? getTranslation('auto.hide_pronunciation', language) : getTranslation('auto.show_pronunciation', language)}
               >
-                <span className="text-xl font-mono">
+                <span className="text-md md:text-lg font-semibold leading-none select-none">
                   {showRomanization ? "aA" : "ก"}
                 </span>
               </button>
-            )}
+            )} */}
 
             {!isReview && setShowInfoModal && (
               <button
                 onClick={() => setShowInfoModal(true)}
-                className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-500 transition-colors bg-transparent border-none outline-none active:scale-95"
+                className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-100 transition-all bg-transparent rounded-xl outline-none"
                 title={getTranslation('auto.vocabulary_list', language)}
               >
-                <List size={24} strokeWidth={2.5} />
+                {/* Correction ici également */}
+                <List strokeWidth={2.5} className="w-[20px] h-[20px] md:w-[22px] md:h-[22px]" />
               </button>
             )}
           </div>
-        </div>
 
-        <div className="flex items-center gap-3 sm:gap-4 w-full max-w-3xl mx-auto px-4 mt-2">
-          <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
-            {mode === 'training' ? "Entraînement" : mode === 'revision' ? "Révision" : `${getTranslation('auto.lvl', language)} ${currentLevel + 1}`}
+          {/* 3. BARRE DE PROGRESSION (Prend 100% de large sur mobile et passe en dessous, se remet au milieu sur desktop) */}
+          <div className="w-full md:w-auto md:flex-1 flex items-center gap-3 order-3 md:order-2 mt-1 md:mt-0">
+            {/* Note le bg-slate-200/80 pour qu'on devine bien la barre vide sur ton fond gris très clair */}
+            <div className="flex-1 h-2.5 md:h-3 bg-slate-200/80 rounded-full overflow-hidden">
+              {isReview && timeLeft !== undefined && timeLeft !== null && initialTime ? (
+                <div
+                  className={`h-full transition-all duration-1000 rounded-full ${timeLeft < 30 ? 'bg-red-500' : timeLeft < 60 ? 'bg-amber-500' : 'bg-emerald-500'
+                    }`}
+                  style={{ width: `${(timeLeft / initialTime) * 100}%` }}
+                />
+              ) : (
+                <div
+                  className="bg-emerald-500 h-full transition-all duration-500 rounded-full"
+                  style={{ width: `${progress}%` }}
+                />
+              )}
+            </div>
+
+            {/* Numérotation de l'exercice */}
+            <span className="text-xs md:text-sm font-bold text-slate-400 tabular-nums min-w-[40px] text-right select-none">
+              {isReview && timeLeft !== undefined && timeLeft !== null ? (
+                <span className={timeLeft < 30 ? "text-red-500 animate-pulse" : ""}>
+                  {Math.floor(timeLeft / 60).toString().padStart(2, '0')}:{(timeLeft % 60).toString().padStart(2, '0')}
+                </span>
+              ) : (
+                `${currentIndex + 1}/${exercisesLength}`
+              )}
+            </span>
           </div>
 
-          <div className="flex-1 h-1.5 sm:h-2 bg-slate-200/60 rounded-full overflow-hidden min-w-[2rem]">
-            {isReview && timeLeft !== undefined && timeLeft !== null && initialTime ? (
-              <div
-                className={`h-full transition-all duration-1000 rounded-full ${timeLeft < 30 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.3)]' :
-                  timeLeft < 60 ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' :
-                    'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
-                  }`}
-                style={{ width: `${(timeLeft / initialTime) * 100}%` }}
-              />
-            ) : (
-              <div
-                className="bg-emerald-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.3)]"
-                style={{ width: `${progress}%` }}
-              />
-            )}
-          </div>
-
-          {mode !== 'training' && mode !== 'revision' && currentLevel < 9 && !isReview && (
-             <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
-                {getTranslation('auto.lvl', language)} {currentLevel + 2}
-             </div>
-          )}
         </div>
       </header>
     </>
