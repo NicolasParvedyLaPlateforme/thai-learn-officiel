@@ -1,8 +1,7 @@
 import { getTranslation } from "@/hooks/useTranslation";
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Exercise } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
-import { Volume2 } from 'lucide-react';
 import { OptionCardButton } from "@/components/ui/OptionCardButton";
 import { m, AnimatePresence } from "framer-motion";
 
@@ -152,29 +151,62 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
     }
   };
 
+  // Détermine la clé de consigne en fonction du type de placeholder
+  const instructionKey = (() => {
+    const { placeholderType } = exercise;
+    const aboveVowels = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ', '๋', '้', '๊', '่', 'ะ', 'า', 'แ', 'โ', 'ใ', 'ไ', 'เ', 'อ', 'ุ', 'ู'];
+    const answer = exercise.answer || '';
+    if (placeholderType === 'above' || placeholderType === 'below' || aboveVowels.includes(answer)) {
+      return 'exercise.find_vowel';
+    }
+    if (placeholderType === 'normal' && answer.length === 1) {
+      return 'exercise.find_consonant';
+    }
+    return 'exercise.find_letter';
+  })();
+
   return (
     <div className="w-full flex flex-col items-center">
-      {/* Display Text */}
-      <div className="w-full max-w-2xl mx-auto mb-20 bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
+      {/* Display Text : carte du mot avec la lettre manquante */}
+      <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
         {renderText()}
 
-        {/* Hint for missing letter (Phonetic & Audio) */}
-        <div className="flex flex-col items-center gap-2 mt-2">
-          {exercise.showPhoneticHint !== false && exercise.targetLetterPhonetic && (
-            <div className="text-lg font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full border border-slate-200">
-              {exercise.targetLetterPhonetic}
-            </div>
-          )}
-          {exercise.targetLetter && (
-            <button
-              onClick={() => playThaiTTS(exercise.targetLetter!)}
-              className="w-10 h-10 rounded-full bg-indigo-50 text-indigo-500 hover:bg-indigo-100 flex items-center justify-center transition-colors border border-indigo-100 shadow-sm"
+        {/* Indice phonétique de la lettre cible */}
+        {exercise.showPhoneticHint !== false && exercise.targetLetterPhonetic && (
+          <div className="text-lg font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full border border-slate-200">
+            {exercise.targetLetterPhonetic}
+          </div>
+        )}
+
+        {/* Icône son unique — style émeraude unifié — joue la lettre cible */}
+        {exercise.targetLetter && (
+          <button
+            onClick={() => playThaiTTS(exercise.targetLetter!)}
+            className="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 w-12 h-12 rounded-full flex items-center justify-center transition-colors"
+            aria-label={getTranslation('exercise.listen', language)}
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <Volume2 size={20} />
-            </button>
-          )}
-        </div>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </button>
+        )}
       </div>
+
+      {/* Consigne traduite sous la carte */}
+      <h2 className="text-xl font-semibold text-slate-800 text-center mt-5 mb-6 px-4 max-w-sm leading-snug">
+        {getTranslation(instructionKey, language)}
+      </h2>
 
       {/* Options */}
       <div className="w-full max-w-md mx-auto grid grid-cols-2 gap-3 sm:gap-4 px-4 sm:px-0">

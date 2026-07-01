@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { Exercise } from '@/types/lesson';
-import { Volume2 } from 'lucide-react';
 import { playThaiTTS } from '@/lib/tts';
 import { OptionCardButton } from '../ui/OptionCardButton';
 import { m, AnimatePresence } from 'framer-motion';
@@ -92,31 +91,42 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center w-full">
-        {/* Question */}
-        <h2 className="text-xl md:text-2xl font-bold text-slate-800 text-center mb-8">
-          {displayQuestionNode}
-        </h2>
 
-        {/* Display Word */}
-        <div className="w-full max-w-2xl mx-auto mb-8 bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
+        {/* Carte : mot thaï + icône son émeraude */}
+        <div className="w-full max-w-2xl mx-auto mb-4 bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
           <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center flex items-center justify-center">
             {exercise.originalWord}
           </div>
 
-          {/* Play target sound button */}
+          {/* Icône son — style émeraude unifié */}
           {exercise.targetLetter && (
-            <div className="flex flex-col items-center gap-2 mt-4">
-              <button
-                onClick={() => playThaiTTS(exercise.targetLetter!)}
-                className="w-12 h-12 rounded-full bg-indigo-50 text-indigo-500 hover:bg-indigo-100 flex items-center justify-center transition-colors border border-indigo-100 shadow-sm"
-                aria-label="Écouter le son"
+            <button
+              onClick={() => playThaiTTS(exercise.targetLetter!)}
+              className="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 w-12 h-12 rounded-full flex items-center justify-center transition-colors"
+              aria-label={getTranslation('exercise.listen', language)}
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <Volume2 size={24} />
-              </button>
-              <span className="text-sm font-medium text-slate-400">Écouter</span>
-            </div>
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+            </button>
           )}
         </div>
+
+        {/* Consigne */}
+        <h2 className="text-xl font-semibold text-slate-800 text-center mb-6 px-4 max-w-sm leading-snug">
+          {displayQuestionNode}
+        </h2>
       </div>
 
       {/* Options */}
