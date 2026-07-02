@@ -171,7 +171,7 @@ export default function QuestionArea({
             <span>🐘</span>
           )}
           {!imageUrl && (
-            <div className="absolute -right-2 -top-2 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full z-10"></div>
+            <div className="absolute -right-2 -top-2 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full z-10 "></div>
           )}
         </motion.div>
 
@@ -184,12 +184,12 @@ export default function QuestionArea({
         >
           <div className="relative w-full text-center mt-2 md:mt-0">
             {currentExercise.type === "intro" ? (
-              <div className="flex flex-col items-center gap-4">
-                <p className="text-2xl text-slate-600 font-medium">
+              <div className="flex flex-col items-center gap-4 ">
+                <p className="text-3xl text-slate-600 font-medium mb-2">
                   {currentExercise.question}
                 </p>
                 <div
-                  className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md px-6 py-4 rounded-3xl border border-slate-100 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors"
+                  className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md px-6 py-4 rounded-3xl border border-slate-100 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors "
                   onClick={() => playThaiTTS(currentExercise.answer)}
                 >
                   <span className="font-thai text-3xl md:text-4xl text-emerald-600 font-semibold">
@@ -207,7 +207,7 @@ export default function QuestionArea({
                         </span>
                       </div>
                     )}
-                  <div className="ml-2 bg-emerald-50 text-emerald-600 p-2.5 rounded-full">
+                  <div className="ml-2 bg-emerald-50 text-emerald-600 p-2.5 rounded-full ">
                     <svg
                       width="20"
                       height="20"
