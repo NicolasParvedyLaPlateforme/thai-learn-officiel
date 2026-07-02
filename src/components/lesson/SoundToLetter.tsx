@@ -95,7 +95,7 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
       <div className="flex flex-col items-center pt-6 gap-6 w-full max-w-2xl mx-auto h-[80vh] justify-center">
 
         {/* Carte : mot thaï uniquement */}
-        <div className="w-full bg-white rounded-3xl p-8 border border-slate-200 flex items-center justify-center shadow-sm">
+        <div className="w-full bg-white rounded-3xl p-8 border border-slate-200 flex items-center justify-center  shadow-[-2px_2px_rgba(100,116,139,0.4),-4px_4px_rgba(100,116,139,0.2),-6px_6px_rgba(100,116,139,0.1),-8px_8px_rgba(100,116,139,0.08),-10px_10px_rgba(100,116,139,0.04)]">
           <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center">
             {exercise.originalWord}
           </div>
