@@ -1,5 +1,15 @@
 {
   "auto.my_adventure": "My Adventure",
+  "next.title": "Auto Mode",
+  "next.subtitle": "It's just a button!",
+  "next.button": "Next",
+  "next.daily_unit": "Daily Unit",
+  "next.all_done": "Well done! All levels of this unit are completed.",
+  "next.all_done_sub": "Come back tomorrow for a new unit!",
+  "next.result.next": "Continue",
+  "next.result.quit": "Quit",
+  "next.sidebar_label": "Auto Mode",
+
   "auto.level": "Level",
   "auto.complete_level_1": "Complete Level 1",
   "auto.complete_level_2": "Complete Level 2",

@@ -143,4 +143,8 @@ export interface ProgressState {
   setLastMergedEmail: (email: string | null) => void;
   forceSyncTrigger: number;
   triggerForceSync: () => void;
+
+  // /next mode — unité tirée au hasard chaque jour
+  nextModeUnit: { unitIndex: number; date: string } | null;
+  setNextModeUnit: (data: { unitIndex: number; date: string } | null) => void;
 }

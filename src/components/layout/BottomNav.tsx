@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Search, ChevronUp, Pencil, Mic, Wand2, GraduationCap, RotateCcw } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Search, ChevronUp, Pencil, Mic, Wand2, GraduationCap, RotateCcw, Zap } from 'lucide-react';
+
 import { m as motion , AnimatePresence } from "motion/react";
 import { useProgressStore } from "@/lib/store";
 import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
@@ -69,9 +70,10 @@ export default function BottomNav() {
   const isSpeakActive = pathname === '/speak';
   
   const isLearnOrAlphabetActive = isLearnActive || isAlphabetActive || isSpeakActive;
+  const isNextActive = pathname === '/next';
 
   // We show BottomNav if we are on any of these main paths
-  const isVisible = isLearnActive || isAlphabetActive || isConversationsActive || isPracticeActive || isDetectiveActive || isSpeakActive;
+  const isVisible = isLearnActive || isAlphabetActive || isConversationsActive || isPracticeActive || isDetectiveActive || isSpeakActive || isNextActive;
 
   if (!isVisible || !mounted) return null;
 
@@ -131,6 +133,10 @@ export default function BottomNav() {
               <Link href={getHrefWithHash('/speak', 'speak')} onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isSpeakActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
                  <Mic size={20} className={`shrink-0 ${isSpeakActive ? 'text-emerald-500' : 'text-slate-400'}`} />
                  {t('sidebar.speaking') || 'Parler'}
+              </Link>
+              <Link href="/next" onClick={() => setActivePopover(null)} className={`flex items-center gap-3 p-3 rounded-xl transition-colors font-bold text-sm ${isNextActive ? 'bg-emerald-50 text-emerald-600' : 'text-slate-700 hover:bg-slate-50'}`}>
+                 <Zap size={20} className={`shrink-0 ${isNextActive ? 'text-emerald-500' : 'text-slate-400'}`} />
+                 {getTranslation('next.sidebar_label', language) || 'Mode Auto'}
               </Link>
             </motion.div>
           )}

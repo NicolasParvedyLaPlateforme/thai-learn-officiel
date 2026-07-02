@@ -1,12 +1,14 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { m as motion, AnimatePresence } from "motion/react";
 import { getTranslation } from "@/hooks/useTranslation";
 import { ErrorBoundary } from "@/components/providers/ErrorBoundary";
 import { HelpCircle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
+import { getLightweightLessons } from "@/actions/course";
 
 // Static imports for maximum offline resilience
 import WordMatch from './WordMatch';
@@ -19,6 +21,7 @@ import SoundToLetter from './SoundToLetter';
 import TrueFalse from './TrueFalse';
 import GlossaryModal from '@/components/lesson/GlossaryModal';
 import ResultScreen from '@/components/lesson/ResultScreen';
+import NextResultScreen from '@/components/next/NextResultScreen';
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import HeaderProgressBar from "@/components/lesson/HeaderProgressBar";
 import InstructionBlock from "@/components/lesson/InstructionBlock";
@@ -28,8 +31,19 @@ import QuestionArea from "@/components/lesson/QuestionArea";
 import { useLessonGameLogic } from "@/hooks/useLessonGameLogic";
 import { Exercise, Word } from "@/types";
 
+
 function LessonPageContent({ lesson }: { lesson: any }) {
   const { state, actions } = useLessonGameLogic(lesson);
+  const searchParams = useSearchParams();
+  const isFromNext = searchParams.get('from') === 'next';
+
+  // Leçons légères pour NextResultScreen (chargées uniquement si from=next)
+  const [allLessons, setAllLessons] = useState<any[]>([]);
+  useEffect(() => {
+    if (isFromNext) {
+      getLightweightLessons().then(setAllLessons);
+    }
+  }, [isFromNext]);
 
   if (state.showResumePrompt) {
     return (
@@ -58,6 +72,25 @@ function LessonPageContent({ lesson }: { lesson: any }) {
   }
 
   if (state.isFinished && state.currentLevel !== undefined) {
+    // Mode /next : afficher l'écran simplifié
+    if (isFromNext) {
+      return (
+        <NextResultScreen
+          lesson={lesson}
+          currentLevel={state.currentLevel}
+          earnedStars={state.earnedStars}
+          earnedXp={state.earnedXp}
+          isPart={state.isPart}
+          partIndex={state.partIndex}
+          totalParts={state.totalParts}
+          elapsedTimeSec={state.elapsedTimeSec}
+          language={state.language}
+          allLessons={allLessons}
+        />
+      );
+    }
+
+    // Mode standard : écran de fin normal
     const lessonIndex = parseInt(lesson.id.replace("lesson-", "")) - 1;
     const unitEndIndices = [11, 20, 30, 40, 50, 60, 70, 80, 90, 100];
     let currentUnitIndex = unitEndIndices.findIndex((idx) => lessonIndex < idx);

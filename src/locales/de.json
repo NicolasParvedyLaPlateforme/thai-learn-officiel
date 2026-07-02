@@ -1,5 +1,15 @@
 {
   "auto.my_adventure": "Mein Abenteuer",
+  "next.title": "Auto-Modus",
+  "next.subtitle": "Es ist nur ein Knopf!",
+  "next.button": "Weiter",
+  "next.daily_unit": "Tägliche Einheit",
+  "next.all_done": "Gut gemacht! Alle Level der Einheit sind abgeschlossen.",
+  "next.all_done_sub": "Komm morgen für eine neue Einheit zurück!",
+  "next.result.next": "Weiter",
+  "next.result.quit": "Beenden",
+  "next.sidebar_label": "Auto-Modus",
+
   "auto.level": "Level",
   "auto.complete_level_1": "Level 1 abschließen",
   "auto.complete_level_2": "Level 2 abschließen",

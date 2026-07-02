@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins, Mic, ChevronUp, Pencil, RotateCcw, GraduationCap } from 'lucide-react';
+import { BookOpen, MessageCircle, Brain, Globe, Star, Heart, Flame, Search, User, LogOut, Coins, Mic, ChevronUp, Pencil, RotateCcw, GraduationCap, Zap } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
 import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 import { useSession, signOut } from 'next-auth/react';
@@ -25,7 +25,9 @@ export default function DesktopSidebarLeft() {
   const isPracticeActive = pathname === '/practice';
   const isSpeakActive = pathname === '/speak';
   const isDetectiveActive = pathname.startsWith('/detective');
+  const isNextActive = pathname === '/next';
   
+
   const [mounted, setMounted] = useState(false);
   const [isMobileLandscape, setIsMobileLandscape] = useState(false);
 
@@ -40,9 +42,9 @@ export default function DesktopSidebarLeft() {
   }, []);
 
   // Decide whether to show navigation
-  const isVisible = (isLearnActive || isAlphabetActive || isConversationsActive || isSpeakActive || isReviewActive || isPairsActive || pathname === '/writing' || isPracticeActive || isDetectiveActive) && !isExerciseRunning;
+  const isVisible = (isLearnActive || isAlphabetActive || isConversationsActive || isSpeakActive || isReviewActive || isPairsActive || pathname === '/writing' || isPracticeActive || isDetectiveActive || isNextActive) && !isExerciseRunning;
 
-  const isLearnCategoryActive = isLearnActive || isAlphabetActive || isSpeakActive;
+  const isLearnCategoryActive = isLearnActive || isAlphabetActive || isSpeakActive || isNextActive;
   const isImmersionCategoryActive = isConversationsActive || isDetectiveActive;
   const isPracticeCategoryActive = isPracticeActive || isPairsActive || isReviewActive || pathname === '/writing';
 
@@ -119,6 +121,7 @@ export default function DesktopSidebarLeft() {
             <NavItem href={getHrefWithHash('/learn', 'learn')} icon={<BookOpen size={20} strokeWidth={2.5} />} label={t('sidebar.vocabulary') || 'Vocabulaire'} active={isLearnActive} hasSuggestion={globalSuggested?.type === 'learn' && !isLearnActive} isSubItem />
             <NavItem href={getHrefWithHash('/alphabet', 'alphabet')} icon={<Globe size={20} strokeWidth={2.5} />} label={t('sidebar.alphabet')} active={isAlphabetActive} hasSuggestion={globalSuggested?.type === 'alphabet' && !isAlphabetActive} isSubItem />
             <NavItem href={getHrefWithHash('/speak', 'speak')} icon={<Mic size={20} strokeWidth={2.5} />} label={t('sidebar.speaking') || 'Parler'} active={isSpeakActive} isSubItem />
+            <NavItem href="/next" icon={<Zap size={20} strokeWidth={2.5} />} label={getTranslation('next.sidebar_label', language) || 'Mode Auto'} active={isNextActive} isSubItem />
           </NavCategory>
 
           <NavCategory 

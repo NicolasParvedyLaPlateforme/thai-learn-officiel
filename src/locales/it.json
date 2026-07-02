@@ -1,5 +1,15 @@
 {
   "auto.my_adventure": "La Mia Avventura",
+  "next.title": "Modalità Automatica",
+  "next.subtitle": "È solo un pulsante!",
+  "next.button": "Avanti",
+  "next.daily_unit": "Unità del giorno",
+  "next.all_done": "Bravo! Tutti i livelli dell'unità sono completati.",
+  "next.all_done_sub": "Torna domani per una nuova unità!",
+  "next.result.next": "Continua",
+  "next.result.quit": "Esci",
+  "next.sidebar_label": "Modalità Auto",
+
   "auto.level": "Livello",
   "auto.complete_level_1": "Completa il Livello 1",
   "auto.complete_level_2": "Completa il Livello 2",

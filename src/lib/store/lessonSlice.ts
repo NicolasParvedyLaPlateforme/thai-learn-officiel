@@ -35,6 +35,9 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
   lastPlayedLessonType: null,
   setLastPlayedLesson: (id: string, type: 'learn' | 'alphabet' | 'speak') => set({ lastPlayedLessonId: id, lastPlayedLessonType: type }),
 
+  nextModeUnit: null,
+  setNextModeUnit: (data: { unitIndex: number; date: string } | null) => set({ nextModeUnit: data }),
+
   saveInProgressLesson: (key: string, stateData: any) => set((state: ProgressState) => {
     const now = Date.now();
     if (stateData === null) {
