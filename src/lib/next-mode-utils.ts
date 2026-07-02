@@ -134,7 +134,38 @@ function isLevelAccessible(
 // ─── Algorithme principal ────────────────────────────────────────────────────
 
 /**
+ * Identifie si une leçon est un "Bilan" (révision d'unité).
+ * Même détection que le reste du projet (levelSplits, LessonClientPage, etc.)
+ */
+function isBilanLesson(lesson: any): boolean {
+  return (
+    lesson.isReview === true ||
+    lesson.id?.startsWith('bilan-') ||
+    lesson.id?.includes('-bilan') ||
+    lesson.title?.toLowerCase().includes('bilan') ||
+    lesson.titleEn?.toLowerCase().includes('review')
+  );
+}
+
+/**
+ * Vérifie si toutes les leçons d'une liste ont leur niveau Ultime (levelIndex=10) terminé.
+ */
+function areAllUltimatesComplete(
+  lessons: any[],
+  fullLevelsCompleted: Record<string, number[]>,
+  lessonStars: Record<string, number[]>
+): boolean {
+  return lessons.every((l) =>
+    isFullLevelComplete(l.id, 10, fullLevelsCompleted, lessonStars)
+  );
+}
+
+/**
  * Calcule le prochain exercice à lancer en mode /next.
+ *
+ * Règle des bilans :
+ *   Les leçons de type "Bilan" (révision d'unité) ne sont proposées
+ *   qu'une fois que tous les niveaux Ultimes des leçons normales sont terminés.
  *
  * @param unitLessons - Leçons de l'unité du jour (dans l'ordre)
  * @param lessonLevels - Record<lessonId, levelReached>
@@ -154,15 +185,57 @@ export function computeNextLesson(
 ): NextLessonResult | null {
   if (!unitLessons || unitLessons.length === 0) return null;
 
-  // Mélanger les leçons de manière pseudo-aléatoire mais stable pour la journée
-  const shuffled = shuffleWithSeed([...unitLessons], dailySeed);
+  // Séparer les leçons normales des bilans
+  const regularLessons = unitLessons.filter((l) => !isBilanLesson(l));
+  const bilanLessons = unitLessons.filter((l) => isBilanLesson(l));
 
+  // Mélanger de manière pseudo-aléatoire mais stable pour la journée
+  const shuffledRegular = shuffleWithSeed([...regularLessons], dailySeed);
+  const shuffledBilan   = shuffleWithSeed([...bilanLessons],   dailySeed + 1);
+
+  // ── Étape 1 : Appliquer la séquence complète sur les leçons normales ─────
+  const regularResult = runSequence(
+    shuffledRegular,
+    lessonLevels,
+    lessonPartsCompleted,
+    fullLevelsCompleted,
+    lessonStars
+  );
+  if (regularResult) return regularResult;
+
+  // ── Étape 2 : Les bilans ne démarrent qu'une fois tous les Ultimes normaux terminés ──
+  if (bilanLessons.length === 0) return null;
+
+  if (!areAllUltimatesComplete(regularLessons, fullLevelsCompleted, lessonStars)) {
+    // Les leçons normales ne sont pas toutes au niveau Ultime : pas encore de bilan
+    return null;
+  }
+
+  // ── Étape 3 : Appliquer la séquence sur les bilans ───────────────────────
+  return runSequence(
+    shuffledBilan,
+    lessonLevels,
+    lessonPartsCompleted,
+    fullLevelsCompleted,
+    lessonStars
+  );
+}
+
+/**
+ * Applique NEXT_MODE_SEQUENCE sur une liste de leçons et retourne le premier exercice trouvé.
+ */
+function runSequence(
+  lessons: any[],
+  lessonLevels: Record<string, number>,
+  lessonPartsCompleted: Record<string, number[]>,
+  fullLevelsCompleted: Record<string, number[]>,
+  lessonStars: Record<string, number[]>
+): NextLessonResult | null {
   for (const step of NEXT_MODE_SEQUENCE) {
     const { type, levelIndex } = step;
 
     if (type === 'parts') {
-      // Chercher une leçon avec des parts non complétées pour ce niveau
-      for (const lesson of shuffled) {
+      for (const lesson of lessons) {
         if (!isLevelAccessible(lesson.id, levelIndex, lessonLevels)) continue;
 
         const nextPart = getNextPart(lesson.id, levelIndex, lesson, lessonPartsCompleted);
@@ -181,7 +254,7 @@ export function computeNextLesson(
       // type === 'full'
       const isUltimate = levelIndex === 10;
 
-      for (const lesson of shuffled) {
+      for (const lesson of lessons) {
         if (!isLevelAccessible(lesson.id, levelIndex, lessonLevels)) continue;
         if (!isFullLevelComplete(lesson.id, levelIndex, fullLevelsCompleted, lessonStars)) {
           return {
