@@ -17,7 +17,17 @@ interface Props {
   onAddMistake?: () => void;
 }
 
-export default React.memo(function MissingLetter({ exercise, selected, onChange, disabled, onAutoCheck, isChecking, isCorrect, language = 'fr', onAddMistake }: Props) {
+export default React.memo(function MissingLetter({
+  exercise,
+  selected,
+  onChange,
+  disabled,
+  onAutoCheck,
+  isChecking,
+  isCorrect,
+  language = 'fr',
+  onAddMistake
+}: Props) {
 
   // Remplacer le tiret par la lettre sélectionnée, ou le laisser tel quel
   const renderText = () => {
@@ -44,7 +54,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
     if (!originalWord || missingIndex === undefined || missingIndex === -1) {
       // Ultimate Fallback
       return (
-        <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center">
+        <div className="text-5xl md:text-6xl font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex items-center justify-center font-bold">
           {(exercise.missingLetterText || "").split('').map((char, index) => (
             <span key={index} className={char === '_' ? 'text-amber-500 mx-1' : (char === selected ? 'text-amber-500 font-bold animate-in zoom-in duration-300' : '')}>
               {selected && char === '_' ? selected : char}
@@ -89,7 +99,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
       const isComplexCluster = afterMissing.length > 0 || hasUpperVowel;
 
       return (
-        <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px]">
+        <div className="text-5xl md:text-6xl font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px] font-bold">
           <span>{beforeBase}</span>
 
           <span className="relative inline-flex items-center justify-center ">
@@ -97,13 +107,13 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
             {selected ? (
               // ÉTAT TROUVÉ : Si c'est un cluster complexe (2ème voyelle/ton), on le laisse en gris (sans coloration).
               // Sinon (voyelle simple), on peut le laisser en orange.
-              <span className={`animate-in zoom-in duration-300 ${isComplexCluster ? 'text-slate-800' : 'text-amber-500'}`}>
+              <span className={`animate-in zoom-in duration-300 ${isComplexCluster ? 'text-slate-900' : 'text-amber-500'}`}>
                 {baseChar}{selected}{afterMissing}
               </span>
             ) : (
               // ÉTAT VIDE : Méthode 100% native. Pas de texte flottant ou invisible.
               <>
-                <span className="text-slate-800 z-10">
+                <span className="text-slate-900 z-10">
                   {baseChar}{afterMissing}
                 </span>
 
@@ -131,7 +141,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
 
     // Normal non-combining rendering (like consonants, or front/back vowels)
     return (
-      <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center min-h-[80px] flex items-center justify-center">
+      <div className="text-5xl md:text-6xl font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex items-center justify-center font-bold">
         <span>{originalWord.substring(0, missingIndex)}</span>
         {!selected ? (
           <span className="text-amber-500 mx-1 relative -top-5">_</span>
@@ -166,65 +176,91 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
   })();
 
   return (
-    <div className="w-full h-full flex flex-col items-center px-4">
+    <div className="flex flex-col h-full w-full max-w-2xl mx-auto px-4">
 
       {/* Contenu principal : carte en haut, éléments empilés */}
-      <div className="flex flex-col items-center pt-6 gap-6 w-full max-w-sm lg:mt-20 mt-[40%]">
+      <div className="flex flex-col items-center h-[80vh] gap-6 justify-center">
 
-        {/* Carte : mot avec la lettre manquante + indice phonétique */}
-        <div className="w-full bg-white rounded-3xl p-6 border border-slate-200 flex flex-col items-center justify-center gap-4 shadow-sm relative overflow-hidden">
-          {renderText()}
-
-          {/* Indice phonétique de la lettre cible — reste dans la carte */}
-          {exercise.showPhoneticHint !== false && exercise.targetLetterPhonetic && (
-            <div className="text-lg font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full border border-slate-200">
-              {exercise.targetLetterPhonetic}
+        {/* Carte Principale Unifiée (Style Flashcard) */}
+        <m.div
+          key={exercise.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white border border-slate-200 shadow-sm rounded-[1rem] flex flex-col w-full min-w-[280px] max-w-[360px] overflow-hidden"
+        >
+          <div className="flex flex-col p-6 w-full">
+            {/* Tag "mot" */}
+            <div className="w-full flex justify-start mb-10">
+              <span className="text-slate-500 border border-slate-200 rounded px-3 py-1 text-sm">
+                mot
+              </span>
             </div>
-          )}
-        </div>
 
-        {/* Pill : mot français + icône son côte à côte */}
-        {(exercise.question || exercise.targetLetter) && (
-          <button
-            onClick={() => exercise.targetLetter && playThaiTTS(exercise.targetLetter)}
-            className="inline-flex items-center gap-3 bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm hover:bg-slate-50 transition-colors"
-          >
-            {exercise.question && (
-              <span className="text-2xl font-semibold text-slate-800">{exercise.question}</span>
+            {/* Mot thaï avec lettre manquante */}
+            <div className="mb-14">
+              {renderText()}
+            </div>
+
+            {/* Traduction et Phonétique */}
+            {(exercise.question || exercise.targetLetterPhonetic) && (
+              <div className="flex flex-col items-center mb-10 text-center">
+                {exercise.question && (
+                  <span className="text-[1.35rem] font-medium text-slate-900 mb-2">
+                    {exercise.question}
+                  </span>
+                )}
+                {exercise.showPhoneticHint !== false && exercise.targetLetterPhonetic && (
+                  <span className="text-lg text-slate-400 font-light">
+                    [{exercise.targetLetterPhonetic}]
+                  </span>
+                )}
+              </div>
             )}
-            <div className="bg-emerald-50 text-emerald-600 p-2.5 rounded-full shrink-0">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-              </svg>
-            </div>
-          </button>
-        )}
 
-        {/* Consigne traduite */}
-        <h2 className="text-xl font-semibold text-slate-800 text-center leading-snug px-4 ">
+            {/* Bouton icône son */}
+            {(exercise.question || exercise.targetLetter) && (
+              <button
+                onClick={() => exercise.targetLetter && playThaiTTS(exercise.targetLetter)}
+                className="mx-auto bg-emerald-50 text-emerald-600 p-4 rounded-full border border-emerald-100 hover:bg-emerald-100 transition-colors mb-2"
+                aria-label="Écouter la prononciation"
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Barre de progression verte en bas de la carte */}
+          <div className="w-full h-1.5 bg-slate-100 mt-auto flex">
+            <div className="h-full bg-emerald-400 w-full rounded-bl-[1rem]"></div>
+          </div>
+        </m.div>
+
+        {/* Consigne */}
+        <h2 className="font-semibold text-center leading-snug max-w-xs p-[29px] text-[25px] bg-[wheat] rounded-[7px] border-b-[5px] border-[#825500] text-[#825500]">
           {getTranslation(instructionKey, language)}
         </h2>
       </div>
 
-      {/* Options — collées en bas au-dessus du Footer */}
-      <div className="mt-auto w-full max-w-md mx-auto grid grid-cols-2 gap-3 sm:gap-4 lg:pb-[40px]">
+      {/* Options — fixées en bas au-dessus du Footer */}
+      <div className="mt-auto w-full max-w-md mx-auto grid grid-cols-2 gap-3 sm:gap-4 lg:pb-[110px] pb-2">
         <AnimatePresence mode="popLayout">
           {exercise.options.map((opt: any, index: number) => {
             const isSelected = selected === opt.id;
             // On gère l'état d'erreur visuelle si isChecking et que c'est sélectionné et faux
             const isWrong = isChecking && isSelected && !isCorrect;
-            const isRight = isChecking && isSelected && isCorrect;
 
             return (
               <m.div
@@ -241,7 +277,7 @@ export default React.memo(function MissingLetter({ exercise, selected, onChange,
                   isError={isWrong}
                   disabled={disabled}
                   onClick={() => handleSelect(opt.id)}
-                  className="w-full h-full"
+                  className="w-full h-full flex flex-col items-center justify-center relative pb-1 gap-2 text-xl font-semibold"
                 >
                   <div className="flex items-center justify-center relative pb-1">
                     <span className="font-thai text-4xl leading-none font-normal w-full block text-center">{opt.th}</span>

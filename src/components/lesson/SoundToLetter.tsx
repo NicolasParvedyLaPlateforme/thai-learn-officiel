@@ -17,7 +17,17 @@ interface Props {
   onAddMistake?: () => void;
 }
 
-export default React.memo(function SoundToLetter({ exercise, selected, onChange, disabled, onAutoCheck, isChecking, isCorrect, language = 'fr', onAddMistake }: Props) {
+export default React.memo(function SoundToLetter({
+  exercise,
+  selected,
+  onChange,
+  disabled,
+  onAutoCheck,
+  isChecking,
+  isCorrect,
+  language = 'fr',
+  onAddMistake
+}: Props) {
 
   const handleSelect = (val: string) => {
     if (disabled) return;
@@ -89,74 +99,94 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
   }
 
   return (
-    <div className="w-full h-full flex flex-col px-4">
+    <div className="flex flex-col h-full w-full max-w-2xl mx-auto px-4">
 
-      {/* Contenu principal : carte en haut */}
-      <div className="flex flex-col items-center pt-6 gap-6 w-full max-w-2xl mx-auto h-[80vh] justify-center">
+      {/* Contenu principal : carte en haut, éléments empilés */}
+      <div className="flex flex-col items-center h-[80vh] gap-6 justify-center">
 
-        {/* Carte : mot thaï uniquement */}
-        <div className="w-full bg-white rounded-3xl p-8 border border-slate-200 flex items-center justify-center  shadow-[-2px_2px_rgba(100,116,139,0.4),-4px_4px_rgba(100,116,139,0.2),-6px_6px_rgba(100,116,139,0.1),-8px_8px_rgba(100,116,139,0.08),-10px_10px_rgba(100,116,139,0.04)]">
-          <div className="text-5xl md:text-6xl font-thai text-slate-800 leading-relaxed text-center">
-            {exercise.originalWord}
-          </div>
-        </div>
-
-        {/* Pill : icône son dans fond blanc arrondi */}
-        {exercise.targetLetter && (
-          <button
-            onClick={() => playThaiTTS(exercise.targetLetter!)}
-            className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm hover:bg-slate-50 transition-colors"
-            aria-label={getTranslation('exercise.listen', language)}
-          >
-            <div className="bg-emerald-50 text-emerald-600 p-2.5 rounded-full shrink-0">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-              </svg>
+        {/* Carte Principale Unifiée (Style Flashcard) */}
+        <m.div
+          key={exercise.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white border border-slate-200 shadow-sm rounded-[1rem] flex flex-col w-full min-w-[280px] max-w-[360px] overflow-hidden"
+        >
+          <div className="flex flex-col p-6 w-full">
+            {/* Tag "mot" */}
+            <div className="w-full flex justify-start mb-10">
+              <span className="text-slate-500 border border-slate-200 rounded px-3 py-1 text-sm">
+                mot
+              </span>
             </div>
-          </button>
-        )}
+
+            {/* Mot thaï */}
+            <div className="text-7xl md:text-8xl font-bold font-thai text-slate-900 leading-none text-center mb-14">
+              {exercise.originalWord || "???"}
+            </div>
+
+            {/* Bouton icône son */}
+            {exercise.targetLetter && (
+              <button
+                onClick={() => playThaiTTS(exercise.targetLetter!)}
+                className="mx-auto bg-emerald-50 text-emerald-600 p-4 rounded-full border border-emerald-100 hover:bg-emerald-100 transition-colors mb-2"
+                aria-label={getTranslation('exercise.listen', language)}
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Barre de progression verte en bas de la carte */}
+          <div className="w-full h-1.5 bg-slate-100 mt-auto flex">
+            <div className="h-full bg-emerald-400 w-full rounded-bl-[1rem]"></div>
+          </div>
+        </m.div>
 
         {/* Consigne */}
-        <h2 className="text-xl font-semibold text-slate-800 text-center px-4 max-w-sm leading-snug">
+        <h2 className="font-semibold text-center leading-snug max-w-xs p-[29px] text-[25px] bg-[wheat] rounded-[7px] border-b-[5px] border-[#825500] text-[#825500]">
           {displayQuestionNode}
         </h2>
       </div>
 
-      {/* Options — collées en bas au-dessus du Footer */}
-      <div className="mt-auto w-full max-w-2xl mx-auto lg:pb-[110px] pb-2">
+      {/* Options — fixées en bas au-dessus du Footer */}
+      <div className="mt-auto w-full max-w-md mx-auto lg:pb-[110px] pb-2">
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {exercise.options.map((opt: any, index: number) => {
               const isSelected = selected === opt.id;
 
               return (
                 <m.div
                   key={opt.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.2, delay: index * 0.05 }}
                 >
                   <OptionCardButton
-                    className="w-full h-full"
+                    className="w-full h-full flex flex-col items-center justify-center relative pb-1 gap-2 text-xl font-semibold"
                     isSelected={isSelected}
                     isSuccess={isChecking ? (opt.id === exercise.answer) : undefined}
-                    isError={isWrong}
+                    isError={isWrong && isSelected}
                     disabled={disabled}
                     onClick={() => handleSelect(opt.id)}
                   >
-                    <div className="w-full h-full flex flex-col items-center justify-center relative pb-1 gap-2">
-                      <span className="font-thai text-4xl leading-none font-normal w-full block text-center mt-2">{opt.th}</span>
+                    <div className="flex items-center justify-center relative pb-1 w-full">
+                      <span className="font-thai text-4xl leading-none font-normal w-full block text-center">{opt.th}</span>
                     </div>
                   </OptionCardButton>
                 </m.div>
