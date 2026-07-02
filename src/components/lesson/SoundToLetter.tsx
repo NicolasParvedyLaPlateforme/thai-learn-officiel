@@ -92,7 +92,7 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
     <div className="w-full h-full flex flex-col px-4">
 
       {/* Contenu principal : carte en haut */}
-      <div className="flex flex-col items-center pt-6 gap-6 w-full max-w-2xl mx-auto">
+      <div className="flex flex-col items-center pt-6 gap-6 w-full max-w-2xl mx-auto h-[80vh] justify-center">
 
         {/* Carte : mot thaï uniquement */}
         <div className="w-full bg-white rounded-3xl p-8 border border-slate-200 flex items-center justify-center shadow-sm">
@@ -134,7 +134,7 @@ export default React.memo(function SoundToLetter({ exercise, selected, onChange,
       </div>
 
       {/* Options — collées en bas au-dessus du Footer */}
-      <div className="mt-auto w-full max-w-2xl mx-auto pb-[110px]">
+      <div className="mt-auto w-full max-w-2xl mx-auto lg:pb-[110px] pb-2">
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <AnimatePresence>
             {exercise.options.map((opt: any, index: number) => {

@@ -56,7 +56,7 @@ export default React.memo(function TrueFalse({
     <div className="flex flex-col h-full w-full max-w-2xl mx-auto px-4">
 
       {/* Contenu principal : carte en haut, éléments empilés */}
-      <div className="flex flex-col items-center pt-6 gap-6">
+      <div className="flex flex-col items-center h-[80vh] gap-6 justify-center">
 
         {/* Carte : mot thaï */}
         <m.div
@@ -110,7 +110,7 @@ export default React.memo(function TrueFalse({
       </div>
 
       {/* Boutons Vrai/Faux — fixés en bas, au-dessus du Footer (min-h ~100px) */}
-      <div className="mt-auto grid grid-cols-2 gap-3 max-w-sm mx-auto w-full pb-[110px]">
+      <div className="mt-auto grid grid-cols-2 gap-3 max-w-sm mx-auto w-full lg:pb-[110px] pb-2">
         {(['true', 'false'] as const).map((val) => {
           const { isSelected, isSuccess, isError } = getState(val);
           return (
@@ -121,7 +121,7 @@ export default React.memo(function TrueFalse({
               isError={isError}
               disabled={disabled}
               onClick={() => handleSelect(val)}
-              className="w-full text-lg font-semibold"
+              className="w-full h-full flex flex-col items-center justify-center relative pb-1 gap-2 text-xl font-semibold"
             >
               {val === 'true'
                 ? getTranslation('exercise.true', language)
