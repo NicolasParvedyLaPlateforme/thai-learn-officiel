@@ -87,9 +87,17 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
     }
   }
 
-  // Create the main text content, always wrapping it in a TooltipHint if we have the translation
+  // Create the main text content, always wrapping it in a TooltipHint if we have the translation [Mot à traduire exemple Bonjour] 
+  //ne pas supprimer, car c'est pas sûr qu'on garde
+  const OldinnerText = (
+    <span className={`inline-block ${getDottedClass()} ${isReverse ? 'font-thai text-3xl md:text-5xl text-slate-600 mb-2' : 'text-slate-600 font-medium'}`}>
+      {highlightedText}
+    </span>
+  );
+
+  // Create the main text content, always wrapping it in a TooltipHint if we have the translation [Mot à traduire exemple Bonjour]
   const innerText = (
-    <span className={`inline-block ${getDottedClass()} ${isReverse ? 'font-thai text-3xl md:text-5xl mb-2' : ''}`}>
+    <span className={`inline-block ${isReverse ? 'font-thai text-3xl md:text-5xl text-slate-600 mb-2' : 'text-slate-600 text-medium'}`}>
       {highlightedText}
     </span>
   );
@@ -123,6 +131,8 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
     </span>
   );
 
+  disableTooltips = true; // en cas de besoin de reactiver les tooltips - ne pas supprimer et ne pas toucher 
+
   const tooltipWrappedContent = tooltipTranslation && !disableTooltips ? (
     <TooltipHint
       className="inline-block relative z-[100]"
@@ -149,7 +159,7 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
       <div className="relative inline-flex items-center flex-col">
         {tooltipWrappedContent}
         {rightElement && (
-          <span className="left-full ml-3 top-1/2 -translate-y-1/2 inline-flex items-center shrink-0">
+          <span className="left-full top-1/2 -translate-y-1/2 inline-flex items-center shrink-0 mt-3">
             {rightElement}
           </span>
         )}

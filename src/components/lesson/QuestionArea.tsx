@@ -252,14 +252,14 @@ export default function QuestionArea({
                     currentThaiWordForAudio={currentThaiWordForAudio}
                     rightElement={
                       <IconButton
-                        size="sm"
+                        size="lg"
                         onClick={() => playThaiTTS(currentExercise.answer)}
-                        className="text-emerald-500 hover:text-emerald-600 hover:bg-emerald-100 bg-emerald-50 shrink-0 ml-2"
+                        className="text-slate-500 hover:text-blue-600 hover:bg-slate-100 bg-slate-50 shrink-0 ml-2"
                         title={t('exercise.listen')}
                       >
                         <svg
-                          width="20"
-                          height="20"
+                          width="30"
+                          height="30"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
