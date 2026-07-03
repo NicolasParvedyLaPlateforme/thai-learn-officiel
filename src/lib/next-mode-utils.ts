@@ -249,22 +249,44 @@ function runSequence(
 ): NextLessonResult | null {
   if (lessons.length === 0) return null;
 
-  // ── Phase 1 : Parts des niveaux 1-4, leçon par leçon ────────────────────
+  // ── Phase 1 : Parts des niveaux 1-4 (Progression Verticale) ────────────────
   for (const lesson of lessons) {
-    for (const levelIndex of [0, 1, 2, 3]) {
-      if (!isLevelAccessible(lesson.id, levelIndex, lessonLevels)) continue;
-
-      const nextPart = getNextPart(lesson.id, levelIndex, lesson, lessonPartsCompleted);
-      if (nextPart) {
-        return {
-          lessonId: lesson.id,
-          levelIndex,
-          type: 'parts',
-          partIndex: nextPart.partIndex,
-          totalParts: nextPart.totalParts,
-          isUltimate: false,
-        };
+    let hasMoreParts = true;
+    let targetPartIndex = 0;
+    
+    while (hasMoreParts) {
+      hasMoreParts = false;
+      for (const levelIndex of [0, 1, 2, 3]) {
+        // Vertical unlock: to access levelIndex, Part 1 (index 0) of levelIndex - 1 must be completed.
+        let isVerticallyAccessible = true;
+        if (levelIndex > 0) {
+          const prevKey = `${lesson.id}_level-${levelIndex - 1}`;
+          const prevDone = lessonPartsCompleted[prevKey] || [];
+          isVerticallyAccessible = prevDone.includes(0);
+        }
+        
+        if (!isVerticallyAccessible) continue;
+        
+        const totalParts = lesson ? getLevelSplit(levelIndex, lesson) : 1;
+        if (targetPartIndex < totalParts) {
+          hasMoreParts = true;
+          
+          const key = `${lesson.id}_level-${levelIndex}`;
+          const done = lessonPartsCompleted[key] || [];
+          
+          if (!done.includes(targetPartIndex)) {
+            return {
+              lessonId: lesson.id,
+              levelIndex,
+              type: 'parts',
+              partIndex: targetPartIndex,
+              totalParts,
+              isUltimate: false,
+            };
+          }
+        }
       }
+      targetPartIndex++;
     }
   }
 
