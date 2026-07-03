@@ -53,6 +53,12 @@ export default React.memo(function OneLetterDifference({
           transition={{ type: "spring", bounce: 0.4 }}
           className="flex flex-col items-center justify-center gap-4"
         >
+          <div className="text-center mb-2 md:mb-6">
+            <h2 className="text-2xl md:text-3xl font-medium text-slate-600">
+              {exercise.question}
+            </h2>
+          </div>
+
           {hintType === 'sound' && (
             <button
               onClick={() => targetLetter && playThaiTTS(targetLetter.letter)}
