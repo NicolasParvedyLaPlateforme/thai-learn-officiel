@@ -222,7 +222,23 @@ export function computeNextLesson(
 }
 
 /**
- * Applique NEXT_MODE_SEQUENCE sur une liste de leçons et retourne le premier exercice trouvé.
+ * Applique la séquence de progression sur une liste de leçons.
+ *
+ * Ordre d'itération : LEÇON EN PREMIER, puis niveaux au sein de la leçon.
+ *
+ * Phase 1 — Parts des niveaux 1 à 4, leçon par leçon :
+ *   Leçon A : parts niv.1 → parts niv.2 → parts niv.3 → parts niv.4
+ *   Leçon B : parts niv.1 → parts niv.2 → parts niv.3 → parts niv.4
+ *   ...
+ *
+ * Phase 2+3 — Paires (Full niv.N → Parts niv.N+4), leçon par leçon :
+ *   Pour chaque paire i (0..5) :
+ *     Leçon A : Full niv.i → Parts niv.(i+4)
+ *     Leçon B : Full niv.i → Parts niv.(i+4)
+ *     ...
+ *   Puis paire suivante.
+ *
+ * Phase 4 — Niveau Ultime, leçon par leçon.
  */
 function runSequence(
   lessons: any[],
@@ -231,18 +247,58 @@ function runSequence(
   fullLevelsCompleted: Record<string, number[]>,
   lessonStars: Record<string, number[]>
 ): NextLessonResult | null {
-  for (const step of NEXT_MODE_SEQUENCE) {
-    const { type, levelIndex } = step;
+  if (lessons.length === 0) return null;
 
-    if (type === 'parts') {
-      for (const lesson of lessons) {
-        if (!isLevelAccessible(lesson.id, levelIndex, lessonLevels)) continue;
+  // ── Phase 1 : Parts des niveaux 1-4, leçon par leçon ────────────────────
+  for (const lesson of lessons) {
+    for (const levelIndex of [0, 1, 2, 3]) {
+      if (!isLevelAccessible(lesson.id, levelIndex, lessonLevels)) continue;
 
-        const nextPart = getNextPart(lesson.id, levelIndex, lesson, lessonPartsCompleted);
+      const nextPart = getNextPart(lesson.id, levelIndex, lesson, lessonPartsCompleted);
+      if (nextPart) {
+        return {
+          lessonId: lesson.id,
+          levelIndex,
+          type: 'parts',
+          partIndex: nextPart.partIndex,
+          totalParts: nextPart.totalParts,
+          isUltimate: false,
+        };
+      }
+    }
+  }
+
+  // ── Phase 2+3 : Paires Full niv.i → Parts niv.(i+4), leçon par leçon ───
+  //   i=0 : Full niv.1 → Parts niv.5
+  //   i=1 : Full niv.2 → Parts niv.6
+  //   ...
+  //   i=5 : Full niv.6 → Parts niv.10
+  for (let i = 0; i <= 5; i++) {
+    const fullLevelIndex  = i;      // 0..5  (niveaux 1..6)
+    const partsLevelIndex = i + 4;  // 4..9  (niveaux 5..10)
+
+    for (const lesson of lessons) {
+      // a) Le Full level doit être fait d'abord (prérequis du parts level suivant)
+      if (isLevelAccessible(lesson.id, fullLevelIndex, lessonLevels)) {
+        if (!isFullLevelComplete(lesson.id, fullLevelIndex, fullLevelsCompleted, lessonStars)) {
+          return {
+            lessonId: lesson.id,
+            levelIndex: fullLevelIndex,
+            type: 'full',
+            partIndex: null,
+            totalParts: 1,
+            isUltimate: false,
+          };
+        }
+      }
+
+      // b) Une fois le Full terminé, les parts du niveau débloqué
+      if (isLevelAccessible(lesson.id, partsLevelIndex, lessonLevels)) {
+        const nextPart = getNextPart(lesson.id, partsLevelIndex, lesson, lessonPartsCompleted);
         if (nextPart) {
           return {
             lessonId: lesson.id,
-            levelIndex,
+            levelIndex: partsLevelIndex,
             type: 'parts',
             partIndex: nextPart.partIndex,
             totalParts: nextPart.totalParts,
@@ -250,28 +306,27 @@ function runSequence(
           };
         }
       }
-    } else {
-      // type === 'full'
-      const isUltimate = levelIndex === 10;
-
-      for (const lesson of lessons) {
-        if (!isLevelAccessible(lesson.id, levelIndex, lessonLevels)) continue;
-        if (!isFullLevelComplete(lesson.id, levelIndex, fullLevelsCompleted, lessonStars)) {
-          return {
-            lessonId: lesson.id,
-            levelIndex,
-            type: 'full',
-            partIndex: null,
-            totalParts: 1,
-            isUltimate,
-          };
-        }
-      }
     }
   }
 
-  return null; // Tout est complété !
+  // ── Phase 4 : Niveau Ultime (levelIndex 10), leçon par leçon ────────────
+  for (const lesson of lessons) {
+    if (!isLevelAccessible(lesson.id, 10, lessonLevels)) continue;
+    if (!isFullLevelComplete(lesson.id, 10, fullLevelsCompleted, lessonStars)) {
+      return {
+        lessonId: lesson.id,
+        levelIndex: 10,
+        type: 'full',
+        partIndex: null,
+        totalParts: 1,
+        isUltimate: true,
+      };
+    }
+  }
+
+  return null; // Tout est complété pour ce groupe de leçons
 }
+
 
 /**
  * Construit l'URL de leçon à partir du résultat de computeNextLesson.
