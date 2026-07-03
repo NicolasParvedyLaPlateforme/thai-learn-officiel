@@ -78,6 +78,48 @@ export function useLessonGameLogic(lesson: any) {
 
   const savedLevel = lesson ? lessonLevels[lesson.id] || 0 : 0;
 
+  const isPartCompleted = (l: number, p: number) => {
+    const key = `${lessonId}_level-${l}`;
+    const parts = lessonPartsCompleted?.[key] || [];
+    return parts.includes(p);
+  };
+
+  let maxAccessibleLevel = 0;
+  const maxL = 10;
+  const currentFullLevels = Object.keys(lessonPartsCompleted || {})
+    .filter(k => k.startsWith(`${lessonId}_level-`))
+    .map(k => parseInt(k.split('-')[1], 10))
+    .filter(l => {
+      const total = lesson ? getLevelSplit(l, lesson) : 1;
+      return (lessonPartsCompleted?.[`${lessonId}_level-${l}`] || []).length >= total;
+    });
+
+  for (let l = 1; l <= maxL; l++) {
+    const isVerticalMet = isPartCompleted(l - 1, 0);
+    if (!isVerticalMet) break;
+
+    let isBlocked = false;
+    if (l >= 4) {
+      for (let i = 4; i <= l; i++) {
+        if (!currentFullLevels.includes(i - 4)) {
+          isBlocked = true;
+          break;
+        }
+      }
+      if (l === 4) {
+        const partsL3 = lesson ? getLevelSplit(3, lesson) : 1;
+        const completedL3 = lessonPartsCompleted?.[`${lessonId}_level-3`] || [];
+        if (completedL3.length < partsL3) {
+            isBlocked = true;
+        }
+      }
+    }
+    if (isBlocked) break;
+    maxAccessibleLevel = l;
+  }
+
+  const effectiveProgress = Math.max(savedLevel, maxAccessibleLevel);
+
   const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{
     id: string;
     level: number;
@@ -88,8 +130,8 @@ export function useLessonGameLogic(lesson: any) {
   const currentLevel = requestedLevelStr
     ? isDev
       ? Math.max(0, parseInt(requestedLevelStr, 10) - 1)
-      : Math.min(savedLevel, Math.max(0, parseInt(requestedLevelStr, 10) - 1))
-    : (exercisesGeneratedFor?.level !== undefined ? exercisesGeneratedFor.level : savedLevel);
+      : Math.min(effectiveProgress, Math.max(0, parseInt(requestedLevelStr, 10) - 1))
+    : (exercisesGeneratedFor?.level !== undefined ? exercisesGeneratedFor.level : effectiveProgress);
 
   const partStr = searchParams.get("part");
   const totalPartsStr = searchParams.get("totalParts");

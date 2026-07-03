@@ -97,7 +97,7 @@ export function LessonPathNode({
   const isCompletedFullLevel = currentFullLevels ? currentFullLevels.includes(levelIndex) : false;
 
   const earnedStarsMastery = (isCompletedFullLevel && levelIndex === maxLevel) ? (earnedStarsArray[maxLevel] || 0) : 0;
-  const isCompleted = isMastery ? earnedStarsMastery > 0 : levelIndex < currentProgress;
+  const isCompleted = isMastery ? earnedStarsMastery > 0 : isCompletedFullLevel;
   const isCurrent = !isMastery && levelIndex === currentProgress && !isBlockedByFullLevel;
   const isSelected = selectedAction !== null;
   const earnedStars = isCompletedFullLevel ? (earnedStarsArray[levelIndex] || 0) : 0;
@@ -237,8 +237,19 @@ export function LessonPathNode({
                 const isLevelLocked = !isAccessible;
 
                 const isPartCompleted = currentCompletedParts.includes(i);
-                const isSelectedPart = !isLevelFullyCompleted && !isLevelLocked && i === currentCompletedParts.length;
-                const isAccessibleSlice = !isLevelLocked && i <= currentCompletedParts.length;
+
+                let isVerticalMet = true;
+                if (levelIndex > 0) {
+                  const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+                  const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+                  const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+                  const requiredPrevPart = Math.min(i, prevLevelPartsTotal - 1);
+                  isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                }
+                
+                const isHorizontalMet = i === 0 || currentCompletedParts.includes(i - 1);
+                const isAccessibleSlice = !isLevelLocked && isHorizontalMet && isVerticalMet;
+                const isSelectedPart = !isLevelFullyCompleted && isAccessibleSlice && !isPartCompleted && (i === currentCompletedParts.length);
 
                 const angle = 360 / currentPartsTotal;
                 const startAngle = i * angle - 90;
@@ -310,11 +321,21 @@ export function LessonPathNode({
 
             {/* Tooltip La Suite */}
             {!isCompleted && isAccessible && (() => {
+              const nextPart = currentCompletedParts.length;
+              let isVerticalMet = true;
+              if (levelIndex > 0) {
+                const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+                const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+                const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+                const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
+                isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+              }
+              if (!isVerticalMet) return null;
+
               let tx = 50;
               let ty = 50;
               let midAngle = -90;
 
-              const nextPart = currentCompletedParts.length;
               const angle = 360 / currentPartsTotal;
               const startAngle = nextPart * angle - 90;
               midAngle = startAngle + angle / 2;

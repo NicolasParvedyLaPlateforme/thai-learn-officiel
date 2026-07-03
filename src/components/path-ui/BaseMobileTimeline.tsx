@@ -67,6 +67,7 @@ export default function BaseMobileTimeline({
 }: BaseMobileTimelineProps) {
     const router = useRouter();
     const storyObjective = useNextConversationObjective();
+    const currentPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
 
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
     const [expandedLessons, setExpandedLessons] = React.useState<Set<string>>(new Set());
@@ -376,7 +377,7 @@ export default function BaseMobileTimeline({
                                                             language={language}
                                                             lessonId={lesson.id}
                                                             lesson={lesson}
-                                                            lessonPartsCompleted={useProgressStore.getState().lessonPartsCompleted}
+                                                            lessonPartsCompleted={currentPartsCompleted}
                                                             suggestionType={pathType}
                                                             initialScrollLevel={selectedLesson?.initialScrollLevel}
                                                             disableAutoScroll={!isInitializingScroll}

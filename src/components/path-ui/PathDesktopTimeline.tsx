@@ -58,6 +58,7 @@ export default function PathDesktopTimeline({
   lessonStars,
   modalLevel
 }: PathDesktopTimelineProps) {
+  const currentPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
   const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
   const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson), 0) : 0;
   const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
@@ -280,7 +281,7 @@ export default function PathDesktopTimeline({
                             language={language}
                             lessonId={lesson.id}
                             lesson={lesson}
-                            lessonPartsCompleted={useProgressStore.getState().lessonPartsCompleted}
+                            lessonPartsCompleted={currentPartsCompleted}
                             suggestionType={pathType}
                             initialScrollLevel={selectedLesson?.initialScrollLevel}
                             disableAutoScroll={!isInitializingScroll}

@@ -54,19 +54,51 @@ export function LessonPathMap({
   const fullLevelsCompleted = useProgressStore(state => state.fullLevelsCompleted);
   const currentFullLevels = lessonId ? (fullLevelsCompleted[lessonId] || []) : [];
 
-  let calculatedTarget = currentProgress > maxLevel ? maxLevel : currentProgress;
+  let maxAccessibleLevel = 0;
   let blockedByLevel: number | null = null;
+
+  const isPartCompleted = (l: number, p: number) => {
+    const key = `${lessonId}_level-${l}`;
+    const parts = lessonPartsCompleted?.[key] || [];
+    return parts.includes(p);
+  };
+
+  for (let l = 1; l <= maxLevel; l++) {
+    const isVerticalMet = isPartCompleted(l - 1, 0);
+    if (!isVerticalMet) break;
+
+    let isBlocked = false;
+    if (l >= 4) {
+      for (let i = 4; i <= l; i++) {
+        if (!currentFullLevels.includes(i - 4)) {
+          isBlocked = true;
+          blockedByLevel = blockedByLevel === null ? i : blockedByLevel;
+          break;
+        }
+      }
+      
+      if (l === 4) {
+          const partsL3 = lesson ? getLevelSplit(3, lesson) : 1;
+          const completedL3 = lessonPartsCompleted?.[`${lessonId}_level-3`] || [];
+          if (completedL3.length < partsL3) {
+              isBlocked = true;
+          }
+      }
+    }
+
+    if (isBlocked) break;
+    maxAccessibleLevel = l;
+  }
+
+  const effectiveProgress = maxAccessibleLevel;
+  let calculatedTarget = effectiveProgress > maxLevel ? maxLevel : effectiveProgress;
   let isReminder = false;
   
-  for (let i = 4; i <= currentProgress; i++) {
-     if (i <= maxLevel && !currentFullLevels.includes(i - 4)) {
-         calculatedTarget = i - 4;
-         blockedByLevel = i;
-         break;
-     }
+  if (blockedByLevel !== null) {
+      calculatedTarget = blockedByLevel - 4;
   }
   
-  if (currentProgress >= maxLevel && blockedByLevel === null) {
+  if (effectiveProgress >= maxLevel && blockedByLevel === null) {
       if (typeof window !== 'undefined') {
           let reminderLevelStr = localStorage.getItem('recommendedReminderLevel');
           if (!reminderLevelStr) {
@@ -285,12 +317,12 @@ export function LessonPathMap({
     <div className="flex flex-col items-center justify-start w-full relative pt-2 md:pt-6 pb-4 md:pb-12">
 
 
-      {nodes.filter(levelIndex => levelIndex <= (blockedByLevel !== null ? blockedByLevel : currentProgress)).map((levelIndex) => (
+      {nodes.filter(levelIndex => levelIndex <= (blockedByLevel !== null ? blockedByLevel : effectiveProgress)).map((levelIndex) => (
         <LessonPathNode
           key={levelIndex}
           levelIndex={levelIndex}
           maxLevel={maxLevel}
-          currentProgress={currentProgress}
+          currentProgress={effectiveProgress}
           modalLevel={modalLevel}
           setModalLevel={setModalLevel}
           earnedStarsArray={earnedStarsArray}
