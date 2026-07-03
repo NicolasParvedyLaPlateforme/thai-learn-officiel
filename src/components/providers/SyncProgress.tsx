@@ -139,6 +139,7 @@ export default function SyncProgress() {
         lessonPartsCompleted: state.lessonPartsCompleted,
         fullLevelsCompleted: state.fullLevelsCompleted,
         unopenedGifts: state.unopenedGifts,
+        nextModeUnit: state.nextModeUnit,
       };
 
       const timestamp = Date.now();
@@ -179,7 +180,8 @@ export default function SyncProgress() {
     store.inProgressLessons,
     store.lessonPartsCompleted,
     store.fullLevelsCompleted,
-    store.unopenedGifts
+    store.unopenedGifts,
+    store.nextModeUnit
   ]);
 
   return null;
