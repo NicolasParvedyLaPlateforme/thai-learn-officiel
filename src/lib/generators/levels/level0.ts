@@ -1,5 +1,5 @@
 import { Exercise, Word } from "@/types";
-import { buildIntro, buildWordMatch, buildMissingLetter, buildSoundToLetter, buildTrueFalseSpelling } from '../builders';
+import { buildIntro, buildWordMatch, buildMissingLetter, buildSoundToLetter, buildTrueFalseSpelling, buildOneLetterDifference } from '../builders';
 import { shuffle } from '../utils';
 
 export function generateLevel0(validLessonWords: Word[], globalWords: Word[], language: string): Exercise[] {
@@ -38,13 +38,15 @@ export function generateLevel0(validLessonWords: Word[], globalWords: Word[], la
       pool: globalWords
     }));
     
-    pool.push(buildWordMatch(word, language, {
-      distractorMode: 'misspelled',
+    const hintTypes: Array<'sound' | 'image' | 'pronunciation'> = ['sound', 'image', 'pronunciation'];
+    const randomHintType = hintTypes[Math.floor(Math.random() * hintTypes.length)];
+    const oneLetterEx = buildOneLetterDifference(word, language, {
+      hintType: randomHintType,
       numDistractors: 3,
       maxMistakes: 2,
-      validLessonWords,
       pool: globalWords
-    }));
+    });
+    if (oneLetterEx) pool.push(oneLetterEx);
 
     // Add True/False exercises (choose 1 randomly)
     const tfModes = ['random-replace', 'misplaced-consonant', 'misplaced-vowel', 'similar-consonant', 'similar-vowel'] as const;

@@ -1,6 +1,6 @@
 import { Exercise, Word, Phrase } from "@/types";
 import { shuffle, getRandomDistractorMode } from '../utils';
-import { buildWordMatch, buildFillInTheBlank, buildSentenceBuilder } from '../builders';
+import { buildWordMatch, buildFillInTheBlank, buildSentenceBuilder, buildOneLetterDifference } from '../builders';
 import { getExerciseTranslation } from '@/lib/translation-utils';
 
 export function generateLevel2(validLessonWords: Word[], lessonPhrases: Phrase[], globalWords: Word[], language: string): Exercise[] {
@@ -14,6 +14,18 @@ export function generateLevel2(validLessonWords: Word[], lessonPhrases: Phrase[]
       validLessonWords,
       pool: globalWords
     }));
+    
+    // Add 3 one-letter-difference steps per word
+    const hintTypes: Array<'sound' | 'image' | 'pronunciation'> = ['sound', 'image', 'pronunciation'];
+    hintTypes.forEach(hintType => {
+      const ex = buildOneLetterDifference(word, language, {
+        hintType,
+        numDistractors: 3,
+        maxMistakes: 2,
+        pool: globalWords
+      });
+      if (ex) wmExercises.push(ex);
+    });
   });
 
   let fillInBlankPool: Exercise[] = [];
