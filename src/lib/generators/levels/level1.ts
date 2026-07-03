@@ -1,6 +1,6 @@
 import { Exercise, Word, Phrase } from "@/types";
 import { shuffle, getRandomDistractorMode } from '../utils';
-import { buildWordMatch, buildFillInTheBlank, buildOneLetterDifference } from '../builders';
+import { buildWordMatch, buildFillInTheBlank, buildOneLetterDifference, buildWordPosition } from '../builders';
 
 export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[], globalWords: Word[], language: string): Exercise[] {
   let wmExercises: Exercise[] = [];
@@ -30,6 +30,8 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
   });
 
   let fillInBlankPool: Exercise[] = [];
+  let wordPositionPool: Exercise[] = [];
+  
   lessonPhrases.forEach((phrase) => {
     const fibEx = buildFillInTheBlank(phrase, language, {
        numMisspelledDistractors: 1,
@@ -37,7 +39,12 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
        pool: globalWords
     });
     if (fibEx) fillInBlankPool.push(fibEx);
+
+    const wpEx = buildWordPosition(phrase, language, {
+      pool: globalWords
+    });
+    if (wpEx) wordPositionPool.push(wpEx);
   });
 
-  return [...shuffle(wmExercises), ...shuffle(fillInBlankPool)];
+  return [...shuffle(wmExercises), ...shuffle(fillInBlankPool), ...shuffle(wordPositionPool)];
 }

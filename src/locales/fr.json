@@ -9,7 +9,6 @@
   "next.result.next": "Continuer",
   "next.result.quit": "Quitter",
   "next.sidebar_label": "Mode Auto",
-
   "auto.level": "Niveau",
   "auto.complete_level_1": "Terminer le Niveau 1",
   "auto.complete_level_2": "Terminer le Niveau 2",
@@ -460,5 +459,7 @@
   "auto.sound.mai_tai_khu": "Raccourcissement",
   "auto.sound.karan": "Silencieux",
   "auto.sound.rue___ri": "rue / ri",
-  "auto.exercise.trueFalse": "Le mot est-il correctement écrit ?"
+  "auto.exercise.trueFalse": "Le mot est-il correctement écrit ?",
+  "auto.find_word_position": "Trouvez la position de ce mot",
+  "auto.listen_and_select_position": "Écoutez la phrase et sélectionnez le numéro de sa position dans la phrase."
 }
