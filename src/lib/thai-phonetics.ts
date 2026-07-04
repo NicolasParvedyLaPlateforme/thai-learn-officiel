@@ -106,6 +106,7 @@ export const analyzeSyllableContext = (
   activeAlphabetItem: any
 ) => {
   let initialConsonant = null;
+  let initialConsonantIndex = -1;
   let initialClass: ToneClass = 'mid';
   let hasShortVowel = false;
   let finalConsonant = null;
@@ -116,37 +117,73 @@ export const analyzeSyllableContext = (
   const isVowel = activeAlphabetItem?.type === 'vowel';
   const isConsonant = activeAlphabetItem?.type === 'consonant';
 
+  let isFinal = false;
+  if (isConsonant) {
+    const nextChar = currentIndex < characters.length - 1 ? characters[currentIndex + 1] : null;
+    const prevChar = currentIndex > 0 ? characters[currentIndex - 1] : null;
+
+    if (currentIndex > 0) {
+      if (currentIndex === characters.length - 1) {
+        isFinal = true;
+      } else {
+        if (prevChar && /[\u0E40-\u0E44]/.test(prevChar)) {
+          isFinal = false;
+        } else if (nextChar && /[\u0E30-\u0E39\u0E45\u0E48-\u0E4C\u0E47]/.test(nextChar)) {
+          isFinal = false;
+        } else if (prevChar && /[\u0E31\u0E34-\u0E39\u0E47]/.test(prevChar)) {
+          isFinal = true;
+        } else if (prevChar && /[ก-ฮ]/.test(prevChar)) {
+          if (['อ', 'ว', 'ย', 'ร'].includes(characters[currentIndex]) && nextChar && /[ก-ฮ]/.test(nextChar)) {
+             isFinal = false;
+          } else {
+             isFinal = true;
+          }
+        }
+      }
+    }
+  }
+
   // Find previous consonant (Initial)
-  for (let i = currentIndex - 1; i >= 0; i--) {
-    const char = characters[i];
-    // We assume the first consonant we hit looking backwards is the initial.
-    // (This is a simplified heuristic, it might pick a leading consonant)
-    if (/[ก-ฮ]/.test(char)) {
-      initialConsonant = char;
-      break;
+  if (isConsonant && !isFinal) {
+    // If it's a consonant and NOT final, and NOT acting as a vowel, it might be the initial.
+    // Wait, if it's ว acting as a vowel, we should look backwards!
+    if (['อ', 'ว', 'ย', 'ร'].includes(characters[currentIndex]) && currentIndex > 0 && /[ก-ฮ]/.test(characters[currentIndex - 1])) {
+       for (let i = currentIndex - 1; i >= 0; i--) {
+         if (/[ก-ฮ]/.test(characters[i])) {
+           initialConsonant = characters[i];
+           initialConsonantIndex = i;
+           break;
+         }
+       }
+    } else {
+      initialConsonant = characters[currentIndex];
+      initialConsonantIndex = currentIndex;
+    }
+  } else {
+    for (let i = currentIndex - 1; i >= 0; i--) {
+      if (/[ก-ฮ]/.test(characters[i])) {
+        initialConsonant = characters[i];
+        initialConsonantIndex = i;
+        break;
+      }
     }
   }
   
   // Also check for 'Leading Consonant' (Akson Nam) like ห or a high class consonant
   let leadingConsonantClass: ToneClass | null = null;
-  if (initialConsonant) {
-    const initIdx = characters.indexOf(initialConsonant);
-    if (initIdx > 0 && /[ก-ฮ]/.test(characters[initIdx - 1])) {
+  if (initialConsonantIndex > 0) {
+    if (/[ก-ฮ]/.test(characters[initialConsonantIndex - 1])) {
        // Potential leading consonant
-       const potentialLeader = characters[initIdx - 1];
+       const potentialLeader = characters[initialConsonantIndex - 1];
        if (potentialLeader === 'ห' || potentialLeader === 'อ') {
          leadingConsonantClass = potentialLeader === 'ห' ? 'high' : 'mid';
-       } else {
-         // High/Mid class can lead Low sonorant class (simplified logic)
-         // Actually evaluating full Akson Nam requires dictionary, we skip strict evaluation here 
-         // and just look if there's a ห.
        }
     }
   }
 
   // 2. Identify Vowels & Vowel Length in the syllable block
   // We scan a small window around the initial consonant up to the current index
-  const windowStart = initialConsonant ? characters.indexOf(initialConsonant) : Math.max(0, currentIndex - 2);
+  const windowStart = initialConsonantIndex > -1 ? initialConsonantIndex : Math.max(0, currentIndex - 2);
   for (let i = windowStart; i <= currentIndex + 1; i++) {
     if (characters[i] && isShortVowel(characters[i])) {
       hasShortVowel = true;
@@ -154,54 +191,78 @@ export const analyzeSyllableContext = (
   }
 
   // 3. Identify Final Consonant
-  // If the user clicked on a consonant, is it the final one?
   let finalConsonantIndex = -1;
-  if (isConsonant) {
-    let isFinal = false;
-    const nextChar = currentIndex < characters.length - 1 ? characters[currentIndex + 1] : null;
-    const prevChar = currentIndex > 0 ? characters[currentIndex - 1] : null;
-
-    if (currentIndex > 0) {
-      if (currentIndex === characters.length - 1) {
-        // Last char is usually a final consonant
-        isFinal = true;
-      } else {
-        // Not the first or last char
-        if (prevChar && /[\u0E40-\u0E44]/.test(prevChar)) {
-          // Preceded by pre-posed vowel (e.g. เ, แ) -> initial
-          isFinal = false;
-        } else if (nextChar && /[\u0E30-\u0E39\u0E45\u0E48-\u0E4C\u0E47]/.test(nextChar)) {
-          // Followed by a vowel or tone mark -> initial
-          isFinal = false;
-        } else if (prevChar && /[\u0E31\u0E34-\u0E39\u0E47]/.test(prevChar)) {
-          // Preceded by upper/lower vowel -> final
-          isFinal = true;
-        } else if (prevChar && /[ก-ฮ]/.test(prevChar)) {
-          // Preceded by consonant, followed by consonant -> likely final
-          isFinal = true;
-        }
-      }
-    }
-
-    if (isFinal) {
-       finalConsonant = characters[currentIndex];
-       finalConsonantIndex = currentIndex;
-    }
-  } else {
+  
+  if (isConsonant && isFinal) {
+    finalConsonant = characters[currentIndex];
+    finalConsonantIndex = currentIndex;
+  } else if (!isConsonant) {
     // If user clicked a vowel (like ั), the final consonant is likely the next consonant
     if (currentIndex + 1 < characters.length && /[ก-ฮ]/.test(characters[currentIndex + 1])) {
       finalConsonant = characters[currentIndex + 1];
       finalConsonantIndex = currentIndex + 1;
+    }
+  } else if (isConsonant && !isFinal) {
+    // User clicked the initial consonant. Let's find the final consonant of this syllable.
+    for (let i = initialConsonantIndex + 1; i < characters.length; i++) {
+       // If we hit a pre-posed vowel, the current syllable has ended
+       if (/[\u0E40-\u0E44]/.test(characters[i])) break;
+       
+       if (/[ก-ฮ]/.test(characters[i])) {
+          const nextChar = i < characters.length - 1 ? characters[i + 1] : null;
+          if (nextChar && /[\u0E30-\u0E39\u0E45\u0E48-\u0E4C\u0E47]/.test(nextChar)) {
+             break; // Likely the initial consonant for the next syllable
+          }
+          finalConsonant = characters[i];
+          finalConsonantIndex = i;
+          break;
+       }
     }
   }
 
   // 4. Check for implicit 'o' vowel (โ-ะ)
   // This occurs when a syllable has an initial and final consonant, but NO written vowels at all.
   let hasImplicitOVowel = false;
-  if (initialConsonant && finalConsonant && finalConsonantIndex > -1) {
-    const initIdx = characters.indexOf(initialConsonant);
+  let specialVowelRule: string | undefined = undefined;
+
+  if (initialConsonantIndex > -1 && finalConsonantIndex > -1) {
+    const initIdx = initialConsonantIndex;
     const finIdx = finalConsonantIndex;
     
+    // Check advanced phonetic rules based on clicked character (currentIndex)
+    const activeChar = characters[currentIndex];
+
+    // Rule 1: เ-อ -> เ-ิ (g-oe-d -> เกิด)
+    if (activeChar === '\u0E34' && initIdx > 0 && characters[initIdx - 1] === 'เ') {
+       specialVowelRule = 'oe_transformation';
+    }
+    
+    // Rule 2: เ-อ + ย -> เ-ย (kh-oe-y -> เคย)
+    if (activeChar === 'เ' && characters[finIdx] === 'ย') {
+       let noOtherVowels = true;
+       for (let i = initIdx; i <= finIdx; i++) {
+         if (/[\u0E30-\u0E39\u0E45\u0E47-\u0E4D]/.test(characters[i])) noOtherVowels = false;
+       }
+       if (noOtherVowels) specialVowelRule = 'oe_y_transformation';
+    }
+
+    // Rule 3: -ัว -> -ว- (s-ua-y -> สวย)
+    if (activeChar === 'ว' && currentIndex > initIdx && currentIndex < finIdx) {
+       specialVowelRule = 'ua_transformation';
+    }
+
+    // Rule 5: เ-าะ -> -็อ (ch-o-k -> ช็อก)
+    if ((activeChar === '\u0E47' && characters[currentIndex + 1] === 'อ') ||
+        (activeChar === 'อ' && characters[currentIndex - 1] === '\u0E47')) {
+       specialVowelRule = 'or_short_transformation';
+    }
+
+    // Rule 4: อ (O Ang) long vowel (n-o-n -> นอน)
+    // Only if not part of or_short_transformation (-็อ) or oe_transformation
+    if (!specialVowelRule && activeChar === 'อ' && currentIndex > initIdx && currentIndex < finIdx) {
+       specialVowelRule = 'o_long_vowel';
+    }
+
     if (finIdx > initIdx) {
       let foundVowel = false;
       // Check pre-posed vowels
@@ -242,9 +303,11 @@ export const analyzeSyllableContext = (
 
   return {
     initialConsonant,
+    initialConsonantIndex,
     leadingConsonantClass,
     hasShortVowel,
     hasImplicitOVowel,
+    specialVowelRule,
     finalConsonant,
     finalConsonantIndex,
     finalFamily,

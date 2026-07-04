@@ -489,5 +489,10 @@
   "composition.mata_explanation": "This consonant belongs to the {mata} family and is pronounced as a stopped '{sound}' at the end of the syllable.",
   "composition.implicit_o_vowel": "Implicit Vowel: When there is no written vowel between two consonants, a short, invisible 'O' (โ-ะ) is pronounced.",
   "composition.special_modifier.ั": "Short A Vowel: This symbol (Mai Han-a-kat) produces a short 'a' sound. It is the form the vowel ะ takes when a final consonant closes the syllable.",
-  "composition.special_modifier.็": "Vowel Shortener: This symbol (Mai Tai Khu) shortens the vowel sound. It replaces the ะ symbol when a final consonant closes the syllable with the vowels เ and แ."
+  "composition.special_modifier.็": "Vowel Shortener: This symbol (Mai Tai Khu) shortens the vowel sound. It replaces the ะ symbol when a final consonant closes the syllable with the vowels เ and แ.",
+  "composition.vowel_rule.oe_transformation": "เ-อ Transformation: With a final consonant, the long vowel เ-อ transforms into เ-ิ. The symbol ิ replaces the final อ letter.",
+  "composition.vowel_rule.oe_y_transformation": "เ-อ Transformation: When followed by a final 'Y' (ย), the long vowel เ-อ loses its อ. Only the เ remains to make the 'oe' sound.",
+  "composition.vowel_rule.ua_transformation": "-ัว Transformation: With a final consonant, the long vowel -ัว loses its ั. Only the ว remains to make the 'ua' sound.",
+  "composition.vowel_rule.o_long_vowel": "Long O Vowel: The letter อ (O Ang) acts here as the long 'o' vowel in the middle of the syllable.",
+  "composition.vowel_rule.or_short_transformation": "เ-าะ Transformation: With a final consonant, the short vowel เ-าะ transforms into -็อ."
 }

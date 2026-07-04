@@ -489,5 +489,10 @@
   "composition.mata_explanation": "Questa consonante appartiene alla famiglia {mata} e quindi si pronuncia come una '{sound}' alla fine della sillaba.",
   "composition.implicit_o_vowel": "Vocale implicita: Quando non c'è una vocale scritta tra due consonanti, si pronuncia una 'O' corta (โ-ะ) invisibile.",
   "composition.special_modifier.ั": "Vocale A corta: Questo simbolo (Mai Han-a-kat) produce un suono 'a' corto. È la forma che assume la vocale ะ quando una consonante finale chiude la sillaba.",
-  "composition.special_modifier.็": "Accorciatore di vocale: Questo simbolo (Mai Tai Khu) accorcia il suono della vocale. Sostituisce il simbolo ะ quando una consonante finale chiude la sillaba con le vocali เ e แ."
+  "composition.special_modifier.็": "Accorciatore di vocale: Questo simbolo (Mai Tai Khu) accorcia il suono della vocale. Sostituisce il simbolo ะ quando una consonante finale chiude la sillaba con le vocali เ e แ.",
+  "composition.vowel_rule.oe_transformation": "Trasformazione เ-อ: Con una consonante finale, la vocale lunga เ-อ si trasforma in เ-ิ. Il simbolo ิ sostituisce l'ultima lettera อ.",
+  "composition.vowel_rule.oe_y_transformation": "Trasformazione เ-อ: Quando è seguita da una 'Y' finale (ย), la vocale lunga เ-อ perde la sua อ. Rimane solo la เ per fare il suono 'oe'.",
+  "composition.vowel_rule.ua_transformation": "Trasformazione -ัว: Con una consonante finale, la vocale lunga -ัว perde il suo ั. Rimane solo la ว per fare il suono 'ua'.",
+  "composition.vowel_rule.o_long_vowel": "Vocale O lunga: La lettera อ (O Ang) agisce qui come la vocale 'o' lunga nel mezzo della sillaba.",
+  "composition.vowel_rule.or_short_transformation": "Trasformazione เ-าะ: Con una consonante finale, la vocale corta เ-าะ si trasforma in -็อ."
 }

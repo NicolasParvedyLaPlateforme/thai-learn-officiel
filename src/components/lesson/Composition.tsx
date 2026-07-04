@@ -321,6 +321,20 @@ export default function Composition({ exercise, language }: CompositionProps) {
                     </span>
                   </motion.div>
                 )}
+
+                {/* NOUVEAU : Explication d'une transformation de voyelle (consonnes agissant comme voyelles, ex: ว, อ) */}
+                {syllableContext.specialVowelRule && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.2 }}
+                    className="mt-1 bg-indigo-50 border-2 border-indigo-200 text-indigo-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
+                  >
+                    <span className="text-sm font-medium">
+                      {getTranslation(`composition.vowel_rule.${syllableContext.specialVowelRule}`, language)}
+                    </span>
+                  </motion.div>
+                )}
               </motion.div>
             )}
 
@@ -344,10 +358,19 @@ export default function Composition({ exercise, language }: CompositionProps) {
                 </motion.div>
 
                 {/* Bulle d'explication pour les modificateurs spéciaux (seulement si ce n'est pas une simple voyelle longue normale sans impact ton spécifique demandé ici, bien que l'on puisse tout afficher) */}
-                {isSpecialModifier(activeChar) && (
+                {isSpecialModifier(activeChar) && !syllableContext.specialVowelRule && (
                   <div className="bg-blue-50 border-2 border-blue-200 text-blue-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm">
                     <span className="text-sm font-medium">
                       {getTranslation(`composition.special_modifier.${activeChar}`, language) || getTranslation('composition.tone_mark_explanation', language)}
+                    </span>
+                  </div>
+                )}
+
+                {/* NOUVEAU : Explication d'une transformation de voyelle (voyelles se transformant, ex: เ, ิ, ็) */}
+                {syllableContext.specialVowelRule && (
+                  <div className="bg-indigo-50 border-2 border-indigo-200 text-indigo-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm">
+                    <span className="text-sm font-medium">
+                      {getTranslation(`composition.vowel_rule.${syllableContext.specialVowelRule}`, language)}
                     </span>
                   </div>
                 )}

@@ -491,5 +491,10 @@
   "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe.",
   "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible.",
   "composition.special_modifier.ั": "Voyelle A court : Ce symbole (Mai Han-a-kat) produit le son 'a' court. C'est la forme que prend la voyelle ะ lorsqu'une consonne finale vient fermer la syllabe.",
-  "composition.special_modifier.็": "Raccourcisseur de voyelle : Ce symbole (Mai Tai Khu) raccourcit le son de la voyelle. Il remplace le symbole ะ lorsqu'une consonne finale vient fermer la syllabe avec les voyelles เ et แ."
+  "composition.special_modifier.็": "Raccourcisseur de voyelle : Ce symbole (Mai Tai Khu) raccourcit le son de la voyelle. Il remplace le symbole ะ lorsqu'une consonne finale vient fermer la syllabe avec les voyelles เ et แ.",
+  "composition.vowel_rule.oe_transformation": "Transformation de เ-อ : Avec une consonne finale, la voyelle longue เ-อ se transforme en เ-ิ. Le symbole ิ remplace la lettre อ finale.",
+  "composition.vowel_rule.oe_y_transformation": "Transformation de เ-อ : Lorsqu'elle est suivie d'un 'Y' final (ย), la voyelle longue เ-อ perd son อ. Il ne reste que le เ pour faire le son 'oe'.",
+  "composition.vowel_rule.ua_transformation": "Transformation de -ัว : Avec une consonne finale, la voyelle longue -ัว perd son ั. Il ne reste que le ว pour faire le son 'ua'.",
+  "composition.vowel_rule.o_long_vowel": "Voyelle O longue : La lettre อ (O Ang) agit ici comme la voyelle 'o' longue au milieu de la syllabe.",
+  "composition.vowel_rule.or_short_transformation": "Transformation de เ-าะ : Avec une consonne finale, la voyelle courte เ-าะ se transforme en -็อ."
 }
