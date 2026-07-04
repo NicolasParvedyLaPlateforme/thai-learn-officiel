@@ -195,6 +195,45 @@ export const analyzeSyllableContext = (
     }
   }
 
+  // 4. Check for implicit 'o' vowel (โ-ะ)
+  // This occurs when a syllable has an initial and final consonant, but NO written vowels at all.
+  let hasImplicitOVowel = false;
+  if (initialConsonant && finalConsonant && finalConsonantIndex > -1) {
+    const initIdx = characters.indexOf(initialConsonant);
+    const finIdx = finalConsonantIndex;
+    
+    if (finIdx > initIdx) {
+      let foundVowel = false;
+      // Check pre-posed vowels
+      if (initIdx > 0 && /[\u0E40-\u0E44]/.test(characters[initIdx - 1])) {
+        foundVowel = true;
+      }
+      // Check standard vowel marks in the range
+      if (!foundVowel) {
+        for (let i = initIdx; i <= finIdx; i++) {
+          if (/[\u0E30-\u0E39\u0E45\u0E47-\u0E4D]/.test(characters[i])) {
+            foundVowel = true;
+            break;
+          }
+        }
+      }
+      // Check for consonant-vowels like อ, ว, ย between initial and final
+      if (!foundVowel) {
+        for (let i = initIdx + 1; i < finIdx; i++) {
+           if (['อ', 'ว', 'ย', 'ร'].includes(characters[i])) {
+             foundVowel = true;
+             break;
+           }
+        }
+      }
+      
+      if (!foundVowel) {
+        hasImplicitOVowel = true;
+        hasShortVowel = true; // Implicit O is a short vowel
+      }
+    }
+  }
+
   if (finalConsonant) {
     finalFamily = getFinalConsonantFamily(finalConsonant);
   }
@@ -205,6 +244,7 @@ export const analyzeSyllableContext = (
     initialConsonant,
     leadingConsonantClass,
     hasShortVowel,
+    hasImplicitOVowel,
     finalConsonant,
     finalConsonantIndex,
     finalFamily,

@@ -486,5 +486,6 @@
   "composition.mata.Mae Kom": "Mae Kom ('M' Laut)",
   "composition.mata.Mae Koei": "Mae Koei ('Y' Laut)",
   "composition.mata.Mae Kow": "Mae Kow ('W' Laut)",
-  "composition.mata_explanation": "Dieser Konsonant gehört zur {mata}-Familie und wird am Silbenende wie ein gestopptes '{sound}' ausgesprochen."
+  "composition.mata_explanation": "Dieser Konsonant gehört zur {mata}-Familie und wird am Silbenende wie ein gestopptes '{sound}' ausgesprochen.",
+  "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen zwei Konsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen."
 }

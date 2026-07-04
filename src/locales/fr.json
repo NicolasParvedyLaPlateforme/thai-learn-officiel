@@ -488,5 +488,6 @@
   "composition.mata.Mae Kom": "Mae Kom (Son 'M')",
   "composition.mata.Mae Koei": "Mae Koei (Son 'Y')",
   "composition.mata.Mae Kow": "Mae Kow (Son 'W')",
-  "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe."
+  "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe.",
+  "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible."
 }

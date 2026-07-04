@@ -486,5 +486,6 @@
   "composition.mata.Mae Kom": "Mae Kom (Suono 'M')",
   "composition.mata.Mae Koei": "Mae Koei (Suono 'Y')",
   "composition.mata.Mae Kow": "Mae Kow (Suono 'W')",
-  "composition.mata_explanation": "Questa consonante appartiene alla famiglia {mata} e quindi si pronuncia come una '{sound}' alla fine della sillaba."
+  "composition.mata_explanation": "Questa consonante appartiene alla famiglia {mata} e quindi si pronuncia come una '{sound}' alla fine della sillaba.",
+  "composition.implicit_o_vowel": "Vocale implicita: Quando non c'è una vocale scritta tra due consonanti, si pronuncia una 'O' corta (โ-ะ) invisibile."
 }

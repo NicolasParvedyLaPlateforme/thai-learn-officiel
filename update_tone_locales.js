@@ -26,7 +26,8 @@ const translations = {
     "composition.mata.Mae Kom": "Mae Kom (Son 'M')",
     "composition.mata.Mae Koei": "Mae Koei (Son 'Y')",
     "composition.mata.Mae Kow": "Mae Kow (Son 'W')",
-    "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe."
+    "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe.",
+    "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible."
   },
   en: {
     "composition.syllable_type.live": "Live Syllable",
@@ -43,7 +44,8 @@ const translations = {
     "composition.mata.Mae Kom": "Mae Kom ('M' sound)",
     "composition.mata.Mae Koei": "Mae Koei ('Y' sound)",
     "composition.mata.Mae Kow": "Mae Kow ('W' sound)",
-    "composition.mata_explanation": "This consonant belongs to the {mata} family and is pronounced as a stopped '{sound}' at the end of the syllable."
+    "composition.mata_explanation": "This consonant belongs to the {mata} family and is pronounced as a stopped '{sound}' at the end of the syllable.",
+    "composition.implicit_o_vowel": "Implicit Vowel: When there is no written vowel between two consonants, a short, invisible 'O' (โ-ะ) is pronounced."
   },
   es: {
     "composition.syllable_type.live": "Sílaba Viva",
@@ -60,7 +62,8 @@ const translations = {
     "composition.mata.Mae Kom": "Mae Kom (Sonido 'M')",
     "composition.mata.Mae Koei": "Mae Koei (Sonido 'Y')",
     "composition.mata.Mae Kow": "Mae Kow (Sonido 'W')",
-    "composition.mata_explanation": "Esta consonante pertenece a la familia {mata} y, por lo tanto, se pronuncia como una '{sound}' al final de la sílaba."
+    "composition.mata_explanation": "Esta consonante pertenece a la familia {mata} y, por lo tanto, se pronuncia como una '{sound}' al final de la sílaba.",
+    "composition.implicit_o_vowel": "Vocal implícita: Cuando no hay una vocal escrita entre dos consonantes, se pronuncia una 'O' corta (โ-ะ) invisible."
   },
   de: {
     "composition.syllable_type.live": "Lebendige Silbe",
@@ -77,7 +80,8 @@ const translations = {
     "composition.mata.Mae Kom": "Mae Kom ('M' Laut)",
     "composition.mata.Mae Koei": "Mae Koei ('Y' Laut)",
     "composition.mata.Mae Kow": "Mae Kow ('W' Laut)",
-    "composition.mata_explanation": "Dieser Konsonant gehört zur {mata}-Familie und wird am Silbenende wie ein gestopptes '{sound}' ausgesprochen."
+    "composition.mata_explanation": "Dieser Konsonant gehört zur {mata}-Familie und wird am Silbenende wie ein gestopptes '{sound}' ausgesprochen.",
+    "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen zwei Konsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen."
   },
   it: {
     "composition.syllable_type.live": "Sillaba Viva",
@@ -94,7 +98,8 @@ const translations = {
     "composition.mata.Mae Kom": "Mae Kom (Suono 'M')",
     "composition.mata.Mae Koei": "Mae Koei (Suono 'Y')",
     "composition.mata.Mae Kow": "Mae Kow (Suono 'W')",
-    "composition.mata_explanation": "Questa consonante appartiene alla famiglia {mata} e quindi si pronuncia come una '{sound}' alla fine della sillaba."
+    "composition.mata_explanation": "Questa consonante appartiene alla famiglia {mata} e quindi si pronuncia come una '{sound}' alla fine della sillaba.",
+    "composition.implicit_o_vowel": "Vocale implicita: Quando non c'è una vocale scritta tra due consonanti, si pronuncia una 'O' corta (โ-ะ) invisibile."
   }
 };
 

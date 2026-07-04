@@ -307,6 +307,20 @@ export default function Composition({ exercise, language }: CompositionProps) {
                     </span>
                   </motion.div>
                 )}
+
+                {/* NOUVEAU : Explication pour la voyelle implicite (O court) */}
+                {syllableContext.hasImplicitOVowel && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15, duration: 0.2 }}
+                    className="mt-1 bg-purple-50 border-2 border-purple-200 text-purple-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
+                  >
+                    <span className="text-sm font-medium">
+                      {getTranslation('composition.implicit_o_vowel', language)}
+                    </span>
+                  </motion.div>
+                )}
               </motion.div>
             )}
 
