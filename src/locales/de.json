@@ -460,5 +460,7 @@
   "auto.sound.mai_tai_khu": "Verkürzung",
   "auto.sound.karan": "Stumm",
   "auto.sound.rue___ri": "rue / ri",
-  "auto.exercise.trueFalse": "Ist das Wort richtig geschrieben?"
+  "auto.exercise.trueFalse": "Ist das Wort richtig geschrieben?",
+  "composition.title_word": "Wortzusammensetzung ({word})",
+  "composition.title_phrase": "Satzstruktur ({phrase})"
 }

@@ -461,5 +461,7 @@
   "auto.sound.rue___ri": "rue / ri",
   "auto.exercise.trueFalse": "Le mot est-il correctement écrit ?",
   "auto.find_word_position": "Trouvez la position de ce mot",
-  "auto.listen_and_select_position": "Écoutez la phrase et sélectionnez le numéro de sa position dans la phrase."
+  "auto.listen_and_select_position": "Écoutez la phrase et sélectionnez le numéro de sa position dans la phrase.",
+  "composition.title_word": "Composition du mot ({word})",
+  "composition.title_phrase": "Composition de la phrase ({phrase})"
 }

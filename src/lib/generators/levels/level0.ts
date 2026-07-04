@@ -1,5 +1,5 @@
 import { Exercise, Word } from "@/types";
-import { buildIntro, buildWordMatch, buildMissingLetter, buildSoundToLetter, buildTrueFalseSpelling, buildOneLetterDifference } from '../builders';
+import { buildIntro, buildComposition, buildWordMatch, buildMissingLetter, buildSoundToLetter, buildTrueFalseSpelling, buildOneLetterDifference } from '../builders';
 import { shuffle } from '../utils';
 
 export function generateLevel0(validLessonWords: Word[], globalWords: Word[], language: string): Exercise[] {
@@ -7,6 +7,7 @@ export function generateLevel0(validLessonWords: Word[], globalWords: Word[], la
   
   validLessonWords.forEach(word => {
     exercises.push(buildIntro(word, language));
+    exercises.push(buildComposition(word, language));
     
     exercises.push(buildWordMatch(word, language, {
       distractorMode: 'random',

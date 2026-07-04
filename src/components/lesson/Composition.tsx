@@ -1,0 +1,239 @@
+"use client";
+
+import React, { useState, useEffect, useMemo } from 'react';
+import { m as motion, AnimatePresence } from 'motion/react';
+import { Exercise, Word, Phrase } from "@/types";
+import { THAI_ALPHABET } from "@/data/alphabet-data";
+import { playThaiTTS } from "@/lib/tts";
+import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
+import { ChevronLeft, ChevronRight, Volume2, ArrowDown, ArrowUp } from 'lucide-react';
+import { cn } from "@/lib/utils";
+
+interface CompositionProps {
+  exercise: Exercise;
+  language: string;
+}
+
+export default function Composition({ exercise, language }: CompositionProps) {
+  const isPhrase = !!(exercise.introItem as any)?.components;
+  const thText = exercise.answer;
+
+  // Split string into characters
+  const characters = useMemo(() => Array.from(thText), [thText]);
+
+  // Find selectable character indices (those present in THAI_ALPHABET)
+  const selectableIndices = useMemo(() => {
+    return characters
+      .map((char, index) => {
+        const item = THAI_ALPHABET.find(a => a.letter === char);
+        return item ? index : -1;
+      })
+      .filter(idx => idx !== -1);
+  }, [characters]);
+
+  const [activeIdx, setActiveIdx] = useState<number>(() => {
+    return selectableIndices[0] !== undefined ? selectableIndices[0] : 0;
+  });
+
+  const activeChar = characters[activeIdx];
+
+  const activeAlphabetItem = useMemo(() => {
+    if (!activeChar) return null;
+    return THAI_ALPHABET.find(a => a.letter === activeChar) || null;
+  }, [activeChar]);
+
+  // Play sound when active character changes
+  useEffect(() => {
+    if (activeAlphabetItem) {
+      playThaiTTS(activeAlphabetItem.exampleWord);
+    }
+  }, [activeIdx, activeAlphabetItem]);
+
+  const currentSelectableIndex = selectableIndices.indexOf(activeIdx);
+  const hasPrev = currentSelectableIndex > 0;
+  const hasNext = currentSelectableIndex < selectableIndices.length - 1;
+
+  const handlePrev = () => {
+    if (hasPrev) {
+      setActiveIdx(selectableIndices[currentSelectableIndex - 1]);
+    }
+  };
+
+  const handleNext = () => {
+    if (hasNext) {
+      setActiveIdx(selectableIndices[currentSelectableIndex + 1]);
+    }
+  };
+
+  // Helper to render consonant pronunciation with the first letter colored
+  const renderConsonantPronunciation = (pron: string) => {
+    // Match the initial sound prefix (letters before 'ɔ' or 'ɔ̌' or 'ɔ̂')
+    const match = pron.match(/^([a-z]+)(ɔ.*)$/i);
+    if (match) {
+      const prefix = match[1];
+      const rest = match[2];
+      return (
+        <span className="font-sans">
+          [<span className="text-emerald-500 font-extrabold uppercase">{prefix}</span>{rest}]
+        </span>
+      );
+    }
+    return <span className="font-sans">[{pron}]</span>;
+  };
+
+  const isConsonant = activeAlphabetItem?.type === 'consonant';
+  const isVowel = activeAlphabetItem?.type === 'vowel';
+
+  // Get translations
+  const titleText = isPhrase
+    ? getTranslation('composition.title_phrase', language)?.replace('{phrase}', thText) || `Composition de la phrase (${thText})`
+    : getTranslation('composition.title_word', language)?.replace('{word}', thText) || `Composition du mot (${thText})`;
+
+  return (
+    <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto px-4 py-8 md:py-12 select-none">
+
+      {/* Title */}
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-700 text-center mb-12 sm:mb-16">
+        {titleText}
+      </h2>
+
+      {/* Main Composition Arena */}
+      <div className="w-full flex flex-col items-center gap-6 relative min-h-[320px] justify-center">
+
+        {/* UPPER BUBBLE (Vowels & Others) */}
+        <div className="h-28 flex items-end justify-center w-full">
+          <AnimatePresence mode="wait">
+            {isVowel && activeAlphabetItem && (
+              <motion.div
+                key={`vowel-${activeIdx}`}
+                initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -15, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col items-center gap-2 cursor-pointer group"
+                onClick={() => playThaiTTS(activeAlphabetItem.exampleWord)}
+              >
+                <div className="bg-purple-50 hover:bg-purple-100/80 border-2 border-purple-200 text-purple-700 px-6 py-3.5 rounded-2xl shadow-sm flex items-center gap-3 transition-colors active:scale-95 duration-200">
+                  <span className="text-xl font-bold font-thai">
+                    {activeAlphabetItem.exampleWord}
+                  </span>
+                  <span className="text-lg font-bold font-sans text-purple-600/90">
+                    [{activeAlphabetItem.pronunciation}]
+                  </span>
+                  <Volume2 size={18} className="text-purple-500 animate-pulse" />
+                </div>
+
+                {/* Arrow pointing UP from the letter to the bubble */}
+                <motion.div
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                  className="text-purple-400"
+                >
+                  <ArrowUp size={20} className="stroke-[2.5]" />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* MIDDLE LAYER (Word/Phrase with Navigation) */}
+        <div className="flex items-center justify-between w-full gap-4 sm:gap-8 py-2">
+
+          {/* Left Arrow */}
+          <button
+            onClick={handlePrev}
+            disabled={!hasPrev}
+            className={cn(
+              "w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all",
+              hasPrev
+                ? "bg-white hover:bg-slate-50 border-slate-200 text-slate-600 active:scale-90 hover:shadow-sm"
+                : "bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed"
+            )}
+          >
+            <ChevronLeft size={24} className="stroke-[2.5]" />
+          </button>
+
+          {/* Thai text split in characters */}
+          <div className="flex flex-wrap justify-center items-center gap-x-1 gap-y-3 text-5xl sm:text-6xl md:text-7xl font-thai text-slate-800 tracking-wide select-none">
+            {characters.map((char, index) => {
+              const isSelected = index === activeIdx;
+              const isSelectable = selectableIndices.includes(index);
+
+              return (
+                <span
+                  key={index}
+                  onClick={() => isSelectable && setActiveIdx(index)}
+                  className={cn(
+                    "relative px-2 py-1 rounded-2xl cursor-pointer transition-all duration-300 select-none",
+                    isSelected
+                      ? isConsonant
+                        ? "bg-emerald-50 text-emerald-600 font-bold scale-110 shadow-sm border-2 border-emerald-200/50"
+                        : "bg-purple-50 text-purple-600 font-bold scale-110 shadow-sm border-2 border-purple-200/50"
+                      : isSelectable
+                        ? "hover:bg-slate-100 text-slate-600"
+                        : "text-slate-300 cursor-default"
+                  )}
+                >
+                  {char}
+                </span>
+              );
+            })}
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={handleNext}
+            disabled={!hasNext}
+            className={cn(
+              "w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all",
+              hasNext
+                ? "bg-white hover:bg-slate-50 border-slate-200 text-slate-600 active:scale-90 hover:shadow-sm"
+                : "bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed"
+            )}
+          >
+            <ChevronRight size={24} className="stroke-[2.5]" />
+          </button>
+
+        </div>
+
+        {/* LOWER BUBBLE (Consonants) */}
+        <div className="h-28 flex items-start justify-center w-full">
+          <AnimatePresence mode="wait">
+            {isConsonant && activeAlphabetItem && (
+              <motion.div
+                key={`consonant-${activeIdx}`}
+                initial={{ opacity: 0, y: -15, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col items-center gap-2 cursor-pointer group"
+                onClick={() => playThaiTTS(activeAlphabetItem.exampleWord)}
+              >
+                {/* Arrow pointing DOWN from the letter to the bubble */}
+                <motion.div
+                  animate={{ y: [0, 3, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                  className="text-emerald-400"
+                >
+                  <ArrowDown size={20} className="stroke-[2.5]" />
+                </motion.div>
+
+                <div className="bg-emerald-50 hover:bg-emerald-100/80 border-2 border-emerald-200 text-emerald-700 px-6 py-3.5 rounded-2xl shadow-sm flex items-center gap-3 transition-colors active:scale-95 duration-200">
+                  <span className="text-xl font-bold font-thai">
+                    {activeAlphabetItem.exampleWord}
+                  </span>
+                  <span className="text-lg font-bold font-sans">
+                    {renderConsonantPronunciation(activeAlphabetItem.pronunciation)}
+                  </span>
+                  <Volume2 size={18} className="text-emerald-500 animate-pulse" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+      </div>
+
+    </div>
+  );
+}

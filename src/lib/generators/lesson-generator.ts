@@ -1,7 +1,7 @@
 import { Lesson, Exercise } from "@/types";
 import { generateLevel0, generateLevel1, generateLevel2, generateLevel3, generateLevel4To6, generateLevel7, generateLevel8, generateLevel9 } from './levels';
 import { generateReviewLesson } from './reviews';
-import { buildIntro } from './builders';
+import { buildIntro, buildComposition } from './builders';
 
 export function generateExercises(
   lesson: Lesson, 
@@ -142,6 +142,7 @@ export function generateExercises(
       if (phrase && !introducedIds.has(phrase.id)) {
         introducedIds.add(phrase.id);
         exercisesWithIntros.push(buildIntro(phrase, language));
+        exercisesWithIntros.push(buildComposition(phrase, language));
       }
     }
     exercisesWithIntros.push(ex);

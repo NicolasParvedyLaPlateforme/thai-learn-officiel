@@ -11,3 +11,4 @@ export * from './true-false-builder';
 export * from './one-letter-difference-builder';
 export * from './word-position-builder';
 export * from './phrase-order-builder';
+export * from './composition-builder';

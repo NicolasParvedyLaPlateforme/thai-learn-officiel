@@ -13,6 +13,7 @@ import { getTranslation } from "@/hooks/useTranslation";
 const getInstructionKey = (ex: Exercise | undefined) => {
   if (!ex) return null;
   if (ex.type === "intro") return null;
+  if (ex.type === "composition") return null;
   if (ex.type === "word-match") return "word-match";
   if (ex.type === "pair-matching") return "pair-matching";
   if (ex.type === "sentence-builder") return "sentence-builder";
@@ -180,7 +181,7 @@ export function useLessonGameLogic(lesson: any) {
     initialIndex: engineIndex,
     initialMistakes: engineMistakes,
     animationDelay: 150,
-    isExerciseIntroOrReview: (ex) => ex.type === 'intro',
+    isExerciseIntroOrReview: (ex) => ex.type === 'intro' || ex.type === 'composition',
     cloneExerciseForRetry: (ex) => {
       const cloned = { ...ex, id: (ex as any).id + '-retry-' + Date.now() };
       if (cloned.type === 'word-match' && cloned.options) {
@@ -539,7 +540,7 @@ export function useLessonGameLogic(lesson: any) {
   }, [currentExercise, isChecking, isCorrect, isFinished, handleCheck]);
 
   const isAnswerComplete = currentExercise
-    ? currentExercise.type === "intro"
+    ? currentExercise.type === "intro" || currentExercise.type === "composition"
       ? true
       : currentExercise.type === "free-typing"
         ? false

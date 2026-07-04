@@ -34,6 +34,7 @@ export default function Footer({
     if (
       !isChecking &&
       currentExercise.type !== "intro" &&
+      currentExercise.type !== "composition" &&
       (currentExercise.type as any) !== "review"
     ) {
       return false;
@@ -217,6 +218,7 @@ export default function Footer({
               disabled={
                 disableCheck !== undefined ? disableCheck :
                   currentExercise.type !== "intro" &&
+                  currentExercise.type !== "composition" &&
                   !isChecking &&
                   (!selectedAnswer ||
                     (Array.isArray(selectedAnswer) &&
@@ -230,7 +232,7 @@ export default function Footer({
               variant={isChecking && !isCorrect ? "dangerGamified" : "gamified"}
               className="w-full sm:w-auto min-w-[200px] text-lg uppercase tracking-wider"
             >
-              {currentExercise.type === "intro" || isChecking
+              {currentExercise.type === "intro" || currentExercise.type === "composition" || isChecking
                 ? getTranslation('auto.continue', language)
                 : getTranslation('auto.check', language)}
             </Button>

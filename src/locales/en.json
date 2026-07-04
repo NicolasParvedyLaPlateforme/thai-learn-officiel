@@ -460,5 +460,7 @@
   "auto.sound.mai_tai_khu": "Shortener",
   "auto.sound.karan": "Silent",
   "auto.sound.rue___ri": "rue / ri",
-  "auto.exercise.trueFalse": "Is the word spelled correctly?"
+  "auto.exercise.trueFalse": "Is the word spelled correctly?",
+  "composition.title_word": "Word composition ({word})",
+  "composition.title_phrase": "Sentence composition ({phrase})"
 }

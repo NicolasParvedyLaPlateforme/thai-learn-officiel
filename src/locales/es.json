@@ -458,5 +458,7 @@
   "auto.sound.mai_tai_khu": "Acortamiento",
   "auto.sound.karan": "Silencio",
   "auto.sound.rue___ri": "rue / ri",
-  "auto.exercise.trueFalse": "¿Está bien escrita la palabra?"
+  "auto.exercise.trueFalse": "¿Está bien escrita la palabra?",
+  "composition.title_word": "Composición de la palabra ({word})",
+  "composition.title_phrase": "Composición de la frase ({phrase})"
 }
