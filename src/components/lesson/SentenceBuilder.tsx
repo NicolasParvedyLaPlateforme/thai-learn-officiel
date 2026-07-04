@@ -227,23 +227,36 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
           }
           
           let displayText: React.ReactNode = opt.th;
+          let isAudioMode = false;
           
           if (exercise.isFillInBlank) {
             if (exercise.fillInBlankMode === 'translation') {
               // Get the translated text instead of Thai
-              displayText = getLocalizedField(opt, 'fr', language) || opt.th;
+              displayText = getLocalizedField(opt as any, 'fr', language) || opt.th;
             } else if (exercise.fillInBlankMode === 'audio') {
-              displayText = (
-                <div className="flex items-center gap-2">
-                  <div 
-                    onClick={(e) => { e.stopPropagation(); playThaiTTS(opt.th); }}
-                    className="p-1.5 rounded-full hover:bg-slate-200 text-blue-500"
-                  >
-                    <Volume2 size={24} className={isUsed ? 'opacity-0' : ''} />
-                  </div>
-                </div>
-              );
+              isAudioMode = true;
             }
+          }
+
+          if (isAudioMode) {
+            const choiceText = (language === 'en' ? 'Choice ' : (language === 'th' ? 'ตัวเลือก ' : 'Choix ')) + (idx + 1);
+            return (
+              <div key={`opt-container-${idx}`} className="flex flex-col items-center gap-3 mx-1">
+                <button 
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); playThaiTTS(opt.th); }}
+                  disabled={disabled || isUsed}
+                  className={`p-3 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 shadow-sm transition-colors flex items-center justify-center ${isUsed ? 'opacity-0 cursor-default' : 'cursor-pointer'}`}
+                >
+                  <Volume2 size={24} />
+                </button>
+                <WordTile
+                  text={choiceText}
+                  onClick={() => handleSelect(opt.th)}
+                  disabled={disabled || isUsed}
+                  className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none ' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5 '}
+                />
+              </div>
+            );
           }
 
           return (
