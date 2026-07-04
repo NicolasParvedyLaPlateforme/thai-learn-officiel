@@ -164,11 +164,11 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   key={index}
                   onClick={() => isSelectable && setActiveIdx(index)}
                   className={cn(
-                    "relative px-2 py-1 rounded-2xl cursor-pointer transition-all duration-300 select-none",
+                    "relative cursor-pointer transition-all duration-300 select-none",
                     isSelected
                       ? isConsonant
-                        ? "bg-emerald-50 text-emerald-600 font-bold scale-110 shadow-sm border-2 border-emerald-200/50"
-                        : "bg-purple-50 text-purple-600 font-bold scale-110 shadow-sm border-2 border-purple-200/50"
+                        ? "bg-emerald-50 text-emerald-600 font-bold scale-110 "
+                        : "bg-purple-50 text-purple-600 font-bold scale-110 "
                       : isSelectable
                         ? "hover:bg-slate-100 text-slate-600"
                         : "text-slate-300 cursor-default"
