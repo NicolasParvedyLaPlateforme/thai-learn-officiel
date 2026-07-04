@@ -19,6 +19,7 @@ interface CompositionProps {
 // --- Détection des caractères thaïlandais nécessitant un empilement ---
 const isUpperVowel = (char: string) => /[\u0E31\u0E34-\u0E37\u0E47\u0E4D]/.test(char);
 const isToneMark = (char: string) => /[\u0E48-\u0E4C]/.test(char);
+const isSpecialModifier = (char: string) => /[\u0E48-\u0E4C\u0E31\u0E47]/.test(char);
 
 export default function Composition({ exercise, language }: CompositionProps) {
   const isPhrase = !!(exercise.introItem as any)?.components;
@@ -63,7 +64,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
   };
 
   const prevConsonantItem = useMemo(() => {
-    if (!isToneMark(activeChar)) return null;
+    if (!isSpecialModifier(activeChar)) return null;
     for (let i = currentSelectableIndex - 1; i >= 0; i--) {
       const idx = selectableIndices[i];
       const char = characters[idx];
@@ -74,7 +75,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
   }, [activeChar, characters, currentSelectableIndex, selectableIndices]);
 
   const prevConsonantIndex = useMemo(() => {
-    if (!isToneMark(activeChar)) return -1;
+    if (!isSpecialModifier(activeChar)) return -1;
     for (let i = currentSelectableIndex - 1; i >= 0; i--) {
       const idx = selectableIndices[i];
       const char = characters[idx];
@@ -275,7 +276,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
             )}
 
             {/* --- AJOUT : Cas 2 : Explication des voyelles spéciales / Marques de ton --- */}
-            {!isConsonant && activeAlphabetItem && isToneMark(activeChar) && (
+            {!isConsonant && activeAlphabetItem && isSpecialModifier(activeChar) && (
               <motion.div
                 key={`explanation-${activeIdx}`}
                 initial={{ opacity: 0, y: -15, scale: 0.95 }}
