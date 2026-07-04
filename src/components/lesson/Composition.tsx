@@ -14,20 +14,16 @@ interface CompositionProps {
   language: string;
 }
 
-// --- AJOUT : Détection des caractères thaïlandais nécessitant un empilement ---
-// Voyelles qui se placent au-dessus de la consonne
+// --- Détection des caractères thaïlandais nécessitant un empilement ---
 const isUpperVowel = (char: string) => /[\u0E31\u0E34-\u0E37\u0E47\u0E4D]/.test(char);
-// Marques de ton qui doivent passer par-dessus une voyelle supérieure existante
 const isToneMark = (char: string) => /[\u0E48-\u0E4C]/.test(char);
 
 export default function Composition({ exercise, language }: CompositionProps) {
   const isPhrase = !!(exercise.introItem as any)?.components;
   const thText = exercise.answer;
 
-  // Split string into characters
   const characters = useMemo(() => Array.from(thText), [thText]);
 
-  // Find selectable character indices (those present in THAI_ALPHABET)
   const selectableIndices = useMemo(() => {
     return characters
       .map((char, index) => {
@@ -48,7 +44,6 @@ export default function Composition({ exercise, language }: CompositionProps) {
     return THAI_ALPHABET.find(a => a.letter === activeChar) || null;
   }, [activeChar]);
 
-  // Play sound when active character changes
   useEffect(() => {
     if (activeAlphabetItem) {
       playThaiTTS(activeAlphabetItem.exampleWord);
@@ -71,9 +66,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
     }
   };
 
-  // Helper to render consonant pronunciation with the first letter colored
   const renderConsonantPronunciation = (pron: string) => {
-    // Match the initial sound prefix (letters before 'ɔ' or 'ɔ̌' or 'ɔ̂')
     const match = pron.match(/^([a-z]+)(ɔ.*)$/i);
     if (match) {
       const prefix = match[1];
@@ -87,9 +80,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
     return <span className="font-sans">[{pron}]</span>;
   };
 
-  // --- AJOUT : Helper pour mettre en avant la voyelle après "sara" ---
   const renderVowelPronunciation = (pron: string) => {
-    // Cherche "sara" (insensible à la casse) suivi d'un espace éventuel, puis capture le reste
     const match = pron.match(/^(sara\s*)(.*)$/i);
     if (match) {
       const prefix = match[1];
@@ -106,7 +97,6 @@ export default function Composition({ exercise, language }: CompositionProps) {
   const isConsonant = activeAlphabetItem?.type === 'consonant';
   const isVowel = activeAlphabetItem?.type === 'vowel';
 
-  // Get translations
   const titleText = isPhrase
     ? getTranslation('composition.title_phrase', language)?.replace('{phrase}', thText) || `Composition de la phrase (${thText})`
     : getTranslation('composition.title_word', language)?.replace('{word}', thText) || `Composition du mot (${thText})`;
@@ -114,12 +104,10 @@ export default function Composition({ exercise, language }: CompositionProps) {
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto px-4 py-8 md:py-12 select-none">
 
-      {/* Title */}
       <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-700 text-center mb-12 sm:mb-16">
         {titleText}
       </h2>
 
-      {/* Main Composition Arena */}
       <div className="w-full flex flex-col items-center gap-6 relative min-h-[320px] justify-center">
 
         {/* UPPER BUBBLE (Vowels & Others) */}
@@ -145,7 +133,6 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   <Volume2 size={18} className="text-purple-500 animate-pulse" />
                 </div>
 
-                {/* Arrow pointing UP from the letter to the bubble */}
                 <motion.div
                   animate={{ y: [0, -3, 0] }}
                   transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
@@ -161,7 +148,6 @@ export default function Composition({ exercise, language }: CompositionProps) {
         {/* MIDDLE LAYER (Word/Phrase with Navigation) */}
         <div className="flex items-center justify-between w-full gap-4 sm:gap-8 py-2">
 
-          {/* Left Arrow */}
           <button
             onClick={handlePrev}
             disabled={!hasPrev}
@@ -175,14 +161,11 @@ export default function Composition({ exercise, language }: CompositionProps) {
             <ChevronLeft size={24} className="stroke-[2.5]" />
           </button>
 
-          {/* Thai text split in characters */}
           <div className="flex flex-wrap justify-center items-center gap-y-3 text-5xl sm:text-6xl md:text-7xl font-thai text-slate-800 tracking-wide select-none">
             {characters.map((char, index) => {
               const isSelected = index === activeIdx;
               const isSelectable = selectableIndices.includes(index);
 
-              // --- AJOUT : Vérification de l'empilement ---
-              // Si le caractère actuel est une marque de ton ET que le caractère précédent est une voyelle supérieure.
               const isStackedMark = isToneMark(char) && index > 0 && isUpperVowel(characters[index - 1]);
 
               return (
@@ -191,7 +174,6 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   onClick={() => isSelectable && setActiveIdx(index)}
                   className={cn(
                     "relative cursor-pointer transition-all duration-300 select-none",
-                    // Application du décalage vers le haut et mise au premier plan pour ne pas être caché par le background de la voyelle
                     isStackedMark && "-top-[0.45em] z-10",
                     isSelected
                       ? isConsonant
@@ -208,7 +190,6 @@ export default function Composition({ exercise, language }: CompositionProps) {
             })}
           </div>
 
-          {/* Right Arrow */}
           <button
             onClick={handleNext}
             disabled={!hasNext}
@@ -224,9 +205,11 @@ export default function Composition({ exercise, language }: CompositionProps) {
 
         </div>
 
-        {/* LOWER BUBBLE (Consonants) */}
+        {/* LOWER BUBBLE (Consonants & Special Vowels Explanations) */}
         <div className="h-28 flex items-start justify-center w-full">
           <AnimatePresence mode="wait">
+
+            {/* Cas 1 : Affichage des Consonnes */}
             {isConsonant && activeAlphabetItem && (
               <motion.div
                 key={`consonant-${activeIdx}`}
@@ -237,7 +220,6 @@ export default function Composition({ exercise, language }: CompositionProps) {
                 className="flex flex-col items-center gap-2 cursor-pointer group"
                 onClick={() => playThaiTTS(activeAlphabetItem.exampleWord)}
               >
-                {/* Arrow pointing DOWN from the letter to the bubble */}
                 <motion.div
                   animate={{ y: [0, 3, 0] }}
                   transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
@@ -257,11 +239,41 @@ export default function Composition({ exercise, language }: CompositionProps) {
                 </div>
               </motion.div>
             )}
+
+            {/* --- AJOUT : Cas 2 : Explication des voyelles spéciales / Marques de ton --- */}
+            {!isConsonant && activeAlphabetItem && isToneMark(activeChar) && (
+              <motion.div
+                key={`explanation-${activeIdx}`}
+                initial={{ opacity: 0, y: -15, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-col items-center gap-2"
+              >
+                {/* Flèche vers le bas de couleur bleue pour différencier de la consonne */}
+                <motion.div
+                  animate={{ y: [0, 3, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                  className="text-blue-400"
+                >
+                  <ArrowDown size={20} className="stroke-[2.5]" />
+                </motion.div>
+
+                {/* Bulle d'explication */}
+                <div className="bg-blue-50 border-2 border-blue-200 text-blue-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm">
+                  <span className="text-sm font-medium">
+                    {/* fallback si aucune explication n'est définie dans les data */}
+                    {/* @ts-ignore - Assuming explanation is added to Alphabet data type */}
+                    {activeAlphabetItem.explanationFR || "Modificateur : Ce symbole ne se prononce pas seul mais altère le ton ou le son de la consonne."}
+                  </span>
+                </div>
+              </motion.div>
+            )}
+
           </AnimatePresence>
         </div>
 
       </div>
-
     </div>
   );
 }

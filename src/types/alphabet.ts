@@ -15,6 +15,11 @@ export interface AlphabetItem {
   exampleTranslationEs?: string;
   exampleTranslationIt?: string;
   mnemonicEmoji?: string;
+  explanationFR?: string;
+  explanationEN?: string;
+  explanationDE?: string;
+  explanationES?: string;
+  explanationIT?: string;
 }
 
 export interface AlphabetLessonDef {
