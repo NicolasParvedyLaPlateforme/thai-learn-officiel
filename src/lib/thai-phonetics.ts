@@ -179,13 +179,24 @@ export const analyzeSyllableContext = (
     // If it's a consonant and NOT final, and NOT acting as a vowel, it might be the initial.
     // Wait, if it's ว acting as a vowel, we should look backwards!
     if (['อ', 'ว', 'ย', 'ร'].includes(characters[currentIndex]) && currentIndex > 0 && /[ก-ฮ]/.test(characters[currentIndex - 1])) {
-       for (let i = currentIndex - 1; i >= 0; i--) {
-         if (/[ก-ฮ]/.test(characters[i])) {
-           initialConsonant = characters[i];
-           initialConsonantIndex = i;
-           break;
-         }
+       let hasVowelAttached = false;
+       if (currentIndex < characters.length - 1 && /[\u0E30-\u0E39\u0E45\u0E47-\u0E4D]/.test(characters[currentIndex + 1])) {
+         hasVowelAttached = true;
        }
+       
+       if (!hasVowelAttached) {
+         for (let i = currentIndex - 1; i >= 0; i--) {
+           if (/[ก-ฮ]/.test(characters[i])) {
+             initialConsonant = characters[i];
+             initialConsonantIndex = i;
+             break;
+           }
+         }
+       } else {
+         initialConsonant = characters[currentIndex];
+         initialConsonantIndex = currentIndex;
+       }
+
     } else {
       initialConsonant = characters[currentIndex];
       initialConsonantIndex = currentIndex;
@@ -327,6 +338,23 @@ export const analyzeSyllableContext = (
         implicitVowelType = getImplicitVowelType(currentIndex, characters);
         hasShortVowel = true; // Implicit A or O are both short vowels
       }
+    }
+  } else if (initialConsonantIndex > -1 && finalConsonantIndex === -1) {
+    // Isolated initial consonant (e.g. ส in สวัสดี)
+    const initIdx = initialConsonantIndex;
+    let foundVowel = false;
+    
+    // Check if there's any vowel associated with it
+    if (initIdx > 0 && /[\u0E40-\u0E44]/.test(characters[initIdx - 1])) foundVowel = true;
+    if (initIdx < characters.length - 1 && /[\u0E30-\u0E39\u0E45\u0E47-\u0E4D]/.test(characters[initIdx + 1])) foundVowel = true;
+    // Also check current index just in case to avoid false positives (e.g. ว in สวัสดี has ั)
+    if (currentIndex < characters.length - 1 && /[\u0E30-\u0E39\u0E45\u0E47-\u0E4D]/.test(characters[currentIndex + 1])) foundVowel = true;
+    
+    // Also, if it is followed by อ, ว, ย which might act as vowels (but usually they'd be final if no other vowels)
+    // Actually, if it's isolated, it has no final consonant.
+    if (!foundVowel) {
+      implicitVowelType = 'a';
+      hasShortVowel = true;
     }
   }
 
