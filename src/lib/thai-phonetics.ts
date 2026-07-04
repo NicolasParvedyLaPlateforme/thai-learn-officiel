@@ -157,15 +157,33 @@ export const analyzeSyllableContext = (
   // If the user clicked on a consonant, is it the final one?
   let finalConsonantIndex = -1;
   if (isConsonant) {
-    // A consonant is final if it's the last character, or followed by another syllable's initial/vowel
-    // For heuristic: if the previous char is a vowel (ั, ิ, etc.) or we are at the end
+    let isFinal = false;
+    const nextChar = currentIndex < characters.length - 1 ? characters[currentIndex + 1] : null;
     const prevChar = currentIndex > 0 ? characters[currentIndex - 1] : null;
-    if (prevChar && (isShortVowel(prevChar) || /[\u0E30-\u0E39\u0E40-\u0E44]/.test(prevChar))) {
-       finalConsonant = characters[currentIndex];
-       finalConsonantIndex = currentIndex;
+
+    if (currentIndex > 0) {
+      if (currentIndex === characters.length - 1) {
+        // Last char is usually a final consonant
+        isFinal = true;
+      } else {
+        // Not the first or last char
+        if (prevChar && /[\u0E40-\u0E44]/.test(prevChar)) {
+          // Preceded by pre-posed vowel (e.g. เ, แ) -> initial
+          isFinal = false;
+        } else if (nextChar && /[\u0E30-\u0E39\u0E45\u0E48-\u0E4C\u0E47]/.test(nextChar)) {
+          // Followed by a vowel or tone mark -> initial
+          isFinal = false;
+        } else if (prevChar && /[\u0E31\u0E34-\u0E39\u0E47]/.test(prevChar)) {
+          // Preceded by upper/lower vowel -> final
+          isFinal = true;
+        } else if (prevChar && /[ก-ฮ]/.test(prevChar)) {
+          // Preceded by consonant, followed by consonant -> likely final
+          isFinal = true;
+        }
+      }
     }
-    // Also if it's the very last char in the word
-    if (currentIndex === characters.length - 1 && initialConsonant !== characters[currentIndex]) {
+
+    if (isFinal) {
        finalConsonant = characters[currentIndex];
        finalConsonantIndex = currentIndex;
     }

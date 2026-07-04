@@ -87,8 +87,8 @@ export default function Composition({ exercise, language }: CompositionProps) {
   }, [activeChar, characters, currentSelectableIndex, selectableIndices]);
 
   const syllableContext = useMemo(() => {
-    return analyzeSyllableContext(characters, currentSelectableIndex, activeAlphabetItem);
-  }, [characters, currentSelectableIndex, activeAlphabetItem]);
+    return analyzeSyllableContext(characters, activeIdx, activeAlphabetItem);
+  }, [characters, activeIdx, activeAlphabetItem]);
 
   const implicitToneResult = useMemo(() => {
     if (!syllableContext.initialConsonant) return null;
@@ -292,7 +292,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
                 </div>
 
                 {/* Explication supplémentaire si c'est une consonne finale (Mata) */}
-                {syllableContext.finalConsonant === activeChar && syllableContext.finalFamily !== "Mae Ko Ka" && (
+                {syllableContext.finalConsonantIndex === activeIdx && syllableContext.finalFamily !== "Mae Ko Ka" && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
