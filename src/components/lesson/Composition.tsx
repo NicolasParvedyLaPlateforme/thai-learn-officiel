@@ -154,7 +154,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
           </button>
 
           {/* Thai text split in characters */}
-          <div className="flex flex-wrap justify-center items-center gap-x-1 gap-y-3 text-5xl sm:text-6xl md:text-7xl font-thai text-slate-800 tracking-wide select-none">
+          <div className="flex flex-wrap justify-center items-center gap-y-3 text-5xl sm:text-6xl md:text-7xl font-thai text-slate-800 tracking-wide select-none">
             {characters.map((char, index) => {
               const isSelected = index === activeIdx;
               const isSelectable = selectableIndices.includes(index);
