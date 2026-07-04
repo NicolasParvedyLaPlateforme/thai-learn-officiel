@@ -492,5 +492,10 @@
   "composition.vowel_rule.oe_y_transformation": "Transformación เ-อ: Cuando es seguida por una 'Y' final (ย), la vocal larga เ-อ pierde su อ. Solo queda la เ para hacer el sonido 'oe'.",
   "composition.vowel_rule.ua_transformation": "Transformación -ัว: Con una consonante final, la vocal larga -ัว pierde su ั. Solo queda la ว para hacer el sonido 'ua'.",
   "composition.vowel_rule.o_long_vowel": "Vocal O larga: La letra อ (O Ang) actúa aquí como la vocal 'o' larga en el medio de la sílaba.",
-  "composition.vowel_rule.or_short_transformation": "Transformación เ-าะ: Con una consonante final, la vocal corta เ-าะ se transforma en -็อ."
+  "composition.vowel_rule.or_short_transformation": "Transformación เ-าะ: Con una consonante final, la vocal corta เ-าะ se transforma en -็อ.",
+  "composition.special_modifier.่": "Marca de tono (Mai Ek): Modifica el tono de la sílaba dependiendo de la clase de la consonante inicial.",
+  "composition.special_modifier.้": "Marca de tono (Mai Tho): Modifica el tono de la sílaba dependiendo de la clase de la consonante inicial.",
+  "composition.special_modifier.๊": "Marca de tono (Mai Tri): Generalmente indica un tono alto, usado principalmente con consonantes de clase media.",
+  "composition.special_modifier.๋": "Marca de tono (Mai Chattawa): Generalmente indica un tono ascendente, usado principalmente con consonantes de clase media.",
+  "composition.special_modifier.์": "Símbolo de silencio (Karan): Indica que la consonante sobre la que se coloca (y a veces la vocal asociada) es muda."
 }

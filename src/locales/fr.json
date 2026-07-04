@@ -496,5 +496,10 @@
   "composition.vowel_rule.oe_y_transformation": "Transformation de เ-อ : Lorsqu'elle est suivie d'un 'Y' final (ย), la voyelle longue เ-อ perd son อ. Il ne reste que le เ pour faire le son 'oe'.",
   "composition.vowel_rule.ua_transformation": "Transformation de -ัว : Avec une consonne finale, la voyelle longue -ัว perd son ั. Il ne reste que le ว pour faire le son 'ua'.",
   "composition.vowel_rule.o_long_vowel": "Voyelle O longue : La lettre อ (O Ang) agit ici comme la voyelle 'o' longue au milieu de la syllabe.",
-  "composition.vowel_rule.or_short_transformation": "Transformation de เ-าะ : Avec une consonne finale, la voyelle courte เ-าะ se transforme en -็อ."
+  "composition.vowel_rule.or_short_transformation": "Transformation de เ-าะ : Avec une consonne finale, la voyelle courte เ-าะ se transforme en -็อ.",
+  "composition.special_modifier.่": "Marque de ton (Mai Ek) : Modifie le ton de la syllabe selon la classe de la consonne initiale.",
+  "composition.special_modifier.้": "Marque de ton (Mai Tho) : Modifie le ton de la syllabe selon la classe de la consonne initiale.",
+  "composition.special_modifier.๊": "Marque de ton (Mai Tri) : Indique généralement un ton haut, principalement utilisé avec les consonnes de classe moyenne.",
+  "composition.special_modifier.๋": "Marque de ton (Mai Chattawa) : Indique généralement un ton ascendant, principalement utilisé avec les consonnes de classe moyenne.",
+  "composition.special_modifier.์": "Symbole de silence (Karan) : Indique que la consonne sur laquelle il est placé (et parfois la voyelle associée) est muette."
 }

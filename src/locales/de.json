@@ -494,5 +494,10 @@
   "composition.vowel_rule.oe_y_transformation": "เ-อ Transformation: Wenn ein abschließendes 'Y' (ย) folgt, verliert der lange Vokal เ-อ sein อ. Nur das เ bleibt übrig, um den 'oe'-Laut zu erzeugen.",
   "composition.vowel_rule.ua_transformation": "-ัว Transformation: Mit einem Schlusskonsonanten verliert der lange Vokal -ัว sein ั. Nur das ว bleibt übrig, um den 'ua'-Laut zu erzeugen.",
   "composition.vowel_rule.o_long_vowel": "Langer O-Vokal: Der Buchstabe อ (O Ang) fungiert hier als langer 'o'-Vokal in der Mitte der Silbe.",
-  "composition.vowel_rule.or_short_transformation": "เ-าะ Transformation: Mit einem Schlusskonsonanten verwandelt sich der kurze Vokal เ-าะ in -็อ."
+  "composition.vowel_rule.or_short_transformation": "เ-าะ Transformation: Mit einem Schlusskonsonanten verwandelt sich der kurze Vokal เ-าะ in -็อ.",
+  "composition.special_modifier.่": "Tonzeichen (Mai Ek): Ändert den Ton der Silbe in Abhängigkeit von der Klasse des Anfangskonsonanten.",
+  "composition.special_modifier.้": "Tonzeichen (Mai Tho): Ändert den Ton der Silbe in Abhängigkeit von der Klasse des Anfangskonsonanten.",
+  "composition.special_modifier.๊": "Tonzeichen (Mai Tri): Zeigt im Allgemeinen einen hohen Ton an, wird meist mit Konsonanten der mittleren Klasse verwendet.",
+  "composition.special_modifier.๋": "Tonzeichen (Mai Chattawa): Zeigt im Allgemeinen einen steigenden Ton an, wird meist mit Konsonanten der mittleren Klasse verwendet.",
+  "composition.special_modifier.์": "Stille-Symbol (Karan): Zeigt an, dass der Konsonant, über dem es steht (und manchmal der zugehörige Vokal), stumm ist."
 }

@@ -160,11 +160,21 @@ export const analyzeSyllableContext = (
       initialConsonantIndex = currentIndex;
     }
   } else {
-    for (let i = currentIndex - 1; i >= 0; i--) {
-      if (/[ก-ฮ]/.test(characters[i])) {
-        initialConsonant = characters[i];
-        initialConsonantIndex = i;
-        break;
+    if (/[\u0E40-\u0E44]/.test(characters[currentIndex])) {
+      for (let i = currentIndex + 1; i < characters.length; i++) {
+        if (/[ก-ฮ]/.test(characters[i])) {
+          initialConsonant = characters[i];
+          initialConsonantIndex = i;
+          break;
+        }
+      }
+    } else {
+      for (let i = currentIndex - 1; i >= 0; i--) {
+        if (/[ก-ฮ]/.test(characters[i])) {
+          initialConsonant = characters[i];
+          initialConsonantIndex = i;
+          break;
+        }
       }
     }
   }
@@ -196,14 +206,8 @@ export const analyzeSyllableContext = (
   if (isConsonant && isFinal) {
     finalConsonant = characters[currentIndex];
     finalConsonantIndex = currentIndex;
-  } else if (!isConsonant) {
-    // If user clicked a vowel (like ั), the final consonant is likely the next consonant
-    if (currentIndex + 1 < characters.length && /[ก-ฮ]/.test(characters[currentIndex + 1])) {
-      finalConsonant = characters[currentIndex + 1];
-      finalConsonantIndex = currentIndex + 1;
-    }
-  } else if (isConsonant && !isFinal) {
-    // User clicked the initial consonant. Let's find the final consonant of this syllable.
+  } else if (initialConsonantIndex > -1) {
+    // Let's find the final consonant of this syllable starting from the initial consonant.
     for (let i = initialConsonantIndex + 1; i < characters.length; i++) {
        // If we hit a pre-posed vowel, the current syllable has ended
        if (/[\u0E40-\u0E44]/.test(characters[i])) break;
