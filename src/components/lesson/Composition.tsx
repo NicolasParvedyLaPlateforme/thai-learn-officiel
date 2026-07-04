@@ -14,6 +14,12 @@ interface CompositionProps {
   language: string;
 }
 
+// --- AJOUT : Détection des caractères thaïlandais nécessitant un empilement ---
+// Voyelles qui se placent au-dessus de la consonne
+const isUpperVowel = (char: string) => /[\u0E31\u0E34-\u0E37\u0E47\u0E4D]/.test(char);
+// Marques de ton qui doivent passer par-dessus une voyelle supérieure existante
+const isToneMark = (char: string) => /[\u0E48-\u0E4C]/.test(char);
+
 export default function Composition({ exercise, language }: CompositionProps) {
   const isPhrase = !!(exercise.introItem as any)?.components;
   const thText = exercise.answer;
@@ -159,12 +165,18 @@ export default function Composition({ exercise, language }: CompositionProps) {
               const isSelected = index === activeIdx;
               const isSelectable = selectableIndices.includes(index);
 
+              // --- AJOUT : Vérification de l'empilement ---
+              // Si le caractère actuel est une marque de ton ET que le caractère précédent est une voyelle supérieure.
+              const isStackedMark = isToneMark(char) && index > 0 && isUpperVowel(characters[index - 1]);
+
               return (
                 <span
                   key={index}
                   onClick={() => isSelectable && setActiveIdx(index)}
                   className={cn(
                     "relative cursor-pointer transition-all duration-300 select-none",
+                    // Application du décalage vers le haut et mise au premier plan pour ne pas être caché par le background de la voyelle
+                    isStackedMark && "-top-[0.45em] z-10",
                     isSelected
                       ? isConsonant
                         ? "bg-emerald-50 text-emerald-600 font-bold scale-110 "
