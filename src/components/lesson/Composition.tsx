@@ -87,6 +87,22 @@ export default function Composition({ exercise, language }: CompositionProps) {
     return <span className="font-sans">[{pron}]</span>;
   };
 
+  // --- AJOUT : Helper pour mettre en avant la voyelle après "sara" ---
+  const renderVowelPronunciation = (pron: string) => {
+    // Cherche "sara" (insensible à la casse) suivi d'un espace éventuel, puis capture le reste
+    const match = pron.match(/^(sara\s*)(.*)$/i);
+    if (match) {
+      const prefix = match[1];
+      const rest = match[2];
+      return (
+        <span className="font-sans">
+          [{prefix}<span className="text-2xl font-bold text-purple-800">{rest}</span>]
+        </span>
+      );
+    }
+    return <span className="font-sans">[{pron}]</span>;
+  };
+
   const isConsonant = activeAlphabetItem?.type === 'consonant';
   const isVowel = activeAlphabetItem?.type === 'vowel';
 
@@ -123,8 +139,8 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   <span className="text-xl font-bold font-thai">
                     {activeAlphabetItem.exampleWord}
                   </span>
-                  <span className="text-lg font-bold font-sans text-purple-600/90">
-                    [{activeAlphabetItem.pronunciation}]
+                  <span className="text-lg font-bold font-sans text-purple-600/90 flex items-baseline">
+                    {renderVowelPronunciation(activeAlphabetItem.pronunciation)}
                   </span>
                   <Volume2 size={18} className="text-purple-500 animate-pulse" />
                 </div>
