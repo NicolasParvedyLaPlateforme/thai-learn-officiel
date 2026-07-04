@@ -94,7 +94,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
     if (!syllableContext.initialConsonant) return null;
     const item = THAI_ALPHABET.find(a => a.letter === syllableContext.initialConsonant);
     if (!item || !item.consonantClass) return null;
-    
+
     const baseClass = syllableContext.leadingConsonantClass || item.consonantClass;
     return calculateImplicitTone(baseClass as ToneClass, syllableContext.syllableType, syllableContext.hasShortVowel);
   }, [syllableContext]);
@@ -214,6 +214,8 @@ export default function Composition({ exercise, language }: CompositionProps) {
 
               // NOUVEAU : On vérifie si ce caractère est la consonne modifiée par le ton actuel
               const isModifiedConsonant = index === prevConsonantIndex;
+              // AJOUT : Vérifie si ce caractère est la consonne finale de la syllabe actuelle (qui crée le son mort/vivant)
+              const isFinalConsonant = index === syllableContext.finalConsonantIndex && syllableContext.finalFamily !== "Mae Ko Ka";
 
               return (
                 <span
@@ -228,9 +230,11 @@ export default function Composition({ exercise, language }: CompositionProps) {
                         : "bg-purple-50 text-purple-600 font-bold scale-110 "
                       : isModifiedConsonant
                         ? "text-orange-500" // NOUVEAU : Texte orange, sans changement de taille
-                        : isSelectable
-                          ? "hover:bg-slate-100 text-slate-600"
-                          : "text-slate-300 cursor-default"
+                        : isFinalConsonant
+                          ? "text-teal-500 font-medium" // AJOUT : Texte turquoise pour la consonne finale
+                          : isSelectable
+                            ? "hover:bg-slate-100 text-slate-600"
+                            : "text-slate-300 cursor-default"
                   )}
                 >
                   {char}
@@ -286,7 +290,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   </span>
                   <Volume2 size={18} className="text-emerald-500 animate-pulse" />
                 </div>
-                
+
                 {/* Explication supplémentaire si c'est une consonne finale (Mata) */}
                 {syllableContext.finalConsonant === activeChar && syllableContext.finalFamily !== "Mae Ko Ka" && (
                   <motion.div
@@ -363,11 +367,11 @@ export default function Composition({ exercise, language }: CompositionProps) {
                     >
                       <span className="text-sm font-medium">
                         {getTranslation('composition.tone_rule_prefix', language)}
-                        <strong className="mx-1">
+                        <strong className="mx-1v text-orange-500">
                           {getTranslation(`composition.tone_class.${syllableContext.leadingConsonantClass || THAI_ALPHABET.find(a => a.letter === syllableContext.initialConsonant)?.consonantClass}`, language)}
                         </strong>
-                        + <strong className="mx-1">{getTranslation(`composition.vowel_length.${syllableContext.hasShortVowel ? 'short' : 'long'}`, language)}</strong>
-                        + <strong className="mx-1">{getTranslation(`composition.syllable_type.${syllableContext.syllableType}`, language)}</strong> =
+                        + <strong className="mx-1 text-purple-600 ">{getTranslation(`composition.vowel_length.${syllableContext.hasShortVowel ? 'short' : 'long'}`, language)}</strong>
+                        + <strong className="mx-1 text-teal-600">{getTranslation(`composition.syllable_type.${syllableContext.syllableType}`, language)}</strong> =
                         <strong className="ml-1 uppercase text-amber-600">{getTranslation(`composition.tone_result.${implicitToneResult}`, language)}</strong>
                       </span>
                     </motion.div>

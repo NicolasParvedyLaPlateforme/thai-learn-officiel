@@ -155,21 +155,25 @@ export const analyzeSyllableContext = (
 
   // 3. Identify Final Consonant
   // If the user clicked on a consonant, is it the final one?
+  let finalConsonantIndex = -1;
   if (isConsonant) {
     // A consonant is final if it's the last character, or followed by another syllable's initial/vowel
     // For heuristic: if the previous char is a vowel (ั, ิ, etc.) or we are at the end
     const prevChar = currentIndex > 0 ? characters[currentIndex - 1] : null;
     if (prevChar && (isShortVowel(prevChar) || /[\u0E30-\u0E39\u0E40-\u0E44]/.test(prevChar))) {
        finalConsonant = characters[currentIndex];
+       finalConsonantIndex = currentIndex;
     }
     // Also if it's the very last char in the word
     if (currentIndex === characters.length - 1 && initialConsonant !== characters[currentIndex]) {
        finalConsonant = characters[currentIndex];
+       finalConsonantIndex = currentIndex;
     }
   } else {
     // If user clicked a vowel (like ั), the final consonant is likely the next consonant
     if (currentIndex + 1 < characters.length && /[ก-ฮ]/.test(characters[currentIndex + 1])) {
       finalConsonant = characters[currentIndex + 1];
+      finalConsonantIndex = currentIndex + 1;
     }
   }
 
@@ -184,6 +188,7 @@ export const analyzeSyllableContext = (
     leadingConsonantClass,
     hasShortVowel,
     finalConsonant,
+    finalConsonantIndex,
     finalFamily,
     syllableType
   };
