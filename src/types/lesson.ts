@@ -69,6 +69,7 @@ export interface Exercise {
   maxMistakes?: number; // How many mistakes allowed before failing the exercise 
   reverse?: boolean; // For word-match: if true, options show FR/EN instead of TH
   isFillInBlank?: boolean;
+  fillInBlankMode?: 'classic' | 'translation' | 'audio';
   blankIndex?: number;
   blankHint?: string;
   prefilledComponents?: string[];

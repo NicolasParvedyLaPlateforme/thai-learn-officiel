@@ -3,7 +3,7 @@ import { Exercise } from "@/types";
 import { playThaiTTS } from "@/lib/tts";
 import { THAI_ALPHABET } from "@/data/alphabet-data";
 import React, { useState } from 'react';
-import { HelpCircle } from 'lucide-react';
+import { HelpCircle, Volume2 } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
 import { WordTile } from "@/components/ui/WordTile";
 import { IconButton } from "@/components/ui/IconButton";
@@ -225,16 +225,36 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
             isUsed = true;
             usedCounts[opt.th]--;
           }
+          
+          let displayText: React.ReactNode = opt.th;
+          
+          if (exercise.isFillInBlank) {
+            if (exercise.fillInBlankMode === 'translation') {
+              // Get the translated text instead of Thai
+              displayText = getLocalizedField(opt, 'fr', language) || opt.th;
+            } else if (exercise.fillInBlankMode === 'audio') {
+              displayText = (
+                <div className="flex items-center gap-2">
+                  <div 
+                    onClick={(e) => { e.stopPropagation(); playThaiTTS(opt.th); }}
+                    className="p-1.5 rounded-full hover:bg-slate-200 text-blue-500"
+                  >
+                    <Volume2 size={24} className={isUsed ? 'opacity-0' : ''} />
+                  </div>
+                </div>
+              );
+            }
+          }
+
           return (
             <WordTile
               key={`opt-${idx}`}
-              text={opt.th}
+              text={displayText}
               onClick={() => handleSelect(opt.th)}
               disabled={disabled || isUsed}
               // Pour la banque de mots, on écrase les styles quand le mot est déjà utilisé
               className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none ' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5 '}
             />
-
           );
         })}
       </div>

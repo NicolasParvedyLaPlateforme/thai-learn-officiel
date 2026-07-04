@@ -95,7 +95,8 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
     const fibExMain = buildFillInTheBlank(phrase, language, {
        numMisspelledDistractors: 1,
        maxMistakes: 2,
-       pool: globalWords
+       pool: globalWords,
+       mode: 'classic'
     });
     if (fibExMain) phraseExercises.push(fibExMain);
 
@@ -107,15 +108,18 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
     const wpEx = buildWordPosition(phrase, language, { pool: globalWords });
     if (wpEx) randomPool.push(wpEx);
 
+    // Randomly choose between translation or audio mode for the second fill-in-the-blank
+    const randomMode = Math.random() < 0.5 ? 'translation' : 'audio';
     const fibExRandom = buildFillInTheBlank(phrase, language, {
        numMisspelledDistractors: 1,
        maxMistakes: 2,
-       pool: globalWords
+       pool: globalWords,
+       mode: randomMode
     });
     if (fibExRandom) randomPool.push(fibExRandom);
 
     randomPool = shuffle(randomPool);
-    phraseExercises.push(...randomPool.slice(0, 2));
+    phraseExercises.push(...randomPool);
   });
 
   const finalExercises = [...wmExercises, ...phraseExercises];
