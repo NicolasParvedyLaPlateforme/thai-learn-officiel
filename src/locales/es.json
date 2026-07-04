@@ -498,5 +498,8 @@
   "composition.special_modifier.๊": "Marca de tono (Mai Tri): Generalmente indica un tono alto, usado principalmente con consonantes de clase media.",
   "composition.special_modifier.๋": "Marca de tono (Mai Chattawa): Generalmente indica un tono ascendente, usado principalmente con consonantes de clase media.",
   "composition.special_modifier.์": "Símbolo de silencio (Karan): Indica que la consonante sobre la que se coloca (y a veces la vocal asociada) es muda.",
-  "composition.implicit_a_vowel": "Vocal implícita: Esta consonante forma una sílaba abierta, se pronuncia una 'A' corta (ะ) invisible."
+  "composition.implicit_a_vowel": "Vocal implícita: Esta consonante forma una sílaba abierta, se pronuncia una 'A' corta (ะ) invisible.",
+  "exercise.word": "Palabra",
+  "exercise.phrase": "Frase",
+  "exercise.composition": "Composición"
 }

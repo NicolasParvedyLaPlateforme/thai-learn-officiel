@@ -500,5 +500,8 @@
   "composition.special_modifier.๊": "Tone Mark (Mai Tri): Generally indicates a high tone, mostly used with mid-class consonants.",
   "composition.special_modifier.๋": "Tone Mark (Mai Chattawa): Generally indicates a rising tone, mostly used with mid-class consonants.",
   "composition.special_modifier.์": "Silence Symbol (Karan): Indicates that the consonant it is placed on (and sometimes the associated vowel) is silent.",
-  "composition.implicit_a_vowel": "Implicit Vowel: This consonant forms an open syllable, a short, invisible 'A' (ะ) is pronounced."
+  "composition.implicit_a_vowel": "Implicit Vowel: This consonant forms an open syllable, a short, invisible 'A' (ะ) is pronounced.",
+  "exercise.word": "Word",
+  "exercise.phrase": "Sentence",
+  "exercise.composition": "Composition"
 }

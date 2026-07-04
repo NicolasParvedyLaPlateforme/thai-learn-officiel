@@ -500,5 +500,8 @@
   "composition.special_modifier.๊": "Tonzeichen (Mai Tri): Zeigt im Allgemeinen einen hohen Ton an, wird meist mit Konsonanten der mittleren Klasse verwendet.",
   "composition.special_modifier.๋": "Tonzeichen (Mai Chattawa): Zeigt im Allgemeinen einen steigenden Ton an, wird meist mit Konsonanten der mittleren Klasse verwendet.",
   "composition.special_modifier.์": "Stille-Symbol (Karan): Zeigt an, dass der Konsonant, über dem es steht (und manchmal der zugehörige Vokal), stumm ist.",
-  "composition.implicit_a_vowel": "Impliziter Vokal: Dieser Konsonant bildet eine offene Silbe, ein kurzes, unsichtbares 'A' (ะ) wird gesprochen."
+  "composition.implicit_a_vowel": "Impliziter Vokal: Dieser Konsonant bildet eine offene Silbe, ein kurzes, unsichtbares 'A' (ะ) wird gesprochen.",
+  "exercise.word": "Wort",
+  "exercise.phrase": "Satz",
+  "exercise.composition": "Zusammensetzung"
 }

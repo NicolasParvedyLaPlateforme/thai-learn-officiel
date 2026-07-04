@@ -3,6 +3,8 @@ import { Exercise } from '@/types/lesson';
 import { playThaiTTS } from '@/lib/tts';
 import { OptionCardButton } from '../ui/OptionCardButton';
 import { m, AnimatePresence } from 'framer-motion';
+import { Search, X } from 'lucide-react';
+import Composition from './Composition';
 import { getTranslation } from '@/hooks/useTranslation';
 
 interface Props {
@@ -28,6 +30,25 @@ export default React.memo(function SoundToLetter({
   language = 'fr',
   onAddMistake
 }: Props) {
+  const [showComposition, setShowComposition] = React.useState(false);
+  const isPhrase = !!(exercise.introItem as any)?.components;
+
+  const compositionWord = exercise.originalWord || exercise.answer;
+
+  if (showComposition) {
+    return (
+      <div className="relative flex flex-col w-full h-full">
+        <button 
+          onClick={() => setShowComposition(false)}
+          className="absolute top-4 right-4 z-50 bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-full p-2 shadow-sm flex items-center justify-center transition-colors"
+          aria-label={getTranslation('auto.close', language)}
+        >
+          <X size={24} />
+        </button>
+        <Composition exercise={{ ...exercise, answer: compositionWord }} language={language} />
+      </div>
+    );
+  }
 
   const handleSelect = (val: string) => {
     if (disabled) return;
@@ -112,11 +133,18 @@ export default React.memo(function SoundToLetter({
           className="bg-white border border-slate-200 shadow-sm rounded-[1rem] flex flex-col w-full min-w-[280px] max-w-[360px] overflow-hidden"
         >
           <div className="flex flex-col p-6 w-full">
-            {/* Tag "mot" */}
-            <div className="w-full flex justify-start mb-10">
-              <span className="text-slate-500 border border-slate-200 rounded px-3 py-1 text-sm">
-                mot
+            {/* Tag "mot" ou "phrase" + Bouton Composition */}
+            <div className="w-full flex justify-between items-center mb-10">
+              <span className="text-slate-500 bg-white border border-slate-200 rounded px-3 py-1 text-sm">
+                {isPhrase ? getTranslation('exercise.phrase', language) : getTranslation('exercise.word', language)}
               </span>
+              <button
+                onClick={() => setShowComposition(true)}
+                className="text-slate-500 bg-white hover:text-emerald-600 flex items-center gap-1.5 text-sm font-medium transition-colors border border-slate-200 hover:border-emerald-200 hover:bg-emerald-50 rounded px-3 py-1"
+              >
+                <Search size={16} />
+                <span className="hidden sm:inline">{getTranslation('exercise.composition', language)}</span>
+              </button>
             </div>
 
             {/* Mot thaï */}
