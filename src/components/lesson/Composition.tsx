@@ -347,7 +347,7 @@ export default function Composition({ exercise, language }: CompositionProps) {
                 {isSpecialModifier(activeChar) && (
                   <div className="bg-blue-50 border-2 border-blue-200 text-blue-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm">
                     <span className="text-sm font-medium">
-                      {getTranslation('composition.tone_mark_explanation', language)}
+                      {getTranslation(`composition.special_modifier.${activeChar}`, language) || getTranslation('composition.tone_mark_explanation', language)}
                     </span>
                   </div>
                 )}

@@ -487,5 +487,7 @@
   "composition.mata.Mae Koei": "Mae Koei ('Y' Laut)",
   "composition.mata.Mae Kow": "Mae Kow ('W' Laut)",
   "composition.mata_explanation": "Dieser Konsonant gehört zur {mata}-Familie und wird am Silbenende wie ein gestopptes '{sound}' ausgesprochen.",
-  "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen zwei Konsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen."
+  "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen zwei Konsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen.",
+  "composition.special_modifier.ั": "Kurzer A-Vokal: Dieses Symbol (Mai Han-a-kat) erzeugt einen kurzen 'a'-Laut. Es ist die Form, die der Vokal ะ annimmt, wenn ein Schlusskonsonant die Silbe schließt.",
+  "composition.special_modifier.็": "Vokalverkürzer: Dieses Symbol (Mai Tai Khu) verkürzt den Vokallaut. Es ersetzt das Symbol ะ, wenn ein Schlusskonsonant die Silbe mit den Vokalen เ und แ schließt."
 }

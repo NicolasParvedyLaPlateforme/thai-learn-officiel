@@ -489,5 +489,7 @@
   "composition.mata.Mae Koei": "Mae Koei (Son 'Y')",
   "composition.mata.Mae Kow": "Mae Kow (Son 'W')",
   "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe.",
-  "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible."
+  "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible.",
+  "composition.special_modifier.ั": "Voyelle A court : Ce symbole (Mai Han-a-kat) produit le son 'a' court. C'est la forme que prend la voyelle ะ lorsqu'une consonne finale vient fermer la syllabe.",
+  "composition.special_modifier.็": "Raccourcisseur de voyelle : Ce symbole (Mai Tai Khu) raccourcit le son de la voyelle. Il remplace le symbole ะ lorsqu'une consonne finale vient fermer la syllabe avec les voyelles เ et แ."
 }

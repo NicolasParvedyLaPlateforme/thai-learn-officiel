@@ -27,7 +27,9 @@ const translations = {
     "composition.mata.Mae Koei": "Mae Koei (Son 'Y')",
     "composition.mata.Mae Kow": "Mae Kow (Son 'W')",
     "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe.",
-    "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible."
+    "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible.",
+    "composition.special_modifier.\u0E31": "Voyelle A court : Ce symbole (Mai Han-a-kat) produit le son 'a' court. C'est la forme que prend la voyelle ะ lorsqu'une consonne finale vient fermer la syllabe.",
+    "composition.special_modifier.\u0E47": "Raccourcisseur de voyelle : Ce symbole (Mai Tai Khu) raccourcit le son de la voyelle. Il remplace le symbole ะ lorsqu'une consonne finale vient fermer la syllabe avec les voyelles เ et แ."
   },
   en: {
     "composition.syllable_type.live": "Live Syllable",
@@ -45,7 +47,9 @@ const translations = {
     "composition.mata.Mae Koei": "Mae Koei ('Y' sound)",
     "composition.mata.Mae Kow": "Mae Kow ('W' sound)",
     "composition.mata_explanation": "This consonant belongs to the {mata} family and is pronounced as a stopped '{sound}' at the end of the syllable.",
-    "composition.implicit_o_vowel": "Implicit Vowel: When there is no written vowel between two consonants, a short, invisible 'O' (โ-ะ) is pronounced."
+    "composition.implicit_o_vowel": "Implicit Vowel: When there is no written vowel between two consonants, a short, invisible 'O' (โ-ะ) is pronounced.",
+    "composition.special_modifier.\u0E31": "Short A Vowel: This symbol (Mai Han-a-kat) produces a short 'a' sound. It is the form the vowel ะ takes when a final consonant closes the syllable.",
+    "composition.special_modifier.\u0E47": "Vowel Shortener: This symbol (Mai Tai Khu) shortens the vowel sound. It replaces the ะ symbol when a final consonant closes the syllable with the vowels เ and แ."
   },
   es: {
     "composition.syllable_type.live": "Sílaba Viva",
@@ -63,7 +67,9 @@ const translations = {
     "composition.mata.Mae Koei": "Mae Koei (Sonido 'Y')",
     "composition.mata.Mae Kow": "Mae Kow (Sonido 'W')",
     "composition.mata_explanation": "Esta consonante pertenece a la familia {mata} y, por lo tanto, se pronuncia como una '{sound}' al final de la sílaba.",
-    "composition.implicit_o_vowel": "Vocal implícita: Cuando no hay una vocal escrita entre dos consonantes, se pronuncia una 'O' corta (โ-ะ) invisible."
+    "composition.implicit_o_vowel": "Vocal implícita: Cuando no hay una vocal escrita entre dos consonantes, se pronuncia una 'O' corta (โ-ะ) invisible.",
+    "composition.special_modifier.\u0E31": "Vocal A corta: Este símbolo (Mai Han-a-kat) produce un sonido 'a' corto. Es la forma que toma la vocal ะ cuando una consonante final cierra la sílaba.",
+    "composition.special_modifier.\u0E47": "Acortador de vocal: Este símbolo (Mai Tai Khu) acorta el sonido de la vocal. Reemplaza al símbolo ะ cuando una consonante final cierra la sílaba con las vocales เ y แ."
   },
   de: {
     "composition.syllable_type.live": "Lebendige Silbe",
@@ -81,7 +87,9 @@ const translations = {
     "composition.mata.Mae Koei": "Mae Koei ('Y' Laut)",
     "composition.mata.Mae Kow": "Mae Kow ('W' Laut)",
     "composition.mata_explanation": "Dieser Konsonant gehört zur {mata}-Familie und wird am Silbenende wie ein gestopptes '{sound}' ausgesprochen.",
-    "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen zwei Konsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen."
+    "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen zwei Konsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen.",
+    "composition.special_modifier.\u0E31": "Kurzer A-Vokal: Dieses Symbol (Mai Han-a-kat) erzeugt einen kurzen 'a'-Laut. Es ist die Form, die der Vokal ะ annimmt, wenn ein Schlusskonsonant die Silbe schließt.",
+    "composition.special_modifier.\u0E47": "Vokalverkürzer: Dieses Symbol (Mai Tai Khu) verkürzt den Vokallaut. Es ersetzt das Symbol ะ, wenn ein Schlusskonsonant die Silbe mit den Vokalen เ und แ schließt."
   },
   it: {
     "composition.syllable_type.live": "Sillaba Viva",
@@ -99,7 +107,9 @@ const translations = {
     "composition.mata.Mae Koei": "Mae Koei (Suono 'Y')",
     "composition.mata.Mae Kow": "Mae Kow (Suono 'W')",
     "composition.mata_explanation": "Questa consonante appartiene alla famiglia {mata} e quindi si pronuncia come una '{sound}' alla fine della sillaba.",
-    "composition.implicit_o_vowel": "Vocale implicita: Quando non c'è una vocale scritta tra due consonanti, si pronuncia una 'O' corta (โ-ะ) invisibile."
+    "composition.implicit_o_vowel": "Vocale implicita: Quando non c'è una vocale scritta tra due consonanti, si pronuncia una 'O' corta (โ-ะ) invisibile.",
+    "composition.special_modifier.\u0E31": "Vocale A corta: Questo simbolo (Mai Han-a-kat) produce un suono 'a' corto. È la forma che assume la vocale ะ quando una consonante finale chiude la sillaba.",
+    "composition.special_modifier.\u0E47": "Accorciatore di vocale: Questo simbolo (Mai Tai Khu) accorcia il suono della vocale. Sostituisce il simbolo ะ quando una consonante finale chiude la sillaba con le vocali เ e แ."
   }
 };
 
