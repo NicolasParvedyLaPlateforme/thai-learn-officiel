@@ -308,16 +308,19 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   </motion.div>
                 )}
 
-                {/* NOUVEAU : Explication pour la voyelle implicite (O court) */}
-                {syllableContext.hasImplicitOVowel && (
+                {/* NOUVEAU : Explication pour la voyelle implicite (A ou O court) */}
+                {syllableContext.implicitVowelType && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.2 }}
-                    className="mt-1 bg-purple-50 border-2 border-purple-200 text-purple-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
+                    className={`mt-1 border-2 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm ${syllableContext.implicitVowelType === 'a' ? 'bg-fuchsia-50 border-fuchsia-200 text-fuchsia-800' : 'bg-purple-50 border-purple-200 text-purple-800'}`}
                   >
                     <span className="text-sm font-medium">
-                      {getTranslation('composition.implicit_o_vowel', language)}
+                      {syllableContext.implicitVowelType === 'a' 
+                        ? getTranslation('composition.implicit_a_vowel', language)
+                        : getTranslation('composition.implicit_o_vowel', language)
+                      }
                     </span>
                   </motion.div>
                 )}

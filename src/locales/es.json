@@ -485,7 +485,7 @@
   "composition.mata.Mae Koei": "Mae Koei (Sonido 'Y')",
   "composition.mata.Mae Kow": "Mae Kow (Sonido 'W')",
   "composition.mata_explanation": "Esta consonante pertenece a la familia {mata} y, por lo tanto, se pronuncia como una '{sound}' al final de la sílaba.",
-  "composition.implicit_o_vowel": "Vocal implícita: Cuando no hay una vocal escrita entre dos consonantes, se pronuncia una 'O' corta (โ-ะ) invisible.",
+  "composition.implicit_o_vowel": "Vocal implícita: Cuando no hay una vocal escrita entre una consonante inicial y final, se pronuncia una 'O' corta (โ-ะ) invisible.",
   "composition.special_modifier.ั": "Vocal A corta: Este símbolo (Mai Han-a-kat) produce un sonido 'a' corto. Es la forma que toma la vocal ะ cuando una consonante final cierra la sílaba.",
   "composition.special_modifier.็": "Acortador de vocal: Este símbolo (Mai Tai Khu) acorta el sonido de la vocal. Reemplaza al símbolo ะ cuando una consonante final cierra la sílaba con las vocales เ y แ.",
   "composition.vowel_rule.oe_transformation": "Transformación เ-อ: Con una consonante final, la vocal larga เ-อ se transforma en เ-ิ. El símbolo ิ reemplaza la letra อ final.",
@@ -497,5 +497,6 @@
   "composition.special_modifier.้": "Marca de tono (Mai Tho): Modifica el tono de la sílaba dependiendo de la clase de la consonante inicial.",
   "composition.special_modifier.๊": "Marca de tono (Mai Tri): Generalmente indica un tono alto, usado principalmente con consonantes de clase media.",
   "composition.special_modifier.๋": "Marca de tono (Mai Chattawa): Generalmente indica un tono ascendente, usado principalmente con consonantes de clase media.",
-  "composition.special_modifier.์": "Símbolo de silencio (Karan): Indica que la consonante sobre la que se coloca (y a veces la vocal asociada) es muda."
+  "composition.special_modifier.์": "Símbolo de silencio (Karan): Indica que la consonante sobre la que se coloca (y a veces la vocal asociada) es muda.",
+  "composition.implicit_a_vowel": "Vocal implícita: Esta consonante forma una sílaba abierta, se pronuncia una 'A' corta (ะ) invisible."
 }

@@ -489,7 +489,7 @@
   "composition.mata.Mae Koei": "Mae Koei (Son 'Y')",
   "composition.mata.Mae Kow": "Mae Kow (Son 'W')",
   "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe.",
-  "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre deux consonnes, on prononce un \"O\" court (โ-ะ) invisible.",
+  "composition.implicit_o_vowel": "Voyelle implicite : Lorsqu'il n'y a pas de voyelle écrite entre une consonne initiale et finale, on prononce un 'O' court (โ-ะ) invisible.",
   "composition.special_modifier.ั": "Voyelle A court : Ce symbole (Mai Han-a-kat) produit le son 'a' court. C'est la forme que prend la voyelle ะ lorsqu'une consonne finale vient fermer la syllabe.",
   "composition.special_modifier.็": "Raccourcisseur de voyelle : Ce symbole (Mai Tai Khu) raccourcit le son de la voyelle. Il remplace le symbole ะ lorsqu'une consonne finale vient fermer la syllabe avec les voyelles เ et แ.",
   "composition.vowel_rule.oe_transformation": "Transformation de เ-อ : Avec une consonne finale, la voyelle longue เ-อ se transforme en เ-ิ. Le symbole ิ remplace la lettre อ finale.",
@@ -501,5 +501,6 @@
   "composition.special_modifier.้": "Marque de ton (Mai Tho) : Modifie le ton de la syllabe selon la classe de la consonne initiale.",
   "composition.special_modifier.๊": "Marque de ton (Mai Tri) : Indique généralement un ton haut, principalement utilisé avec les consonnes de classe moyenne.",
   "composition.special_modifier.๋": "Marque de ton (Mai Chattawa) : Indique généralement un ton ascendant, principalement utilisé avec les consonnes de classe moyenne.",
-  "composition.special_modifier.์": "Symbole de silence (Karan) : Indique que la consonne sur laquelle il est placé (et parfois la voyelle associée) est muette."
+  "composition.special_modifier.์": "Symbole de silence (Karan) : Indique que la consonne sur laquelle il est placé (et parfois la voyelle associée) est muette.",
+  "composition.implicit_a_vowel": "Voyelle implicite : Cette consonne forme une syllabe ouverte, on prononce un 'A' court (ะ) invisible."
 }

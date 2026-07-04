@@ -487,7 +487,7 @@
   "composition.mata.Mae Koei": "Mae Koei ('Y' Laut)",
   "composition.mata.Mae Kow": "Mae Kow ('W' Laut)",
   "composition.mata_explanation": "Dieser Konsonant gehört zur {mata}-Familie und wird am Silbenende wie ein gestopptes '{sound}' ausgesprochen.",
-  "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen zwei Konsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen.",
+  "composition.implicit_o_vowel": "Impliziter Vokal: Wenn kein Vokal zwischen einem Anfangs- und Schlusskonsonanten geschrieben steht, wird ein kurzes, unsichtbares 'O' (โ-ะ) gesprochen.",
   "composition.special_modifier.ั": "Kurzer A-Vokal: Dieses Symbol (Mai Han-a-kat) erzeugt einen kurzen 'a'-Laut. Es ist die Form, die der Vokal ะ annimmt, wenn ein Schlusskonsonant die Silbe schließt.",
   "composition.special_modifier.็": "Vokalverkürzer: Dieses Symbol (Mai Tai Khu) verkürzt den Vokallaut. Es ersetzt das Symbol ะ, wenn ein Schlusskonsonant die Silbe mit den Vokalen เ und แ schließt.",
   "composition.vowel_rule.oe_transformation": "เ-อ Transformation: Mit einem Schlusskonsonanten verwandelt sich der lange Vokal เ-อ in เ-ิ. Das Symbol ิ ersetzt den letzten Buchstaben อ.",
@@ -499,5 +499,6 @@
   "composition.special_modifier.้": "Tonzeichen (Mai Tho): Ändert den Ton der Silbe in Abhängigkeit von der Klasse des Anfangskonsonanten.",
   "composition.special_modifier.๊": "Tonzeichen (Mai Tri): Zeigt im Allgemeinen einen hohen Ton an, wird meist mit Konsonanten der mittleren Klasse verwendet.",
   "composition.special_modifier.๋": "Tonzeichen (Mai Chattawa): Zeigt im Allgemeinen einen steigenden Ton an, wird meist mit Konsonanten der mittleren Klasse verwendet.",
-  "composition.special_modifier.์": "Stille-Symbol (Karan): Zeigt an, dass der Konsonant, über dem es steht (und manchmal der zugehörige Vokal), stumm ist."
+  "composition.special_modifier.์": "Stille-Symbol (Karan): Zeigt an, dass der Konsonant, über dem es steht (und manchmal der zugehörige Vokal), stumm ist.",
+  "composition.implicit_a_vowel": "Impliziter Vokal: Dieser Konsonant bildet eine offene Silbe, ein kurzes, unsichtbares 'A' (ะ) wird gesprochen."
 }

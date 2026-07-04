@@ -487,7 +487,7 @@
   "composition.mata.Mae Koei": "Mae Koei ('Y' sound)",
   "composition.mata.Mae Kow": "Mae Kow ('W' sound)",
   "composition.mata_explanation": "This consonant belongs to the {mata} family and is pronounced as a stopped '{sound}' at the end of the syllable.",
-  "composition.implicit_o_vowel": "Implicit Vowel: When there is no written vowel between two consonants, a short, invisible 'O' (โ-ะ) is pronounced.",
+  "composition.implicit_o_vowel": "Implicit Vowel: When there is no written vowel between an initial and final consonant, a short, invisible 'O' (โ-ะ) is pronounced.",
   "composition.special_modifier.ั": "Short A Vowel: This symbol (Mai Han-a-kat) produces a short 'a' sound. It is the form the vowel ะ takes when a final consonant closes the syllable.",
   "composition.special_modifier.็": "Vowel Shortener: This symbol (Mai Tai Khu) shortens the vowel sound. It replaces the ะ symbol when a final consonant closes the syllable with the vowels เ and แ.",
   "composition.vowel_rule.oe_transformation": "เ-อ Transformation: With a final consonant, the long vowel เ-อ transforms into เ-ิ. The symbol ิ replaces the final อ letter.",
@@ -499,5 +499,6 @@
   "composition.special_modifier.้": "Tone Mark (Mai Tho): Modifies the tone of the syllable depending on the initial consonant's class.",
   "composition.special_modifier.๊": "Tone Mark (Mai Tri): Generally indicates a high tone, mostly used with mid-class consonants.",
   "composition.special_modifier.๋": "Tone Mark (Mai Chattawa): Generally indicates a rising tone, mostly used with mid-class consonants.",
-  "composition.special_modifier.์": "Silence Symbol (Karan): Indicates that the consonant it is placed on (and sometimes the associated vowel) is silent."
+  "composition.special_modifier.์": "Silence Symbol (Karan): Indicates that the consonant it is placed on (and sometimes the associated vowel) is silent.",
+  "composition.implicit_a_vowel": "Implicit Vowel: This consonant forms an open syllable, a short, invisible 'A' (ะ) is pronounced."
 }

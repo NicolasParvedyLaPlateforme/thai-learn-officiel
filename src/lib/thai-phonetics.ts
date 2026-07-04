@@ -15,6 +15,37 @@ export type SyllableType = "live" | "dead";
 export type VowelLength = "short" | "long";
 
 /**
+ * Detect implicit vowel type based on consecutive consonants
+ */
+export const getImplicitVowelType = (charIndex: number, characters: string[]): 'a' | 'o' | null => {
+  const char = characters[charIndex];
+  if (!/[ก-ฮ]/.test(char)) return null;
+
+  let start = charIndex;
+  while (start > 0 && /[ก-ฮ]/.test(characters[start - 1])) {
+    start--;
+  }
+  let end = charIndex;
+  while (end < characters.length - 1 && /[ก-ฮ]/.test(characters[end + 1])) {
+    end++;
+  }
+  
+  const blockLength = end - start + 1;
+  
+  if (blockLength === 3) {
+    if (charIndex === start) {
+      return 'a'; // First consonant of 3 takes 'a'
+    } else {
+      return 'o'; // The rest takes 'o'
+    }
+  } else if (blockLength === 2) {
+    return 'o'; // e.g. ผม
+  }
+  
+  return null;
+}
+
+/**
  * Identify the final consonant family (Mata)
  */
 export const getFinalConsonantFamily = (char: string): MataFamily => {
@@ -226,7 +257,7 @@ export const analyzeSyllableContext = (
 
   // 4. Check for implicit 'o' vowel (โ-ะ)
   // This occurs when a syllable has an initial and final consonant, but NO written vowels at all.
-  let hasImplicitOVowel = false;
+  let implicitVowelType: 'a' | 'o' | null = null;
   let specialVowelRule: string | undefined = undefined;
 
   if (initialConsonantIndex > -1 && finalConsonantIndex > -1) {
@@ -293,8 +324,8 @@ export const analyzeSyllableContext = (
       }
       
       if (!foundVowel) {
-        hasImplicitOVowel = true;
-        hasShortVowel = true; // Implicit O is a short vowel
+        implicitVowelType = getImplicitVowelType(currentIndex, characters);
+        hasShortVowel = true; // Implicit A or O are both short vowels
       }
     }
   }
@@ -310,7 +341,7 @@ export const analyzeSyllableContext = (
     initialConsonantIndex,
     leadingConsonantClass,
     hasShortVowel,
-    hasImplicitOVowel,
+    implicitVowelType,
     specialVowelRule,
     finalConsonant,
     finalConsonantIndex,
