@@ -8,9 +8,7 @@ import {
   buildPhraseOrder,
   buildMissingLetter,
   buildSoundToLetter,
-  buildTrueFalseSpelling,
-  buildIntro,
-  buildComposition
+  buildTrueFalseSpelling
 } from '../builders';
 
 export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[], globalWords: Word[], language: string): Exercise[] {
@@ -86,43 +84,7 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
   }
   wmExercises = [...result, ...waitlist];
 
-  let phraseExercises: Exercise[] = [];
-  
-  shuffle([...lessonPhrases]).forEach((phrase) => {
-    phraseExercises.push(buildIntro(phrase, language));
-    phraseExercises.push(buildComposition(phrase, language));
-    
-    const fibExMain = buildFillInTheBlank(phrase, language, {
-       numMisspelledDistractors: 1,
-       maxMistakes: 2,
-       pool: globalWords,
-       mode: 'classic'
-    });
-    if (fibExMain) phraseExercises.push(fibExMain);
-
-    let randomPool: Exercise[] = [];
-    
-    const poEx = buildPhraseOrder(phrase, language, { pool: globalWords });
-    if (poEx) randomPool.push(poEx);
-
-    const wpEx = buildWordPosition(phrase, language, { pool: globalWords });
-    if (wpEx) randomPool.push(wpEx);
-
-    // Randomly choose between translation or audio mode for the second fill-in-the-blank
-    const randomMode = Math.random() < 0.5 ? 'translation' : 'audio';
-    const fibExRandom = buildFillInTheBlank(phrase, language, {
-       numMisspelledDistractors: 1,
-       maxMistakes: 2,
-       pool: globalWords,
-       mode: randomMode
-    });
-    if (fibExRandom) randomPool.push(fibExRandom);
-
-    randomPool = shuffle(randomPool);
-    phraseExercises.push(...randomPool);
-  });
-
-  const finalExercises = [...wmExercises, ...phraseExercises];
+  const finalExercises = [...wmExercises];
 
   // Prevent consecutive word-match exercises from having the correct answer at the same index
   let lastCorrectIndex = -1;

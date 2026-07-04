@@ -71,17 +71,18 @@ export function generateExercises(
   if (level === 1) {
      return generateLevel1(validLessonWords, lessonPhrases, globalWords, language);
   }
+  if (level === 2) {
+     return generateLevel2(validLessonWords, lessonPhrases, globalWords, language);
+  }
+  if (level === 3) {
+     const allPhrasesForLvl3 = allLessons.flatMap(l => l.phrases);
+     return generateLevel3(validLessonWords, lessonPhrases, globalWords, allPhrasesForLvl3, language, totalParts);
+  }
 
   let finalExercises: Exercise[] = [];
   const allPhrases = allLessons.flatMap(l => l.phrases);
 
   switch (level) {
-    case 2:
-      finalExercises = generateLevel2(validLessonWords, lessonPhrases, globalWords, language);
-      break;
-    case 3:
-      finalExercises = generateLevel3(validLessonWords, lessonPhrases, globalWords, allPhrases, language, totalParts);
-      break;
     case 4:
     case 5:
     case 6:

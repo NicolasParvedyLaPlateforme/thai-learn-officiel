@@ -1,61 +1,49 @@
 import { Exercise, Word, Phrase } from "@/types";
-import { shuffle, getRandomDistractorMode } from '../utils';
-import { buildWordMatch, buildFillInTheBlank, buildSentenceBuilder, buildOneLetterDifference } from '../builders';
-import { getExerciseTranslation } from '@/lib/translation-utils';
+import { shuffle } from '../utils';
+import { 
+  buildFillInTheBlank, 
+  buildWordPosition, 
+  buildPhraseOrder,
+  buildIntro,
+  buildComposition
+} from '../builders';
 
 export function generateLevel2(validLessonWords: Word[], lessonPhrases: Phrase[], globalWords: Word[], language: string): Exercise[] {
-  let wmExercises: Exercise[] = [];
+  let phraseExercises: Exercise[] = [];
   
-  validLessonWords.forEach(word => {
-    wmExercises.push(buildWordMatch(word, language, {
-      distractorMode: getRandomDistractorMode(),
-      numDistractors: 3,
-      maxMistakes: 2,
-      validLessonWords,
-      pool: globalWords
-    }));
+  shuffle([...lessonPhrases]).forEach((phrase) => {
+    phraseExercises.push(buildIntro(phrase, language));
+    phraseExercises.push(buildComposition(phrase, language));
     
-    // Add 3 one-letter-difference steps per word
-    const hintTypes: Array<'sound' | 'image' | 'pronunciation'> = ['sound', 'image', 'pronunciation'];
-    hintTypes.forEach(hintType => {
-      const ex = buildOneLetterDifference(word, language, {
-        hintType,
-        numDistractors: 3,
-        maxMistakes: 2,
-        pool: globalWords
-      });
-      if (ex) wmExercises.push(ex);
-    });
-  });
-
-  let fillInBlankPool: Exercise[] = [];
-  lessonPhrases.forEach((phrase) => {
-    const fibEx = buildFillInTheBlank(phrase, language, {
+    const fibExMain = buildFillInTheBlank(phrase, language, {
        numMisspelledDistractors: 1,
        maxMistakes: 2,
-       pool: globalWords
+       pool: globalWords,
+       mode: 'classic'
     });
-    if (fibEx) fillInBlankPool.push(fibEx);
+    if (fibExMain) phraseExercises.push(fibExMain);
+
+    let randomPool: Exercise[] = [];
+    
+    const poEx = buildPhraseOrder(phrase, language, { pool: globalWords });
+    if (poEx) randomPool.push(poEx);
+
+    const wpEx = buildWordPosition(phrase, language, { pool: globalWords });
+    if (wpEx) randomPool.push(wpEx);
+
+    // Randomly choose between translation or audio mode for the second fill-in-the-blank
+    const randomMode = Math.random() < 0.5 ? 'translation' : 'audio';
+    const fibExRandom = buildFillInTheBlank(phrase, language, {
+       numMisspelledDistractors: 1,
+       maxMistakes: 2,
+       pool: globalWords,
+       mode: randomMode
+    });
+    if (fibExRandom) randomPool.push(fibExRandom);
+
+    randomPool = shuffle(randomPool);
+    phraseExercises.push(...randomPool);
   });
 
-  let sbPool: Exercise[] = [];
-  lessonPhrases.forEach(phrase => {
-    sbPool.push(buildSentenceBuilder(phrase, language, {
-      numDistractors: 0,
-      pool: globalWords
-    }));
-  });
-
-  if (sbPool.length === 0) {
-    sbPool = globalWords.slice(0, 2).map((w, i) => ({
-      id: `fallback-sb-3-${Date.now()}-${i}`,
-      type: 'sentence-builder',
-      question: getExerciseTranslation(w, language),
-      answer: w.th,
-      options: [w],
-      correctComponents: [w.th]
-    }));
-  }
-
-  return [...shuffle(wmExercises), ...shuffle(fillInBlankPool), ...shuffle(sbPool)];
+  return phraseExercises;
 }
