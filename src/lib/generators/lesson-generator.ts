@@ -68,14 +68,14 @@ export function generateExercises(
   if (level === 0) {
      return generateLevel0(validLessonWords, globalWords, language);
   }
+  if (level === 1) {
+     return generateLevel1(validLessonWords, lessonPhrases, globalWords, language);
+  }
 
   let finalExercises: Exercise[] = [];
   const allPhrases = allLessons.flatMap(l => l.phrases);
 
   switch (level) {
-    case 1:
-      finalExercises = generateLevel1(validLessonWords, lessonPhrases, globalWords, language);
-      break;
     case 2:
       finalExercises = generateLevel2(validLessonWords, lessonPhrases, globalWords, language);
       break;
@@ -137,14 +137,6 @@ export function generateExercises(
   const introducedIds = new Set<string>();
 
   for (const ex of finalResult) {
-    if (level === 1 && ex.type === 'sentence-builder') {
-      const phrase = lessonPhrases.find(p => p.th === ex.answer);
-      if (phrase && !introducedIds.has(phrase.id)) {
-        introducedIds.add(phrase.id);
-        exercisesWithIntros.push(buildIntro(phrase, language));
-        exercisesWithIntros.push(buildComposition(phrase, language));
-      }
-    }
     exercisesWithIntros.push(ex);
   }
 

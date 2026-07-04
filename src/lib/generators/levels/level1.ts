@@ -8,7 +8,9 @@ import {
   buildPhraseOrder,
   buildMissingLetter,
   buildSoundToLetter,
-  buildTrueFalseSpelling
+  buildTrueFalseSpelling,
+  buildIntro,
+  buildComposition
 } from '../builders';
 
 export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[], globalWords: Word[], language: string): Exercise[] {
@@ -58,28 +60,86 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
     wmExercises.push(...pool.slice(0, 2));
   });
 
-  let fillInBlankPool: Exercise[] = [];
-  let wordPositionPool: Exercise[] = [];
-  let phraseOrderPool: Exercise[] = [];
+  wmExercises = shuffle(wmExercises);
+
+  // Prevent consecutive same answers for wmExercises
+  const result: Exercise[] = [];
+  const waitlist: Exercise[] = [];
   
-  lessonPhrases.forEach((phrase) => {
-    const fibEx = buildFillInTheBlank(phrase, language, {
+  for (let i = 0; i < wmExercises.length; i++) {
+     const current = wmExercises[i];
+     const lastInResult = result[result.length - 1];
+     
+     if (!lastInResult || lastInResult.answer !== current.answer) {
+         result.push(current);
+         let w = 0;
+         while (w < waitlist.length) {
+            if (result[result.length - 1].answer !== waitlist[w].answer) {
+                result.push(waitlist.splice(w, 1)[0]);
+            } else {
+                w++;
+            }
+         }
+     } else {
+         waitlist.push(current);
+     }
+  }
+  wmExercises = [...result, ...waitlist];
+
+  let phraseExercises: Exercise[] = [];
+  
+  shuffle([...lessonPhrases]).forEach((phrase) => {
+    phraseExercises.push(buildIntro(phrase, language));
+    phraseExercises.push(buildComposition(phrase, language));
+    
+    const fibExMain = buildFillInTheBlank(phrase, language, {
        numMisspelledDistractors: 1,
        maxMistakes: 2,
        pool: globalWords
     });
-    if (fibEx) fillInBlankPool.push(fibEx);
+    if (fibExMain) phraseExercises.push(fibExMain);
 
-    const wpEx = buildWordPosition(phrase, language, {
-      pool: globalWords
-    });
-    if (wpEx) wordPositionPool.push(wpEx);
+    let randomPool: Exercise[] = [];
+    
+    const poEx = buildPhraseOrder(phrase, language, { pool: globalWords });
+    if (poEx) randomPool.push(poEx);
 
-    const poEx = buildPhraseOrder(phrase, language, {
-      pool: globalWords
+    const wpEx = buildWordPosition(phrase, language, { pool: globalWords });
+    if (wpEx) randomPool.push(wpEx);
+
+    const fibExRandom = buildFillInTheBlank(phrase, language, {
+       numMisspelledDistractors: 1,
+       maxMistakes: 2,
+       pool: globalWords
     });
-    if (poEx) phraseOrderPool.push(poEx);
+    if (fibExRandom) randomPool.push(fibExRandom);
+
+    randomPool = shuffle(randomPool);
+    phraseExercises.push(...randomPool.slice(0, 2));
   });
 
-  return [...shuffle(wmExercises), ...shuffle(fillInBlankPool), ...shuffle(wordPositionPool), ...shuffle(phraseOrderPool)];
+  const finalExercises = [...wmExercises, ...phraseExercises];
+
+  // Prevent consecutive word-match exercises from having the correct answer at the same index
+  let lastCorrectIndex = -1;
+  for (const ex of finalExercises) {
+    if (ex.type === 'word-match' && !(ex as any).isFillInBlank && ex.options && ex.options.length > 1) {
+      let correctIndex = ex.options.findIndex((o: any) => o.th === ex.answer);
+      if (correctIndex !== -1) {
+        if (correctIndex === lastCorrectIndex) {
+          let newIdx;
+          do {
+            newIdx = Math.floor(Math.random() * ex.options.length);
+          } while (newIdx === correctIndex);
+          const newOptions = [...ex.options];
+          [newOptions[correctIndex], newOptions[newIdx]] = [newOptions[newIdx], newOptions[correctIndex]];
+          ex.options = newOptions;
+          correctIndex = newIdx;
+        }
+        lastCorrectIndex = correctIndex;
+      }
+    }
+  }
+
+  return finalExercises;
 }
