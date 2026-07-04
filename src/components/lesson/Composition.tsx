@@ -73,6 +73,17 @@ export default function Composition({ exercise, language }: CompositionProps) {
     return null;
   }, [activeChar, characters, currentSelectableIndex, selectableIndices]);
 
+  const prevConsonantIndex = useMemo(() => {
+    if (!isToneMark(activeChar)) return -1;
+    for (let i = currentSelectableIndex - 1; i >= 0; i--) {
+      const idx = selectableIndices[i];
+      const char = characters[idx];
+      const item = THAI_ALPHABET.find(a => a.letter === char);
+      if (item && item.type === 'consonant') return idx;
+    }
+    return -1;
+  }, [activeChar, characters, currentSelectableIndex, selectableIndices]);
+
   const toneResult = useMemo(() => {
     if (!prevConsonantItem || !prevConsonantItem.consonantClass) return null;
     return getToneResult(prevConsonantItem.consonantClass as ToneClass, activeChar);
@@ -186,6 +197,9 @@ export default function Composition({ exercise, language }: CompositionProps) {
 
               const isStackedMark = isToneMark(char) && index > 0 && isUpperVowel(characters[index - 1]);
 
+              // NOUVEAU : On vérifie si ce caractère est la consonne modifiée par le ton actuel
+              const isModifiedConsonant = index === prevConsonantIndex;
+
               return (
                 <span
                   key={index}
@@ -197,9 +211,11 @@ export default function Composition({ exercise, language }: CompositionProps) {
                       ? isConsonant
                         ? "bg-emerald-50 text-emerald-600 font-bold scale-110 "
                         : "bg-purple-50 text-purple-600 font-bold scale-110 "
-                      : isSelectable
-                        ? "hover:bg-slate-100 text-slate-600"
-                        : "text-slate-300 cursor-default"
+                      : isModifiedConsonant
+                        ? "text-orange-500" // NOUVEAU : Texte orange, sans changement de taille
+                        : isSelectable
+                          ? "hover:bg-slate-100 text-slate-600"
+                          : "text-slate-300 cursor-default"
                   )}
                 >
                   {char}
@@ -286,16 +302,16 @@ export default function Composition({ exercise, language }: CompositionProps) {
 
                 {/* --- NOUVELLE BULLE : Règle de ton dynamique --- */}
                 {prevConsonantItem && prevConsonantItem.consonantClass && toneResult && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.2 }}
                     className="mt-1 bg-amber-50 border-2 border-amber-200 text-amber-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
                   >
                     <span className="text-sm font-medium">
-                      {getTranslation('composition.tone_rule_prefix', language)} 
+                      {getTranslation('composition.tone_rule_prefix', language)}
                       <strong className="mx-1">{getTranslation(`composition.tone_class.${prevConsonantItem.consonantClass}`, language)}</strong>
-                      + <strong className="font-thai text-lg">{activeChar}</strong> = 
+                      + <strong className="font-thai text-lg">{activeChar}</strong> =
                       <strong className="ml-1 uppercase text-amber-600">{getTranslation(`composition.tone_result.${toneResult}`, language)}</strong>
                     </span>
                   </motion.div>
