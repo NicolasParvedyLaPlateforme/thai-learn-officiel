@@ -48,7 +48,7 @@ export interface CourseData {
   lessons: Lesson[];
 }
 
-export type ExerciseType = 'word-match' | 'sentence-builder' | 'writing' | 'intro' | 'pair-matching' | 'free-typing' | 'missing-letter' | 'sound-to-letter' | 'true-false' | 'one-letter-difference' | 'word-position';
+export type ExerciseType = 'word-match' | 'sentence-builder' | 'writing' | 'intro' | 'pair-matching' | 'free-typing' | 'missing-letter' | 'sound-to-letter' | 'true-false' | 'one-letter-difference' | 'word-position' | 'phrase-order';
 export interface Exercise {
   id: string;
   type: ExerciseType;
@@ -87,4 +87,7 @@ export interface Exercise {
   translation?: string;
   oneLetterHintType?: 'sound' | 'image' | 'pronunciation';
   diffReveal?: boolean;
+  presentedOrder?: string[];
+  correctOrder?: string[];
+  isCorrectOrder?: boolean;
 }

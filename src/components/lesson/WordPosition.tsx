@@ -25,7 +25,8 @@ export default React.memo(function WordPosition({
   onAutoCheck,
   isChecking,
   isCorrect,
-  language = 'fr'
+  language = 'fr',
+  onAddMistake
 }: Props) {
   const [localErrors, setLocalErrors] = useState<string[]>([]);
   

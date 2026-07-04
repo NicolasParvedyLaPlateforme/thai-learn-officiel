@@ -21,6 +21,7 @@ import SoundToLetter from './SoundToLetter';
 import TrueFalse from './TrueFalse';
 import OneLetterDifference from './OneLetterDifference';
 import WordPosition from './WordPosition';
+import PhraseOrder from './PhraseOrder';
 import GlossaryModal from '@/components/lesson/GlossaryModal';
 import ResultScreen from '@/components/lesson/ResultScreen';
 import NextResultScreen from '@/components/next/NextResultScreen';
@@ -216,9 +217,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                   <motion.div
                     animate={{ opacity: state.isExiting ? 0 : 1, y: 0, scale: 1 }}
                     transition={{ duration: state.isExiting ? 0.15 : 0.3, delay: state.isExiting ? 0 : 0.1 }}
-                    className={`${state.showInstruction || state.showHelpModal || state.currentExercise?.type === "pair-matching" || state.currentExercise?.type === "sound-to-letter" || state.currentExercise?.type === "true-false" || state.currentExercise?.type === "missing-letter" || state.currentExercise?.type === "one-letter-difference" || state.currentExercise?.type === "word-position" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${state.isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
+                    className={`${state.showInstruction || state.showHelpModal || state.currentExercise?.type === "pair-matching" || state.currentExercise?.type === "sound-to-letter" || state.currentExercise?.type === "true-false" || state.currentExercise?.type === "missing-letter" || state.currentExercise?.type === "one-letter-difference" || state.currentExercise?.type === "word-position" || state.currentExercise?.type === "phrase-order" ? "hidden" : "flex"} flex-1 md:flex-none w-full max-w-3xl overflow-y-auto md:overflow-y-visible px-4 py-4 md:py-4 flex-col ${state.isKeyboardOpen ? "justify-end pb-[5vh] md:justify-center md:pb-4" : "justify-center"} hide-scrollbar`}
                   >
-                    {state.currentExercise?.type !== "pair-matching" && state.currentExercise?.type !== "sound-to-letter" && state.currentExercise?.type !== "true-false" && state.currentExercise?.type !== "missing-letter" && state.currentExercise?.type !== "one-letter-difference" && state.currentExercise?.type !== "word-position" && (
+                    {state.currentExercise?.type !== "pair-matching" && state.currentExercise?.type !== "sound-to-letter" && state.currentExercise?.type !== "true-false" && state.currentExercise?.type !== "missing-letter" && state.currentExercise?.type !== "one-letter-difference" && state.currentExercise?.type !== "word-position" && state.currentExercise?.type !== "phrase-order" && (
                       <QuestionArea
                         currentExercise={state.currentExercise as Exercise}
                         lesson={lesson}
@@ -235,9 +236,9 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={state.isExiting ? { opacity: 0 } : { opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: state.isExiting ? 0.15 : 0.3, delay: state.isExiting ? 0 : 0.3 }}
-                    className={`${state.showInstruction || state.showHelpModal ? "hidden" : "flex"} ${state.currentExercise?.type === "pair-matching" || state.currentExercise?.type === "sound-to-letter" || state.currentExercise?.type === "true-false" || state.currentExercise?.type === "missing-letter" || state.currentExercise?.type === "one-letter-difference" || state.currentExercise?.type === "word-position" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
+                    className={`${state.showInstruction || state.showHelpModal ? "hidden" : "flex"} ${state.currentExercise?.type === "pair-matching" || state.currentExercise?.type === "sound-to-letter" || state.currentExercise?.type === "true-false" || state.currentExercise?.type === "missing-letter" || state.currentExercise?.type === "one-letter-difference" || state.currentExercise?.type === "word-position" || state.currentExercise?.type === "phrase-order" ? "flex-1 items-center" : "shrink-0 md:shrink-0"} bg-transparent px-4 pb-4 pt-2 md:pt-4 md:pb-8 justify-center z-10 w-full max-w-3xl`}
                   >
-                    <div className={cn("w-full relative", (state.currentExercise?.type === "true-false" || state.currentExercise?.type === "sound-to-letter" || state.currentExercise?.type === "missing-letter" || state.currentExercise?.type === "one-letter-difference" || state.currentExercise?.type === "word-position") && "h-full")}>
+                    <div className={cn("w-full relative", (state.currentExercise?.type === "true-false" || state.currentExercise?.type === "sound-to-letter" || state.currentExercise?.type === "missing-letter" || state.currentExercise?.type === "one-letter-difference" || state.currentExercise?.type === "word-position" || state.currentExercise?.type === "phrase-order") && "h-full")}>
                       <ErrorBoundary>
                         {state.currentExercise?.type === "intro" ? null : state.currentExercise?.type === "word-match" ? (
                             <WordMatch
@@ -265,6 +266,18 @@ function LessonPageContent({ lesson }: { lesson: any }) {
                             />
                           ) : state.currentExercise?.type === "word-position" ? (
                             <WordPosition
+                              exercise={state.currentExercise as Exercise}
+                              selected={state.selectedAnswer as string}
+                              onChange={actions.setSelectedAnswer}
+                              disabled={state.isChecking}
+                              isChecking={state.isChecking}
+                              isCorrect={state.isCorrect}
+                              onAutoCheck={(val) => actions.handleCheck(val)}
+                              language={state.language}
+                              onAddMistake={() => actions.setMistakes((m: number) => m + 1)}
+                            />
+                          ) : state.currentExercise?.type === "phrase-order" ? (
+                            <PhraseOrder
                               exercise={state.currentExercise as Exercise}
                               selected={state.selectedAnswer as string}
                               onChange={actions.setSelectedAnswer}
