@@ -463,5 +463,15 @@
   "auto.find_word_position": "Trouvez la position de ce mot",
   "auto.listen_and_select_position": "Écoutez la phrase et sélectionnez le numéro de sa position dans la phrase.",
   "composition.title_word": "Composition du mot ({word})",
-  "composition.title_phrase": "Composition de la phrase ({phrase})"
+  "composition.title_phrase": "Composition de la phrase ({phrase})",
+  "composition.tone_mark_explanation": "Modificateur : Ce symbole ne se prononce pas seul mais altère le ton ou le son de la consonne.",
+  "composition.tone_rule_prefix": "Règle de ton :",
+  "composition.tone_class.mid": "Classe Moyenne",
+  "composition.tone_class.high": "Classe Haute",
+  "composition.tone_class.low": "Classe Basse",
+  "composition.tone_result.low": "Ton Bas",
+  "composition.tone_result.falling": "Ton Descendant",
+  "composition.tone_result.high": "Ton Haut",
+  "composition.tone_result.rising": "Ton Ascendant",
+  "composition.tone_result.mid": "Ton Moyen"
 }

@@ -9,7 +9,6 @@
   "next.result.next": "Continue",
   "next.result.quit": "Quit",
   "next.sidebar_label": "Auto Mode",
-
   "auto.level": "Level",
   "auto.complete_level_1": "Complete Level 1",
   "auto.complete_level_2": "Complete Level 2",
@@ -462,5 +461,15 @@
   "auto.sound.rue___ri": "rue / ri",
   "auto.exercise.trueFalse": "Is the word spelled correctly?",
   "composition.title_word": "Word composition ({word})",
-  "composition.title_phrase": "Sentence composition ({phrase})"
+  "composition.title_phrase": "Sentence composition ({phrase})",
+  "composition.tone_mark_explanation": "Modifier: This symbol is not pronounced alone but alters the tone or sound of the consonant.",
+  "composition.tone_rule_prefix": "Tone rule:",
+  "composition.tone_class.mid": "Mid Class",
+  "composition.tone_class.high": "High Class",
+  "composition.tone_class.low": "Low Class",
+  "composition.tone_result.low": "Low Tone",
+  "composition.tone_result.falling": "Falling Tone",
+  "composition.tone_result.high": "High Tone",
+  "composition.tone_result.rising": "Rising Tone",
+  "composition.tone_result.mid": "Mid Tone"
 }

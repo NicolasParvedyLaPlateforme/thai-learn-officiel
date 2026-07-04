@@ -9,7 +9,6 @@
   "next.result.next": "Weiter",
   "next.result.quit": "Beenden",
   "next.sidebar_label": "Auto-Modus",
-
   "auto.level": "Level",
   "auto.complete_level_1": "Level 1 abschließen",
   "auto.complete_level_2": "Level 2 abschließen",
@@ -462,5 +461,15 @@
   "auto.sound.rue___ri": "rue / ri",
   "auto.exercise.trueFalse": "Ist das Wort richtig geschrieben?",
   "composition.title_word": "Wortzusammensetzung ({word})",
-  "composition.title_phrase": "Satzstruktur ({phrase})"
+  "composition.title_phrase": "Satzstruktur ({phrase})",
+  "composition.tone_mark_explanation": "Modifikator: Dieses Symbol wird nicht allein ausgesprochen, sondern ändert den Ton oder Klang des Konsonanten.",
+  "composition.tone_rule_prefix": "Tonregel:",
+  "composition.tone_class.mid": "Mittelklasse",
+  "composition.tone_class.high": "Hohe Klasse",
+  "composition.tone_class.low": "Niedrige Klasse",
+  "composition.tone_result.low": "Tiefer Ton",
+  "composition.tone_result.falling": "Fallender Ton",
+  "composition.tone_result.high": "Hoher Ton",
+  "composition.tone_result.rising": "Steigender Ton",
+  "composition.tone_result.mid": "Mittlerer Ton"
 }

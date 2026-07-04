@@ -9,7 +9,6 @@
   "next.result.next": "Continuar",
   "next.result.quit": "Salir",
   "next.sidebar_label": "Modo Auto",
-
   "auto.level": "Nivel",
   "auto.complete_level_1": "Completa el Nivel 1",
   "auto.complete_level_2": "Completa el Nivel 2",
@@ -460,5 +459,15 @@
   "auto.sound.rue___ri": "rue / ri",
   "auto.exercise.trueFalse": "¿Está bien escrita la palabra?",
   "composition.title_word": "Composición de la palabra ({word})",
-  "composition.title_phrase": "Composición de la frase ({phrase})"
+  "composition.title_phrase": "Composición de la frase ({phrase})",
+  "composition.tone_mark_explanation": "Modificador: Este símbolo no se pronuncia solo, pero altera el tono o el sonido de la consonante.",
+  "composition.tone_rule_prefix": "Regla de tono:",
+  "composition.tone_class.mid": "Clase Media",
+  "composition.tone_class.high": "Clase Alta",
+  "composition.tone_class.low": "Clase Baja",
+  "composition.tone_result.low": "Tono Bajo",
+  "composition.tone_result.falling": "Tono Descendente",
+  "composition.tone_result.high": "Tono Alto",
+  "composition.tone_result.rising": "Tono Ascendente",
+  "composition.tone_result.mid": "Tono Medio"
 }

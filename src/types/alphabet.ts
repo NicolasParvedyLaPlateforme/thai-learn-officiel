@@ -15,11 +15,6 @@ export interface AlphabetItem {
   exampleTranslationEs?: string;
   exampleTranslationIt?: string;
   mnemonicEmoji?: string;
-  explanationFR?: string;
-  explanationEN?: string;
-  explanationDE?: string;
-  explanationES?: string;
-  explanationIT?: string;
 }
 
 export interface AlphabetLessonDef {
@@ -45,4 +40,14 @@ export interface AlphabetExercise {
   explanation?: string; // Optional explanation for hints
   pairMatchMode?: 'th-en' | 'th-th' | 'audio-th';
   forceHideRomanization?: boolean;
+}
+
+export type ToneClass = 'low' | 'mid' | 'high';
+export type ToneMark = '่' | '้' | '๊' | '๋';
+export type ToneResult = 'low' | 'mid' | 'high' | 'falling' | 'rising';
+
+export interface ToneRule {
+  consonantClass: ToneClass;
+  mark: ToneMark;
+  result: ToneResult;
 }
