@@ -1,13 +1,40 @@
 import { Exercise, Word, Phrase } from "@/types";
 import { shuffle, getRandomDistractorMode } from '../utils';
-import { buildWordMatch, buildFillInTheBlank, buildOneLetterDifference, buildWordPosition, buildPhraseOrder } from '../builders';
+import { 
+  buildWordMatch, 
+  buildFillInTheBlank, 
+  buildOneLetterDifference, 
+  buildWordPosition, 
+  buildPhraseOrder,
+  buildMissingLetter,
+  buildSoundToLetter,
+  buildTrueFalseSpelling
+} from '../builders';
 
 export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[], globalWords: Word[], language: string): Exercise[] {
   let wmExercises: Exercise[] = [];
   
   validLessonWords.forEach(word => {
+    let pool: Exercise[] = [];
+
+    const missingLetterEx = buildMissingLetter(word, language, { numDistractors: 1, targetType: 'consonant' });
+    if (missingLetterEx) pool.push(missingLetterEx);
+    
+    const missingLetterVowelEx = buildMissingLetter(word, language, { numDistractors: 1, targetType: 'vowel' });
+    if (missingLetterVowelEx) pool.push(missingLetterVowelEx);
+    
+    const soundToLetterVowelEx = buildSoundToLetter(word, language, { numDistractors: 1, targetType: 'vowel' });
+    if (soundToLetterVowelEx) pool.push(soundToLetterVowelEx);
+    
+    const soundToLetterConsonantEx = buildSoundToLetter(word, language, { numDistractors: 1, targetType: 'consonant' });
+    if (soundToLetterConsonantEx) pool.push(soundToLetterConsonantEx);
+    
+    const tfModes = ['random-replace', 'misplaced-consonant', 'misplaced-vowel', 'similar-consonant', 'similar-vowel'] as const;
+    const selectedTfMode = tfModes[Math.floor(Math.random() * tfModes.length)];
+    pool.push(buildTrueFalseSpelling(word, language, { mode: selectedTfMode }));
+
     for (let i = 0; i < 2; i++) {
-      wmExercises.push(buildWordMatch(word, language, {
+      pool.push(buildWordMatch(word, language, {
         distractorMode: getRandomDistractorMode(),
         numDistractors: 3,
         maxMistakes: 2,
@@ -16,7 +43,6 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
       }));
     }
     
-    // Add 3 one-letter-difference steps per word
     const hintTypes: Array<'sound' | 'image' | 'pronunciation'> = ['sound', 'image', 'pronunciation'];
     hintTypes.forEach(hintType => {
       const ex = buildOneLetterDifference(word, language, {
@@ -25,8 +51,11 @@ export function generateLevel1(validLessonWords: Word[], lessonPhrases: Phrase[]
         maxMistakes: 2,
         pool: globalWords
       });
-      if (ex) wmExercises.push(ex);
+      if (ex) pool.push(ex);
     });
+
+    pool = shuffle(pool);
+    wmExercises.push(...pool.slice(0, 2));
   });
 
   let fillInBlankPool: Exercise[] = [];
