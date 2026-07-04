@@ -473,5 +473,20 @@
   "composition.tone_result.falling": "Ton Descendant",
   "composition.tone_result.high": "Ton Haut",
   "composition.tone_result.rising": "Ton Ascendant",
-  "composition.tone_result.mid": "Ton Moyen"
+  "composition.tone_result.mid": "Ton Moyen",
+  "composition.syllable_type.live": "Syllabe Vivante",
+  "composition.syllable_type.dead": "Syllabe Morte",
+  "composition.vowel_length.short": "Voyelle Courte",
+  "composition.vowel_length.long": "Voyelle Longue",
+  "composition.final_consonant": "Consonne Finale",
+  "composition.mata.Mae Ko Ka": "Mae Ko Ka (Aucune consonne finale)",
+  "composition.mata.Mae Kok": "Mae Kok (Son 'K')",
+  "composition.mata.Mae Kot": "Mae Kot (Son 'T')",
+  "composition.mata.Mae Kop": "Mae Kop (Son 'P')",
+  "composition.mata.Mae Kong": "Mae Kong (Son 'NG')",
+  "composition.mata.Mae Kan": "Mae Kan (Son 'N')",
+  "composition.mata.Mae Kom": "Mae Kom (Son 'M')",
+  "composition.mata.Mae Koei": "Mae Koei (Son 'Y')",
+  "composition.mata.Mae Kow": "Mae Kow (Son 'W')",
+  "composition.mata_explanation": "Cette consonne appartient à la famille {mata} et se prononce donc comme un '{sound}' bloqué à la fin de la syllabe."
 }

@@ -6,6 +6,7 @@ import { Exercise, Word, Phrase } from "@/types";
 import { THAI_ALPHABET } from "@/data/alphabet-data";
 import { getToneResult } from "@/data/tone-rules";
 import { ToneClass } from "@/types/alphabet";
+import { analyzeSyllableContext, getFinalConsonantSound, calculateImplicitTone } from "@/lib/thai-phonetics";
 import { playThaiTTS } from "@/lib/tts";
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { ChevronLeft, ChevronRight, Volume2, ArrowDown, ArrowUp } from 'lucide-react';
@@ -84,6 +85,19 @@ export default function Composition({ exercise, language }: CompositionProps) {
     }
     return -1;
   }, [activeChar, characters, currentSelectableIndex, selectableIndices]);
+
+  const syllableContext = useMemo(() => {
+    return analyzeSyllableContext(characters, currentSelectableIndex, activeAlphabetItem);
+  }, [characters, currentSelectableIndex, activeAlphabetItem]);
+
+  const implicitToneResult = useMemo(() => {
+    if (!syllableContext.initialConsonant) return null;
+    const item = THAI_ALPHABET.find(a => a.letter === syllableContext.initialConsonant);
+    if (!item || !item.consonantClass) return null;
+    
+    const baseClass = syllableContext.leadingConsonantClass || item.consonantClass;
+    return calculateImplicitTone(baseClass as ToneClass, syllableContext.syllableType, syllableContext.hasShortVowel);
+  }, [syllableContext]);
 
   const toneResult = useMemo(() => {
     if (!prevConsonantItem || !prevConsonantItem.consonantClass) return null;
@@ -272,11 +286,28 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   </span>
                   <Volume2 size={18} className="text-emerald-500 animate-pulse" />
                 </div>
+                
+                {/* Explication supplémentaire si c'est une consonne finale (Mata) */}
+                {syllableContext.finalConsonant === activeChar && syllableContext.finalFamily !== "Mae Ko Ka" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.2 }}
+                    className="mt-1 bg-teal-50 border-2 border-teal-200 text-teal-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
+                  >
+                    <span className="text-sm font-medium">
+                      <strong>{getTranslation('composition.final_consonant', language)}</strong> : {' '}
+                      {getTranslation(`composition.mata_explanation`, language)
+                        ?.replace('{mata}', getTranslation(`composition.mata.${syllableContext.finalFamily}`, language) || syllableContext.finalFamily)
+                        ?.replace('{sound}', getFinalConsonantSound(syllableContext.finalFamily))}
+                    </span>
+                  </motion.div>
+                )}
               </motion.div>
             )}
 
             {/* --- AJOUT : Cas 2 : Explication des voyelles spéciales / Marques de ton --- */}
-            {!isConsonant && activeAlphabetItem && isSpecialModifier(activeChar) && (
+            {(!isConsonant && activeAlphabetItem && isSpecialModifier(activeChar) || isVowel) && (
               <motion.div
                 key={`explanation-${activeIdx}`}
                 initial={{ opacity: 0, y: -15, scale: 0.95 }}
@@ -294,28 +325,53 @@ export default function Composition({ exercise, language }: CompositionProps) {
                   <ArrowDown size={20} className="stroke-[2.5]" />
                 </motion.div>
 
-                {/* Bulle d'explication */}
-                <div className="bg-blue-50 border-2 border-blue-200 text-blue-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm">
-                  <span className="text-sm font-medium">
-                    {getTranslation('composition.tone_mark_explanation', language)}
-                  </span>
-                </div>
+                {/* Bulle d'explication pour les modificateurs spéciaux (seulement si ce n'est pas une simple voyelle longue normale sans impact ton spécifique demandé ici, bien que l'on puisse tout afficher) */}
+                {isSpecialModifier(activeChar) && (
+                  <div className="bg-blue-50 border-2 border-blue-200 text-blue-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm">
+                    <span className="text-sm font-medium">
+                      {getTranslation('composition.tone_mark_explanation', language)}
+                    </span>
+                  </div>
+                )}
 
                 {/* --- NOUVELLE BULLE : Règle de ton dynamique --- */}
-                {prevConsonantItem && prevConsonantItem.consonantClass && toneResult && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.2 }}
-                    className="mt-1 bg-amber-50 border-2 border-amber-200 text-amber-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
-                  >
-                    <span className="text-sm font-medium">
-                      {getTranslation('composition.tone_rule_prefix', language)}
-                      <strong className="mx-1">{getTranslation(`composition.tone_class.${prevConsonantItem.consonantClass}`, language)}</strong>
-                      + <strong className="font-thai text-lg">{activeChar}</strong> =
-                      <strong className="ml-1 uppercase text-amber-600">{getTranslation(`composition.tone_result.${toneResult}`, language)}</strong>
-                    </span>
-                  </motion.div>
+                {isToneMark(activeChar) ? (
+                  // Equation directe (Marque de ton)
+                  prevConsonantItem && prevConsonantItem.consonantClass && toneResult && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1, duration: 0.2 }}
+                      className="mt-1 bg-amber-50 border-2 border-amber-200 text-amber-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
+                    >
+                      <span className="text-sm font-medium">
+                        {getTranslation('composition.tone_rule_prefix', language)}
+                        <strong className="mx-1">{getTranslation(`composition.tone_class.${prevConsonantItem.consonantClass}`, language)}</strong>
+                        + <strong className="font-thai text-lg">{activeChar}</strong> =
+                        <strong className="ml-1 uppercase text-amber-600">{getTranslation(`composition.tone_result.${toneResult}`, language)}</strong>
+                      </span>
+                    </motion.div>
+                  )
+                ) : (
+                  // Equation implicite (Syllabe morte/vivante pour les voyelles)
+                  syllableContext.initialConsonant && implicitToneResult && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1, duration: 0.2 }}
+                      className="mt-1 bg-amber-50 border-2 border-amber-200 text-amber-800 px-6 py-3 rounded-2xl shadow-sm flex flex-col items-center text-center max-w-sm"
+                    >
+                      <span className="text-sm font-medium">
+                        {getTranslation('composition.tone_rule_prefix', language)}
+                        <strong className="mx-1">
+                          {getTranslation(`composition.tone_class.${syllableContext.leadingConsonantClass || THAI_ALPHABET.find(a => a.letter === syllableContext.initialConsonant)?.consonantClass}`, language)}
+                        </strong>
+                        + <strong className="mx-1">{getTranslation(`composition.vowel_length.${syllableContext.hasShortVowel ? 'short' : 'long'}`, language)}</strong>
+                        + <strong className="mx-1">{getTranslation(`composition.syllable_type.${syllableContext.syllableType}`, language)}</strong> =
+                        <strong className="ml-1 uppercase text-amber-600">{getTranslation(`composition.tone_result.${implicitToneResult}`, language)}</strong>
+                      </span>
+                    </motion.div>
+                  )
                 )}
               </motion.div>
             )}

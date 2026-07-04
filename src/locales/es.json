@@ -469,5 +469,20 @@
   "composition.tone_result.falling": "Tono Descendente",
   "composition.tone_result.high": "Tono Alto",
   "composition.tone_result.rising": "Tono Ascendente",
-  "composition.tone_result.mid": "Tono Medio"
+  "composition.tone_result.mid": "Tono Medio",
+  "composition.syllable_type.live": "Sílaba Viva",
+  "composition.syllable_type.dead": "Sílaba Muerta",
+  "composition.vowel_length.short": "Vocal Corta",
+  "composition.vowel_length.long": "Vocal Larga",
+  "composition.final_consonant": "Consonante Final",
+  "composition.mata.Mae Ko Ka": "Mae Ko Ka (Sin consonante final)",
+  "composition.mata.Mae Kok": "Mae Kok (Sonido 'K')",
+  "composition.mata.Mae Kot": "Mae Kot (Sonido 'T')",
+  "composition.mata.Mae Kop": "Mae Kop (Sonido 'P')",
+  "composition.mata.Mae Kong": "Mae Kong (Sonido 'NG')",
+  "composition.mata.Mae Kan": "Mae Kan (Sonido 'N')",
+  "composition.mata.Mae Kom": "Mae Kom (Sonido 'M')",
+  "composition.mata.Mae Koei": "Mae Koei (Sonido 'Y')",
+  "composition.mata.Mae Kow": "Mae Kow (Sonido 'W')",
+  "composition.mata_explanation": "Esta consonante pertenece a la familia {mata} y, por lo tanto, se pronuncia como una '{sound}' al final de la sílaba."
 }

@@ -471,5 +471,20 @@
   "composition.tone_result.falling": "Falling Tone",
   "composition.tone_result.high": "High Tone",
   "composition.tone_result.rising": "Rising Tone",
-  "composition.tone_result.mid": "Mid Tone"
+  "composition.tone_result.mid": "Mid Tone",
+  "composition.syllable_type.live": "Live Syllable",
+  "composition.syllable_type.dead": "Dead Syllable",
+  "composition.vowel_length.short": "Short Vowel",
+  "composition.vowel_length.long": "Long Vowel",
+  "composition.final_consonant": "Final Consonant",
+  "composition.mata.Mae Ko Ka": "Mae Ko Ka (No final consonant)",
+  "composition.mata.Mae Kok": "Mae Kok ('K' sound)",
+  "composition.mata.Mae Kot": "Mae Kot ('T' sound)",
+  "composition.mata.Mae Kop": "Mae Kop ('P' sound)",
+  "composition.mata.Mae Kong": "Mae Kong ('NG' sound)",
+  "composition.mata.Mae Kan": "Mae Kan ('N' sound)",
+  "composition.mata.Mae Kom": "Mae Kom ('M' sound)",
+  "composition.mata.Mae Koei": "Mae Koei ('Y' sound)",
+  "composition.mata.Mae Kow": "Mae Kow ('W' sound)",
+  "composition.mata_explanation": "This consonant belongs to the {mata} family and is pronounced as a stopped '{sound}' at the end of the syllable."
 }
