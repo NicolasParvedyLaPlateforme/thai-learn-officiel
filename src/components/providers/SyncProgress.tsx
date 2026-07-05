@@ -95,6 +95,33 @@ export default function SyncProgress() {
             saveProgress(dbState);
           }
           
+          // ── Migration: reconstitute fullLevelsCompleted ───────────────────
+          // fullLevelsCompleted is not stored in the DB (always comes back as {}).
+          // We rebuild it here from lessonLevels before overwriting the store,
+          // otherwise this setState would wipe any locally-migrated value.
+          // Rule: if lessonLevel[id] = N, levels 0..N-1 have been fully completed.
+          if (dbState.lessonLevels) {
+            const rebuiltFullLevels: Record<string, number[]> = { ...(dbState.fullLevelsCompleted || {}) };
+            Object.entries(dbState.lessonLevels as Record<string, number>).forEach(([lessonId, level]) => {
+              if (
+                lessonId.startsWith('speak_') ||
+                lessonId.startsWith('alphabet_') ||
+                lessonId.startsWith('alpha-')
+              ) return;
+              const numLevel = Number(level);
+              if (numLevel <= 0) return;
+              const existing = rebuiltFullLevels[lessonId] || [];
+              const levelsToAdd: number[] = [];
+              for (let i = 0; i < numLevel; i++) {
+                if (!existing.includes(i)) levelsToAdd.push(i);
+              }
+              if (levelsToAdd.length > 0) {
+                rebuiltFullLevels[lessonId] = [...existing, ...levelsToAdd];
+              }
+            });
+            dbState.fullLevelsCompleted = rebuiltFullLevels;
+          }
+
           const userEmail = session?.user?.email || null;
           useProgressStore.setState({ ...dbState, lastMergedEmail: userEmail });
         }
