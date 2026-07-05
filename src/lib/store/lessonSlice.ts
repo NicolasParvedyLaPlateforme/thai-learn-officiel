@@ -178,11 +178,12 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
         : [0];
         
       const newFullLevelsCompleted = { ...state.fullLevelsCompleted };
-      if (!isFromParts) {
-        const currentFullLevels = newFullLevelsCompleted[lessonId] || [];
-        if (!currentFullLevels.includes(actualPlayedLevel)) {
-           newFullLevelsCompleted[lessonId] = [...currentFullLevels, actualPlayedLevel];
-        }
+      // Always update fullLevelsCompleted regardless of isFromParts.
+      // Previously this was guarded by !isFromParts, which caused levels 4+
+      // to remain blocked when the user played each part separately.
+      const currentFullLevels = newFullLevelsCompleted[lessonId] || [];
+      if (!currentFullLevels.includes(actualPlayedLevel)) {
+        newFullLevelsCompleted[lessonId] = [...currentFullLevels, actualPlayedLevel];
       }
       
       return {

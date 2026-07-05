@@ -320,7 +320,7 @@ export function LessonPathNode({
             </svg>
 
             {/* Tooltip La Suite */}
-            {!isCompleted && isAccessible && (() => {
+            {!isCompleted && isAccessible && isCurrent && (() => {
               const nextPart = currentCompletedParts.length;
               let isVerticalMet = true;
               if (levelIndex > 0) {

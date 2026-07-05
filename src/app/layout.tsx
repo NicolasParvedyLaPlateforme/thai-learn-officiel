@@ -37,6 +37,7 @@ import AuthProvider from "@/components/providers/AuthProvider";
 import SyncProgress from "@/components/providers/SyncProgress";
 import GlobalModals from "@/components/layout/GlobalModals";
 import MotionProvider from "@/components/providers/MotionProvider";
+import MigrationRunner from "@/components/providers/MigrationRunner";
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -45,6 +46,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
          <MotionProvider>
            <AuthProvider>
              <SyncProgress />
+             <MigrationRunner />
            <DesktopSidebarLeft />
            <GlobalModals />
            <div className="flex-1 flex flex-col min-h-screen min-w-0">
