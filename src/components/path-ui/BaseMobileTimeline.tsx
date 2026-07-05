@@ -351,49 +351,35 @@ export default function BaseMobileTimeline({
                                                     index={idx}
                                                     maxLevelPerLesson={maxLevelPerLesson}
                                                     onClick={handleNodeClick(lesson, level, unit, isReviewLocked, pathType)}
-                                                />
+                                                >
+                                                    <LessonPathMap
+                                                        maxLevel={maxLevelPerLesson}
+                                                        currentProgress={level}
+                                                        modalLevel={modalLevel ?? null}
+                                                        setModalLevel={setModalLevel}
+                                                        earnedStarsArray={lessonStars?.[lesson.id] || Array(maxLevelPerLesson + 1).fill(0)}
+                                                        unitColor={unit.colorClass}
+                                                        unitBorder={unit.borderClass}
+                                                        unitText={unit.textClass}
+                                                        language={language}
+                                                        lessonId={lesson.id}
+                                                        lesson={lesson}
+                                                        lessonPartsCompleted={currentPartsCompleted}
+                                                        suggestionType={pathType}
+                                                        initialScrollLevel={selectedLesson?.initialScrollLevel}
+                                                        disableAutoScroll={!isInitializingScroll}
+                                                        onReady={() => { }}
+                                                        onBack={() => {
+                                                            setExpandedLessons(prev => {
+                                                                const next = new Set(prev);
+                                                                next.delete(lesson.id);
+                                                                return next;
+                                                            });
+                                                        }}
+                                                    />
+                                                </SharedLessonCard>
                                             }
                                         />
-
-                                        <AnimatePresence>
-                                            {expandedLessons.has(lesson.id) && (
-                                                <motion.div
-                                                    initial={{ height: 0, opacity: 0 }}
-                                                    animate={{ height: 'auto', opacity: 1 }}
-                                                    exit={{ height: 0, opacity: 0 }}
-                                                    transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                                                    className="w-full overflow-visible flex flex-col items-center pt-[30px] relative"
-                                                >
-                                                    <div className="w-full relative">
-                                                        <LessonPathMap
-                                                            maxLevel={maxLevelPerLesson}
-                                                            currentProgress={level}
-                                                            modalLevel={modalLevel ?? null}
-                                                            setModalLevel={setModalLevel}
-                                                            earnedStarsArray={lessonStars?.[lesson.id] || Array(maxLevelPerLesson + 1).fill(0)}
-                                                            unitColor={unit.colorClass}
-                                                            unitBorder={unit.borderClass}
-                                                            unitText={unit.textClass}
-                                                            language={language}
-                                                            lessonId={lesson.id}
-                                                            lesson={lesson}
-                                                            lessonPartsCompleted={currentPartsCompleted}
-                                                            suggestionType={pathType}
-                                                            initialScrollLevel={selectedLesson?.initialScrollLevel}
-                                                            disableAutoScroll={!isInitializingScroll}
-                                                            onReady={() => { }}
-                                                            onBack={() => {
-                                                                setExpandedLessons(prev => {
-                                                                    const next = new Set(prev);
-                                                                    next.delete(lesson.id);
-                                                                    return next;
-                                                                });
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
                                     </div>
                                 );
                             })}

@@ -468,7 +468,7 @@ export function LessonPathNode({
         </div>
 
         {selectedAction !== null && (
-          <div className="w-full mt-4 md:mt-8 flex justify-center z-40">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center z-[200] w-[90%] max-w-[320px]">
             <PartNodeBubble
               lessonId={lessonId || ''}
               levelIndex={levelIndex}

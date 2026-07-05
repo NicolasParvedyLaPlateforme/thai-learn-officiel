@@ -46,8 +46,9 @@ export function SharedLessonCard({
   maxLevelPerLesson = 10,
   isMobileLayout = false,
   index,
-  isExpanded = false
-}: SharedLessonCardProps) {
+  isExpanded = false,
+  children
+}: SharedLessonCardProps & { children?: React.ReactNode }) {
   const [activeTab, setActiveTab] = useState<'words' | 'phrases'>('words');
   const [isHovered, setIsHovered] = useState(false);
 
@@ -207,10 +208,9 @@ export function SharedLessonCard({
   return (
     <Card
       ref={cardRef as React.Ref<HTMLDivElement>}
-      className={cn("relative p-4 sm:p-6 flex flex-row items-center gap-4 sm:gap-6 rounded-[2rem] bg-white cursor-pointer hover:shadow-md transition-shadow group overflow-visible",
+      className={cn("relative p-0 flex flex-col rounded-[2rem] bg-white cursor-pointer hover:shadow-md transition-shadow group overflow-visible",
         !isMaxLevel ? "border-0" : "border border-slate-200 shadow-none",
-        isReviewLocked ? "opacity-50 pointer-events-none" : "",
-        isMobileLayout ? "pb-10" : ""
+        isReviewLocked ? "opacity-50 pointer-events-none" : ""
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -231,19 +231,24 @@ export function SharedLessonCard({
 
       {/* Badges (Top Centered) */}
       {isMaxLevel ? (
-        <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-100 font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
+        <Badge className={cn("absolute -top-3.5 left-1/2 -translate-x-1/2 shadow-sm px-3 py-1 gap-1 z-[100] font-bold border-[2px] shrink-0", badgeBgColor, badgeTextColor, badgeBorderColor)}>
           <CheckCircle size={14} /> {getTranslation('auto.mastered', language)}
         </Badge>
       ) : isSuggested ? (
-        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-100 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
+        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-[100] font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
           {getTranslation('auto.in_progress', language) || "En cours"}
         </Badge>
       ) : displayLevel > 0 ? (
-        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-100 font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
+        <Badge className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-50 text-rose-600 shadow-sm px-3 py-1 gap-1 z-[100] font-bold border-[2px] border-rose-200 shrink-0 uppercase tracking-wider text-[10px]">
           {getTranslation('auto.in_progress', language) || "En cours"}
         </Badge>
       ) : null}
 
+      {/* Main Card Content Wrapper */}
+      <div className={cn(
+        "relative flex flex-row items-center gap-4 sm:gap-6 p-4 sm:p-6 w-full z-[60]",
+        isMobileLayout ? "pb-10" : ""
+      )}>
       {/* Left: Circular Image Icon */}
       {lesson.imageUrl ? (
         <div className="w-[64px] h-[64px] sm:w-[84px] sm:h-[84px] rounded-full overflow-hidden shrink-0 relative bg-slate-50 border-[3px] border-slate-100 flex items-center justify-center z-10 shadow-sm group-hover:scale-105 transition-transform duration-300">
@@ -308,6 +313,32 @@ export function SharedLessonCard({
           {!isMaxLevel && <ChevronDown size={18} className={cn("stroke-[3] transition-transform duration-300", isExpanded && "rotate-180")} />}
         </Button>
       </div>
+
+      {/* Main Card Content Wrapper Closes Here */}
+      </div>
+
+      {/* Expanded Content */}
+      <AnimatePresence>
+        {isExpanded && children && (
+          <m.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            className="w-full overflow-hidden flex flex-col items-center relative z-10"
+          >
+            <div 
+              className="w-full relative pb-6 pt-2"
+              onClick={(e) => {
+                // Prevent clicks inside the expanded levels list from bubbling up and collapsing the card
+                e.stopPropagation();
+              }}
+            >
+              {children}
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
 
     </Card>
   );
