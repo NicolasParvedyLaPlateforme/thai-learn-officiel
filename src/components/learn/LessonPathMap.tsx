@@ -69,7 +69,7 @@ export function LessonPathMap({
     }
 
     let isBlocked = false;
-    if (l >= 4) {
+    if (suggestionType === 'learn' && l >= 4) {
       for (let i = 4; i <= l; i++) {
         if (!currentFullLevels.includes(i - 4)) {
           isBlocked = true;

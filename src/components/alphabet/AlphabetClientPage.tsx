@@ -52,11 +52,11 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       quests={alphabetQuests}
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
-      maxLevelPerLesson={4}
-      renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="alphabet" quests={alphabetQuests} maxLevelPerLesson={4} />}
-      renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="alphabet" maxLevelPerLesson={4} />}
-      renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="alphabet" maxLevelPerLesson={4} />}
-      renderLessonModal={(props) => <PathLessonModal {...props} pathType="alphabet" maxLevelPerLesson={4} />}
+      maxLevelPerLesson={3}
+      renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="alphabet" quests={alphabetQuests} maxLevelPerLesson={3} />}
+      renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="alphabet" maxLevelPerLesson={3} />}
+      renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="alphabet" maxLevelPerLesson={3} />}
+      renderLessonModal={(props) => <PathLessonModal {...props} pathType="alphabet" maxLevelPerLesson={3} />}
       renderUnitsModal={(props) => <UnitsModal {...props} />}
       renderQuestsModal={(props) => <QuestsModal category="alphabet" {...props} />}
     />
