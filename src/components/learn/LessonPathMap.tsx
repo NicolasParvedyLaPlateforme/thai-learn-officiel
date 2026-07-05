@@ -103,7 +103,18 @@ export function LessonPathMap({
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
   
   const [activeLevel, setActiveLevel] = useState<number>(targetScrollLevel);
+  const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
   const [showLockMessageFor, setShowLockMessageFor] = useState<number | null>(null);
+
+  const handleLevelChange = (l: number) => {
+    if (l !== activeLevel) {
+      setIsFadingOut(true);
+      setTimeout(() => {
+        setActiveLevel(l);
+        setIsFadingOut(false);
+      }, 200);
+    }
+  };
 
   useEffect(() => {
     onReady?.();
@@ -171,7 +182,7 @@ export function LessonPathMap({
               <button
                 onClick={() => {
                   if (unlocked) {
-                    setActiveLevel(l);
+                    handleLevelChange(l);
                     setShowLockMessageFor(null);
                   } else if (isNextLocked) {
                     setShowLockMessageFor(l);
@@ -191,9 +202,17 @@ export function LessonPathMap({
               
               {/* Lock Message Tooltip */}
               {showLockMessageFor === l && isNextLocked && (
-                <div className="absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95">
+                <div className={`absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95
+                  ${l % 5 === 4 ? 'right-0 sm:left-1/2 sm:-translate-x-1/2' : ''}
+                  ${l % 5 === 0 ? 'left-0 sm:left-1/2 sm:-translate-x-1/2' : ''}
+                  ${(l % 5 !== 0 && l % 5 !== 4) ? 'left-1/2 -translate-x-1/2' : ''}
+                `}>
                   {blockingReason || "Niveau verrouillé."}
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div>
+                  <div className={`absolute -top-1 w-2 h-2 bg-slate-800 rotate-45
+                    ${l % 5 === 4 ? 'right-6 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto' : ''}
+                    ${l % 5 === 0 ? 'left-6 sm:left-1/2 sm:-translate-x-1/2 sm:left-auto' : ''}
+                    ${(l % 5 !== 0 && l % 5 !== 4) ? 'left-1/2 -translate-x-1/2' : ''}
+                  `}></div>
                 </div>
               )}
             </div>
@@ -203,7 +222,7 @@ export function LessonPathMap({
       </div>
 
       {/* Selected Level Node */}
-      <div className="w-full lg:w-1/2 relative mt-4 lg:mt-0 flex justify-center">
+      <div className={`w-full lg:w-1/2 relative mt-4 lg:mt-0 flex justify-center transition-all duration-200 ease-out ${isFadingOut ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
         <LessonPathNode
           levelIndex={activeLevel}
           maxLevel={maxLevel}
