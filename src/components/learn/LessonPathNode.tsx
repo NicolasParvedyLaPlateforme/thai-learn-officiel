@@ -168,7 +168,21 @@ export function LessonPathNode({
 
         {/* Steps Indicator (flag) was here, removed because PartNodeBubble already displays it */}
 
-        {(!isMastery && currentPartsTotal > 1) ? (
+        <div className="flex flex-row items-center justify-center gap-6">
+          {/* Vertical Stars Column (Left of Camembert) */}
+          {(isCompleted && !isMastery) && (
+            <div className="flex flex-col justify-center gap-1.5 z-30">
+              {[...Array(5)].map((_, i) => {
+                const earned = earnedStars >= i + 1;
+                return (
+                  <Star key={i} size={24} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-slate-100 stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
+                );
+              })}
+            </div>
+          )}
+
+          <div className="relative">
+            {(!isMastery && currentPartsTotal > 1) ? (
           <div
             onClick={(e) => {
               e.stopPropagation();
@@ -450,34 +464,26 @@ export function LessonPathNode({
             <span className="text-xs font-black text-slate-600">{earnedStarsMastery}/5</span>
           </div>
         )}
-
-        {/* Horizontal Stars Row (Below Camembert) */}
-        {(isCompleted && !isMastery) && (
-          <div className="flex justify-center gap-1.5 mt-6 z-30">
-            {[...Array(5)].map((_, i) => {
-              const earned = earnedStars >= i + 1;
-              return (
-                <Star key={i} size={28} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-slate-100 stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
-              );
-            })}
           </div>
-        )}
+        </div>
 
         {selectedAction !== null && (
-          <PartNodeBubble
-            lessonId={lessonId || ''}
-            levelIndex={levelIndex}
-            partIndex={selectedAction}
-            totalParts={currentPartsTotal}
-            stepsCount={getStepsForPart(selectedAction)}
-            expectedXp={getExpectedXpForPart(selectedAction)}
-            isCompleted={selectedAction === 'full' ? isCompleted : currentCompletedParts.includes(selectedAction)}
-            unitColor={unitColor}
-            unitText={unitText}
-            nodeX={getOffset(levelIndex)}
-            onClose={() => setSelectedAction(null)}
-            suggestionType={suggestionType}
-          />
+          <div className="w-full mt-4 md:mt-8 flex justify-center z-40">
+            <PartNodeBubble
+              lessonId={lessonId || ''}
+              levelIndex={levelIndex}
+              partIndex={selectedAction}
+              totalParts={currentPartsTotal}
+              stepsCount={getStepsForPart(selectedAction)}
+              expectedXp={getExpectedXpForPart(selectedAction)}
+              isCompleted={selectedAction === 'full' ? isCompleted : currentCompletedParts.includes(selectedAction)}
+              unitColor={unitColor}
+              unitText={unitText}
+              nodeX={getOffset(levelIndex)}
+              onClose={() => setSelectedAction(null)}
+              suggestionType={suggestionType}
+            />
+          </div>
         )}
       </div>
     </div>

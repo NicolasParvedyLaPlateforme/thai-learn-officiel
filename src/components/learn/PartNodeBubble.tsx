@@ -64,19 +64,20 @@ export function PartNodeBubble({
     translateXPercentage = 25;
   }
 
-  const positionClasses = 'top-full mt-3 lg:mt-4 left-1/2';
-  const positionStyle: React.CSSProperties = { transform: `translateX(-${translateXPercentage}%)` };
+  const positionClasses = 'mt-3 lg:mt-4 mx-auto';
+  // Pas de translation car l'élément est dans le flux standard
+  const positionStyle: React.CSSProperties = { };
 
   const arrowClasses = '-top-[6px] border-b-0 border-r-0';
   const arrowStyle: React.CSSProperties = { 
-    left: `calc(${translateXPercentage}% + ${xOffset}px)`, 
+    left: `calc(50% + ${xOffset}px)`, 
     transform: 'translateX(-50%) rotate(45deg)' 
   };
 
   return (
     <div
       className={[
-        'absolute z-[100]',
+        'relative z-20',
         positionClasses,
         'w-max max-w-[calc(100vw-32px)]',
         'bg-white rounded-[24px] shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-slate-100',
