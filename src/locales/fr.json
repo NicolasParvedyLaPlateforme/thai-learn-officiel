@@ -511,7 +511,17 @@
   "auto.reminder": "Petit rappel ?",
   "auto.bonus_xp": "+50 XP bonus",
   "auto.level_locked_full_1": "Le niveau ",
-  "auto.level_locked_full_2": " est d�bloqu� qu'apr�s l'accomplissement du niveau ",
+  "auto.level_locked_full_2": " est débloqué qu'après l'accomplissement du niveau ",
   "auto.level_locked_full_3": " en entier",
-  "auto.part": "Partie "
+  "auto.part": "Partie ",
+  "auto.complete_part_1_of_level": "Terminez la partie 1 du Niveau ",
+  "auto.to_unlock": " pour débloquer.",
+  "auto.complete_level": "Terminez le Niveau ",
+  "auto.full_to_unlock": " (entier) pour débloquer.",
+  "auto.complete_all_parts_level_4": "Terminez toutes les parties du Niveau 4 pour débloquer.",
+  "auto.level_locked": "Niveau verrouillé.",
+  "auto.choose_part": "CHOISISSEZ UNE PARTIE",
+  "auto.full_level": "Niveau entier",
+  "auto.next_step": "La Suite",
+  "auto.ultimate": "Ultime"
 }

@@ -511,5 +511,15 @@
   "auto.level_locked_full_1": "Il livello ",
   "auto.level_locked_full_2": " � sbloccato solo dopo il completamento del livello ",
   "auto.level_locked_full_3": " per intero",
-  "auto.part": "Parte "
+  "auto.part": "Parte ",
+  "auto.complete_part_1_of_level": "Completa la parte 1 del Livello ",
+  "auto.to_unlock": " per sbloccare.",
+  "auto.complete_level": "Completa il Livello ",
+  "auto.full_to_unlock": " (intero) per sbloccare.",
+  "auto.complete_all_parts_level_4": "Completa tutte le parti del Livello 4 per sbloccare.",
+  "auto.level_locked": "Livello bloccato.",
+  "auto.choose_part": "SCEGLI UNA PARTE",
+  "auto.full_level": "Livello intero",
+  "auto.next_step": "Successivo",
+  "auto.ultimate": "Ultimo"
 }

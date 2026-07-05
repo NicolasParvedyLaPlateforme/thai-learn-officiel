@@ -507,7 +507,17 @@
   "auto.reminder": "�Peque�o recordatorio?",
   "auto.bonus_xp": "+50 XP de bonificaci�n",
   "auto.level_locked_full_1": "El nivel ",
-  "auto.level_locked_full_2": " se desbloquea solo despu�s de completar el nivel ",
+  "auto.level_locked_full_2": " se desbloquea solo después de completar el nivel ",
   "auto.level_locked_full_3": " por completo",
-  "auto.part": "Parte "
+  "auto.part": "Parte ",
+  "auto.complete_part_1_of_level": "Completa la parte 1 del Nivel ",
+  "auto.to_unlock": " para desbloquear.",
+  "auto.complete_level": "Completa el Nivel ",
+  "auto.full_to_unlock": " (entero) para desbloquear.",
+  "auto.complete_all_parts_level_4": "Completa todas las partes del Nivel 4 para desbloquear.",
+  "auto.level_locked": "Nivel bloqueado.",
+  "auto.choose_part": "ELIGE UNA PARTE",
+  "auto.full_level": "Nivel entero",
+  "auto.next_step": "Siguiente",
+  "auto.ultimate": "Último"
 }

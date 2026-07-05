@@ -64,7 +64,7 @@ export function LessonPathMap({
   for (let l = 1; l <= maxLevel; l++) {
     const isVerticalMet = isPartCompleted(l - 1, 0);
     if (!isVerticalMet) {
-      blockingReason = `Terminez la partie 1 du Niveau ${l} pour débloquer.`;
+      blockingReason = `${getTranslation('auto.complete_part_1_of_level', language) || 'Terminez la partie 1 du Niveau '}${l}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
       break;
     }
 
@@ -74,7 +74,7 @@ export function LessonPathMap({
         if (!currentFullLevels.includes(i - 4)) {
           isBlocked = true;
           blockedByLevel = blockedByLevel === null ? i : blockedByLevel;
-          blockingReason = `Terminez le Niveau ${i - 3} (entier) pour débloquer.`;
+          blockingReason = `${getTranslation('auto.complete_level', language) || 'Terminez le Niveau '}${i - 3}${getTranslation('auto.full_to_unlock', language) || ' (entier) pour débloquer.'}`;
           break;
         }
       }
@@ -84,7 +84,7 @@ export function LessonPathMap({
           const completedL3 = lessonPartsCompleted?.[`${lessonId}_level-3`] || [];
           if (completedL3.length < partsL3) {
               isBlocked = true;
-              if (!blockingReason) blockingReason = `Terminez toutes les parties du Niveau 4 pour débloquer.`;
+              if (!blockingReason) blockingReason = getTranslation('auto.complete_all_parts_level_4', language) || `Terminez toutes les parties du Niveau 4 pour débloquer.`;
           }
       }
     }
@@ -160,7 +160,7 @@ export function LessonPathMap({
           const isNextLocked = l === (blockedByLevel !== null ? blockedByLevel : effectiveProgress + 1);
           
           const isSelected = activeLevel === l;
-          const label = l === maxLevel && maxLevel > 4 ? 'Ultime' : `${l + 1}`;
+          const label = l === maxLevel && maxLevel > 4 ? (getTranslation('auto.ultimate', language) || 'Ultime') : `${l + 1}`;
           
           let buttonClass = "px-4 py-2 rounded-xl font-bold text-[15px] transition-all ";
           
@@ -205,7 +205,7 @@ export function LessonPathMap({
                 <div className={`absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95
                   ${l >= maxLevel - 1 ? 'right-0 md:left-1/2 md:-translate-x-1/2' : (l <= 1 ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-1/2 -translate-x-1/2')}
                 `}>
-                  {blockingReason || "Niveau verrouillé."}
+                  {blockingReason || (getTranslation('auto.level_locked', language) || "Niveau verrouillé.")}
                   <div className={`absolute -top-1 w-2 h-2 bg-slate-800 rotate-45
                     ${l >= maxLevel - 1 ? 'right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto' : (l <= 1 ? 'left-6 md:left-1/2 md:-translate-x-1/2 md:left-auto' : 'left-1/2 -translate-x-1/2')}
                   `}></div>

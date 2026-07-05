@@ -511,5 +511,15 @@
   "auto.level_locked_full_1": "Level ",
   "auto.level_locked_full_2": " is unlocked only after completing level ",
   "auto.level_locked_full_3": " in full",
-  "auto.part": "Part "
+  "auto.part": "Part ",
+  "auto.complete_part_1_of_level": "Complete Part 1 of Level ",
+  "auto.to_unlock": " to unlock.",
+  "auto.complete_level": "Complete Level ",
+  "auto.full_to_unlock": " in full to unlock.",
+  "auto.complete_all_parts_level_4": "Complete all parts of Level 4 to unlock.",
+  "auto.level_locked": "Level locked.",
+  "auto.choose_part": "CHOOSE A PART",
+  "auto.full_level": "Full Level",
+  "auto.next_step": "Next",
+  "auto.ultimate": "Ultimate"
 }

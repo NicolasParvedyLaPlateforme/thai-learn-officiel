@@ -1,4 +1,5 @@
 import React from 'react';
+import { getTranslation } from '@/hooks/useTranslation';
 
 interface LessonPartsSelectorProps {
   totalParts: number;
@@ -28,7 +29,7 @@ export function LessonPartsSelector({
   return (
     <div className="flex flex-col items-center w-full mb-8">
       <h4 className="text-[11px] font-black uppercase text-slate-500 tracking-widest mb-6 text-center">
-        {language === 'en' ? 'CHOOSE A PART' : 'CHOISISSEZ UNE PARTIE'}
+        {getTranslation('auto.choose_part', language) || 'CHOISISSEZ UNE PARTIE'}
       </h4>
 
       <div className="relative w-48 h-48 mb-6">
@@ -76,7 +77,7 @@ export function LessonPartsSelector({
             onClick={() => { if(isLevelFullyCompleted) setPlayFullLevel(true); }}
           />
           <text x="50" y="50" textAnchor="middle" dominantBaseline="central" className={`text-[6.5px] font-black ${playFullLevel ? 'fill-white' : (isLevelFullyCompleted ? 'fill-slate-800' : 'fill-slate-400')} pointer-events-none`}>
-            {language === 'en' ? 'FULL' : 'ENTIER'}
+            {getTranslation('auto.full', language) || 'ENTIER'}
           </text>
         </svg>
 
@@ -123,7 +124,7 @@ export function LessonPartsSelector({
                     }}
                   />
                   <div className="relative z-10 bg-[#10B981] text-white font-black text-[9px] uppercase px-2.5 py-1 rounded-md tracking-wider whitespace-nowrap shadow-sm">
-                    {language === 'en' ? 'Next' : 'La Suite'}
+                    {getTranslation('auto.next_step', language) || 'La Suite'}
                   </div>
                 </div>
               </div>
@@ -142,7 +143,7 @@ export function LessonPartsSelector({
         `}
       >
         <div className={`w-3 h-3 rounded-full ${playFullLevel ? 'bg-white' : 'bg-slate-300'}`}></div>
-        {language === 'en' ? 'Full Level' : 'Niveau entier'}
+        {getTranslation('auto.full_level', language) || 'Niveau entier'}
       </button>
       
       <div className="flex items-center justify-center gap-2 mb-2 flex-wrap">
@@ -161,7 +162,7 @@ export function LessonPartsSelector({
                ${isSelected ? `${selectedLesson.unitColor} text-white` : 
                  (isLevelFullyCompleted || i <= completedParts.length) ? 'bg-slate-100 text-slate-500 hover:bg-slate-200' : 'bg-slate-50 text-slate-300 cursor-not-allowed'}
              `}>
-               {language === 'en' ? 'Part ' : 'Partie '}{i + 1}
+               {getTranslation('auto.part', language) || 'Partie '}{i + 1}
              </button>
            )
         })}

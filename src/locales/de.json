@@ -510,6 +510,16 @@
   "auto.bonus_xp": "+50 XP Bonus",
   "auto.level_locked_full_1": "Level ",
   "auto.level_locked_full_2": " wird erst freigeschaltet, nachdem Level ",
-  "auto.level_locked_full_3": " vollst�ndig abgeschlossen wurde",
-  "auto.part": "Teil "
+  "auto.level_locked_full_3": " vollständig abgeschlossen wurde",
+  "auto.part": "Teil ",
+  "auto.complete_part_1_of_level": "Schließe Teil 1 von Level ",
+  "auto.to_unlock": " ab, um es freizuschalten.",
+  "auto.complete_level": "Schließe Level ",
+  "auto.full_to_unlock": " komplett ab, um es freizuschalten.",
+  "auto.complete_all_parts_level_4": "Schließe alle Teile von Level 4 ab, um es freizuschalten.",
+  "auto.level_locked": "Level gesperrt.",
+  "auto.choose_part": "WÄHLE EINEN TEIL",
+  "auto.full_level": "Ganzes Level",
+  "auto.next_step": "Weiter",
+  "auto.ultimate": "Ultimativ"
 }
