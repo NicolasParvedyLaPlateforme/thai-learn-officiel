@@ -140,20 +140,26 @@ export default function QuestionArea({
   return (
     <>
       {/* Container for Question Content */}
-      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-8 w-full">
+      {/* Ajout de 'shrink min-h-0 flex-1' ici pour s'assurer que le parent global peut rétrécir */}
+      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-8 w-full shrink min-h-0 flex-1">
+
         {/* Image Box */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
           className={`${currentExercise.type === "intro" ||
-            currentExercise.type === "word-match" ||
-            currentExercise.type === "sentence-builder" ||
-            currentExercise.type === "free-typing" ||
-            currentExercise.type === "writing"
-            ? "flex"
-            : "hidden"
-            } w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-64 lg:h-64 rounded-[2rem] text-7xl md:text-8xl mx-auto items-center justify-center relative flex-shrink-0 ${imageUrl
+              currentExercise.type === "word-match" ||
+              currentExercise.type === "sentence-builder" ||
+              currentExercise.type === "free-typing" ||
+              currentExercise.type === "writing"
+              ? "flex"
+              : "hidden"
+            } 
+          /* --- LES CHANGEMENTS SONT ICI --- */
+          w-full max-w-64 sm:max-w-72 md:max-w-80 lg:max-w-64 aspect-square shrink min-h-0 min-w-0
+          /* -------------------------------- */
+          rounded-[2rem] text-7xl md:text-8xl mx-auto items-center justify-center relative ${imageUrl
               ? "bg-transparent overflow-visible"
               : "bg-emerald-50 shadow-sm border border-emerald-100 overflow-hidden"
             }`}

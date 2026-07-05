@@ -33,13 +33,13 @@ export default React.memo(function MissingLetter({
   const [showComposition, setShowComposition] = React.useState(false);
   const isPhrase = !!(exercise.introItem as any)?.components;
 
-  const compositionWord = exercise.originalWord 
+  const compositionWord = exercise.originalWord
     || (exercise.missingLetterText && exercise.answer ? exercise.missingLetterText.replace('_', exercise.answer) : exercise.answer);
 
   if (showComposition) {
     return (
       <div className="relative flex flex-col w-full h-full">
-        <button 
+        <button
           onClick={() => setShowComposition(false)}
           className="absolute top-4 right-4 z-50 bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-full p-2 shadow-sm flex items-center justify-center transition-colors"
           aria-label={getTranslation('auto.close', language)}
@@ -73,10 +73,24 @@ export default React.memo(function MissingLetter({
       }
     }
 
+    // --- NOUVEAU : Calcul de la taille de la police dynamiquement ---
+    const textLen = (originalWord || exercise.missingLetterText || "").length;
+    let textSizeClass = "text-5xl md:text-6xl"; // Taille par défaut (mots courts)
+
+    if (textLen > 16) {
+      textSizeClass = "text-3xl md:text-4xl"; // Diminue beaucoup pour les phrases ou mots très longs
+    } else if (textLen > 9) {
+      textSizeClass = "text-4xl md:text-5xl"; // Diminue légèrement pour les mots moyens
+    }
+
+    // Classes CSS communes pour gérer le retour à la ligne
+    const containerClasses = `${textSizeClass} font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex flex-wrap items-center justify-center font-bold break-words w-full px-2`;
+    // -----------------------------------------------------------------
+
     if (!originalWord || missingIndex === undefined || missingIndex === -1) {
       // Ultimate Fallback
       return (
-        <div className="text-5xl md:text-6xl font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex items-center justify-center font-bold">
+        <div className={containerClasses}>
           {(exercise.missingLetterText || "").split('').map((char, index) => (
             <span key={index} className={char === '_' ? 'text-amber-500 mx-1' : (char === selected ? 'text-amber-500 font-bold animate-in zoom-in duration-300' : '')}>
               {selected && char === '_' ? selected : char}
@@ -115,45 +129,34 @@ export default React.memo(function MissingLetter({
 
     if (isCombining) {
       const hasUpperVowel = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ'].some(v => baseChar.includes(v));
-
-      // On considère qu'on cherche une "2ème voyelle / ton" s'il y a un afterMissing 
-      // ou si la base contient déjà une voyelle haute.
       const isComplexCluster = afterMissing.length > 0 || hasUpperVowel;
 
       return (
-        <div className="text-5xl md:text-6xl font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex items-center justify-center gap-[2px] font-bold">
+        <div className={`${containerClasses} gap-[2px]`}>
           <span>{beforeBase}</span>
 
-          <span className="relative inline-flex items-center justify-center ">
-
+          <span className="relative inline-flex items-center justify-center">
             {selected ? (
-              // ÉTAT TROUVÉ : Si c'est un cluster complexe (2ème voyelle/ton), on le laisse en gris (sans coloration).
-              // Sinon (voyelle simple), on peut le laisser en orange.
               <span className={`animate-in zoom-in duration-300 ${isComplexCluster ? 'text-slate-900' : 'text-amber-500'}`}>
                 {baseChar}{selected}{afterMissing}
               </span>
             ) : (
-              // ÉTAT VIDE : Méthode 100% native. Pas de texte flottant ou invisible.
               <>
                 <span className="text-slate-900 z-10">
                   {baseChar}{afterMissing}
                 </span>
 
-                {/* Tiret pour la voyelle manquante au-dessus */}
                 {placeholderType === 'above' && (
                   <span
-                    className={`absolute left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20 ${hasUpperVowel ? '-top-4' : 'top-4'
-                      }`}
+                    className={`absolute left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20 ${hasUpperVowel ? '-top-4' : 'top-4'}`}
                   />
                 )}
 
-                {/* Tiret pour la voyelle manquante en-dessous */}
                 {placeholderType === 'below' && (
                   <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20" />
                 )}
               </>
             )}
-
           </span>
 
           <span>{afterBase}</span>
@@ -161,9 +164,9 @@ export default React.memo(function MissingLetter({
       );
     }
 
-    // Normal non-combining rendering (like consonants, or front/back vowels)
+    // Normal non-combining rendering
     return (
-      <div className="text-5xl md:text-6xl font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex items-center justify-center font-bold">
+      <div className={containerClasses}>
         <span>{originalWord.substring(0, missingIndex)}</span>
         {!selected ? (
           <span className="text-amber-500 mx-1 relative -top-5">_</span>

@@ -38,7 +38,7 @@ export default React.memo(function SoundToLetter({
   if (showComposition) {
     return (
       <div className="relative flex flex-col w-full h-full">
-        <button 
+        <button
           onClick={() => setShowComposition(false)}
           className="absolute top-4 right-4 z-50 bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-full p-2 shadow-sm flex items-center justify-center transition-colors"
           aria-label={getTranslation('auto.close', language)}
@@ -119,6 +119,18 @@ export default React.memo(function SoundToLetter({
     }
   }
 
+  // --- NOUVEAU : Calcul de la taille de la police pour le mot principal ---
+  const wordToDisplay = exercise.originalWord || "???";
+  const textLen = wordToDisplay.length;
+
+  let textSizeClass = "text-7xl md:text-8xl"; // Taille par défaut (mots courts)
+  if (textLen > 16) {
+    textSizeClass = "text-4xl md:text-5xl"; // Beaucoup plus petit pour les phrases
+  } else if (textLen > 9) {
+    textSizeClass = "text-5xl md:text-6xl"; // Légèrement réduit
+  }
+  // ------------------------------------------------------------------------
+
   return (
     <div className="flex flex-col h-full w-full max-w-2xl mx-auto px-4">
 
@@ -147,9 +159,9 @@ export default React.memo(function SoundToLetter({
               </button>
             </div>
 
-            {/* Mot thaï */}
-            <div className="text-7xl md:text-8xl font-bold font-thai text-slate-900 leading-none text-center mb-14">
-              {exercise.originalWord || "???"}
+            {/* Mot thaï (Classes mises à jour pour s'adapter et passer à la ligne) */}
+            <div className={`${textSizeClass} font-bold font-thai text-slate-900 leading-tight text-center mb-14 break-words w-full px-2`}>
+              {wordToDisplay}
             </div>
 
             {/* Bouton icône son */}
