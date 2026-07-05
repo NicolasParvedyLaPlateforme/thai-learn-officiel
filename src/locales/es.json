@@ -502,5 +502,12 @@
   "composition.implicit_a_vowel": "Vocal implícita: Esta consonante forma una sílaba abierta, se pronuncia una 'A' corta (ะ) invisible.",
   "exercise.word": "Palabra",
   "exercise.phrase": "Frase",
-  "exercise.composition": "Composición"
+  "exercise.composition": "Composición",
+  "auto.full": "ENTERO",
+  "auto.reminder": "�Peque�o recordatorio?",
+  "auto.bonus_xp": "+50 XP de bonificaci�n",
+  "auto.level_locked_full_1": "El nivel ",
+  "auto.level_locked_full_2": " se desbloquea solo despu�s de completar el nivel ",
+  "auto.level_locked_full_3": " por completo",
+  "auto.part": "Parte "
 }

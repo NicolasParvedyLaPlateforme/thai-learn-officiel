@@ -504,5 +504,12 @@
   "composition.implicit_a_vowel": "Implicit Vowel: This consonant forms an open syllable, a short, invisible 'A' (ะ) is pronounced.",
   "exercise.word": "Word",
   "exercise.phrase": "Sentence",
-  "exercise.composition": "Composition"
+  "exercise.composition": "Composition",
+  "auto.full": "FULL",
+  "auto.reminder": "Quick reminder?",
+  "auto.bonus_xp": "+50 XP bonus",
+  "auto.level_locked_full_1": "Level ",
+  "auto.level_locked_full_2": " is unlocked only after completing level ",
+  "auto.level_locked_full_3": " in full",
+  "auto.part": "Part "
 }

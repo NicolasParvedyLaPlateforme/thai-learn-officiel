@@ -506,5 +506,12 @@
   "composition.implicit_a_vowel": "Voyelle implicite : Cette consonne forme une syllabe ouverte, on prononce un 'A' court (ะ) invisible.",
   "exercise.word": "Mot",
   "exercise.phrase": "Phrase",
-  "exercise.composition": "Composition"
+  "exercise.composition": "Composition",
+  "auto.full": "ENTIER",
+  "auto.reminder": "Petit rappel ?",
+  "auto.bonus_xp": "+50 XP bonus",
+  "auto.level_locked_full_1": "Le niveau ",
+  "auto.level_locked_full_2": " est d�bloqu� qu'apr�s l'accomplissement du niveau ",
+  "auto.level_locked_full_3": " en entier",
+  "auto.part": "Partie "
 }

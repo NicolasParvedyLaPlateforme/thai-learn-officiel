@@ -268,8 +268,8 @@ export function LessonPathNode({
                         }}
                       >
                         <path d={pathData} className={`${colorClass} stroke-white stroke-[3] transition-colors duration-300`} />
-                        <text x={tx} y={ty} textAnchor="middle" dominantBaseline="central" className={`text-[8px] font-black transition-colors duration-300 ${textClass}`}>
-                          P{i + 1}
+                        <text x={tx} y={ty} textAnchor="middle" dominantBaseline="central" className={`text-[9px] font-black transition-colors duration-300 ${textClass}`}>
+                          {i + 1}
                         </text>
                       </g>
                     );
@@ -284,7 +284,7 @@ export function LessonPathNode({
                   />
                   <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
                     className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
-                    ENTIER
+                    {getTranslation('auto.full', language) || 'ENTIER'}
                   </text>
                 </svg>
 
@@ -336,7 +336,7 @@ export function LessonPathNode({
                             }}
                           />
                           <div className="relative z-10 bg-[#10B981] text-white font-black text-[9px] uppercase px-2.5 py-1 rounded-md tracking-wider whitespace-nowrap shadow-sm">
-                            La Suite
+                            {getTranslation('auto.next', language) || 'La Suite'}
                           </div>
                         </div>
                       </div>
@@ -358,7 +358,7 @@ export function LessonPathNode({
 
                           {/* Le corps de la bulle */}
                           <div className="relative z-1000 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
-                            Le niveau {blockedByLevel + 1} est débloqué qu'après l'accomplissement du niveau {blockedByLevel - 3} en entier
+                            {getTranslation('auto.level_locked_full_1', language) || 'Le niveau '}{blockedByLevel + 1}{getTranslation('auto.level_locked_full_2', language) || ' est débloqué qu\'après l\'accomplissement du niveau '}{blockedByLevel - 3}{getTranslation('auto.level_locked_full_3', language) || ' en entier'}
                           </div>
 
                         </div>
@@ -374,8 +374,8 @@ export function LessonPathNode({
                       <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -220%)' }}>
                         <div className="animate-bounce flex flex-col items-center justify-center relative">
                           <div className="relative z-10 bg-amber-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px] whitespace-pre-wrap leading-tight">
-                            Petit rappel ?
-                            <br /><span className="text-amber-100 font-black">+50 XP bonus</span>
+                            {getTranslation('auto.reminder', language) || 'Petit rappel ?'}
+                            <br /><span className="text-amber-100 font-black">{getTranslation('auto.bonus_xp', language) || '+50 XP bonus'}</span>
                           </div>
                           <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-amber-500 mt-[-1px]"></div>
                         </div>
@@ -435,7 +435,7 @@ export function LessonPathNode({
 
                     {/* Le corps de la bulle */}
                     <div className="relative z-1000 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
-                      Le niveau {blockedByLevel + 1} est débloqué qu'après l'accomplissement du niveau {blockedByLevel - 3} en entier
+                      {getTranslation('auto.level_locked_full_1', language) || 'Le niveau '}{blockedByLevel + 1}{getTranslation('auto.level_locked_full_2', language) || ' est débloqué qu\'après l\'accomplissement du niveau '}{blockedByLevel - 3}{getTranslation('auto.level_locked_full_3', language) || ' en entier'}
                     </div>
 
                   </div>
@@ -449,8 +449,8 @@ export function LessonPathNode({
                 <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, -200%)' }}>
                   <div className="animate-bounce flex flex-col items-center justify-center relative">
                     <div className="relative z-10 bg-amber-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[120px] whitespace-pre-wrap leading-tight">
-                      Petit rappel ?
-                      <br /><span className="text-amber-100 font-black">+50 XP bonus</span>
+                      {getTranslation('auto.reminder', language) || 'Petit rappel ?'}
+                      <br /><span className="text-amber-100 font-black">{getTranslation('auto.bonus_xp', language) || '+50 XP bonus'}</span>
                     </div>
                     <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-amber-500 mt-[-1px]"></div>
                   </div>
@@ -486,6 +486,7 @@ export function LessonPathNode({
                 nodeX={getOffset(levelIndex)}
                 onClose={() => setSelectedAction(null)}
                 suggestionType={suggestionType}
+                language={language}
               />
             </div>
           </div>

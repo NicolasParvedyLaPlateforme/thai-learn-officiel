@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Flag, Play, CheckCircle2, Star } from 'lucide-react';
 import { buttonVariants } from '../ui/Button';
+import { getTranslation } from "@/hooks/useTranslation";
 
 interface PartNodeBubbleProps {
   lessonId: string;
@@ -17,6 +18,7 @@ interface PartNodeBubbleProps {
   nodeX: number;
   onClose: () => void;
   suggestionType?: string;
+  language?: string;
 }
 
 export function PartNodeBubble({
@@ -31,7 +33,8 @@ export function PartNodeBubble({
   unitText,
   nodeX,
   onClose,
-  suggestionType = 'learn'
+  suggestionType = 'learn',
+  language = 'fr'
 }: PartNodeBubbleProps) {
   const getHref = () => {
     if (suggestionType === 'alphabet') return `/alphabet/lesson/${lessonId}?level=${levelIndex + 1}`;
@@ -92,7 +95,7 @@ export function PartNodeBubble({
           }
         </div>
         <span className={`text-[14px] md:text-[15px] font-extrabold ${unitText} leading-tight whitespace-nowrap`}>
-          {partIndex === 'full' ? `Niveau ${levelIndex + 1}` : `Partie ${(partIndex as number) + 1}`}
+          {partIndex === 'full' ? `${getTranslation('auto.level', language) || 'Niveau'} ${levelIndex + 1}` : `${getTranslation('auto.part', language) || 'Partie '}${(partIndex as number) + 1}`}
         </span>
       </div>
 
@@ -116,7 +119,7 @@ export function PartNodeBubble({
           ].join(' '),
         })}
       >
-        {isCompleted ? 'Rejouer' : 'Commencer'}
+        {isCompleted ? (getTranslation('auto.replay', language) || 'Rejouer') : (getTranslation('auto.start', language) || 'Commencer')}
       </Link>
     </div>
   );
