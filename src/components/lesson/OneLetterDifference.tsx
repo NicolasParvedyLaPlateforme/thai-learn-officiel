@@ -32,7 +32,7 @@ export default React.memo(function OneLetterDifference({
 }: Props) {
   const { t } = useTranslation();
   const [localErrors, setLocalErrors] = useState<string[]>([]);
-  
+
   const isDense = exercise.options.length > 6;
   const hintType = exercise.oneLetterHintType || 'sound';
   const showColor = exercise.diffReveal ?? true;
@@ -75,20 +75,20 @@ export default React.memo(function OneLetterDifference({
           )}
 
           {hintType === 'pronunciation' && (
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-indigo-50 border-4 border-indigo-100 flex items-center justify-center text-4xl md:text-5xl font-bold text-indigo-600 shadow-sm">
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-indigo-50 border-4 border-indigo-100 flex items-center justify-center text-4xl md:text-5xl font-bold text-indigo-600 shadow-sm text-center">
               {targetLetter?.pronunciation || '?'}
             </div>
           )}
 
           <div className="text-center mt-4">
-             <div className="text-lg font-bold text-slate-700">
-               {getTranslation('auto.only_one_letter_differentiates', language)}
-             </div>
-             <div className="text-sm text-slate-500 font-medium">
-               {hintType === 'sound' && getTranslation('auto.hint_1', language)}
-               {hintType === 'image' && getTranslation('auto.hint_2', language)}
-               {hintType === 'pronunciation' && getTranslation('auto.hint_3', language)}
-             </div>
+            <div className="text-lg font-bold text-slate-700">
+              {getTranslation('auto.only_one_letter_differentiates', language)}
+            </div>
+            <div className="text-sm text-slate-500 font-medium">
+              {hintType === 'sound' && getTranslation('auto.hint_1', language)}
+              {hintType === 'image' && getTranslation('auto.hint_2', language)}
+              {hintType === 'pronunciation' && getTranslation('auto.hint_3', language)}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -129,14 +129,14 @@ export default React.memo(function OneLetterDifference({
           }
 
           const displayValue = (diffAnalysis && showColor)
-                ? (
-                  <span className="inline-block whitespace-nowrap">
-                    {opt.th.substring(0, diffAnalysis.commonPrefixLen)}
-                    <span className="text-fuchsia-600 font-bold bg-fuchsia-100 rounded px-px shadow-sm inline-block">{opt.th.substring(diffAnalysis.commonPrefixLen, opt.th.length - diffAnalysis.commonSuffixLen)}</span>
-                    {opt.th.substring(opt.th.length - diffAnalysis.commonSuffixLen)}
-                  </span>
-                )
-                : formatCombiningChar(opt.th);
+            ? (
+              <span className="inline-block whitespace-nowrap">
+                {opt.th.substring(0, diffAnalysis.commonPrefixLen)}
+                <span className="text-fuchsia-600 font-bold bg-fuchsia-100 rounded px-px shadow-sm inline-block">{opt.th.substring(diffAnalysis.commonPrefixLen, opt.th.length - diffAnalysis.commonSuffixLen)}</span>
+                {opt.th.substring(opt.th.length - diffAnalysis.commonSuffixLen)}
+              </span>
+            )
+            : formatCombiningChar(opt.th);
 
           return (
             <Button
