@@ -239,7 +239,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
           }
 
           if (isAudioMode) {
-            const choiceText = (language === 'en' ? 'Choice ' : (language === 'th' ? 'ตัวเลือก ' : 'Choix ')) + (idx + 1);
+            const choiceText = (language === 'en' ? 'Choice ' : 'Choix ') + (idx + 1);
             return (
               <div key={`opt-container-${idx}`} className="flex flex-col items-center gap-3 mx-1">
                 <button 
