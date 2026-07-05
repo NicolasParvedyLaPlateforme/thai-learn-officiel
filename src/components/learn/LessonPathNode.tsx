@@ -33,8 +33,6 @@ interface LessonPathNodeProps {
   generatePath: (index: number, isMobile: boolean) => string;
   /** Height of this slot's div (px) */
   slotHeight: number;
-  /** Actual center-to-center distance to previous node (for SVG path height) */
-  pathHeight: number;
   blockedByLevel?: number | null;
   isReminderTarget?: boolean;
   currentFullLevels?: number[];
@@ -64,7 +62,6 @@ export function LessonPathNode({
   getOffset,
   generatePath,
   slotHeight,
-  pathHeight,
   blockedByLevel,
   isReminderTarget,
   currentFullLevels,
@@ -148,25 +145,14 @@ export function LessonPathNode({
   return (
     <div
       ref={containerRef}
-      className={`relative w-[94%] md:w-[98%] max-w-6xl mx-auto flex items-center justify-center transition-colors duration-500 mb-10 mt-5 pt-5 pb-5 ${levelIndex === maxLevel
-        ? 'h-[160px] md:h-[240px] mb-[80px]'
-        : levelIndex === currentProgress
-          ? 'h-[160px] md:h-[240px] mb-[160px]'
-          : levelIndex === 0
-            ? 'h-[160px] md:h-[240px] mb-[80px]'
-            : 'h-[160px] md:h-[240px] mb-[80px]'
-        } ${isCurrent ? `${unitColor.replace(/\d+/, '100')} rounded-2xl md:rounded-3xl` : ''}`}
+      className={`relative w-[94%] md:w-[98%] max-w-6xl mx-auto flex items-center justify-center transition-colors duration-500 pt-5 pb-5`}
       id={`path-level-${lessonId}-${levelIndex}`}
     >
       {/* ── SVG connection lines have been removed per user request ── */}
 
       {/* ── Main node ── */}
       <div
-        className="relative z-10 flex flex-col items-center justify-center transition-transform [transform:translateX(var(--offset-mobile))] lg:[transform:translateX(var(--offset-desktop))]"
-        style={{
-          '--offset-mobile': `${getMobileOffset(levelIndex)}px`,
-          '--offset-desktop': `${getOffset(levelIndex)}px`,
-        } as React.CSSProperties}
+        className="relative z-10 flex flex-col items-center justify-center pb-16 md:pb-24 w-full"
         ref={(el) => {
           nodeRefs.current[levelIndex] = el;
           const shouldScrollTo = modalLevel !== null ? isSelected : levelIndex === targetScrollLevel;
@@ -176,40 +162,9 @@ export function LessonPathNode({
         }}
         data-level-index={levelIndex}
       >
-        {/* Objective Images */}
-        {getImageNameForLevel(levelIndex) && suggestionType === 'learn' && (
-          <div className={`absolute top-1/2 -translate-y-1/2 w-32 md:w-56 lg:w-72 z-0 transition-all duration-500 ease-out
-            ${activeMobileLevel === levelIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
-            ${getOffset(levelIndex) < 0 ? 'left-full ml-10 md:ml-20 lg:ml-28' : 'right-full mr-10 md:mr-20 lg:mr-28'}
-          `}>
-            <div className={`hidden md:block bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm mb-2 mx-auto w-max max-w-full border border-slate-100 font-bold text-slate-700 text-xs md:text-sm text-center transition-all duration-500`}>
-              {getTranslation(`levelTitle.${levelIndex + 1}`, language)}
-            </div>
-            <img
-              src={`/images/image-learn-niveau/${getImageNameForLevel(levelIndex)}`}
-              alt="Objectif du niveau"
-              className="w-full h-auto drop-shadow-xl hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-        )}
         {/* Halo background removed per user request, moved to container */}
 
-        {/* Stars Arc */}
-        {(isCompleted && !isMastery) && (
-          <div className="absolute top-1/2 left-1/2 w-44 h-44 md:w-56 md:h-56 pointer-events-none z-30 -ml-3" style={{ transform: 'translate(-50%, -50%)' }}>
-            {[...Array(5)].map((_, i) => {
-              const angleDeg = -90 + (i - 2) * 35;
-              const earned = earnedStars >= i + 1;
-              return (
-                <div key={i} className="absolute left-1/2 top-1/2 w-full h-full" style={{ transform: `translate(-50%, -50%) rotate(${angleDeg}deg)` }}>
-                  <div className="absolute top-0 left-1/2" style={{ transform: `translate(-50%, -50%) rotate(${-angleDeg}deg)` }}>
-                    <Star size={26} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-white stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+
 
         {/* Steps Indicator (flag) was here, removed because PartNodeBubble already displays it */}
 
@@ -493,6 +448,18 @@ export function LessonPathNode({
           <div className={`absolute -bottom-6 flex items-center justify-center bg-white px-3 py-1.5 rounded-full shadow-md border border-slate-200 gap-1.5 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-90'} z-20`}>
             <Crown size={14} className="fill-amber-400 stroke-amber-500 stroke-[1.5]" />
             <span className="text-xs font-black text-slate-600">{earnedStarsMastery}/5</span>
+          </div>
+        )}
+
+        {/* Horizontal Stars Row (Below Camembert) */}
+        {(isCompleted && !isMastery) && (
+          <div className="flex justify-center gap-1.5 mt-6 z-30">
+            {[...Array(5)].map((_, i) => {
+              const earned = earnedStars >= i + 1;
+              return (
+                <Star key={i} size={28} className={earned ? "fill-amber-400 stroke-amber-500 stroke-[1.5] drop-shadow-sm" : "fill-slate-100 stroke-slate-300 stroke-[1.5] drop-shadow-sm"} />
+              );
+            })}
           </div>
         )}
 

@@ -84,7 +84,7 @@ export default function BaseMobileTimeline({
     // Scroll logic that only runs once
     React.useEffect(() => {
         if (!mounted || hasInitializedScrollRef.current) return;
-        
+
         // Wait until unitLessons has data (if it's empty on first mount)
         if (!unitLessons || unitLessons.length === 0) return;
 
@@ -100,7 +100,7 @@ export default function BaseMobileTimeline({
 
         if (toExpand) {
             setExpandedLessons(new Set([toExpand.id]));
-            
+
             // Scroll to the card instantly (no cleanup so it's guaranteed to run)
             setTimeout(() => {
                 const circleEl = document.getElementById(`mobile-node-circle-${toExpand?.id}`);
@@ -146,11 +146,11 @@ export default function BaseMobileTimeline({
                 setSelectedLesson(null);
             }
         }
-        
+
         if (!isCurrentlyExpanded) {
             setSelectedLesson({ lesson, isCompleted: level >= maxLevelPerLesson, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass });
         }
-        
+
         const isCompleted = level >= maxLevelPerLesson;
         if (!isCurrentlyExpanded) {
             setTimeout(() => {
@@ -362,7 +362,7 @@ export default function BaseMobileTimeline({
                                                     animate={{ height: 'auto', opacity: 1 }}
                                                     exit={{ height: 0, opacity: 0 }}
                                                     transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                                                    className="w-full overflow-visible flex flex-col items-center pt-[60px] relative"
+                                                    className="w-full overflow-visible flex flex-col items-center pt-[30px] relative"
                                                 >
                                                     <div className="w-full relative">
                                                         <LessonPathMap
@@ -381,7 +381,7 @@ export default function BaseMobileTimeline({
                                                             suggestionType={pathType}
                                                             initialScrollLevel={selectedLesson?.initialScrollLevel}
                                                             disableAutoScroll={!isInitializingScroll}
-                                                            onReady={() => {}}
+                                                            onReady={() => { }}
                                                             onBack={() => {
                                                                 setExpandedLessons(prev => {
                                                                     const next = new Set(prev);

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { ChevronLeft, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { LessonPathNode } from './LessonPathNode';
 import { getLevelSplit } from '@/lib/levelSplits';
 import { useProgressStore } from "@/lib/store";
+import { getTranslation } from "@/hooks/useTranslation";
+import { Lock } from 'lucide-react';
 
 interface LessonPathMapProps {
   maxLevel: number;
@@ -25,9 +25,6 @@ interface LessonPathMapProps {
   onBack?: () => void;
   isLeft?: boolean;
 }
-
-/** Base slot height in px */
-const BASE_SLOT_HEIGHT = 290;
 
 export function LessonPathMap({
   maxLevel,
@@ -56,6 +53,7 @@ export function LessonPathMap({
 
   let maxAccessibleLevel = 0;
   let blockedByLevel: number | null = null;
+  let blockingReason: string | null = null;
 
   const isPartCompleted = (l: number, p: number) => {
     const key = `${lessonId}_level-${l}`;
@@ -65,7 +63,10 @@ export function LessonPathMap({
 
   for (let l = 1; l <= maxLevel; l++) {
     const isVerticalMet = isPartCompleted(l - 1, 0);
-    if (!isVerticalMet) break;
+    if (!isVerticalMet) {
+      blockingReason = `Terminez la partie 1 du Niveau ${l} pour débloquer.`;
+      break;
+    }
 
     let isBlocked = false;
     if (l >= 4) {
@@ -73,6 +74,7 @@ export function LessonPathMap({
         if (!currentFullLevels.includes(i - 4)) {
           isBlocked = true;
           blockedByLevel = blockedByLevel === null ? i : blockedByLevel;
+          blockingReason = `Terminez le Niveau ${i - 3} (entier) pour débloquer.`;
           break;
         }
       }
@@ -82,6 +84,7 @@ export function LessonPathMap({
           const completedL3 = lessonPartsCompleted?.[`${lessonId}_level-3`] || [];
           if (completedL3.length < partsL3) {
               isBlocked = true;
+              if (!blockingReason) blockingReason = `Terminez toutes les parties du Niveau 4 pour débloquer.`;
           }
       }
     }
@@ -92,54 +95,19 @@ export function LessonPathMap({
 
   const effectiveProgress = maxAccessibleLevel;
   let calculatedTarget = effectiveProgress > maxLevel ? maxLevel : effectiveProgress;
-  let isReminder = false;
   
   if (blockedByLevel !== null) {
       calculatedTarget = blockedByLevel - 4;
   }
-  
-  if (effectiveProgress >= maxLevel && blockedByLevel === null) {
-      if (typeof window !== 'undefined') {
-          let reminderLevelStr = localStorage.getItem('recommendedReminderLevel');
-          if (!reminderLevelStr) {
-              reminderLevelStr = Math.floor(Math.random() * maxLevel).toString();
-              localStorage.setItem('recommendedReminderLevel', reminderLevelStr);
-          }
-          calculatedTarget = parseInt(reminderLevelStr);
-          isReminder = true;
-      } else {
-          calculatedTarget = 0;
-      }
-  }
 
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
+  
+  const [activeLevel, setActiveLevel] = useState<number>(targetScrollLevel);
+  const [showLockMessageFor, setShowLockMessageFor] = useState<number | null>(null);
 
-  /**
-   * Compute the div height for a given slot.
-   */
-  const getSlotHeight = (index: number): number => {
-    if (index === maxLevel) {
-      return BASE_SLOT_HEIGHT * 0.2; // Significantly less space before mastery node
-    }
-    return BASE_SLOT_HEIGHT;
-  };
-
-  const getPathHeight = (index: number): number => {
-    if (index === 0) {
-      return getSlotHeight(0) / 2 + BASE_SLOT_HEIGHT / 2;
-    }
-    return getSlotHeight(index) / 2 + getSlotHeight(index - 1) / 2;
-  };
-
-  const getOffset = (index: number) => {
-    if (index === maxLevel) return 0;
-    return index % 2 === 0 ? -120 : 120;
-  };
-
-  const getMobileOffset = (index: number) => {
-    if (index === maxLevel) return 0;
-    return index % 2 === 0 ? -70 : 70;
-  };
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
 
   const getImageNameForLevel = (index: number) => {
     switch (index) {
@@ -157,170 +125,87 @@ export function LessonPathMap({
     }
   };
 
-  const generatePath = (index: number, isMobile: boolean) => {
-    return "";
-  };
+  const getMobileOffset = () => 0;
+  const getOffset = () => 0;
+  const generatePath = () => "";
 
-  const currentLevelRef = useRef<HTMLDivElement | null>(null);
-  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const carouselRef = useRef<HTMLDivElement | null>(null);
-  const targetLevel = initialScrollLevel !== undefined ? initialScrollLevel : currentProgress;
-  const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(targetLevel);
-  const [isReady, setIsReady] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
-  const isClickScrolling = useRef(false);
-  const scrollEndTimer = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const t = setTimeout(() => setMenuVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    if (activeMobileLevel !== null && carouselRef.current) {
-      if (isClickScrolling.current) return; 
-
-      const doScroll = () => {
-        const button = carouselRef.current?.querySelector(`[data-nav-level="${activeMobileLevel}"]`) as HTMLElement;
-        if (button && carouselRef.current) {
-          const container = carouselRef.current;
-          const containerRect = container.getBoundingClientRect();
-          const buttonRect = button.getBoundingClientRect();
-          const scrollLeft = container.scrollLeft + (buttonRect.left - containerRect.left) - (containerRect.width / 2) + (buttonRect.width / 2);
-          container.scrollTo({ left: scrollLeft, behavior: 'auto' });
-        }
-      };
-
-      doScroll();
-      const t = setTimeout(doScroll, 150);
-      return () => clearTimeout(t);
-    }
-  }, [activeMobileLevel]);
-
-  useEffect(() => {
-    if (currentProgress >= maxLevel) {
-      setIsReady(true);
-      onReady?.();
-      return;
-    }
-
-    if (targetScrollLevel !== null && !isClickScrolling.current) {
-      // Small delay to let the framer-motion accordion open first
-      const timeoutId = setTimeout(() => {
-        const el = currentLevelRef.current;
-        if (el && el.offsetParent !== null) {
-          if (!disableAutoScroll) {
-            el.scrollIntoView({ behavior: 'auto', block: 'center' });
-          }
-        }
-        setIsReady(true);
-        onReady?.();
-      }, 450);
-      
-      return () => clearTimeout(timeoutId);
-    }
-    
-    if (currentLevelRef.current) {
-      setTimeout(() => {
-        if (currentLevelRef.current && currentLevelRef.current.offsetParent !== null) {
-          if (!disableAutoScroll) {
-            currentLevelRef.current.scrollIntoView({ block: 'center', behavior: 'auto' });
-          }
-        }
-        setTimeout(() => {
-          setIsReady(true);
-          onReady?.();
-        }, 50);
-      }, 450);
-    } else {
-      setIsReady(true);
-      onReady?.();
-    }
-  }, []);
-
-  useEffect(() => {
-    let ticking = false;
-    // Hystérésis : on ne change de nœud actif que si le nouveau candidat
-    // dépasse le nœud actuel d'au moins HYSTERESIS_PX pixels.
-    // Cela évite le flicker quand une carte est exactement à la frontière.
-    const HYSTERESIS_PX = 40;
-
-    const handleScroll = () => {
-      if (isClickScrolling.current) {
-        if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
-        scrollEndTimer.current = setTimeout(() => {
-          isClickScrolling.current = false;
-        }, 150);
-        return;
-      }
-
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const centerY = window.innerHeight / 2;
-
-          // Calculer la distance de chaque nœud au centre
-          const distances: { index: number; distance: number }[] = [];
-          nodeRefs.current.forEach((node, index) => {
-            if (node) {
-              const rect = node.getBoundingClientRect();
-              const nodeCenter = rect.top + rect.height / 2;
-              distances.push({ index, distance: Math.abs(centerY - nodeCenter) });
-            }
-          });
-
-          if (distances.length === 0) {
-            ticking = false;
-            return;
-          }
-
-          // Trouver le nœud le plus proche
-          distances.sort((a, b) => a.distance - b.distance);
-          const best = distances[0];
-
-          if (best.distance >= window.innerHeight / 2) {
-            ticking = false;
-            return;
-          }
-
-          setActiveMobileLevel((prev) => {
-            if (prev === best.index) return prev;
-
-            // Si un nœud actif existe, vérifier qu'il n'est pas "presque aussi proche"
-            if (prev !== null) {
-              const currentEntry = distances.find((d) => d.index === prev);
-              if (currentEntry) {
-                // On ne change que si le nouveau est clairement plus proche (hystérésis)
-                if (currentEntry.distance - best.distance < HYSTERESIS_PX) {
-                  return prev; // Pas assez d'avance → on garde le nœud actuel
-                }
-              }
-            }
-
-            return best.index;
-          });
-
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    setTimeout(handleScroll, 100);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const isUnlockedMastery = currentProgress >= maxLevel;
+  const isLevelUnlocked = (l: number) => l <= effectiveProgress;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative pt-2 md:pt-6 pb-4 md:pb-12">
+    <div className="flex flex-col lg:flex-row-reverse items-center justify-start lg:justify-center w-full max-w-5xl mx-auto px-4 lg:gap-16 pt-4">
+      {/* Level Selector */}
+      <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start gap-4 mb-10 lg:mb-0 mt-6 lg:mt-12 content-start">
+        {suggestionType === 'learn' && (
+          <h3 className={`text-xl md:text-2xl font-extrabold text-center lg:text-left px-2 leading-tight w-full ${activeLevel >= 10 ? 'text-amber-500' : 'text-slate-700'}`}>
+            {activeLevel < 10 
+              ? (getTranslation(`levelTitle.${activeLevel + 1}`, language) || `Niveau ${activeLevel + 1}`) 
+              : (getTranslation(`levelTitle.11`, language) || `Niveau Ultime`)
+            }
+          </h3>
+        )}
+        <div className="flex flex-wrap justify-center lg:justify-start gap-3 lg:gap-4 w-full">
+        {nodes.map((l) => {
+          const unlocked = isLevelUnlocked(l);
+          const isNextLocked = l === (blockedByLevel !== null ? blockedByLevel : effectiveProgress + 1);
+          
+          const isSelected = activeLevel === l;
+          const label = l === maxLevel && maxLevel > 4 ? 'Ultime' : `${l + 1}`;
+          
+          let buttonClass = "px-4 py-2 rounded-xl font-bold text-[15px] transition-all ";
+          
+          if (unlocked) {
+            if (isSelected) {
+              buttonClass += `${unitColor} text-white shadow-lg scale-110 border-2 border-transparent`;
+            } else {
+              buttonClass += "bg-white text-slate-600 border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-sm";
+            }
+          } else if (isNextLocked) {
+            // Mise en évidence du prochain niveau à débloquer
+            buttonClass += "bg-slate-50 text-slate-500 border-2 border-dashed border-slate-400 hover:bg-slate-100 hover:border-slate-500 shadow-sm cursor-help";
+          } else {
+            buttonClass += "bg-slate-100 text-slate-400 border-2 border-slate-100 cursor-not-allowed opacity-50";
+          }
 
+          return (
+            <div key={l} className="relative flex flex-col items-center">
+              <button
+                onClick={() => {
+                  if (unlocked) {
+                    setActiveLevel(l);
+                    setShowLockMessageFor(null);
+                  } else if (isNextLocked) {
+                    setShowLockMessageFor(l);
+                    setTimeout(() => setShowLockMessageFor(null), 3000);
+                  }
+                }}
+                className={buttonClass}
+              >
+                {label}
+                {isNextLocked && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-slate-400 border-2 border-white"></span>
+                  </span>
+                )}
+              </button>
+              
+              {/* Lock Message Tooltip */}
+              {showLockMessageFor === l && isNextLocked && (
+                <div className="absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95">
+                  {blockingReason || "Niveau verrouillé."}
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+        </div>
+      </div>
 
-      {nodes.filter(levelIndex => levelIndex <= (blockedByLevel !== null ? blockedByLevel : effectiveProgress)).map((levelIndex) => (
+      {/* Selected Level Node */}
+      <div className="w-full lg:w-1/2 relative mt-4 lg:mt-0 flex justify-center">
         <LessonPathNode
-          key={levelIndex}
-          levelIndex={levelIndex}
+          levelIndex={activeLevel}
           maxLevel={maxLevel}
           currentProgress={effectiveProgress}
           modalLevel={modalLevel}
@@ -335,20 +220,18 @@ export function LessonPathMap({
           lessonPartsCompleted={lessonPartsCompleted}
           suggestionType={suggestionType}
           targetScrollLevel={targetScrollLevel}
-          activeMobileLevel={activeMobileLevel}
-          nodeRefs={nodeRefs}
-          currentLevelRef={currentLevelRef}
+          activeMobileLevel={activeLevel}
+          nodeRefs={{ current: [] }}
+          currentLevelRef={{ current: null }}
           getImageNameForLevel={getImageNameForLevel}
           getMobileOffset={getMobileOffset}
           getOffset={getOffset}
           generatePath={generatePath}
-          slotHeight={getSlotHeight(levelIndex)}
-          pathHeight={getPathHeight(levelIndex)}
+          slotHeight={290}
           blockedByLevel={blockedByLevel}
-          isReminderTarget={isReminder && levelIndex === calculatedTarget}
           currentFullLevels={currentFullLevels}
         />
-      ))}
+      </div>
     </div>
   );
 }
