@@ -143,9 +143,9 @@ export function LessonPathMap({
   const isLevelUnlocked = (l: number) => l <= effectiveProgress;
 
   return (
-    <div className="flex flex-col lg:flex-row-reverse items-center justify-start lg:justify-center w-full max-w-5xl mx-auto px-4 lg:gap-16 pt-4">
+    <div className="flex flex-col lg:flex-row-reverse items-center justify-start lg:justify-center w-full max-w-5xl mx-auto lg:gap-16 pt-4 pb-0">
       {/* Level Selector */}
-      <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start gap-4 mb-10 lg:mb-0 mt-6 lg:mt-12 content-start">
+      <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start gap-4 mb-10 lg:mb-0 mt-6 lg:mt-12 px-4 content-start">
         {suggestionType === 'learn' && (
           <h3 className={`text-xl md:text-2xl font-extrabold text-center lg:text-left px-2 leading-tight w-full ${activeLevel >= 10 ? 'text-amber-500' : 'text-slate-700'}`}>
             {activeLevel < 10 

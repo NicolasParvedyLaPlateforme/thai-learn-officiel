@@ -36,7 +36,7 @@ export function PartNodeBubble({
   const getHref = () => {
     if (suggestionType === 'alphabet') return `/alphabet/lesson/${lessonId}?level=${levelIndex + 1}`;
     if (suggestionType === 'speak') return `/speak/lesson/${lessonId}?level=${levelIndex + 1}`;
-    
+
     if (partIndex === 'full' || totalParts <= 1) {
       return `/lesson/${lessonId}?level=${levelIndex + 1}`;
     }
@@ -44,14 +44,14 @@ export function PartNodeBubble({
   };
 
   const href = getHref();
-  
+
   let xOffset = 0;
-  
+
   if (partIndex !== 'full') {
     const angle = 360 / totalParts;
     const midAngle = (partIndex * angle) - 90 + (angle / 2);
     const normalized = (midAngle + 360) % 360;
-    
+
     // Calculate precise arrow offset using trig (radius ~45px for the pizza slices)
     xOffset = Math.cos(normalized * Math.PI / 180) * 45;
   }
@@ -66,37 +66,25 @@ export function PartNodeBubble({
 
   const positionClasses = 'mt-3 lg:mt-4 mx-auto';
   // Pas de translation car l'élément est dans le flux standard
-  const positionStyle: React.CSSProperties = { };
+  const positionStyle: React.CSSProperties = {};
 
   const arrowClasses = '-top-[6px] border-b-0 border-r-0';
-  const arrowStyle: React.CSSProperties = { 
-    left: `calc(50% + ${xOffset}px)`, 
-    transform: 'translateX(-50%) rotate(45deg)' 
+  const arrowStyle: React.CSSProperties = {
+    left: `calc(50% + ${xOffset}px)`,
+    transform: 'translateX(-50%) rotate(45deg)'
   };
 
   return (
     <div
       className={[
-        'relative z-20',
-        positionClasses,
-        'w-max max-w-[calc(100vw-32px)]',
-        'bg-white rounded-[24px] shadow-[0_8px_32px_rgba(0,0,0,0.14)] border border-slate-100',
-        'flex flex-row items-center gap-3 md:gap-4 p-2.5 pr-3 md:p-3 md:pr-4',
+        'relative z-20 w-full',
+        'flex flex-row items-center gap-2 md:gap-4',
       ].join(' ')}
       style={positionStyle}
       onClick={(e) => e.stopPropagation()}
     >
-      {/* Pointer arrow */}
-      <div
-        className={[
-          'absolute w-3 h-3 bg-white border border-slate-100',
-          arrowClasses,
-        ].join(' ')}
-        style={arrowStyle}
-      />
-
       {/* Header */}
-      <div className="flex items-center gap-2 md:gap-2.5 shrink-0">
+      <div className="flex items-center gap-2 shrink-0">
         <div className={`w-8 h-8 md:w-9 md:h-9 rounded-full ${unitColor} flex items-center justify-center shrink-0`}>
           {isCompleted
             ? <CheckCircle2 size={16} className="text-white stroke-[2.5]" />
@@ -109,17 +97,9 @@ export function PartNodeBubble({
       </div>
 
       {/* Stats */}
-      <div className="flex items-center gap-3 px-1 md:px-2 shrink-0">
-        {stepsCount > 0 && (
-          <div className="flex items-center gap-1 md:gap-1.5">
-            <Flag size={14} className="text-slate-400 shrink-0" />
-            <span className="text-[13px] md:text-[14px] font-bold text-slate-500">{stepsCount}</span>
-          </div>
-        )}
-        <div className="flex items-center gap-1 md:gap-1.5">
-          <Star size={14} className="text-amber-400 fill-amber-400 shrink-0" />
-          <span className="text-[13px] md:text-[14px] font-bold text-amber-500">+{expectedXp} XP</span>
-        </div>
+      <div className="flex items-center gap-1 md:gap-1.5 shrink-0 px-2 md:px-4">
+        <Star size={16} className="text-amber-400 fill-amber-400 shrink-0" />
+        <span className="text-[14px] md:text-[15px] font-bold text-amber-500">+{expectedXp} XP</span>
       </div>
 
       {/* CTA */}
@@ -130,7 +110,7 @@ export function PartNodeBubble({
           variant: 'gamified',
           size: 'default',
           className: [
-            'h-9 md:h-10 rounded-[14px] text-[13px] md:text-[14px] px-4 md:px-6 min-w-[90px] md:min-w-[100px] justify-center ml-auto shrink-0',
+            'h-10 md:h-11 rounded-xl text-[14px] md:text-[15px] px-4 md:px-4 justify-center ml-auto shrink-0 px-[13px]',
             unitColor,
             unitColor.replace('bg-', 'border-').replace(/500$/, '600').replace(/400$/, '500'),
           ].join(' '),

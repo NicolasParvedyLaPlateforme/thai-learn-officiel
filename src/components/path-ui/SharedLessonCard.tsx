@@ -328,7 +328,7 @@ export function SharedLessonCard({
             className="w-full overflow-hidden flex flex-col items-center relative z-10"
           >
             <div 
-              className="w-full relative pb-6 pt-2"
+              className="w-full relative"
               onClick={(e) => {
                 // Prevent clicks inside the expanded levels list from bubbling up and collapsing the card
                 e.stopPropagation();
