@@ -252,6 +252,7 @@ export default function PathLessonModal({
                setManualPartIndex={setManualPartIndex}
                selectedLesson={selectedLesson}
                isLevelFullyCompleted={isLevelFullyCompleted}
+               language={language}
              />
           )}
 
@@ -261,7 +262,7 @@ export default function PathLessonModal({
             maxXp={maxXp}
             isFirstTime={isFirstTime}
             estimatedMins={isBilanLesson ? estimatedMins : (playFullLevel ? estimatedMins : Math.ceil(estimatedMins/totalParts))}
-            title={pathType === 'learn' ? (isBilanLesson ? 'BILAN' : (playFullLevel ? "NIVEAU ENTIER" : totalParts > 1 ? `PARTIE ${selectedPartIndex + 1}` : "DÉTAILS")) : undefined}
+            title={pathType === 'learn' ? (isBilanLesson ? (language === 'en' ? 'ASSESSMENT' : 'BILAN') : (playFullLevel ? (language === 'en' ? 'FULL LEVEL' : "NIVEAU ENTIER") : totalParts > 1 ? (language === 'en' ? `PART ${selectedPartIndex + 1}` : `PARTIE ${selectedPartIndex + 1}`) : (language === 'en' ? 'DETAILS' : "DÉTAILS"))) : undefined}
           />
         </div>
       </div>

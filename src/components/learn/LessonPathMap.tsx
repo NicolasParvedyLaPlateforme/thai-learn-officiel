@@ -203,15 +203,11 @@ export function LessonPathMap({
               {/* Lock Message Tooltip */}
               {showLockMessageFor === l && isNextLocked && (
                 <div className={`absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95
-                  ${l % 5 === 4 ? 'right-0 sm:left-1/2 sm:-translate-x-1/2' : ''}
-                  ${l % 5 === 0 ? 'left-0 sm:left-1/2 sm:-translate-x-1/2' : ''}
-                  ${(l % 5 !== 0 && l % 5 !== 4) ? 'left-1/2 -translate-x-1/2' : ''}
+                  ${l >= maxLevel - 1 ? 'right-0 md:left-1/2 md:-translate-x-1/2' : (l <= 1 ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-1/2 -translate-x-1/2')}
                 `}>
                   {blockingReason || "Niveau verrouillé."}
                   <div className={`absolute -top-1 w-2 h-2 bg-slate-800 rotate-45
-                    ${l % 5 === 4 ? 'right-6 sm:left-1/2 sm:-translate-x-1/2 sm:right-auto' : ''}
-                    ${l % 5 === 0 ? 'left-6 sm:left-1/2 sm:-translate-x-1/2 sm:left-auto' : ''}
-                    ${(l % 5 !== 0 && l % 5 !== 4) ? 'left-1/2 -translate-x-1/2' : ''}
+                    ${l >= maxLevel - 1 ? 'right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto' : (l <= 1 ? 'left-6 md:left-1/2 md:-translate-x-1/2 md:left-auto' : 'left-1/2 -translate-x-1/2')}
                   `}></div>
                 </div>
               )}
