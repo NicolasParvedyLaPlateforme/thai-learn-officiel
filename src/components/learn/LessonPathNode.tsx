@@ -272,26 +272,28 @@ export function LessonPathNode({
                     );
                   })}
 
-                  <circle cx="50" cy="50" r="18"
-                    className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} ${blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 ? 'stroke-orange-500 animate-pulse stroke-[4]' : 'stroke-white stroke-[3]'} transition-colors ${isAccessible && isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (isAccessible && isCompleted) {
-                        if (selectedAction === 'full') {
-                          setSelectedAction(null);
-                        } else {
-                          setSelectedAction('full');
-                          setTimeout(() => {
-                            containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                          }, 100);
+                  <g className={(!isAccessible || (!isCompleted && currentCompletedParts.length < currentPartsTotal)) ? 'opacity-25 transition-opacity duration-300' : 'transition-opacity duration-300'}>
+                    <circle cx="50" cy="50" r="18"
+                      className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} ${blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 ? 'stroke-orange-500 animate-pulse stroke-[4]' : 'stroke-white stroke-[3]'} transition-colors ${isAccessible && isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (isAccessible && isCompleted) {
+                          if (selectedAction === 'full') {
+                            setSelectedAction(null);
+                          } else {
+                            setSelectedAction('full');
+                            setTimeout(() => {
+                              containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                            }, 100);
+                          }
                         }
-                      }
-                    }}
-                  />
-                  <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
-                    className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
-                    {getTranslation('auto.full', language) || 'ENTIER'}
-                  </text>
+                      }}
+                    />
+                    <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
+                      className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
+                      {getTranslation('auto.full', language) || 'ENTIER'}
+                    </text>
+                  </g>
                 </svg>
 
                 {/* Tooltip La Suite */}

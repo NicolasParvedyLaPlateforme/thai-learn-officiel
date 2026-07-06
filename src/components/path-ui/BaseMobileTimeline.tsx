@@ -102,21 +102,11 @@ export default function BaseMobileTimeline({
             setExpandedLessons(new Set([toExpand.id]));
             const activeLevel = Math.min(lessonLevels[toExpand.id] || 0, maxLevelPerLesson);
 
-            // Scroll to the active level inside the card if possible, otherwise fallback to card
+            // Scroll to the card
             setTimeout(() => {
-                const levelEl = document.getElementById(`path-level-${toExpand.id}-${activeLevel}`);
-                if (levelEl) {
-                    levelEl.scrollIntoView({ behavior: 'auto', block: 'center' });
-                } else {
-                    const circleEl = document.getElementById(`mobile-node-circle-${toExpand.id}`);
-                    if (circleEl) {
-                        circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
-                    } else {
-                        const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
-                        if (cardEl) {
-                            cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
-                        }
-                    }
+                const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
+                if (cardEl) {
+                    cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
                 }
             }, 450);
         }
@@ -160,14 +150,9 @@ export default function BaseMobileTimeline({
         const isCompleted = level >= maxLevelPerLesson;
         if (!isCurrentlyExpanded) {
             setTimeout(() => {
-                const levelEl = document.getElementById(`path-level-${lesson.id}-${level}`);
-                if (levelEl) {
-                    levelEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
-                    if (cardEl) {
-                        cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
+                if (cardEl) {
+                    cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }, 450);
         }

@@ -211,14 +211,9 @@ export default function PathDesktopTimeline({
                 
                 if (!isCurrentlyExpanded) {
                   setTimeout(() => {
-                      const levelEl = document.getElementById(`path-level-${lesson.id}-${level}`);
-                      if (levelEl) {
-                          levelEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      } else {
-                          const nodeEl = document.getElementById(`desktop-lesson-${lesson.id}`);
-                          if (nodeEl) {
-                              nodeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
+                      const nodeEl = document.getElementById(`desktop-node-${lesson.id}`);
+                      if (nodeEl) {
+                          nodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                       }
                   }, 450);
                 }

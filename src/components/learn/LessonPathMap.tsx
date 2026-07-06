@@ -221,6 +221,7 @@ export function LessonPathMap({
       {/* Selected Level Node */}
       <div className={`w-full lg:w-1/2 relative mt-4 lg:mt-0 flex justify-center transition-all duration-200 ease-out ${isFadingOut ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
         <LessonPathNode
+          key={`level-node-${activeLevel}`}
           levelIndex={activeLevel}
           maxLevel={maxLevel}
           currentProgress={effectiveProgress}
