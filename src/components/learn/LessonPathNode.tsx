@@ -91,7 +91,7 @@ export function LessonPathNode({
 
   const isAccessible = (isMastery ? isUnlockedMastery : levelIndex <= currentProgress) && !isBlockedByFullLevel;
 
-  const isCompletedFullLevel = (currentFullLevels ? currentFullLevels.includes(levelIndex) : false) || levelIndex < currentProgress;
+  const isCompletedFullLevel = (currentFullLevels ? currentFullLevels.includes(levelIndex) : false) || (levelIndex < currentProgress && (lesson ? getLevelSplit(levelIndex, lesson) : 1) <= 1);
 
   const earnedStarsMastery = (isCompletedFullLevel && levelIndex === maxLevel) ? (earnedStarsArray[maxLevel] || 0) : 0;
   const isCompleted = isMastery ? earnedStarsMastery > 0 : isCompletedFullLevel;
