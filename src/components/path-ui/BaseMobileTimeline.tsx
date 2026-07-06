@@ -100,19 +100,25 @@ export default function BaseMobileTimeline({
 
         if (toExpand) {
             setExpandedLessons(new Set([toExpand.id]));
+            const activeLevel = Math.min(lessonLevels[toExpand.id] || 0, maxLevelPerLesson);
 
-            // Scroll to the card instantly (no cleanup so it's guaranteed to run)
+            // Scroll to the active level inside the card if possible, otherwise fallback to card
             setTimeout(() => {
-                const circleEl = document.getElementById(`mobile-node-circle-${toExpand?.id}`);
-                if (circleEl) {
-                    circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                const levelEl = document.getElementById(`path-level-${toExpand.id}-${activeLevel}`);
+                if (levelEl) {
+                    levelEl.scrollIntoView({ behavior: 'auto', block: 'center' });
                 } else {
-                    const cardEl = document.getElementById(`mobile-lesson-${toExpand?.id}`);
-                    if (cardEl) {
-                        cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                    const circleEl = document.getElementById(`mobile-node-circle-${toExpand.id}`);
+                    if (circleEl) {
+                        circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                    } else {
+                        const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
+                        if (cardEl) {
+                            cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                        }
                     }
                 }
-            }, 100);
+            }, 300);
         }
     }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
 
