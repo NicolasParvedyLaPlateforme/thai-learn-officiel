@@ -246,75 +246,75 @@ export function SharedLessonCard({
 
       {/* Main Card Content Wrapper */}
       <div className={cn(
-        "relative flex flex-row items-center gap-4 sm:gap-6 p-4 sm:p-6 w-full z-[60]",
+        "relative flex flex-row items-center gap-4 sm:gap-6 p-4 sm:p-6 w-full z-[60] bg-transparent",
         isMobileLayout ? "pb-10" : ""
       )}>
-      {/* Left: Circular Image Icon */}
-      {lesson.imageUrl ? (
-        <div className="w-[64px] h-[64px] sm:w-[84px] sm:h-[84px] rounded-full overflow-hidden shrink-0 relative bg-slate-50 border-[3px] border-slate-100 flex items-center justify-center z-10 shadow-sm group-hover:scale-105 transition-transform duration-300">
-          <IconImage src={lesson.imageUrl} alt={lesson.title} fill className="object-cover" sizes="84px" />
-        </div>
-      ) : (
-        <div className={cn("w-[64px] h-[64px] sm:w-[84px] sm:h-[84px] rounded-full shrink-0 relative flex items-center justify-center z-10 shadow-sm border-[3px] border-white group-hover:scale-105 transition-transform duration-300", badgeBgColor, badgeTextColor)}>
-          <span className="font-thai text-3xl font-bold">{lesson.items?.[0]?.letter?.[0] || lesson.title?.[0]}</span>
-        </div>
-      )}
-
-      {/* Middle: Content */}
-      <div className="flex flex-col items-start text-left flex-1 min-w-0 z-10 py-1">
-        <Typography variant="h3" className="w-full text-base sm:text-lg lg:text-xl font-bold text-slate-800">
-          {getLocalizedField(lesson, 'title', language)}
-        </Typography>
-        <Typography variant="muted" className="mt-0.5 w-full text-xs sm:text-sm text-slate-500 pr-2">
-          {renderDescription()}
-        </Typography>
-
-        {/* Phonetic / preview block */}
-        {mobileItems.length > 0 && (
-          <div className="flex items-center mt-2 overflow-hidden relative w-full" style={{ height: '1.5rem' }}>
-            <AnimatePresence mode="wait">
-              <m.div
-                key={scrollIndex}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.3 }}
-                className="absolute flex items-center gap-2 w-full min-w-0 left-0"
-              >
-                <span className={cn("font-thai text-sm font-bold leading-none truncate shrink-0", textDynamicColor)}>
-                  {mobileItems[scrollIndex]?.thai}
-                </span>
-                <span className="text-slate-400 text-xs truncate min-w-0">
-                  {mobileItems[scrollIndex]?.translation}
-                </span>
-              </m.div>
-            </AnimatePresence>
+        {/* Left: Circular Image Icon */}
+        {lesson.imageUrl ? (
+          <div className="w-[64px] h-[64px] sm:w-[84px] sm:h-[84px] rounded-full overflow-hidden shrink-0 relative bg-slate-50 border-[3px] border-slate-100 flex items-center justify-center z-10 shadow-sm group-hover:scale-105 transition-transform duration-300">
+            <IconImage src={lesson.imageUrl} alt={lesson.title} fill className="object-cover" sizes="84px" />
+          </div>
+        ) : (
+          <div className={cn("w-[64px] h-[64px] sm:w-[84px] sm:h-[84px] rounded-full shrink-0 relative flex items-center justify-center z-10 shadow-sm border-[3px] border-white group-hover:scale-105 transition-transform duration-300", badgeBgColor, badgeTextColor)}>
+            <span className="font-thai text-3xl font-bold">{lesson.items?.[0]?.letter?.[0] || lesson.title?.[0]}</span>
           </div>
         )}
-      </div>
 
-      {/* Button */}
-      <div className={cn("shrink-0 z-10 flex flex-col items-end gap-1 z-100",
-        isMobileLayout ? "absolute -bottom-5 left-1/2 -translate-x-1/2 w-3/4 max-w-[200px]" : "ml-auto"
-      )}>
-        <Button
-          variant={isMaxLevel ? "outline" : "gamified"}
-          size={isMobileLayout ? "default" : "lg"}
-          className={cn("px-4 sm:px-6 shadow-sm transition-all duration-200 justify-center flex items-center gap-2 w-full cursor-pointer",
-            !isMobileLayout && "sm:min-w-[140px]",
-            isMaxLevel ? "border-2 text-slate-700 bg-white hover:bg-slate-50 shadow-none" : cn("text-white", dynamicColor, borderDynamicColor, hoverDynamicColor)
+        {/* Middle: Content */}
+        <div className="flex flex-col items-start text-left flex-1 min-w-0 z-10 py-1">
+          <Typography variant="h3" className="w-full text-base sm:text-lg lg:text-xl font-bold text-slate-800">
+            {getLocalizedField(lesson, 'title', language)}
+          </Typography>
+          <Typography variant="muted" className="mt-0.5 w-full text-xs sm:text-sm text-slate-500 pr-2">
+            {renderDescription()}
+          </Typography>
+
+          {/* Phonetic / preview block */}
+          {mobileItems.length > 0 && (
+            <div className="flex items-center mt-2 overflow-hidden relative w-full" style={{ height: '1.5rem' }}>
+              <AnimatePresence mode="wait">
+                <m.div
+                  key={scrollIndex}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute flex items-center gap-2 w-full min-w-0 left-0"
+                >
+                  <span className={cn("font-thai text-sm font-bold leading-none truncate shrink-0", textDynamicColor)}>
+                    {mobileItems[scrollIndex]?.thai}
+                  </span>
+                  <span className="text-slate-400 text-xs truncate min-w-0">
+                    {mobileItems[scrollIndex]?.translation}
+                  </span>
+                </m.div>
+              </AnimatePresence>
+            </div>
           )}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick();
-          }}
-        >
-          {buttonText}
-          {!isMaxLevel && <ChevronDown size={18} className={cn("stroke-[3] transition-transform duration-300", isExpanded && "rotate-180")} />}
-        </Button>
-      </div>
+        </div>
 
-      {/* Main Card Content Wrapper Closes Here */}
+        {/* Button */}
+        <div className={cn("shrink-0 z-10 flex flex-col items-end gap-1 z-100",
+          isMobileLayout ? "absolute -bottom-5 left-1/2 -translate-x-1/2 w-3/4 max-w-[200px]" : "ml-auto"
+        )}>
+          <Button
+            variant={isMaxLevel ? "outline" : "gamified"}
+            size={isMobileLayout ? "default" : "lg"}
+            className={cn("px-4 sm:px-6 shadow-sm transition-all duration-200 justify-center flex items-center gap-2 w-full cursor-pointer",
+              !isMobileLayout && "sm:min-w-[140px]",
+              isMaxLevel ? "border-2 text-slate-700 bg-white hover:bg-slate-50 shadow-none" : cn("text-white", dynamicColor, borderDynamicColor, hoverDynamicColor)
+            )}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick();
+            }}
+          >
+            {buttonText}
+            {!isMaxLevel && <ChevronDown size={18} className={cn("stroke-[3] transition-transform duration-300", isExpanded && "rotate-180")} />}
+          </Button>
+        </div>
+
+        {/* Main Card Content Wrapper Closes Here */}
       </div>
 
       {/* Expanded Content */}
@@ -327,7 +327,7 @@ export function SharedLessonCard({
             transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             className="w-full overflow-hidden flex flex-col items-center relative z-10"
           >
-            <div 
+            <div
               className="w-full relative"
               onClick={(e) => {
                 // Prevent clicks inside the expanded levels list from bubbling up and collapsing the card

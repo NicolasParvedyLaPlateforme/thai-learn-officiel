@@ -171,7 +171,7 @@ export function LessonPathNode({
         <div className="flex flex-row items-center justify-center gap-6 mb-10">
           {/* Vertical Stars Column (Left of Camembert) */}
           {(isCompleted && !isMastery) && (
-            <div className="flex flex-col justify-center gap-1.5 z-30">
+            <div className="flex flex-col justify-center gap-1.5 z-30 hidden">
               {[...Array(5)].map((_, i) => {
                 const earned = earnedStars >= i + 1;
                 return (
