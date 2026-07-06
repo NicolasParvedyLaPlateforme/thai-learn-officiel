@@ -202,16 +202,21 @@ export function LessonPathMap({
               </button>
               
               {/* Lock Message Tooltip */}
-              {showLockMessageFor === l && isNextLocked && (
+              {showLockMessageFor === l && isNextLocked && (() => {
+                const isRightEdge = l === 3 || l === 4 || l === 8 || l === 9 || l >= maxLevel - 1;
+                const isLeftEdge = l === 0 || l === 5;
+                
+                return (
                 <div className={`absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95
-                  ${l >= maxLevel - 1 ? 'right-0 md:left-1/2 md:-translate-x-1/2' : (l <= 1 ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-1/2 -translate-x-1/2')}
+                  ${isRightEdge ? 'right-0 md:left-1/2 md:-translate-x-1/2' : (isLeftEdge ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-1/2 -translate-x-1/2')}
                 `}>
                   {blockingReason || (getTranslation('auto.level_locked', language) || "Niveau verrouillé.")}
                   <div className={`absolute -top-1 w-2 h-2 bg-slate-800 rotate-45
-                    ${l >= maxLevel - 1 ? 'right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto' : (l <= 1 ? 'left-6 md:left-1/2 md:-translate-x-1/2 md:left-auto' : 'left-1/2 -translate-x-1/2')}
+                    ${isRightEdge ? 'right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto' : (isLeftEdge ? 'left-6 md:left-1/2 md:-translate-x-1/2 md:left-auto' : 'left-1/2 -translate-x-1/2')}
                   `}></div>
                 </div>
-              )}
+                );
+              })()}
             </div>
           );
         })}
