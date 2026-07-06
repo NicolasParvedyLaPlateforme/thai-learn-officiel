@@ -223,7 +223,7 @@ export default function BottomNav() {
             )}
           </div>
           <div className="flex items-center gap-0.5 text-[10px] font-bold">
-             {language === 'en' ? 'Learn' : 'Apprendre'}
+             {getTranslation('nav.learn', language)}
              <ChevronUp size={12} className={`transition-transform duration-200 ${activePopover === 'learn' ? 'rotate-180' : ''}`} />
           </div>
         </Link>

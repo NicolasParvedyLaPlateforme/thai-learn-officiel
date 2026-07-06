@@ -140,7 +140,7 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
       tooltipContent={
         <>
           <span className="font-thai text-lg font-bold text-slate-800 mr-1">{tooltipTranslation}</span>
-          <button onClick={(e) => { e.stopPropagation(); setToneAnalyzerModalWord(tooltipTranslation); }} className="p-1 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mx-1" title={language === 'en' ? 'Analyze Tone' : 'Analyser le Ton'}>
+          <button onClick={(e) => { e.stopPropagation(); setToneAnalyzerModalWord(tooltipTranslation); }} className="p-1 text-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors mx-1" title={getTranslation('hints.analyze_tone', language)}>
             <Wand2 size={16} />
           </button>
           {phonetic && (!forceHideRomanization && showRomanization || isChecking) && <span className="text-slate-500 text-xs ml-1">(<ColoredPhonetic phonetic={phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />)</span>}

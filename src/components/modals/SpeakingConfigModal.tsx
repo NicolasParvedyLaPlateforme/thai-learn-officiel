@@ -97,32 +97,32 @@ export function SpeakingConfigModal({ isOpen, onClose }: { isOpen: boolean, onCl
 
       <div className="space-y-3">
         <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
-          {language === 'en' ? 'Required Pronunciation Accuracy' : 'Précision de prononciation requise'}
+          {getTranslation('speaking.accuracy_required', language)}
         </h3>
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => { setRequiredAccuracy(50); setStrictMode(false); }}
             className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 50 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
           >
-            {language === 'en' ? '50% (Lenient)' : '50% (Tolérant)'}
+            {getTranslation('speaking.lenient', language)}
           </button>
           <button
             onClick={() => { setRequiredAccuracy(80); setStrictMode(false); }}
             className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 80 ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
           >
-            {language === 'en' ? '80% (Strict)' : '80% (Strict)'}
+            {getTranslation('speaking.strict', language)}
           </button>
           <button
             onClick={() => { setRequiredAccuracy(100); setStrictMode(false); }}
             className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 100 && !strictMode ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
           >
-            {language === 'en' ? '100% (With Help)' : '100% (Avec aide)'}
+            {getTranslation('speaking.with_help', language)}
           </button>
           <button
             onClick={() => { setRequiredAccuracy(100); setStrictMode(true); }}
             className={`py-3 px-2 rounded-xl text-sm font-bold transition-all border-2 ${requiredAccuracy === 100 && strictMode ? 'bg-purple-50 border-purple-500 text-purple-700' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300'}`}
           >
-            {language === 'en' ? '100% (Ultimate)' : '100% (Ultime)'}
+            {getTranslation('speaking.ultimate', language)}
           </button>
         </div>
       </div>

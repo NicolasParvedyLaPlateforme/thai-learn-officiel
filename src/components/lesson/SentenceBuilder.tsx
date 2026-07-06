@@ -83,7 +83,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
         const alphaInfo = THAI_ALPHABET.find(a => a.letter === firstChar);
         if (alphaInfo) {
           nextHintLetter = alphaInfo.letter;
-          nextHintPronunciation = language === 'en' ? (alphaInfo.exampleTranslationEn || alphaInfo.exampleTranslation) : alphaInfo.exampleTranslation;
+          nextHintPronunciation = getLocalizedField(alphaInfo, 'exampleTranslation', language);
           nextHintPronunciation = alphaInfo.exampleWord; // e.g. "ศ ศาลา"
         }
       }
@@ -232,14 +232,14 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
           if (exercise.isFillInBlank) {
             if (exercise.fillInBlankMode === 'translation') {
               // Get the translated text instead of Thai
-              displayText = getLocalizedField(opt as any, 'fr', language) || opt.th;
+              displayText = getLocalizedField(opt as any, '', language) || opt.th;
             } else if (exercise.fillInBlankMode === 'audio') {
               isAudioMode = true;
             }
           }
 
           if (isAudioMode) {
-            const choiceText = (language === 'en' ? 'Choice ' : 'Choix ') + (idx + 1);
+            const choiceText = getTranslation('exercise.choice', language) + ' ' + (idx + 1);
             return (
               <div key={`opt-container-${idx}`} className="flex flex-col items-center gap-3 mx-1">
                 <button 

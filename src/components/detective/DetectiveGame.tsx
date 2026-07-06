@@ -265,7 +265,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
           {getTranslation('auto.detective_mode', language)}
         </h2>
         <p className="text-slate-600 mb-8">
-          {language === 'en' ? `Find ${level.objects?.length || 0} hidden objects in the image.` : `Trouve les ${level.objects?.length || 0} objets cachés dans l'image.`}
+          {getTranslation('detective.find_objects', language).replace('{count}', (level.objects?.length || 0).toString())}
         </p>
 
         <div className="w-full space-y-4">
@@ -307,7 +307,7 @@ export default function DetectiveGame({ level, initialDiff }: Props) {
           ))}
         </div>
         <p className="text-slate-600 mb-8">
-          {language === 'en' ? `You found all ${level.objects?.length || 0} objects with ${mistakes} mistakes.` : `Tu as trouvé les ${level.objects?.length || 0} objets avec ${mistakes} erreurs.`}
+          {getTranslation('detective.found_all', language).replace('{count}', (level.objects?.length || 0).toString()).replace('{mistakes}', mistakes.toString())}
         </p>
         <div className="w-full flex flex-col gap-3 px-4 mt-6">
           {nextLevel && (

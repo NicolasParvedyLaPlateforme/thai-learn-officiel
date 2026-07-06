@@ -1,5 +1,6 @@
 import { Lesson, Exercise } from "@/types";
 import { shuffle } from './utils';
+import { getTranslation } from '@/hooks/useTranslation';
 
 export function generateEndlessPairMatching(
   allLessons: Lesson[],
@@ -28,7 +29,7 @@ export function generateEndlessPairMatching(
     exercises.push({
       id: `endless-pm-${Date.now()}-${Math.random()}`,
       type: 'pair-matching',
-      question: (language === 'en' ? 'Match the pairs' : language === 'fr' ? 'Reliez les paires correspondantes' : 'Match the pairs'),
+      question: getTranslation('exercise.match_pairs', language),
       answer: '',
       options: selectedPairs as any,
       pairs: selectedPairs as any,

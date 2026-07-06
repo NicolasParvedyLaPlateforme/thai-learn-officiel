@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { DetectiveLevel } from "@/types";
+import { getLocalizedField } from "@/hooks/useTranslation";
 import DetectiveDevMode from './DetectiveDevMode';
 import DetectiveGame from './DetectiveGame';
 import Link from 'next/link';
@@ -26,7 +27,7 @@ export default function DetectiveClientWrapper({ level, isDev, initialDiff }: Pr
         </Link>
         <div className="flex-1">
           <h1 className="text-xl font-bold text-slate-800">
-            {language === 'en' ? level.titleEn : level.title}
+            {getLocalizedField(level, 'title', language)}
           </h1>
           {isDev && (
             <span className="text-xs bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded-full">

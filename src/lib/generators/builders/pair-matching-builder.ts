@@ -1,5 +1,6 @@
 import { Exercise, Word, Phrase } from "@/types";
 import { shuffle } from '../utils';
+import { getTranslation } from '@/hooks/useTranslation';
 
 export interface PairMatchingOptions {
   mode: 'normal' | 'audio-only' | 'script-only';
@@ -18,7 +19,7 @@ export function buildPairMatching(
   return {
     id: `pm-${mode}-${Date.now()}-${Math.random()}`,
     type: 'pair-matching',
-    question: (language === 'en' ? 'Match the pairs' : language === 'fr' ? 'Reliez les paires correspondantes' : 'Match the pairs'),
+    question: getTranslation('exercise.match_pairs', language),
     answer: '',
     options: pairs as any,
     pairs: pairs as any,

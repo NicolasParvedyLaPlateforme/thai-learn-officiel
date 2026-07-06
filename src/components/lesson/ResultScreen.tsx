@@ -89,12 +89,12 @@ export default function ResultScreen({
           {getTranslation('auto.time_s_up', language)}
         </h1>
         <p className="text-slate-500 mb-8 text-center text-lg font-medium">
-          {language === "en" ? `Completion: ${percentage}%` : `Complété à : ${percentage}%`}
+          {getTranslation('result.completion', language)}: {percentage}%
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-lg">
           <button
-            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`, language === "en" ? "Retry" : "Refaire")}
+            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}`, getTranslation('result.retry', language))}
             className="px-8 py-3 flex-1 rounded-xl bg-indigo-500 border-b-4 border-indigo-700 text-white font-bold text-lg shadow-lg hover:bg-indigo-400 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
             <RotateCcw size={20} />
@@ -136,7 +136,7 @@ export default function ResultScreen({
       {timeTakenSec !== null ? (
         <p className="text-indigo-500 mb-4 text-center text-lg font-bold flex items-center justify-center gap-2">
           <Clock size={20} />
-          {language === "en" ? `Time: ${formatTime(timeTakenSec)}` : `Temps : ${formatTime(timeTakenSec)}`}
+          {getTranslation('result.time', language)}: {formatTime(timeTakenSec)}
         </p>
       ) : (
         <p className="text-slate-500 mb-4 text-center text-lg font-medium">

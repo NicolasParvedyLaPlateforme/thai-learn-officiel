@@ -181,7 +181,7 @@ export default function PathLessonModal({
                 href={getStartLink()}
                 className={buttonVariants({ variant: getGamifiedVariant(selectedLesson.unitColor), size: "lg", className: "w-full" })}
               >
-                {isBilanLesson ? (language === 'en' ? 'Start Assessment' : 'Commencer le bilan') : getTranslation('auto.start_lesson', language)}
+                {isBilanLesson ? getTranslation('path.start_assessment', language) : getTranslation('auto.start_lesson', language)}
               </Link>
             )}
           </div>
@@ -230,7 +230,7 @@ export default function PathLessonModal({
             </div>
             <div className="flex flex-col gap-1">
               <Typography variant="alert-title">
-                {language === 'en' ? 'Timed Assessment' : 'Évaluation chronométrée'}
+                {getTranslation('path.timed_assessment', language)}
               </Typography>
               <Typography variant="alert-desc">
                 {language === 'en'
@@ -262,7 +262,7 @@ export default function PathLessonModal({
             maxXp={maxXp}
             isFirstTime={isFirstTime}
             estimatedMins={isBilanLesson ? estimatedMins : (playFullLevel ? estimatedMins : Math.ceil(estimatedMins/totalParts))}
-            title={pathType === 'learn' ? (isBilanLesson ? (language === 'en' ? 'ASSESSMENT' : 'BILAN') : (playFullLevel ? (language === 'en' ? 'FULL LEVEL' : "NIVEAU ENTIER") : totalParts > 1 ? (language === 'en' ? `PART ${selectedPartIndex + 1}` : `PARTIE ${selectedPartIndex + 1}`) : (language === 'en' ? 'DETAILS' : "DÉTAILS"))) : undefined}
+            title={pathType === 'learn' ? (isBilanLesson ? getTranslation('path.assessment_title', language) : (playFullLevel ? getTranslation('path.full_level', language) : totalParts > 1 ? getTranslation('path.part', language).replace('{index}', (selectedPartIndex + 1).toString()) : getTranslation('path.details', language))) : undefined}
           />
         </div>
       </div>

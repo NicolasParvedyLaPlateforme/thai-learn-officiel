@@ -1,4 +1,5 @@
-import { getTranslation } from "@/hooks/useTranslation";
+import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
+import { CheckCircle2, ChevronRight } from "lucide-react";
 
 interface LessonSelectorProps {
   language: string;
@@ -28,7 +29,7 @@ export function LessonSelector({
         <option value="all">{getTranslation('auto.all_seen_lessons', language)}</option>
         {lessonsList.filter(l => completedLessons.includes(l.id)).map(lesson => (
           <option key={lesson.id} value={lesson.id}>
-            {language === 'en' && lesson.titleEn ? lesson.titleEn : lesson.title}
+            {getLocalizedField(lesson, 'title', language)}
           </option>
         ))}
       </select>

@@ -1,3 +1,4 @@
+import { getTranslation } from '@/hooks/useTranslation';
 import nodemailer from 'nodemailer';
 
 const getDomain = () => {
@@ -22,11 +23,11 @@ const transporter = nodemailer.createTransport({
 export const sendVerificationEmail = async (email: string, token: string, language: string = 'fr') => {
   const confirmLink = `${domain}/api/auth/verify-email?token=${token}`;
 
-  const subject = language === 'en' ? "Confirm your email address - ThaiLearn" : "Confirme ton adresse email - ThaiLearn";
-  const title = language === 'en' ? "Welcome to ThaiLearn!" : "Bienvenue sur ThaiLearn !";
-  const body = language === 'en' ? "Thank you for registering. To verify your account, click the link below:" : "Merci de t'être inscrit(e). Pour vérifier ton compte, clique sur le lien ci-dessous :";
-  const btn = language === 'en' ? "Confirm my email" : "Confirmer mon email";
-  const ignore = language === 'en' ? "If you didn't create this account, you can ignore this email." : "Si tu n'as pas créé ce compte, tu peux ignorer cet email.";
+  const subject = getTranslation('mail.confirm_subject', language);
+  const title = getTranslation('mail.confirm_title', language);
+  const body = getTranslation('mail.confirm_body', language);
+  const btn = getTranslation('mail.confirm_btn', language);
+  const ignore = getTranslation('mail.confirm_ignore', language);
 
   const mailOptions = {
     from: `"ThaiLearn" <${process.env.EMAIL_SERVER_USER}>`,
@@ -55,11 +56,11 @@ export const sendVerificationEmail = async (email: string, token: string, langua
 export const sendPasswordResetEmail = async (email: string, token: string, language: string = 'fr') => {
   const resetLink = `${domain}/reset-password?token=${token}`;
 
-  const subject = language === 'en' ? "Reset your password - ThaiLearn" : "Réinitialisation de ton mot de passe - ThaiLearn";
-  const title = language === 'en' ? "Password Reset" : "Réinitialisation de mot de passe";
-  const body = language === 'en' ? "You requested to reset your password. Click the link below to change it:" : "Tu as demandé à réinitialiser ton mot de passe. Clique sur le lien ci-dessous pour le changer :";
-  const btn = language === 'en' ? "Reset my password" : "Réinitialiser mon mot de passe";
-  const ignore = language === 'en' ? "If you didn't make this request, you can ignore this email." : "Si tu n'as pas fait cette demande, tu peux ignorer cet email.";
+  const subject = getTranslation('mail.reset_subject', language);
+  const title = getTranslation('mail.reset_title', language);
+  const body = getTranslation('mail.reset_body', language);
+  const btn = getTranslation('mail.reset_btn', language);
+  const ignore = getTranslation('mail.reset_ignore', language);
 
   const mailOptions = {
     from: `"ThaiLearn" <${process.env.EMAIL_SERVER_USER}>`,

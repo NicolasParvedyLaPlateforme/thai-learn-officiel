@@ -131,24 +131,24 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
 
   const translateTone = (tone: string) => {
     const tones = {
-      mid: language === 'en' ? 'Mid Tone' : 'Ton Moyen',
-      low: language === 'en' ? 'Low Tone' : 'Ton Bas',
-      falling: language === 'en' ? 'Falling Tone' : 'Ton Descendant',
-      high: language === 'en' ? 'High Tone' : 'Ton Haut',
-      rising: language === 'en' ? 'Rising Tone' : 'Ton Montant'
+      mid: getTranslation('tone.mid_tone', language),
+      low: getTranslation('tone.low_tone', language),
+      falling: getTranslation('tone.falling_tone', language),
+      high: getTranslation('tone.high_tone', language),
+      rising: getTranslation('tone.rising_tone', language)
     };
     return tones[tone as keyof typeof tones] || tone;
   };
 
   const translateClass = (cls: string) => {
-    if (cls === 'high') return language === 'en' ? 'High Class' : 'Classe Haute';
-    if (cls === 'mid') return language === 'en' ? 'Mid Class' : 'Classe Moyenne';
-    if (cls === 'low') return language === 'en' ? 'Low Class' : 'Classe Basse';
+    if (cls === 'high') return getTranslation('tone.high_class', language);
+    if (cls === 'mid') return getTranslation('tone.mid_class', language);
+    if (cls === 'low') return getTranslation('tone.low_class', language);
     return cls;
   };
 
   const translateMark = (mark: string) => {
-    if (mark === 'none') return language === 'en' ? 'No mark' : 'Aucune marque';
+    if (mark === 'none') return getTranslation('tone.no_mark', language);
     if (mark === 'mai_ek') return 'Mai Ek ( ◌่ )';
     if (mark === 'mai_tho') return 'Mai Tho ( ◌้ )';
     if (mark === 'mai_tri') return 'Mai Tri ( ◌๊ )';
@@ -178,7 +178,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
       <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
         <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-sm border border-slate-200 flex flex-col items-center">
           <h2 className="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 md:mb-6">
-            {language === 'en' ? 'The Rule' : 'L\'équation'}
+            {getTranslation('tone.rule', language)}
           </h2>
           
           <div className="flex flex-wrap justify-center items-center gap-2 md:gap-3 w-full">
@@ -188,7 +188,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                       ✨ Akson Nam
                     </div>
                 )}
-                <span className="text-xs md:text-sm font-bold opacity-70 mb-1">{language === 'en' ? 'Consonant' : 'Consonne'}</span>
+                <span className="text-xs md:text-sm font-bold opacity-70 mb-1">{getTranslation('tone.consonant', language)}</span>
                 <span className="text-2xl md:text-3xl font-thai font-bold mb-1">{analysis.initCons || '-'}</span>
                 <span className="text-[10px] md:text-xs font-bold text-center">{translateClass(analysis.initialClass)}</span>
               </div>
@@ -201,16 +201,16 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                       ✨ Sara A
                     </div>
                 )}
-                <span className="text-xs md:text-sm font-bold opacity-70 mb-1">{language === 'en' ? 'Vowel' : 'Voyelle'}</span>
-                <span className="text-base md:text-lg font-bold mb-1">{analysis.vowelLength === 'short' ? (language === 'en' ? 'Short' : 'Courte') : (language === 'en' ? 'Long' : 'Longue')}</span>
-                <span className="text-[9px] md:text-[10px] font-medium text-slate-400 text-center uppercase tracking-wider">{analysis.endingType === 'live' ? (language === 'en' ? 'Live Syllable' : 'Syllabe Vivante') : (language === 'en' ? 'Dead Syllable' : 'Syllabe Morte')}</span>
+                <span className="text-xs md:text-sm font-bold opacity-70 mb-1">{getTranslation('tone.vowel', language)}</span>
+                <span className="text-base md:text-lg font-bold mb-1">{analysis.vowelLength === 'short' ? getTranslation('tone.short', language) : getTranslation('tone.long', language)}</span>
+                <span className="text-[9px] md:text-[10px] font-medium text-slate-400 text-center uppercase tracking-wider">{analysis.endingType === 'live' ? getTranslation('tone.live_syllable', language) : getTranslation('tone.dead_syllable', language)}</span>
               </div>
 
               {analysis.toneMark !== 'none' && (
                 <>
                   <span className="text-slate-300 font-black text-lg md:text-xl">+</span>
                   <div className="flex flex-col items-center p-2.5 md:p-3 rounded-xl md:rounded-2xl border-2 border-amber-200 bg-amber-50 text-amber-600 min-w-[80px] md:min-w-[100px]">
-                    <span className="text-xs md:text-sm font-bold opacity-70 mb-1">{language === 'en' ? 'Mark' : 'Marque'}</span>
+                    <span className="text-xs md:text-sm font-bold opacity-70 mb-1">{getTranslation('tone.mark', language)}</span>
                     <span className="text-base md:text-lg font-bold mb-1">{translateMark(analysis.toneMark).split(' ')[0]}</span>
                     <span className="text-[9px] md:text-[10px] font-bold text-amber-500 text-center uppercase">{translateMark(analysis.toneMark)}</span>
                   </div>
@@ -225,7 +225,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
           </div>
 
           <div className={`w-full py-3 md:py-4 rounded-xl md:rounded-2xl border-2 md:border-4 flex flex-col items-center justify-center shadow-inner ${getToneColor(analysis.finalTone)}`}>
-              <span className="text-xs md:text-sm font-bold opacity-80 mb-1 uppercase tracking-widest">{language === 'en' ? 'Result' : 'Résultat'}</span>
+              <span className="text-xs md:text-sm font-bold opacity-80 mb-1 uppercase tracking-widest">{getTranslation('tone.result', language)}</span>
               <span className="text-2xl md:text-3xl font-black">{translateTone(analysis.finalTone)}</span>
           </div>
         </div>
@@ -246,8 +246,8 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
             : " (modifiée par la consonne menante précédente via la règle Akson Nam)"
         )}
         {analysis.toneMark !== 'none' 
-          ? (language === 'en' ? `, and it has the tone mark ${translateMark(analysis.toneMark)}.` : `, et elle possède la marque de ton ${translateMark(analysis.toneMark)}.`)
-          : (language === 'en' ? ' without any tone mark.' : ' sans aucune marque de ton.')}
+          ? getTranslation('tone.has_mark', language).replace('{mark}', translateMark(analysis.toneMark))
+          : getTranslation('tone.without_mark', language)}
         
         {analysis.isImplicitShortVowel && (
             <div className={`mt-3 font-bold p-3 rounded-xl border ${isMobileSkin ? 'bg-indigo-800/50 text-amber-300 border-indigo-700' : 'bg-amber-50 text-amber-700 border-amber-100'}`}>
@@ -258,7 +258,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
         )}
 
         <div className={`mt-4 pt-3 border-t ${isMobileSkin ? 'border-indigo-700/50' : 'border-indigo-500/20'}`}>
-          {language === 'en' ? 'According to Thai tone rules, this combination results in a ' : 'Selon les règles des tons thaïlandais, cette combinaison donne un '}
+          {getTranslation('tone.rule_explanation', language)}
           <strong className={isMobileSkin ? 'text-white' : 'text-indigo-900'}>{translateTone(analysis.finalTone).toLowerCase()}</strong>.
         </div>
       </div>
@@ -282,7 +282,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                 <Wand2 size={16} className="md:w-4.5 md:h-4.5" />
               </div>
               <h1 className="text-lg md:text-xl font-extrabold text-slate-800">
-                {language === 'en' ? 'Tone Analyzer' : 'Calculateur de Tons'}
+                {getTranslation('tone.title', language)}
               </h1>
             </div>
           </div>
@@ -308,7 +308,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                   {predefinedSyllables ? (
                     <>
                       <p className="text-xs md:text-sm font-bold text-indigo-500 mb-3 md:mb-4 uppercase tracking-wide text-center">
-                        {language === 'en' ? 'Select a syllable to analyze' : 'Sélectionnez une syllabe à analyser'}
+                        {getTranslation('tone.select_syllable', language)}
                       </p>
                       <div className="flex flex-wrap justify-center gap-2 md:gap-3">
                         {predefinedSyllables.map((syllable, index) => {
@@ -332,7 +332,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                   ) : (
                     <>
                       <p className="text-xs md:text-sm font-bold text-indigo-500 mb-3 md:mb-4 uppercase tracking-wide text-center">
-                        {language === 'en' ? 'Build your word letter by letter' : 'Construisez votre mot lettre par lettre'}
+                        {getTranslation('tone.build_word', language)}
                       </p>
                       <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
                         {targetWord.split('').map((char, index) => {
@@ -349,13 +349,13 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                                     <button 
                                       onClick={() => setManualBoundaries(prev => prev.filter(b => b !== index))}
                                       className="h-8 md:h-10 w-1.5 bg-rose-400 rounded-full hover:bg-rose-500 hover:scale-110 transition-all cursor-pointer shadow-sm"
-                                      title={language === 'en' ? 'Remove split' : 'Supprimer la coupure'}
+                                      title={getTranslation('tone.remove_split', language)}
                                     />
                                   ) : (
                                     <button 
                                       onClick={() => setManualBoundaries(prev => [...prev, index].sort((a, b) => a - b))}
                                       className="h-full w-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                                      title={language === 'en' ? 'Split syllable here' : 'Couper la syllabe ici'}
+                                      title={getTranslation('tone.split_here', language)}
                                     >
                                       <Scissors size={16} className="text-indigo-400 hover:text-indigo-600 transition-colors" />
                                     </button>
@@ -384,7 +384,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                 </div>
                 <div className="flex justify-center mb-2">
                   <Button variant="outline" onClick={resetSearch} className="px-5 py-2 md:px-6 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-xs md:text-sm font-bold border-none">
-                    {language === 'en' ? 'Search another word' : 'Rechercher un autre mot'}
+                    {getTranslation('tone.search_another', language)}
                   </Button>
                 </div>
               </div>
@@ -392,7 +392,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
 
             <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-sm border border-slate-200 mb-6 md:mb-8">
               <label className="block text-xs md:text-sm font-bold text-slate-500 mb-2 uppercase tracking-wide">
-                {language === 'en' ? (mode === 'guided' ? 'Current Syllable' : 'Enter a Thai word') : (mode === 'guided' ? 'Syllabe en cours' : 'Entrez un mot thaï')}
+                {mode === 'guided' ? getTranslation('tone.current_syllable', language) : getTranslation('tone.enter_word', language)}
               </label>
               <div className="relative">
                 <input 
@@ -415,7 +415,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                     size="lg"
                     onClick={() => playThaiTTS(currentActiveInput)}
                     className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
-                    title={language === 'en' ? 'Listen' : 'Écouter'}
+                    title={getTranslation('tone.listen', language)}
                   >
                     <Volume2 size={18} className="md:w-5 md:h-5" />
                   </IconButton>
@@ -444,7 +444,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                     className="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full font-bold text-xs border-indigo-100 hover:bg-indigo-100"
                   >
                     <Info size={16} />
-                    {language === 'en' ? 'Why this tone?' : 'Pourquoi ce ton ?'}
+                    {getTranslation('tone.why_this_tone', language)}
                   </Button>
                   
                   <AnimatePresence>
@@ -458,7 +458,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                         <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-900 rotate-45 rounded-sm"></div>
                         <div className="relative z-10">
                           <div className="flex justify-between items-center mb-3 text-white border-b border-indigo-700/50 pb-2">
-                            <span className="font-bold text-sm uppercase tracking-wide flex items-center gap-2"><Info size={16}/>{language === 'en' ? 'Explanation' : 'Explication'}</span>
+                            <span className="font-bold text-sm uppercase tracking-wide flex items-center gap-2"><Info size={16}/>{getTranslation('tone.explanation', language)}</span>
                             <IconButton size="sm" onClick={() => setShowMobileExplanation(false)} className="hover:bg-white/10 text-indigo-200 hover:text-white"><X size={16}/></IconButton>
                           </div>
                           <ExplanationContent isMobileSkin={true} />
@@ -487,7 +487,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                 <div className="bg-indigo-50 rounded-3xl p-6 border border-indigo-100">
                   <h3 className="font-bold text-indigo-900 mb-4 flex items-center gap-2">
                     <Info className="text-indigo-500" size={22} />
-                    {language === 'en' ? 'Why this tone?' : 'Pourquoi ce ton ?'}
+                    {getTranslation('tone.why_this_tone', language)}
                   </h3>
                   <ExplanationContent />
                 </div>

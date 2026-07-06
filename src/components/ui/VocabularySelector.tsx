@@ -1,4 +1,4 @@
-import { getTranslation } from "@/hooks/useTranslation";
+import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { Check } from "lucide-react";
 import { Word, Phrase } from "@/types";
 
@@ -67,7 +67,7 @@ export function VocabularySelector({
                             </div>
                             <div className="flex flex-col min-w-0">
                                 <span className="font-thai text-lg truncate">{item.th}</span>
-                                <span className="text-xs text-slate-500 truncate">{language === 'en' && item.en ? item.en : item.fr}</span>
+                                <span className="text-xs text-slate-500 truncate">{getLocalizedField(item, '', language)}</span>
                             </div>
                         </button>
                     ))

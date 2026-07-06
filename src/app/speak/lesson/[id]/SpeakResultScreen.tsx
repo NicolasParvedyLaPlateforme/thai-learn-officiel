@@ -61,7 +61,7 @@ export default function SpeakResultScreen({
       {elapsedTimeSec !== undefined && elapsedTimeSec !== null ? (
         <p className="text-indigo-500 mb-4 text-center text-lg font-bold flex items-center justify-center gap-2">
           <Clock size={20} />
-          {language === "en" ? `Time: ${formatTime(elapsedTimeSec)}` : `Temps : ${formatTime(elapsedTimeSec)}`}
+          {getTranslation('result.time', language)}: {formatTime(elapsedTimeSec)}
         </p>
       ) : (
         <p className="text-slate-500 mb-4 text-center text-lg font-medium">

@@ -157,7 +157,7 @@ export default function NextResultScreen({
               {formatTime(elapsedTimeSec)}
             </span>
             <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-              {language === 'en' ? 'Time' : 'Temps'}
+              {getTranslation('result.time', language)}
             </span>
           </div>
         )}

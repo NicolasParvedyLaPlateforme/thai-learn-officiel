@@ -152,7 +152,7 @@ export default function RewardClient() {
                     </div>
                     <span className="text-4xl font-black text-slate-800">+{reward.coins}</span>
                     <span className="text-yellow-500 font-bold uppercase tracking-wider text-sm mt-1">
-                      {language === 'en' ? 'Coins' : 'Pièces'}
+                      {getTranslation('reward.coins', language)}
                     </span>
                   </motion.div>
                 ) : null}
