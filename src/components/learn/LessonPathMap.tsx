@@ -103,14 +103,17 @@ export function LessonPathMap({
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
   
   const [activeLevel, setActiveLevel] = useState<number>(targetScrollLevel);
+  const [nextLevel, setNextLevel] = useState<number | null>(null);
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
   const [showLockMessageFor, setShowLockMessageFor] = useState<number | null>(null);
 
   const handleLevelChange = (l: number) => {
     if (l !== activeLevel) {
+      setNextLevel(l);
       setIsFadingOut(true);
       setTimeout(() => {
         setActiveLevel(l);
+        setNextLevel(null);
         setIsFadingOut(false);
       }, 200);
     }
@@ -162,7 +165,8 @@ export function LessonPathMap({
           // Ne pas afficher les niveaux qui sont au-delà du prochain niveau à débloquer
           if (!unlocked && !isNextLocked) return null;
 
-          const isSelected = activeLevel === l;
+          const currentVisualLevel = nextLevel !== null ? nextLevel : activeLevel;
+          const isSelected = currentVisualLevel === l;
           const label = l === maxLevel && maxLevel > 4 ? (getTranslation('auto.ultimate', language) || 'Ultime') : `${l + 1}`;
           
           let buttonClass = "px-4 py-2 rounded-xl font-bold text-[15px] transition-all ";
