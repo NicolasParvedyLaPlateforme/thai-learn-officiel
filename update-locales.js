@@ -1,8 +1,24 @@
 const fs = require('fs');
-const locales = ['fr', 'en', 'es', 'de', 'it'];
-for (const locale of locales) {
-  const path = `./src/locales/${locale}.json`;
-  const data = JSON.parse(fs.readFileSync(path, 'utf8'));
-  data['auto.exercise.trueFalse'] = locale === 'fr' ? 'Le mot est-il correctement écrit ?' : locale === 'en' ? 'Is the word spelled correctly?' : locale === 'es' ? '¿Está bien escrita la palabra?' : locale === 'de' ? 'Ist das Wort richtig geschrieben?' : 'La parola è scritta correttamente?';
-  fs.writeFileSync(path, JSON.stringify(data, null, 2));
+const path = require('path');
+
+const localesDir = path.join(__dirname, 'src', 'locales');
+const files = [
+  { file: 'fr.json', translation: '(Mot manquant : {word})' },
+  { file: 'en.json', translation: '(Missing: {word})' },
+  { file: 'de.json', translation: '(Fehlendes Wort: {word})' },
+  { file: 'es.json', translation: '(Palabra que falta: {word})' },
+  { file: 'it.json', translation: '(Parola mancante: {word})' }
+];
+
+for (const { file, translation } of files) {
+  const filePath = path.join(localesDir, file);
+  try {
+    const data = fs.readFileSync(filePath, 'utf8');
+    const json = JSON.parse(data);
+    json['exercise.missing_word'] = translation;
+    fs.writeFileSync(filePath, JSON.stringify(json, null, 2));
+    console.log(`Updated ${file}`);
+  } catch (err) {
+    console.error(`Error updating ${file}:`, err);
+  }
 }

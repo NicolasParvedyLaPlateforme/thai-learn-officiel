@@ -526,5 +526,6 @@
   "auto.tap_to_open": "Toca para abrir",
   "auto.completed_m": " completado!",
   "auto.completed_f": " completada!",
-  "auto.full_parentheses": "(completo)"
+  "auto.full_parentheses": "(completo)",
+  "exercise.missing_word": "(Palabra que falta: {word})"
 }

@@ -1,5 +1,6 @@
 import { Exercise, Word, Phrase } from "@/types";
 import { getExerciseTranslation } from '@/lib/translation-utils';
+import { getTranslation } from '@/hooks/useTranslation';
 import { shuffle, generateMisspelledWords } from '../utils';
 
 export interface SentenceBuilderOptions {
@@ -78,7 +79,8 @@ export function buildFillInTheBlank(
   });
   
   const missingWordFr = getExerciseTranslation(blankWord, language);
-  const blankHint = language === 'en' ? `(Missing: ${missingWordFr})` : `(Mot manquant : ${missingWordFr})`;
+  const hintTemplate = getTranslation('exercise.missing_word', language);
+  const blankHint = hintTemplate.replace('{word}', missingWordFr);
 
   return {
     id: `fib-${phrase.id}-${Date.now()}-${Math.random()}`,

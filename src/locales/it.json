@@ -528,5 +528,6 @@
   "auto.tap_to_open": "Tocca per aprire",
   "auto.completed_m": " completato!",
   "auto.completed_f": " completata!",
-  "auto.full_parentheses": "(intero)"
+  "auto.full_parentheses": "(intero)",
+  "exercise.missing_word": "(Parola mancante: {word})"
 }

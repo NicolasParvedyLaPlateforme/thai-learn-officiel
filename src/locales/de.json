@@ -528,5 +528,6 @@
   "auto.tap_to_open": "Zum Öffnen tippen",
   "auto.completed_m": " abgeschlossen!",
   "auto.completed_f": " abgeschlossen!",
-  "auto.full_parentheses": "(komplett)"
+  "auto.full_parentheses": "(komplett)",
+  "exercise.missing_word": "(Fehlendes Wort: {word})"
 }
