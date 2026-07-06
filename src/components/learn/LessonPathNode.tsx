@@ -86,12 +86,12 @@ export function LessonPathNode({
 
   // ── Current node state ──
   const isBlockedByFullLevel = blockedByLevel !== undefined && blockedByLevel !== null && levelIndex >= blockedByLevel;
-  const isMastery = levelIndex === maxLevel;
+  const isMastery = levelIndex === maxLevel && maxLevel > 4;
   const isUnlockedMastery = currentProgress >= maxLevel;
 
   const isAccessible = (isMastery ? isUnlockedMastery : levelIndex <= currentProgress) && !isBlockedByFullLevel;
 
-  const isCompletedFullLevel = currentFullLevels ? currentFullLevels.includes(levelIndex) : false;
+  const isCompletedFullLevel = (currentFullLevels ? currentFullLevels.includes(levelIndex) : false) || levelIndex < currentProgress;
 
   const earnedStarsMastery = (isCompletedFullLevel && levelIndex === maxLevel) ? (earnedStarsArray[maxLevel] || 0) : 0;
   const isCompleted = isMastery ? earnedStarsMastery > 0 : isCompletedFullLevel;

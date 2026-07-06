@@ -62,7 +62,7 @@ export function LessonPathMap({
   };
 
   for (let l = 1; l <= maxLevel; l++) {
-    const isVerticalMet = isPartCompleted(l - 1, 0);
+    const isVerticalMet = l <= currentProgress || isPartCompleted(l - 1, 0);
     if (!isVerticalMet) {
       blockingReason = `${getTranslation('auto.complete_part_1_of_level', language) || 'Terminez la partie 1 du Niveau '}${l}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
       break;
