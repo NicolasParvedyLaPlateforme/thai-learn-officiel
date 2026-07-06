@@ -521,5 +521,12 @@
   "auto.choose_part": "WÄHLE EINEN TEIL",
   "auto.full_level": "Ganzes Level",
   "auto.next_step": "Weiter",
-  "auto.ultimate": "Ultimativ"
+  "auto.ultimate": "Ultimativ",
+  "auto.next_part": "Nächster Teil",
+  "auto.open_gift": "Öffne dein Geschenk!",
+  "auto.reward_unlocked": "Belohnung freigeschaltet!",
+  "auto.tap_to_open": "Zum Öffnen tippen",
+  "auto.completed_m": " abgeschlossen!",
+  "auto.completed_f": " abgeschlossen!",
+  "auto.full_parentheses": "(komplett)"
 }

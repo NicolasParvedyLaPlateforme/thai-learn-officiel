@@ -523,5 +523,12 @@
   "auto.choose_part": "CHOISISSEZ UNE PARTIE",
   "auto.full_level": "Niveau entier",
   "auto.next_step": "La Suite",
-  "auto.ultimate": "Ultime"
+  "auto.ultimate": "Ultime",
+  "auto.next_part": "Partie suivante",
+  "auto.open_gift": "Ouvrez votre cadeau !",
+  "auto.reward_unlocked": "Récompense débloquée !",
+  "auto.tap_to_open": "Touchez pour ouvrir",
+  "auto.completed_m": " terminé !",
+  "auto.completed_f": " terminée !",
+  "auto.full_parentheses": "(entier)"
 }

@@ -519,5 +519,12 @@
   "auto.choose_part": "ELIGE UNA PARTE",
   "auto.full_level": "Nivel entero",
   "auto.next_step": "Siguiente",
-  "auto.ultimate": "Último"
+  "auto.ultimate": "Último",
+  "auto.next_part": "Siguiente parte",
+  "auto.open_gift": "¡Abre tu regalo!",
+  "auto.reward_unlocked": "¡Recompensa desbloqueada!",
+  "auto.tap_to_open": "Toca para abrir",
+  "auto.completed_m": " completado!",
+  "auto.completed_f": " completada!",
+  "auto.full_parentheses": "(completo)"
 }

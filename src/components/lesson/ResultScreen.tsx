@@ -128,10 +128,8 @@ export default function ResultScreen({
             : currentLevel === 10
               ? getTranslation('auto.mastery_level_completed', language)
               : isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null
-                ? `Partie ${partIndex + 1}/${totalParts} terminée !`
-                : (language === "en"
-                  ? `Level ${currentLevel + 1} completed!`
-                  : `Niveau ${currentLevel + 1} terminé !`)
+                ? `${getTranslation('auto.part', language)}${partIndex + 1}/${totalParts}${getTranslation('auto.completed_f', language)}`
+                : `${getTranslation('auto.level', language)}${currentLevel + 1}${getTranslation('auto.completed_m', language)}`
         }
       </h2>
 
@@ -170,10 +168,10 @@ export default function ResultScreen({
             size="lg"
             className="w-full text-lg uppercase tracking-widest"
             onClick={() =>
-              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, language === "en" ? "Next Part" : "Partie suivante")
+              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, getTranslation('auto.next_part', language))
             }
           >
-            {language === "en" ? "Next Part" : "Partie suivante"}
+            {getTranslation('auto.next_part', language)}
           </Button>
         ) : mode !== 'training' && mode !== 'revision' && currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10) && (
           <Button

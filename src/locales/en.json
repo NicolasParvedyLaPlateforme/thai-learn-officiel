@@ -521,5 +521,12 @@
   "auto.choose_part": "CHOOSE A PART",
   "auto.full_level": "Full Level",
   "auto.next_step": "Next",
-  "auto.ultimate": "Ultimate"
+  "auto.ultimate": "Ultimate",
+  "auto.next_part": "Next Part",
+  "auto.open_gift": "Open your gift!",
+  "auto.reward_unlocked": "Reward unlocked!",
+  "auto.tap_to_open": "Tap to open",
+  "auto.completed_m": " completed!",
+  "auto.completed_f": " completed!",
+  "auto.full_parentheses": "(full)"
 }

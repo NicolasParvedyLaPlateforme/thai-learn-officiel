@@ -83,8 +83,8 @@ export default function RewardClient() {
       <div className="z-10 flex flex-col items-center justify-center w-full max-w-md p-6">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-12 text-center drop-shadow-sm">
           {step === 'opened'
-            ? (language === 'en' ? 'Reward unlocked!' : 'Récompense débloquée !')
-            : (language === 'en' ? 'Open your gift!' : 'Ouvrez votre cadeau !')}
+            ? getTranslation('auto.reward_unlocked', language)
+            : getTranslation('auto.open_gift', language)}
         </h1>
 
         <AnimatePresence mode="wait">
@@ -112,7 +112,7 @@ export default function RewardClient() {
                 <Gift size={64} className="text-yellow-100 relative z-10" />
               </div>
               <div className="mt-8 text-center text-indigo-500 font-bold animate-pulse uppercase tracking-widest text-sm">
-                {language === 'en' ? 'Tap to open' : 'Touchez pour ouvrir'}
+                {getTranslation('auto.tap_to_open', language)}
               </div>
             </motion.div>
           ) : (

@@ -521,5 +521,12 @@
   "auto.choose_part": "SCEGLI UNA PARTE",
   "auto.full_level": "Livello intero",
   "auto.next_step": "Successivo",
-  "auto.ultimate": "Ultimo"
+  "auto.ultimate": "Ultimo",
+  "auto.next_part": "Prossima parte",
+  "auto.open_gift": "Apri il tuo regalo!",
+  "auto.reward_unlocked": "Ricompensa sbloccata!",
+  "auto.tap_to_open": "Tocca per aprire",
+  "auto.completed_m": " completato!",
+  "auto.completed_f": " completata!",
+  "auto.full_parentheses": "(intero)"
 }

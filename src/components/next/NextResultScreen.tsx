@@ -107,13 +107,11 @@ export default function NextResultScreen({
 
   const levelLabel = (() => {
     const num = currentLevel + 1;
-    if (currentLevel === 10) return language === 'en' ? 'Ultimate Level' : 'Niveau Ultime';
-    if (isPart && partIndex !== null && partIndex !== undefined && totalParts) {
-      return language === 'en'
-        ? `Level ${num} — Part ${partIndex + 1}/${totalParts} completed!`
-        : `Niveau ${num} — Partie ${partIndex + 1}/${totalParts} terminée !`;
+    if (currentLevel === 10) return getTranslation('auto.ultimate_level', language);
+    if (isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null) {
+      return `${getTranslation('auto.level', language)}${num} — ${getTranslation('auto.part', language)}${partIndex + 1}/${totalParts}${getTranslation('auto.completed_f', language)}`;
     }
-    return language === 'en' ? `Level ${num} completed!` : `Niveau ${num} terminé !`;
+    return `${getTranslation('auto.level', language)}${num}${getTranslation('auto.completed_m', language)}`;
   })();
 
   return (

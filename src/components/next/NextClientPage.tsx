@@ -122,14 +122,16 @@ export default function NextClientPage() {
 
   const levelLabel = (() => {
     if (!nextLesson) return null;
-    const lvl = nextLesson.levelIndex;
-    if (lvl === 10) return 'Niveau Ultime';
-    const num = lvl + 1;
-    if (nextLesson.type === 'full') return `Niveau ${num} (entier)`;
-    if (nextLesson.totalParts > 1 && nextLesson.partIndex !== null) {
-      return `Niveau ${num} — Partie ${nextLesson.partIndex + 1}/${nextLesson.totalParts}`;
-    }
-    return `Niveau ${num}`;
+    const formatNextLessonSubtitle = (lvl: number, nextLesson?: any) => {
+      if (lvl === 10) return getTranslation('auto.ultimate_level', language);
+      const num = lvl + 1;
+      if (nextLesson && nextLesson.type === 'full') return `${getTranslation('auto.level', language)}${num} ${getTranslation('auto.full_parentheses', language)}`;
+      if (nextLesson && typeof nextLesson.partIndex === 'number' && typeof nextLesson.totalParts === 'number') {
+        return `${getTranslation('auto.level', language)}${num} — ${getTranslation('auto.part', language)}${nextLesson.partIndex + 1}/${nextLesson.totalParts}`;
+      }
+      return `${getTranslation('auto.level', language)}${num}`;
+    };
+    return formatNextLessonSubtitle(nextLesson.levelIndex, nextLesson);
   })();
 
   const unitName = dailyUnit ? getLocalizedField(dailyUnit, 'title', language) : null;
