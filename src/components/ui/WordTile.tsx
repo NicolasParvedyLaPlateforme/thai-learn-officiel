@@ -30,7 +30,7 @@ export const WordTile: React.FC<WordTileProps> = ({
             if (content.length > 18) return "text-sm sm:text-base";
             if (content.length > 10) return "text-base sm:text-lg";
         }
-        return "text-lg sm:text-xl font-bold";
+        return "font-thai font-normal text-3xl sm:text-4xl ";
     };
 
     const textClasses = `leading-tight text-center break-words whitespace-normal max-w-full ${getDynamicTextSize(text)}`;
