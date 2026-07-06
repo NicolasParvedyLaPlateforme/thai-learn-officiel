@@ -1,6 +1,6 @@
 'use client';
 
-import { getTranslation } from "@/hooks/useTranslation";
+import { getLocalizedField, getTranslation } from "@/hooks/useTranslation";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
@@ -311,7 +311,7 @@ export default function WritingPage() {
                   <div className="mt-6 p-4 rounded-xl border border-orange-200 bg-orange-50 flex items-start gap-3">
                     <div className="text-xl">💡</div>
                     <div className="text-orange-800 text-sm font-medium leading-relaxed">
-                      {language === 'en' ? charHint.noteEn : charHint.note}
+                      {getLocalizedField(charHint, 'note', language)}
                     </div>
                   </div>
                 )}

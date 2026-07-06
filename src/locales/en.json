@@ -590,5 +590,14 @@
   "mail.reset_title": "Password Reset",
   "mail.reset_body": "You requested to reset your password. Click the link below to change it:",
   "mail.reset_btn": "Reset my password",
-  "mail.reset_ignore": "If you didn't make this request, you can ignore this email."
+  "mail.reset_ignore": "If you didn't make this request, you can ignore this email.",
+  "writing.write_this_word": "Write this word in Thai",
+  "writing.write_this_sentence": "Write this sentence in Thai",
+  "path.time_limit": "You have {minutes} minute{s} to answer as many questions as possible. The further you get, the better your score!",
+  "tone.is_live_or_dead": "This is a {type} starting with a {class}",
+  "tone.akson_nam_modifier": " (modified by the previous leading consonant via the Akson Nam rule)",
+  "tone.implicit_sara_a": "💡 This is a dead syllable due to an implicit short vowel (Sara A).",
+  "tone.select_letter_to_analyze": "Select a letter to see the analysis and tone rules",
+  "auto.find_word_position": "Find the word position",
+  "auto.listen_and_select_position": "Listen and select the correct position"
 }

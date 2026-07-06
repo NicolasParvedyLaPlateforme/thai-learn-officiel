@@ -590,5 +590,14 @@
   "mail.reset_title": "Passwort zurücksetzen",
   "mail.reset_body": "Du hast das Zurücksetzen deines Passworts angefordert. Klicke auf den Link unten, um es zu ändern:",
   "mail.reset_btn": "Mein Passwort zurücksetzen",
-  "mail.reset_ignore": "Wenn du diese Anfrage nicht gestellt hast, kannst du diese E-Mail ignorieren."
+  "mail.reset_ignore": "Wenn du diese Anfrage nicht gestellt hast, kannst du diese E-Mail ignorieren.",
+  "writing.write_this_word": "Schreibe dieses Wort auf Thai",
+  "writing.write_this_sentence": "Schreibe diesen Satz auf Thai",
+  "path.time_limit": "Du hast {minutes} Minute{s}, um so viele Fragen wie möglich zu beantworten. Je weiter du kommst, desto besser dein Ergebnis!",
+  "tone.is_live_or_dead": "Dies ist eine {type}, die mit einem Konsonanten der {class} beginnt",
+  "tone.akson_nam_modifier": " (modifiziert durch den vorhergehenden führenden Konsonanten nach der Akson Nam-Regel)",
+  "tone.implicit_sara_a": "💡 Dies ist eine tote Silbe aufgrund eines impliziten kurzen Vokals (Sara A).",
+  "tone.select_letter_to_analyze": "Wähle einen Buchstaben, um die Analyse und Tonregeln zu sehen",
+  "auto.find_word_position": "Finde die Position des Wortes",
+  "auto.listen_and_select_position": "Höre zu und wähle die richtige Position"
 }

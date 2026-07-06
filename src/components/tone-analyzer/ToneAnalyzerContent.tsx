@@ -237,13 +237,9 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
     if (!analysis) return null;
     return (
       <div className={`text-sm leading-relaxed ${isMobileSkin ? "text-indigo-100" : "text-indigo-800"}`}>
-        {language === 'en' 
-          ? `This is a ${analysis.endingType === 'live' ? 'live' : 'dead'} syllable starting with a ${analysis.initialClass} class consonant`
-          : `C'est une syllabe ${analysis.endingType === 'live' ? 'vivante' : 'morte'} commençant par une consonne de classe ${analysis.initialClass === 'high' ? 'haute' : analysis.initialClass === 'mid' ? 'moyenne' : 'basse'}`}
+        {getTranslation('tone.is_live_or_dead', language).replace('{type}', (analysis.endingType === 'live' ? getTranslation('tone.live_syllable', language) : getTranslation('tone.dead_syllable', language)).toLowerCase()).replace('{class}', (analysis.initialClass === 'high' ? getTranslation('tone.high_class', language) : analysis.initialClass === 'mid' ? getTranslation('tone.mid_class', language) : getTranslation('tone.low_class', language)).toLowerCase())}
         {analysis.isAksonNamApplied && (
-            language === 'en' 
-            ? " (modified by the previous leading consonant via the Akson Nam rule)"
-            : " (modifiée par la consonne menante précédente via la règle Akson Nam)"
+            getTranslation('tone.akson_nam_modifier', language)
         )}
         {analysis.toneMark !== 'none' 
           ? getTranslation('tone.has_mark', language).replace('{mark}', translateMark(analysis.toneMark))
@@ -497,9 +493,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
               <div className="flex-1 min-h-[300px] border-2 border-dashed border-slate-200 rounded-3xl flex flex-col items-center justify-center p-8 text-center text-slate-400 opacity-50 bg-slate-50/50">
                 <Wand2 size={48} className="mb-4 opacity-40" />
                 <p className="font-bold text-sm">
-                  {language === 'en' 
-                    ? 'Select a letter to see the analysis and tone rules' 
-                    : 'Sélectionnez une lettre pour voir l\'analyse et la règle du ton'}
+                  {getTranslation('tone.select_letter_to_analyze', language)}
                 </p>
               </div>
             )}

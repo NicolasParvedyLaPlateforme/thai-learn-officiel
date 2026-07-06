@@ -1,4 +1,4 @@
-import { getTranslation } from "@/hooks/useTranslation";
+import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import { m as motion, AnimatePresence } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { Exercise, Word } from "@/types";
@@ -198,9 +198,7 @@ export default function Footer({
                               currentExercise.options as Word[]
                             ).find((o) => o.th === currentExercise.answer);
                             if (correctOpt) {
-                              return language === "en"
-                                ? correctOpt.en || correctOpt.fr
-                                : correctOpt.fr;
+                              return getLocalizedField(correctOpt as any, '', language);
                             }
                             return currentExercise.answer;
                           })()

@@ -49,7 +49,7 @@ export function buildSoundToLetter(
   }
 
   let question = `Dans le mot ${word.th}, quelle lettre produit le son « ${targetSound} » ?`;
-  if (language === 'en') {
+  if (false) {
     question = `In the word ${word.th}, which letter produces the sound "${targetSound}"?`;
   } else if (language === 'es') {
     question = `En la palabra ${word.th}, ¿qué letra produce el sonido "${targetSound}"?`;

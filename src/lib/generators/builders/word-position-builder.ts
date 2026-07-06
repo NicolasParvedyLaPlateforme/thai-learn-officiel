@@ -1,5 +1,5 @@
-import { Exercise, Phrase, Word } from "@/types";
-import { getTranslation } from '@/hooks/useTranslation';
+import { Exercise, Word, Phrase } from "@/types";
+import { getLocalizedField, getTranslation } from "@/hooks/useTranslation";
 
 export function buildWordPosition(
   phrase: Phrase,
@@ -31,7 +31,7 @@ export function buildWordPosition(
   }));
 
   let questionText = targetWord.fr;
-  if (language === 'en' && targetWord.en) questionText = targetWord.en;
+  questionText = getLocalizedField(targetWord, '', language);
   if (language === 'es' && targetWord.es) questionText = targetWord.es;
   if (language === 'de' && targetWord.de) questionText = targetWord.de;
   if (language === 'it' && targetWord.it) questionText = targetWord.it;

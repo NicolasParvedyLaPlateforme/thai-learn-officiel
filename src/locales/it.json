@@ -590,5 +590,14 @@
   "mail.reset_title": "Reimpostazione password",
   "mail.reset_body": "Hai richiesto di reimpostare la tua password. Fai clic sul link sottostante per cambiarla:",
   "mail.reset_btn": "Reimposta la mia password",
-  "mail.reset_ignore": "Se non hai fatto questa richiesta, puoi ignorare questa email."
+  "mail.reset_ignore": "Se non hai fatto questa richiesta, puoi ignorare questa email.",
+  "writing.write_this_word": "Scrivi questa parola in tailandese",
+  "writing.write_this_sentence": "Scrivi questa frase in tailandese",
+  "path.time_limit": "Hai {minutes} minuto{s} per rispondere al maggior numero di domande possibile. Più vai avanti, migliore sarà il tuo punteggio!",
+  "tone.is_live_or_dead": "Questa è una {type} che inizia con una {class}",
+  "tone.akson_nam_modifier": " (modificata dalla consonante iniziale precedente tramite la regola Akson Nam)",
+  "tone.implicit_sara_a": "💡 Questa è una sillaba morta a causa di una vocale corta implicita (Sara A).",
+  "tone.select_letter_to_analyze": "Seleziona una lettera per visualizzare l'analisi e le regole tonali",
+  "auto.find_word_position": "Trova la posizione della parola",
+  "auto.listen_and_select_position": "Ascolta e seleziona la posizione corretta"
 }

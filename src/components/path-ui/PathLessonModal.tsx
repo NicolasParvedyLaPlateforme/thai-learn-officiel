@@ -233,9 +233,7 @@ export default function PathLessonModal({
                 {getTranslation('path.timed_assessment', language)}
               </Typography>
               <Typography variant="alert-desc">
-                {language === 'en'
-                  ? `You have ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} to answer as many questions as possible. The further you get, the better your score!`
-                  : `Vous avez ${estimatedMins} minute${estimatedMins > 1 ? 's' : ''} pour répondre à un maximum de questions. Plus vous allez loin, meilleur est votre score !`}
+                {getTranslation('path.time_limit', language).replace('{minutes}', estimatedMins.toString()).replace('{s}', estimatedMins > 1 ? 's' : '')}
               </Typography>
             </div>
           </div>

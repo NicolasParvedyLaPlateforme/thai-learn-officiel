@@ -588,5 +588,14 @@
   "mail.reset_title": "Restablecimiento de contraseña",
   "mail.reset_body": "Solicitaste restablecer tu contraseña. Haz clic en el enlace a continuación para cambiarla:",
   "mail.reset_btn": "Restablecer mi contraseña",
-  "mail.reset_ignore": "Si no hiciste esta solicitud, puedes ignorar este correo electrónico."
+  "mail.reset_ignore": "Si no hiciste esta solicitud, puedes ignorar este correo electrónico.",
+  "writing.write_this_word": "Escribe esta palabra en tailandés",
+  "writing.write_this_sentence": "Escribe esta oración en tailandés",
+  "path.time_limit": "Tienes {minutes} minuto{s} para responder tantas preguntas como sea posible. ¡Cuanto más lejos llegues, mejor será tu puntuación!",
+  "tone.is_live_or_dead": "Esta es una {type} que comienza con una {class}",
+  "tone.akson_nam_modifier": " (modificada por la consonante principal anterior mediante la regla Akson Nam)",
+  "tone.implicit_sara_a": "💡 Esta es una sílaba muerta debido a una vocal corta implícita (Sara A).",
+  "tone.select_letter_to_analyze": "Selecciona una letra para ver el análisis y las reglas de tono",
+  "auto.find_word_position": "Encuentra la posición de la palabra",
+  "auto.listen_and_select_position": "Escucha y selecciona la posición correcta"
 }
