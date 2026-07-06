@@ -35,7 +35,6 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
     };
 
     if (!fill) {
-      // Utiliser maxWidth/maxHeight plutôt que width/height fixes pour permettre le rétrécissement
       style.width = "100%";
       style.maxWidth = width ? `${width}px` : undefined;
       style.height = "100%";
@@ -45,11 +44,10 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
 
     return (
       <div
-        // Ajout de 'shrink min-h-0' pour Flexbox
         className={`flex items-center justify-center shrink min-h-0 ${fill ? "absolute inset-0" : ""} ${className}`}
         style={style}
       >
-        <span style={{ fontSize: "65cqmin" }}>{mapping.emoji}</span>
+        <span style={{ fontSize: "55cqmin", opacity: 0.95 }}>{mapping.emoji}</span>
       </div>
     );
   }
@@ -58,7 +56,6 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
     <Image
       src={src}
       alt={alt}
-      // Ajout de 'w-full h-full object-contain' si !fill pour que l'image respecte les limites du div
       className={`${className} ${priority ? '' : 'transition-opacity duration-300 ease-out'} z-10 ${!fill ? 'w-full h-full object-contain' : ''}`}
       style={{ opacity: priority || isLoaded ? undefined : 0 }}
       fill={fill}
@@ -75,7 +72,7 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
 
   const skeletonElement = (
     <div
-      className={`absolute inset-0 bg-slate-200 transition-opacity duration-300 z-0 rounded-[inherit] pointer-events-none ${isLoaded ? 'opacity-0' : 'opacity-100 animate-pulse'}`}
+      className={`absolute inset-0 bg-slate-100 transition-opacity duration-300 z-0 rounded-[inherit] pointer-events-none ${isLoaded ? 'opacity-0' : 'opacity-100 animate-pulse'}`}
       aria-hidden="true"
     />
   );
@@ -91,7 +88,6 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
 
   return (
     <div
-      // shrink et min-h-0 autorisent la réduction. w-full prend toute la largeur dispo.
       className="relative flex items-center justify-center overflow-hidden shrink min-h-0 w-full"
       style={{
         maxWidth: width ? `${width}px` : "100%",

@@ -8,8 +8,7 @@ import { useProgressStore } from "@/lib/store";
 import { m as motion, AnimatePresence } from "framer-motion";
 import { TooltipHint } from '../ui/TooltipHint';
 
-// A simple component to render the french question with tooltips (hints)
-export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerciseOptions, hideHints, disableTooltips, hideColors, alwaysShowPhonetic, answerTh, correctComponents, charHintRegex, isChecking, forceHideRomanization, currentThaiWordForAudio, isReverse, rightElement }: { text: string, dictionary: Word[], phrases: Phrase[], isSentence: boolean, exerciseOptions: Word[], hideHints?: boolean, disableTooltips?: boolean, hideColors?: boolean, alwaysShowPhonetic?: boolean, answerTh?: string, correctComponents?: string[], charHintRegex?: RegExp, isChecking?: boolean, forceHideRomanization?: boolean, currentThaiWordForAudio?: string, isReverse?: boolean, rightElement?: React.ReactNode }) {
+export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerciseOptions, hideHints, disableTooltips, hideColors, alwaysShowPhonetic, answerTh, correctComponents, charHintRegex, isChecking, forceHideRomanization, currentThaiWordForAudio, isReverse, bottomElement }: { text: string, dictionary: Word[], phrases: Phrase[], isSentence: boolean, exerciseOptions: Word[], hideHints?: boolean, disableTooltips?: boolean, hideColors?: boolean, alwaysShowPhonetic?: boolean, answerTh?: string, correctComponents?: string[], charHintRegex?: RegExp, isChecking?: boolean, forceHideRomanization?: boolean, currentThaiWordForAudio?: string, isReverse?: boolean, bottomElement?: React.ReactNode }) {
   const { language, showRomanization, setToneAnalyzerModalWord } = useProgressStore();
   const [isVocabOpen, setIsVocabOpen] = useState(false);
   // Try to match the ENTIRE phrase/word first
@@ -36,9 +35,6 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
       // the mapping word to highlight:
       const translatedWord = getLocalizedField(currentDictWord, '', language);
       if (translatedWord) {
-        // 1. Try exact match
-        // 2. Try split by slashes (e.g. "bien / à l'aise")
-        // 3. Try individual words > 3 chars (e.g. "particule femme" -> "femme")
         const searchPhrases = [
           translatedWord,
           ...translatedWord.split('/').map(s => s.trim()),
@@ -87,28 +83,21 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
     }
   }
 
-  // Create the main text content, always wrapping it in a TooltipHint if we have the translation [Mot à traduire exemple Bonjour] 
-  //ne pas supprimer, car c'est pas sûr qu'on garde
-  const OldinnerText = (
-    <span className={`inline-block ${getDottedClass()} ${isReverse ? 'font-thai text-3xl md:text-5xl text-slate-600 mb-2' : 'text-slate-600 font-medium'}`}>
-      {highlightedText}
-    </span>
-  );
-
-  // Create the main text content, always wrapping it in a TooltipHint if we have the translation [Mot à traduire exemple Bonjour]
   const innerText = (
-    <span className={`inline-block ${isReverse ? 'font-thai text-3xl md:text-5xl text-slate-600 mb-2' : 'text-slate-600 text-medium'}`}>
+    <span className={`inline-block ${isReverse ? 'font-thai text-4xl md:text-5xl text-slate-900 mb-2' : 'text-slate-900 font-bold text-3xl md:text-4xl'}`}>
       {highlightedText}
     </span>
   );
 
   const mainContent = (
-    <span className={`flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-6 leading-tight font-normal tracking-tight pt-2 pb-6 relative ${isReverse ? 'text-3xl lg:text-2xl md:text-6xl text-slate-800 font-[Comic Sans MS] ' : 'text-3xl lg:text-2xl md:text-5xl text-slate-800 font-[Comic Sans MS]'}`}>
+    <span className={`flex flex-col items-center justify-center leading-tight tracking-tight pt-2 relative w-full`}>
       {exactMatch ? (
         shouldShowPhonetic ? (
-          <span className="inline-flex flex-col items-center justify-center text-center relative group font-[Comic Sans MS]">
+          <span className="inline-flex flex-col items-center justify-center text-center relative group w-full">
             {innerText}
-            <span className="text-sm md:text-base font-medium tracking-wide mt-1 text-center w-full font-[Comic Sans MS]">[<ColoredPhonetic phonetic={exactMatch.phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />]</span>
+            <span className="text-base md:text-lg font-medium tracking-wide mt-2 text-center w-full">
+              [<ColoredPhonetic phonetic={exactMatch.phonetic} charHintRegex={charHintRegex} hideColors={hideColors} />]
+            </span>
           </span>
         ) : (
           innerText
@@ -117,7 +106,7 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
         innerText
       )}
       {currentThaiWordForAudio && !wordHighlighted && (
-        <div className="absolute left-1/2 -translate-x-1/2 top-full -mt-2 flex flex-col items-center z-10">
+        <div className="absolute left-1/2 -translate-x-1/2 top-full flex flex-col items-center z-10 mt-2">
           <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-sky-200 -mb-[1px] z-10" />
           <button onClick={(e) => {
             e.preventDefault();
@@ -155,16 +144,15 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
   );
 
   return (
-    <div className="flex flex-col-reverse md:flex-col gap-4 md:gap-8 relative items-center w-full ">
-      <div className="relative inline-flex items-center flex-col">
+    <div className="flex flex-col items-center w-full gap-4">
+      <div className="relative flex flex-col items-center w-full">
         {tooltipWrappedContent}
-        {rightElement && (
-          <span className="left-full top-1/2 -translate-y-1/2 inline-flex items-center shrink-0 mt-3">
-            {rightElement}
-          </span>
-        )}
       </div>
-
+      {bottomElement && (
+        <div className="flex justify-center mt-2">
+          {bottomElement}
+        </div>
+      )}
     </div>
   );
 }
