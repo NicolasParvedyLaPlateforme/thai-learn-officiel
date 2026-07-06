@@ -126,6 +126,7 @@ export function useLessonGameLogic(lesson: any) {
     level: number;
     partIndex?: number | null;
     mode?: string | null;
+    language?: string;
   } | null>(null);
 
   const currentLevel = requestedLevelStr
@@ -333,7 +334,7 @@ export function useLessonGameLogic(lesson: any) {
       setInitialTime(null);
     }
     setStartTime(Date.now());
-    setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: modeParam ?? null });
+    setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: modeParam ?? null, language });
   };
 
   useEffect(() => {
@@ -362,15 +363,16 @@ export function useLessonGameLogic(lesson: any) {
       exercisesGeneratedFor.id !== lesson.id ||
       exercisesGeneratedFor.level !== currentLevel ||
       exercisesGeneratedFor.partIndex !== partIndex ||
-      exercisesGeneratedFor.mode !== currentMode
+      exercisesGeneratedFor.mode !== currentMode ||
+      exercisesGeneratedFor.language !== language
     ) {
       setShowExerciseUI(false);
-      const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
+      const savedStateKey = `${lesson.id}_${currentLevel}_${language}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
       const savedState = inProgressLessons[savedStateKey];
 
       if (currentMode !== 'training' && currentMode !== 'revision' && savedState && savedState.exercises && savedState.exercises.length > 0) {
         setShowResumePrompt(true);
-        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode });
+        setExercisesGeneratedFor({ id: lesson.id, level: currentLevel, partIndex, mode: currentMode, language });
         return;
       }
 
@@ -426,7 +428,7 @@ export function useLessonGameLogic(lesson: any) {
   }, [exercises]);
 
   const handleResume = () => {
-    const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
+    const savedStateKey = `${lesson.id}_${currentLevel}_${language}${isPart ? `_part_${partIndex}` : ''}`;
     const savedState = inProgressLessons[savedStateKey];
     if (savedState) {
       setInitialExercises(savedState.exercises);
@@ -441,7 +443,7 @@ export function useLessonGameLogic(lesson: any) {
   };
 
   const handleRestart = () => {
-    const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}`;
+    const savedStateKey = `${lesson.id}_${currentLevel}_${language}${isPart ? `_part_${partIndex}` : ''}`;
     saveInProgressLesson(savedStateKey, null);
     setShowResumePrompt(false);
     setShowExerciseUI(false);
@@ -477,7 +479,7 @@ export function useLessonGameLogic(lesson: any) {
     if (exercises.length > 0 && !isFinished && !showResumePrompt && isDataLoaded) {
       const currentMode = searchParams.get('mode');
       if (currentMode !== 'training' && currentMode !== 'revision') {
-        const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
+        const savedStateKey = `${lesson.id}_${currentLevel}_${language}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
         saveInProgressLesson(savedStateKey, {
           exercises,
           currentIndex,
@@ -498,7 +500,7 @@ export function useLessonGameLogic(lesson: any) {
       }
       const currentMode = searchParams.get('mode');
       if (currentMode !== 'training' && currentMode !== 'revision') {
-        const savedStateKey = `${lesson.id}_${currentLevel}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
+        const savedStateKey = `${lesson.id}_${currentLevel}_${language}${isPart ? `_part_${partIndex}` : ''}${currentMode ? `_${currentMode}` : ''}`;
         saveInProgressLesson(savedStateKey, null);
       }
     }
