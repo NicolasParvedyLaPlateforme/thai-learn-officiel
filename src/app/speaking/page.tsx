@@ -1,6 +1,8 @@
 'use client';
 
-import { getTranslation } from "@/hooks/useTranslation";
+import { getTranslation, useTranslation } from "@/hooks/useTranslation";
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgressStore } from "@/lib/store";
@@ -53,9 +55,9 @@ export default function SpeakingPage() {
         <p className="text-xl text-slate-600 mb-6">
           {getTranslation('auto.no_words_selected', language)}
         </p>
-        <button onClick={() => router.push('/practice')} className="px-6 py-3 bg-orange-500 text-white rounded-xl font-bold hover:bg-orange-600 transition-colors">
+        <Button onClick={() => router.push('/practice')} variant="orange" className="px-6 py-3 rounded-xl font-bold transition-colors">
           {getTranslation('auto.go_back', language)}
-        </button>
+        </Button>
       </div>
     );
   }
@@ -63,12 +65,13 @@ export default function SpeakingPage() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
       <header className="bg-white border-b border-slate-200 px-4 h-16 flex items-center sticky top-0 z-50 gap-4">
-        <button 
+        <IconButton 
+          size="md"
           onClick={() => router.push('/practice')}
-          className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-slate-400 hover:bg-slate-100 transition-colors"
+          className="shrink-0 text-slate-400 hover:bg-slate-100"
         >
           <ArrowLeft size={24} />
-        </button>
+        </IconButton>
         <div className="flex-1 flex items-center gap-4">
            <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
               <div className="h-full bg-orange-500 transition-all duration-500 ease-out" style={{ width: `${vocabulary.length > 0 ? (currentIndex / vocabulary.length) * 100 : 0}%` }}></div>

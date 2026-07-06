@@ -1,7 +1,7 @@
 import { Lesson, Exercise } from "@/types";
 import { generateLevel0, generateLevel1, generateLevel2, generateLevel3, generateLevel4To6, generateLevel7, generateLevel8, generateLevel9 } from './levels';
 import { generateReviewLesson } from './reviews';
-import { buildIntro } from './builders';
+import { buildIntro, buildComposition } from './builders';
 
 export function generateExercises(
   lesson: Lesson, 
@@ -68,20 +68,21 @@ export function generateExercises(
   if (level === 0) {
      return generateLevel0(validLessonWords, globalWords, language);
   }
+  if (level === 1) {
+     return generateLevel1(validLessonWords, lessonPhrases, globalWords, language);
+  }
+  if (level === 2) {
+     return generateLevel2(validLessonWords, lessonPhrases, globalWords, language);
+  }
+  if (level === 3) {
+     const allPhrasesForLvl3 = allLessons.flatMap(l => l.phrases);
+     return generateLevel3(validLessonWords, lessonPhrases, globalWords, allPhrasesForLvl3, language, totalParts);
+  }
 
   let finalExercises: Exercise[] = [];
   const allPhrases = allLessons.flatMap(l => l.phrases);
 
   switch (level) {
-    case 1:
-      finalExercises = generateLevel1(validLessonWords, lessonPhrases, globalWords, language);
-      break;
-    case 2:
-      finalExercises = generateLevel2(validLessonWords, lessonPhrases, globalWords, language);
-      break;
-    case 3:
-      finalExercises = generateLevel3(validLessonWords, lessonPhrases, globalWords, allPhrases, language, totalParts);
-      break;
     case 4:
     case 5:
     case 6:
@@ -137,13 +138,6 @@ export function generateExercises(
   const introducedIds = new Set<string>();
 
   for (const ex of finalResult) {
-    if (level === 1 && ex.type === 'sentence-builder') {
-      const phrase = lessonPhrases.find(p => p.th === ex.answer);
-      if (phrase && !introducedIds.has(phrase.id)) {
-        introducedIds.add(phrase.id);
-        exercisesWithIntros.push(buildIntro(phrase, language));
-      }
-    }
     exercisesWithIntros.push(ex);
   }
 

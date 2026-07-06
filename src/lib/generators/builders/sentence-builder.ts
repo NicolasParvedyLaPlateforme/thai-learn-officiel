@@ -41,6 +41,7 @@ export interface FillInBlankOptions {
   hideHints?: boolean;
   disableTooltips?: boolean;
   pool?: Word[];
+  mode?: 'classic' | 'translation' | 'audio';
 }
 
 export function buildFillInTheBlank(
@@ -48,7 +49,7 @@ export function buildFillInTheBlank(
   language: string,
   options: FillInBlankOptions
 ): Exercise | null {
-  const { numMisspelledDistractors = 1, maxMistakes = 2, hideRomanization = false, hideHints = false, disableTooltips = false, pool = [] } = options;
+  const { numMisspelledDistractors = 1, maxMistakes = 2, hideRomanization = false, hideHints = false, disableTooltips = false, pool = [], mode = 'classic' } = options;
   
   if (!phrase.components || phrase.components.length <= 1) return null;
   const validIndices = phrase.components.map((c, i) => c !== 'w_dots' ? i : -1).filter(i => i !== -1);
@@ -58,7 +59,16 @@ export function buildFillInTheBlank(
   const blankWordId = phrase.components[blankIndex];
   
   const blankWord = pool.find(w => w.id === blankWordId) || {id: blankWordId, th: blankWordId, fr: '', en: '', phonetic: ''};
-  const misspelledOptions = generateMisspelledWords(blankWord as any, numMisspelledDistractors);
+  
+  let optionsList: any[] = [];
+  if (mode === 'classic') {
+    const misspelledOptions = generateMisspelledWords(blankWord as any, numMisspelledDistractors);
+    optionsList = [blankWord, ...misspelledOptions];
+  } else {
+    const validDistractors = pool.filter(w => w.id !== blankWordId);
+    const shuffledDistractors = shuffle(validDistractors).slice(0, numMisspelledDistractors);
+    optionsList = [blankWord, ...shuffledDistractors];
+  }
   
   const prefilledComponents = phrase.components.map((id, i) => {
       if (i === blankIndex) return '';
@@ -75,10 +85,11 @@ export function buildFillInTheBlank(
     type: 'sentence-builder',
     question: getExerciseTranslation(phrase, language),
     answer: phrase.th,
-    options: shuffle([blankWord, ...misspelledOptions]) as any,
+    options: shuffle(optionsList) as any,
     correctComponents: phrase.components,
     prefilledComponents,
     isFillInBlank: true,
+    fillInBlankMode: mode,
     blankIndex,
     blankHint,
     hideHints,

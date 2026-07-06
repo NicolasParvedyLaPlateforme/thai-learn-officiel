@@ -71,6 +71,7 @@ export interface ProgressState {
   clearPendingGoldConversion: () => void;
   unopenedGifts: { learn: number, alphabet: number, speak: number };
   claimGift: (category: 'learn' | 'alphabet' | 'speak') => { xp: number, coins: number } | null;
+  applyGiftResult: (category: 'learn' | 'alphabet' | 'speak', xpAmount: number, coinsAmount: number, totalXp: number, totalCoins: number) => void;
   seenAlphabets: string[]; // Keep track of seen alphabet letters
   isExerciseRunning: boolean;
   setExerciseRunning: (state: boolean) => void;
@@ -80,7 +81,7 @@ export interface ProgressState {
   getExpectedXp: (lessonId: string, levelIndex: number, isBilan: boolean, isPart?: boolean, isFullLongLevel?: boolean, partIndex?: number | null) => { xp: number, maxXp: number, isFirstTime: boolean, key: string };
   completeLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number, isBilan?: boolean, isFromParts?: boolean) => void;
   completeLessonPart: (lessonId: string, fallbackXp: number, playedLevel: number, partIndex: number, totalParts: number, earnedStars?: number, isBilan?: boolean) => void;
-  addXp: (amount: number) => void;
+  addXp: (amount: number, category?: 'learn' | 'alphabet' | 'speak') => void;
   unlockLessonManual: (lessonId: string) => void;
   resetProgress: () => void;
   resetLessonLevel: (lessonId: string) => void;
@@ -102,6 +103,7 @@ export interface ProgressState {
   speakCompletedLessons: string[];
   speakLessonLevels: Record<string, number>;
   speakLessonStars: Record<string, number[]>;
+  fullLevelsCompleted: Record<string, number[]>;
   completeSpeakLesson: (lessonId: string, fallbackXp: number, playedLevel?: number, earnedStars?: number) => void;
   hiddenInstructions: string[];
   hideInstruction: (key: string) => void;
@@ -141,4 +143,8 @@ export interface ProgressState {
   setLastMergedEmail: (email: string | null) => void;
   forceSyncTrigger: number;
   triggerForceSync: () => void;
+
+  // /next mode — unité tirée au hasard chaque jour
+  nextModeUnit: { unitIndex: number; date: string } | null;
+  setNextModeUnit: (data: { unitIndex: number; date: string } | null) => void;
 }

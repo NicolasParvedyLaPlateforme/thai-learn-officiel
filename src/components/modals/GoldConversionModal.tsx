@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useProgressStore } from "@/lib/store";
-import { m as motion , AnimatePresence } from "motion/react";
+import { m as motion, AnimatePresence } from "motion/react";
 import { Coins, Sparkles, Trophy } from 'lucide-react';
 import { getTranslation } from "@/hooks/useTranslation";
+import { Button } from '../ui/Button';
 
 export function GoldConversionModal() {
   const { pendingGoldConversion, clearPendingGoldConversion, language } = useProgressStore();
@@ -33,13 +34,13 @@ export function GoldConversionModal() {
 
   return (
     <AnimatePresence>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
       >
-        <motion.div 
+        <motion.div
           initial={{ scale: 0.9, y: 20 }}
           animate={{ scale: 1, y: 0 }}
           exit={{ scale: 0.9, y: 20 }}
@@ -47,7 +48,7 @@ export function GoldConversionModal() {
         >
           {/* Decorative background */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-amber-400 to-yellow-500 opacity-20"></div>
-          
+
           <div className="relative flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mb-6 shadow-inner relative">
               <Coins size={40} className="relative z-10" />
@@ -57,7 +58,7 @@ export function GoldConversionModal() {
             <h2 className="text-2xl font-extrabold text-slate-800 mb-2">
               {getTranslation('leaderboard.month_ended', language)}
             </h2>
-            
+
             <p className="text-slate-500 mb-8 leading-relaxed">
               {getTranslation('leaderboard.month_converted', language)}
             </p>
@@ -67,7 +68,7 @@ export function GoldConversionModal() {
                 <span className="text-sm font-bold text-slate-400 mb-1 uppercase tracking-wider">{getTranslation('leaderboard.old_xp', language)}</span>
                 <span className="text-2xl font-extrabold text-slate-700 line-through opacity-70">{pendingGoldConversion.oldXp}</span>
               </div>
-              
+
               <div className="flex flex-col items-center text-amber-500 animate-bounce">
                 <span className="text-2xl font-bold">→</span>
               </div>
@@ -81,12 +82,14 @@ export function GoldConversionModal() {
               </div>
             </div>
 
-            <button 
+            <Button
+              variant="amberGamified"
+              size="lg"
+              className="w-full text-lg shadow-lg"
               onClick={() => clearPendingGoldConversion()}
-              className="w-full bg-amber-500 text-white font-bold text-lg py-4 rounded-xl border-b-4 border-amber-600 active:border-b-0 active:translate-y-1 transition-all shadow-lg hover:bg-amber-400"
             >
               {getTranslation('leaderboard.collect_coins', language)}
-            </button>
+            </Button>
           </div>
         </motion.div>
       </motion.div>

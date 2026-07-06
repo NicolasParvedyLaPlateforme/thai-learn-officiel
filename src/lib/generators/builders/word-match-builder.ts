@@ -3,7 +3,7 @@ import { getExerciseTranslation } from '@/lib/translation-utils';
 import { shuffle, generateMisspelledWords } from '../utils';
 
 export interface WordMatchOptions {
-  distractorMode: 'random' | 'misspelled' | 'reverse';
+  distractorMode: 'random' | 'reverse';
   numDistractors: number;
   maxMistakes?: number;
   hideRomanization?: boolean;
@@ -31,17 +31,12 @@ export function buildWordMatch(
   
   let finalOptions: any[] = [];
   
-  if (distractorMode === 'misspelled') {
-    const distractors = generateMisspelledWords(word, numDistractors);
-    finalOptions = shuffle([word, ...distractors]);
-  } else {
-    // 'random' or 'reverse'
-    let distractors = shuffle(validLessonWords.filter(w => w.id !== word.id)).slice(0, numDistractors);
-    if (distractors.length < numDistractors) {
-       distractors.push(...shuffle(pool.filter(w => w.id !== word.id && !distractors.find(sw => sw.id === w.id))).slice(0, numDistractors - distractors.length));
-    }
-    finalOptions = shuffle([word, ...distractors]);
+  // 'random' or 'reverse'
+  let distractors = shuffle(validLessonWords.filter(w => w.id !== word.id)).slice(0, numDistractors);
+  if (distractors.length < numDistractors) {
+     distractors.push(...shuffle(pool.filter(w => w.id !== word.id && !distractors.find(sw => sw.id === w.id))).slice(0, numDistractors - distractors.length));
   }
+  finalOptions = shuffle([word, ...distractors]);
 
   return {
     id: `wm-${distractorMode}-${word.id}-${Date.now()}-${Math.random()}`,

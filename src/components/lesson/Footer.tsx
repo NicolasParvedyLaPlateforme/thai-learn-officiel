@@ -34,6 +34,7 @@ export default function Footer({
     if (
       !isChecking &&
       currentExercise.type !== "intro" &&
+      currentExercise.type !== "composition" &&
       (currentExercise.type as any) !== "review"
     ) {
       return false;
@@ -50,14 +51,13 @@ export default function Footer({
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "100%", opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[110px] py-4 md:py-0 border-t items-center justify-center flex transition-colors duration-300 z-50 ${
-            isChecking
-              ? isCorrect
-                ? "bg-emerald-50/90 backdrop-blur-md border-emerald-100"
-                : "bg-rose-50/90 backdrop-blur-md border-rose-100 shadow-[0_-10px_40px_rgba(244,63,94,0.05)]"
-              : "bg-white/95 backdrop-blur-md border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]"
-          }`}
+          transition={{ type: "tween", ease: "easeOut", duration: 0.25 }}
+          className={`absolute bottom-0 left-0 right-0 w-full min-h-[100px] md:min-h-[110px] py-4 md:py-0 border-t-2 items-center justify-center flex transition-colors duration-300 z-50 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.05)] ${isChecking
+            ? isCorrect
+              ? "border-emerald-200"
+              : "border-rose-200"
+            : "border-slate-100"
+            }`}
         >
           <div className="w-full max-w-3xl px-6 flex sm:flex-row flex-col items-center justify-between gap-6">
             <div className="flex-1 w-full text-center sm:text-left">
@@ -86,7 +86,7 @@ export default function Footer({
                                 c === currentExercise.correctComponents![i]
                             ).length /
                               currentExercise.correctComponents!.length) *
-                              100
+                            100
                           )}
                           % {getTranslation('auto.match', language)}
                         </span>
@@ -129,7 +129,7 @@ export default function Footer({
                                   Math.max(a.length, b.length)
                                 );
                               })()) *
-                              100
+                            100
                           )}
                           % {getTranslation('auto.match', language)}
                         </span>
@@ -142,8 +142,8 @@ export default function Footer({
                     {customCorrectAnswer ? (
                       customCorrectAnswer
                     ) : currentExercise.type === "writing" &&
-                    currentExercise.blindMode &&
-                    currentExercise.correctComponents ? (
+                      currentExercise.blindMode &&
+                      currentExercise.correctComponents ? (
                       (() => {
                         const isCombiningLocal = (charStr: string) => {
                           if (!charStr) return false;
@@ -194,16 +194,16 @@ export default function Footer({
                       <span className={currentExercise.reverse ? "font-sans" : ""}>
                         {currentExercise.reverse
                           ? (() => {
-                              const correctOpt = (
-                                currentExercise.options as Word[]
-                              ).find((o) => o.th === currentExercise.answer);
-                              if (correctOpt) {
-                                return language === "en"
-                                  ? correctOpt.en || correctOpt.fr
-                                  : correctOpt.fr;
-                              }
-                              return currentExercise.answer;
-                            })()
+                            const correctOpt = (
+                              currentExercise.options as Word[]
+                            ).find((o) => o.th === currentExercise.answer);
+                            if (correctOpt) {
+                              return language === "en"
+                                ? correctOpt.en || correctOpt.fr
+                                : correctOpt.fr;
+                            }
+                            return currentExercise.answer;
+                          })()
                           : currentExercise.answer}
                       </span>
                     )}
@@ -217,21 +217,22 @@ export default function Footer({
               onClick={handleCheck}
               disabled={
                 disableCheck !== undefined ? disableCheck :
-                currentExercise.type !== "intro" &&
-                !isChecking &&
-                (!selectedAnswer ||
-                  (Array.isArray(selectedAnswer) &&
-                    (currentExercise.type === "writing" &&
-                    currentExercise.correctComponents
-                      ? selectedAnswer.length !==
+                  currentExercise.type !== "intro" &&
+                  currentExercise.type !== "composition" &&
+                  !isChecking &&
+                  (!selectedAnswer ||
+                    (Array.isArray(selectedAnswer) &&
+                      (currentExercise.type === "writing" &&
+                        currentExercise.correctComponents
+                        ? selectedAnswer.length !==
                         currentExercise.correctComponents.length
-                      : selectedAnswer.length === 0)))
+                        : selectedAnswer.length === 0)))
               }
               size="lg"
               variant={isChecking && !isCorrect ? "dangerGamified" : "gamified"}
               className="w-full sm:w-auto min-w-[200px] text-lg uppercase tracking-wider"
             >
-              {currentExercise.type === "intro" || isChecking
+              {currentExercise.type === "intro" || currentExercise.type === "composition" || isChecking
                 ? getTranslation('auto.continue', language)
                 : getTranslation('auto.check', language)}
             </Button>

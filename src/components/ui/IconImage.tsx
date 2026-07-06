@@ -35,15 +35,18 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
     };
 
     if (!fill) {
-      style.width = width ? `${width}px` : "100%";
-      style.height = height ? `${height}px` : "100%";
-      style.aspectRatio = "1 / 1";
+      // Utiliser maxWidth/maxHeight plutôt que width/height fixes pour permettre le rétrécissement
+      style.width = "100%";
+      style.maxWidth = width ? `${width}px` : undefined;
+      style.height = "100%";
+      style.maxHeight = height ? `${height}px` : undefined;
+      style.aspectRatio = width && height ? `${width} / ${height}` : "1 / 1";
     }
 
     return (
       <div
-        className={`flex items-center justify-center ${fill ? "absolute inset-0" : ""
-          } ${className}`}
+        // Ajout de 'shrink min-h-0' pour Flexbox
+        className={`flex items-center justify-center shrink min-h-0 ${fill ? "absolute inset-0" : ""} ${className}`}
         style={style}
       >
         <span style={{ fontSize: "65cqmin" }}>{mapping.emoji}</span>
@@ -55,11 +58,12 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
     <Image
       src={src}
       alt={alt}
-      className={`${className} ${priority ? '' : 'transition-opacity duration-300 ease-out'} z-10`}
+      // Ajout de 'w-full h-full object-contain' si !fill pour que l'image respecte les limites du div
+      className={`${className} ${priority ? '' : 'transition-opacity duration-300 ease-out'} z-10 ${!fill ? 'w-full h-full object-contain' : ''}`}
       style={{ opacity: priority || isLoaded ? undefined : 0 }}
       fill={fill}
-      width={width}
-      height={height}
+      width={fill ? undefined : width}
+      height={fill ? undefined : height}
       priority={priority}
       fetchPriority={priority ? "high" : undefined}
       sizes={sizes || (fill ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" : undefined)}
@@ -70,8 +74,8 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
   );
 
   const skeletonElement = (
-    <div 
-      className={`absolute inset-0 bg-slate-200 transition-opacity duration-300 z-0 rounded-[inherit] pointer-events-none ${isLoaded ? 'opacity-0' : 'opacity-100 animate-pulse'}`} 
+    <div
+      className={`absolute inset-0 bg-slate-200 transition-opacity duration-300 z-0 rounded-[inherit] pointer-events-none ${isLoaded ? 'opacity-0' : 'opacity-100 animate-pulse'}`}
       aria-hidden="true"
     />
   );
@@ -86,7 +90,15 @@ export default function IconImage({ src, alt, className = "", fill, width, heigh
   }
 
   return (
-    <div className={`relative flex items-center justify-center overflow-hidden`} style={{ width: width ? `${width}px` : "100%", height: height ? `${height}px` : "100%" }}>
+    <div
+      // shrink et min-h-0 autorisent la réduction. w-full prend toute la largeur dispo.
+      className="relative flex items-center justify-center overflow-hidden shrink min-h-0 w-full"
+      style={{
+        maxWidth: width ? `${width}px` : "100%",
+        maxHeight: height ? `${height}px` : "100%",
+        aspectRatio: width && height ? `${width} / ${height}` : undefined
+      }}
+    >
       {skeletonElement}
       {imageElement}
     </div>

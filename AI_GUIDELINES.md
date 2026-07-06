@@ -60,6 +60,14 @@ L'application est divisée en sections principales, chacune accessible via son U
 
 ---
 
+## 🔒 GESTION DE LA PROGRESSION ET DE L'XP (NOUVELLE ARCHITECTURE)
+
+- **Source de Vérité = Serveur :** L'XP, les pièces d'or (goldCoins) et les récompenses de cadeaux ne doivent **JAMAIS** être calculés de manière finale côté client (Zustand/localStorage). Le client effectue des mises à jour optimistes (UI immédiate), mais l'état réel et sécurisé est géré par les **Server Actions** dans `src/actions/secureProgress.ts`.
+- **Incrémentations Atomiques :** Lors de l'ajout d'XP ou d'or dans la base de données, il faut **TOUJOURS** utiliser l'incrémentation atomique de PostgreSQL (`{ increment: amount }`). Il ne faut jamais lire la valeur, l'additionner puis la sauvegarder pour éviter les conflits et écrasements ("Race Conditions").
+- **Synchronisation JSON (`SyncProgress`) :** La sauvegarde périodique de l'état `progressData` (données annexes) via `saveProgress` doit **systématiquement fusionner (merge)** les données avec ce qui est déjà en base de données. Ne jamais écraser la totalité du JSON, pour ne pas perdre des données (comme les `unopenedGifts`).
+
+---
+
 ## 🚨 RÈGLES STRICTES ET INTERDITS
 
 ### 1. Fichiers de données (Intouchables 🚫)
@@ -132,3 +140,4 @@ Pour comprendre la structure des leçons et exercices, il faut se référer à `
 - **[12/06/2026] Cohérence UI & Traduction stricte** : Toujours vérifier si un composant UI équivalent existe déjà (ex: bouton micro, pied de page d'erreur/succès, modale) avant de l'implémenter de zéro. De plus, bannir les conditions "bricolées" de type `language === 'en'`. Utiliser systématiquement `getTranslation` (UI statique) et `getLocalizedField` (données), tout en pensant à mettre à jour **tous** les fichiers du dossier `locales/` lors de la création d'une nouvelle clé.
 - **[21/06/2026] Design System & Boutons (Gamified vs Flat)** : L'interface est un subtil mélange de "Flat Design" et de "Gamified Design". Règle d'or pour la hiérarchie visuelle : L'action **principale** doit toujours ressortir avec un style gamifié (variante `gamified` avec effet 3D "push" et couleur d'unité), tandis que les actions **secondaires** doivent se fondre dans la masse (variante `flat` en design plat et tons neutres). Ne jamais recréer de boutons avec des classes Tailwind en dur (copier-coller) : utiliser systématiquement le composant réutilisable `<Button>` ou `buttonVariants({ variant: '...' })` (`src/components/ui/Button.tsx`).
 - **[21/06/2026] Nombre d'étapes (Pré-calcul)** : Afin de garantir 100% de fiabilité entre le nombre d'exercices affiché dans l'UI (ex: Modale de leçon, Sidebar) et la réalité du jeu sans impacter les performances, l'application lit un fichier JSON statique généré à l'avance. **RÈGLE CRUCIALE :** Dès qu'une modification est apportée à la logique des générateurs d'exercices (`src/lib/generators/...`), il faut IMPÉRATIVEMENT lancer la commande `npx tsx scripts/generate-steps.ts` pour mettre à jour le fichier `src/data/steps_metadata.json` avec les nouveaux comptes d'étapes.
+- **[27/06/2026] Découpage UI/Logique & Centralisation des Types** : Afin de maintenir des composants lisibles (éviter les `Client Components` de 1000 lignes), la logique métier complexe (états, timers, vérifications) doit systématiquement être extraite dans des Hooks dédiés (ex: `src/hooks/useLessonGameLogic.ts`). De plus, les types et interfaces globaux (modèles de données partagés) doivent être centralisés dans `src/types/` et exposés via des "Barrels" (`index.ts`) pour éviter les imports circulaires et fluidifier la maintenance (ex: `import { Button } from "@/components/ui"`).

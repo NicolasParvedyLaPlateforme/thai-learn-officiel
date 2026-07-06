@@ -41,8 +41,22 @@ async function getAudioUrl(text: string): Promise<string> {
   return `/api/tts?text=${encodeURIComponent(text)}`;
 }
 
-export const playThaiTTS = (text: string) => {
+const ttsTextReplacements: Record<string, string> = {
+  'น': 'น หนู',
+  // You can add more single letter exceptions here if Google TTS mispronounces them
+};
+
+function sanitizeTtsText(text: string): string {
+  const trimmed = text.trim();
+  if (ttsTextReplacements[trimmed]) {
+    return ttsTextReplacements[trimmed];
+  }
+  return text;
+}
+
+export const playThaiTTS = (rawText: string) => {
   if (typeof window === 'undefined') return;
+  const text = sanitizeTtsText(rawText);
   const now = Date.now();
   if (text === lastTtsText && now - lastTtsTime < 300) {
     return; // deduplicate rapid identical calls
@@ -113,13 +127,14 @@ export const playThaiTTS = (text: string) => {
   })();
 };
 
-export const playThaiTTSAsync = (text: string): Promise<void> => {
+export const playThaiTTSAsync = (rawText: string): Promise<void> => {
   return new Promise((resolve) => {
     if (typeof window === 'undefined') {
       resolve();
       return;
     }
     
+    const text = sanitizeTtsText(rawText);
     const now = Date.now();
     if (text === lastTtsText && now - lastTtsTime < 300) {
       resolve(); // ignore rapid identical calls
@@ -266,7 +281,7 @@ export const preloadThaiAudio = async (texts: string[]) => {
   if (typeof window === 'undefined') return;
   // Preload in batches to avoid network congestion
   for (let i = 0; i < texts.length; i += 5) {
-    const batch = texts.slice(i, i + 5);
+    const batch = texts.slice(i, i + 5).map(sanitizeTtsText);
     await Promise.all(
       batch.map(async (text) => {
         try {

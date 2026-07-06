@@ -1,10 +1,11 @@
 import IconImage from "@/components/ui/IconImage";
-import { useEffect } from "react";
-import { Exercise, Lesson, Word } from "@/types";
+import React, { useMemo, useEffect } from 'react';
+import { Word, Exercise, Lesson } from "@/types";
 import { SentenceWithHints } from "@/components/learn/Hints";
 import { playThaiTTS } from "@/lib/tts";
 import { m as motion } from "motion/react";
 import { useTranslation } from "@/hooks/useTranslation";
+import { IconButton } from "@/components/ui/IconButton";
 
 interface QuestionAreaProps {
   currentExercise: Exercise;
@@ -139,7 +140,9 @@ export default function QuestionArea({
   return (
     <>
       {/* Container for Question Content */}
-      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-8 w-full">
+      {/* Ajout de 'shrink min-h-0 flex-1' ici pour s'assurer que le parent global peut rétrécir */}
+      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-8 w-full shrink min-h-0 flex-1">
+
         {/* Image Box */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -152,12 +155,11 @@ export default function QuestionArea({
               currentExercise.type === "writing"
               ? "flex"
               : "hidden"
-            } ${currentExercise.type === "sentence-builder" ||
-              currentExercise.type === "free-typing" ||
-              currentExercise.type === "writing"
-              ? "w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-2xl text-5xl md:text-4xl"
-              : "w-40 h-40 sm:w-48 sm:h-48 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-3xl text-7xl md:text-5xl"
-            } mx-auto items-center justify-center relative flex-shrink-0 ${imageUrl
+            } 
+          /* --- LES CHANGEMENTS SONT ICI --- */
+          w-full max-w-64 sm:max-w-72 md:max-w-80 lg:max-w-64 aspect-square shrink min-h-0 min-w-0
+          /* -------------------------------- */
+          rounded-[2rem] text-7xl md:text-8xl mx-auto items-center justify-center relative ${imageUrl
               ? "bg-transparent overflow-visible"
               : "bg-emerald-50 shadow-sm border border-emerald-100 overflow-hidden"
             }`}
@@ -175,7 +177,7 @@ export default function QuestionArea({
             <span>🐘</span>
           )}
           {!imageUrl && (
-            <div className="absolute -right-2 -top-2 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full z-10"></div>
+            <div className="absolute -right-2 -top-2 w-6 h-6 bg-emerald-500 border-2 border-white rounded-full z-10 "></div>
           )}
         </motion.div>
 
@@ -184,16 +186,16 @@ export default function QuestionArea({
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="flex-1 mt-2 md:mt-0 flex flex-col items-center w-full"
+          className="flex-1 mt-2 md:mt-0 flex flex-col items-center w-full mb-8 sm:mb-12"
         >
           <div className="relative w-full text-center mt-2 md:mt-0">
             {currentExercise.type === "intro" ? (
-              <div className="flex flex-col items-center gap-4">
-                <p className="text-2xl text-slate-600 font-medium">
+              <div className="flex flex-col items-center gap-4 ">
+                <p className="text-3xl text-slate-600 font-medium mb-2">
                   {currentExercise.question}
                 </p>
                 <div
-                  className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md px-6 py-4 rounded-3xl border border-slate-100 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors"
+                  className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md px-6 py-4 rounded-3xl border border-slate-100 shadow-sm cursor-pointer hover:bg-slate-50 transition-colors "
                   onClick={() => playThaiTTS(currentExercise.answer)}
                 >
                   <span className="font-thai text-3xl md:text-4xl text-emerald-600 font-semibold">
@@ -211,7 +213,7 @@ export default function QuestionArea({
                         </span>
                       </div>
                     )}
-                  <div className="ml-2 bg-emerald-50 text-emerald-600 p-2.5 rounded-full">
+                  <div className="ml-2 bg-emerald-50 text-emerald-600 p-2.5 rounded-full ">
                     <svg
                       width="20"
                       height="20"
@@ -255,14 +257,15 @@ export default function QuestionArea({
                     isReverse={currentExercise.reverse}
                     currentThaiWordForAudio={currentThaiWordForAudio}
                     rightElement={
-                      <button
+                      <IconButton
+                        size="lg"
                         onClick={() => playThaiTTS(currentExercise.answer)}
-                        className="text-emerald-500 hover:text-emerald-600 bg-emerald-50 p-2 rounded-full transition-colors flex-shrink-0 ml-2"
+                        className="text-slate-500 hover:text-blue-600 hover:bg-slate-100 bg-slate-50 shrink-0 ml-2"
                         title={t('exercise.listen')}
                       >
                         <svg
-                          width="20"
-                          height="20"
+                          width="30"
+                          height="30"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -274,12 +277,12 @@ export default function QuestionArea({
                           <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                           <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
                         </svg>
-                      </button>
+                      </IconButton>
                     }
                   />
                 </div>
                 {currentExercise.blankHint && (
-                  <p className="text-xl text-emerald-600 font-medium pb-2 text-center mt-[-10px] md:mt-[-20px]">
+                  <p className="text-xl text-slate-500 font-medium pb-2 text-center mt-[-10px] md:mt-[-20px]">
                     {currentExercise.blankHint}
                   </p>
                 )}

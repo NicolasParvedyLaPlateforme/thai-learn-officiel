@@ -1,8 +1,12 @@
+"use client";
+
 import { getTranslation } from "@/hooks/useTranslation";
-import { useState } from "react";
-import { X, Star, Crown, Clock } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowLeft, Star, Crown, List } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Exercise } from "@/types";
+import { Button } from "../ui/Button";
+import { IconButton } from "../ui/IconButton";
 
 interface HeaderProgressBarProps {
   lessonId: string;
@@ -21,6 +25,86 @@ interface HeaderProgressBarProps {
   initialTime?: number | null;
   returnUrl?: string;
   customTitle?: React.ReactNode;
+  showHelpButton?: boolean;
+  onShowHelp?: () => void;
+}
+
+/** Affiche 5 étoiles avec animation sur la perte d'une étoile */
+function StarsBadge({
+  earnedStars,
+  currentLevel,
+  customTitle,
+  mode,
+  isReview,
+}: {
+  earnedStars: number;
+  currentLevel: number;
+  customTitle?: React.ReactNode;
+  mode: string | null;
+  isReview?: boolean;
+}) {
+  const prevStars = useRef(earnedStars);
+  const [lostStarIndex, setLostStarIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (earnedStars < prevStars.current) {
+      // L'étoile perdue est celle à l'index earnedStars (0-based)
+      setLostStarIndex(earnedStars);
+      const timer = setTimeout(() => setLostStarIndex(null), 700);
+      prevStars.current = earnedStars;
+      return () => clearTimeout(timer);
+    }
+    prevStars.current = earnedStars;
+  }, [earnedStars]);
+
+  if (mode === 'training' || mode === 'revision' || isReview) return null;
+
+  if (customTitle) {
+    return (
+      <div className="flex items-center h-8 md:h-10 px-2.5 md:px-3 bg-white border border-slate-100 shadow-sm rounded-xl text-xs md:text-sm font-bold">
+        {customTitle}
+      </div>
+    );
+  }
+
+  if (currentLevel >= 9) {
+    return (
+      <div className="flex items-center h-8 md:h-10 px-2.5 md:px-3 bg-white border border-slate-100 shadow-sm rounded-xl">
+        <Crown size={15} className="text-amber-500 fill-current" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-0.5 md:gap-1 h-8 md:h-10 px-2 md:px-3">
+      {Array.from({ length: 5 }).map((_, i) => {
+        const earned = i < earnedStars;
+        const isLosing = i === lostStarIndex;
+        return (
+          <span
+            key={i}
+            style={{
+              display: "inline-flex",
+              transform: isLosing ? "scale(0.5)" : "scale(1)",
+              opacity: isLosing ? 0 : 1,
+              transition: isLosing
+                ? "transform 0.35s cubic-bezier(0.36,0.07,0.19,0.97), opacity 0.35s ease"
+                : "transform 0.2s ease, opacity 0.2s ease",
+            }}
+          >
+            <Star
+              size={13}
+              className={
+                earned
+                  ? "fill-amber-400 text-amber-400"
+                  : "fill-slate-200 text-slate-300"
+              }
+            />
+          </span>
+        );
+      })}
+    </div>
+  );
 }
 
 export default function HeaderProgressBar({
@@ -40,6 +124,8 @@ export default function HeaderProgressBar({
   initialTime,
   returnUrl,
   customTitle,
+  showHelpButton,
+  onShowHelp,
 }: HeaderProgressBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -53,8 +139,6 @@ export default function HeaderProgressBar({
   const handleTrainInstead = () => {
     const baseUrl = window.location.pathname;
     let url = `${baseUrl}?level=${currentLevel}&mode=training`;
-    // We try to pass part info if we can, but since HeaderProgressBar doesn't get partIndex natively,
-    // we just use the current searchParams
     const part = searchParams.get('part');
     const totalParts = searchParams.get('totalParts');
     if (part && totalParts) {
@@ -62,6 +146,9 @@ export default function HeaderProgressBar({
     }
     window.location.href = url;
   };
+
+  // Affichage du temps restant (review) ou numéro d'étape
+  const isTimerMode = isReview && timeLeft !== undefined && timeLeft !== null;
 
   return (
     <>
@@ -76,160 +163,158 @@ export default function HeaderProgressBar({
             </p>
             <div className="flex flex-col gap-2 mt-2">
               {!mode && currentLevel > 0 && (
-                <button
-                  onClick={handleTrainInstead}
-                  className="w-full py-3.5 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-400 transition-colors shadow-sm mb-2"
-                >
-                  S'entraîner d'abord (+10 XP)
-                </button>
+                <Button variant="indigoGamified" size="lg" onClick={handleTrainInstead}>
+                  {getTranslation('auto.train_instead', language) || 'S\'entraîner d\'abord (+10 XP)'}
+                </Button>
               )}
-              <button
-                onClick={handleQuit}
-                className="w-full py-3.5 bg-rose-100 text-rose-600 font-bold rounded-xl hover:bg-rose-200 transition-colors"
-              >
+
+              <Button variant="dangerSoft" size="lg" onClick={handleQuit}>
                 {getTranslation('auto.quit', language)}
-              </button>
-              <button
-                onClick={() => setShowQuitConfirm(false)}
-                className="w-full py-3.5 bg-slate-100 text-slate-600 font-bold rounded-xl hover:bg-slate-200 transition-colors"
-              >
+              </Button>
+
+              <Button variant="flat" size="lg" onClick={() => setShowQuitConfirm(false)}>
                 {getTranslation('auto.cancel', language)}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
       )}
-      <header className="h-16 flex items-center shrink-0 justify-between border-b border-slate-200 bg-white">
-        <div className="flex items-center gap-3 sm:gap-6 w-full max-w-3xl mx-auto h-full px-4 flex-1">
-          <button
-            onClick={() => setShowQuitConfirm(true)}
-            className="text-slate-400 hover:text-slate-600 transition-colors"
-          >
-            <X size={24} strokeWidth={2.5} />
-          </button>
 
-          <div className="flex font-bold text-slate-400 text-sm sm:text-base items-center shrink-0">
-            {mode === 'training' ? "Entraînement" : mode === 'revision' ? "Révision" : `${getTranslation('auto.lvl', language)} ${currentLevel + 1}`}
+      {/* Header transparent */}
+      <header className="w-full bg-transparent shrink-0">
+        {/* ── MOBILE LAYOUT ── */}
+        <div className="md:hidden flex flex-col">
+
+          {/* Ligne 1 : retour | étoiles | liste — avec padding horizontal */}
+          <div className="flex items-center justify-between px-3 pt-2 pb-1">
+            {/* Retour */}
+            <IconButton
+              onClick={() => setShowQuitConfirm(true)}
+              size="md"
+              className="text-slate-400 hover:text-slate-600 transition-colors bg-transparent border-none -ml-1"
+            >
+              <ArrowLeft size={22} strokeWidth={2.5} />
+            </IconButton>
+
+            {/* Étoiles (centre) */}
+            <StarsBadge
+              earnedStars={earnedStars}
+              currentLevel={currentLevel}
+              customTitle={customTitle}
+              mode={mode}
+              isReview={isReview}
+            />
+
+            {/* Bouton liste glossaire */}
+            <div className="flex items-center gap-1">
+              {!isReview && setShowInfoModal && (
+                <button
+                  onClick={() => setShowInfoModal(true)}
+                  className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-100 transition-all bg-transparent rounded-xl outline-none"
+                  title={getTranslation('auto.vocabulary_list', language)}
+                >
+                  <List strokeWidth={2.5} className="w-[18px] h-[18px]" />
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden min-w-[2rem]">
-            {isReview && timeLeft !== undefined && timeLeft !== null && initialTime ? (
+          {/* Barre de progression : pleine largeur, collée aux bords, sans arrondi */}
+          <div className="w-full h-1 bg-slate-200/80">
+            {isTimerMode && initialTime ? (
               <div
-                className={`h-full transition-all duration-1000 rounded-full ${timeLeft < 30 ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.3)]' :
-                    timeLeft < 60 ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' :
-                      'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
-                  }`}
-                style={{ width: `${(timeLeft / initialTime) * 100}%` }}
+                className={`h-full transition-all duration-1000 ${timeLeft! < 30 ? 'bg-red-500' : timeLeft! < 60 ? 'bg-amber-500' : 'bg-emerald-500'}`}
+                style={{ width: `${(timeLeft! / initialTime) * 100}%` }}
               />
             ) : (
               <div
-                className="bg-emerald-500 h-full transition-all duration-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.3)]"
+                className="bg-emerald-500 h-full transition-all duration-500"
                 style={{ width: `${progress}%` }}
               />
             )}
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-4 flex-shrink-0 text-sm sm:text-base whitespace-nowrap overflow-hidden">
-            {mode === 'training' || mode === 'revision' ? null : customTitle ? (
-              customTitle
-            ) : currentLevel < 9 && !isReview ? (
-              <span className="flex items-center text-slate-400 font-semibold tracking-wide">
-                <div className="hidden sm:flex text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className={i < earnedStars ? "fill-current" : "text-slate-200 fill-slate-200"}
-                    />
-                  ))}
-                </div>
-                <div className="flex sm:hidden text-amber-400">
-                    <Star size={16} className="fill-current" />
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-slate-300 mx-1 sm:mx-2"
-                >
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-                <span className="hidden sm:inline">
-                  {getTranslation('auto.lvl', language)} {currentLevel + 2}
-                </span>
-                <span className="sm:hidden">
-                  {getTranslation('auto.lvl', language)} {currentLevel + 2}
-                </span>
+          {/* Numéros : juste en dessous de la barre, avec padding horizontal */}
+          {!isTimerMode ? (
+            <div className="flex items-center justify-between px-3 pt-1">
+              <span className="text-xs font-bold text-slate-500 tabular-nums select-none">
+                {currentIndex + 1}
               </span>
-            ) : (
-              <span className="flex items-center text-amber-500">
-                <Crown size={18} className="fill-current stroke-[2.5]" />
+              <span className="text-xs font-bold text-slate-300 tabular-nums select-none">
+                {exercisesLength}
               </span>
-            )}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center px-3 pt-1">
+              <span className={`text-xs font-bold tabular-nums select-none ${timeLeft! < 30 ? 'text-red-500 animate-pulse' : 'text-slate-500'}`}>
+                {Math.floor(timeLeft! / 60).toString().padStart(2, '0')}:{(timeLeft! % 60).toString().padStart(2, '0')}
+              </span>
+            </div>
+          )}
 
-            <span className="bg-slate-100 text-slate-500 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold shrink-0 ml-1 flex items-center gap-1.5 tabular-nums">
-              {isReview && timeLeft !== undefined && timeLeft !== null ? (
-                <>
-                  <Clock size={14} className={timeLeft < 30 ? "text-red-500" : "text-slate-400"} />
-                  <span className={timeLeft < 30 ? "text-red-500 font-bold" : ""}>
-                    {Math.floor(timeLeft / 60).toString().padStart(2, '0')}:{(timeLeft % 60).toString().padStart(2, '0')}
-                  </span>
-                </>
+        </div>
+
+        {/* ── DESKTOP LAYOUT ── une seule ligne horizontale */}
+        <div className="hidden md:flex w-full max-w-5xl mx-auto px-4 py-0 h-20 items-center justify-between gap-6">
+
+          {/* 1. Bouton retour */}
+          <div className="flex items-center">
+            <IconButton
+              onClick={() => setShowQuitConfirm(true)}
+              size="md"
+              className="text-slate-400 hover:text-slate-600 transition-colors bg-transparent border-none"
+            >
+              <ArrowLeft size={24} strokeWidth={2.5} />
+            </IconButton>
+          </div>
+
+          {/* 2. Barre de progression + numérotation (centre) */}
+          <div className="flex-1 flex items-center gap-3">
+            <div className="flex-1 h-3 bg-slate-200/80 rounded-full overflow-hidden">
+              {isTimerMode && initialTime ? (
+                <div
+                  className={`h-full transition-all duration-1000 rounded-full ${timeLeft! < 30 ? 'bg-red-500' : timeLeft! < 60 ? 'bg-amber-500' : 'bg-emerald-500'}`}
+                  style={{ width: `${(timeLeft! / initialTime) * 100}%` }}
+                />
               ) : (
-                `${currentIndex + 1} / ${exercisesLength}`
+                <div
+                  className="bg-emerald-500 h-full transition-all duration-500 rounded-full"
+                  style={{ width: `${progress}%` }}
+                />
+              )}
+            </div>
+            <span className="text-sm font-bold text-slate-400 tabular-nums min-w-[48px] text-right select-none">
+              {isTimerMode ? (
+                <span className={timeLeft! < 30 ? "text-red-500 animate-pulse" : ""}>
+                  {Math.floor(timeLeft! / 60).toString().padStart(2, '0')}:{(timeLeft! % 60).toString().padStart(2, '0')}
+                </span>
+              ) : (
+                `${currentIndex + 1}/${exercisesLength}`
               )}
             </span>
+          </div>
 
-            {!isReview && setShowRomanization && !currentExercise?.forceHideRomanization && (
-              <button
-                onClick={() => setShowRomanization(!showRomanization)}
-                className={`w-9 h-9 flex flex-col items-center justify-center rounded-xl font-bold border-2 transition-colors ${showRomanization
-                    ? "border-indigo-200 text-indigo-600 bg-indigo-50 hover:bg-indigo-100"
-                    : "border-slate-200 text-slate-400 bg-white hover:bg-slate-100"
-                  }`}
-                title={
-                  showRomanization
-                    ? getTranslation('auto.hide_pronunciation', language)
-                    : getTranslation('auto.show_pronunciation', language)
-                }
-              >
-                <span className="text-xs font-mono">
-                  {showRomanization ? "aA" : "ก"}
-                </span>
-              </button>
-            )}
+          {/* 3. Actions + badge étoiles */}
+          <div className="flex items-center gap-1 sm:gap-2">
+            <StarsBadge
+              earnedStars={earnedStars}
+              currentLevel={currentLevel}
+              customTitle={customTitle}
+              mode={mode}
+              isReview={isReview}
+            />
 
             {!isReview && setShowInfoModal && (
               <button
                 onClick={() => setShowInfoModal(true)}
-                className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
-                title={
-                  getTranslation('auto.vocabulary_list', language)
-                }
+                className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-100 transition-all bg-transparent rounded-xl outline-none"
+                title={getTranslation('auto.vocabulary_list', language)}
               >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="16" x2="12" y2="12"></line>
-                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
+                <List strokeWidth={2.5} className="w-[22px] h-[22px]" />
               </button>
             )}
           </div>
+
         </div>
       </header>
     </>

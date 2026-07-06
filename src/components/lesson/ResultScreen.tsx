@@ -7,6 +7,7 @@ import { Lesson } from "@/types";
 import { useProgressStore } from "@/lib/store";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
+import { AnimatedStars } from "@/components/ui/AnimatedStars";
 
 interface ResultScreenProps {
   lesson: Lesson;
@@ -99,12 +100,15 @@ export default function ResultScreen({
             <RotateCcw size={20} />
             {getTranslation('auto.retry', language)}
           </button>
-          <button
-            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet' : 'learn'}#lesson-${lesson.id}`, language === "en" ? "Back" : "Accueil")}
-            className="px-8 py-3 flex-1 rounded-xl bg-slate-200 border-b-4 border-slate-300 text-slate-500 font-bold text-lg shadow-lg hover:bg-slate-100 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-center"
-          >
+
+          <Button
+            variant="retour"
+            size="lg"
+            className="flex-1 text-lg gap-2"
+            onClick={() => handleNavigate(`/${pathType === 'alphabet' ? 'alphabet' : 'learn'}#lesson-${lesson.id}`, getTranslation('auto.back', language))}>
+            <LogOut size={20} className="rotate-180" />
             {getTranslation('auto.back', language)}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -115,25 +119,7 @@ export default function ResultScreen({
       <div className="text-emerald-500 mb-2">
         <Check size={80} className="mx-auto" />
       </div>
-      <div className="flex gap-2 mb-6">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ scale: 0, rotate: -45 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.2 + i * 0.1, type: "spring", stiffness: 200 }}
-          >
-            <Star
-              size={48}
-              className={
-                i < earnedStars
-                  ? "fill-amber-400 text-amber-500"
-                  : "fill-slate-200 text-slate-300 drop-shadow-sm"
-              }
-            />
-          </motion.div>
-        ))}
-      </div>
+      <AnimatedStars earnedStars={earnedStars} />
       <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight drop-shadow-sm text-center mb-2 px-4">
         {mode === 'training'
           ? "Entraînement terminé !"
@@ -142,10 +128,8 @@ export default function ResultScreen({
             : currentLevel === 10
               ? getTranslation('auto.mastery_level_completed', language)
               : isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null
-                ? `Partie ${partIndex + 1}/${totalParts} terminée !`
-                : (language === "en"
-                  ? `Level ${currentLevel + 1} completed!`
-                  : `Niveau ${currentLevel + 1} terminé !`)
+                ? `${getTranslation('auto.part', language)}${partIndex + 1}/${totalParts}${getTranslation('auto.completed_f', language)}`
+                : `${getTranslation('auto.level', language)}${currentLevel + 1}${getTranslation('auto.completed_m', language)}`
         }
       </h2>
 
@@ -184,10 +168,10 @@ export default function ResultScreen({
             size="lg"
             className="w-full text-lg uppercase tracking-widest"
             onClick={() =>
-              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, language === "en" ? "Next Part" : "Partie suivante")
+              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, getTranslation('auto.next_part', language))
             }
           >
-            {language === "en" ? "Next Part" : "Partie suivante"}
+            {getTranslation('auto.next_part', language)}
           </Button>
         ) : mode !== 'training' && mode !== 'revision' && currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10) && (
           <Button
@@ -234,9 +218,9 @@ export default function ResultScreen({
 
         <div className="flex flex-row gap-4 w-full">
           <Button
-            variant={mode === 'training' ? "gamified" : "flat"}
+            variant={mode === 'training' ? "gamified" : "retour"}
             size="lg"
-            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            className="flex-1 text-lg gap-2"
             onClick={() => {
               if (mode === 'training') {
                 const partStr = searchParams.get("part");

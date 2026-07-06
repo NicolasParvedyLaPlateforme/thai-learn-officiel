@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { ChevronLeft } from 'lucide-react';
-import { LessonPathMobileNav } from './LessonPathMobileNav';
+import React, { useEffect, useState } from 'react';
 import { LessonPathNode } from './LessonPathNode';
+import { getLevelSplit } from '@/lib/levelSplits';
+import { useProgressStore } from "@/lib/store";
+import { getTranslation } from "@/hooks/useTranslation";
+import { Lock } from 'lucide-react';
 
 interface LessonPathMapProps {
   maxLevel: number;
@@ -19,8 +20,10 @@ interface LessonPathMapProps {
   lessonPartsCompleted?: Record<string, number[]>;
   suggestionType?: string;
   initialScrollLevel?: number;
+  disableAutoScroll?: boolean;
   onReady?: () => void;
   onBack?: () => void;
+  isLeft?: boolean;
 }
 
 export function LessonPathMap({
@@ -38,21 +41,84 @@ export function LessonPathMap({
   lessonPartsCompleted,
   suggestionType,
   initialScrollLevel,
+  disableAutoScroll,
   onReady,
-  onBack
+  onBack,
+  isLeft
 }: LessonPathMapProps) {
-  const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i).reverse();
+  const nodes = Array.from({ length: maxLevel + 1 }).map((_, i) => i);
 
-  const effectiveCurrent = currentProgress > maxLevel ? maxLevel : currentProgress;
-  const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : effectiveCurrent;
+  const fullLevelsCompleted = useProgressStore(state => state.fullLevelsCompleted);
+  const currentFullLevels = lessonId ? (fullLevelsCompleted[lessonId] || []) : [];
 
-  const getOffset = (index: number) => {
-    return index % 2 === 0 ? -120 : 120;
+  let maxAccessibleLevel = 0;
+  let blockedByLevel: number | null = null;
+  let blockingReason: string | null = null;
+
+  const isPartCompleted = (l: number, p: number) => {
+    const key = `${lessonId}_level-${l}`;
+    const parts = lessonPartsCompleted?.[key] || [];
+    return parts.includes(p);
   };
 
-  const getMobileOffset = (index: number) => {
-    return index % 2 === 0 ? -95 : 95;
+  for (let l = 1; l <= maxLevel; l++) {
+    const isVerticalMet = l <= currentProgress || isPartCompleted(l - 1, 0);
+    if (!isVerticalMet) {
+      blockingReason = `${getTranslation('auto.complete_part_1_of_level', language) || 'Terminez la partie 1 du Niveau '}${l}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
+      break;
+    }
+
+    let isBlocked = false;
+    if (suggestionType === 'learn' && l >= 4) {
+      for (let i = 4; i <= l; i++) {
+        if (!currentFullLevels.includes(i - 4)) {
+          isBlocked = true;
+          blockedByLevel = blockedByLevel === null ? i : blockedByLevel;
+          blockingReason = `${getTranslation('auto.complete_level', language) || 'Terminez le Niveau '}${i - 3}${getTranslation('auto.full_to_unlock', language) || ' (entier) pour débloquer.'}`;
+          break;
+        }
+      }
+      
+      if (l === 4) {
+          const partsL3 = lesson ? getLevelSplit(3, lesson) : 1;
+          const completedL3 = lessonPartsCompleted?.[`${lessonId}_level-3`] || [];
+          if (completedL3.length < partsL3) {
+              isBlocked = true;
+              if (!blockingReason) blockingReason = getTranslation('auto.complete_all_parts_level_4', language) || `Terminez toutes les parties du Niveau 4 pour débloquer.`;
+          }
+      }
+    }
+
+    if (isBlocked) break;
+    maxAccessibleLevel = l;
+  }
+
+  const effectiveProgress = maxAccessibleLevel;
+  let calculatedTarget = effectiveProgress > maxLevel ? maxLevel : effectiveProgress;
+  
+  if (blockedByLevel !== null) {
+      calculatedTarget = blockedByLevel - 4;
+  }
+
+  const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
+  
+  const [activeLevel, setActiveLevel] = useState<number>(targetScrollLevel);
+  const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
+  const [showLockMessageFor, setShowLockMessageFor] = useState<number | null>(null);
+
+  const handleLevelChange = (l: number) => {
+    if (l !== activeLevel) {
+      setIsFadingOut(true);
+      setTimeout(() => {
+        setActiveLevel(l);
+        setIsFadingOut(false);
+      }, 200);
+    }
   };
+
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
 
   const getImageNameForLevel = (index: number) => {
     switch (index) {
@@ -70,161 +136,93 @@ export function LessonPathMap({
     }
   };
 
-  const generatePath = (index: number, isMobile: boolean) => {
-    const height = isMobile ? 240 : 320;
-    const startX = 100 + (isMobile ? getMobileOffset(index) : getOffset(index));
-    const endX = 100 + (isMobile ? getMobileOffset(index - 1) : getOffset(index - 1));
-    
-    const c1x = startX;
-    const c2x = endX;
-    const c1y = isMobile ? height * 0.8 : height * 0.5;
-    const c2y = isMobile ? height * 0.2 : height * 0.5;
+  const getMobileOffset = () => 0;
+  const getOffset = () => 0;
+  const generatePath = () => "";
 
-    return `M ${startX} 0 C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${height}`;
-  };
-
-  const currentLevelRef = useRef<HTMLDivElement | null>(null);
-  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const carouselRef = useRef<HTMLDivElement | null>(null);
-  const targetLevel = initialScrollLevel !== undefined ? initialScrollLevel : currentProgress;
-  const [activeMobileLevel, setActiveMobileLevel] = useState<number | null>(targetLevel);
-  const [isReady, setIsReady] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
-  const isClickScrolling = useRef(false);
-  const scrollEndTimer = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const t = setTimeout(() => setMenuVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    if (activeMobileLevel !== null && carouselRef.current) {
-      if (isClickScrolling.current) return; 
-
-      const doScroll = () => {
-        const button = carouselRef.current?.querySelector(`[data-nav-level="${activeMobileLevel}"]`) as HTMLElement;
-        if (button && carouselRef.current) {
-          const container = carouselRef.current;
-          const containerRect = container.getBoundingClientRect();
-          const buttonRect = button.getBoundingClientRect();
-          const scrollLeft = container.scrollLeft + (buttonRect.left - containerRect.left) - (containerRect.width / 2) + (buttonRect.width / 2);
-          container.scrollTo({ left: scrollLeft, behavior: 'auto' });
-        }
-      };
-
-      doScroll();
-      const t = setTimeout(doScroll, 150);
-      return () => clearTimeout(t);
-    }
-  }, [activeMobileLevel]);
-
-  useEffect(() => {
-    if (currentLevelRef.current) {
-      setTimeout(() => {
-        currentLevelRef.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
-        setTimeout(() => {
-          setIsReady(true);
-          onReady?.();
-        }, 50);
-      }, 10);
-    } else {
-      setIsReady(true);
-      onReady?.();
-    }
-  }, []);
-
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (isClickScrolling.current) {
-        if (scrollEndTimer.current) clearTimeout(scrollEndTimer.current);
-        scrollEndTimer.current = setTimeout(() => {
-          isClickScrolling.current = false;
-        }, 150);
-        return;
-      }
-
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const centerY = window.innerHeight / 2;
-          let closestIndex: number | null = null;
-          let minDistance = Infinity;
-
-          nodeRefs.current.forEach((node, index) => {
-            if (node) {
-              const rect = node.getBoundingClientRect();
-              const nodeCenter = rect.top + rect.height / 2;
-              const distance = Math.abs(centerY - nodeCenter);
-
-              if (distance < minDistance) {
-                minDistance = distance;
-                closestIndex = index;
-              }
-            }
-          });
-
-          if (closestIndex !== null && minDistance < window.innerHeight / 2) {
-            setActiveMobileLevel((prev) => prev !== closestIndex ? closestIndex : prev);
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    setTimeout(handleScroll, 100);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const isUnlockedMastery = currentProgress >= maxLevel;
+  const isLevelUnlocked = (l: number) => l <= effectiveProgress;
 
   return (
-    <div className="flex flex-col items-center justify-start w-full relative pt-8 pb-[15vh] lg:pb-[30vh]">
-      {/* Floating Back Button (Desktop) */}
-      {typeof document !== 'undefined' && createPortal(
-        <div 
-          className={`hidden lg:block fixed bottom-6 lg:bottom-10 left-6 lg:left-10 z-[100] transition-all duration-500 ease-out ${menuVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
-        >
-          {onBack && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onBack();
-              }}
-              className={`w-12 h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 ${unitColor} text-white`}
-            >
-              <ChevronLeft size={28} />
-            </button>
-          )}
-        </div>,
-        document.body
-      )}
+    <div className="flex flex-col lg:flex-row-reverse items-center justify-start lg:justify-center w-full max-w-5xl mx-auto lg:gap-16 pt-4 pb-0">
+      {/* Level Selector */}
+      <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start gap-4 mb-10 lg:mb-0 mt-6 lg:mt-12 px-4 content-start">
+        {suggestionType === 'learn' && (
+          <h3 className={`text-xl md:text-2xl font-extrabold text-center lg:text-left px-2 leading-tight w-full ${activeLevel >= 10 ? 'text-amber-500' : 'text-slate-700'}`}>
+            {activeLevel < 10 
+              ? (getTranslation(`levelTitle.${activeLevel + 1}`, language) || `Niveau ${activeLevel + 1}`) 
+              : (getTranslation(`levelTitle.11`, language) || `Niveau Ultime`)
+            }
+          </h3>
+        )}
+        <div className="flex flex-wrap justify-center lg:justify-start gap-3 lg:gap-4 w-full">
+        {nodes.map((l) => {
+          const unlocked = isLevelUnlocked(l);
+          const isNextLocked = l === (blockedByLevel !== null ? blockedByLevel : effectiveProgress + 1);
+          
+          const isSelected = activeLevel === l;
+          const label = l === maxLevel && maxLevel > 4 ? (getTranslation('auto.ultimate', language) || 'Ultime') : `${l + 1}`;
+          
+          let buttonClass = "px-4 py-2 rounded-xl font-bold text-[15px] transition-all ";
+          
+          if (unlocked) {
+            if (isSelected) {
+              buttonClass += `${unitColor} text-white shadow-lg scale-110 border-2 border-transparent`;
+            } else {
+              buttonClass += "bg-white text-slate-600 border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-sm";
+            }
+          } else if (isNextLocked) {
+            // Mise en évidence du prochain niveau à débloquer
+            buttonClass += "bg-slate-50 text-slate-500 border-2 border-dashed border-slate-400 hover:bg-slate-100 hover:border-slate-500 shadow-sm cursor-help";
+          } else {
+            buttonClass += "bg-slate-100 text-slate-400 border-2 border-slate-100 cursor-not-allowed opacity-50";
+          }
 
-      {/* Horizontal Navigation Bar (Mobile) */}
-      <LessonPathMobileNav
-        nodes={nodes}
-        maxLevel={maxLevel}
-        currentProgress={currentProgress}
-        activeMobileLevel={activeMobileLevel}
-        setActiveMobileLevel={setActiveMobileLevel}
-        unitColor={unitColor}
-        isUnlockedMastery={isUnlockedMastery}
-        menuVisible={menuVisible}
-        carouselRef={carouselRef}
-        isClickScrolling={isClickScrolling}
-        scrollEndTimer={scrollEndTimer}
-        onBack={onBack}
-      />
+          return (
+            <div key={l} className="relative flex flex-col items-center">
+              <button
+                onClick={() => {
+                  if (unlocked) {
+                    handleLevelChange(l);
+                    setShowLockMessageFor(null);
+                  } else if (isNextLocked) {
+                    setShowLockMessageFor(l);
+                    setTimeout(() => setShowLockMessageFor(null), 3000);
+                  }
+                }}
+                className={buttonClass}
+              >
+                {label}
+                {isNextLocked && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-slate-400 border-2 border-white"></span>
+                  </span>
+                )}
+              </button>
+              
+              {/* Lock Message Tooltip */}
+              {showLockMessageFor === l && isNextLocked && (
+                <div className={`absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95
+                  ${l >= maxLevel - 1 ? 'right-0 md:left-1/2 md:-translate-x-1/2' : (l <= 1 ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-1/2 -translate-x-1/2')}
+                `}>
+                  {blockingReason || (getTranslation('auto.level_locked', language) || "Niveau verrouillé.")}
+                  <div className={`absolute -top-1 w-2 h-2 bg-slate-800 rotate-45
+                    ${l >= maxLevel - 1 ? 'right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto' : (l <= 1 ? 'left-6 md:left-1/2 md:-translate-x-1/2 md:left-auto' : 'left-1/2 -translate-x-1/2')}
+                  `}></div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+        </div>
+      </div>
 
-      {nodes.map((levelIndex) => (
+      {/* Selected Level Node */}
+      <div className={`w-full lg:w-1/2 relative mt-4 lg:mt-0 flex justify-center transition-all duration-200 ease-out ${isFadingOut ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
         <LessonPathNode
-          key={levelIndex}
-          levelIndex={levelIndex}
+          levelIndex={activeLevel}
           maxLevel={maxLevel}
-          currentProgress={currentProgress}
+          currentProgress={effectiveProgress}
           modalLevel={modalLevel}
           setModalLevel={setModalLevel}
           earnedStarsArray={earnedStarsArray}
@@ -237,15 +235,18 @@ export function LessonPathMap({
           lessonPartsCompleted={lessonPartsCompleted}
           suggestionType={suggestionType}
           targetScrollLevel={targetScrollLevel}
-          activeMobileLevel={activeMobileLevel}
-          nodeRefs={nodeRefs}
-          currentLevelRef={currentLevelRef}
+          activeMobileLevel={activeLevel}
+          nodeRefs={{ current: [] }}
+          currentLevelRef={{ current: null }}
           getImageNameForLevel={getImageNameForLevel}
           getMobileOffset={getMobileOffset}
           getOffset={getOffset}
           generatePath={generatePath}
+          slotHeight={290}
+          blockedByLevel={blockedByLevel}
+          currentFullLevels={currentFullLevels}
         />
-      ))}
+      </div>
     </div>
   );
 }

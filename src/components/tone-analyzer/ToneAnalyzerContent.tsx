@@ -4,10 +4,12 @@ import { getTranslation } from "@/hooks/useTranslation";
 import React, { useState, useEffect } from 'react';
 import { useProgressStore } from "@/lib/store";
 import { analyzeSyllable, ToneAnalysis } from "@/lib/toneAnalyzer";
-import { Search, ArrowLeft, Wand2, Info, Volume2, Scissors, X } from 'lucide-react';
+import { Search, Wand2, Info, ArrowLeft, Volume2, Divide, HelpCircle, BookOpen, MessageCircle, Scissors, X } from 'lucide-react';
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
+import { m as motion, AnimatePresence } from "motion/react";
 import Link from 'next/link';
 import { playThaiTTS } from "@/lib/tts";
-import { AnimatePresence, m as motion } from 'motion/react';
 import { getPredefinedSyllables } from "@/lib/vocabulary-utils";
 
 export interface ToneAnalyzerContentProps {
@@ -285,12 +287,13 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
             </div>
           </div>
           {isModal && onClose && (
-            <button 
+            <IconButton 
+              size="md"
               onClick={onClose}
-              className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
+              className="bg-slate-100 text-slate-600"
             >
               <X size={18} />
-            </button>
+            </IconButton>
           )}
         </div>
       </header>
@@ -380,9 +383,9 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                   )}
                 </div>
                 <div className="flex justify-center mb-2">
-                  <button onClick={resetSearch} className="px-5 py-2 md:px-6 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-xs md:text-sm font-bold transition-colors">
+                  <Button variant="outline" onClick={resetSearch} className="px-5 py-2 md:px-6 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full text-xs md:text-sm font-bold border-none">
                     {language === 'en' ? 'Search another word' : 'Rechercher un autre mot'}
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}
@@ -408,21 +411,23 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                   className={`w-full bg-slate-50 border-2 border-slate-200 rounded-xl md:rounded-2xl py-3 px-4 md:py-4 md:px-5 text-2xl md:text-3xl font-thai text-slate-800 focus:outline-none transition-all ${mode === 'search' ? 'focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100' : ''}`}
                 />
                 {currentActiveInput && mode === 'guided' && (
-                  <button 
+                  <IconButton 
+                    size="lg"
                     onClick={() => playThaiTTS(currentActiveInput)}
-                    className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-indigo-100 text-indigo-600 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-indigo-200 active:scale-95 transition-all"
+                    className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
                     title={language === 'en' ? 'Listen' : 'Écouter'}
                   >
                     <Volume2 size={18} className="md:w-5 md:h-5" />
-                  </button>
+                  </IconButton>
                 )}
                 {input && mode === 'search' && (
-                  <button 
+                  <IconButton 
+                    size="lg"
                     onClick={handleSearch}
-                    className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-indigo-500 text-white rounded-lg md:rounded-xl flex items-center justify-center hover:bg-indigo-600 active:scale-95 transition-all"
+                    className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 bg-indigo-500 text-white hover:bg-indigo-600"
                   >
                     <Search size={18} className="md:w-5 md:h-5" />
-                  </button>
+                  </IconButton>
                 )}
               </div>
             </div>
@@ -433,13 +438,14 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
               
               {analysis && !analysis.error && (currentIndex >= 0 || activePredefinedIndex >= 0) && (
                 <div className="mt-4 relative flex flex-col items-center">
-                  <button 
+                  <Button 
+                    variant="outline"
                     onClick={() => setShowMobileExplanation(!showMobileExplanation)}
-                    className="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full font-bold flex items-center gap-2 hover:bg-indigo-100 transition-colors shadow-sm text-xs border border-indigo-100"
+                    className="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full font-bold text-xs border-indigo-100 hover:bg-indigo-100"
                   >
                     <Info size={16} />
                     {language === 'en' ? 'Why this tone?' : 'Pourquoi ce ton ?'}
-                  </button>
+                  </Button>
                   
                   <AnimatePresence>
                     {showMobileExplanation && (
@@ -453,7 +459,7 @@ export function ToneAnalyzerContent({ initialWord = '', isModal = false, onClose
                         <div className="relative z-10">
                           <div className="flex justify-between items-center mb-3 text-white border-b border-indigo-700/50 pb-2">
                             <span className="font-bold text-sm uppercase tracking-wide flex items-center gap-2"><Info size={16}/>{language === 'en' ? 'Explanation' : 'Explication'}</span>
-                            <button onClick={() => setShowMobileExplanation(false)} className="p-1 hover:bg-white/10 rounded-full text-indigo-200 hover:text-white transition-colors"><X size={16}/></button>
+                            <IconButton size="sm" onClick={() => setShowMobileExplanation(false)} className="hover:bg-white/10 text-indigo-200 hover:text-white"><X size={16}/></IconButton>
                           </div>
                           <ExplanationContent isMobileSkin={true} />
                         </div>

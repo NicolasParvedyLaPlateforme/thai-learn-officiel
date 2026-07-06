@@ -73,6 +73,7 @@ export const useProgressStore = create<ProgressState>()(
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
         if (state && typeof window !== 'undefined') {
+          // ── Migration 1: reset levels 7 & 8 (old) ────────────────────────
           const migrationKey = 'migration_level_8_9_reset_v5';
           if (!window.localStorage.getItem(migrationKey)) {
              try {
@@ -121,6 +122,7 @@ export const useProgressStore = create<ProgressState>()(
                console.error("Migration failed, ignoring to prevent crash", e);
              }
           }
+
         }
       }
     }

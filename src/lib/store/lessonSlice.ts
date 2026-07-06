@@ -2,6 +2,7 @@ import { StateCreator } from 'zustand';
 import { ProgressState } from "./types";
 import { calculateExpectedXp } from '../xp-utils';
 import { calculateLessonLevelAndStars } from '../lesson-utils';
+import { completeLessonAction, syncXpAction } from '@/actions/secureProgress';
 
 const getLocalDateString = (date: Date = new Date()) => {
   const y = date.getFullYear();
@@ -21,6 +22,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
   lessonLevels: {},
   lessonPartsCompleted: {},
   lessonStars: {},
+  fullLevelsCompleted: {},
   speakCompletedLessons: [],
   speakLessonLevels: {},
   speakLessonStars: {},
@@ -32,6 +34,9 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
   lastPlayedLessonId: null,
   lastPlayedLessonType: null,
   setLastPlayedLesson: (id: string, type: 'learn' | 'alphabet' | 'speak') => set({ lastPlayedLessonId: id, lastPlayedLessonType: type }),
+
+  nextModeUnit: null,
+  setNextModeUnit: (data: { unitIndex: number; date: string } | null) => set({ nextModeUnit: data }),
 
   saveInProgressLesson: (key: string, stateData: any) => set((state: ProgressState) => {
     const now = Date.now();
@@ -138,7 +143,18 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     }
 
     const { xp: calculatedXp, isFirstTime, key } = state.getExpectedXp(lessonId, actualPlayedLevel, isBilan, false, isFullLongLevel);
-    const finalXp = lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp);
+    
+    let bonusXp = 0;
+    if (!isFromParts && typeof window !== 'undefined') {
+       const reminderLevelStr = localStorage.getItem('recommendedReminderLevel');
+       if (reminderLevelStr && parseInt(reminderLevelStr) === actualPlayedLevel) {
+           bonusXp = 50;
+           // Generate a new random reminder level between 0 and 9
+           localStorage.setItem('recommendedReminderLevel', Math.floor(Math.random() * 10).toString());
+       }
+    }
+    
+    const finalXp = (isFromParts ? 0 : (lessonId.startsWith('detective_') ? calculatedXp : (calculatedXp || fallbackXp))) + bonusXp;
 
     const { newLevel, newStars } = calculateLessonLevelAndStars(currentLevel, playedLevel, earnedStars, state.lessonStars[lessonId]);
 
@@ -160,6 +176,15 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
       const newPartsForKey = isFromParts
         ? (state.lessonPartsCompleted[partsKey] || [0])
         : [0];
+        
+      const newFullLevelsCompleted = { ...state.fullLevelsCompleted };
+      // Always update fullLevelsCompleted regardless of isFromParts.
+      // Previously this was guarded by !isFromParts, which caused levels 4+
+      // to remain blocked when the user played each part separately.
+      const currentFullLevels = newFullLevelsCompleted[lessonId] || [];
+      if (!currentFullLevels.includes(actualPlayedLevel)) {
+        newFullLevelsCompleted[lessonId] = [...currentFullLevels, actualPlayedLevel];
+      }
       
       return {
         completedLessons: state.completedLessons.includes(lessonId) 
@@ -178,6 +203,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
           ...state.lessonStars,
           [lessonId]: newStars
         },
+        fullLevelsCompleted: newFullLevelsCompleted,
         xp: state.xp + finalXp,
         lastPlayedLessonId: lessonId,
         lastPlayedLessonType: type
@@ -199,6 +225,15 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     }
     get().progressQuest(type, 'xp', finalXp);
     get().triggerForceSync();
+
+    if (typeof window !== 'undefined' && !isFromParts) {
+      completeLessonAction(lessonId, actualPlayedLevel, isBilan, false, isFullLongLevel, null, earnedStars)
+        .then(res => {
+          if (res.success && res.data) {
+            set({ xp: res.data.totalXp });
+          }
+        }).catch(console.error);
+    }
   },
 
   completeLessonPart: (lessonId: string, fallbackXp: number, playedLevel: number, partIndex: number, totalParts: number, earnedStars: number = 3, isBilan: boolean = false) => {
@@ -251,6 +286,15 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     }
     get().triggerForceSync();
 
+    if (typeof window !== 'undefined') {
+      completeLessonAction(lessonId, playedLevel, isBilan, true, false, partIndex, earnedStars)
+        .then(res => {
+          if (res.success && res.data) {
+            set({ xp: res.data.totalXp });
+          }
+        }).catch(console.error);
+    }
+
     const updatedState = get();
     const updatedCompletedParts = updatedState.lessonPartsCompleted[partsKey] || [];
     if (updatedCompletedParts.length >= totalParts) {
@@ -302,6 +346,15 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
       get().progressQuest('speak', 'perfect_lesson', 1);
     }
     get().triggerForceSync();
+
+    if (typeof window !== 'undefined') {
+      completeLessonAction(`speak_${lessonId}`, actualPlayedLevel, false, false, false, null, earnedStars)
+        .then(res => {
+          if (res.success && res.data) {
+            set({ xp: res.data.totalXp });
+          }
+        }).catch(console.error);
+    }
   },
 
   unlockLessonManual: (lessonId: string) => set((state: ProgressState) => ({
@@ -351,6 +404,7 @@ export const createLessonSlice: StateCreator<ProgressState, [], [], any> = (set,
     lessonLevels: {}, 
     lessonPartsCompleted: {},
     lessonStars: {}, 
+    fullLevelsCompleted: {},
     speakCompletedLessons: [], 
     speakLessonLevels: {}, 
     speakLessonStars: {}, 

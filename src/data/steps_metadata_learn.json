@@ -1,28 +1,28 @@
 {
   "lesson-1": {
     "0": {
-      "full": 28,
-      "part_0": 12,
-      "part_1": 8,
-      "part_2": 8
+      "full": 49,
+      "part_0": 21,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 8
+      "full": 14,
+      "part_0": 6,
+      "part_1": 4,
+      "part_2": 4
     },
     "2": {
-      "full": 19,
-      "part_0": 7,
-      "part_1": 6,
-      "part_2": 6
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -62,32 +62,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 126
+      "full": 167
     }
   },
   "lesson-2": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -128,32 +128,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "l_nouveau_001": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -194,32 +194,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 97
+      "full": 125
     }
   },
   "lesson-3": {
     "0": {
-      "full": 28,
-      "part_0": 12,
-      "part_1": 8,
-      "part_2": 8
+      "full": 49,
+      "part_0": 21,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
-    },
-    "2": {
-      "full": 17,
-      "part_0": 7,
-      "part_1": 6,
+      "full": 14,
+      "part_0": 6,
+      "part_1": 4,
       "part_2": 4
     },
+    "2": {
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
+    },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -260,32 +260,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 121
+      "full": 155
     }
   },
   "l_nouveau_002": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -326,32 +326,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "l_nouveau_003": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -392,7 +392,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-1": {
@@ -432,27 +432,27 @@
   },
   "lesson-3-quantities": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -493,32 +493,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "l_nouveau_004": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -559,32 +559,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-4": {
     "0": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 42,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
-    },
-    "2": {
-      "full": 16,
-      "part_0": 6,
-      "part_1": 6,
+      "full": 12,
+      "part_0": 4,
+      "part_1": 4,
       "part_2": 4
     },
+    "2": {
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
+    },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -625,32 +625,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 113
+      "full": 145
     }
   },
   "l_nouveau_005": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -691,33 +691,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "l_nouveau_006": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 21,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 5
+      "full": 48,
+      "part_0": 18,
+      "part_1": 18,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 40,
+      "part_0": 15,
+      "part_1": 15,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -757,32 +757,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 120
+      "full": 171
     }
   },
   "lesson-5": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -823,7 +823,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-2": {
@@ -863,27 +863,27 @@
   },
   "l_nouveau_007": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -924,32 +924,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "l_nouveau_008": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 6,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 5,
-      "part_1": 6,
-      "part_2": 3
+      "full": 26,
+      "part_0": 8,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 21,
+      "part_0": 6,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -990,32 +990,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 102
+      "full": 127
     }
   },
   "lesson-6": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -1056,32 +1056,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "l_nouveau_009": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -1122,33 +1122,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "l_nouveau_010": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1188,33 +1188,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-7": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 10,
-      "part_1": 6,
-      "part_2": 6
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 5,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1254,7 +1254,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 107
+      "full": 149
     }
   },
   "bilan-unit-3": {
@@ -1294,28 +1294,28 @@
   },
   "l_nouveau_011": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1355,33 +1355,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-8": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1421,33 +1421,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-9": {
     "0": {
-      "full": 28,
-      "part_0": 12,
-      "part_1": 8,
-      "part_2": 8
+      "full": 49,
+      "part_0": 21,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 28,
-      "part_0": 12,
-      "part_1": 8,
-      "part_2": 8
+      "full": 14,
+      "part_0": 6,
+      "part_1": 4,
+      "part_2": 4
     },
     "2": {
-      "full": 21,
-      "part_0": 9,
-      "part_1": 6,
-      "part_2": 6
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1487,33 +1487,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 131
+      "full": 179
     }
   },
   "lesson-11": {
     "0": {
-      "full": 28,
-      "part_0": 12,
-      "part_1": 8,
-      "part_2": 8
+      "full": 49,
+      "part_0": 21,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 28,
-      "part_0": 12,
-      "part_1": 8,
-      "part_2": 8
+      "full": 14,
+      "part_0": 6,
+      "part_1": 4,
+      "part_2": 4
     },
     "2": {
-      "full": 21,
-      "part_0": 9,
-      "part_1": 6,
-      "part_2": 6
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1553,33 +1553,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 131
+      "full": 179
     }
   },
   "lesson-12": {
     "0": {
-      "full": 28,
-      "part_0": 12,
-      "part_1": 8,
-      "part_2": 8
+      "full": 49,
+      "part_0": 21,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 14,
+      "part_0": 6,
+      "part_1": 4,
+      "part_2": 4
     },
     "2": {
-      "full": 19,
-      "part_0": 7,
-      "part_1": 6,
-      "part_2": 6
+      "full": 34,
+      "part_0": 10,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 27,
+      "part_0": 7,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1619,32 +1619,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 125
+      "full": 163
     }
   },
   "l_nouveau_012": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -1685,7 +1685,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-4": {
@@ -1725,28 +1725,28 @@
   },
   "lesson-13": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 21,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 5
+      "full": 48,
+      "part_0": 18,
+      "part_1": 18,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 40,
+      "part_0": 15,
+      "part_1": 15,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1786,33 +1786,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 120
+      "full": 171
     }
   },
   "lesson-14": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 21,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 5
+      "full": 48,
+      "part_0": 18,
+      "part_1": 18,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 40,
+      "part_0": 15,
+      "part_1": 15,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1852,33 +1852,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 120
+      "full": 171
     }
   },
   "lesson-15": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -1918,32 +1918,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-16": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -1984,33 +1984,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-17": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -2050,32 +2050,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-18": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2116,7 +2116,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-5": {
@@ -2156,28 +2156,28 @@
   },
   "lesson-20": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -2217,33 +2217,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-21": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -2283,32 +2283,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-22": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2349,32 +2349,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 97
+      "full": 125
     }
   },
   "lesson-23": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2415,32 +2415,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-24-a1": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2481,32 +2481,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-24-a2": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2547,33 +2547,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 97
+      "full": 125
     }
   },
   "lesson-24-a3": {
     "0": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 42,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 12,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 4
     },
     "2": {
-      "full": 18,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 6
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -2613,7 +2613,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 118
+      "full": 157
     }
   },
   "bilan-unit-6": {
@@ -2653,28 +2653,28 @@
   },
   "lesson-24-a4": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 10,
-      "part_1": 6,
-      "part_2": 6
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 5,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -2714,32 +2714,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 107
+      "full": 149
     }
   },
   "lesson-24-a5": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2780,32 +2780,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-25": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2846,32 +2846,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-26": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -2912,33 +2912,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-27": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 6
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 16,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -2978,32 +2978,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 102
+      "full": 137
     }
   },
   "lesson-28": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3044,7 +3044,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-7": {
@@ -3084,28 +3084,28 @@
   },
   "lesson-29-a1": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -3145,32 +3145,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-29-a2": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3211,32 +3211,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-29-a3": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3277,32 +3277,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-29-a4": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3343,32 +3343,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-29-a5": {
     "0": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 42,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
-    },
-    "2": {
-      "full": 16,
-      "part_0": 6,
-      "part_1": 6,
+      "full": 12,
+      "part_0": 4,
+      "part_1": 4,
       "part_2": 4
     },
+    "2": {
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
+    },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3409,32 +3409,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 113
+      "full": 145
     }
   },
   "lesson-30": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3475,32 +3475,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 97
+      "full": 125
     }
   },
   "lesson-31": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3541,7 +3541,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-8": {
@@ -3581,27 +3581,27 @@
   },
   "lesson-32": {
     "0": {
-      "full": 8,
-      "part_0": 4,
-      "part_1": 4,
+      "full": 14,
+      "part_0": 7,
+      "part_1": 7,
       "part_2": 0
     },
     "1": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 2
+      "full": 4,
+      "part_0": 2,
+      "part_1": 2,
+      "part_2": 0
     },
     "2": {
-      "full": 12,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 2
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3642,32 +3642,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 81
+      "full": 105
     }
   },
   "lesson-33": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3708,32 +3708,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-34-a1": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3774,32 +3774,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-34-a2": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3840,32 +3840,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-34-a3": {
     "0": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 42,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
-    },
-    "2": {
-      "full": 16,
-      "part_0": 6,
-      "part_1": 6,
+      "full": 12,
+      "part_0": 4,
+      "part_1": 4,
       "part_2": 4
     },
+    "2": {
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
+    },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -3906,33 +3906,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 113
+      "full": 145
     }
   },
   "lesson-34-a4": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -3972,33 +3972,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-34-a5": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -4038,7 +4038,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "bilan-unit-9": {
@@ -4078,28 +4078,28 @@
   },
   "lesson-35": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -4139,32 +4139,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-36": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -4205,32 +4205,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-37": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -4271,33 +4271,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-38": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 24,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 19,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 5
+      "full": 42,
+      "part_0": 18,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 35,
+      "part_0": 15,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -4337,32 +4337,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 115
+      "full": 159
     }
   },
   "lesson-39-a1": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -4403,32 +4403,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 97
+      "full": 125
     }
   },
   "lesson-39-a2": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 26,
+      "part_0": 12,
+      "part_1": 8,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 21,
+      "part_0": 10,
+      "part_1": 6,
       "part_2": 5
     },
     "4": {
@@ -4469,7 +4469,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 102
+      "full": 127
     }
   },
   "bilan-unit-10": {
@@ -4509,26 +4509,26 @@
   },
   "lesson-39-a3": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 13,
-      "part_0": 6,
-      "part_1": 4,
-      "part_2": 3
+      "full": 24,
+      "part_0": 12,
+      "part_1": 6,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
+      "full": 20,
+      "part_0": 10,
       "part_1": 5,
       "part_2": 5
     },
@@ -4570,33 +4570,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 100
+      "full": 123
     }
   },
   "lesson-39-a4": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
-    },
-    "1": {
-      "full": 28,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 8
-    },
-    "2": {
-      "full": 23,
-      "part_0": 8,
-      "part_1": 8,
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
       "part_2": 7
     },
+    "1": {
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
+    },
+    "2": {
+      "full": 54,
+      "part_0": 18,
+      "part_1": 18,
+      "part_2": 18
+    },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 45,
+      "part_0": 15,
+      "part_1": 15,
+      "part_2": 15
     },
     "4": {
       "full": 5,
@@ -4636,32 +4636,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 125
+      "full": 183
     }
   },
   "lesson-39-a5": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -4702,32 +4702,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-40": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -4768,33 +4768,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-41": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -4834,33 +4834,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-42": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -4900,32 +4900,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-43": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -4966,7 +4966,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-11": {
@@ -5006,27 +5006,27 @@
   },
   "lesson-44-a1": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5067,32 +5067,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-44-a2": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5133,32 +5133,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-44-a3": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5199,32 +5199,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-44-a4": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5265,32 +5265,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-44-a5": {
     "0": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 42,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
-    },
-    "2": {
-      "full": 16,
-      "part_0": 6,
-      "part_1": 6,
+      "full": 12,
+      "part_0": 4,
+      "part_1": 4,
       "part_2": 4
     },
+    "2": {
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
+    },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5331,32 +5331,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 113
+      "full": 145
     }
   },
   "lesson-45": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5397,32 +5397,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-46": {
     "0": {
-      "full": 12,
-      "part_0": 4,
-      "part_1": 4,
-      "part_2": 4
+      "full": 21,
+      "part_0": 7,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 16,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 4
+      "full": 6,
+      "part_0": 2,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 13,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5463,7 +5463,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 89
+      "full": 115
     }
   },
   "bilan-unit-12": {
@@ -5503,27 +5503,27 @@
   },
   "lesson-47": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5564,32 +5564,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-48": {
     "0": {
-      "full": 8,
-      "part_0": 4,
-      "part_1": 4,
+      "full": 14,
+      "part_0": 7,
+      "part_1": 7,
       "part_2": 0
     },
     "1": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 2
+      "full": 4,
+      "part_0": 2,
+      "part_1": 2,
+      "part_2": 0
     },
     "2": {
-      "full": 12,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 2
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5630,32 +5630,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 81
+      "full": 105
     }
   },
   "lesson-49-a1": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5696,32 +5696,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 97
+      "full": 125
     }
   },
   "lesson-49-a2": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5762,31 +5762,31 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-49-a3": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 12,
-      "part_0": 6,
-      "part_1": 3,
-      "part_2": 3
+      "full": 24,
+      "part_0": 12,
+      "part_1": 6,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
+      "full": 20,
+      "part_0": 10,
       "part_1": 5,
       "part_2": 5
     },
@@ -5828,32 +5828,32 @@
       "part_4": 0
     },
     "10": {
-      "full": 92
+      "full": 113
     }
   },
   "lesson-49-a4": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5894,32 +5894,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-49-a5": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -5960,7 +5960,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-13": {
@@ -6000,28 +6000,28 @@
   },
   "lesson-50": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -6061,33 +6061,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-51": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -6127,32 +6127,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-52": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6193,32 +6193,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-53": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6259,32 +6259,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-54-a1": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6325,32 +6325,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-54-a2": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6391,32 +6391,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-54-a3": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6457,7 +6457,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "bilan-unit-14": {
@@ -6497,27 +6497,27 @@
   },
   "lesson-54-a4": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6558,33 +6558,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-54-a5": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 10,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 21,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 5
+      "full": 48,
+      "part_0": 18,
+      "part_1": 18,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 40,
+      "part_0": 15,
+      "part_1": 15,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -6624,32 +6624,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 120
+      "full": 171
     }
   },
   "lesson-55": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6690,32 +6690,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-56": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6756,32 +6756,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-57": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -6822,33 +6822,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-58": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -6888,7 +6888,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "bilan-unit-15": {
@@ -6928,28 +6928,28 @@
   },
   "lesson-59": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -6989,33 +6989,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-60": {
     "0": {
-      "full": 24,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 8
+      "full": 42,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 14
     },
     "1": {
-      "full": 32,
-      "part_0": 12,
-      "part_1": 10,
-      "part_2": 10
+      "full": 12,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 4
     },
     "2": {
-      "full": 26,
-      "part_0": 10,
-      "part_1": 8,
-      "part_2": 8
+      "full": 60,
+      "part_0": 24,
+      "part_1": 18,
+      "part_2": 18
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 50,
+      "part_0": 20,
+      "part_1": 15,
+      "part_2": 15
     },
     "4": {
       "full": 5,
@@ -7055,32 +7055,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 138
+      "full": 205
     }
   },
   "lesson-61": {
     "0": {
-      "full": 16,
-      "part_0": 8,
-      "part_1": 4,
-      "part_2": 4
+      "full": 28,
+      "part_0": 14,
+      "part_1": 7,
+      "part_2": 7
     },
     "1": {
-      "full": 18,
-      "part_0": 8,
-      "part_1": 6,
-      "part_2": 4
+      "full": 8,
+      "part_0": 4,
+      "part_1": 2,
+      "part_2": 2
     },
     "2": {
-      "full": 14,
-      "part_0": 6,
-      "part_1": 5,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -7121,32 +7121,32 @@
       "part_4": 2
     },
     "10": {
-      "full": 97
+      "full": 125
     }
   },
   "lesson-62": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 15,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 3
+      "full": 30,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 6
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
+      "full": 25,
+      "part_0": 10,
+      "part_1": 10,
       "part_2": 5
     },
     "4": {
@@ -7187,33 +7187,33 @@
       "part_4": 2
     },
     "10": {
-      "full": 105
+      "full": 135
     }
   },
   "lesson-63": {
     "0": {
-      "full": 20,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 4
+      "full": 35,
+      "part_0": 14,
+      "part_1": 14,
+      "part_2": 7
     },
     "1": {
-      "full": 22,
-      "part_0": 8,
-      "part_1": 8,
-      "part_2": 6
+      "full": 10,
+      "part_0": 4,
+      "part_1": 4,
+      "part_2": 2
     },
     "2": {
-      "full": 17,
-      "part_0": 6,
-      "part_1": 6,
-      "part_2": 5
+      "full": 36,
+      "part_0": 12,
+      "part_1": 12,
+      "part_2": 12
     },
     "3": {
-      "full": 15,
-      "part_0": 5,
-      "part_1": 5,
-      "part_2": 5
+      "full": 30,
+      "part_0": 10,
+      "part_1": 10,
+      "part_2": 10
     },
     "4": {
       "full": 5,
@@ -7253,7 +7253,7 @@
       "part_4": 2
     },
     "10": {
-      "full": 110
+      "full": 147
     }
   },
   "lesson-64-bilan-final": {

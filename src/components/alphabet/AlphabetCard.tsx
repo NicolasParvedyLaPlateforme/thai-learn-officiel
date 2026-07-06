@@ -1,7 +1,7 @@
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
 import React, { useState } from 'react';
 import { m as motion } from "motion/react";
-import { AlphabetItem } from "@/data/alphabet-data";
+import { AlphabetItem } from "@/types";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { Volume2 } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";

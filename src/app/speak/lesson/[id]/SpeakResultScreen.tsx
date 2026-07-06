@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useProgressStore } from "@/lib/store";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
 import { Button } from "@/components/ui/Button";
+import { AnimatedStars } from "@/components/ui/AnimatedStars";
 
 interface SpeakResultScreenProps {
   lessonId: string;
@@ -50,25 +51,7 @@ export default function SpeakResultScreen({
       <div className="text-emerald-500 mb-2">
         <Check size={80} className="mx-auto" />
       </div>
-      <div className="flex gap-2 mb-6">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ scale: 0, rotate: -45 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.2 + i * 0.1, type: "spring", stiffness: 200 }}
-          >
-            <Star
-              size={48}
-              className={
-                i < earnedStars
-                  ? "fill-amber-400 text-amber-500"
-                  : "fill-slate-200 text-slate-300 drop-shadow-sm"
-              }
-            />
-          </motion.div>
-        ))}
-      </div>
+      <AnimatedStars earnedStars={earnedStars} />
       <h1 className="text-3xl font-extrabold text-slate-800 mb-2 text-center">
         {currentLevel === 10
           ? (getTranslation('auto.mastery_level_completed', language))
@@ -105,9 +88,9 @@ export default function SpeakResultScreen({
         )}
         <div className="flex flex-row gap-4 w-full">
           <Button
-            variant="flat"
+            variant="retour"
             size="lg"
-            className="flex-1 text-lg uppercase tracking-widest gap-2"
+            className="flex-1 text-lg gap-2"
             onClick={() => router.push(`/speak#lesson-${lessonId}`)}
           >
             <LogOut size={20} className="rotate-180" />

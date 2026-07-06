@@ -6,49 +6,19 @@ import { Word, Phrase } from "@/types";
 import { Mic, ArrowRight, Loader2, Square, Trash2, Zap } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
+import { MicButton } from "@/components/ui/MicButton";
+import { IconButton } from "@/components/ui/IconButton";
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
+import { getAliases, replaceNumbersWithThai, getTargetWords } from "@/lib/vocabulary-utils";
 
 const normalizeThai = (str: string) => {
    return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
 };
 
-const getAliases = (word: string): string[] => {
-   const aliases: Record<string, string[]> = {
-      'ฉัน': ['ชั้น'],
-      'เขา': ['เค้า'],
-      'ไหม': ['มั้ย', 'มั๊ย'],
-      'หรือ': ['หรอ', 'เหรอ'],
-      'หรือเปล่า': ['รึเปล่า', 'ป่าว'],
-      'เปล่า': ['ป่าว'],
-      'อย่างไร': ['ยังไง'],
-      'เท่าไร': ['เท่าไหร่'],
-      'ทำไม': ['ทําไม'],
-      'ก็': ['ก้อ'],
-      'หนึ่ง': ['นึง'],
-      'ค่ะ': ['คะ', 'คา', 'ค่า', 'ขะ', 'ข่า'],
-      'คะ': ['ค่ะ', 'ค้า', 'ขะ', 'คา'],
-      'ครับ': ['คับ', 'ครัช', 'ฮะ'],
-      'อะไร': ['อัลไล']
-   };
-   return aliases[word] || [];
-};
 
-const replaceNumbersWithThai = (text: string) => {
-   const map: Record<string, string> = {
-      '0': 'ศูนย์', '1': 'หนึ่ง', '2': 'สอง', '3': 'สาม', '4': 'สี่',
-      '5': 'ห้า', '6': 'หก', '7': 'เจ็ด', '8': 'แปด', '9': 'เก้า',
-      '10': 'สิบ', '11': 'สิบเอ็ด', '20': 'ยี่สิบ', '100': 'ร้อย'
-   };
-   let res = text;
-   for (const num of ['100', '20', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']) {
-      const re = new RegExp(`(?<!\\d)${num}(?!\\d)`, 'g');
-      res = res.replace(re, map[num]);
-   }
-   return res;
-};
 
 // Helper to shuffle array
 const shuffle = <T,>(array: T[]): T[] => {
@@ -106,13 +76,7 @@ export function SpeakBuildPhraseExercise({
    }, [lockedPhraseId, phrases]);
 
    // Build target components for locked phrase
-   const targetWords = useMemo(() => {
-      if (!lockedPhrase) return [];
-      return lockedPhrase.components.map(id => {
-         if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
-         return dictionary.find(d => d.id === id) || { id, th: '???', fr: '', phonetic: '' } as Word;
-      });
-   }, [lockedPhrase, dictionary]);
+   const targetWords = useMemo(() => getTargetWords(lockedPhrase, dictionary), [lockedPhrase, dictionary]);
 
    // Generate options
    useEffect(() => {
@@ -178,7 +142,7 @@ export function SpeakBuildPhraseExercise({
       }
    }, [lockedPhraseId, step, phrases, completedPhraseIds, dictionary, targetWords]);
 
-   const handlePhraseFinish = () => {
+   function handlePhraseFinish() {
       setStatus('success');
       SpeechRecognition.stopListening();
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
@@ -190,9 +154,9 @@ export function SpeakBuildPhraseExercise({
          setMistakes(0);
          resetListeningContext();
       }, 1500);
-   };
+   }
 
-   const evaluateTranscript = (text: string) => {
+   function evaluateTranscript(text: string) {
       if (!text || options.length === 0) return;
 
       let remainingTranscript = normalizeThai(replaceNumbersWithThai(text));
@@ -290,9 +254,9 @@ export function SpeakBuildPhraseExercise({
             }
          }
       }
-   };
+   }
 
-   const resetListeningContext = (autoStart = false) => {
+   function resetListeningContext(autoStart = false) {
       resetTranscript();
       setSpokenHistory("");
       setStatus('idle');
@@ -307,7 +271,7 @@ export function SpeakBuildPhraseExercise({
       evaluateTranscript(currentFullTranscript);
    }, [currentFullTranscript, status]);
 
-   const stopAndEvaluate = () => {
+   function stopAndEvaluate() {
       SpeechRecognition.stopListening();
       setStatus('evaluating');
       if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
@@ -337,7 +301,7 @@ export function SpeakBuildPhraseExercise({
       return () => { SpeechRecognition.abortListening(); };
    }, []);
 
-   const startListening = (clearHistory = true) => {
+   function startListening(clearHistory = true) {
       stopTTS();
       SpeechRecognition.abortListening();
       if (!clearHistory && transcript) setSpokenHistory(currentFullTranscript + " ");
@@ -345,9 +309,9 @@ export function SpeakBuildPhraseExercise({
       resetTranscript();
       setStatus('listening');
       SpeechRecognition.startListening({ language: 'th-TH', continuous: true });
-   };
+   }
 
-   const playTTS = (wordTh: string) => {
+   function playTTS(wordTh: string) {
       if (status === 'listening' || status === 'evaluating') {
          SpeechRecognition.abortListening();
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
@@ -457,41 +421,33 @@ export function SpeakBuildPhraseExercise({
 
 
                <div className="absolute -top-14 left-1/2 -translate-x-1/2 flex items-center justify-center">
-                  <button
+                  <IconButton
                      onClick={() => setIsAutoMicEnabled(!isAutoMicEnabled)}
-                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm ${isAutoMicEnabled ? 'bg-emerald-100 text-emerald-600 border border-emerald-300' : 'bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200'}`}
+                     size="md"
+                     className={`shadow-sm ${isAutoMicEnabled ? 'bg-emerald-100 text-emerald-600 border border-emerald-300' : 'bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200'}`}
                   >
                      <Zap size={20} className={isAutoMicEnabled ? 'fill-emerald-500' : ''} />
-                  </button>
+                  </IconButton>
                </div>
 
-               {status !== 'listening' && status !== 'success' && (
-                  <button
-                     onClick={() => startListening(true)}
-                     className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
-                  >
-                     {status === 'evaluating' ? <Loader2 size={32} className="animate-spin" /> : <Mic size={32} className="group-hover:scale-110" />}
-                  </button>
-               )}
-
-               {status === 'success' && (
-                  <div className="w-20 h-20 bg-emerald-500/50 text-white rounded-full flex items-center justify-center z-10 opacity-60">
-                     <Mic size={32} />
-                  </div>
-               )}
+               <MicButton
+                  status={status}
+                  onClick={() => {
+                     if (status === 'listening') {
+                        stopAndEvaluate();
+                     } else if (status !== 'success') {
+                        startListening(true);
+                     }
+                  }}
+               />
 
                {status === 'listening' && (
-                  <>
-                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10">
-                        <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2">
-                           <Loader2 size={18} className="animate-spin text-orange-500" />
-                           <span className="truncate">{currentFullTranscript || <span className="text-slate-400 italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
-                        </span>
-                     </motion.div>
-                     <button onClick={stopAndEvaluate} className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] transition-all">
-                        <Square size={32} className="fill-current" />
-                     </button>
-                  </>
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10">
+                     <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2">
+                        <Loader2 size={18} className="animate-spin text-orange-500" />
+                        <span className="truncate">{currentFullTranscript || <span className="text-slate-400 italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
+                     </span>
+                  </motion.div>
                )}
             </div>
          </div>

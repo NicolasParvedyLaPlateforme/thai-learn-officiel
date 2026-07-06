@@ -1,0 +1,325 @@
+import { getTranslation } from "@/hooks/useTranslation";
+import React from 'react';
+import { Exercise } from "@/types";
+import { playThaiTTS } from "@/lib/tts";
+import { OptionCardButton } from "@/components/ui/OptionCardButton";
+import { m, AnimatePresence } from "framer-motion";
+import { Search, X } from "lucide-react";
+import Composition from "./Composition";
+
+interface Props {
+  exercise: Exercise;
+  selected: string;
+  onChange: (val: string) => void;
+  disabled: boolean;
+  isChecking?: boolean;
+  isCorrect?: boolean | null;
+  onAutoCheck?: (val?: string) => void;
+  language?: string;
+  onAddMistake?: () => void;
+}
+
+export default React.memo(function MissingLetter({
+  exercise,
+  selected,
+  onChange,
+  disabled,
+  onAutoCheck,
+  isChecking,
+  isCorrect,
+  language = 'fr',
+  onAddMistake
+}: Props) {
+  const [showComposition, setShowComposition] = React.useState(false);
+  const isPhrase = !!(exercise.introItem as any)?.components;
+
+  const compositionWord = exercise.originalWord
+    || (exercise.missingLetterText && exercise.answer ? exercise.missingLetterText.replace('_', exercise.answer) : exercise.answer);
+
+  if (showComposition) {
+    return (
+      <div className="relative flex flex-col w-full h-full">
+        <button
+          onClick={() => setShowComposition(false)}
+          className="absolute top-4 right-4 z-50 bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 rounded-full p-2 shadow-sm flex items-center justify-center transition-colors"
+          aria-label={getTranslation('auto.close', language)}
+        >
+          <X size={24} />
+        </button>
+        <Composition exercise={{ ...exercise, answer: compositionWord }} language={language} />
+      </div>
+    );
+  }
+
+  // Remplacer le tiret par la lettre sélectionnée, ou le laisser tel quel
+  const renderText = () => {
+    let { originalWord, missingIndex, placeholderType } = exercise;
+
+    // Retro-compatibility: compute missing properties if they are not in the DB
+    if (originalWord === undefined || missingIndex === undefined) {
+      if (exercise.missingLetterText && exercise.answer) {
+        missingIndex = exercise.missingLetterText.indexOf('_');
+        originalWord = exercise.missingLetterText.replace('_', exercise.answer);
+
+        const aboveVowels = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ', '๋', '้', '๊', '่'];
+        const belowVowels = ['ุ', 'ู'];
+        if (aboveVowels.includes(exercise.answer)) {
+          placeholderType = 'above';
+        } else if (belowVowels.includes(exercise.answer)) {
+          placeholderType = 'below';
+        } else {
+          placeholderType = 'normal';
+        }
+      }
+    }
+
+    // --- NOUVEAU : Calcul de la taille de la police dynamiquement ---
+    const textLen = (originalWord || exercise.missingLetterText || "").length;
+    let textSizeClass = "text-5xl md:text-6xl"; // Taille par défaut (mots courts)
+
+    if (textLen > 16) {
+      textSizeClass = "text-3xl md:text-4xl"; // Diminue beaucoup pour les phrases ou mots très longs
+    } else if (textLen > 9) {
+      textSizeClass = "text-4xl md:text-5xl"; // Diminue légèrement pour les mots moyens
+    }
+
+    // Classes CSS communes pour gérer le retour à la ligne
+    const containerClasses = `${textSizeClass} font-thai text-slate-900 leading-relaxed text-center min-h-[80px] flex flex-wrap items-center justify-center font-bold break-words w-full px-2`;
+    // -----------------------------------------------------------------
+
+    if (!originalWord || missingIndex === undefined || missingIndex === -1) {
+      // Ultimate Fallback
+      return (
+        <div className={containerClasses}>
+          {(exercise.missingLetterText || "").split('').map((char, index) => (
+            <span key={index} className={char === '_' ? 'text-amber-500 mx-1' : (char === selected ? 'text-amber-500 font-bold animate-in zoom-in duration-300' : '')}>
+              {selected && char === '_' ? selected : char}
+            </span>
+          ))}
+        </div>
+      );
+    }
+
+    let clusterStartIndex = missingIndex > 0 ? missingIndex - 1 : 0;
+    while (clusterStartIndex >= 0) {
+      const charCode = originalWord.charCodeAt(clusterStartIndex);
+      // Thai consonants: 0x0E01 to 0x0E2E
+      if (charCode >= 0x0E01 && charCode <= 0x0E2E) {
+        break;
+      }
+      clusterStartIndex--;
+    }
+    if (clusterStartIndex < 0) clusterStartIndex = Math.max(0, missingIndex - 1);
+
+    let clusterEndIndex = missingIndex + 1;
+    while (clusterEndIndex < originalWord.length) {
+      const charCode = originalWord.charCodeAt(clusterEndIndex);
+      if (charCode >= 0x0E01 && charCode <= 0x0E2E) {
+        break;
+      }
+      clusterEndIndex++;
+    }
+
+    const beforeBase = originalWord.substring(0, clusterStartIndex);
+    const baseChar = originalWord.substring(clusterStartIndex, missingIndex);
+    const afterMissing = originalWord.substring(missingIndex + 1, clusterEndIndex);
+    const afterBase = originalWord.substring(clusterEndIndex);
+
+    const isCombining = placeholderType === 'above' || placeholderType === 'below';
+
+    if (isCombining) {
+      const hasUpperVowel = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ'].some(v => baseChar.includes(v));
+      const isComplexCluster = afterMissing.length > 0 || hasUpperVowel;
+
+      return (
+        <div className={`${containerClasses} gap-[2px]`}>
+          <span>{beforeBase}</span>
+
+          <span className="relative inline-flex items-center justify-center">
+            {selected ? (
+              <span className={`animate-in zoom-in duration-300 ${isComplexCluster ? 'text-slate-900' : 'text-amber-500'}`}>
+                {baseChar}{selected}{afterMissing}
+              </span>
+            ) : (
+              <>
+                <span className="text-slate-900 z-10">
+                  {baseChar}{afterMissing}
+                </span>
+
+                {placeholderType === 'above' && (
+                  <span
+                    className={`absolute left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20 ${hasUpperVowel ? '-top-4' : 'top-4'}`}
+                  />
+                )}
+
+                {placeholderType === 'below' && (
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1 bg-amber-500 rounded-full z-20" />
+                )}
+              </>
+            )}
+          </span>
+
+          <span>{afterBase}</span>
+        </div>
+      );
+    }
+
+    // Normal non-combining rendering
+    return (
+      <div className={containerClasses}>
+        <span>{originalWord.substring(0, missingIndex)}</span>
+        {!selected ? (
+          <span className="text-amber-500 mx-1 relative -top-5">_</span>
+        ) : (
+          <span className="text-amber-500 font-bold animate-in zoom-in duration-300">{selected}</span>
+        )}
+        <span>{originalWord.substring(missingIndex + 1)}</span>
+      </div>
+    );
+  };
+
+  const handleSelect = (val: string) => {
+    if (disabled) return;
+    onChange(val);
+    if (onAutoCheck) {
+      onAutoCheck(val);
+    }
+  };
+
+  // Détermine la clé de consigne en fonction du type de placeholder
+  const instructionKey = (() => {
+    const { placeholderType } = exercise;
+    const aboveVowels = ['ิ', 'ี', 'ึ', 'ื', 'ั', '็', '์', 'ํ', '๋', '้', '๊', '่', 'ะ', 'า', 'แ', 'โ', 'ใ', 'ไ', 'เ', 'อ', 'ุ', 'ู'];
+    const answer = exercise.answer || '';
+    if (placeholderType === 'above' || placeholderType === 'below' || aboveVowels.includes(answer)) {
+      return 'exercise.find_vowel';
+    }
+    if (placeholderType === 'normal' && answer.length === 1) {
+      return 'exercise.find_consonant';
+    }
+    return 'exercise.find_letter';
+  })();
+
+  return (
+    <div className="flex flex-col h-full w-full max-w-2xl mx-auto px-4">
+
+      {/* Contenu principal : carte en haut, éléments empilés */}
+      <div className="flex flex-col items-center h-[80vh] gap-6 justify-center">
+
+        {/* Carte Principale Unifiée (Style Flashcard) */}
+        <m.div
+          key={exercise.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white border border-slate-200 shadow-sm rounded-[1rem] flex flex-col w-full min-w-[280px] max-w-[360px] overflow-hidden"
+        >
+          <div className="flex flex-col p-6 w-full">
+            {/* Tag "mot" ou "phrase" + Bouton Composition */}
+            <div className="w-full flex justify-between items-center mb-10">
+              <span className="text-slate-500 bg-white border border-slate-200 rounded px-3 py-1 text-sm">
+                {isPhrase ? getTranslation('exercise.phrase', language) : getTranslation('exercise.word', language)}
+              </span>
+              <button
+                onClick={() => setShowComposition(true)}
+                className="text-slate-500 bg-white hover:text-emerald-600 flex items-center gap-1.5 text-sm font-medium transition-colors border border-slate-200 hover:border-emerald-200 hover:bg-emerald-50 rounded px-3 py-1"
+              >
+                <Search size={16} />
+                <span className="hidden sm:inline">{getTranslation('exercise.composition', language)}</span>
+              </button>
+            </div>
+
+            {/* Mot thaï avec lettre manquante */}
+            <div className="mb-14">
+              {renderText()}
+            </div>
+
+            {/* Traduction et Phonétique */}
+            {(exercise.question || exercise.targetLetterPhonetic) && (
+              <div className="flex flex-col items-center mb-10 text-center">
+                {exercise.question && (
+                  <span className="text-[1.35rem] font-medium text-slate-900 mb-2">
+                    {exercise.question}
+                  </span>
+                )}
+                {exercise.showPhoneticHint !== false && exercise.targetLetterPhonetic && (
+                  <span className="text-lg text-slate-400 font-light">
+                    [{exercise.targetLetterPhonetic}]
+                  </span>
+                )}
+              </div>
+            )}
+
+            {/* Bouton icône son */}
+            {(exercise.question || exercise.targetLetter) && (
+              <button
+                onClick={() => exercise.targetLetter && playThaiTTS(exercise.targetLetter)}
+                className="mx-auto bg-emerald-50 text-emerald-600 p-4 rounded-full border border-emerald-100 hover:bg-emerald-100 transition-colors mb-2"
+                aria-label="Écouter la prononciation"
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Barre de progression verte en bas de la carte */}
+          <div className="w-full h-1.5 bg-slate-100 mt-auto flex">
+            <div className="h-full bg-emerald-400 w-full rounded-bl-[1rem]"></div>
+          </div>
+        </m.div>
+
+        {/* Consigne */}
+        <h2 className="font-semibold text-center leading-snug max-w-xs p-[29px] text-[25px] bg-[wheat] rounded-[7px] border-b-[5px] border-[#825500] text-[#825500]">
+          {getTranslation(instructionKey, language)}
+        </h2>
+      </div>
+
+      {/* Options — fixées en bas au-dessus du Footer */}
+      <div className="mt-auto w-full max-w-md mx-auto grid grid-cols-2 gap-3 sm:gap-4 lg:pb-[110px] pb-2">
+        <AnimatePresence mode="popLayout">
+          {exercise.options.map((opt: any, index: number) => {
+            const isSelected = selected === opt.id;
+            // On gère l'état d'erreur visuelle si isChecking et que c'est sélectionné et faux
+            const isWrong = isChecking && isSelected && !isCorrect;
+
+            return (
+              <m.div
+                key={opt.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2, delay: index * 0.05 }}
+              >
+                <OptionCardButton
+                  isSelected={isSelected}
+                  isSuccess={isChecking ? (opt.id === exercise.answer) : undefined}
+                  isError={isWrong}
+                  disabled={disabled}
+                  onClick={() => handleSelect(opt.id)}
+                  className="w-full h-full flex flex-col items-center justify-center relative pb-1 gap-2 text-xl font-semibold"
+                >
+                  <div className="flex items-center justify-center relative pb-1">
+                    <span className="font-thai text-4xl leading-none font-normal w-full block text-center">{opt.th}</span>
+                  </div>
+                </OptionCardButton>
+              </m.div>
+            );
+          })}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+});

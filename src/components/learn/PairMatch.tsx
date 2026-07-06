@@ -17,12 +17,12 @@ interface PairMatchProps {
 }
 
 const pairColors = [
-  'bg-blue-100 border-blue-300 text-blue-700',
-  'bg-emerald-100 border-emerald-300 text-emerald-700',
-  'bg-amber-100 border-amber-300 text-amber-700',
-  'bg-purple-100 border-purple-300 text-purple-700',
-  'bg-pink-100 border-pink-300 text-pink-700',
-  'bg-cyan-100 border-cyan-300 text-cyan-700',
+  'bg-blue-50 border-2 border-blue-400 border-b-4 text-blue-700',
+  'bg-emerald-50 border-2 border-emerald-400 border-b-4 text-emerald-700',
+  'bg-amber-50 border-2 border-amber-400 border-b-4 text-amber-700',
+  'bg-purple-50 border-2 border-purple-400 border-b-4 text-purple-700',
+  'bg-pink-50 border-2 border-pink-400 border-b-4 text-pink-700',
+  'bg-cyan-50 border-2 border-cyan-400 border-b-4 text-cyan-700',
 ];
 
 export default React.memo(function PairMatch({ pairs, mode = 'normal', onComplete, forceHideRomanization, disabled }: PairMatchProps) {
@@ -142,15 +142,15 @@ export default React.memo(function PairMatch({ pairs, mode = 'normal', onComplet
             const isSelected = selectedLeft === card.id;
             const isError = errorIds.has(`left-${card.id}`);
             const isDisabled = disabled || isMatched || (mode === 'audio-only' && !selectedRight && !selectedLeft);
-            let colorClass = 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50';
+            let colorClass = 'bg-white border-2 border-slate-200 border-b-4 text-slate-700 hover:bg-slate-50';
 
             if (failed) {
               const pairIndex = pairs.findIndex(p => p.id === card.id);
               colorClass = pairColors[pairIndex % pairColors.length];
             } else if (isError) {
-              colorClass = 'bg-rose-100 border-rose-300 text-rose-700';
+              colorClass = 'bg-rose-50 border-2 border-rose-300 border-b-4 text-rose-500';
             } else if (isSelected) {
-              colorClass = 'bg-indigo-100 border-indigo-300 text-indigo-700';
+              colorClass = 'bg-indigo-50 border-2 border-indigo-500 border-b-4 text-indigo-700 shadow-[inset_0_0_0_1px_rgba(99,102,241,0.2)]';
             }
 
             return (
@@ -162,8 +162,9 @@ export default React.memo(function PairMatch({ pairs, mode = 'normal', onComplet
                 onClick={() => handleSelectLeft(card.id)}
                 disabled={isDisabled || failed}
                 style={{ WebkitTapHighlightColor: 'transparent', willChange: 'opacity, transform' }}
-                className={`px-2 py-4 rounded-xl text-base sm:text-lg font-medium border-b-4 transition-colors h-24 sm:h-32 flex items-center justify-center text-center leading-tight transform-gpu backface-hidden
-                  ${(isMatched || isDisabled || failed) ? 'pointer-events-none' : ''}
+                className={`px-2 py-4 rounded-2xl text-base sm:text-lg font-medium transition-all h-24 sm:h-32 flex items-center justify-center text-center leading-tight transform-gpu backface-hidden
+                  ${(isMatched || isDisabled || failed) ? 'pointer-events-none' : 'cursor-pointer hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-2'}
+                  ${isSelected && !failed ? '!border-b-2 translate-y-[2px]' : ''}
                   ${colorClass}
                 `}
               >
@@ -179,15 +180,15 @@ export default React.memo(function PairMatch({ pairs, mode = 'normal', onComplet
             const isMatched = matchedIds.has(card.id);
             const isSelected = selectedRight === card.id;
             const isError = errorIds.has(`right-${card.id}`);
-            let colorClass = 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50';
+            let colorClass = 'bg-white border-2 border-slate-200 border-b-4 text-slate-700 hover:bg-slate-50';
 
             if (failed) {
               const pairIndex = pairs.findIndex(p => p.id === card.id);
               colorClass = pairColors[pairIndex % pairColors.length];
             } else if (isError) {
-              colorClass = 'bg-rose-100 border-rose-300 text-rose-700';
+              colorClass = 'bg-rose-50 border-2 border-rose-300 border-b-4 text-rose-500';
             } else if (isSelected) {
-              colorClass = 'bg-indigo-100 border-indigo-300 text-indigo-700';
+              colorClass = 'bg-indigo-50 border-2 border-indigo-500 border-b-4 text-indigo-700 shadow-[inset_0_0_0_1px_rgba(99,102,241,0.2)]';
             }
 
             return (
@@ -199,8 +200,9 @@ export default React.memo(function PairMatch({ pairs, mode = 'normal', onComplet
                 onClick={() => handleSelectRight(card.id)}
                 disabled={disabled || isMatched || failed}
                 style={{ WebkitTapHighlightColor: 'transparent', willChange: 'opacity, transform' }}
-                className={`px-2 py-4 rounded-xl text-base sm:text-lg font-medium border-b-4 transition-colors h-24 sm:h-32 flex items-center justify-center text-center leading-tight transform-gpu backface-hidden
-                  ${(isMatched || disabled || failed) ? 'pointer-events-none' : ''}
+                className={`px-2 py-4 rounded-2xl text-base sm:text-lg font-medium transition-all h-24 sm:h-32 flex items-center justify-center text-center leading-tight transform-gpu backface-hidden
+                  ${(isMatched || disabled || failed) ? 'pointer-events-none' : 'cursor-pointer hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-2'}
+                  ${isSelected && !failed ? '!border-b-2 translate-y-[2px]' : ''}
                   ${colorClass}
                 `}
               >

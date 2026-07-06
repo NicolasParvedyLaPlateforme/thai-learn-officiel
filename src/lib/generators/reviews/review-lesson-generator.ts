@@ -36,7 +36,7 @@ export function generateReviewLesson(
       const wordsForWM = shuffle(unitWords).slice(0, limit5);
       wordsForWM.forEach(word => {
           const rand = Math.random();
-          let type: 'random' | 'misspelled' = rand < 0.5 ? 'random' : 'misspelled';
+          let type: 'random' | 'reverse' = rand < 0.5 ? 'random' : 'reverse';
           
           reviewExercises.push(buildWordMatch(word, language, {
             distractorMode: type,

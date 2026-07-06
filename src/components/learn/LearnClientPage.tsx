@@ -2,54 +2,27 @@
 
 import { useMemo } from 'react';
 import { useProgressStore } from "@/lib/store";
+import { computeUnits } from "@/lib/lesson-utils";
 import BASE_UNITS from "@/data/units.json";
 import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 
 import dynamic from 'next/dynamic';
 
-import LearnMobileTimeline from './LearnMobileTimeline';
-import LearnDesktopTimeline from './LearnDesktopTimeline';
+import PathMobileTimeline from '../path-ui/PathMobileTimeline';
+import PathDesktopTimeline from '../path-ui/PathDesktopTimeline';
 import { DesktopLessonLevelsView } from './DesktopLessonLevelsView';
 import PathLayout from '../path-ui/PathLayout';
 
-const LearnLessonModal = dynamic(() => import('./LearnLessonModal'), { ssr: false });
-const LearnUnitsModal = dynamic(() => import('./LearnUnitsModal'), { ssr: false });
-const LearnQuestsModal = dynamic(() => import('./LearnQuestsModal'), { ssr: false });
-const LearnLockedReviewModal = dynamic(() => import('./LearnLockedReviewModal'), { ssr: false });
+const PathLessonModal = dynamic(() => import('../path-ui/PathLessonModal'), { ssr: false });
+const UnitsModal = dynamic(() => import('../modals/UnitsModal'), { ssr: false });
+const QuestsModal = dynamic(() => import('../modals/QuestsModal'), { ssr: false });
+const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
 
 export default function LearnClientPage({ lightweightLessons }: { lightweightLessons: any[] }) {
   const data = { lessons: lightweightLessons };
 
   const UNITS = useMemo(() => {
-    const computedUnits = [];
-    let currentStartIndex = 0;
-
-    for (let i = 0; i < BASE_UNITS.length; i++) {
-      const baseUnit = BASE_UNITS[i];
-      let endIndex = currentStartIndex;
-
-      for (let j = currentStartIndex; j < data.lessons.length; j++) {
-        const title = data.lessons[j].title || "";
-        const titleEn = data.lessons[j].titleEn || "";
-        if (title.toLowerCase().includes("bilan") || titleEn.toLowerCase().includes("review")) {
-          endIndex = j + 1;
-          break;
-        }
-      }
-
-      if (endIndex === currentStartIndex && currentStartIndex < data.lessons.length) {
-        endIndex = data.lessons.length;
-      }
-
-      computedUnits.push({
-        ...baseUnit,
-        startIndex: currentStartIndex,
-        endIndex: endIndex
-      });
-
-      currentStartIndex = endIndex;
-    }
-    return computedUnits;
+    return computeUnits(BASE_UNITS, data.lessons);
   }, [lightweightLessons, data.lessons.length]);
 
   const { dailyQuests } = useProgressStore();
@@ -67,13 +40,13 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
       maxLevelPerLesson={10}
-      renderMobileTimeline={(props) => <LearnMobileTimeline {...props} learnQuests={learnQuests} />}
-      renderDesktopTimeline={(props) => <LearnDesktopTimeline {...props} />}
+      renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="learn" quests={learnQuests} />}
+      renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="learn" maxLevelPerLesson={10} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="learn" />}
-      renderLessonModal={(props) => <LearnLessonModal {...props} />}
-      renderUnitsModal={(props) => <LearnUnitsModal {...props} />}
-      renderQuestsModal={(props) => <LearnQuestsModal {...props} />}
-      renderLockedReviewModal={(props) => <LearnLockedReviewModal {...props} />}
+      renderLessonModal={(props) => <PathLessonModal {...props} pathType="learn" maxLevelPerLesson={10} />}
+      renderUnitsModal={(props) => <UnitsModal {...props} />}
+      renderQuestsModal={(props) => <QuestsModal {...props} />}
+      renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}
     />
   );
 }

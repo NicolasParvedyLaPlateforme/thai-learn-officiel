@@ -1,21 +1,4 @@
-export interface AlphabetItem {
-  letter: string;
-  type: 'consonant' | 'vowel';
-  consonantClass?: 'low' | 'mid' | 'high';
-  exampleWord: string;
-  exampleTranslation: string;
-  exampleTranslationEn?: string;
-  pronunciation: string; // The pronunciation of the example word, e.g. "ko kai"
-  mnemonicHintFr?: string;
-  mnemonicHintEn?: string;
-  mnemonicHintDe?: string;
-  mnemonicHintEs?: string;
-  mnemonicHintIt?: string;
-  exampleTranslationDe?: string;
-  exampleTranslationEs?: string;
-  exampleTranslationIt?: string;
-  mnemonicEmoji?: string;
-}
+import { AlphabetItem } from "@/types";
 
 export const THAI_ALPHABET: AlphabetItem[] = [
   // Consonants (Selection of most common ones for a start, but we can list all 44)
@@ -86,4 +69,25 @@ export const THAI_ALPHABET: AlphabetItem[] = [
   { letter: "โ", type: "vowel", exampleWord: "สระ โอ", exampleTranslation: "Vowelle o", exampleTranslationEn: "Vowel o", pronunciation: "sara o", mnemonicHintFr: "Un boomerang (devant)", mnemonicHintEn: "A boomerang (in front)", mnemonicEmoji: "🪃", exampleTranslationDe: "Vokal o", exampleTranslationEs: "Vocal o", exampleTranslationIt: "Vocale o", mnemonicHintDe: "Ein Bumerang (davor)", mnemonicHintEs: "Un bumerán (delante)", mnemonicHintIt: "Un boomerang (davanti)" },
   { letter: "ไ", type: "vowel", exampleWord: "สระ ไอ", exampleTranslation: "Vowelle ai (maimai)", exampleTranslationEn: "Vowel ai (maimai)", pronunciation: "sara ai", mnemonicHintFr: "Une main levée (devant)", mnemonicHintEn: "A raised hand (in front)", mnemonicEmoji: "✋", exampleTranslationDe: "Vokal ai (maimai)", exampleTranslationEs: "Vocal ai (maimai)", exampleTranslationIt: "Vocale ai (maimai)", mnemonicHintDe: "Eine erhobene Hand (davor)", mnemonicHintEs: "Una mano alzada (delante)", mnemonicHintIt: "Una mano alzata (davanti)" },
   { letter: "ใ", type: "vowel", exampleWord: "สระ ใอ", exampleTranslation: "Vowelle ai (maimuan)", exampleTranslationEn: "Vowel ai (maimuan)", pronunciation: "sara ai", mnemonicHintFr: "Une feuille enroulée (devant)", mnemonicHintEn: "A rolled leaf (in front)", mnemonicEmoji: "🌿", exampleTranslationDe: "Vokal ai (maimuan)", exampleTranslationEs: "Vocal ai (maimuan)", exampleTranslationIt: "Vocale ai (maimuan)", mnemonicHintDe: "Ein gerolltes Blatt (davor)", mnemonicHintEs: "Una hoja enrollada (delante)", mnemonicHintIt: "Una foglia arrotolata (davanti)" }
+];
+
+export const SIMILAR_CONSONANTS: string[][] = [
+  ['ข', 'ช', 'ซ'],
+  ['ค', 'ด', 'ต'],
+  ['บ', 'ป', 'ษ'],
+  ['พ', 'ฟ', 'ฬ'],
+  ['ภ', 'ถ'],
+  ['น', 'ม'],
+  ['ร', 'ธ'],
+  ['ล', 'ส'],
+  ['ผ', 'ฝ']
+];
+
+export const SIMILAR_VOWELS: string[][] = [
+  ['ะ', 'า'],
+  ['ิ', 'ี'],
+  ['ึ', 'ื'],
+  ['ุ', 'ู'],
+  ['เ', 'แ'],
+  ['โ', 'ใ', 'ไ']
 ];

@@ -4,6 +4,7 @@ import React, { Component, ErrorInfo, ReactNode } from "react";
 import { WifiOff, RotateCcw } from "lucide-react";
 import { getTranslation } from "@/hooks/useTranslation";
 import { useProgressStore } from "@/lib/store";
+import { Button } from "../ui/Button";
 
 interface Props {
   children: ReactNode;
@@ -39,7 +40,7 @@ class ErrorBoundaryContent extends Component<Props & { language: string }, State
   public render() {
     if (this.state.hasError) {
       const isChunkError = this.state.error?.name === 'ChunkLoadError' || this.state.error?.message.includes('Loading chunk');
-      
+
       return (
         <div className="flex flex-col items-center justify-center h-full w-full p-6 text-center bg-white rounded-3xl shadow-sm border border-slate-100">
           <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4">
@@ -49,17 +50,14 @@ class ErrorBoundaryContent extends Component<Props & { language: string }, State
             {isChunkError ? "Connexion perdue" : "Oups ! Une erreur est survenue"}
           </h2>
           <p className="text-slate-500 text-sm mb-6 max-w-xs">
-            {isChunkError 
-              ? "Impossible de charger l'exercice à cause d'une perte de connexion réseau." 
+            {isChunkError
+              ? "Impossible de charger l'exercice à cause d'une perte de connexion réseau."
               : "Un problème inattendu a empêché l'affichage de cet exercice."}
           </p>
-          <button
-            onClick={this.handleRetry}
-            className="flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-white font-bold py-3 px-6 rounded-2xl transition-all shadow-sm active:scale-95"
-          >
+          <Button variant="indigoGamified" size="lg" onClick={this.handleRetry}>
             <RotateCcw size={20} />
-            Réessayer
-          </button>
+            {getTranslation('auto.retry', this.props.language)}
+          </Button>
         </div>
       );
     }

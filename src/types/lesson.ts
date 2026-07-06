@@ -48,8 +48,7 @@ export interface CourseData {
   lessons: Lesson[];
 }
 
-export type ExerciseType = 'word-match' | 'sentence-builder' | 'writing' | 'intro' | 'pair-matching' | 'free-typing';
-
+export type ExerciseType = 'word-match' | 'sentence-builder' | 'writing' | 'intro' | 'composition' | 'pair-matching' | 'free-typing' | 'missing-letter' | 'sound-to-letter' | 'true-false' | 'one-letter-difference' | 'word-position' | 'phrase-order';
 export interface Exercise {
   id: string;
   type: ExerciseType;
@@ -70,7 +69,26 @@ export interface Exercise {
   maxMistakes?: number; // How many mistakes allowed before failing the exercise 
   reverse?: boolean; // For word-match: if true, options show FR/EN instead of TH
   isFillInBlank?: boolean;
+  fillInBlankMode?: 'classic' | 'translation' | 'audio';
   blankIndex?: number;
   blankHint?: string;
   prefilledComponents?: string[];
+  missingLetterText?: string;
+  targetLetter?: string;
+  targetLetterPhonetic?: string;
+  showPhoneticHint?: boolean;
+  originalWord?: string;
+  missingIndex?: number;
+  placeholderType?: 'normal' | 'above' | 'below';
+  targetSound?: string;
+  targetSoundKey?: string;
+  displayWord?: string;
+  isCorrectSpelling?: boolean;
+  phonetic?: string;
+  translation?: string;
+  oneLetterHintType?: 'sound' | 'image' | 'pronunciation';
+  diffReveal?: boolean;
+  presentedOrder?: string[];
+  correctOrder?: string[];
+  isCorrectOrder?: boolean;
 }

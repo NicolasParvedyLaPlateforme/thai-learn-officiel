@@ -6,50 +6,20 @@ import { Word, Phrase } from "@/types";
 import { Mic, ArrowRight, Play, Loader2, RotateCcw, Square, Trash2, Zap } from 'lucide-react';
 import { useProgressStore } from "@/lib/store";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
+import { MicButton } from "@/components/ui/MicButton";
+import { IconButton } from "@/components/ui/IconButton";
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
+import { getAliases, replaceNumbersWithThai, getTargetWords } from "@/lib/vocabulary-utils";
+import { WordTile } from "@/components/ui/WordTile";
 
 const normalizeThai = (str: string) => {
    return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
 };
 
-const getAliases = (word: string): string[] => {
-   const aliases: Record<string, string[]> = {
-      'ฉัน': ['ชั้น'],
-      'เขา': ['เค้า'],
-      'ไหม': ['มั้ย', 'มั๊ย'],
-      'หรือ': ['หรอ', 'เหรอ'],
-      'หรือเปล่า': ['รึเปล่า', 'ป่าว'],
-      'เปล่า': ['ป่าว'],
-      'อย่างไร': ['ยังไง'],
-      'เท่าไร': ['เท่าไหร่'],
-      'ทำไม': ['ทําไม'],
-      'ก็': ['ก้อ'],
-      'หนึ่ง': ['นึง'],
-      'ค่ะ': ['คะ', 'คา', 'ค่า', 'ขะ', 'ข่า'],
-      'คะ': ['ค่ะ', 'ค้า', 'ขะ', 'คา'],
-      'ครับ': ['คับ', 'ครัช', 'ฮะ'],
-      'อะไร': ['อัลไล']
-   };
-   return aliases[word] || [];
-};
 
-const replaceNumbersWithThai = (text: string) => {
-   const map: Record<string, string> = {
-      '0': 'ศูนย์', '1': 'หนึ่ง', '2': 'สอง', '3': 'สาม', '4': 'สี่',
-      '5': 'ห้า', '6': 'หก', '7': 'เจ็ด', '8': 'แปด', '9': 'เก้า',
-      '10': 'สิบ', '11': 'สิบเอ็ด', '20': 'ยี่สิบ', '100': 'ร้อย'
-   };
-   let res = text;
-   // Replace longer numbers first
-   for (const num of ['100', '20', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']) {
-      const re = new RegExp(`(?<!\\d)${num}(?!\\d)`, 'g');
-      res = res.replace(re, map[num]);
-   }
-   return res;
-};
 
 export function SpeakingExercise({
    vocabulary,
@@ -77,18 +47,7 @@ export function SpeakingExercise({
    const requiredAccuracy = speakingConfig.requiredAccuracy || 50;
 
    // Derive target components
-   const targetWords = useMemo(() => {
-      if (!currentItem) return [];
-      if ('components' in currentItem) { // Phrase
-         return currentItem.components.map(id => {
-            if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
-            const w = dictionary.find(d => d.id === id);
-            return w || { id, th: '???', fr: '', phonetic: '' } as Word;
-         });
-      } else { // Single Word
-         return [currentItem as Word];
-      }
-   }, [currentItem, dictionary]);
+   const targetWords = useMemo(() => getTargetWords(currentItem, dictionary), [currentItem, dictionary]);
 
    const orderedIndices = useMemo(() => {
       return Array.from({ length: targetWords.length }, (_, i) => i);
@@ -342,7 +301,7 @@ export function SpeakingExercise({
          if (listeningTimerRef.current) clearTimeout(listeningTimerRef.current);
          setStatus('idle');
       }
-      
+
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
          const utterance = new SpeechSynthesisUtterance(currentItem.th);
@@ -395,34 +354,33 @@ export function SpeakingExercise({
                const isPlaced = placedIndices.includes(index);
 
                if (word.id === 'w_dots') {
-                  return (
-                     <div key={`fixed-${index}`} className="bg-transparent border-2 border-dashed border-slate-300 text-slate-400 rounded-xl font-medium font-thai px-2 sm:px-3 flex items-center justify-center min-w-[3rem] sm:min-w-[4rem] h-14">
-                        <span className="leading-none text-2xl sm:text-3xl">...</span>
-                     </div>
-                  );
+                  return <WordTile key={`fixed-${index}`} variant="dots" className="!h-14" />;
                }
 
                if (isPlaced) {
                   const score = placedScores[index];
-                  let colorClass = "text-emerald-700 border-emerald-300 bg-emerald-50";
-                  if (score < 50) colorClass = "text-red-700 border-red-300 bg-red-50";
-                  else if (score < 100) colorClass = "text-amber-700 border-amber-300 bg-amber-50";
+                  let wordStatus: 'perfect' | 'good' | 'bad' = 'perfect';
+                  if (score < 50) wordStatus = 'bad';
+                  else if (score < 100) wordStatus = 'good';
 
                   return (
-                     <motion.div
-                        layoutId={`word-${index}`}
+                     <WordTile
                         key={`placed-${index}`}
-                        className={`flex flex-col items-center justify-center px-4 py-2 border-2 rounded-xl shadow-sm font-thai min-w-[4rem] h-14 ${colorClass}`}
-                     >
-                        <span className="text-3xl font-medium leading-none">{word.th}</span>
-                        {score < 100 && <span className="text-[10px] font-bold mt-1 opacity-80">{score}%</span>}
-                     </motion.div>
+                        layoutId={`word-${index}`}
+                        variant="scored"
+                        status={wordStatus}
+                        score={score}
+                        text={word.th}
+                        className="!h-14 !min-w-[4rem]"
+                     />
                   );
                } else {
                   return (
-                     <div key={`empty-${index}`} className="border-2 border-dashed border-slate-300 bg-transparent rounded-xl px-4 py-2 flex items-center justify-center min-w-[4rem] h-14">
-                        <span className="text-2xl text-slate-400 font-medium">...</span>
-                     </div>
+                     <WordTile
+                        key={`empty-${index}`}
+                        variant="dots"
+                        className="!h-14 !min-w-[4rem]"
+                     />
                   );
                }
             })}
@@ -432,18 +390,18 @@ export function SpeakingExercise({
          <div className="w-full max-w-2xl flex flex-wrap gap-3 items-center justify-center mb-10 min-h-[4rem]">
             {orderedIndices.map((originalIndex) => {
                const word = targetWords[originalIndex];
-               if (word.id === 'w_dots') return null; // Do not render dots in options
+               if (word.id === 'w_dots') return null;
 
                const isPlaced = placedIndices.includes(originalIndex);
                if (!isPlaced) {
                   return (
-                     <motion.div
-                        layoutId={`word-${originalIndex}`}
+                     <WordTile
                         key={`bank-${originalIndex}`}
-                        className="bg-white text-slate-700 border-2 border-slate-200 border-b-4 rounded-xl px-4 py-2 shadow-sm font-thai flex items-center justify-center min-w-[4rem] h-14"
-                     >
-                        <span className="text-3xl font-medium leading-none">{word.th}</span>
-                     </motion.div>
+                        layoutId={`word-${originalIndex}`}
+                        variant="bank"
+                        text={word.th}
+                        className="!h-14 !min-w-[4rem]"
+                     />
                   );
                }
                return <div key={`bank-empty-${originalIndex}`} className="min-w-[4rem] h-14" />; // Placeholder to keep spacing
@@ -475,55 +433,38 @@ export function SpeakingExercise({
 
                {/* Center Area */}
                <div className="absolute -top-14 left-1/2 -translate-x-1/2 flex items-center justify-center">
-                  <button
+                  <IconButton
                      onClick={() => setIsAutoMicEnabled(!isAutoMicEnabled)}
-                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm ${isAutoMicEnabled ? 'bg-emerald-100 text-emerald-600 border border-emerald-300' : 'bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200'}`}
+                     size="md"
+                     className={`shadow-sm ${isAutoMicEnabled ? 'bg-emerald-100 text-emerald-600 border border-emerald-300' : 'bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200'}`}
                      title={isAutoMicEnabled ? 'Désactiver le micro automatique' : 'Activer le micro automatique'}
                   >
                      <Zap size={20} className={isAutoMicEnabled ? 'fill-emerald-500' : ''} />
-                  </button>
+                  </IconButton>
                </div>
 
-               {status !== 'listening' && status !== 'success' && (
-                  <button
-                     onClick={() => startListening(false)}
-                     className="w-20 h-20 bg-orange-500 hover:bg-orange-400 text-white rounded-full flex items-center justify-center shadow-[0_8px_0_rgb(194,65,12)] active:shadow-[0_0px_0_rgb(194,65,12)] active:translate-y-2 transition-all group z-10"
-                  >
-                     {status === 'evaluating' ? (
-                        <Loader2 size={32} className="animate-spin" />
-                     ) : (
-                        <Mic size={32} className="group-hover:scale-110 transition-transform" />
-                     )}
-                  </button>
-               )}
-
-               {status === 'success' && (
-                  <div className="w-20 h-20 bg-emerald-500/50 text-white rounded-full flex items-center justify-center z-10 opacity-60 cursor-not-allowed">
-                     <Mic size={32} />
-                  </div>
-               )}
+               <MicButton
+                  status={status}
+                  onClick={() => {
+                     if (status === 'listening') {
+                        stopAndEvaluate();
+                     } else if (status !== 'success') {
+                        startListening(false);
+                     }
+                  }}
+               />
 
                {status === 'listening' && (
-                  <>
-                     <motion.div
-                        key="listening"
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                        className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
-                     >
-                        <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
-                           <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
-                           <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
-                        </span>
-                     </motion.div>
-
-                     <button
-                        onClick={stopAndEvaluate}
-                        className="w-20 h-20 bg-rose-500 hover:bg-rose-400 text-white rounded-3xl flex items-center justify-center shadow-[0_8px_0_rgb(225,29,72)] active:shadow-[0_0px_0_rgb(225,29,72)] active:translate-y-2 transition-all group z-10"
-                        title="Stop"
-                     >
-                        <Square size={32} className="fill-current group-hover:scale-110 transition-transform" />
-                     </button>
-                  </>
+                  <motion.div
+                     key="listening"
+                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                     className="absolute bottom-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 flex items-center z-10 w-max max-w-[90vw]"
+                  >
+                     <span className="text-lg font-thai text-slate-600 bg-white/90 backdrop-blur px-6 py-3 rounded-full border border-orange-200 shadow-sm flex items-center gap-2 truncate">
+                        <Loader2 size={18} className="animate-spin text-orange-500 shrink-0" />
+                        <span className="truncate">{currentFullTranscript || <span className="text-slate-400 font-sans italic text-sm">{getTranslation('auto.speak_now', language)}</span>}</span>
+                     </span>
+                  </motion.div>
                )}
 
                {/* Right Area (Absolute) */}

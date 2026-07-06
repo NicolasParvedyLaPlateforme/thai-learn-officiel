@@ -2,54 +2,27 @@
 
 import { useMemo } from 'react';
 import { useProgressStore } from "@/lib/store";
+import { computeUnits } from "@/lib/lesson-utils";
 import BASE_UNITS from "@/data/speak_units.json";
 import { useGlobalSuggestedLesson } from "@/hooks/useGlobalSuggestedLesson";
 
 import dynamic from 'next/dynamic';
 
-import SpeakMobileTimeline from './SpeakMobileTimeline';
-import SpeakDesktopTimeline from './SpeakDesktopTimeline';
+import PathMobileTimeline from '../path-ui/PathMobileTimeline';
+import PathDesktopTimeline from '../path-ui/PathDesktopTimeline';
 import { DesktopLessonLevelsView } from '../learn/DesktopLessonLevelsView';
 import PathLayout from '../path-ui/PathLayout';
 
-const SpeakLessonModal = dynamic(() => import('./SpeakLessonModal'), { ssr: false });
-const SpeakUnitsModal = dynamic(() => import('./SpeakUnitsModal'), { ssr: false });
-const SpeakQuestsModal = dynamic(() => import('./SpeakQuestsModal'), { ssr: false });
-const SpeakLockedReviewModal = dynamic(() => import('./SpeakLockedReviewModal'), { ssr: false });
+const PathLessonModal = dynamic(() => import('../path-ui/PathLessonModal'), { ssr: false });
+const UnitsModal = dynamic(() => import('../modals/UnitsModal'), { ssr: false });
+const QuestsModal = dynamic(() => import('../modals/QuestsModal'), { ssr: false });
+const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
 
 export default function SpeakClientPage({ lightweightLessons }: { lightweightLessons: any[] }) {
   const data = { lessons: lightweightLessons };
 
   const UNITS = useMemo(() => {
-    const computedUnits = [];
-    let currentStartIndex = 0;
-
-    for (let i = 0; i < BASE_UNITS.length; i++) {
-      const baseUnit = BASE_UNITS[i];
-      let endIndex = currentStartIndex;
-
-      for (let j = currentStartIndex; j < data.lessons.length; j++) {
-        const title = data.lessons[j].title || "";
-        const titleEn = data.lessons[j].titleEn || "";
-        if (title.toLowerCase().includes("bilan") || titleEn.toLowerCase().includes("review")) {
-          endIndex = j + 1;
-          break;
-        }
-      }
-
-      if (endIndex === currentStartIndex && currentStartIndex < data.lessons.length) {
-        endIndex = data.lessons.length;
-      }
-
-      computedUnits.push({
-        ...baseUnit,
-        startIndex: currentStartIndex,
-        endIndex: endIndex
-      });
-
-      currentStartIndex = endIndex;
-    }
-    return computedUnits;
+    return computeUnits(BASE_UNITS, data.lessons);
   }, [lightweightLessons, data.lessons.length]);
 
   const { dailyQuests } = useProgressStore();
@@ -67,13 +40,13 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
       globalSuggested={globalSuggested}
       suggestedLessonId={suggestedLessonId}
       maxLevelPerLesson={5}
-      renderMobileTimeline={(props) => <SpeakMobileTimeline {...props} speakQuests={speakQuests} />}
-      renderDesktopTimeline={(props) => <SpeakDesktopTimeline {...props} maxLevelPerLesson={5} />}
+      renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="speak" quests={speakQuests} maxLevelPerLesson={5} />}
+      renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="speak" maxLevelPerLesson={5} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="speak" maxLevelPerLesson={5} />}
-      renderLessonModal={(props) => <SpeakLessonModal {...props} />}
-      renderUnitsModal={(props) => <SpeakUnitsModal {...props} />}
-      renderQuestsModal={(props) => <SpeakQuestsModal {...props} />}
-      renderLockedReviewModal={(props) => <SpeakLockedReviewModal {...props} />}
+      renderLessonModal={(props) => <PathLessonModal {...props} pathType="speak" maxLevelPerLesson={5} />}
+      renderUnitsModal={(props) => <UnitsModal {...props} />}
+      renderQuestsModal={(props) => <QuestsModal category="speak" {...props} />}
+      renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}
     />
   );
 }

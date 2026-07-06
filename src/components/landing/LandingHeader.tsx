@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export default function LandingHeader() {
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);

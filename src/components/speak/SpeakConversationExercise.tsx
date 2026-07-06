@@ -10,46 +10,15 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import levenshtein from 'fast-levenshtein';
 import { m as motion, AnimatePresence } from "motion/react";
 import { stopTTS, playThaiTTS } from "@/lib/tts";
+import { MessageSquare, RefreshCw, HelpCircle } from "lucide-react";
+import { getAliases, replaceNumbersWithThai, getTargetWords } from "@/lib/vocabulary-utils";
 import IconImage from '../ui/IconImage';
 
 const normalizeThai = (str: string) => {
    return str.replace(/[\s\.\?!,ๆ;]/g, '').toLowerCase();
 };
 
-const getAliases = (word: string): string[] => {
-   const aliases: Record<string, string[]> = {
-      'ฉัน': ['ชั้น'],
-      'เขา': ['เค้า'],
-      'ไหม': ['มั้ย', 'มั๊ย'],
-      'หรือ': ['หรอ', 'เหรอ'],
-      'หรือเปล่า': ['รึเปล่า', 'ป่าว'],
-      'เปล่า': ['ป่าว'],
-      'อย่างไร': ['ยังไง'],
-      'เท่าไร': ['เท่าไหร่'],
-      'ทำไม': ['ทําไม'],
-      'ก็': ['ก้อ'],
-      'หนึ่ง': ['นึง'],
-      'ค่ะ': ['คะ', 'คา', 'ค่า', 'ขะ', 'ข่า'],
-      'คะ': ['ค่ะ', 'ค้า', 'ขะ', 'คา'],
-      'ครับ': ['คับ', 'ครัช', 'ฮะ'],
-      'อะไร': ['อัลไล']
-   };
-   return aliases[word] || [];
-};
 
-const replaceNumbersWithThai = (text: string) => {
-   const map: Record<string, string> = {
-      '0': 'ศูนย์', '1': 'หนึ่ง', '2': 'สอง', '3': 'สาม', '4': 'สี่',
-      '5': 'ห้า', '6': 'หก', '7': 'เจ็ด', '8': 'แปด', '9': 'เก้า',
-      '10': 'สิบ', '11': 'สิบเอ็ด', '20': 'ยี่สิบ', '100': 'ร้อย'
-   };
-   let res = text;
-   for (const num of ['100', '20', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']) {
-      const re = new RegExp(`(?<!\\d)${num}(?!\\d)`, 'g');
-      res = res.replace(re, map[num]);
-   }
-   return res;
-};
 
 export interface DialogueLine {
    speaker: string;
@@ -88,18 +57,7 @@ export function SpeakConversationExercise({
    const activeItemRef = useRef<HTMLDivElement>(null);
 
    // Derive target components
-   const targetWords = useMemo(() => {
-      if (!currentItem) return [];
-      if ('components' in currentItem) { // Phrase
-         return currentItem.components.map(id => {
-            if (id === 'w_dots') return { id: 'w_dots', th: '...', fr: '', phonetic: '' } as Word;
-            const w = dictionary.find(d => d.id === id);
-            return w || { id, th: '???', fr: '', phonetic: '' } as Word;
-         });
-      } else { // Single Word
-         return [currentItem as Word];
-      }
-   }, [currentItem, dictionary]);
+   const targetWords = useMemo(() => getTargetWords(currentItem, dictionary), [currentItem, dictionary]);
 
    const [placedIndices, setPlacedIndices] = useState<number[]>([]);
    const [placedScores, setPlacedScores] = useState<Record<number, number>>({});

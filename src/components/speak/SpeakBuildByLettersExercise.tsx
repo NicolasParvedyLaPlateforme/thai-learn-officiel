@@ -9,9 +9,13 @@ import { stopTTS, playThaiTTS } from "@/lib/tts";
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import levenshtein from 'fast-levenshtein';
+import { MicButton } from "@/components/ui/MicButton";
+import { IconButton } from "@/components/ui/IconButton";
+import { Button } from "@/components/ui/Button";
 import { m as motion, AnimatePresence } from "motion/react";
 import { getWritingClustersAndGroups } from "@/lib/generators";
-import { THAI_ALPHABET, AlphabetItem } from "@/data/alphabet-data";
+import { THAI_ALPHABET } from "@/data/alphabet-data";
+import { AlphabetItem } from "@/types";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 
 const normalizeThai = (str: string) => {
@@ -307,7 +311,7 @@ export function SpeakBuildByLettersExercise({
       };
    }, [status, micAttempts]);
 
-   const startMic = async () => {
+   async function startMic() {
       if (!browserSupportsSpeechRecognition) {
          alert("Speech recognition not supported");
          return;
@@ -321,14 +325,14 @@ export function SpeakBuildByLettersExercise({
       } catch (e) {
          console.error(e);
       }
-   };
+   }
 
-   const stopMic = () => {
+   function stopMic() {
       SpeechRecognition.stopListening();
       if (status === 'listening') setStatus('evaluating');
-   };
+   }
 
-   const playTTS = (text: string) => {
+   function playTTS(text: string) {
       if (status === 'listening' || status === 'evaluating') {
          stopMic();
          setStatus('idle');
@@ -341,9 +345,9 @@ export function SpeakBuildByLettersExercise({
       } else {
          playThaiTTS(text);
       }
-   };
+   }
 
-   const toggleMic = () => {
+   function toggleMic() {
       if (status === 'listening') {
          stopMic();
       } else {
@@ -498,7 +502,12 @@ export function SpeakBuildByLettersExercise({
          {/* Microphone Button at the bottom */}
          {(status !== 'success' || !lockedPhraseId) && (!lockedPhraseId || step < targetChars.length) && (
             <div className="flex flex-col items-center mt-auto pt-12 pb-8">
-               <div className="mb-6 min-h-[3rem] text-center px-4 w-full max-w-md">
+               <MicButton
+                  status={status}
+                  onClick={toggleMic}
+               />
+
+               <div className="mb-6 min-h-[3rem] text-center px-4 w-full max-w-md mt-6">
                   {status === 'listening' ? (
                      <p className="text-lg text-slate-600 font-medium">
                         {spokenHistory || getTranslation('auto.listening', language)}
