@@ -159,6 +159,9 @@ export function LessonPathMap({
           const unlocked = isLevelUnlocked(l);
           const isNextLocked = l === (blockedByLevel !== null ? blockedByLevel : effectiveProgress + 1);
           
+          // Ne pas afficher les niveaux qui sont au-delà du prochain niveau à débloquer
+          if (!unlocked && !isNextLocked) return null;
+
           const isSelected = activeLevel === l;
           const label = l === maxLevel && maxLevel > 4 ? (getTranslation('auto.ultimate', language) || 'Ultime') : `${l + 1}`;
           
@@ -173,8 +176,6 @@ export function LessonPathMap({
           } else if (isNextLocked) {
             // Mise en évidence du prochain niveau à débloquer
             buttonClass += "bg-slate-50 text-slate-500 border-2 border-dashed border-slate-400 hover:bg-slate-100 hover:border-slate-500 shadow-sm cursor-help";
-          } else {
-            buttonClass += "bg-slate-100 text-slate-400 border-2 border-slate-100 cursor-not-allowed opacity-50";
           }
 
           return (

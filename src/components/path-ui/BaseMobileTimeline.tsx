@@ -118,7 +118,7 @@ export default function BaseMobileTimeline({
                         }
                     }
                 }
-            }, 300);
+            }, 450);
         }
     }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
 
@@ -169,7 +169,7 @@ export default function BaseMobileTimeline({
                         cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 }
-            }, 300);
+            }, 450);
         }
     };
 

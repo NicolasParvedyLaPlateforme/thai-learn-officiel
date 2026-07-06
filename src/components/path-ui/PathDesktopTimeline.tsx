@@ -118,7 +118,7 @@ export default function PathDesktopTimeline({
                     nodeEl.scrollIntoView({ behavior: 'auto', block: 'center' });
                 }
             }
-        }, 100);
+        }, 450);
     }
   }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
 
@@ -220,7 +220,7 @@ export default function PathDesktopTimeline({
                               nodeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
                           }
                       }
-                  }, 300);
+                  }, 450);
                 }
               };
 
