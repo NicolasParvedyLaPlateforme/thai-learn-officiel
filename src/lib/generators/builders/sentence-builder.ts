@@ -79,8 +79,9 @@ export function buildFillInTheBlank(
   });
   
   const missingWordFr = getExerciseTranslation(blankWord, language);
+  const wordForHint = mode === 'translation' ? blankWord.th : missingWordFr;
   const hintTemplate = getTranslation('exercise.missing_word', language);
-  const blankHint = hintTemplate.replace('{word}', missingWordFr);
+  const blankHint = hintTemplate.replace('{word}', wordForHint);
 
   return {
     id: `fib-${phrase.id}-${Date.now()}-${Math.random()}`,

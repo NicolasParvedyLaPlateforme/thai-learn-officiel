@@ -597,5 +597,6 @@
   "tone.implicit_sara_a": "💡 Esta es una sílaba muerta debido a una vocal corta implícita (Sara A).",
   "tone.select_letter_to_analyze": "Selecciona una letra para ver el análisis y las reglas de tono",
   "auto.find_word_position": "Encuentra la posición de la palabra",
-  "auto.listen_and_select_position": "Escucha y selecciona la posición correcta"
+  "auto.listen_and_select_position": "Escucha y selecciona la posición correcta",
+  "exercise.choice": "Opción"
 }
