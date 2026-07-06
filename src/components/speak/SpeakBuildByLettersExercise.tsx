@@ -372,10 +372,10 @@ export function SpeakBuildByLettersExercise({
                <div className="flex flex-col gap-3 w-full max-w-md">
                   {availablePhrases.map((phrase, idx) => {
                      const isSuccess = successPhraseId === phrase.id;
-                     let colorClass = "bg-white border-2 border-slate-200 hover:border-orange-300";
+                     let colorClass = "bg-white border border-slate-200 hover:bg-slate-50";
                      if (isSuccess) {
-                        if (successScore < 100) colorClass = "text-amber-700 border-2 border-amber-300 bg-amber-50 shadow-sm shadow-amber-100";
-                        else colorClass = "text-emerald-700 border-2 border-emerald-300 bg-emerald-50 shadow-sm shadow-emerald-100";
+                        if (successScore < 100) colorClass = "text-amber-700 border border-transparent bg-[#FDF1E4]";
+                        else colorClass = "text-emerald-700 border border-transparent bg-[#EEF2EF]";
                      }
                      return (
                         <motion.div
@@ -403,9 +403,9 @@ export function SpeakBuildByLettersExercise({
          {lockedPhraseId && (
             <div className="flex flex-col gap-8 w-full mt-4">
                {/* Selected Area (VirtualKeyboard style) */}
-               <div className={`min-h-[100px] border-y-2 border-slate-200 py-4 flex flex-col gap-2`}>
+               <div className={`min-h-[100px] border-y border-slate-200 py-4 flex flex-col gap-2`}>
                   <div className="flex gap-3 justify-center items-center">
-                     <div className="bg-white border-2 border-b-4 border-slate-200 rounded-xl px-4 py-2 sm:px-5 sm:py-3 shadow-sm text-3xl sm:text-4xl font-thai leading-relaxed text-center break-all min-w-[180px] min-h-[64px] sm:min-h-[76px] flex justify-center items-center">
+                     <div className="bg-white border border-slate-200 rounded-xl px-4 py-2 sm:px-5 sm:py-3 text-3xl sm:text-4xl font-thai leading-relaxed text-center break-all min-w-[180px] min-h-[64px] sm:min-h-[76px] flex justify-center items-center transition-all">
                         {step === 0 ? (
                            <span className="text-slate-400 p-2 font-medium text-base sm:text-lg font-sans">
                               ...
@@ -467,12 +467,12 @@ export function SpeakBuildByLettersExercise({
                         const isSuccess = successChar === opt.char;
 
                         let colorClass = opt.isWrong
-                           ? 'bg-slate-100 border-2 border-slate-200 text-slate-300 pointer-events-none'
-                           : 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2';
+                           ? 'bg-slate-100 border border-slate-200 text-slate-300 pointer-events-none'
+                           : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:scale-95';
 
                         if (isSuccess) {
-                           if (successScore < 100) colorClass = "text-amber-700 border-amber-300 bg-amber-50 border-2 border-b-4 pointer-events-none shadow-sm";
-                           else colorClass = "text-emerald-700 border-emerald-300 bg-emerald-50 border-2 border-b-4 pointer-events-none shadow-sm";
+                           if (successScore < 100) colorClass = "text-amber-700 border border-transparent bg-[#FDF1E4] pointer-events-none";
+                           else colorClass = "text-emerald-700 border border-transparent bg-[#EEF2EF] pointer-events-none";
                         }
 
                         return (
@@ -529,7 +529,7 @@ export function SpeakBuildByLettersExercise({
                   onClick={toggleMic}
                   className={`
                      relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center
-                     transition-all duration-300 shadow-lg active:scale-95
+                     transition-all duration-300 active:scale-95
                      ${status === 'listening' ? 'bg-rose-500 animate-pulse ring-4 ring-rose-500/30' : 'bg-orange-500 hover:bg-orange-600'}
                   `}
                >

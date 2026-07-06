@@ -119,9 +119,9 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
   return (
     <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto">
       {/* Selected area */}
-      <div className={`min-h-[100px] border-y-2 border-slate-200 py-4 flex flex-col gap-2`}>
+      <div className={`min-h-[100px] border-y border-slate-200 py-4 flex flex-col gap-2`}>
         <div className="flex gap-3 justify-center items-center">
-          <div className="bg-white border-2 border-b-4 border-slate-200 rounded-xl px-4 py-2 sm:px-5 sm:py-3 shadow-sm text-3xl sm:text-4xl font-thai leading-relaxed text-center break-all min-w-[180px] min-h-[64px] sm:min-h-[76px] flex justify-center items-center">
+          <div className="bg-white border border-slate-200 rounded-xl px-4 py-2 sm:px-5 sm:py-3 text-3xl sm:text-4xl font-thai leading-relaxed text-center break-all min-w-[180px] min-h-[64px] sm:min-h-[76px] flex justify-center items-center transition-all">
             {selected.length === 0 ? (
               <span className="text-slate-400 p-2 font-medium text-base sm:text-lg font-sans">
                 {getTranslation('auto.choose_characters_below', language)}
@@ -165,7 +165,7 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
           {exercise.type === 'writing' && exercise.blindMode && exercise.correctComponents && !isChecking && (
             <Button 
               variant="outline"
-              className="flex items-center justify-center gap-1 bg-indigo-50 border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
+              className="flex items-center justify-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-600 p-3 sm:px-4 sm:py-3 rounded-xl sm:text-sm font-semibold hover:bg-indigo-100 transition-colors"
               onClick={() => {
                 if (selected.length < exercise.correctComponents!.length) {
                   playThaiTTS(exercise.correctComponents![selected.length]);
@@ -187,18 +187,17 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
         {currentOptions.map((opt) => {
           let displayStr = formatCombiningChar(opt.th);
           
-          let btnClass = 'bg-white border-2 border-b-4 border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:translate-y-0.5 active:border-b-2';
+          let btnClass = 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer active:scale-95';
           
           return (
             <Button
-              variant="outline"
               key={`key-${opt.idx}`}
               onClick={() => handleSelect(opt.th)}
               disabled={disabled}
               className={`
                 rounded-xl font-medium font-thai select-none transition-all
                 text-4xl sm:text-5xl flex items-center justify-center h-16 sm:h-20
-                ${btnClass} border-none
+                ${btnClass}
               `}
             >
               <span className="leading-none pt-1">{displayStr}</span>
@@ -212,15 +211,14 @@ export default function VirtualKeyboard({ exercise, selected, onChange, disabled
 
         {/* Backspace Button */}
         <Button
-          variant="outline"
           onClick={handleBackspace}
           disabled={disabled || selected.length === 0}
           className={`
-            rounded-xl font-medium select-none transition-all
-            flex items-center justify-center h-16 sm:h-20 border-none p-0
+            rounded-xl font-medium select-none transition-all border
+            flex items-center justify-center h-16 sm:h-20 p-0
             ${(!disabled && selected.length > 0)
-              ? 'bg-slate-200 border-2 border-b-4 border-slate-300 text-slate-700 hover:bg-slate-300 cursor-pointer active:translate-y-0.5 active:border-b-2' 
-              : 'bg-slate-100 border-2 border-slate-100 text-slate-300 pointer-events-none'}
+              ? 'bg-slate-200 border-slate-300 text-slate-700 hover:bg-slate-300 cursor-pointer active:scale-95' 
+              : 'bg-slate-100 border-slate-200 text-slate-400 pointer-events-none'}
           `}
         >
           <Delete size={32} />
