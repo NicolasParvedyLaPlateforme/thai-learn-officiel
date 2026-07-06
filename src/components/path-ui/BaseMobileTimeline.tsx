@@ -102,13 +102,22 @@ export default function BaseMobileTimeline({
             setExpandedLessons(new Set([toExpand.id]));
             const activeLevel = Math.min(lessonLevels[toExpand.id] || 0, maxLevelPerLesson);
 
-            // Scroll to the card
-            setTimeout(() => {
-                const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
-                if (cardEl) {
-                    cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
-                }
-            }, 450);
+            const hasAnyProgressInUnit = unitLessons.some(l => {
+                if ((lessonLevels[l.id] || 0) > 0) return true;
+                const partsKey = `${l.id}_level-0`;
+                if ((currentPartsCompleted[partsKey] || []).length > 0) return true;
+                return false;
+            });
+
+            if (hasAnyProgressInUnit) {
+                // Scroll to the card
+                setTimeout(() => {
+                    const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
+                    if (cardEl) {
+                        cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                    }
+                }, 450);
+            }
         }
     }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
 
