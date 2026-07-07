@@ -195,9 +195,7 @@ export function LessonPathNode({
                       setSelectedAction(null);
                     } else {
                       setSelectedAction(targetAction);
-                      setTimeout(() => {
-                        containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                      }, 100);
+
                     }
                   }
                 }}
@@ -274,7 +272,7 @@ export function LessonPathNode({
                             } else {
                               setSelectedAction(i);
                               setTimeout(() => {
-                                containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        
                               }, 100);
                             }
                           }
@@ -299,7 +297,7 @@ export function LessonPathNode({
                           } else {
                             setSelectedAction('full');
                             setTimeout(() => {
-                              containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      
                             }, 100);
                           }
                         }
@@ -417,9 +415,7 @@ export function LessonPathNode({
                       setSelectedAction(null);
                     } else {
                       setSelectedAction('full');
-                      setTimeout(() => {
-                        containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                      }, 100);
+
                     }
                   }
                 }}

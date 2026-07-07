@@ -111,10 +111,12 @@ export default function BaseMobileTimeline({
 
             if (hasAnyProgressInUnit) {
                 // Scroll to the card
+                window.dispatchEvent(new Event('hideGlobalHeader'));
                 setTimeout(() => {
                     const cardEl = document.getElementById(`mobile-lesson-${toExpand.id}`);
                     if (cardEl) {
-                        cardEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                        window.dispatchEvent(new Event('hideGlobalHeader'));
+                        cardEl.scrollIntoView({ behavior: 'auto', block: 'start' });
                     }
                 }, 450);
             }
@@ -158,10 +160,12 @@ export default function BaseMobileTimeline({
 
         const isCompleted = level >= maxLevelPerLesson;
         if (!isCurrentlyExpanded) {
+            window.dispatchEvent(new Event('hideGlobalHeader'));
             setTimeout(() => {
                 const cardEl = document.getElementById(`mobile-lesson-${lesson.id}`);
                 if (cardEl) {
-                    cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    window.dispatchEvent(new Event('hideGlobalHeader'));
+                    cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }, 450);
         }

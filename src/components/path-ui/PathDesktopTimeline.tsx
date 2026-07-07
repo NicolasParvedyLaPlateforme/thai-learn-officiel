@@ -116,13 +116,16 @@ export default function PathDesktopTimeline({
 
         if (hasAnyProgressInUnit) {
             // Scroll to the card instantly (no cleanup so it's guaranteed to run)
+            (window as any)._isProgrammaticScroll = Date.now();
             setTimeout(() => {
                 const circleEl = document.getElementById(`desktop-node-circle-${toExpand?.id}`);
                 if (circleEl) {
+                    (window as any)._isProgrammaticScroll = Date.now();
                     circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
                 } else {
                     const nodeEl = document.getElementById(`desktop-node-${toExpand?.id}`);
                     if (nodeEl) {
+                        (window as any)._isProgrammaticScroll = Date.now();
                         nodeEl.scrollIntoView({ behavior: 'auto', block: 'center' });
                     }
                 }
@@ -219,9 +222,13 @@ export default function PathDesktopTimeline({
                 setShowDesktopUnitsList(false);
                 
                 if (!isCurrentlyExpanded) {
+                  // Prevent sticky banner from showing during expansion animation and auto-scroll
+                  (window as any)._isProgrammaticScroll = Date.now();
+
                   setTimeout(() => {
                       const nodeEl = document.getElementById(`desktop-node-${lesson.id}`);
                       if (nodeEl) {
+                          (window as any)._isProgrammaticScroll = Date.now();
                           nodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                       }
                   }, 450);
