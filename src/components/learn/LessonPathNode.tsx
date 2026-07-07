@@ -66,10 +66,7 @@ export function LessonPathNode({
   isReminderTarget,
   currentFullLevels,
 }: LessonPathNodeProps) {
-  const [selectedAction, setSelectedAction] = useState<number | 'full' | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-
 
   // ── Current node state ──
   const isBlockedByFullLevel = blockedByLevel !== undefined && blockedByLevel !== null && levelIndex >= blockedByLevel;
@@ -82,23 +79,42 @@ export function LessonPathNode({
 
   const earnedStarsMastery = (isCompletedFullLevel && levelIndex === maxLevel) ? (earnedStarsArray[maxLevel] || 0) : 0;
   const isCompleted = isMastery ? earnedStarsMastery > 0 : isCompletedFullLevel;
+
+  const currentPartsTotal = lesson ? getLevelSplit(levelIndex, lesson) : 1;
+  const currentPartsKey = `${lessonId}_level-${levelIndex}`;
+  const currentCompletedParts = lessonPartsCompleted?.[currentPartsKey] || [];
+
+  const [selectedAction, setSelectedAction] = useState<number | 'full' | null>(() => {
+    if (!isAccessible) return null;
+    
+    if (isCompleted || currentCompletedParts.length >= currentPartsTotal) {
+      return 'full';
+    }
+    
+    const nextPart = currentCompletedParts.length;
+    let isVerticalMet = true;
+    if (levelIndex > 0) {
+      const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+      const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+      const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+      const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
+      isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+    }
+    
+    if (!isVerticalMet) return null;
+    return nextPart;
+  });
   const isCurrent = !isMastery && levelIndex === currentProgress && !isBlockedByFullLevel;
   const isSelected = selectedAction !== null;
   const earnedStars = isCompletedFullLevel ? (earnedStarsArray[levelIndex] || 0) : 0;
 
   // Step counter uses parts of the CURRENT level (for the flag indicator)
-  const currentLevelParts = lesson ? getLevelSplit(levelIndex, lesson) : 1;
-  const partsKey = `${lessonId}_level-${levelIndex}`;
-  const completedPartsForFlag = lessonPartsCompleted?.[partsKey] || [];
-  const completedStepsCount = isCompleted ? currentLevelParts : completedPartsForFlag.length;
+  const completedPartsForFlag = lessonPartsCompleted?.[currentPartsKey] || [];
+  const completedStepsCount = isCompleted ? currentPartsTotal : completedPartsForFlag.length;
 
   const strokeClass = levelIndex <= currentProgress
     ? unitColor.replace('bg-', 'text-')
     : 'text-slate-200';
-
-  const currentPartsTotal = lesson ? getLevelSplit(levelIndex, lesson) : 1;
-  const currentPartsKey = `${lessonId}_level-${levelIndex}`;
-  const currentCompletedParts = lessonPartsCompleted?.[currentPartsKey] || [];
 
   const getStepsData = () => {
     if (suggestionType === 'alphabet') return stepsMetadataAlphabet;
@@ -240,8 +256,8 @@ export function LessonPathNode({
                       colorClass = `${unitText} fill-current opacity-40`;
                       textClass = "fill-white opacity-90";
                     } else {
-                      if (isPartCompleted) {
-                        textClass = "fill-slate-300";
+                      if (isPartCompleted || isAccessibleSlice) {
+                        textClass = `${unitText} fill-current opacity-80`;
                       }
                     }
 
@@ -290,7 +306,7 @@ export function LessonPathNode({
                       }}
                     />
                     <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
-                      className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
+                      className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? `${unitText} fill-current opacity-80` : 'fill-slate-400')}`}>
                       {getTranslation('auto.full', language) || 'ENTIER'}
                     </text>
                   </g>
