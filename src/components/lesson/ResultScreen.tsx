@@ -85,10 +85,13 @@ export default function ResultScreen({
       if (nextLogicalStep) {
         const nextLvl = nextLogicalStep.levelIndex + 1;
         let label = "";
+        const strLevel = getTranslation('auto.level', language) || "Niveau";
+        const strPart = (getTranslation('auto.part', language) || "Partie ").trim();
+        
         if (nextLogicalStep.type === 'parts' && nextLogicalStep.totalParts > 1 && nextLogicalStep.partIndex !== null) {
-          label = `Niveau ${nextLvl} - Partie ${nextLogicalStep.partIndex + 1}`;
+          label = `${strLevel} ${nextLvl} - ${strPart} ${nextLogicalStep.partIndex + 1}`;
         } else {
-          label = `Niveau ${nextLvl}`;
+          label = `${strLevel} ${nextLvl}`;
         }
         
         const onClick = () => {
@@ -111,8 +114,11 @@ export default function ResultScreen({
         );
       }
     } else {
+      const strLevel = getTranslation('auto.level', language) || "Niveau";
+      const strPart = (getTranslation('auto.part', language) || "Partie ").trim();
+      
       if (isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1) {
-        const label = `Niveau ${currentLevel + 1} - Partie ${partIndex + 2}`;
+        const label = `${strLevel} ${currentLevel + 1} - ${strPart} ${partIndex + 2}`;
         renderNextButton = (
           <Button
             variant="indigoGamified"
@@ -126,7 +132,7 @@ export default function ResultScreen({
           </Button>
         );
       } else if (currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10)) {
-        const label = `Niveau ${currentLevel + 2}`;
+        const label = `${strLevel} ${currentLevel + 2}`;
         renderNextButton = (
           <Button
             variant="indigoGamified"
@@ -208,7 +214,7 @@ export default function ResultScreen({
             : currentLevel === 10
               ? getTranslation('auto.mastery_level_completed', language)
               : isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null
-                ? `Niveau ${currentLevel + 1} - ${getTranslation('auto.part', language)}${partIndex + 1}/${totalParts}${getTranslation('auto.completed_f', language)}`
+                ? `${getTranslation('auto.level', language) || 'Niveau'} ${currentLevel + 1} - ${getTranslation('auto.part', language)}${partIndex + 1}/${totalParts}${getTranslation('auto.completed_f', language)}`
                 : `${getTranslation('auto.level', language)}${currentLevel + 1}${getTranslation('auto.completed_m', language)}`
         }
       </h2>
