@@ -51,9 +51,7 @@ export function LessonPathMap({
   const fullLevelsCompleted = useProgressStore(state => state.fullLevelsCompleted);
   const currentFullLevels = lessonId ? (fullLevelsCompleted[lessonId] || []) : [];
 
-  let maxAccessibleLevel = 0;
   let blockedByLevel: number | null = null;
-  let blockingReason: string | null = null;
 
   const isPartCompleted = (l: number, p: number) => {
     const key = `${lessonId}_level-${l}`;
@@ -61,43 +59,118 @@ export function LessonPathMap({
     return parts.includes(p);
   };
 
-  for (let l = 1; l <= maxLevel; l++) {
-    const isVerticalMet = l <= currentProgress || isPartCompleted(l - 1, 0);
-    if (!isVerticalMet) {
-      blockingReason = `${getTranslation('auto.complete_part_1_of_level', language) || 'Terminez la partie 1 du Niveau '}${l}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
-      break;
-    }
+  // 1. Determine state of each level
+  const levelStates = Array(maxLevel + 1).fill(null).map((_, i) => {
+    // i is 0-indexed. i = 0 is Niveau 1. i = 4 is Niveau 5. i = 10 is Ultime.
+    const l = i + 1; // 1-indexed
 
-    let isBlocked = false;
-    if (suggestionType === 'learn' && l >= 4) {
-      for (let i = 4; i <= l; i++) {
-        if (!currentFullLevels.includes(i - 4)) {
-          isBlocked = true;
-          blockedByLevel = blockedByLevel === null ? i : blockedByLevel;
-          blockingReason = `${getTranslation('auto.complete_level', language) || 'Terminez le Niveau '}${i - 3}${getTranslation('auto.full_to_unlock', language) || ' (entier) pour débloquer.'}`;
-          break;
+    let isUnlocked = false;
+    let currentBlockingReason: string | null = null;
+
+    if (i < 4) {
+      // Phase 1 : Niveaux 1 à 4
+      isUnlocked = (i === 0) || isPartCompleted(i - 1, 0);
+      if (!isUnlocked) {
+        currentBlockingReason = `${getTranslation('auto.complete_part_1_of_level', language) || 'Terminez la partie 1 du Niveau '}${l - 1}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
+      }
+    } else if (i < 10) {
+      // Phase 2+3 : Niveaux 5 à 10
+      const requiredFullLevelIndex = i - 4; // Pour i=4 (Niv 5), il faut fullLevel 0 (Niv 1)
+      const isFullMet = currentFullLevels.includes(requiredFullLevelIndex);
+      const isPartsMet = currentProgress >= i; // currentProgress == lessonLevel. Pour i=4, il faut lessonLevel >= 4.
+
+      isUnlocked = isFullMet && isPartsMet;
+      if (!isUnlocked) {
+        if (!isFullMet) {
+          if (blockedByLevel === null) {
+            blockedByLevel = i;
+          }
+          currentBlockingReason = `${getTranslation('auto.complete_level', language) || 'Terminez le Niveau '}${requiredFullLevelIndex + 1}${getTranslation('auto.full_to_unlock', language) || ' (entier) pour débloquer.'}`;
+        } else {
+          currentBlockingReason = `${getTranslation('auto.complete_all_parts_level', language) || 'Terminez toutes les parties du Niveau '}${i}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
         }
       }
-      
-      if (l === 4) {
-          const partsL3 = lesson ? getLevelSplit(3, lesson) : 1;
-          const completedL3 = lessonPartsCompleted?.[`${lessonId}_level-3`] || [];
-          if (completedL3.length < partsL3) {
-              isBlocked = true;
-              if (!blockingReason) blockingReason = getTranslation('auto.complete_all_parts_level_4', language) || `Terminez toutes les parties du Niveau 4 pour débloquer.`;
-          }
+    } else {
+      // Ultime (i = 10)
+      isUnlocked = currentProgress >= 10;
+      if (!isUnlocked) {
+         currentBlockingReason = `${getTranslation('auto.complete_all_parts_level', language) || 'Terminez toutes les parties du Niveau '}${10}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
       }
     }
+    return { isUnlocked, blockingReason: currentBlockingReason };
+  });
 
-    if (isBlocked) break;
-    maxAccessibleLevel = l;
+  const firstLockedIndex = levelStates.findIndex(s => !s.isUnlocked);
+  const effectiveProgress = firstLockedIndex !== -1 ? firstLockedIndex - 1 : maxLevel;
+
+  // 2. Determine calculatedTarget (auto-scroll) using /next logic
+  let calculatedTarget = maxLevel;
+  let foundTarget = false;
+
+  // Séquence 1 : Recherche horizontale dans Niveaux 1 à 4
+  let targetPartIndex = 0;
+  let hasMoreParts = true;
+  while (hasMoreParts && !foundTarget) {
+    hasMoreParts = false;
+    for (const levelIndex of [0, 1, 2, 3]) {
+      const isVerticallyAccessible = levelIndex === 0 || isPartCompleted(levelIndex - 1, 0);
+      if (!isVerticallyAccessible) continue;
+      
+      const totalParts = lesson ? getLevelSplit(levelIndex, lesson) : 1;
+      if (targetPartIndex < totalParts) {
+         hasMoreParts = true;
+         if (!isPartCompleted(levelIndex, targetPartIndex)) {
+            calculatedTarget = levelIndex;
+            foundTarget = true;
+            break;
+         }
+      }
+    }
+    targetPartIndex++;
   }
 
-  const effectiveProgress = maxAccessibleLevel;
-  let calculatedTarget = effectiveProgress > maxLevel ? maxLevel : effectiveProgress;
-  
-  if (blockedByLevel !== null) {
-      calculatedTarget = blockedByLevel - 4;
+  // Séquence 2+3 : Full Levels et Parties 5 à 10
+  if (!foundTarget) {
+    for (let i = 0; i <= 5; i++) {
+       const fullLevelIndex = i;
+       const partsLevelIndex = i + 4;
+       
+       if (currentProgress >= fullLevelIndex) {
+           if (!currentFullLevels.includes(fullLevelIndex)) {
+              calculatedTarget = fullLevelIndex; // focus on the level associated with this full level
+              foundTarget = true;
+              break;
+           }
+       }
+       
+       if (currentProgress >= partsLevelIndex) {
+           const totalParts = lesson ? getLevelSplit(partsLevelIndex, lesson) : 1;
+           let partMissing = false;
+           for (let p = 0; p < totalParts; p++) {
+               if (!isPartCompleted(partsLevelIndex, p)) {
+                   partMissing = true;
+                   break;
+               }
+           }
+           if (partMissing) {
+               calculatedTarget = partsLevelIndex;
+               foundTarget = true;
+               break;
+           }
+       }
+    }
+  }
+
+  // Séquence 4 : Ultime
+  if (!foundTarget) {
+      if (currentProgress >= 10 && !currentFullLevels.includes(10)) {
+          calculatedTarget = 10;
+          foundTarget = true;
+      }
+  }
+
+  if (!foundTarget) {
+      calculatedTarget = maxLevel;
   }
 
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
@@ -107,16 +180,9 @@ export function LessonPathMap({
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
   const [showLockMessageFor, setShowLockMessageFor] = useState<number | null>(null);
 
-  const handleLevelChange = (l: number) => {
-    if (l !== activeLevel) {
-      setNextLevel(l);
-      setIsFadingOut(true);
-      setTimeout(() => {
-        setActiveLevel(l);
-        setNextLevel(null);
-        setIsFadingOut(false);
-      }, 200);
-    }
+  const handleLevelChange = (newLevel: number) => {
+    setActiveLevel(newLevel);
+    setModalLevel(newLevel);
   };
 
   useEffect(() => {
@@ -143,7 +209,7 @@ export function LessonPathMap({
   const getOffset = () => 0;
   const generatePath = () => "";
 
-  const isLevelUnlocked = (l: number) => l <= effectiveProgress;
+  const isLevelUnlocked = (l: number) => levelStates[l]?.isUnlocked || false;
 
   return (
     <div className="flex flex-col items-center justify-start lg:justify-center w-full max-w-5xl mx-auto gap-4 lg:gap-8 pt-4 pb-0">
@@ -160,10 +226,12 @@ export function LessonPathMap({
         <div className="flex flex-wrap justify-center gap-3 w-full">
         {nodes.map((l) => {
           const unlocked = isLevelUnlocked(l);
-          const isNextLocked = l === (blockedByLevel !== null ? blockedByLevel : effectiveProgress + 1);
+          const isNextLocked = l === firstLockedIndex;
           
           // Ne pas afficher les niveaux qui sont au-delà du prochain niveau à débloquer
           if (!unlocked && !isNextLocked) return null;
+          
+          const blockingReason = levelStates[l]?.blockingReason;
 
           const currentVisualLevel = nextLevel !== null ? nextLevel : activeLevel;
           const isSelected = currentVisualLevel === l;

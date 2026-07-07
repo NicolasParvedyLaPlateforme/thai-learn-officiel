@@ -214,9 +214,7 @@ export default function PathDesktopTimeline({
                   }
                 } else {
                   setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  const storageKey = pathType === 'speak' ? `last_speak_level_${lesson.id}` : pathType === 'alphabet' ? `last_alphabet_level_${lesson.id}` : `last_level_${lesson.id}`;
-                  const saved = localStorage.getItem(storageKey);
-                  setModalLevel(saved !== null ? parseInt(saved, 10) : null);
+                  setModalLevel(null);
                 }
 
                 setShowDesktopUnitsList(false);
