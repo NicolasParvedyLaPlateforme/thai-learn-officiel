@@ -13,7 +13,6 @@ import PathDesktopTimeline from '../path-ui/PathDesktopTimeline';
 import { DesktopLessonLevelsView } from './DesktopLessonLevelsView';
 import PathLayout from '../path-ui/PathLayout';
 
-const PathLessonModal = dynamic(() => import('../path-ui/PathLessonModal'), { ssr: false });
 const UnitsModal = dynamic(() => import('../modals/UnitsModal'), { ssr: false });
 const QuestsModal = dynamic(() => import('../modals/QuestsModal'), { ssr: false });
 const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
@@ -43,7 +42,6 @@ export default function LearnClientPage({ lightweightLessons }: { lightweightLes
       renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="learn" quests={learnQuests} />}
       renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="learn" maxLevelPerLesson={10} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="learn" />}
-      renderLessonModal={(props) => <PathLessonModal {...props} pathType="learn" maxLevelPerLesson={10} />}
       renderUnitsModal={(props) => <UnitsModal {...props} />}
       renderQuestsModal={(props) => <QuestsModal {...props} />}
       renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}

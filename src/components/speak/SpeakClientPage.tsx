@@ -13,7 +13,6 @@ import PathDesktopTimeline from '../path-ui/PathDesktopTimeline';
 import { DesktopLessonLevelsView } from '../learn/DesktopLessonLevelsView';
 import PathLayout from '../path-ui/PathLayout';
 
-const PathLessonModal = dynamic(() => import('../path-ui/PathLessonModal'), { ssr: false });
 const UnitsModal = dynamic(() => import('../modals/UnitsModal'), { ssr: false });
 const QuestsModal = dynamic(() => import('../modals/QuestsModal'), { ssr: false });
 const LockedReviewModal = dynamic(() => import('../modals/LockedReviewModal'), { ssr: false });
@@ -43,7 +42,6 @@ export default function SpeakClientPage({ lightweightLessons }: { lightweightLes
       renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="speak" quests={speakQuests} maxLevelPerLesson={5} />}
       renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="speak" maxLevelPerLesson={5} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="speak" maxLevelPerLesson={5} />}
-      renderLessonModal={(props) => <PathLessonModal {...props} pathType="speak" maxLevelPerLesson={5} />}
       renderUnitsModal={(props) => <UnitsModal {...props} />}
       renderQuestsModal={(props) => <QuestsModal category="speak" {...props} />}
       renderLockedReviewModal={(props) => <LockedReviewModal {...props} />}

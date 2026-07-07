@@ -183,6 +183,8 @@ export function LessonPathMap({
   const handleLevelChange = (newLevel: number) => {
     setActiveLevel(newLevel);
     setModalLevel(newLevel);
+    const storageKey = suggestionType === 'speak' ? `last_speak_level_${lessonId}` : suggestionType === 'alphabet' ? `last_alphabet_level_${lessonId}` : `last_level_${lessonId}`;
+    localStorage.setItem(storageKey, newLevel.toString());
   };
 
   useEffect(() => {

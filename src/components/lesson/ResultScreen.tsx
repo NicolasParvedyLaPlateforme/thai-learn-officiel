@@ -8,6 +8,7 @@ import { useProgressStore } from "@/lib/store";
 import { getLevelSplit } from "@/lib/levelSplits";
 import { DailyQuestsWidget } from "@/components/widgets/DailyQuestsWidget";
 import { AnimatedStars } from "@/components/ui/AnimatedStars";
+import { computeNextLesson } from "@/lib/next-mode-utils";
 
 interface ResultScreenProps {
   lesson: Lesson;
@@ -67,7 +68,80 @@ export default function ResultScreen({
     return `${m}min ${s}s`;
   };
 
-  const { unopenedGifts } = useProgressStore();
+  const { unopenedGifts, lessonLevels, lessonPartsCompleted, fullLevelsCompleted, lessonStars } = useProgressStore();
+
+  let renderNextButton = null;
+  if (mode !== 'training' && mode !== 'revision') {
+    if (pathType === 'learn') {
+      const nextLogicalStep = computeNextLesson(
+        [lesson],
+        lessonLevels,
+        lessonPartsCompleted,
+        fullLevelsCompleted,
+        lessonStars,
+        0
+      );
+
+      if (nextLogicalStep) {
+        const nextLvl = nextLogicalStep.levelIndex + 1;
+        const isNextPart = nextLogicalStep.type === 'parts' && nextLogicalStep.totalParts > 1 && nextLogicalStep.partIndex !== null && nextLogicalStep.partIndex > 0;
+        const label = isNextPart ? getTranslation('auto.next_part', language) || "Partie suivante" : getTranslation('auto.next_level', language) || "Niveau suivant";
+        
+        const onClick = () => {
+          let url = `/lesson/${lesson.id}?level=${nextLvl}`;
+          if (nextLogicalStep.type === 'parts' && nextLogicalStep.totalParts > 1 && nextLogicalStep.partIndex !== null) {
+            url += `&part=${nextLogicalStep.partIndex}&totalParts=${nextLogicalStep.totalParts}`;
+          }
+          handleNavigate(url, label);
+        };
+
+        renderNextButton = (
+          <Button
+            variant="indigoGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest"
+            onClick={onClick}
+          >
+            {label}
+          </Button>
+        );
+      }
+    } else {
+      if (isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1) {
+        renderNextButton = (
+          <Button
+            variant="indigoGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest"
+            onClick={() =>
+              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, getTranslation('auto.next_part', language) || "Partie suivante")
+            }
+          >
+            {getTranslation('auto.next_part', language) || "Partie suivante"}
+          </Button>
+        );
+      } else if (currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10)) {
+        renderNextButton = (
+          <Button
+            variant="indigoGamified"
+            size="lg"
+            className="w-full text-lg uppercase tracking-widest"
+            onClick={() => {
+              const basePath = pathType === 'alphabet' ? '/alphabet/lesson' : '/lesson';
+              const nextTotalParts = pathType === 'alphabet' ? 1 : getLevelSplit(currentLevel + 1, lesson);
+              if (nextTotalParts > 1) {
+                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`, getTranslation('auto.next_level', language) || "Niveau suivant");
+              } else {
+                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language) || "Niveau suivant");
+              }
+            }}
+          >
+            {getTranslation('auto.next_level', language) || "Niveau suivant"}
+          </Button>
+        );
+      }
+    }
+  }
 
   const handleNavigate = (nextUrl: string, nextLabel: string) => {
     const giftsAvailable = (pathType === 'alphabet' ? unopenedGifts?.alphabet : unopenedGifts?.learn) || 0;
@@ -162,35 +236,7 @@ export default function ResultScreen({
             {getTranslation('auto.next_unit', language)}
           </Button>
         )}
-        {mode !== 'training' && mode !== 'revision' && isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1 ? (
-          <Button
-            variant="indigoGamified"
-            size="lg"
-            className="w-full text-lg uppercase tracking-widest"
-            onClick={() =>
-              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, getTranslation('auto.next_part', language))
-            }
-          >
-            {getTranslation('auto.next_part', language)}
-          </Button>
-        ) : mode !== 'training' && mode !== 'revision' && currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10) && (
-          <Button
-            variant="indigoGamified"
-            size="lg"
-            className="w-full text-lg uppercase tracking-widest"
-            onClick={() => {
-              const basePath = pathType === 'alphabet' ? '/alphabet/lesson' : '/lesson';
-              const nextTotalParts = pathType === 'alphabet' ? 1 : getLevelSplit(currentLevel + 1, lesson);
-              if (nextTotalParts > 1) {
-                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`, getTranslation('auto.next_level', language));
-              } else {
-                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language));
-              }
-            }}
-          >
-            {getTranslation('auto.next_level', language)}
-          </Button>
-        )}
+        {renderNextButton}
 
         {mode === 'training' && (
           <Button
