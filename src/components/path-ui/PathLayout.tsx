@@ -40,7 +40,6 @@ export interface PathLayoutProps {
   renderMobileTimeline: (props: any) => React.ReactNode;
   renderDesktopTimeline: (props: any) => React.ReactNode;
   renderLessonLevelsView?: (props: any) => React.ReactNode;
-  renderLessonModal?: (props: any) => React.ReactNode;
   renderUnitsModal?: (props: any) => React.ReactNode;
   renderQuestsModal?: (props: any) => React.ReactNode;
   renderLockedReviewModal?: (props: any) => React.ReactNode;
@@ -57,7 +56,6 @@ export default function PathLayout({
   renderMobileTimeline,
   renderDesktopTimeline,
   renderLessonLevelsView,
-  renderLessonModal,
   renderUnitsModal,
   renderQuestsModal,
   renderLockedReviewModal
@@ -245,22 +243,6 @@ export default function PathLayout({
           </div>
         )}
       </div>
-
-      {mounted && windowWidth < 1280 && renderLessonModal && renderLessonModal({
-        isOpen: !!selectedLesson && modalLevel !== null,
-        onOpenChange: (open: boolean) => {
-          if (!open) setModalLevel(null);
-        },
-        selectedLesson,
-        modalLevel: modalLevel ?? 0,
-        setModalLevel: (lvl: number | null) => setModalLevel(lvl),
-        language,
-        lessonLevels,
-        lessonStars,
-        resetLessonLevel,
-        reviewStats,
-        getExpectedXp
-      })}
 
       {mounted && windowWidth < 768 && renderUnitsModal && renderUnitsModal({
         isOpen: isUnitsModalOpen,

@@ -366,28 +366,7 @@ export function LessonPathNode({
                   );
                 })()}
 
-                {/* Tooltip Blocage */}
-                {blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 && (() => {
-                  return (
-                    <div className="absolute z-[1000] pointer-events-none drop-shadow-md" style={{ left: '50%', top: '50%' }}>
-                      {/* Changement du translate : on descend la bulle (40%) au lieu de la monter (-180%) */}
-                      <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, 40%)' }}>
-                        {/* L'animation bounce a été retirée ici */}
-                        <div className="flex flex-col items-center justify-center relative">
 
-                          {/* La flèche est maintenant placée AU-DESSUS du texte et pointe vers le haut */}
-                          <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-transparent border-b-indigo-500 mb-[-1px]"></div>
-
-                          {/* Le corps de la bulle */}
-                          <div className="relative z-1000 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
-                            {getTranslation('auto.level_locked_full_1', language) || 'Le niveau '}{blockedByLevel + 1}{getTranslation('auto.level_locked_full_2', language) || ' est débloqué qu\'après l\'accomplissement du niveau '}{blockedByLevel - 3}{getTranslation('auto.level_locked_full_3', language) || ' en entier'}
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })()}
 
                 {/* Tooltip Reminder */}
                 {isReminderTarget && levelIndex === targetScrollLevel && (() => {
@@ -448,26 +427,7 @@ export function LessonPathNode({
               </button>
             )}
 
-            {/* Tooltip Blocage for non-part nodes (mastery, etc) */}
-            {currentPartsTotal <= 1 && blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 && (
-              <div className="absolute z-[1000] pointer-events-none drop-shadow-md mt-5" style={{ left: '50%', top: '50%' }}>
-                {/* Changement du translate : on descend la bulle (40%) au lieu de la monter (-180%) */}
-                <div className="relative flex items-center justify-center" style={{ transform: 'translate(-50%, 40%)' }}>
-                  {/* L'animation bounce a été retirée ici */}
-                  <div className="flex flex-col items-center justify-center relative">
 
-                    {/* La flèche est maintenant placée AU-DESSUS du texte et pointe vers le haut */}
-                    <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-transparent border-b-indigo-500 mb-[-1px]"></div>
-
-                    {/* Le corps de la bulle */}
-                    <div className="relative z-1000 bg-indigo-500 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg text-center shadow-md max-w-[140px]">
-                      {getTranslation('auto.level_locked_full_1', language) || 'Le niveau '}{blockedByLevel + 1}{getTranslation('auto.level_locked_full_2', language) || ' est débloqué qu\'après l\'accomplissement du niveau '}{blockedByLevel - 3}{getTranslation('auto.level_locked_full_3', language) || ' en entier'}
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Tooltip Reminder for non-part nodes */}
             {currentPartsTotal <= 1 && isReminderTarget && levelIndex === targetScrollLevel && (

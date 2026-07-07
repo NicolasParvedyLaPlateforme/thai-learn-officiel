@@ -13,7 +13,6 @@ import PathLayout from "@/components/path-ui/PathLayout";
 
 // Imports for inline modals
 import dynamic from 'next/dynamic';
-const PathLessonModal = dynamic(() => import('@/components/path-ui/PathLessonModal'), { ssr: false });
 const UnitsModal = dynamic(() => import('@/components/modals/UnitsModal'), { ssr: false });
 const QuestsModal = dynamic(() => import('@/components/modals/QuestsModal'), { ssr: false });
 import { getTranslation, getLocalizedField } from "@/hooks/useTranslation";
@@ -56,7 +55,6 @@ export default function AlphabetClientPage({ lightweightLessons }: { lightweight
       renderMobileTimeline={({ key, ...props }: any) => <PathMobileTimeline key={key} {...props} pathType="alphabet" quests={alphabetQuests} maxLevelPerLesson={3} />}
       renderDesktopTimeline={({ key, ...props }: any) => <PathDesktopTimeline key={key} {...props} pathType="alphabet" maxLevelPerLesson={3} />}
       renderLessonLevelsView={(props) => <DesktopLessonLevelsView {...props} suggestionType="alphabet" maxLevelPerLesson={3} />}
-      renderLessonModal={(props) => <PathLessonModal {...props} pathType="alphabet" maxLevelPerLesson={3} />}
       renderUnitsModal={(props) => <UnitsModal {...props} />}
       renderQuestsModal={(props) => <QuestsModal category="alphabet" {...props} />}
     />
