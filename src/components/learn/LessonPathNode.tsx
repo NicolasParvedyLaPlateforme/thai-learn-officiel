@@ -69,20 +69,7 @@ export function LessonPathNode({
   const [selectedAction, setSelectedAction] = useState<number | 'full' | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (selectedAction === null) return;
-    const handler = (e: Event) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setSelectedAction(null);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    document.addEventListener('touchstart', handler);
-    return () => {
-      document.removeEventListener('mousedown', handler);
-      document.removeEventListener('touchstart', handler);
-    };
-  }, [selectedAction]);
+
 
   // ── Current node state ──
   const isBlockedByFullLevel = blockedByLevel !== undefined && blockedByLevel !== null && levelIndex >= blockedByLevel;
@@ -187,12 +174,15 @@ export function LessonPathNode({
                 onClick={(e) => {
                   e.stopPropagation();
                   if (isAccessible) {
-                    if (isCompleted || currentCompletedParts.length === currentPartsTotal) {
-                      setSelectedAction('full');
+                    const targetAction = (isCompleted || currentCompletedParts.length === currentPartsTotal) ? 'full' : currentCompletedParts.length;
+                    if (selectedAction === targetAction) {
+                      setSelectedAction(null);
                     } else {
-                      setSelectedAction(currentCompletedParts.length);
+                      setSelectedAction(targetAction);
+                      setTimeout(() => {
+                        containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                      }, 100);
                     }
-                    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
                   }
                 }}
                 className={`relative w-36 h-36 md:w-48 md:h-48 transition-all duration-300 group
@@ -263,7 +253,14 @@ export function LessonPathNode({
                         onClick={(e) => {
                           e.stopPropagation();
                           if (!isLevelLocked && (isSelectedPart || isPartCompleted || isLevelFullyCompleted || isAccessibleSlice)) {
-                            setSelectedAction(i);
+                            if (selectedAction === i) {
+                              setSelectedAction(null);
+                            } else {
+                              setSelectedAction(i);
+                              setTimeout(() => {
+                                containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                              }, 100);
+                            }
                           }
                         }}
                       >
@@ -275,17 +272,28 @@ export function LessonPathNode({
                     );
                   })}
 
-                  <circle cx="50" cy="50" r="18"
-                    className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} ${blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 ? 'stroke-orange-500 animate-pulse stroke-[4]' : 'stroke-white stroke-[3]'} transition-colors ${isAccessible && isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (isAccessible && isCompleted) setSelectedAction('full');
-                    }}
-                  />
-                  <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
-                    className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
-                    {getTranslation('auto.full', language) || 'ENTIER'}
-                  </text>
+                  <g className={(!isAccessible || (!isCompleted && currentCompletedParts.length < currentPartsTotal)) ? 'opacity-25 transition-opacity duration-300' : 'transition-opacity duration-300'}>
+                    <circle cx="50" cy="50" r="18"
+                      className={`${selectedAction === 'full' ? `${unitText} fill-current ring-2 ${unitColor.replace('bg-', 'ring-')}` : 'fill-slate-100'} ${blockedByLevel !== null && blockedByLevel !== undefined && levelIndex === blockedByLevel - 4 ? 'stroke-orange-500 animate-pulse stroke-[4]' : 'stroke-white stroke-[3]'} transition-colors ${isAccessible && isCompleted ? 'cursor-pointer hover:opacity-90' : 'pointer-events-none'}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (isAccessible && isCompleted) {
+                          if (selectedAction === 'full') {
+                            setSelectedAction(null);
+                          } else {
+                            setSelectedAction('full');
+                            setTimeout(() => {
+                              containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                            }, 100);
+                          }
+                        }
+                      }}
+                    />
+                    <text x="50" y="50" textAnchor="middle" dominantBaseline="central"
+                      className={`text-[6.5px] font-black pointer-events-none transition-colors ${selectedAction === 'full' ? 'fill-white' : (isCompleted ? 'fill-slate-300' : 'fill-slate-400')}`}>
+                      {getTranslation('auto.full', language) || 'ENTIER'}
+                    </text>
+                  </g>
                 </svg>
 
                 {/* Tooltip La Suite */}
@@ -389,8 +397,14 @@ export function LessonPathNode({
                 onClick={(e) => {
                   e.stopPropagation();
                   if (isAccessible) {
-                    setSelectedAction('full');
-                    e.currentTarget.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    if (selectedAction === 'full') {
+                      setSelectedAction(null);
+                    } else {
+                      setSelectedAction('full');
+                      setTimeout(() => {
+                        containerRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                      }, 100);
+                    }
                   }
                 }}
                 disabled={!isAccessible}

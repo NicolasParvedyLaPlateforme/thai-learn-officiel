@@ -29,10 +29,10 @@ export default React.memo(function WordPosition({
   onAddMistake
 }: Props) {
   const [localErrors, setLocalErrors] = useState<string[]>([]);
-  
+
   const handleSelect = (id: string, thValue: string) => {
     if (disabled || isChecking) return;
-    
+
     onChange(thValue);
     if (onAutoCheck) {
       if (thValue !== exercise.answer) {
@@ -44,21 +44,23 @@ export default React.memo(function WordPosition({
   };
 
   return (
-    <div className="flex flex-col w-full h-full max-w-2xl mx-auto">
+    <div className="flex flex-col w-full h-full max-w-2xl mx-auto px-4">
       {/* Top Question Area */}
-      <div className="flex-1 flex flex-col items-center justify-center py-8 min-h-[40vh]">
+      <div className="flex-1 flex flex-col items-center justify-center pt-8 pb-6 min-h-[40vh]">
+
+        {/* White Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ type: "spring", bounce: 0.4 }}
-          className="flex flex-col items-center justify-center gap-6"
+          className="w-full max-w-[320px] sm:max-w-sm bg-white rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center justify-center py-10 px-6 gap-6 mb-10"
         >
-          <div className="text-center mb-2 flex flex-col items-center gap-3">
-            <h2 className="text-2xl md:text-3xl font-medium text-slate-500">
+          <div className="text-center flex flex-col items-center gap-3">
+            <h2 className="text-lg font-medium text-slate-500">
               {exercise.question}
             </h2>
             {exercise.displayWord && (
-              <div className="text-5xl md:text-6xl font-bold font-thai text-emerald-600">
+              <div className="text-5xl font-bold font-thai text-[#00a67d] tracking-wide">
                 {exercise.displayWord}
               </div>
             )}
@@ -66,23 +68,29 @@ export default React.memo(function WordPosition({
 
           <button
             onClick={() => exercise.targetSound && playThaiTTS(exercise.targetSound)}
-            className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-emerald-50 border-4 border-emerald-100 flex items-center justify-center text-emerald-500 hover:bg-emerald-100 hover:scale-105 active:scale-95 transition-all shadow-sm group"
+            className="w-20 h-20 rounded-full bg-[#EEF2EE] flex items-center justify-center text-[#063b2f] hover:bg-[#E2EBE4] hover:scale-105 active:scale-95 transition-all group"
           >
-            <Volume2 className="w-16 h-16 md:w-20 md:h-20 group-hover:text-emerald-600 transition-colors" />
+            <Volume2 className="w-8 h-8 md:w-9 md:h-9 transition-colors fill-current" />
           </button>
+        </motion.div>
 
-          <div className="text-center mt-4 px-4">
-             <div className="text-lg font-bold text-slate-700 mb-1">
-               {getTranslation('auto.find_word_position', language) || "Trouvez la position de ce mot"}
-             </div>
-             <div className="text-sm text-slate-500 font-medium">
-               {getTranslation('auto.listen_and_select_position', language) || "Écoutez la phrase et sélectionnez le numéro de sa position."}
-             </div>
-          </div>
+        {/* Instructions */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-center w-full px-2"
+        >
+          <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-2">
+            {getTranslation('auto.find_word_position', language) || "Trouve la position du mot"}
+          </h3>
+          <p className="text-base sm:text-lg text-slate-500 font-medium">
+            {getTranslation('auto.listen_and_select_position', language) || "Écoute et sélectionne la bonne position"}
+          </p>
         </motion.div>
       </div>
 
-      <div className="min-h-[2rem] sm:min-h-[2.5rem] flex items-center justify-center mb-4">
+      <div className="min-h-[2rem] flex items-center justify-center mb-4">
         {localErrors.length > 0 && !(isChecking && isCorrect === false) && (
           <div className="text-rose-500 font-bold animate-pulse text-base sm:text-lg py-0.5 sm:py-1 px-3 sm:px-4 bg-rose-50 rounded-full border border-rose-200 shadow-sm">
             Incorrect
@@ -91,33 +99,33 @@ export default React.memo(function WordPosition({
       </div>
 
       {/* Bottom Options Area */}
-      <div className={`flex flex-wrap justify-center gap-3 md:gap-6 w-full`}>
-        {exercise.options.map((opt: any, index: number) => {
+      <div className="flex flex-nowrap justify-center gap-4 w-full pb-8 px-4">
+        {exercise.options.map((opt: any) => {
           const isSelected = selected === opt.th;
           const isError = localErrors.includes(opt.id);
           const showAsCorrect = isChecking && isCorrect && isSelected;
           const showAsWrong = isChecking && isCorrect === false && isSelected;
 
-          let btnClass = "bg-white border-slate-200 hover:border-emerald-300 hover:bg-emerald-50 text-slate-700";
-          
+          let btnClass = "bg-[#E2E8E4] hover:bg-[#D5DCD8] text-slate-900";
+
           if (showAsCorrect) {
-            btnClass = "bg-emerald-500 border-emerald-600 text-white shadow-lg scale-105";
+            btnClass = "bg-emerald-500 text-white shadow-lg scale-105 border-b-4 border-emerald-600";
           } else if (showAsWrong || isError) {
-            btnClass = "bg-rose-100 border-rose-300 text-rose-600 opacity-50 scale-95";
+            btnClass = "bg-rose-100 text-rose-500 opacity-50 scale-95";
           } else if (isSelected) {
-            btnClass = "bg-emerald-100 border-emerald-400 text-emerald-700 scale-105";
+            btnClass = "bg-emerald-100 border-4 border-emerald-400 text-emerald-800 scale-105";
           }
 
           return (
             <motion.button
               key={opt.id}
-              whileHover={disabled ? {} : { scale: 1.05 }}
+              whileHover={disabled ? {} : { scale: 1.02 }}
               whileTap={disabled ? {} : { scale: 0.95 }}
               onClick={() => handleSelect(opt.id, opt.th)}
               disabled={disabled || isError}
-              className={`relative flex items-center justify-center w-24 h-32 md:w-32 md:h-40 rounded-3xl border-4 transition-all duration-300 shadow-sm overflow-hidden group ${btnClass}`}
+              className={`relative flex-1 flex items-center justify-center h-[50px] rounded-2xl transition-all duration-300 overflow-hidden ${btnClass}`}
             >
-              <span className="text-5xl md:text-6xl font-black font-thai opacity-90">
+              <span className="text-2xl font-black opacity-90">
                 {opt.th}
               </span>
             </motion.button>

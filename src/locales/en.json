@@ -599,5 +599,6 @@
   "tone.implicit_sara_a": "💡 This is a dead syllable due to an implicit short vowel (Sara A).",
   "tone.select_letter_to_analyze": "Select a letter to see the analysis and tone rules",
   "auto.find_word_position": "Find the word position",
-  "auto.listen_and_select_position": "Listen and select the correct position"
+  "auto.listen_and_select_position": "Listen and select the correct position",
+  "exercise.choice": "Choice"
 }

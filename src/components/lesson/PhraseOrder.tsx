@@ -92,16 +92,16 @@ export default React.memo(function PhraseOrder({
   };
 
   return (
-    <div className="flex flex-col w-full h-full max-w-3xl mx-auto">
+    <div className="flex flex-col w-full h-full max-w-3xl mx-auto shrink min-h-0">
       {/* Top Section */}
-      <div className="flex-1 flex flex-col items-center justify-center py-4 min-h-[40vh]">
+      <div className="flex-1 flex flex-col items-center justify-center py-4 min-h-0 shrink">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center gap-6 w-full"
+          className="flex flex-col items-center gap-4 w-full"
         >
           <div className="text-center mb-2 px-4">
-            <h2 className="text-2xl md:text-3xl font-medium text-slate-600 mb-1">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-1">
               {exercise.question}
             </h2>
             <div className="text-sm text-slate-500 font-medium">
@@ -113,13 +113,13 @@ export default React.memo(function PhraseOrder({
 
           <button
             onClick={() => exercise.targetSound && playThaiTTS(exercise.targetSound)}
-            className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-emerald-50 border-4 border-emerald-100 flex items-center justify-center text-emerald-500 hover:bg-emerald-100 transition-all shadow-sm group shrink-0"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#EEF2EE] flex items-center justify-center text-[#063b2f] hover:bg-[#E2EBE4] hover:scale-105 active:scale-95 transition-all group shrink-0"
           >
-            <Volume2 className="w-10 h-10 md:w-12 md:h-12 group-hover:text-emerald-600 transition-colors" />
+            <Volume2 className="w-7 h-7 sm:w-8 sm:h-8 transition-colors fill-current" />
           </button>
 
           {/* Cards Display */}
-          <div className="flex flex-wrap justify-center gap-2 md:gap-3 px-2 mt-4 w-full">
+          <div className="flex flex-wrap justify-center gap-2 px-2 mt-4 w-full">
             <AnimatePresence>
               {currentOrder.map((wordId, index) => {
                 const word = getWordDetails(wordId);
@@ -130,16 +130,16 @@ export default React.memo(function PhraseOrder({
                   <motion.div
                     key={wordId}
                     layout
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.5 }}
                     onClick={() => handleCardClick(index)}
-                    className={`flex items-center justify-center min-w-[3.5rem] px-4 py-3 md:py-4 rounded-2xl border-2 shadow-sm transition-all select-none
-                      ${phase === 'reorder' ? 'cursor-pointer hover:border-emerald-300' : 'cursor-default'}
-                      ${isSelected ? 'bg-emerald-100 border-emerald-400 scale-105' : 'bg-white border-slate-200'}
+                    className={`flex items-center justify-center min-w-[3.5rem] px-4 py-3 md:py-4 rounded-xl border transition-all select-none
+                      ${phase === 'reorder' ? 'cursor-pointer hover:bg-slate-50 active:scale-95' : 'cursor-default'}
+                      ${isSelected ? '!bg-[#EEF2EF] !border-transparent scale-105' : 'bg-white border-slate-200'}
                     `}
                   >
-                    <span className={`text-3xl md:text-4xl font-thai ${isSelected ? 'text-emerald-700' : 'text-slate-700'}`}>
+                    <span className={`text-3xl md:text-4xl font-thai ${isSelected ? 'text-slate-900' : 'text-slate-700'}`}>
                       {word.th}
                     </span>
                   </motion.div>
@@ -150,37 +150,37 @@ export default React.memo(function PhraseOrder({
         </motion.div>
       </div>
 
-      <div className="min-h-[2rem] sm:min-h-[2.5rem] flex items-center justify-center mb-2">
+      <div className="min-h-[2rem] flex items-center justify-center mb-2">
         {localErrors > 0 && phase === 'true-false' && !(isChecking && isCorrect === false) && (
-          <div className="text-rose-500 font-bold animate-pulse text-base sm:text-lg py-0.5 sm:py-1 px-3 sm:px-4 bg-rose-50 rounded-full border border-rose-200 shadow-sm">
+          <div className="text-rose-500 font-bold animate-pulse text-sm sm:text-base py-0.5 sm:py-1 px-3 sm:px-4 bg-rose-50 rounded-full border border-rose-200">
             Incorrect
           </div>
         )}
       </div>
 
       {/* Bottom Action Area */}
-      <div className="w-full flex justify-center pb-4 min-h-[5rem]">
+      <div className="w-full flex justify-center pb-4 min-h-[5rem] shrink-0">
         {phase === 'true-false' ? (
-          <div className="flex gap-4 md:gap-6 w-full max-w-md px-4">
+          <div className="flex gap-4 w-full max-w-md px-4">
             <motion.button
-              whileHover={disabled ? {} : { scale: 1.05 }}
-              whileTap={disabled ? {} : { scale: 0.95 }}
+              whileHover={disabled ? {} : { scale: 1.02 }}
+              whileTap={disabled ? {} : { scale: 0.98 }}
               onClick={() => handleTrueFalseClick(true)}
               disabled={disabled}
-              className="flex-1 py-4 md:py-5 flex flex-col items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl font-bold shadow-md transition-colors"
+              className="flex-1 py-4 flex flex-col items-center justify-center gap-2 bg-[#E2E8E4] hover:bg-[#d5ded8] text-emerald-700 rounded-[2rem] font-bold transition-all active:scale-95"
             >
-              <CheckCircle2 className="w-8 h-8" />
+              <CheckCircle2 className="w-7 h-7" />
               <span className="text-lg">Vrai</span>
             </motion.button>
             
             <motion.button
-              whileHover={disabled ? {} : { scale: 1.05 }}
-              whileTap={disabled ? {} : { scale: 0.95 }}
+              whileHover={disabled ? {} : { scale: 1.02 }}
+              whileTap={disabled ? {} : { scale: 0.98 }}
               onClick={() => handleTrueFalseClick(false)}
               disabled={disabled}
-              className="flex-1 py-4 md:py-5 flex flex-col items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white rounded-3xl font-bold shadow-md transition-colors"
+              className="flex-1 py-4 flex flex-col items-center justify-center gap-2 bg-[#F2E8E8] hover:bg-[#EBD5D5] text-rose-600 rounded-[2rem] font-bold transition-all active:scale-95"
             >
-              <XCircle className="w-8 h-8" />
+              <XCircle className="w-7 h-7" />
               <span className="text-lg">Faux</span>
             </motion.button>
           </div>

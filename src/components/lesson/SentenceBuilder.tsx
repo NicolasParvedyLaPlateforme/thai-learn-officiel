@@ -90,12 +90,14 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
     }
   }
 
+  const selectedTileClass = "!bg-[#EEF2EF] !border-transparent !text-slate-900";
+
   return (
-    <div className="flex flex-col gap-4 w-full max-w-2xl mx-auto">
+    <div className="flex flex-col gap-3 w-full max-w-2xl mx-auto px-2">
 
       {/* Target area (Answer) */}
-      <div className={`min-h-[120px] border border-slate-200 bg-white/50 backdrop-blur-sm shadow-sm rounded-3xl py-4 px-2 flex flex-col gap-2 items-center justify-center relative mb-10`}>
-        <div className="flex flex-wrap gap-2 items-center justify-center min-h-[64px] sm:min-h-[80px]">
+      <div className={`min-h-[100px] border border-slate-200 bg-white shadow-sm rounded-2xl py-6 px-4 flex flex-col gap-2 items-center justify-center relative mb-4`}>
+        <div className="flex flex-wrap gap-2 items-center justify-center min-h-[56px] sm:min-h-[64px] w-full">
           {selected.length === 0 && !exercise.isFillInBlank && (
             <span className="text-slate-400 p-2 font-medium">{getTranslation('auto.build_the_sentence_here', language)}</span>
           )}
@@ -124,6 +126,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                         onClick={() => handleRemove(0)}
                         disabled={disabled}
                         status={status}
+                        className={status === 'default' ? selectedTileClass : ''}
                       />
                     );
                   } else {
@@ -155,6 +158,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                       onClick={() => handleRemove(removeIdx)}
                       disabled={disabled}
                       status={status}
+                      className={status === 'default' ? selectedTileClass : ''}
                     />
                   );
                   selIdx++;
@@ -170,6 +174,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                     text={word}
                     onClick={() => handleRemove(removeIdx)}
                     disabled={disabled}
+                    className={selectedTileClass}
                   />
                 );
                 selIdx++;
@@ -183,42 +188,18 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                     text={word}
                     onClick={() => handleRemove(idx)}
                     disabled={disabled}
+                    className={selectedTileClass}
                   />
                 );
               });
             }
             return items;
           })()}
-
-          {/* Hint System */}
-          {/* {!disabled && selected.length < (exercise.correctComponents ? exercise.correctComponents.filter(c => c !== 'w_dots').length : 0) && (
-            <div className="relative inline-flex items-center ml-2">
-              {showHint ? (
-                <div
-                  className="bg-amber-100 border-2 border-amber-300 text-amber-800 rounded-xl px-3 py-2 flex flex-col items-center justify-center cursor-pointer shadow-sm animate-pulse-once"
-                  onClick={() => playThaiTTS(nextHintLetter)}
-                  title={getTranslation('auto.next_character_hint', language)}
-                >
-                  <span className="font-thai text-xl">{nextHintLetter}</span>
-                  <span className="text-xs font-semibold mt-0.5">{nextHintPronunciation}</span>
-                </div>
-              ) : (
-                <IconButton
-                  size="md"
-                  onClick={() => setShowHint(true)}
-                  className="bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600"
-                  title={getTranslation('auto.show_hint_23', language)}
-                >
-                  <HelpCircle size={20} />
-                </IconButton>
-              )}
-            </div>
-          )} */}
         </div>
       </div>
 
       {/* Word bank */}
-      <div className="flex flex-wrap justify-center gap-2 -mt-2 sm:mt-2">
+      <div className="flex flex-wrap justify-center gap-2 mt-2">
         {exercise.options.map((opt, idx) => {
           let isUsed = false;
           if (usedCounts[opt.th] > 0) {
@@ -253,7 +234,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
                   text={choiceText}
                   onClick={() => handleSelect(opt.th)}
                   disabled={disabled || isUsed}
-                  className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none ' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5 '}
+                  className={isUsed ? '!bg-slate-50 !border-slate-100 !text-transparent !shadow-none' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5'}
                 />
               </div>
             );
@@ -266,7 +247,7 @@ export default React.memo(function SentenceBuilder({ exercise, selected, onChang
               onClick={() => handleSelect(opt.th)}
               disabled={disabled || isUsed}
               // Pour la banque de mots, on écrase les styles quand le mot est déjà utilisé
-              className={isUsed ? '!bg-slate-100 !border-slate-100 !text-transparent !shadow-none ' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-5 '}
+              className={isUsed ? '!bg-slate-50 !border-slate-100 !text-transparent !shadow-none' : 'hover:bg-slate-50 cursor-pointer px-4 sm:px-6 shadow-sm'}
             />
           );
         })}

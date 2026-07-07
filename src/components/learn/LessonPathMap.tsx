@@ -103,14 +103,17 @@ export function LessonPathMap({
   const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
   
   const [activeLevel, setActiveLevel] = useState<number>(targetScrollLevel);
+  const [nextLevel, setNextLevel] = useState<number | null>(null);
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
   const [showLockMessageFor, setShowLockMessageFor] = useState<number | null>(null);
 
   const handleLevelChange = (l: number) => {
     if (l !== activeLevel) {
+      setNextLevel(l);
       setIsFadingOut(true);
       setTimeout(() => {
         setActiveLevel(l);
+        setNextLevel(null);
         setIsFadingOut(false);
       }, 200);
     }
@@ -159,7 +162,11 @@ export function LessonPathMap({
           const unlocked = isLevelUnlocked(l);
           const isNextLocked = l === (blockedByLevel !== null ? blockedByLevel : effectiveProgress + 1);
           
-          const isSelected = activeLevel === l;
+          // Ne pas afficher les niveaux qui sont au-delà du prochain niveau à débloquer
+          if (!unlocked && !isNextLocked) return null;
+
+          const currentVisualLevel = nextLevel !== null ? nextLevel : activeLevel;
+          const isSelected = currentVisualLevel === l;
           const label = l === maxLevel && maxLevel > 4 ? (getTranslation('auto.ultimate', language) || 'Ultime') : `${l + 1}`;
           
           let buttonClass = "px-4 py-2 rounded-xl font-bold text-[15px] transition-all ";
@@ -173,8 +180,6 @@ export function LessonPathMap({
           } else if (isNextLocked) {
             // Mise en évidence du prochain niveau à débloquer
             buttonClass += "bg-slate-50 text-slate-500 border-2 border-dashed border-slate-400 hover:bg-slate-100 hover:border-slate-500 shadow-sm cursor-help";
-          } else {
-            buttonClass += "bg-slate-100 text-slate-400 border-2 border-slate-100 cursor-not-allowed opacity-50";
           }
 
           return (
@@ -201,16 +206,21 @@ export function LessonPathMap({
               </button>
               
               {/* Lock Message Tooltip */}
-              {showLockMessageFor === l && isNextLocked && (
+              {showLockMessageFor === l && isNextLocked && (() => {
+                const isRightEdge = l === 3 || l === 4 || l === 8 || l === 9 || l >= maxLevel - 1;
+                const isLeftEdge = l === 0 || l === 5;
+                
+                return (
                 <div className={`absolute top-full mt-3 w-max max-w-[220px] bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl z-50 text-center animate-in fade-in zoom-in-95
-                  ${l >= maxLevel - 1 ? 'right-0 md:left-1/2 md:-translate-x-1/2' : (l <= 1 ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-1/2 -translate-x-1/2')}
+                  ${isRightEdge ? 'right-0 md:left-1/2 md:-translate-x-1/2' : (isLeftEdge ? 'left-0 md:left-1/2 md:-translate-x-1/2' : 'left-1/2 -translate-x-1/2')}
                 `}>
                   {blockingReason || (getTranslation('auto.level_locked', language) || "Niveau verrouillé.")}
                   <div className={`absolute -top-1 w-2 h-2 bg-slate-800 rotate-45
-                    ${l >= maxLevel - 1 ? 'right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto' : (l <= 1 ? 'left-6 md:left-1/2 md:-translate-x-1/2 md:left-auto' : 'left-1/2 -translate-x-1/2')}
+                    ${isRightEdge ? 'right-6 md:left-1/2 md:-translate-x-1/2 md:right-auto' : (isLeftEdge ? 'left-6 md:left-1/2 md:-translate-x-1/2 md:left-auto' : 'left-1/2 -translate-x-1/2')}
                   `}></div>
                 </div>
-              )}
+                );
+              })()}
             </div>
           );
         })}
@@ -220,6 +230,7 @@ export function LessonPathMap({
       {/* Selected Level Node */}
       <div className={`w-full lg:w-1/2 relative mt-4 lg:mt-0 flex justify-center transition-all duration-200 ease-out ${isFadingOut ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
         <LessonPathNode
+          key={`level-node-${activeLevel}`}
           levelIndex={activeLevel}
           maxLevel={maxLevel}
           currentProgress={effectiveProgress}

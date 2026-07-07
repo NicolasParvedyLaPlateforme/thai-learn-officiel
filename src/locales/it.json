@@ -599,5 +599,6 @@
   "tone.implicit_sara_a": "💡 Questa è una sillaba morta a causa di una vocale corta implicita (Sara A).",
   "tone.select_letter_to_analyze": "Seleziona una lettera per visualizzare l'analisi e le regole tonali",
   "auto.find_word_position": "Trova la posizione della parola",
-  "auto.listen_and_select_position": "Ascolta e seleziona la posizione corretta"
+  "auto.listen_and_select_position": "Ascolta e seleziona la posizione corretta",
+  "exercise.choice": "Scelta"
 }

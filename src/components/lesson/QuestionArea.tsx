@@ -6,6 +6,7 @@ import { playThaiTTS } from "@/lib/tts";
 import { m as motion } from "motion/react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { IconButton } from "@/components/ui/IconButton";
+import { Volume2 } from "lucide-react";
 
 interface QuestionAreaProps {
   currentExercise: Exercise;
@@ -139,13 +140,11 @@ export default function QuestionArea({
 
   return (
     <>
-      {/* Container for Question Content */}
-      {/* Ajout de 'shrink min-h-0 flex-1' ici pour s'assurer que le parent global peut rétrécir */}
-      <div className="flex flex-col items-center justify-center text-center gap-4 md:gap-8 w-full shrink min-h-0 flex-1">
+      <div className="flex flex-col items-center justify-center text-center gap-4 w-full shrink min-h-0 flex-1">
 
         {/* Image Box */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
           className={`${currentExercise.type === "intro" ||
@@ -156,12 +155,10 @@ export default function QuestionArea({
               ? "flex"
               : "hidden"
             } 
-          /* --- LES CHANGEMENTS SONT ICI --- */
-          w-full max-w-64 sm:max-w-72 md:max-w-80 lg:max-w-64 aspect-square shrink min-h-0 min-w-0
-          /* -------------------------------- */
+          w-full max-w-56 sm:max-w-64 md:max-w-[240px] aspect-square shrink min-h-0 min-w-0
           rounded-[2rem] text-7xl md:text-8xl mx-auto items-center justify-center relative ${imageUrl
               ? "bg-transparent overflow-visible"
-              : "bg-emerald-50 shadow-sm border border-emerald-100 overflow-hidden"
+              : "bg-emerald-50 border border-emerald-100 overflow-hidden"
             }`}
         >
           {imageUrl ? (
@@ -171,7 +168,7 @@ export default function QuestionArea({
               fill
               priority
               unoptimized={true}
-              className="object-cover rounded-3xl shadow-lg border-4 border-white"
+              className="object-cover rounded-[2rem]"
             />
           ) : (
             <span>🐘</span>
@@ -183,12 +180,12 @@ export default function QuestionArea({
 
         {/* Question Content */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="flex-1 mt-2 md:mt-0 flex flex-col items-center w-full mb-8 sm:mb-12"
+          className="flex-1 mt-2 flex flex-col items-center w-full mb-4 sm:mb-8"
         >
-          <div className="relative w-full text-center mt-2 md:mt-0">
+          <div className="relative w-full text-center mt-2">
             {currentExercise.type === "intro" ? (
               <div className="flex flex-col items-center gap-4 ">
                 <p className="text-3xl text-slate-600 font-medium mb-2">
@@ -232,7 +229,7 @@ export default function QuestionArea({
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center gap-4">
+              <div className="flex flex-col items-center gap-3">
                 <div className="flex-1 w-full flex justify-center">
                   <SentenceWithHints
                     text={currentExercise.question}
@@ -256,33 +253,19 @@ export default function QuestionArea({
                     }
                     isReverse={currentExercise.reverse}
                     currentThaiWordForAudio={currentThaiWordForAudio}
-                    rightElement={
-                      <IconButton
-                        size="lg"
+                    bottomElement={
+                      <button
                         onClick={() => playThaiTTS(currentExercise.answer)}
-                        className="text-slate-500 hover:text-blue-600 hover:bg-slate-100 bg-slate-50 shrink-0 ml-2"
+                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#EEF2EE] flex items-center justify-center text-[#063b2f] hover:bg-[#E2EBE4] hover:scale-105 active:scale-95 transition-all group"
                         title={t('exercise.listen')}
                       >
-                        <svg
-                          width="30"
-                          height="30"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-                        </svg>
-                      </IconButton>
+                        <Volume2 className="w-7 h-7 sm:w-8 sm:h-8 transition-colors fill-current" />
+                      </button>
                     }
                   />
                 </div>
                 {currentExercise.blankHint && (
-                  <p className="text-xl text-slate-500 font-medium pb-2 text-center mt-[-10px] md:mt-[-20px]">
+                  <p className="text-sm text-slate-500 font-medium pb-2 text-center mt-2">
                     {currentExercise.blankHint}
                   </p>
                 )}

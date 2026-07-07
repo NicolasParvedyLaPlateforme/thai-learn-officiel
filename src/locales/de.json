@@ -599,5 +599,6 @@
   "tone.implicit_sara_a": "💡 Dies ist eine tote Silbe aufgrund eines impliziten kurzen Vokals (Sara A).",
   "tone.select_letter_to_analyze": "Wähle einen Buchstaben, um die Analyse und Tonregeln zu sehen",
   "auto.find_word_position": "Finde die Position des Wortes",
-  "auto.listen_and_select_position": "Höre zu und wähle die richtige Position"
+  "auto.listen_and_select_position": "Höre zu und wähle die richtige Position",
+  "exercise.choice": "Auswahl"
 }

@@ -107,18 +107,27 @@ export default function PathDesktopTimeline({
     if (toExpand) {
         setExpandedLessons(new Set([toExpand.id]));
         
-        // Scroll to the card instantly (no cleanup so it's guaranteed to run)
-        setTimeout(() => {
-            const circleEl = document.getElementById(`desktop-node-circle-${toExpand?.id}`);
-            if (circleEl) {
-                circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
-            } else {
-                const nodeEl = document.getElementById(`desktop-node-${toExpand?.id}`);
-                if (nodeEl) {
-                    nodeEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+        const hasAnyProgressInUnit = unitLessons.some(l => {
+            if ((lessonLevels[l.id] || 0) > 0) return true;
+            const partsKey = `${l.id}_level-0`;
+            if ((currentPartsCompleted[partsKey] || []).length > 0) return true;
+            return false;
+        });
+
+        if (hasAnyProgressInUnit) {
+            // Scroll to the card instantly (no cleanup so it's guaranteed to run)
+            setTimeout(() => {
+                const circleEl = document.getElementById(`desktop-node-circle-${toExpand?.id}`);
+                if (circleEl) {
+                    circleEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                } else {
+                    const nodeEl = document.getElementById(`desktop-node-${toExpand?.id}`);
+                    if (nodeEl) {
+                        nodeEl.scrollIntoView({ behavior: 'auto', block: 'center' });
+                    }
                 }
-            }
-        }, 100);
+            }, 450);
+        }
     }
   }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
 
@@ -211,16 +220,11 @@ export default function PathDesktopTimeline({
                 
                 if (!isCurrentlyExpanded) {
                   setTimeout(() => {
-                      const levelEl = document.getElementById(`path-level-${lesson.id}-${level}`);
-                      if (levelEl) {
-                          levelEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      } else {
-                          const nodeEl = document.getElementById(`desktop-lesson-${lesson.id}`);
-                          if (nodeEl) {
-                              nodeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
+                      const nodeEl = document.getElementById(`desktop-node-${lesson.id}`);
+                      if (nodeEl) {
+                          nodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                       }
-                  }, 300);
+                  }, 450);
                 }
               };
 
