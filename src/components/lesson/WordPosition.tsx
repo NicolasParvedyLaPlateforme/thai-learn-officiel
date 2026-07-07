@@ -99,7 +99,7 @@ export default React.memo(function WordPosition({
       </div>
 
       {/* Bottom Options Area */}
-      <div className="flex flex-wrap justify-center gap-4 md:gap-6 w-full pb-8">
+      <div className="flex flex-nowrap justify-center gap-4 w-full pb-8 px-4">
         {exercise.options.map((opt: any) => {
           const isSelected = selected === opt.th;
           const isError = localErrors.includes(opt.id);
@@ -123,9 +123,9 @@ export default React.memo(function WordPosition({
               whileTap={disabled ? {} : { scale: 0.95 }}
               onClick={() => handleSelect(opt.id, opt.th)}
               disabled={disabled || isError}
-              className={`relative flex items-center justify-center w-36 h-44 sm:w-40 sm:h-48 rounded-[2rem] transition-all duration-300 overflow-hidden ${btnClass}`}
+              className={`relative flex-1 flex items-center justify-center h-[50px] rounded-2xl transition-all duration-300 overflow-hidden ${btnClass}`}
             >
-              <span className="text-6xl font-black opacity-90">
+              <span className="text-2xl font-black opacity-90">
                 {opt.th}
               </span>
             </motion.button>

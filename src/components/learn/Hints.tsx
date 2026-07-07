@@ -8,7 +8,7 @@ import { useProgressStore } from "@/lib/store";
 import { m as motion, AnimatePresence } from "framer-motion";
 import { TooltipHint } from '../ui/TooltipHint';
 
-export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerciseOptions, hideHints, disableTooltips, hideColors, alwaysShowPhonetic, answerTh, correctComponents, charHintRegex, isChecking, forceHideRomanization, currentThaiWordForAudio, isReverse, bottomElement }: { text: string, dictionary: Word[], phrases: Phrase[], isSentence: boolean, exerciseOptions: Word[], hideHints?: boolean, disableTooltips?: boolean, hideColors?: boolean, alwaysShowPhonetic?: boolean, answerTh?: string, correctComponents?: string[], charHintRegex?: RegExp, isChecking?: boolean, forceHideRomanization?: boolean, currentThaiWordForAudio?: string, isReverse?: boolean, bottomElement?: React.ReactNode }) {
+export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerciseOptions, hideHints, disableTooltips, hideColors, alwaysShowPhonetic, answerTh, correctComponents, charHintRegex, isChecking, forceHideRomanization, currentThaiWordForAudio, isReverse, bottomElement, rightElement }: { text: string, dictionary: Word[], phrases: Phrase[], isSentence: boolean, exerciseOptions: Word[], hideHints?: boolean, disableTooltips?: boolean, hideColors?: boolean, alwaysShowPhonetic?: boolean, answerTh?: string, correctComponents?: string[], charHintRegex?: RegExp, isChecking?: boolean, forceHideRomanization?: boolean, currentThaiWordForAudio?: string, isReverse?: boolean, bottomElement?: React.ReactNode, rightElement?: React.ReactNode }) {
   const { language, showRomanization, setToneAnalyzerModalWord } = useProgressStore();
   const [isVocabOpen, setIsVocabOpen] = useState(false);
   // Try to match the ENTIRE phrase/word first
@@ -146,7 +146,12 @@ export function SentenceWithHints({ text, dictionary, phrases, isSentence, exerc
   return (
     <div className="flex flex-col items-center w-full gap-4">
       <div className="relative flex flex-col items-center w-full">
-        {tooltipWrappedContent}
+        <div className="flex flex-row items-center justify-center gap-3 w-full">
+          {tooltipWrappedContent}
+          {rightElement && (
+            <div className="flex-shrink-0">{rightElement}</div>
+          )}
+        </div>
       </div>
       {bottomElement && (
         <div className="flex justify-center mt-2">
