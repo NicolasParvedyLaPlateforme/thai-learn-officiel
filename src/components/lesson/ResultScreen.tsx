@@ -84,8 +84,12 @@ export default function ResultScreen({
 
       if (nextLogicalStep) {
         const nextLvl = nextLogicalStep.levelIndex + 1;
-        const isNextPart = nextLogicalStep.type === 'parts' && nextLogicalStep.totalParts > 1 && nextLogicalStep.partIndex !== null && nextLogicalStep.partIndex > 0;
-        const label = isNextPart ? getTranslation('auto.next_part', language) || "Partie suivante" : getTranslation('auto.next_level', language) || "Niveau suivant";
+        let label = "";
+        if (nextLogicalStep.type === 'parts' && nextLogicalStep.totalParts > 1 && nextLogicalStep.partIndex !== null) {
+          label = `Niveau ${nextLvl} - Partie ${nextLogicalStep.partIndex + 1}`;
+        } else {
+          label = `Niveau ${nextLvl}`;
+        }
         
         const onClick = () => {
           let url = `/lesson/${lesson.id}?level=${nextLvl}`;
@@ -108,19 +112,21 @@ export default function ResultScreen({
       }
     } else {
       if (isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null && partIndex < totalParts - 1) {
+        const label = `Niveau ${currentLevel + 1} - Partie ${partIndex + 2}`;
         renderNextButton = (
           <Button
             variant="indigoGamified"
             size="lg"
             className="w-full text-lg uppercase tracking-widest"
             onClick={() =>
-              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, getTranslation('auto.next_part', language) || "Partie suivante")
+              handleNavigate(`/${pathType === 'alphabet' ? 'alphabet/lesson' : 'lesson'}/${lesson.id}?level=${currentLevel + 1}&part=${partIndex + 1}&totalParts=${totalParts}`, label)
             }
           >
-            {getTranslation('auto.next_part', language) || "Partie suivante"}
+            {label}
           </Button>
         );
       } else if (currentLevel + 1 < (pathType === 'alphabet' ? 4 : 10)) {
+        const label = `Niveau ${currentLevel + 2}`;
         renderNextButton = (
           <Button
             variant="indigoGamified"
@@ -130,13 +136,13 @@ export default function ResultScreen({
               const basePath = pathType === 'alphabet' ? '/alphabet/lesson' : '/lesson';
               const nextTotalParts = pathType === 'alphabet' ? 1 : getLevelSplit(currentLevel + 1, lesson);
               if (nextTotalParts > 1) {
-                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`, getTranslation('auto.next_level', language) || "Niveau suivant");
+                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}&part=0&totalParts=${nextTotalParts}`, label);
               } else {
-                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}`, getTranslation('auto.next_level', language) || "Niveau suivant");
+                handleNavigate(`${basePath}/${lesson.id}?level=${currentLevel + 2}`, label);
               }
             }}
           >
-            {getTranslation('auto.next_level', language) || "Niveau suivant"}
+            {label}
           </Button>
         );
       }
@@ -202,7 +208,7 @@ export default function ResultScreen({
             : currentLevel === 10
               ? getTranslation('auto.mastery_level_completed', language)
               : isPart && partIndex !== undefined && partIndex !== null && totalParts !== undefined && totalParts !== null
-                ? `${getTranslation('auto.part', language)}${partIndex + 1}/${totalParts}${getTranslation('auto.completed_f', language)}`
+                ? `Niveau ${currentLevel + 1} - ${getTranslation('auto.part', language)}${partIndex + 1}/${totalParts}${getTranslation('auto.completed_f', language)}`
                 : `${getTranslation('auto.level', language)}${currentLevel + 1}${getTranslation('auto.completed_m', language)}`
         }
       </h2>
