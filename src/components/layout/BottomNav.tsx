@@ -30,8 +30,22 @@ export default function BottomNav() {
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let ticking = false;
+    let isProgrammatic = false;
+
+    const handleHide = () => {
+      isProgrammatic = true;
+      setIsScrollingDown(true); // force hide
+      setTimeout(() => {
+        isProgrammatic = false;
+      }, 1500);
+    };
+    window.addEventListener('hideGlobalHeader', handleHide);
 
     const handleScroll = () => {
+      if (isProgrammatic) {
+        lastScrollY = window.scrollY;
+        return;
+      }
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
@@ -47,7 +61,10 @@ export default function BottomNav() {
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hideGlobalHeader', handleHide);
+    };
   }, []);
 
   // Close popover when clicking outside

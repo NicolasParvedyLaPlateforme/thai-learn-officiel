@@ -92,7 +92,7 @@ export function MobileTimelineNodeLayout({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
       style={{ zIndex: 100 - index }}
-      className={cn("relative flex flex-col items-center w-full gap-3 sm:gap-4",
+      className={cn("relative flex flex-col items-center w-full gap-3 sm:gap-4 scroll-mt-32",
         index === 0 ? "mt-0" : "mt-16 sm:mt-16"
       )}
     >
