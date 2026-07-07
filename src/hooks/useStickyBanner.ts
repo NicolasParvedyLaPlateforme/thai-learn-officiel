@@ -12,13 +12,22 @@ export function useStickyBanner({ mounted, scrollThreshold, direction }: UseStic
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let accumulatedDelta = 0;
+    let isProgrammatic = false;
+
+    const handleHide = () => {
+      isProgrammatic = true;
+      setShowMiniBanner(false);
+      setTimeout(() => {
+        isProgrammatic = false;
+      }, 1500);
+    };
+    window.addEventListener('hideGlobalHeader', handleHide);
     
     const handleScroll = () => {
       if (!mounted) return;
       const currentScrollY = window.scrollY;
       
-      // Ignore if a programmatic scroll was fired within the last 1.5 seconds
-      if ((window as any)._isProgrammaticScroll && Date.now() - (window as any)._isProgrammaticScroll < 1500) {
+      if (isProgrammatic || ((window as any)._isProgrammaticScroll && Date.now() - (window as any)._isProgrammaticScroll < 1500)) {
         lastScrollY = currentScrollY;
         return;
       }
@@ -49,7 +58,10 @@ export function useStickyBanner({ mounted, scrollThreshold, direction }: UseStic
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hideGlobalHeader', handleHide);
+    };
   }, [mounted, scrollThreshold, direction]);
 
   return showMiniBanner;
