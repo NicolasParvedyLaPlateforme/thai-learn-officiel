@@ -600,5 +600,6 @@
   "tone.akson_nam_modifier": " (modifiée par la consonne menante précédente via la règle Akson Nam)",
   "tone.implicit_sara_a": "💡 C'est une syllabe morte due à une voyelle courte implicite (Sara A).",
   "tone.select_letter_to_analyze": "Sélectionnez une lettre pour voir l'analyse et la règle du ton",
-  "exercise.choice": "Choix"
+  "exercise.choice": "Choix",
+  "auto.complete_all_parts_level": "Terminez toutes les parties du Niveau "
 }

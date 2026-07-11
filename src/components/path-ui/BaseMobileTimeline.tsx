@@ -126,23 +126,33 @@ export default function BaseMobileTimeline({
     // Logic for active lesson index
     const [activeLessonIndex, setActiveLessonIndex] = React.useState(0);
     const screen2Ref = React.useRef<HTMLDivElement>(null);
+    const hasInitializedLessonIndexRef = React.useRef(false);
+    const prevSelectedLessonRef = React.useRef(selectedLesson);
 
     React.useEffect(() => {
         if (!mounted || !unitLessons || unitLessons.length === 0) return;
         
-        // Find the initial lesson to show
-        let toExpandIdx = 0;
-        if (selectedLesson && selectedLesson.lesson) {
-             toExpandIdx = unitLessons.findIndex(l => l.id === selectedLesson.lesson.id);
-        } else if (suggestedLessonId) {
-             toExpandIdx = unitLessons.findIndex(l => l.id === suggestedLessonId);
-        } else {
-             const idx = unitLessons.findIndex(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
-             if (idx !== -1) toExpandIdx = idx;
-        }
+        const isFirstInit = !hasInitializedLessonIndexRef.current;
+        const selectedLessonChanged = selectedLesson !== prevSelectedLessonRef.current;
         
-        if (toExpandIdx !== -1) {
-            setActiveLessonIndex(toExpandIdx);
+        if (isFirstInit || selectedLessonChanged) {
+            hasInitializedLessonIndexRef.current = true;
+            prevSelectedLessonRef.current = selectedLesson;
+            
+            // Find the initial lesson to show
+            let toExpandIdx = 0;
+            if (selectedLesson && selectedLesson.lesson) {
+                 toExpandIdx = unitLessons.findIndex(l => l.id === selectedLesson.lesson.id);
+            } else if (suggestedLessonId) {
+                 toExpandIdx = unitLessons.findIndex(l => l.id === suggestedLessonId);
+            } else {
+                 const idx = unitLessons.findIndex(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+                 if (idx !== -1) toExpandIdx = idx;
+            }
+            
+            if (toExpandIdx !== -1) {
+                setActiveLessonIndex(toExpandIdx);
+            }
         }
     }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson, selectedLesson]);
 
@@ -173,13 +183,25 @@ export default function BaseMobileTimeline({
     React.useEffect(() => {
         if (!mounted || hasInitializedScrollRef.current) return;
         if (!unitLessons || unitLessons.length === 0) return;
-        hasInitializedScrollRef.current = true;
-
-        if (selectedLesson) {
-             // Return from lesson, scroll to Screen 2
-             setTimeout(() => {
-                  screen2Ref.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
-             }, 100);
+        
+        // Wait until selectedLesson has been processed
+        if (selectedLesson !== undefined) {
+             hasInitializedScrollRef.current = true;
+             if (selectedLesson !== null) {
+                 // Return from lesson, scroll to Screen 2
+                 setTimeout(() => {
+                      if (screen2Ref.current) {
+                          const scrollContainer = document.getElementById('path-scroll-container');
+                          if (scrollContainer) {
+                              // We use offsetTop because it's relative to the scroll container's content
+                              const targetY = screen2Ref.current.offsetTop;
+                              scrollContainer.scrollTo({ top: targetY, behavior: 'auto' });
+                          } else {
+                              screen2Ref.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+                          }
+                      }
+                 }, 300);
+             }
         }
     }, [mounted, unitLessons, selectedLesson]);
 
@@ -373,7 +395,7 @@ export default function BaseMobileTimeline({
                                   lesson={activeLesson}
                                   lessonPartsCompleted={currentPartsCompleted}
                                   suggestionType={pathType}
-                                  initialScrollLevel={selectedLesson?.initialScrollLevel}
+                                  initialScrollLevel={selectedLesson && selectedLesson.lesson.id === activeLesson.id ? selectedLesson.initialScrollLevel : undefined}
                                   disableAutoScroll={!isInitializingScroll}
                                   onReady={() => { }}
                                   onBack={() => {}}

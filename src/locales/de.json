@@ -512,10 +512,10 @@
   "auto.level_locked_full_2": " wird erst freigeschaltet, nachdem Level ",
   "auto.level_locked_full_3": " vollständig abgeschlossen wurde",
   "auto.part": "Teil ",
-  "auto.complete_part_1_of_level": "Schließe Teil 1 von Level ",
+  "auto.complete_part_1_of_level": "Beende Teil 1 von Level ",
   "auto.to_unlock": " ab, um es freizuschalten.",
-  "auto.complete_level": "Schließe Level ",
-  "auto.full_to_unlock": " komplett ab, um es freizuschalten.",
+  "auto.complete_level": "Beende Level ",
+  "auto.full_to_unlock": " (ganz) zum Entsperren.",
   "auto.complete_all_parts_level_4": "Schließe alle Teile von Level 4 ab, um es freizuschalten.",
   "auto.level_locked": "Level gesperrt.",
   "auto.choose_part": "WÄHLE EINEN TEIL",
@@ -600,5 +600,6 @@
   "tone.select_letter_to_analyze": "Wähle einen Buchstaben, um die Analyse und Tonregeln zu sehen",
   "auto.find_word_position": "Finde die Position des Wortes",
   "auto.listen_and_select_position": "Höre zu und wähle die richtige Position",
-  "exercise.choice": "Auswahl"
+  "exercise.choice": "Auswahl",
+  "auto.complete_all_parts_level": "Beende alle Teile von Level "
 }

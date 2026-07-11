@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useProgressStore } from "@/lib/store";
 import PathMobileHeader from './PathMobileHeader';
@@ -140,8 +140,15 @@ export default function PathLayout({
   const activeUnit = units[activeUnitIndex];
   const pageTitleKey = pathType === 'alphabet' ? 'sidebar.alphabet' : pathType === 'speak' ? 'sidebar.speaking' : 'sidebar.vocabulary';
 
+  const unitLessons = useMemo(() => {
+    if (!activeUnit) return [];
+    return pathType === 'alphabet' 
+      ? activeUnit.lessons 
+      : lessons.slice(activeUnit.startIndex, activeUnit.endIndex);
+  }, [activeUnit, pathType, lessons]);
+
   return (
-    <div className="min-h-[100dvh] overflow-y-auto overflow-x-hidden snap-y snap-mandatory bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0 relative h-screen">
+    <div id="path-scroll-container" className="min-h-[100dvh] overflow-y-auto overflow-x-hidden snap-y snap-mandatory bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0 relative h-screen">
       <PathMobileHeader
         showHeader={showHeader}
         mounted={mounted}
@@ -165,7 +172,7 @@ export default function PathLayout({
         renderMobileTimeline({
           key: activeUnit?.id,
           unit: activeUnit,
-          unitLessons: pathType === 'alphabet' ? activeUnit?.lessons : lessons.slice(activeUnit?.startIndex, activeUnit?.endIndex),
+          unitLessons,
           activeUnitIndex,
           totalUnits: units.length,
           language,
@@ -203,7 +210,7 @@ export default function PathLayout({
                 {renderDesktopTimeline({
                   key: activeUnit?.id,
                   unit: activeUnit,
-                  unitLessons: pathType === 'alphabet' ? activeUnit?.lessons : lessons.slice(activeUnit?.startIndex, activeUnit?.endIndex),
+                  unitLessons,
                   activeUnitIndex,
                   totalUnits: units.length,
                   language,

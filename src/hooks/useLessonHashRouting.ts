@@ -64,7 +64,7 @@ export function useLessonHashRouting(
             });
             setActiveUnitIndex(unitIndex);
 
-            if (parsedLastLvl !== undefined && typeof window !== 'undefined' && window.innerWidth >= 1280) {
+            if (parsedLastLvl !== undefined && typeof window !== 'undefined') {
               setModalLevel(parsedLastLvl);
             }
           }

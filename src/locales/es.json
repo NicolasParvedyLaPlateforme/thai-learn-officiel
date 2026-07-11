@@ -598,5 +598,6 @@
   "tone.select_letter_to_analyze": "Selecciona una letra para ver el análisis y las reglas de tono",
   "auto.find_word_position": "Encuentra la posición de la palabra",
   "auto.listen_and_select_position": "Escucha y selecciona la posición correcta",
-  "exercise.choice": "Opción"
+  "exercise.choice": "Opción",
+  "auto.complete_all_parts_level": "Completa todas las partes del Nivel "
 }

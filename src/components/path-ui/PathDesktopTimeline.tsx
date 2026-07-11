@@ -309,7 +309,7 @@ export default function PathDesktopTimeline({
                             lesson={activeLesson}
                             lessonPartsCompleted={currentPartsCompleted}
                             suggestionType={pathType}
-                            initialScrollLevel={selectedLesson?.initialScrollLevel}
+                            initialScrollLevel={selectedLesson && selectedLesson.lesson.id === activeLesson.id ? selectedLesson.initialScrollLevel : undefined}
                             disableAutoScroll={!isInitializingScroll}
                             onReady={() => {}}
                             onBack={() => {}}
