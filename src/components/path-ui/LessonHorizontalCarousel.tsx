@@ -92,22 +92,29 @@ export function LessonHorizontalCarousel({
             <div
               key={lesson.id}
               onClick={() => onLessonChange(idx)}
-              className={cn(
-                "relative shrink-0 cursor-pointer transition-all duration-300 snap-center rounded-full flex items-center justify-center",
-                isActive ? "w-[64px] h-[64px] border-4 border-emerald-500 scale-110 shadow-md" : "w-[56px] h-[56px] border-2 border-slate-200 opacity-60 hover:opacity-100 hover:scale-105"
-              )}
+              // Outer container: FIXED size to prevent any layout shift
+              className="relative shrink-0 cursor-pointer snap-center flex items-center justify-center w-[72px] h-[72px]"
             >
-              {lesson.imageUrl ? (
-                <div className="w-full h-full rounded-full overflow-hidden relative">
-                   <IconImage src={lesson.imageUrl} alt={lesson.title} fill className="object-cover" sizes="64px" />
-                </div>
-              ) : (
-                <div className="w-full h-full rounded-full bg-slate-100 flex items-center justify-center">
-                  <span className="font-thai text-xl font-bold text-slate-600">
-                    {pathType === 'alphabet' ? lesson.items?.[0]?.letter?.[0] : lesson.title?.[0]}
-                  </span>
-                </div>
-              )}
+              <div
+                className={cn(
+                  "rounded-full flex items-center justify-center transition-all duration-300 transform",
+                  isActive 
+                    ? "w-[60px] h-[60px] border-4 border-emerald-500 scale-110 shadow-md opacity-100" 
+                    : "w-[56px] h-[56px] border-2 border-slate-200 scale-100 opacity-60 hover:opacity-100"
+                )}
+              >
+                {lesson.imageUrl ? (
+                  <div className="w-full h-full rounded-full overflow-hidden relative">
+                     <IconImage src={lesson.imageUrl} alt={lesson.title} fill className="object-cover" sizes="60px" />
+                  </div>
+                ) : (
+                  <div className="w-full h-full rounded-full bg-slate-100 flex items-center justify-center">
+                    <span className="font-thai text-xl font-bold text-slate-600">
+                      {pathType === 'alphabet' ? lesson.items?.[0]?.letter?.[0] : lesson.title?.[0]}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
