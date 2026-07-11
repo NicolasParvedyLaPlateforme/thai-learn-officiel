@@ -14,7 +14,8 @@ import { DesktopUnitHeader } from "../path-ui/DesktopUnitHeader";
 import { formatCombiningChar } from "@/lib/alphabet-utils";
 import { LessonPathMap } from '../learn/LessonPathMap';
 import { useProgressStore } from '@/lib/store';
-
+import { LessonHorizontalCarousel } from './LessonHorizontalCarousel';
+import { QuickActionsWidget } from '../widgets/QuickActionsWidget';
 interface PathDesktopTimelineProps {
   pathType: 'learn' | 'speak' | 'alphabet';
   unit: any;
@@ -134,8 +135,77 @@ export default function PathDesktopTimeline({
     }
   }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
 
+    // Logic for active lesson index
+    const [activeLessonIndex, setActiveLessonIndex] = React.useState(0);
+    const screen2Ref = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (!mounted || !unitLessons || unitLessons.length === 0) return;
+        
+        let toExpandIdx = 0;
+        if (selectedLesson && selectedLesson.lesson) {
+             toExpandIdx = unitLessons.findIndex(l => l.id === selectedLesson.lesson.id);
+        } else if (suggestedLessonId) {
+             toExpandIdx = unitLessons.findIndex(l => l.id === suggestedLessonId);
+        } else {
+             const idx = unitLessons.findIndex(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+             if (idx !== -1) toExpandIdx = idx;
+        }
+        
+        if (toExpandIdx !== -1) {
+            setActiveLessonIndex(toExpandIdx);
+        }
+    }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson, selectedLesson]);
+
+    // Intersection Observer to hide/show global header when on Screen 2
+    React.useEffect(() => {
+        const el = screen2Ref.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                    window.dispatchEvent(new Event('hideGlobalHeader'));
+                    window.dispatchEvent(new Event('hideGlobalFooter'));
+                } else {
+                    window.dispatchEvent(new Event('showGlobalHeader'));
+                    window.dispatchEvent(new Event('showGlobalFooter'));
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    // Initial Scroll handling for returning from lesson
+    React.useEffect(() => {
+        if (!mounted || hasInitializedScrollRef.current) return;
+        if (!unitLessons || unitLessons.length === 0) return;
+        hasInitializedScrollRef.current = true;
+
+        if (selectedLesson) {
+             setTimeout(() => {
+                  screen2Ref.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
+             }, 100);
+        }
+    }, [mounted, unitLessons, selectedLesson]);
+
+    const activeQuests = []; // On Desktop, quests are handled in sidebar or modal, but let's just rely on the same logic if we want to display them here.
+    // We can get them from store
+    const { dailyQuests } = useProgressStore();
+    const activeDesktopQuests = dailyQuests?.[pathType === 'speak' ? 'speak' : 'learn']?.filter(q => !q.completed) || [];
+
+    const handleAccessLessons = () => {
+         screen2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const activeLesson = unitLessons[activeLessonIndex];
+    const activeLessonLevel = activeLesson && mounted ? (lessonLevels[activeLesson.id] || 0) : 0;
+
   return (
-    <div key={`desktop-unit-${unit.id}`} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
+    <div key={`desktop-unit-${unit.id}`} className="flex flex-col w-full h-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
       <AnimatePresence>
         {mounted && isInitializingScroll && (
           <motion.div
@@ -151,163 +221,117 @@ export default function PathDesktopTimeline({
         )}
       </AnimatePresence>
 
-      <DesktopStickyBanner
-        unit={unit}
-        language={language}
-        mounted={mounted}
-        onOpenUnitsList={() => {
-          setShowDesktopUnitsList(true);
-          setSelectedLesson(null);
-        }}
-      />
+      {/* SCREEN 1: Base UI */}
+      <div className="w-full min-h-[100dvh] snap-start flex flex-col items-center pt-[80px] pb-8 relative z-0">
+          <div className="w-full max-w-4xl mx-auto flex flex-col gap-8">
+              <DesktopUnitHeader
+                unit={unit}
+                language={language}
+                completedLevels={completedLevelsInUnit}
+                maxLevels={maxLevelsInUnit}
+                progressPercent={progressPercent}
+                mounted={mounted}
+                masteryKey={masteryKey}
+                levelsDescription={levelsDescription}
+                onOpenUnitsList={() => {
+                  setShowDesktopUnitsList(true);
+                  setSelectedLesson(null);
+                }}
+              />
 
-      <div className="flex flex-col gap-8 w-full relative">
-        <DesktopUnitHeader
-          unit={unit}
-          language={language}
-          completedLevels={completedLevelsInUnit}
-          maxLevels={maxLevelsInUnit}
-          progressPercent={progressPercent}
-          mounted={mounted}
-          masteryKey={masteryKey}
-          levelsDescription={levelsDescription}
-          onOpenUnitsList={() => {
-            setShowDesktopUnitsList(true);
-            setSelectedLesson(null);
-          }}
-        />
+              {mounted && activeDesktopQuests.length > 0 && (
+                  <div className="flex flex-col gap-3 mt-4 bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                      <h3 className="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">
+                          {getTranslation('auto.daily_quests', language) || 'Quêtes Journalières'}
+                      </h3>
+                      {activeDesktopQuests.map((quest, idx) => (
+                          <div key={idx} className="flex flex-col gap-2">
+                              <div className="flex justify-between items-center font-bold text-slate-700">
+                                  <span>{getLocalizedField(quest, 'title', language)}</span>
+                                  <span className="text-slate-400">{quest.progress} / {quest.target}</span>
+                              </div>
+                              <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                  <div className="h-full bg-emerald-500 transition-all" style={{ width: `${(quest.progress / quest.target) * 100}%` }} />
+                              </div>
+                          </div>
+                      ))}
+                  </div>
+              )}
 
-        <div className="flex flex-col w-full mt-10">
-          <div className="flex flex-col relative w-full pb-4 md:pb-8">
-            {unitLessons.map((lesson, idx) => {
-              const level = mounted ? (lessonLevels[lesson.id] || 0) : 0;
-              const isMaxLevel = level >= maxLevelPerLesson;
-              const isBilan = lesson.isReview || lesson.id?.startsWith('bilan-') || lesson.id?.includes('-bilan');
-              let isReviewLocked = false;
-              if (isBilan && mounted && pathType !== 'alphabet') {
-                const otherLessonsInUnit = unitLessons.filter(l => l.id !== lesson.id && !l.isReview && !l.id?.startsWith('bilan-') && !l.id?.includes('-bilan'));
-                isReviewLocked = !otherLessonsInUnit.every(l => (lessonLevels[l.id] || 0) >= 4);
-              }
+              <div className="flex justify-center mt-8 w-full">
+                   <button onClick={handleAccessLessons} className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-10 rounded-2xl shadow-sm text-xl flex items-center gap-3 transition-colors">
+                       <BookOpen size={28} /> {getTranslation('auto.lessons', language) || 'Accès aux leçons'}
+                   </button>
+              </div>
 
-              const onNodeClick = (e?: React.MouseEvent) => {
-                if (e) e.stopPropagation();
-                if (isReviewLocked) {
-                  setLockedReviewModalOpen(true);
-                  return;
-                }
-                
-                const isCurrentlyExpanded = expandedLessons.has(lesson.id);
-                
-                setExpandedLessons(prev => {
-                  const next = new Set(prev);
-                  if (next.has(lesson.id)) {
-                    next.delete(lesson.id);
-                  } else {
-                    next.add(lesson.id);
-                  }
-                  return next;
-                });
+              {/* Quick Actions (Next / Practice) */}
+              <div className="flex justify-center w-full mt-6 mb-8 z-10 relative">
+                  <QuickActionsWidget 
+                      variant="desktop-floating" 
+                      pathType={pathType} 
+                  />
+              </div>
+          </div>
+      </div>
 
-                if (isCurrentlyExpanded) {
-                  if (selectedLesson?.lesson.id === lesson.id) {
-                    setSelectedLesson(null);
-                  }
-                } else {
-                  setSelectedLesson({ lesson, isCompleted: isMaxLevel, unitColor: unit.colorClass, unitBorder: unit.borderClass, unitText: unit.textClass, unitHover: unit.hoverClass });
-                  setModalLevel(null);
-                }
-
-                setShowDesktopUnitsList(false);
-                
-                if (!isCurrentlyExpanded) {
-                  // Prevent sticky banner from showing during expansion animation and auto-scroll
-                  (window as any)._isProgrammaticScroll = Date.now();
-
-                  setTimeout(() => {
-                      const nodeEl = document.getElementById(`desktop-node-${lesson.id}`);
-                      if (nodeEl) {
-                          (window as any)._isProgrammaticScroll = Date.now();
-                          nodeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      }
-                  }, 450);
-                }
-              };
-
-              return (
-                <div id={`desktop-node-${lesson.id}`} key={`desktop-node-${lesson.id}`} className="w-full relative">
-                  <div className="w-full relative">
-                    <MobileTimelineNodeLayout
-                      lessonId={lesson.id}
-                      index={idx}
-                      level={level}
-                      maxLevel={maxLevelPerLesson}
-                      unitColorClass={unit.colorClass}
-                      unitTextClass={unit.textClass}
-                      unitShades={unit.shades}
-                      isReviewLocked={isReviewLocked}
-                      isMaxLevel={isMaxLevel}
-                      isReview={isBilan}
-                      onNodeClick={onNodeClick}
-                      lesson={lesson}
-                      isDesktopLayout={true}
-                      cardContent={
-                        <SharedLessonCard
-                          pathType={pathType}
-                          lesson={lesson}
-                          level={level}
-                          maxLevelPerLesson={maxLevelPerLesson}
-                          unit={unit}
-                          language={language}
-                          isReviewLocked={isReviewLocked}
-                          suggestedLessonId={suggestedLessonId}
-                          isMobileLayout={false}
-                          isExpanded={expandedLessons.has(lesson.id)}
-                          onClick={onNodeClick}
-                        >
-                          <LessonPathMap
+      {/* SCREEN 2: Lesson Map */}
+      {activeLesson && (
+          <div 
+              ref={screen2Ref} 
+              className="w-full min-h-[100dvh] snap-start flex flex-col relative z-50 bg-[#FAFAFA]"
+          >
+              <div className="sticky top-0 z-[60] w-full max-w-4xl mx-auto">
+                   <LessonHorizontalCarousel 
+                       lessons={unitLessons}
+                       activeLessonIndex={activeLessonIndex}
+                       onLessonChange={(idx) => {
+                           setActiveLessonIndex(idx);
+                           if (setModalLevel) setModalLevel(null);
+                       }}
+                       language={language}
+                       pathType={pathType}
+                   />
+              </div>
+              <div className="flex-1 w-full max-w-4xl mx-auto px-4 pb-12 flex flex-col items-center pt-8">
+                   <div className="w-full relative min-h-[600px] bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8">
+                        <LessonPathMap
+                            key={activeLesson.id}
                             maxLevel={maxLevelPerLesson}
-                            currentProgress={level}
+                            currentProgress={activeLessonLevel}
                             modalLevel={modalLevel ?? null}
                             setModalLevel={setModalLevel}
-                            earnedStarsArray={lessonStars?.[lesson.id] || Array(maxLevelPerLesson + 1).fill(0)}
+                            earnedStarsArray={lessonStars?.[activeLesson.id] || Array(maxLevelPerLesson + 1).fill(0)}
                             unitColor={unit.colorClass}
                             unitBorder={unit.borderClass}
                             unitText={unit.textClass}
                             language={language}
-                            lessonId={lesson.id}
-                            lesson={lesson}
+                            lessonId={activeLesson.id}
+                            lesson={activeLesson}
                             lessonPartsCompleted={currentPartsCompleted}
                             suggestionType={pathType}
                             initialScrollLevel={selectedLesson?.initialScrollLevel}
                             disableAutoScroll={!isInitializingScroll}
                             onReady={() => {}}
-                            onBack={() => {
-                              setExpandedLessons(prev => {
-                                const next = new Set(prev);
-                                next.delete(lesson.id);
-                                return next;
-                              });
-                            }}
-                          />
-                        </SharedLessonCard>
-                      }
-                    />
-                  </div>
-                </div>
-              )
-            })}
+                            onBack={() => {}}
+                        />
+                   </div>
+              </div>
           </div>
+      )}
 
-          {nextUnit && (
-            <NextUnitCard
-              nextUnit={nextUnit}
-              nextUnitIndex={activeUnitIndex + 1}
-              language={language}
-              handleUnitSelect={handleUnitSelect}
-              isMobile={false}
-            />
-          )}
-        </div>
+      {/* SCREEN 3: Next Unit */}
+      <div className="w-full min-h-[100dvh] snap-start snap-always flex flex-col items-center justify-center pt-8 pb-32 relative z-50 bg-white">
+          <div className="w-full max-w-4xl mx-auto">
+            {nextUnit && (
+              <NextUnitCard
+                nextUnit={nextUnit}
+                nextUnitIndex={activeUnitIndex + 1}
+                language={language}
+                handleUnitSelect={handleUnitSelect}
+                isMobile={false}
+              />
+            )}
+          </div>
       </div>
     </div>
   );

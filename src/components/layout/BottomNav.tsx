@@ -39,7 +39,13 @@ export default function BottomNav() {
         isProgrammatic = false;
       }, 1500);
     };
+
+    const handleHideFooter = () => setIsScrollingDown(true);
+    const handleShowFooter = () => setIsScrollingDown(false);
+
     window.addEventListener('hideGlobalHeader', handleHide);
+    window.addEventListener('hideGlobalFooter', handleHideFooter);
+    window.addEventListener('showGlobalFooter', handleShowFooter);
 
     const handleScroll = () => {
       if (isProgrammatic) {
@@ -64,6 +70,8 @@ export default function BottomNav() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('hideGlobalHeader', handleHide);
+      window.removeEventListener('hideGlobalFooter', handleHideFooter);
+      window.removeEventListener('showGlobalFooter', handleShowFooter);
     };
   }, []);
 

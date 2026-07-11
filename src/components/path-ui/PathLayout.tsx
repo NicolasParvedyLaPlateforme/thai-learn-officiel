@@ -16,15 +16,7 @@ import { useLessonSelection } from '@/hooks/useLessonSelection';
 import { PathMobileSkeleton } from './skeletons/PathMobileSkeleton';
 import { PathDesktopSkeleton } from './skeletons/PathDesktopSkeleton';
 
-const DesktopSidebarRight = dynamic(() => import('../layout/DesktopSidebarRight').then(mod => mod.DesktopSidebarRight), {
-  ssr: false,
-  loading: () => (
-    <div className="hidden xl:flex w-80 shrink-0 flex-col gap-6 sticky top-8">
-      <div className="w-full h-40 bg-slate-200 rounded-[24px] animate-pulse" />
-      <div className="w-full h-64 bg-slate-200 rounded-[24px] animate-pulse" />
-    </div>
-  )
-});
+// Sidebar removed
 
 const MobileHeaderMenu = dynamic(() => import('../layout/MobileHeaderMenu').then(mod => mod.MobileHeaderMenu), { ssr: false });
 const WritingConfigModal = dynamic(() => import('../modals/WritingConfigModal').then(mod => mod.WritingConfigModal), { ssr: false });
@@ -73,7 +65,14 @@ export default function PathLayout({
     setWindowWidth(window.innerWidth);
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    
+    // Lock body scroll so PathLayout container can snap scroll correctly
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+        window.removeEventListener('resize', handleResize);
+        document.body.style.overflow = 'auto';
+    };
   }, []);
 
   // Modal States
@@ -103,7 +102,7 @@ export default function PathLayout({
 
 
 
-  const { activeUnitIndex, handleUnitSelect, setActiveUnitIndex } = useActiveUnit(
+  const { activeUnitIndex, handleUnitSelect: baseHandleUnitSelect, setActiveUnitIndex } = useActiveUnit(
     mounted,
     units,
     lessons,
@@ -112,6 +111,11 @@ export default function PathLayout({
     lastActiveUnitIndex,
     setLastActiveUnitIndex
   );
+
+  const handleUnitSelect = (index: number) => {
+      baseHandleUnitSelect(index);
+      setSelectedLesson(null);
+  };
 
   const isProcessingHash = useLessonHashRouting(
     lessons,
@@ -137,7 +141,7 @@ export default function PathLayout({
   const pageTitleKey = pathType === 'alphabet' ? 'sidebar.alphabet' : pathType === 'speak' ? 'sidebar.speaking' : 'sidebar.vocabulary';
 
   return (
-    <div className="min-h-screen overflow-x-hidden md:overflow-x-visible bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0">
+    <div className="min-h-[100dvh] overflow-y-auto overflow-x-hidden snap-y snap-mandatory bg-[#FAFAFA] font-sans text-slate-800 pb-28 md:pb-0 relative h-screen">
       <PathMobileHeader
         showHeader={showHeader}
         mounted={mounted}
@@ -189,13 +193,13 @@ export default function PathLayout({
           <PathDesktopSkeleton />
         ) : (
           <div
-            className="hidden md:flex flex-row w-full items-start relative min-h-screen"
+            className="hidden md:flex flex-row w-full items-start justify-center relative min-h-screen"
             onClick={() => {
               setShowDesktopUnitsList(false);
             }}
           >
-            <div className={`flex-1 flex justify-center w-full pt-8 pb-32 px-6 lg:px-8 pr-8 xl:pr-12`}>
-              <div className={`flex flex-col gap-10 w-full max-w-4xl`}>
+            <div className={`flex-1 flex justify-center w-full max-w-4xl`}>
+              <div className={`flex flex-col w-full h-full`}>
                 {renderDesktopTimeline({
                   key: activeUnit?.id,
                   unit: activeUnit,
@@ -218,28 +222,6 @@ export default function PathLayout({
                 })}
               </div>
             </div>
-
-            <DesktopSidebarRight
-              showUnitsList={showDesktopUnitsList}
-              setShowUnitsList={setShowDesktopUnitsList}
-              units={units}
-              activeUnitIndex={activeUnitIndex}
-              onUnitSelect={handleUnitSelect}
-              language={language}
-              globalSuggested={globalSuggested}
-              lessons={lessons}
-              lessonLevels={lessonLevels}
-              mounted={mounted}
-              maxLevelPerLesson={maxLevelPerLesson}
-              suggestionType={pathType}
-              questsCategory={pathType as any}
-              selectedLesson={selectedLesson}
-              modalLevel={modalLevel}
-              setModalLevel={setModalLevel}
-              lessonStars={lessonStars}
-              resetLessonLevel={resetLessonLevel}
-              onCloseLesson={() => setSelectedLesson(null)}
-            />
           </div>
         )}
       </div>
