@@ -249,38 +249,38 @@ export default function PathDesktopTimeline({
               </div>
 
               <div className="w-full max-w-[1600px] mx-auto px-6 md:px-10">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 w-full">
+                  <div className="grid grid-cols-1 md:grid-cols-3 w-full border-t border-b border-slate-200 md:border-none md:divide-x md:divide-slate-200 mt-4">
                       {/* Leaderboard */}
-                      <div className="h-full">
+                      <div className="h-full px-4 md:px-8 py-6">
                           <LeaderboardWidget />
                       </div>
 
                       {/* Quests */}
                       {mounted && activeDesktopQuests.length > 0 ? (
-                          <div className="flex flex-col gap-3 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 h-full">
-                              <h3 className="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">
+                          <div className="flex flex-col gap-3 h-full px-4 md:px-8 py-6">
+                              <h3 className="text-[17px] font-extrabold text-slate-800 mb-2 uppercase tracking-tight">
                                   {getTranslation('auto.daily_quests', language) || 'Quêtes Journalières'}
                               </h3>
                               {activeDesktopQuests.map((quest, idx) => (
-                                  <div key={idx} className="flex flex-col gap-2">
+                                  <div key={idx} className="flex flex-col gap-2 mt-2">
                                       <div className="flex justify-between items-center font-bold text-slate-700">
                                           <span>{getLocalizedField(quest, 'title', language)}</span>
                                           <span className="text-slate-400">{quest.progress} / {quest.target}</span>
                                       </div>
-                                      <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                      <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
                                           <div className="h-full bg-emerald-500 transition-all" style={{ width: `${(quest.progress / quest.target) * 100}%` }} />
                                       </div>
                                   </div>
                               ))}
                           </div>
                       ) : (
-                          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center justify-center h-full">
+                          <div className="flex items-center justify-center h-full px-4 md:px-8 py-6">
                               <span className="text-slate-400 font-medium">Aucune quête en cours</span>
                           </div>
                       )}
 
                       {/* Dialogue Mission */}
-                      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 h-full flex flex-col justify-center overflow-hidden relative">
+                      <div className="h-full flex flex-col justify-center relative px-4 md:px-8 py-6">
                           <ConversationObjectiveWidget />
                       </div>
                   </div>
@@ -308,7 +308,7 @@ export default function PathDesktopTimeline({
               ref={screen2Ref} 
               className="w-full min-h-[100dvh] shrink-0 snap-start flex flex-col relative z-50 bg-[#FAFAFA]"
           >
-              <div className="sticky top-0 z-[60] w-full max-w-4xl mx-auto">
+              <div className="sticky top-0 z-[60] w-full border-b border-slate-200">
                    <LessonHorizontalCarousel 
                        lessons={unitLessons}
                        activeLessonIndex={activeLessonIndex}
@@ -320,8 +320,8 @@ export default function PathDesktopTimeline({
                        pathType={pathType}
                    />
               </div>
-              <div className="flex-1 w-full max-w-4xl mx-auto px-4 pb-12 flex flex-col items-center pt-8">
-                   <div className="w-full relative min-h-[600px] bg-white rounded-[2rem] shadow-sm border border-slate-100 p-8">
+              <div className="w-full flex-1 flex flex-col items-center justify-evenly py-8">
+                   <div className="w-full relative flex flex-col items-center justify-center">
                         <LessonPathMap
                             key={activeLesson.id}
                             maxLevel={maxLevelPerLesson}

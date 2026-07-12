@@ -12,7 +12,7 @@ export function ConversationObjectiveWidget() {
   if (!objective) return null;
 
   return (
-    <div className="w-full border-b border-slate-200 py-6 px-1 flex flex-col gap-4 relative group">
+    <div className="w-full flex flex-col gap-4 relative group">
       <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-blue-100/50 text-blue-500 rounded-xl flex items-center justify-center shadow-sm">

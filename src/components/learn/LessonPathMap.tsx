@@ -222,7 +222,7 @@ export function LessonPathMap({
   const isLevelUnlocked = (l: number) => levelStates[l]?.isUnlocked || false;
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-between lg:justify-center w-full max-w-5xl mx-auto pt-4 pb-0">
+    <div className="flex-1 flex flex-col items-center justify-evenly w-full pt-4 pb-0">
       {/* Level Selector */}
       <div className="w-full flex flex-col items-center lg:items-center gap-4 px-4 content-start pt-6">
         {suggestionType === 'learn' && (
