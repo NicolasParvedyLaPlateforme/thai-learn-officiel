@@ -59,6 +59,14 @@ export function LessonPathMap({
     return parts.includes(p);
   };
 
+  let healedProgress = currentProgress;
+  if (currentFullLevels.length > 0) {
+    const maxCompletedFull = Math.max(...currentFullLevels);
+    if (maxCompletedFull >= healedProgress) {
+      healedProgress = maxCompletedFull + 1;
+    }
+  }
+
   // 1. Determine state of each level
   const levelStates = Array(maxLevel + 1).fill(null).map((_, i) => {
     // i is 0-indexed. i = 0 is Niveau 1. i = 4 is Niveau 5. i = 10 is Ultime.
@@ -77,7 +85,7 @@ export function LessonPathMap({
       // Phase 2+3 : Niveaux 5 à 10
       const requiredFullLevelIndex = i - 4; // Pour i=4 (Niv 5), il faut fullLevel 0 (Niv 1)
       const isFullMet = currentFullLevels.includes(requiredFullLevelIndex);
-      const isPartsMet = currentProgress >= i; // currentProgress == lessonLevel. Pour i=4, il faut lessonLevel >= 4.
+      const isPartsMet = healedProgress >= i; // healedProgress == lessonLevel. Pour i=4, il faut lessonLevel >= 4.
 
       isUnlocked = isFullMet && isPartsMet;
       if (!isUnlocked) {
@@ -92,7 +100,7 @@ export function LessonPathMap({
       }
     } else {
       // Ultime (i = 10)
-      isUnlocked = currentProgress >= 10;
+      isUnlocked = healedProgress >= 10;
       if (!isUnlocked) {
          currentBlockingReason = `${getTranslation('auto.complete_all_parts_level', language) || 'Terminez toutes les parties du Niveau '}${10}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
       }
@@ -131,11 +139,11 @@ export function LessonPathMap({
 
   // Séquence 2+3 : Full Levels et Parties 5 à 10
   if (!foundTarget) {
-    for (let i = 0; i <= 5; i++) {
+      for (let i = 0; i <= 5; i++) {
        const fullLevelIndex = i;
        const partsLevelIndex = i + 4;
        
-       if (currentProgress >= fullLevelIndex) {
+       if (healedProgress >= fullLevelIndex) {
            if (!currentFullLevels.includes(fullLevelIndex)) {
               calculatedTarget = fullLevelIndex; // focus on the level associated with this full level
               foundTarget = true;
@@ -143,7 +151,7 @@ export function LessonPathMap({
            }
        }
        
-       if (currentProgress >= partsLevelIndex) {
+       if (healedProgress >= partsLevelIndex) {
            const totalParts = lesson ? getLevelSplit(partsLevelIndex, lesson) : 1;
            let partMissing = false;
            for (let p = 0; p < totalParts; p++) {
@@ -163,7 +171,7 @@ export function LessonPathMap({
 
   // Séquence 4 : Ultime
   if (!foundTarget) {
-      if (currentProgress >= 10 && !currentFullLevels.includes(10)) {
+      if (healedProgress >= 10 && !currentFullLevels.includes(10)) {
           calculatedTarget = 10;
           foundTarget = true;
       }
@@ -303,7 +311,7 @@ export function LessonPathMap({
           key={`level-node-${activeLevel}`}
           levelIndex={activeLevel}
           maxLevel={maxLevel}
-          currentProgress={effectiveProgress}
+          currentProgress={effectiveProgress} // Note: effectiveProgress recalculates using logic that doesn't need healing, so we can leave it as is. Wait, effectiveProgress uses firstLockedIndex which uses healedProgress! So it's already healed.
           modalLevel={modalLevel}
           setModalLevel={setModalLevel}
           earnedStarsArray={earnedStarsArray}

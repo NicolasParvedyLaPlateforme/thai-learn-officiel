@@ -6,8 +6,8 @@ export function calculateLessonLevelAndStars(
 ) {
   let newLevel = currentLevel;
   if (playedLevel !== undefined) {
-    if (playedLevel === currentLevel) {
-       newLevel = Math.min(currentLevel + 1, 10);
+    if (playedLevel >= currentLevel) {
+       newLevel = Math.max(currentLevel, Math.min(playedLevel + 1, 10));
     }
   } else {
      newLevel = Math.min(currentLevel + 1, 10);

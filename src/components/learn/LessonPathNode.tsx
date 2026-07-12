@@ -94,11 +94,15 @@ export function LessonPathNode({
     const nextPart = currentCompletedParts.length;
     let isVerticalMet = true;
     if (levelIndex > 0) {
-      const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
-      const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
-      const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
-      const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
-      isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+      if (currentProgress >= levelIndex) {
+        isVerticalMet = true;
+      } else {
+        const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+        const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+        const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+        const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
+        isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+      }
     }
     
     if (!isVerticalMet) return null;
@@ -213,11 +217,15 @@ export function LessonPathNode({
 
                     let isVerticalMet = true;
                     if (levelIndex > 0) {
-                      const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
-                      const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
-                      const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
-                      const requiredPrevPart = Math.min(i, prevLevelPartsTotal - 1);
-                      isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                      if (currentProgress >= levelIndex) {
+                        isVerticalMet = true;
+                      } else {
+                        const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+                        const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+                        const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+                        const requiredPrevPart = Math.min(i, prevLevelPartsTotal - 1);
+                        isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                      }
                     }
 
                     const isHorizontalMet = i === 0 || currentCompletedParts.includes(i - 1);
@@ -315,11 +323,15 @@ export function LessonPathNode({
                   const nextPart = currentCompletedParts.length;
                   let isVerticalMet = true;
                   if (levelIndex > 0) {
-                    const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
-                    const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
-                    const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
-                    const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
-                    isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                    if (currentProgress >= levelIndex) {
+                      isVerticalMet = true;
+                    } else {
+                      const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+                      const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+                      const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+                      const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
+                      isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                    }
                   }
                   if (!isVerticalMet) return null;
 
