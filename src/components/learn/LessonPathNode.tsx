@@ -86,11 +86,11 @@ export function LessonPathNode({
 
   const [selectedAction, setSelectedAction] = useState<number | 'full' | null>(() => {
     if (!isAccessible) return null;
-    
+
     if (isCompleted || currentCompletedParts.length >= currentPartsTotal) {
       return 'full';
     }
-    
+
     const nextPart = currentCompletedParts.length;
     let isVerticalMet = true;
     if (levelIndex > 0) {
@@ -104,7 +104,7 @@ export function LessonPathNode({
         isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
       }
     }
-    
+
     if (!isVerticalMet) return null;
     return nextPart;
   });
@@ -280,7 +280,7 @@ export function LessonPathNode({
                             } else {
                               setSelectedAction(i);
                               setTimeout(() => {
-        
+
                               }, 100);
                             }
                           }
@@ -305,7 +305,7 @@ export function LessonPathNode({
                           } else {
                             setSelectedAction('full');
                             setTimeout(() => {
-      
+
                             }, 100);
                           }
                         }
@@ -467,9 +467,9 @@ export function LessonPathNode({
       </div>
 
       {selectedAction !== null && (
-        <div className="w-full flex justify-center z-40 pt-6 pb-8 md:pb-6 relative mt-auto">
+        <div className="w-full flex justify-center z-40 pt-6 pb-8 md:pt-8 md:pb-10 relative mt-auto bg-white backdrop-blur-sm border-t border-slate-100">
           {/* Pointer arrow pointing up to the pie chart - Desktop only */}
-          <div className="hidden md:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45"></div>
+          <div className="hidden md:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-50 border-t border-l border-slate-100 rotate-45"></div>
 
           <div className="w-full max-w-[400px] px-4 md:px-6 relative z-10">
             <PartNodeBubble

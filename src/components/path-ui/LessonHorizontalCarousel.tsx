@@ -25,21 +25,59 @@ export function LessonHorizontalCarousel({
 }: LessonHorizontalCarouselProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const isProgrammaticScrollRef = useRef(false);
+
   useEffect(() => {
-    // Center the active lesson icon when it changes
-    if (scrollContainerRef.current) {
+    // Center the active lesson icon when it changes programmatically (e.g. arrows, or initial)
+    if (scrollContainerRef.current && !isProgrammaticScrollRef.current) {
       const container = scrollContainerRef.current;
       const activeElement = container.children[activeLessonIndex] as HTMLElement;
       if (activeElement) {
         const containerCenter = container.clientWidth / 2;
         const elementCenter = activeElement.offsetLeft + activeElement.clientWidth / 2;
+        isProgrammaticScrollRef.current = true;
         container.scrollTo({
           left: elementCenter - containerCenter,
           behavior: 'smooth',
         });
+        
+        // Reset the flag after animation finishes
+        setTimeout(() => {
+          isProgrammaticScrollRef.current = false;
+        }, 300);
       }
     }
   }, [activeLessonIndex, lessons.length]);
+
+  const handleScroll = () => {
+    if (isProgrammaticScrollRef.current) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const containerCenter = container.scrollLeft + container.clientWidth / 2;
+    let closestIndex = activeLessonIndex;
+    let minDistance = Infinity;
+
+    Array.from(container.children).forEach((child, index) => {
+      const childEl = child as HTMLElement;
+      const childCenter = childEl.offsetLeft + childEl.clientWidth / 2;
+      const distance = Math.abs(containerCenter - childCenter);
+      
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    if (closestIndex !== activeLessonIndex) {
+      // Mark as programmatic so the subsequent useEffect doesn't fight the user scroll
+      isProgrammaticScrollRef.current = true;
+      onLessonChange(closestIndex);
+      setTimeout(() => {
+        isProgrammaticScrollRef.current = false;
+      }, 50);
+    }
+  };
 
   const handlePrev = () => {
     if (activeLessonIndex > 0) {
@@ -83,7 +121,8 @@ export function LessonHorizontalCarousel({
 
       <div
         ref={scrollContainerRef}
-        className="flex overflow-x-auto gap-6 pt-3 pb-3 scrollbar-hide snap-x snap-mandatory px-[calc(50vw-32px)] sm:px-[calc(50%-32px)] box-border items-center"
+        onScroll={handleScroll}
+        className="flex overflow-x-auto gap-6 pt-3 pb-3 scrollbar-hide px-[calc(50vw-32px)] sm:px-[calc(50%-32px)] box-border items-center"
         style={{ scrollPadding: '0' }}
       >
         {lessons.map((lesson, idx) => {
@@ -93,7 +132,7 @@ export function LessonHorizontalCarousel({
               key={lesson.id}
               onClick={() => onLessonChange(idx)}
               // Outer container: FIXED size to prevent any layout shift
-              className="relative shrink-0 cursor-pointer snap-center flex items-center justify-center w-[72px] h-[72px]"
+              className="relative shrink-0 cursor-pointer flex items-center justify-center w-[72px] h-[72px]"
             >
               <div
                 className={cn(

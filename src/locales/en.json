@@ -601,5 +601,7 @@
   "auto.find_word_position": "Find the word position",
   "auto.listen_and_select_position": "Listen and select the correct position",
   "exercise.choice": "Choice",
-  "auto.complete_all_parts_level": "Complete all parts of Level "
+  "auto.complete_all_parts_level": "Complete all parts of Level ",
+  "auto.objective": "Objective",
+  "auto.play_now": "Play now"
 }

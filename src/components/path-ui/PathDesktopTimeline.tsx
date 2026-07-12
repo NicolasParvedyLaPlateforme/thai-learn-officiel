@@ -320,7 +320,7 @@ export default function PathDesktopTimeline({
                             pathType={pathType}
                         />
                     </div>
-                    <div className="w-full flex-1 flex flex-col py-8">
+                    <div className="w-full flex-1 flex flex-col pt-8">
                         <div className="w-full flex-1 relative flex flex-col items-stretch">
                             <LessonPathMap
                                 key={activeLesson.id}

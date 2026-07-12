@@ -66,7 +66,7 @@ export default function ConversationObjectiveModal({ isOpen, onOpenChange, objec
 
           <div className="w-full h-48 md:h-64 relative bg-slate-800 rounded-t-3xl overflow-hidden shrink-0">
             <IconImage src={imageUrl} alt={title} fill className="object-cover opacity-80" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6 w-full flex flex-col gap-1">
               <span className={`text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg w-max ${objective.type === 'vocab' ? 'bg-indigo-500 text-white' : 'bg-emerald-500 text-white'}`}>
                 {subtitle}
