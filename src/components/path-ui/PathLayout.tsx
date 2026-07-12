@@ -166,33 +166,35 @@ export default function PathLayout({
       />
 
       {/* Main Content (Mobile Only) */}
-      {!mounted || isProcessingHash ? (
-        <PathMobileSkeleton />
-      ) : (
-        renderMobileTimeline({
-          key: activeUnit?.id,
-          unit: activeUnit,
-          unitLessons,
-          activeUnitIndex,
-          totalUnits: units.length,
-          language,
-          lessonLevels,
-          lessonStars,
-          suggestedLessonId,
-          globalSuggestedLesson: suggestedLessonId ? lessons.find((l: any) => l.id === suggestedLessonId) : null,
-          quests,
-          mounted,
-          handleUnitSelect,
-          setIsUnitsModalOpen,
-          setIsQuestsModalOpen,
-          setSelectedLesson,
-          selectedLesson,
-          modalLevel,
-          setModalLevel,
-          setLockedReviewModalOpen,
-          nextUnit: activeUnitIndex < units.length - 1 ? units[activeUnitIndex + 1] : undefined
-        })
-      )}
+      <div className="md:hidden">
+        {!mounted || isProcessingHash ? (
+          <PathMobileSkeleton />
+        ) : (
+          renderMobileTimeline({
+            key: activeUnit?.id,
+            unit: activeUnit,
+            unitLessons,
+            activeUnitIndex,
+            totalUnits: units.length,
+            language,
+            lessonLevels,
+            lessonStars,
+            suggestedLessonId,
+            globalSuggestedLesson: suggestedLessonId ? lessons.find((l: any) => l.id === suggestedLessonId) : null,
+            quests,
+            mounted,
+            handleUnitSelect,
+            setIsUnitsModalOpen,
+            setIsQuestsModalOpen,
+            setSelectedLesson,
+            selectedLesson,
+            modalLevel,
+            setModalLevel,
+            setLockedReviewModalOpen,
+            nextUnit: activeUnitIndex < units.length - 1 ? units[activeUnitIndex + 1] : undefined
+          })
+        )}
+      </div>
 
       {/* Desktop Main Content */}
       <div className="hidden md:block">

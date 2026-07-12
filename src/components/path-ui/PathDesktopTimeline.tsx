@@ -222,7 +222,7 @@ export default function PathDesktopTimeline({
       </AnimatePresence>
 
       {/* SCREEN 1: Base UI */}
-      <div className="w-full min-h-[100dvh] snap-start flex flex-col items-center pt-[80px] pb-8 relative z-0">
+      <div className="w-full min-h-[100dvh] shrink-0 snap-start flex flex-col items-center pt-[80px] pb-8 relative z-0">
           <div className="w-full max-w-4xl mx-auto flex flex-col gap-8">
               <DesktopUnitHeader
                 unit={unit}
@@ -278,7 +278,7 @@ export default function PathDesktopTimeline({
       {activeLesson && (
           <div 
               ref={screen2Ref} 
-              className="w-full min-h-[100dvh] snap-start flex flex-col relative z-50 bg-[#FAFAFA]"
+              className="w-full min-h-[100dvh] shrink-0 snap-start flex flex-col relative z-50 bg-[#FAFAFA]"
           >
               <div className="sticky top-0 z-[60] w-full max-w-4xl mx-auto">
                    <LessonHorizontalCarousel 
@@ -320,7 +320,7 @@ export default function PathDesktopTimeline({
       )}
 
       {/* SCREEN 3: Next Unit */}
-      <div className="w-full min-h-[100dvh] snap-start snap-always flex flex-col items-center justify-center pt-8 pb-32 relative z-50 bg-white">
+      <div className="w-full min-h-[100dvh] shrink-0 snap-start snap-always flex flex-col items-center justify-center pt-8 pb-32 relative z-50 bg-white">
           <div className="w-full max-w-4xl mx-auto">
             {nextUnit && (
               <NextUnitCard
