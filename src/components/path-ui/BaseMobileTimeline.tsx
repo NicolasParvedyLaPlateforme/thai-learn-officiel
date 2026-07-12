@@ -131,6 +131,7 @@ export default function BaseMobileTimeline({
     // Logic for active lesson index
     const [activeLessonIndex, setActiveLessonIndex] = React.useState(0);
     const screen2Ref = React.useRef<HTMLDivElement>(null);
+    const screen1Ref = React.useRef<HTMLDivElement>(null);
     const hasInitializedLessonIndexRef = React.useRef(false);
     const prevSelectedLessonRef = React.useRef(selectedLesson);
 
@@ -163,8 +164,23 @@ export default function BaseMobileTimeline({
 
     // Intersection Observer to hide/show global header when on Screen 2
     React.useEffect(() => {
-        const el = screen2Ref.current;
-        if (!el) return;
+        const el1 = screen1Ref.current;
+        if (el1) {
+            const observer1 = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+                        window.dispatchEvent(new Event('showFab'));
+                    } else {
+                        window.dispatchEvent(new Event('hideFab'));
+                    }
+                },
+                { threshold: 0.1 }
+            );
+            observer1.observe(el1);
+        }
+
+        const el2 = screen2Ref.current;
+        if (!el2) return;
 
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -180,8 +196,11 @@ export default function BaseMobileTimeline({
             { threshold: 0.5 }
         );
 
-        observer.observe(el);
-        return () => observer.disconnect();
+        observer.observe(el2);
+        return () => {
+            observer.disconnect();
+            window.dispatchEvent(new Event('showFab')); // cleanup
+        };
     }, []);
 
     // Initial Scroll handling for returning from lesson
@@ -241,7 +260,7 @@ export default function BaseMobileTimeline({
             </AnimatePresence>
 
             {/* SCREEN 1: Base UI */}
-            <div className="w-full min-h-[100dvh] snap-start flex flex-col items-center pt-[80px] pb-8 relative z-0">
+            <div ref={screen1Ref} className="w-full min-h-[100dvh] snap-start flex flex-col items-center pt-[80px] pb-8 relative z-0">
                 <main className="max-w-2xl w-full mx-auto px-4 mt-2 flex flex-col gap-6">
                     <motion.div
                         key={unit.id}

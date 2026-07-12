@@ -467,9 +467,9 @@ export function LessonPathNode({
       </div>
 
       {selectedAction !== null && (
-        <div className="w-full flex justify-center z-40 pt-6 pb-8 md:pb-6 bg-white md:bg-slate-50 border-t border-slate-100 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] md:shadow-inner relative md:rounded-b-[2rem] mt-auto">
+        <div className="w-full flex justify-center z-40 pt-6 pb-8 md:pb-6 relative mt-auto">
           {/* Pointer arrow pointing up to the pie chart - Desktop only */}
-          <div className="hidden md:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-50 border-t border-l border-slate-100 rotate-45"></div>
+          <div className="hidden md:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rotate-45"></div>
 
           <div className="w-full max-w-[400px] px-4 md:px-6 relative z-10">
             <PartNodeBubble

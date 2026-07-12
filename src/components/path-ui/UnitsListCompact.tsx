@@ -11,7 +11,7 @@ interface UnitsListCompactProps {
 
 export function UnitsListCompact({ units, activeUnitIndex, language, onUnitSelect }: UnitsListCompactProps) {
   return (
-    <div className="w-full mt-8">
+    <div className="w-full mt-2 md:mt-8">
       <h3 className="text-sm font-bold text-slate-500 mb-4 uppercase tracking-wider px-4">
         {getTranslation('auto.course_units', language) || 'Toutes les unités'}
       </h3>

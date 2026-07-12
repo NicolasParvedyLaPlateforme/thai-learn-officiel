@@ -46,7 +46,7 @@ export default function PathMobileTimeline(props: PathMobileTimelineProps) {
             handleUnitSelect={props.handleUnitSelect}
             isMobile={true}
           />
-          <div className="mt-8">
+          <div className="mt-0">
             <UnitsListCompact
               units={props.units || []}
               activeUnitIndex={props.activeUnitIndex}
