@@ -137,25 +137,25 @@ export default function BaseMobileTimeline({
 
     React.useEffect(() => {
         if (!mounted || !unitLessons || unitLessons.length === 0) return;
-        
+
         const isFirstInit = !hasInitializedLessonIndexRef.current;
         const selectedLessonChanged = selectedLesson !== prevSelectedLessonRef.current;
-        
+
         if (isFirstInit || selectedLessonChanged) {
             hasInitializedLessonIndexRef.current = true;
             prevSelectedLessonRef.current = selectedLesson;
-            
+
             // Find the initial lesson to show
             let toExpandIdx = 0;
             if (selectedLesson && selectedLesson.lesson) {
-                 toExpandIdx = unitLessons.findIndex(l => l.id === selectedLesson.lesson.id);
+                toExpandIdx = unitLessons.findIndex(l => l.id === selectedLesson.lesson.id);
             } else if (suggestedLessonId) {
-                 toExpandIdx = unitLessons.findIndex(l => l.id === suggestedLessonId);
+                toExpandIdx = unitLessons.findIndex(l => l.id === suggestedLessonId);
             } else {
-                 const idx = unitLessons.findIndex(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
-                 if (idx !== -1) toExpandIdx = idx;
+                const idx = unitLessons.findIndex(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+                if (idx !== -1) toExpandIdx = idx;
             }
-            
+
             if (toExpandIdx !== -1) {
                 setActiveLessonIndex(toExpandIdx);
             }
@@ -207,25 +207,25 @@ export default function BaseMobileTimeline({
     React.useEffect(() => {
         if (!mounted || hasInitializedScrollRef.current) return;
         if (!unitLessons || unitLessons.length === 0) return;
-        
+
         // Wait until selectedLesson has been processed
         if (selectedLesson !== undefined) {
-             hasInitializedScrollRef.current = true;
-             if (selectedLesson !== null) {
-                 // Return from lesson, scroll to Screen 2
-                 setTimeout(() => {
-                      if (screen2Ref.current) {
-                          const scrollContainer = document.getElementById('path-scroll-container');
-                          if (scrollContainer) {
-                              // We use offsetTop because it's relative to the scroll container's content
-                              const targetY = screen2Ref.current.offsetTop;
-                              scrollContainer.scrollTo({ top: targetY, behavior: 'auto' });
-                          } else {
-                              screen2Ref.current.scrollIntoView({ behavior: 'auto', block: 'start' });
-                          }
-                      }
-                 }, 300);
-             }
+            hasInitializedScrollRef.current = true;
+            if (selectedLesson !== null) {
+                // Return from lesson, scroll to Screen 2
+                setTimeout(() => {
+                    if (screen2Ref.current) {
+                        const scrollContainer = document.getElementById('path-scroll-container');
+                        if (scrollContainer) {
+                            // We use offsetTop because it's relative to the scroll container's content
+                            const targetY = screen2Ref.current.offsetTop;
+                            scrollContainer.scrollTo({ top: targetY, behavior: 'auto' });
+                        } else {
+                            screen2Ref.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+                        }
+                    }
+                }, 300);
+            }
         }
     }, [mounted, unitLessons, selectedLesson]);
 
@@ -236,7 +236,7 @@ export default function BaseMobileTimeline({
     const activeQuests = quests.filter(q => !q.completed);
 
     const handleAccessLessons = () => {
-         screen2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        screen2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     const activeLesson = unitLessons[activeLessonIndex];
@@ -244,7 +244,7 @@ export default function BaseMobileTimeline({
 
     return (
         <div className="flex flex-col w-full h-full">
-            <AnimatePresence>
+            {/* <AnimatePresence>
                 {mounted && isInitializingScroll && (
                     <motion.div
                         initial={{ opacity: 1 }}
@@ -257,7 +257,7 @@ export default function BaseMobileTimeline({
                         <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin opacity-80" />
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence> */}
 
             {/* SCREEN 1: Base UI */}
             <div ref={screen1Ref} className="w-full min-h-[100dvh] snap-start flex flex-col items-center pt-[80px] pb-8 relative z-0">
@@ -344,7 +344,7 @@ export default function BaseMobileTimeline({
 
                         {/* Story Objective */}
                         {mounted && storyObjective && (
-                             <div
+                            <div
                                 onClick={() => setIsObjectiveModalOpen(true)}
                                 className="w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between mb-4"
                             >
@@ -370,9 +370,9 @@ export default function BaseMobileTimeline({
 
                         {/* Access Lessons Button */}
                         <div className="flex justify-center mt-6 w-full">
-                             <Button onClick={handleAccessLessons} size="lg" className="w-full sm:w-auto px-8 py-6 rounded-2xl shadow-sm text-lg gap-2" variant="gamified">
-                                 <BookOpen size={24} /> {getTranslation('auto.lessons', language) || 'Accès aux leçons'}
-                             </Button>
+                            <Button onClick={handleAccessLessons} size="lg" className="w-full sm:w-auto px-8 py-6 rounded-2xl shadow-sm text-lg gap-2" variant="gamified">
+                                <BookOpen size={24} /> {getTranslation('auto.lessons', language) || 'Accès aux leçons'}
+                            </Button>
                         </div>
 
                     </motion.div>
@@ -381,47 +381,47 @@ export default function BaseMobileTimeline({
 
             {/* SCREEN 2: Lesson Map */}
             {activeLesson && (
-                <div 
+                <div
                     id="mobile-screen-2"
-                    ref={screen2Ref} 
+                    ref={screen2Ref}
                     className="w-full min-h-[100dvh] snap-start flex flex-col relative z-50 bg-[#FAFAFA]"
                 >
                     <div className="sticky top-0 z-[60] w-full">
-                         {/* Here we need to import LessonHorizontalCarousel at the top of file, but we will use dynamic import or just standard import since we can't edit imports easily, let's just assume we can add the import. Wait, I should add the import. */}
-                         <LessonHorizontalCarousel 
-                             lessons={unitLessons}
-                             activeLessonIndex={activeLessonIndex}
-                             onLessonChange={(idx) => {
-                                 setActiveLessonIndex(idx);
-                                 if (setModalLevel) setModalLevel(null);
-                             }}
-                             language={language}
-                             pathType={pathType}
-                         />
+                        {/* Here we need to import LessonHorizontalCarousel at the top of file, but we will use dynamic import or just standard import since we can't edit imports easily, let's just assume we can add the import. Wait, I should add the import. */}
+                        <LessonHorizontalCarousel
+                            lessons={unitLessons}
+                            activeLessonIndex={activeLessonIndex}
+                            onLessonChange={(idx) => {
+                                setActiveLessonIndex(idx);
+                                if (setModalLevel) setModalLevel(null);
+                            }}
+                            language={language}
+                            pathType={pathType}
+                        />
                     </div>
                     <div className="flex-1 w-full max-w-2xl mx-auto px-0 pb-0 flex flex-col items-center pt-2">
-                         <div className="w-full relative min-h-[500px] flex-1 flex flex-col justify-between">
-                              <LessonPathMap
-                                  key={activeLesson.id}
-                                  maxLevel={maxLevelPerLesson}
-                                  currentProgress={activeLessonLevel}
-                                  modalLevel={modalLevel ?? null}
-                                  setModalLevel={setModalLevel}
-                                  earnedStarsArray={lessonStars?.[activeLesson.id] || Array(maxLevelPerLesson + 1).fill(0)}
-                                  unitColor={unit.colorClass}
-                                  unitBorder={unit.borderClass}
-                                  unitText={unit.textClass}
-                                  language={language}
-                                  lessonId={activeLesson.id}
-                                  lesson={activeLesson}
-                                  lessonPartsCompleted={currentPartsCompleted}
-                                  suggestionType={pathType}
-                                  initialScrollLevel={selectedLesson && selectedLesson.lesson.id === activeLesson.id ? selectedLesson.initialScrollLevel : undefined}
-                                  disableAutoScroll={!isInitializingScroll}
-                                  onReady={() => { }}
-                                  onBack={() => {}}
-                              />
-                         </div>
+                        <div className="w-full relative min-h-[500px] flex-1 flex flex-col justify-between">
+                            <LessonPathMap
+                                key={activeLesson.id}
+                                maxLevel={maxLevelPerLesson}
+                                currentProgress={activeLessonLevel}
+                                modalLevel={modalLevel ?? null}
+                                setModalLevel={setModalLevel}
+                                earnedStarsArray={lessonStars?.[activeLesson.id] || Array(maxLevelPerLesson + 1).fill(0)}
+                                unitColor={unit.colorClass}
+                                unitBorder={unit.borderClass}
+                                unitText={unit.textClass}
+                                language={language}
+                                lessonId={activeLesson.id}
+                                lesson={activeLesson}
+                                lessonPartsCompleted={currentPartsCompleted}
+                                suggestionType={pathType}
+                                initialScrollLevel={selectedLesson && selectedLesson.lesson.id === activeLesson.id ? selectedLesson.initialScrollLevel : undefined}
+                                disableAutoScroll={!isInitializingScroll}
+                                onReady={() => { }}
+                                onBack={() => { }}
+                            />
+                        </div>
                     </div>
                 </div>
             )}
@@ -440,4 +440,4 @@ export default function BaseMobileTimeline({
             />
         </div>
     );
-}
+}
