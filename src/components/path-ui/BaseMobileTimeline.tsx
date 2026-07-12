@@ -14,8 +14,11 @@ import { Button } from '../ui/Button';
 import { LessonPathMap } from '../learn/LessonPathMap';
 import { useProgressStore } from "@/lib/store";
 import { LessonHorizontalCarousel } from './LessonHorizontalCarousel';
+import ConversationObjectiveModal from '../modals/ConversationObjectiveModal';
+
 interface BaseMobileTimelineProps {
     pathType: 'learn' | 'alphabet' | 'speak';
+    units: any[];
     unit: any;
     unitLessons: any[];
     activeUnitIndex: number;
@@ -42,6 +45,7 @@ interface BaseMobileTimelineProps {
 
 export default function BaseMobileTimeline({
     pathType,
+    units,
     unit,
     unitLessons,
     activeUnitIndex,
@@ -72,6 +76,7 @@ export default function BaseMobileTimeline({
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
     const [expandedLessons, setExpandedLessons] = React.useState<Set<string>>(new Set());
     const [isInitializingScroll, setIsInitializingScroll] = React.useState(true);
+    const [isObjectiveModalOpen, setIsObjectiveModalOpen] = React.useState(false);
     const hasInitializedScrollRef = React.useRef(false);
 
     // Guaranteed fog dismissal after 800ms
@@ -321,7 +326,7 @@ export default function BaseMobileTimeline({
                         {/* Story Objective */}
                         {mounted && storyObjective && (
                              <div
-                                onClick={() => setIsQuestsModalOpen(true)}
+                                onClick={() => setIsObjectiveModalOpen(true)}
                                 className="w-full bg-white rounded-2xl border-0 p-4 shadow-sm hover:shadow-md cursor-pointer active:scale-95 transition-all gap-2 flex items-center justify-between mb-4"
                             >
                                 <div className="flex items-center gap-3 flex-1 min-w-0 pr-2">
@@ -336,11 +341,7 @@ export default function BaseMobileTimeline({
                                     size="icon-sm"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        if (storyObjective.type === 'vocab') {
-                                            router.push(`/lesson/${storyObjective.lesson.id}?level=1`);
-                                        } else {
-                                            router.push(`/conversations/${storyObjective.conversation.id}${storyObjective.levelToComplete > 0 ? `?level=${storyObjective.levelToComplete}` : ''}`);
-                                        }
+                                        setIsObjectiveModalOpen(true);
                                     }}
                                 >
                                     <Play size={18} className="ml-1 fill-current" />
@@ -362,6 +363,7 @@ export default function BaseMobileTimeline({
             {/* SCREEN 2: Lesson Map */}
             {activeLesson && (
                 <div 
+                    id="mobile-screen-2"
                     ref={screen2Ref} 
                     className="w-full min-h-[100dvh] snap-start flex flex-col relative z-50 bg-[#FAFAFA]"
                 >
@@ -409,6 +411,14 @@ export default function BaseMobileTimeline({
             <div className="w-full snap-start snap-always flex flex-col items-center justify-center min-h-[100dvh] pb-32 pt-12 relative z-50">
                 {children}
             </div>
+
+            {/* Modals */}
+            <ConversationObjectiveModal
+                isOpen={isObjectiveModalOpen}
+                onOpenChange={setIsObjectiveModalOpen}
+                objective={storyObjective}
+                language={language}
+            />
         </div>
     );
 }

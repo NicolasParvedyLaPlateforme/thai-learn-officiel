@@ -16,8 +16,12 @@ import { LessonPathMap } from '../learn/LessonPathMap';
 import { useProgressStore } from '@/lib/store';
 import { LessonHorizontalCarousel } from './LessonHorizontalCarousel';
 import { QuickActionsWidget } from '../widgets/QuickActionsWidget';
+import { LeaderboardWidget } from '../widgets/LeaderboardWidget';
+import { ConversationObjectiveWidget } from '../widgets/ConversationObjectiveWidget';
+import { UnitsListCompact } from './UnitsListCompact';
 interface PathDesktopTimelineProps {
   pathType: 'learn' | 'speak' | 'alphabet';
+  units: any[];
   unit: any;
   unitLessons: any[];
   activeUnitIndex: number;
@@ -40,6 +44,7 @@ interface PathDesktopTimelineProps {
 
 export default function PathDesktopTimeline({
   pathType,
+  units,
   unit,
   unitLessons,
   activeUnitIndex,
@@ -222,41 +227,64 @@ export default function PathDesktopTimeline({
       </AnimatePresence>
 
       {/* SCREEN 1: Base UI */}
-      <div className="w-full min-h-[100dvh] shrink-0 snap-start flex flex-col items-center pt-[80px] pb-8 relative z-0">
-          <div className="w-full max-w-4xl mx-auto flex flex-col gap-8">
-              <DesktopUnitHeader
-                unit={unit}
-                language={language}
-                completedLevels={completedLevelsInUnit}
-                maxLevels={maxLevelsInUnit}
-                progressPercent={progressPercent}
-                mounted={mounted}
-                masteryKey={masteryKey}
-                levelsDescription={levelsDescription}
-                onOpenUnitsList={() => {
-                  setShowDesktopUnitsList(true);
-                  setSelectedLesson(null);
-                }}
-              />
+      <div className="w-full min-h-[100dvh] shrink-0 snap-start flex flex-col items-center pt-0 pb-8 relative z-0">
+          <div className="w-full flex flex-col gap-8">
+              <div className="w-full">
+                  <DesktopUnitHeader
+                    unit={unit}
+                    language={language}
+                    completedLevels={completedLevelsInUnit}
+                    maxLevels={maxLevelsInUnit}
+                    progressPercent={progressPercent}
+                    mounted={mounted}
+                    masteryKey={masteryKey}
+                    levelsDescription={levelsDescription}
+                    onOpenUnitsList={() => {
+                      const screen3 = document.getElementById('desktop-screen-3');
+                      if (screen3) {
+                        screen3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
+                  />
+              </div>
 
-              {mounted && activeDesktopQuests.length > 0 && (
-                  <div className="flex flex-col gap-3 mt-4 bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                      <h3 className="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">
-                          {getTranslation('auto.daily_quests', language) || 'Quêtes Journalières'}
-                      </h3>
-                      {activeDesktopQuests.map((quest, idx) => (
-                          <div key={idx} className="flex flex-col gap-2">
-                              <div className="flex justify-between items-center font-bold text-slate-700">
-                                  <span>{getLocalizedField(quest, 'title', language)}</span>
-                                  <span className="text-slate-400">{quest.progress} / {quest.target}</span>
-                              </div>
-                              <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-                                  <div className="h-full bg-emerald-500 transition-all" style={{ width: `${(quest.progress / quest.target) * 100}%` }} />
-                              </div>
+              <div className="w-full max-w-[1600px] mx-auto px-6 md:px-10">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 w-full">
+                      {/* Leaderboard */}
+                      <div className="h-full">
+                          <LeaderboardWidget />
+                      </div>
+
+                      {/* Quests */}
+                      {mounted && activeDesktopQuests.length > 0 ? (
+                          <div className="flex flex-col gap-3 bg-white rounded-2xl p-6 shadow-sm border border-slate-100 h-full">
+                              <h3 className="text-sm font-bold text-slate-500 mb-2 uppercase tracking-wider">
+                                  {getTranslation('auto.daily_quests', language) || 'Quêtes Journalières'}
+                              </h3>
+                              {activeDesktopQuests.map((quest, idx) => (
+                                  <div key={idx} className="flex flex-col gap-2">
+                                      <div className="flex justify-between items-center font-bold text-slate-700">
+                                          <span>{getLocalizedField(quest, 'title', language)}</span>
+                                          <span className="text-slate-400">{quest.progress} / {quest.target}</span>
+                                      </div>
+                                      <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                          <div className="h-full bg-emerald-500 transition-all" style={{ width: `${(quest.progress / quest.target) * 100}%` }} />
+                                      </div>
+                                  </div>
+                              ))}
                           </div>
-                      ))}
+                      ) : (
+                          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center justify-center h-full">
+                              <span className="text-slate-400 font-medium">Aucune quête en cours</span>
+                          </div>
+                      )}
+
+                      {/* Dialogue Mission */}
+                      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 h-full flex flex-col justify-center overflow-hidden relative">
+                          <ConversationObjectiveWidget />
+                      </div>
                   </div>
-              )}
+              </div>
 
               <div className="flex justify-center mt-8 w-full">
                    <button onClick={handleAccessLessons} className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-10 rounded-2xl shadow-sm text-xl flex items-center gap-3 transition-colors">
@@ -320,8 +348,8 @@ export default function PathDesktopTimeline({
       )}
 
       {/* SCREEN 3: Next Unit */}
-      <div className="w-full min-h-[100dvh] shrink-0 snap-start snap-always flex flex-col items-center justify-center pt-8 pb-32 relative z-50 bg-white">
-          <div className="w-full max-w-4xl mx-auto">
+      <div id="desktop-screen-3" className="w-full min-h-[100dvh] shrink-0 snap-start snap-always flex flex-col items-center justify-center pt-8 pb-32 relative z-50 bg-[#FAFAFA]">
+          <div className="w-full max-w-4xl mx-auto flex flex-col gap-8">
             {nextUnit && (
               <NextUnitCard
                 nextUnit={nextUnit}
@@ -331,6 +359,21 @@ export default function PathDesktopTimeline({
                 isMobile={false}
               />
             )}
+            
+            {/* List of Units */}
+            <div className="w-full overflow-hidden">
+                <UnitsListCompact
+                  units={units || []} // Provide all units from props
+                  activeUnitIndex={activeUnitIndex}
+                  language={language}
+                  onUnitSelect={(idx) => {
+                     handleUnitSelect(idx);
+                     setTimeout(() => {
+                         screen2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                     }, 100);
+                  }}
+                />
+            </div>
           </div>
       </div>
     </div>

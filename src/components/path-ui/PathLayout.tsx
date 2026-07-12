@@ -172,6 +172,7 @@ export default function PathLayout({
         ) : (
           renderMobileTimeline({
             key: activeUnit?.id,
+            units,
             unit: activeUnit,
             unitLessons,
             activeUnitIndex,
@@ -207,10 +208,11 @@ export default function PathLayout({
               setShowDesktopUnitsList(false);
             }}
           >
-            <div className={`flex-1 flex justify-center w-full max-w-4xl`}>
+            <div className={`flex-1 flex justify-center w-full max-w-full`}>
               <div className={`flex flex-col w-full h-full`}>
                 {renderDesktopTimeline({
                   key: activeUnit?.id,
+                  units,
                   unit: activeUnit,
                   unitLessons,
                   activeUnitIndex,

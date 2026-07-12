@@ -30,8 +30,11 @@ export const DesktopUnitHeader: React.FC<DesktopUnitHeaderProps> = ({
 }) => {
     return (
         <div
-            onClick={(e) => { e.stopPropagation(); onOpenUnitsList(); }}
-            className={`p-8 md:p-10 ${unit.colorClass} rounded-3xl text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer transition-transform min-h-[220px] flex items-center group`}
+            onClick={(e) => {
+                e.stopPropagation();
+                onOpenUnitsList();
+            }}
+            className={`px-8 py-10 md:px-12 md:py-12 ${unit.colorClass} rounded-none text-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer transition-transform min-h-[220px] flex items-center group w-full`}
         >
             {unit.imageUrl && (
                 <div
