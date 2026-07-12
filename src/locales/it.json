@@ -447,8 +447,8 @@
   "auto.training": "Allenamento",
   "auto.all_lessons_mastered": "Tutte le lezioni padroneggiate!",
   "auto.no_phrase": "Nessuna frase",
-  "auto.complete_base_conversation": "Completa la Conversazione Base",
-  "auto.complete_level_prefix": "Completa il Livello",
+  "auto.complete_base_conversation": "Completa Conversazione Base",
+  "auto.complete_level_prefix": "Completa Livello",
   "auto.levels_per_lesson": "livelli / lezione",
   "auto.next": "Avanti",
   "auto.train_instead": "Esercitati (+10 XP)",
@@ -600,5 +600,8 @@
   "tone.select_letter_to_analyze": "Seleziona una lettera per visualizzare l'analisi e le regole tonali",
   "auto.find_word_position": "Trova la posizione della parola",
   "auto.listen_and_select_position": "Ascolta e seleziona la posizione corretta",
-  "exercise.choice": "Scelta"
+  "exercise.choice": "Scelta",
+  "auto.complete_all_parts_level": "Completa tutte le parti del Livello ",
+  "auto.objective": "Obiettivo",
+  "auto.play_now": "Gioca ora"
 }

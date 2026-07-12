@@ -20,7 +20,13 @@ export function useScrollHeader(threshold: number = 50) {
         isProgrammaticRef.current = false;
       }, 1500);
     };
+    
+    const handleShow = () => {
+      setShowHeader(true);
+    };
+
     window.addEventListener('hideGlobalHeader', handleHide);
+    window.addEventListener('showGlobalHeader', handleShow);
 
     const handleScroll = () => {
       if (Date.now() - mountTime < 500) return; // Reduced ignore time to 500ms
@@ -52,6 +58,7 @@ export function useScrollHeader(threshold: number = 50) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('hideGlobalHeader', handleHide);
+      window.removeEventListener('showGlobalHeader', handleShow);
     };
   }, [threshold]);
 

@@ -21,6 +21,7 @@ export default function BottomNav() {
   const [mounted, setMounted] = useState(false);
   const [activePopover, setActivePopover] = useState<'learn' | 'practice' | null>(null);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [isFabHidden, setIsFabHidden] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -39,7 +40,17 @@ export default function BottomNav() {
         isProgrammatic = false;
       }, 1500);
     };
+
+    const handleHideFooter = () => setIsScrollingDown(true);
+    const handleShowFooter = () => setIsScrollingDown(false);
+    const handleHideFab = () => setIsFabHidden(true);
+    const handleShowFab = () => setIsFabHidden(false);
+
     window.addEventListener('hideGlobalHeader', handleHide);
+    window.addEventListener('hideGlobalFooter', handleHideFooter);
+    window.addEventListener('showGlobalFooter', handleShowFooter);
+    window.addEventListener('hideFab', handleHideFab);
+    window.addEventListener('showFab', handleShowFab);
 
     const handleScroll = () => {
       if (isProgrammatic) {
@@ -64,6 +75,10 @@ export default function BottomNav() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('hideGlobalHeader', handleHide);
+      window.removeEventListener('hideGlobalFooter', handleHideFooter);
+      window.removeEventListener('showGlobalFooter', handleShowFooter);
+      window.removeEventListener('hideFab', handleHideFab);
+      window.removeEventListener('showFab', handleShowFab);
     };
   }, []);
 
@@ -214,7 +229,7 @@ export default function BottomNav() {
 
         {/* Action Rapide Bubble - Only on Learn/Alphabet/Speak */}
         <AnimatePresence>
-          {isLearnOrAlphabetActive && !activePopover && !isScrollingDown && (
+          {isLearnOrAlphabetActive && !activePopover && !isScrollingDown && !isFabHidden && (
              <motion.div
                initial={{ opacity: 0, y: 10, scale: 0.9 }}
                animate={{ opacity: 1, y: 0, scale: 1 }}

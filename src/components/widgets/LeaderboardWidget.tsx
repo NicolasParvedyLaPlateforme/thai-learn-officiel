@@ -49,7 +49,7 @@ export function LeaderboardWidget() {
   if (users.length === 0) return null;
 
   return (
-    <div className="w-full py-6 px-1 flex flex-col gap-4 relative group">
+    <div className="w-full flex flex-col gap-4 relative group">
 
       <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3">

@@ -59,6 +59,14 @@ export function LessonPathMap({
     return parts.includes(p);
   };
 
+  let healedProgress = currentProgress;
+  if (currentFullLevels.length > 0) {
+    const maxCompletedFull = Math.max(...currentFullLevels);
+    if (maxCompletedFull >= healedProgress) {
+      healedProgress = maxCompletedFull + 1;
+    }
+  }
+
   // 1. Determine state of each level
   const levelStates = Array(maxLevel + 1).fill(null).map((_, i) => {
     // i is 0-indexed. i = 0 is Niveau 1. i = 4 is Niveau 5. i = 10 is Ultime.
@@ -77,7 +85,7 @@ export function LessonPathMap({
       // Phase 2+3 : Niveaux 5 à 10
       const requiredFullLevelIndex = i - 4; // Pour i=4 (Niv 5), il faut fullLevel 0 (Niv 1)
       const isFullMet = currentFullLevels.includes(requiredFullLevelIndex);
-      const isPartsMet = currentProgress >= i; // currentProgress == lessonLevel. Pour i=4, il faut lessonLevel >= 4.
+      const isPartsMet = healedProgress >= i; // healedProgress == lessonLevel. Pour i=4, il faut lessonLevel >= 4.
 
       isUnlocked = isFullMet && isPartsMet;
       if (!isUnlocked) {
@@ -92,7 +100,7 @@ export function LessonPathMap({
       }
     } else {
       // Ultime (i = 10)
-      isUnlocked = currentProgress >= 10;
+      isUnlocked = healedProgress >= 10;
       if (!isUnlocked) {
          currentBlockingReason = `${getTranslation('auto.complete_all_parts_level', language) || 'Terminez toutes les parties du Niveau '}${10}${getTranslation('auto.to_unlock', language) || ' pour débloquer.'}`;
       }
@@ -131,11 +139,11 @@ export function LessonPathMap({
 
   // Séquence 2+3 : Full Levels et Parties 5 à 10
   if (!foundTarget) {
-    for (let i = 0; i <= 5; i++) {
+      for (let i = 0; i <= 5; i++) {
        const fullLevelIndex = i;
        const partsLevelIndex = i + 4;
        
-       if (currentProgress >= fullLevelIndex) {
+       if (healedProgress >= fullLevelIndex) {
            if (!currentFullLevels.includes(fullLevelIndex)) {
               calculatedTarget = fullLevelIndex; // focus on the level associated with this full level
               foundTarget = true;
@@ -143,7 +151,7 @@ export function LessonPathMap({
            }
        }
        
-       if (currentProgress >= partsLevelIndex) {
+       if (healedProgress >= partsLevelIndex) {
            const totalParts = lesson ? getLevelSplit(partsLevelIndex, lesson) : 1;
            let partMissing = false;
            for (let p = 0; p < totalParts; p++) {
@@ -163,7 +171,7 @@ export function LessonPathMap({
 
   // Séquence 4 : Ultime
   if (!foundTarget) {
-      if (currentProgress >= 10 && !currentFullLevels.includes(10)) {
+      if (healedProgress >= 10 && !currentFullLevels.includes(10)) {
           calculatedTarget = 10;
           foundTarget = true;
       }
@@ -214,9 +222,9 @@ export function LessonPathMap({
   const isLevelUnlocked = (l: number) => levelStates[l]?.isUnlocked || false;
 
   return (
-    <div className="flex flex-col items-center justify-start lg:justify-center w-full max-w-5xl mx-auto gap-4 lg:gap-8 pt-4 pb-0">
+    <div className="flex-1 flex flex-col items-center justify-evenly w-full pt-4 pb-0">
       {/* Level Selector */}
-      <div className="w-full flex flex-col items-center lg:items-center gap-4 mb-10 lg:mb-0 mt-6 lg:mt-12 px-4 content-start">
+      <div className="w-full flex flex-col items-center lg:items-center gap-4 px-4 content-start pt-6">
         {suggestionType === 'learn' && (
           <h3 className={`text-xl md:text-2xl font-extrabold text-center px-2 leading-tight w-full ${activeLevel >= 10 ? 'text-amber-500' : 'text-slate-700'}`}>
             {activeLevel < 10 
@@ -298,12 +306,12 @@ export function LessonPathMap({
       </div>
 
       {/* Selected Level Node */}
-      <div className={`w-full relative mt-4 flex justify-center transition-all duration-200 ease-out ${isFadingOut ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
+      <div className={`w-full flex-1 relative mt-4 flex flex-col items-center justify-center transition-all duration-200 ease-out ${isFadingOut ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
         <LessonPathNode
           key={`level-node-${activeLevel}`}
           levelIndex={activeLevel}
           maxLevel={maxLevel}
-          currentProgress={effectiveProgress}
+          currentProgress={effectiveProgress} // Note: effectiveProgress recalculates using logic that doesn't need healing, so we can leave it as is. Wait, effectiveProgress uses firstLockedIndex which uses healedProgress! So it's already healed.
           modalLevel={modalLevel}
           setModalLevel={setModalLevel}
           earnedStarsArray={earnedStarsArray}

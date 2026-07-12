@@ -322,6 +322,10 @@
   "auth.save_changes": "Enregistrer les modifications",
   "auth.email_reset_subject": "Réinitialisez votre mot de passe - ThaiLearn",
   "auth.email_reset_body": "Cliquez ici pour réinitialiser votre mot de passe :",
+  "auto.objective": "Objectif",
+  "auto.play_now": "Jouer maintenant",
+  "auto.complete_base_conversation": "Terminer Conversation de base",
+  "auto.complete_level_prefix": "Terminer Niveau",
   "leaderboard.title": "Classement",
   "leaderboard.view_all": "Voir le classement complet",
   "leaderboard.page_title": "Classement Global",
@@ -447,8 +451,6 @@
   "auto.training": "Entraînement",
   "auto.all_lessons_mastered": "Toutes les leçons maîtrisées !",
   "auto.no_phrase": "Aucune phrase",
-  "auto.complete_base_conversation": "Terminer Conversation de base",
-  "auto.complete_level_prefix": "Terminer Niveau",
   "auto.levels_per_lesson": "niveaux / leçon",
   "auto.next": "Suivant",
   "auto.train_instead": "S'entraîner (+10 XP)",
@@ -600,5 +602,6 @@
   "tone.akson_nam_modifier": " (modifiée par la consonne menante précédente via la règle Akson Nam)",
   "tone.implicit_sara_a": "💡 C'est une syllabe morte due à une voyelle courte implicite (Sara A).",
   "tone.select_letter_to_analyze": "Sélectionnez une lettre pour voir l'analyse et la règle du ton",
-  "exercise.choice": "Choix"
+  "exercise.choice": "Choix",
+  "auto.complete_all_parts_level": "Terminez toutes les parties du Niveau "
 }

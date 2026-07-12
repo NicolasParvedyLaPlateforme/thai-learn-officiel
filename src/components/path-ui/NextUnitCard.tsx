@@ -22,7 +22,7 @@ export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSele
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className={`relative w-full mt-8 mb-16 group cursor-pointer`}
+      className={`relative w-full mt-8 md:mb-16 group cursor-pointer`}
       onClick={() => handleUnitSelect(nextUnitIndex)}
     >
       {/* Premium Anchor Badge */}
@@ -31,9 +31,9 @@ export function NextUnitCard({ nextUnit, nextUnitIndex, language, handleUnitSele
         <ChevronsDown size={isMobile ? 24 : 32} className="text-white stroke-[3] relative z-10 animate-bounce" />
       </div>
 
-      <div className={`w-full h-full bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden flex ${isMobile ? 'flex-col-reverse' : 'flex-row'} items-stretch transition-shadow duration-300 group-hover:shadow-lg`}>
+      <div className={`w-full h-full flex ${isMobile ? 'flex-col-reverse' : 'flex-row'} items-stretch transition-shadow duration-300`}>
         {/* Content Side */}
-      <div className={`flex flex-col justify-center p-8 sm:p-10 ${isMobile ? 'w-full' : 'w-1/2'} gap-4 z-10 bg-white`}>
+      <div className={`flex flex-col justify-center p-8 sm:p-10 ${isMobile ? 'w-full' : 'w-1/2'} gap-4 z-10`}>
         <Typography variant="overline">
           {getTranslation('auto.go_to_next_unit', language) || "Aller à l'unité suivante"}
         </Typography>

@@ -79,6 +79,17 @@ export function useLessonGameLogic(lesson: any) {
 
   const savedLevel = lesson ? lessonLevels[lesson.id] || 0 : 0;
 
+  const fullLevelsCompleted = useProgressStore(state => state.fullLevelsCompleted);
+  const manualFullLevels = lesson ? (fullLevelsCompleted[lesson.id] || []) : [];
+  
+  let healedSavedLevel = savedLevel;
+  if (manualFullLevels.length > 0) {
+    const maxCompletedFull = Math.max(...manualFullLevels);
+    if (maxCompletedFull >= healedSavedLevel) {
+      healedSavedLevel = maxCompletedFull + 1;
+    }
+  }
+
   const isPartCompleted = (l: number, p: number) => {
     const key = `${lessonId}_level-${l}`;
     const parts = lessonPartsCompleted?.[key] || [];
@@ -119,7 +130,7 @@ export function useLessonGameLogic(lesson: any) {
     maxAccessibleLevel = l;
   }
 
-  const effectiveProgress = Math.max(savedLevel, maxAccessibleLevel);
+  const effectiveProgress = Math.max(healedSavedLevel, maxAccessibleLevel);
 
   const [exercisesGeneratedFor, setExercisesGeneratedFor] = useState<{
     id: string;

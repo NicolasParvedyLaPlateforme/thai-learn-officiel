@@ -2,9 +2,11 @@ import React from 'react';
 import { m } from 'framer-motion';
 import BaseMobileTimeline from './BaseMobileTimeline';
 import { NextUnitCard } from './NextUnitCard';
+import { UnitsListCompact } from './UnitsListCompact';
 
 interface PathMobileTimelineProps {
   pathType: 'learn' | 'alphabet' | 'speak';
+  units: any[];
   unit: any;
   unitLessons: any[];
   activeUnitIndex: number;
@@ -44,6 +46,25 @@ export default function PathMobileTimeline(props: PathMobileTimelineProps) {
             handleUnitSelect={props.handleUnitSelect}
             isMobile={true}
           />
+          <div className="mt-0">
+            <UnitsListCompact
+              units={props.units || []}
+              activeUnitIndex={props.activeUnitIndex}
+              language={props.language}
+              onUnitSelect={(idx) => {
+                 props.handleUnitSelect(idx);
+                 setTimeout(() => {
+                     const scrollContainer = document.getElementById('path-scroll-container');
+                     if (scrollContainer) {
+                         const screen2 = document.getElementById('mobile-screen-2');
+                         if (screen2) {
+                             scrollContainer.scrollTo({ top: screen2.offsetTop, behavior: 'smooth' });
+                         }
+                     }
+                 }, 100);
+              }}
+            />
+          </div>
         </m.div>
       )}
     </BaseMobileTimeline>

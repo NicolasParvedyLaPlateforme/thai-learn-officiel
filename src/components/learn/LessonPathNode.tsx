@@ -86,21 +86,25 @@ export function LessonPathNode({
 
   const [selectedAction, setSelectedAction] = useState<number | 'full' | null>(() => {
     if (!isAccessible) return null;
-    
+
     if (isCompleted || currentCompletedParts.length >= currentPartsTotal) {
       return 'full';
     }
-    
+
     const nextPart = currentCompletedParts.length;
     let isVerticalMet = true;
     if (levelIndex > 0) {
-      const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
-      const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
-      const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
-      const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
-      isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+      if (currentProgress >= levelIndex) {
+        isVerticalMet = true;
+      } else {
+        const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+        const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+        const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+        const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
+        isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+      }
     }
-    
+
     if (!isVerticalMet) return null;
     return nextPart;
   });
@@ -148,14 +152,14 @@ export function LessonPathNode({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full flex items-center justify-center transition-colors duration-500`}
+      className={`relative w-full flex-1 flex flex-col items-center justify-center transition-colors duration-500`}
       id={`path-level-${lessonId}-${levelIndex}`}
     >
       {/* ── SVG connection lines have been removed per user request ── */}
 
       {/* ── Main node ── */}
       <div
-        className="relative z-10 flex flex-col items-center justify-center w-full"
+        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full"
         ref={(el) => {
           nodeRefs.current[levelIndex] = el;
           const shouldScrollTo = modalLevel !== null ? isSelected : levelIndex === targetScrollLevel;
@@ -213,11 +217,15 @@ export function LessonPathNode({
 
                     let isVerticalMet = true;
                     if (levelIndex > 0) {
-                      const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
-                      const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
-                      const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
-                      const requiredPrevPart = Math.min(i, prevLevelPartsTotal - 1);
-                      isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                      if (currentProgress >= levelIndex) {
+                        isVerticalMet = true;
+                      } else {
+                        const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+                        const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+                        const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+                        const requiredPrevPart = Math.min(i, prevLevelPartsTotal - 1);
+                        isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                      }
                     }
 
                     const isHorizontalMet = i === 0 || currentCompletedParts.includes(i - 1);
@@ -272,7 +280,7 @@ export function LessonPathNode({
                             } else {
                               setSelectedAction(i);
                               setTimeout(() => {
-        
+
                               }, 100);
                             }
                           }
@@ -297,7 +305,7 @@ export function LessonPathNode({
                           } else {
                             setSelectedAction('full');
                             setTimeout(() => {
-      
+
                             }, 100);
                           }
                         }
@@ -315,11 +323,15 @@ export function LessonPathNode({
                   const nextPart = currentCompletedParts.length;
                   let isVerticalMet = true;
                   if (levelIndex > 0) {
-                    const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
-                    const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
-                    const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
-                    const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
-                    isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                    if (currentProgress >= levelIndex) {
+                      isVerticalMet = true;
+                    } else {
+                      const prevPartsKey = `${lessonId}_level-${levelIndex - 1}`;
+                      const prevCompletedParts = lessonPartsCompleted?.[prevPartsKey] || [];
+                      const prevLevelPartsTotal = lesson ? getLevelSplit(levelIndex - 1, lesson) : 1;
+                      const requiredPrevPart = Math.min(nextPart, prevLevelPartsTotal - 1);
+                      isVerticalMet = prevCompletedParts.includes(requiredPrevPart);
+                    }
                   }
                   if (!isVerticalMet) return null;
 
@@ -452,32 +464,32 @@ export function LessonPathNode({
             )}
           </div>
         </div>
-
-        {selectedAction !== null && (
-          <div className="w-full flex justify-center z-40 pt-6 pb-5 md:pb-6 bg-slate-50 border-t border-slate-100 rounded-b-[2rem] shadow-inner relative">
-            {/* Pointer arrow pointing up to the pie chart */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-50 border-t border-l border-slate-100 rotate-45"></div>
-
-            <div className="w-full max-w-[400px] px-4 md:px-6 relative z-10">
-              <PartNodeBubble
-                lessonId={lessonId || ''}
-                levelIndex={levelIndex}
-                partIndex={selectedAction}
-                totalParts={currentPartsTotal}
-                stepsCount={getStepsForPart(selectedAction)}
-                expectedXp={getExpectedXpForPart(selectedAction)}
-                isCompleted={selectedAction === 'full' ? isCompleted : currentCompletedParts.includes(selectedAction)}
-                unitColor={unitColor}
-                unitText={unitText}
-                nodeX={getOffset(levelIndex)}
-                onClose={() => setSelectedAction(null)}
-                suggestionType={suggestionType}
-                language={language}
-              />
-            </div>
-          </div>
-        )}
       </div>
+
+      {selectedAction !== null && (
+        <div className="w-full flex justify-center z-40 pt-6 pb-8 md:pt-8 md:pb-10 relative mt-auto bg-white backdrop-blur-sm border-t border-slate-100">
+          {/* Pointer arrow pointing up to the pie chart - Desktop only */}
+          <div className="hidden md:block absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-50 border-t border-l border-slate-100 rotate-45"></div>
+
+          <div className="w-full max-w-[400px] px-4 md:px-6 relative z-10">
+            <PartNodeBubble
+              lessonId={lessonId || ''}
+              levelIndex={levelIndex}
+              partIndex={selectedAction}
+              totalParts={currentPartsTotal}
+              stepsCount={getStepsForPart(selectedAction)}
+              expectedXp={getExpectedXpForPart(selectedAction)}
+              isCompleted={selectedAction === 'full' ? isCompleted : currentCompletedParts.includes(selectedAction)}
+              unitColor={unitColor}
+              unitText={unitText}
+              nodeX={getOffset(levelIndex)}
+              onClose={() => setSelectedAction(null)}
+              suggestionType={suggestionType}
+              language={language}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
