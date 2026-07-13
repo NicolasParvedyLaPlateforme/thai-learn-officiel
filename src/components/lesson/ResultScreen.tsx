@@ -50,8 +50,8 @@ export default function ResultScreen({
   elapsedTimeSec,
 }: ResultScreenProps) {
   const router = useRouter();
-  const searchParams = require('next/navigation').useSearchParams();
-  const setLastActiveUnitIndex = useProgressStore((s) => s.setLastActiveUnitIndex);
+  const searchParams = useSearchParams();
+  const setLastActiveUnitIndex = useProgressStore(s => s.setLastActiveUnitIndex);
 
   const percentage = failedDueToTime && currentIndex !== undefined ? Math.round((currentIndex / exercisesLength) * 100) : 100;
 
@@ -289,7 +289,12 @@ export default function ResultScreen({
                 }
                 handleNavigate(url, "Enchaîner la leçon");
               } else {
-                const backUrl = pathType === 'alphabet' ? `/alphabet#lesson-${lesson.id}` : pathType === 'speak' ? `/speak#lesson-${lesson.id}` : `/learn#lesson-${lesson.id}`;
+                const level = lessonLevels[lesson.id] || 0;
+                const maxLevel = pathType === 'alphabet' ? 4 : 10;
+                const isComplete = level >= maxLevel || (fullLevelsCompleted[lesson.id] || []).includes(maxLevel - 1);
+                
+                const baseRoute = pathType === 'alphabet' ? '/alphabet' : pathType === 'speak' ? '/speak' : '/learn';
+                const backUrl = isComplete ? baseRoute : `${baseRoute}#lesson-${lesson.id}`;
                 router.push(backUrl);
               }
             }}

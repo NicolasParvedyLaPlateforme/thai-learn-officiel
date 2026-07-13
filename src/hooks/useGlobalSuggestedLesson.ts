@@ -9,7 +9,7 @@ export type SuggestedLesson = {
 };
 
 export function useGlobalSuggestedLesson(providedLearnLessons?: any[]): SuggestedLesson | null {
-  const { lessonLevels, lastPlayedLessonId, lastPlayedLessonType } = useProgressStore();
+  const { lessonLevels, fullLevelsCompleted, lastPlayedLessonId, lastPlayedLessonType } = useProgressStore();
   
   const [learnLessons, setLearnLessons] = useState<any[]>(providedLearnLessons || []);
 
@@ -39,14 +39,17 @@ export function useGlobalSuggestedLesson(providedLearnLessons?: any[]): Suggeste
        const currentIndex = list.findIndex(l => l.id === lastPlayedLessonId);
        if (currentIndex !== -1) {
           const currentLevel = lessonLevels[lastPlayedLessonId] || 0;
-          if (currentLevel < maxLevel) {
+          const isComplete = currentLevel >= maxLevel || (fullLevelsCompleted[lastPlayedLessonId] || []).includes(maxLevel - 1);
+          if (!isComplete) {
              suggestionFromLastPlayed = { id: lastPlayedLessonId, type: lastPlayedLessonType };
           } else {
              // Find the next incomplete lesson starting from currentIndex + 1
              for (let i = currentIndex + 1; i < list.length; i++) {
-                const nextLessonLevel = lessonLevels[list[i].id] || 0;
-                if (nextLessonLevel < maxLevel) {
-                   suggestionFromLastPlayed = { id: list[i].id, type: lastPlayedLessonType };
+                const nextLessonId = list[i].id;
+                const nextLessonLevel = lessonLevels[nextLessonId] || 0;
+                const nextIsComplete = nextLessonLevel >= maxLevel || (fullLevelsCompleted[nextLessonId] || []).includes(maxLevel - 1);
+                if (!nextIsComplete) {
+                   suggestionFromLastPlayed = { id: nextLessonId, type: lastPlayedLessonType };
                    break;
                 }
              }
@@ -57,7 +60,8 @@ export function useGlobalSuggestedLesson(providedLearnLessons?: any[]): Suggeste
     for (const lesson of learnLessons) {
       if (!lesson) continue;
       const level = lessonLevels[lesson.id] || 0;
-      if (level > 0 && level < 10 && !furthestInProgress) {
+      const isComplete = level >= 10 || (fullLevelsCompleted[lesson.id] || []).includes(9);
+      if (level > 0 && !isComplete && !furthestInProgress) {
         furthestInProgress = { id: lesson.id, type: 'learn' };
       }
       if (level === 0 && !firstZeroLevel) {
@@ -68,7 +72,8 @@ export function useGlobalSuggestedLesson(providedLearnLessons?: any[]): Suggeste
     if (!furthestInProgress && !firstZeroLevel) {
        for (const lesson of alphabetLessons) {
          const level = lessonLevels[lesson.id] || 0;
-         if (level > 0 && level < 4 && !furthestInProgress) {
+         const isComplete = level >= 4 || (fullLevelsCompleted[lesson.id] || []).includes(3);
+         if (level > 0 && !isComplete && !furthestInProgress) {
            furthestInProgress = { id: lesson.id, type: 'alphabet' };
          }
          if (level === 0 && !firstZeroLevel) {
@@ -78,5 +83,5 @@ export function useGlobalSuggestedLesson(providedLearnLessons?: any[]): Suggeste
     }
 
     return suggestionFromLastPlayed || furthestInProgress || firstZeroLevel || { id: learnLessons[0]?.id || '', type: 'learn' };
-  }, [lessonLevels, lastPlayedLessonId, lastPlayedLessonType, learnLessons]);
+  }, [lessonLevels, fullLevelsCompleted, lastPlayedLessonId, lastPlayedLessonType, learnLessons]);
 }

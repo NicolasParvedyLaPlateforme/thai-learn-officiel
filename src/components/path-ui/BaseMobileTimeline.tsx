@@ -72,6 +72,7 @@ export default function BaseMobileTimeline({
     const router = useRouter();
     const storyObjective = useNextConversationObjective();
     const currentPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
+    const fullLevelsCompleted = useProgressStore(state => state.fullLevelsCompleted);
 
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
     const [expandedLessons, setExpandedLessons] = React.useState<Set<string>>(new Set());
@@ -152,7 +153,11 @@ export default function BaseMobileTimeline({
             } else if (suggestedLessonId) {
                 toExpandIdx = unitLessons.findIndex(l => l.id === suggestedLessonId);
             } else {
-                const idx = unitLessons.findIndex(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+                const idx = unitLessons.findIndex(l => {
+                    const lvl = lessonLevels[l.id] || 0;
+                    const isComplete = lvl >= maxLevelPerLesson || (fullLevelsCompleted[l.id] || []).includes(maxLevelPerLesson - 1);
+                    return !isComplete;
+                });
                 if (idx !== -1) toExpandIdx = idx;
             }
 

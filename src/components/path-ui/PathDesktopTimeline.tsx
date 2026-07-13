@@ -65,6 +65,7 @@ export default function PathDesktopTimeline({
     modalLevel
 }: PathDesktopTimelineProps) {
     const currentPartsCompleted = useProgressStore(state => state.lessonPartsCompleted);
+    const fullLevelsCompleted = useProgressStore(state => state.fullLevelsCompleted);
     const maxLevelsInUnit = unitLessons.length * maxLevelPerLesson;
     const completedLevelsInUnit = mounted ? unitLessons.reduce((acc: number, l: any) => acc + Math.min(lessonLevels[l.id] || 0, maxLevelPerLesson), 0) : 0;
     const progressPercent = mounted ? (completedLevelsInUnit / maxLevelsInUnit) * 100 : 0;
@@ -101,6 +102,13 @@ export default function PathDesktopTimeline({
         if (!unitLessons || unitLessons.length === 0) return;
 
         hasInitializedScrollRef.current = true;
+        
+        if (selectedLesson) {
+            setTimeout(() => {
+                screen2Ref.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
+            }, 100);
+            return; // Skip screen 1 scroll
+        }
 
         let toExpand = null;
         if (suggestedLessonId) {
@@ -138,7 +146,7 @@ export default function PathDesktopTimeline({
                 }, 450);
             }
         }
-    }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson]);
+    }, [mounted, unitLessons, suggestedLessonId, lessonLevels, maxLevelPerLesson, selectedLesson]);
 
     // Logic for active lesson index
     const [activeLessonIndex, setActiveLessonIndex] = React.useState(0);
@@ -153,7 +161,11 @@ export default function PathDesktopTimeline({
         } else if (suggestedLessonId) {
             toExpandIdx = unitLessons.findIndex(l => l.id === suggestedLessonId);
         } else {
-            const idx = unitLessons.findIndex(l => (lessonLevels[l.id] || 0) < maxLevelPerLesson);
+            const idx = unitLessons.findIndex(l => {
+                const lvl = lessonLevels[l.id] || 0;
+                const isComplete = lvl >= maxLevelPerLesson || (fullLevelsCompleted[l.id] || []).includes(maxLevelPerLesson - 1);
+                return !isComplete;
+            });
             if (idx !== -1) toExpandIdx = idx;
         }
 
@@ -184,18 +196,7 @@ export default function PathDesktopTimeline({
         return () => observer.disconnect();
     }, []);
 
-    // Initial Scroll handling for returning from lesson
-    React.useEffect(() => {
-        if (!mounted || hasInitializedScrollRef.current) return;
-        if (!unitLessons || unitLessons.length === 0) return;
-        hasInitializedScrollRef.current = true;
 
-        if (selectedLesson) {
-            setTimeout(() => {
-                screen2Ref.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
-            }, 100);
-        }
-    }, [mounted, unitLessons, selectedLesson]);
 
     const activeQuests = []; // On Desktop, quests are handled in sidebar or modal, but let's just rely on the same logic if we want to display them here.
     // We can get them from store

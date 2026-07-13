@@ -152,18 +152,20 @@ export function LessonPathMap({
        }
        
        if (healedProgress >= partsLevelIndex) {
-           const totalParts = lesson ? getLevelSplit(partsLevelIndex, lesson) : 1;
-           let partMissing = false;
-           for (let p = 0; p < totalParts; p++) {
-               if (!isPartCompleted(partsLevelIndex, p)) {
-                   partMissing = true;
+           if (!currentFullLevels.includes(partsLevelIndex)) {
+               const totalParts = lesson ? getLevelSplit(partsLevelIndex, lesson) : 1;
+               let partMissing = false;
+               for (let p = 0; p < totalParts; p++) {
+                   if (!isPartCompleted(partsLevelIndex, p)) {
+                       partMissing = true;
+                       break;
+                   }
+               }
+               if (partMissing) {
+                   calculatedTarget = partsLevelIndex;
+                   foundTarget = true;
                    break;
                }
-           }
-           if (partMissing) {
-               calculatedTarget = partsLevelIndex;
-               foundTarget = true;
-               break;
            }
        }
     }
@@ -181,7 +183,26 @@ export function LessonPathMap({
       calculatedTarget = maxLevel;
   }
 
-  const targetScrollLevel = initialScrollLevel !== undefined && initialScrollLevel !== null ? initialScrollLevel : calculatedTarget;
+  let validInitialScroll = initialScrollLevel;
+  if (initialScrollLevel !== undefined && initialScrollLevel !== null) {
+      const partsLevelTotal = lesson ? getLevelSplit(initialScrollLevel, lesson) : 1;
+      let isFullyCompleted = false;
+      if (currentFullLevels.includes(initialScrollLevel)) {
+          isFullyCompleted = true;
+      } else {
+          const parts = lessonPartsCompleted?.[`${lessonId}_level-${initialScrollLevel}`] || [];
+          if (parts.length >= partsLevelTotal) {
+              isFullyCompleted = true;
+          }
+      }
+      
+      // If the saved level is fully completed, it's better to jump to the next uncompleted level
+      if (isFullyCompleted && calculatedTarget > initialScrollLevel) {
+          validInitialScroll = calculatedTarget;
+      }
+  }
+
+  const targetScrollLevel = validInitialScroll !== undefined && validInitialScroll !== null ? validInitialScroll : calculatedTarget;
   
   const [activeLevel, setActiveLevel] = useState<number>(targetScrollLevel);
   const [nextLevel, setNextLevel] = useState<number | null>(null);
