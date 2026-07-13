@@ -1,7 +1,7 @@
 import { getTranslation } from "@/hooks/useTranslation";
 import { m as motion, AnimatePresence } from "framer-motion";
 import { Check, Star, Clock, RotateCcw, LogOut } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Lesson } from "@/types";
 import { useProgressStore } from "@/lib/store";
